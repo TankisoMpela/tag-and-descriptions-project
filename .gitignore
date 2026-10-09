@@ -1,0 +1,41 @@
+# Dependencies / build artifacts
+node_modules/
+.opencode/node_modules/
+
+# Scratch / pipeline / workspace
+.backboard/
+.pipeline/
+q/
+q.zip
+
+# Marketplace listing outputs (generated, never versioned)
+outputs/
+# ...except the hand-maintained BOOTH tag bank. It is NOT generated: it is
+# the authoritative tag source that build_booth_db.py --bank reads, and its
+# snapshot values exist nowhere else. Listed by the spec as 'the sole
+# permanent activity/tag baseline'.
+!outputs/research/booth-font-tag-bank.md
+
+# Python virtual environments
+.venv-deterministic-fonts/
+.venv/
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Font Vault local review state and render cache
+font-vault/data/
+font-vault/*.bak
+
+# Quarantine / scratch staging (malformed font dirs, throwaway work)
+font-factory/.trash/
+
+# OpenCode local tooling that should not be versioned
+.opencode/package-lock.json
+.env*
+
+# Large font collections and working copies (too large for git)
+font-factory/Fonts/
+font-factory/input/
+font-factory/visuals/

@@ -1,0 +1,36 @@
+name: validate
+
+# Lightweight CI gate. The repo is a private, local-first pipeline: listing
+# outputs, virtualenvs, and node_modules are never committed, so CI only checks
+# the reusable structure — configs parse, helpers byte-compile, and font-factory
+# staging has no pathological space-joined slugs. It does not run marketplace
+# listing validators (those require generated outputs absent from CI).
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install npm deps
+        run: npm ci
+
+      - name: Validate (config JSON, Python compile, font-factory hygiene)
+        run: npm run validate
+
+      - name: Font-factory pathological-slug gate
+        run: python3 bin/validate_font_factory.py
