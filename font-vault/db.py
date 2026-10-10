@@ -291,20 +291,10 @@ class VaultDB:
         """, (vault_id, dir_pattern, prefix_pattern, prefix_pattern, family_key, family_key))
         return [dict(r) for r in cur.fetchall()]
 
-    def query_vault_fonts(
-        self,
-        vault_id: int,
-        query: str = "",
-        filter_name: str = "Review queue",
-        skip_broken: bool = True,
-        limit: int = 2000,
-        offset: int = 0
-    ) -> tuple[list[dict[str, Any]], int]:
-        """Query fonts with instant indexed filtering and total count."""
-        where_clauses = ["f.vault_id = ?"]
-        params: list[Any] = [vault_id]
-
-        # Filter handling
+    def _filter_clauses(self, filter_name: str, skip_broken: bool) -> tuple[list[str], list[Any]]:
+        """Shared WHERE fragments + params for the queue views."""
+        where_clauses: list[str] = []
+        params: list[Any] = []
         filter_lower = filter_name.strip().lower()
         if filter_lower == "review queue":
             where_clauses.append("COALESCE(r.status, 'unreviewed') = 'unreviewed'")
@@ -320,11 +310,36 @@ class VaultDB:
             params.append(filter_lower)
             if skip_broken:
                 where_clauses.append("COALESCE(r.classification, 'reviewable') != 'broken'")
+        return where_clauses, params
 
+    def _query_filter_params(
+        self,
+        vault_id: int,
+        query: str,
+        filter_name: str,
+        skip_broken: bool,
+    ) -> tuple[list[str], list[Any]]:
+        where_clauses = ["f.vault_id = ?"]
+        params: list[Any] = [vault_id]
+        extra, extra_params = self._filter_clauses(filter_name, skip_broken)
+        where_clauses.extend(extra)
+        params.extend(extra_params)
         if query.strip():
             where_clauses.append("f.display LIKE ?")
             params.append(f"%{query.strip()}%")
+        return where_clauses, params
 
+    def query_vault_fonts(
+        self,
+        vault_id: int,
+        query: str = "",
+        filter_name: str = "Review queue",
+        skip_broken: bool = True,
+        limit: int = 2000,
+        offset: int = 0
+    ) -> tuple[list[dict[str, Any]], int]:
+        """Query fonts with instant indexed filtering and total count."""
+        where_clauses, params = self._query_filter_params(vault_id, query, filter_name, skip_broken)
         where_sql = " AND ".join(where_clauses)
 
         # 1. Count query
@@ -358,12 +373,55 @@ class VaultDB:
             FROM font_records f
             LEFT JOIN reviews r ON f.file_key = r.file_key
             WHERE {where_sql}
-            ORDER BY f.display ASC
+            ORDER BY f.display ASC, f.file_key ASC
             LIMIT ? OFFSET ?
         """, [*params, limit_val, max(0, offset)])
 
         items = [dict(row) for row in cur.fetchall()]
         return items, total_count
+
+    def find_filtered_index(
+        self,
+        vault_id: int,
+        file_key: str,
+        query: str = "",
+        filter_name: str = "Review queue",
+        skip_broken: bool = True,
+    ) -> int | None:
+        """Return the 0-based index of a font inside the current filtered view.
+
+        Mirrors query_vault_fonts' filtering/ordering so navigation can jump
+        straight to the exact page and row of a remembered font (for example
+        the font you were on before Randomize), even when it lives on another
+        page. Returns None when the font is not part of the current view.
+        """
+        cur = self.conn.cursor()
+        cur.execute(
+            "SELECT display FROM font_records WHERE vault_id = ? AND file_key = ?",
+            (vault_id, file_key),
+        )
+        target = cur.fetchone()
+        if not target:
+            return None
+        where_clauses, params = self._query_filter_params(vault_id, query, filter_name, skip_broken)
+        where_sql = " AND ".join(where_clauses)
+        # Confirm the target belongs to the current view before ranking.
+        cur.execute(f"""
+            SELECT COUNT(*) AS c
+            FROM font_records f
+            LEFT JOIN reviews r ON f.file_key = r.file_key
+            WHERE {where_sql} AND f.file_key = ?
+        """, [*params, file_key])
+        if cur.fetchone()["c"] == 0:
+            return None
+        # Rank using the same (display, file_key) ordering as the page query.
+        cur.execute(f"""
+            SELECT COUNT(*) AS rank
+            FROM font_records f
+            LEFT JOIN reviews r ON f.file_key = r.file_key
+            WHERE {where_sql} AND (f.display, f.file_key) <= (?, ?)
+        """, [*params, target["display"], file_key])
+        return cur.fetchone()["rank"] - 1
 
     def migrate_from_state_json(self, json_path: Path, force: bool = False) -> int:
         """Migrate legacy state.json into SQLite seamlessly (runs once unless forced)."""

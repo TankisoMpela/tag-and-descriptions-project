@@ -24,7 +24,7 @@ from PySide6.QtGui import QKeySequence, QPixmap, QShortcut
 from PySide6.QtWidgets import (
     QApplication, QCheckBox, QComboBox, QFileDialog, QFrame, QHBoxLayout,
     QLabel, QLineEdit, QListWidget, QListWidgetItem, QMainWindow, QMessageBox,
-    QPushButton, QSizePolicy, QSplitter, QVBoxLayout, QWidget,
+    QPushButton, QScrollArea, QSizePolicy, QSplitter, QVBoxLayout, QWidget,
 )
 
 
@@ -244,6 +244,45 @@ class DirectoryScanWorker(QObject):
             self.finished.emit()
 
 
+class SpecimenRenderWorker(QObject):
+    """Render the combined specimen and read font facts off the UI thread.
+
+    Each batch is rendered in the given order (the currently viewed font first,
+    then prefetched neighbours). Font files and PIL/subprocess work are safe in
+    this thread; only the file path + facts text are emitted back to the UI
+    thread, which owns the QPixmap.
+    """
+
+    ready = Signal(object, str, str, str)  # record key, render path, facts text, classification note
+    failed = Signal(object, str)           # record key, error message
+    done = Signal()
+
+    def __init__(self, window: "FontVaultWindow", records: list[FontRecord]) -> None:
+        super().__init__()
+        self.window = window
+        self.records = records
+        self.cancelled = False
+
+    @Slot()
+    def run(self) -> None:
+        for record in self.records:
+            if self.cancelled:
+                break
+            try:
+                # Deep outline checks use SIGALRM timeouts and must stay on the
+                # UI thread (queue_selected runs them); the worker uses the fast
+                # cmap pass, which is enough for broken/missing-letter notes.
+                state = self.window.analyze_record(record, deep=False)
+                note = f" · excluded: {state.get('reason')}" if state.get("classification") == "broken" else ""
+                path = str(self.window.render_path(record))
+                facts = self.window.inspect(record) + note
+            except Exception as error:
+                self.failed.emit(record.key, str(error))
+                continue
+            self.ready.emit(record.key, path, facts, note)
+        self.done.emit()
+
+
 class FontVaultWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
@@ -270,6 +309,13 @@ class FontVaultWindow(QMainWindow):
         self.queue_page = 0
         self.scan_thread: QThread | None = None
         self.scan_worker: DirectoryScanWorker | None = None
+        # Background specimen rendering + result caches
+        self._pixmap_orig_cache: dict[str, QPixmap] = {}
+        self._pixmap_cache: dict[str, QPixmap] = {}
+        self._facts_cache: dict[str, str] = {}
+        self._render_thread: QThread | None = None
+        self._render_worker: SpecimenRenderWorker | None = None
+        self._pending_renders: list[FontRecord] = []
 
         self.batch_label = QLabel("No font batch loaded")
         self.status_label = QLabel("Choose a font directory to begin.")
@@ -293,6 +339,8 @@ class FontVaultWindow(QMainWindow):
             label.setCursor(Qt.CursorShape.IBeamCursor)
         self.copy_shortcut = QShortcut(QKeySequence.StandardKey.Copy, self.queue)
         self.copy_shortcut.activated.connect(self.copy_queue_selection)
+        self.previous_shortcut = QShortcut(QKeySequence("Alt+Left"), self)
+        self.previous_shortcut.activated.connect(self.go_to_previous_font)
         self.populate_recent_vaults()
         self.resume_last_vault()
 
@@ -346,10 +394,15 @@ class FontVaultWindow(QMainWindow):
         preview_panel = QFrame(); preview_panel.setObjectName("panel"); preview_layout = QVBoxLayout(preview_panel); preview_layout.setContentsMargins(14, 14, 14, 14)
         specimen_label = QLabel("COMBINED SPECIMEN  ·  CHARACTER SET + SENTENCE"); specimen_label.setObjectName("muted"); preview_layout.addWidget(specimen_label)
         self.name_label.setObjectName("fontName"); preview_layout.addWidget(self.name_label)
-        # Make facts label scrollable when text is long
-        from PySide6.QtWidgets import QScrollArea
+        # Metadata facts live in a compact scroll area so long descriptions
+        # (license text, URLs, authors) can never steal space from the specimen.
         scroll = QScrollArea(); scroll.setWidgetResizable(True); scroll.setMaximumHeight(120)
-        self.facts_label.setObjectName("facts"); self.facts_label.setWordWrap(True); scroll.setWidget(self.facts_label)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        scroll.setStyleSheet("QScrollArea { background: transparent; border: 0; }")
+        self.facts_label.setObjectName("facts"); self.facts_label.setWordWrap(True)
+        self.facts_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
+        scroll.setWidget(self.facts_label)
         preview_layout.addWidget(scroll)
         copy_row = QHBoxLayout(); copy_row.addWidget(self.button("Copy font details", self.copy_current_details)); copy_row.addWidget(self.button("Copy specimen text", self.copy_specimen_text)); copy_row.addStretch(); preview_layout.addLayout(copy_row)
         preview_layout.addWidget(self.preview, 1); main_layout.addWidget(preview_panel, 1)
@@ -862,17 +915,123 @@ class FontVaultWindow(QMainWindow):
         facts = f"{len(font.getGlyphOrder())} glyphs  ·  {letters}/52 basic letters  ·  {dates}  ·  author={author}  ·  license={license_text}  ·  url={url}  ·  fsType={font['OS/2'].fsType if 'OS/2' in font else 'unknown'}  ·  legacy kern={'yes' if 'kern' in font else 'no'}  ·  GPOS={'yes' if 'GPOS' in font else 'no'}  ·  GSUB={'yes' if 'GSUB' in font else 'no'}"; font.close(); return facts
 
     def render_current(self, _mode=None) -> None:
+        """Show the specimen instantly when cached; render in the background otherwise.
+
+        Rendering (subprocess + font inspection) has moved off the UI thread, so
+        switching fonts stays responsive even for never-seen fonts. Results are
+        cached in memory per font key and the images resize lazily on window
+        resize without re-decoding the originals.
+        """
         if not self.current: return
-        self.status_label.setText(f"Rendering {self.current.display}…"); QApplication.processEvents()
-        try:
-            path = self.render_path(self.current)
-            pixmap = QPixmap(str(path)); self.preview.setPixmap(pixmap.scaled(self.preview.size(), Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)); self.name_label.setText(pretty_display(self.current.display))
-            state = self.analyze_record(self.current, deep=True); classification_note = f" · excluded: {state.get('reason')}" if state.get("classification") == "broken" else ""
-            self.facts_label.setText(self.inspect(self.current) + classification_note); self.status_label.setText("Combined specimen rendered.")
-        except Exception as error:
-            self.preview.clear(); self.preview.setText(f"Font could not be rendered.\n\n{error}")
-            self.name_label.setText(pretty_display(self.current.display)); self.facts_label.setText("Source load/render failed.")
+        current = self.current
+        key = current.key
+        self.name_label.setText(pretty_display(current.display))
+        if key in self._pixmap_orig_cache:
+            self._set_cached_preview(key)
+            if self._facts_cache.get(key):
+                self.facts_label.setText(self._facts_cache[key])
+            self.status_label.setText("Combined specimen rendered.")
+        else:
+            self.preview.clear(); self.preview.setText("Rendering specimen…")
+            self.facts_label.clear()
+            self._request_render([current], replace=True)
+        self._prefetch_adjacent()
+
+    def _request_render(self, records: list[FontRecord], replace: bool = False) -> None:
+        """Queue a background render batch, starting it if none is running."""
+        batch = [r for r in records if r.key not in self._pixmap_orig_cache]
+        if not batch:
+            return
+        if self._render_thread and self._render_thread.isRunning():
+            if replace and self._render_worker is not None:
+                # A freshly selected font takes priority: cancel the in-flight
+                # prefetch batch and render it as soon as the thread drains.
+                self._render_worker.cancelled = True
+                self._pending_renders = batch
+            elif replace:
+                self._pending_renders = batch
+            else:
+                seen = {r.key for r in self._pending_renders}
+                self._pending_renders.extend(r for r in batch if r.key not in seen)
+            return
+        self._start_render_batch(batch)
+
+    def _start_render_batch(self, records: list[FontRecord]) -> None:
+        self._render_thread = QThread(self)
+        self._render_worker = SpecimenRenderWorker(self, records)
+        self._render_worker.cancelled = False
+        self._render_worker.moveToThread(self._render_thread)
+        self._render_thread.started.connect(self._render_worker.run)
+        self._render_worker.ready.connect(self._on_render_ready)
+        self._render_worker.failed.connect(self._on_render_failed)
+        self._render_worker.done.connect(self._render_thread.quit)
+        self._render_worker.done.connect(self._render_worker.deleteLater)
+        self._render_thread.finished.connect(self._render_thread.deleteLater)
+        self._render_thread.finished.connect(self._render_thread_finished)
+        self._render_thread.start()
+
+    def _render_thread_finished(self) -> None:
+        self._render_thread = None
+        self._render_worker = None
+        if self._pending_renders:
+            batch = self._pending_renders
+            self._pending_renders = []
+            self._start_render_batch(batch)
+
+    def _on_render_ready(self, key, path, facts, _note) -> None:
+        self._facts_cache[key] = facts
+        pixmap = QPixmap(str(path))
+        if pixmap.isNull():
+            if self.current and self.current.key == key:
+                self.preview.clear(); self.preview.setText(f"Font could not be rendered.\n\n{path}")
+                self.facts_label.setText(facts or "Source load/render failed.")
+                self.status_label.setText("Font render failed; the font remains selected for review.")
+            return
+        self._pixmap_orig_cache[key] = pixmap
+        self._trim_pixmap_cache()
+        if self.current and self.current.key == key:
+            self._set_cached_preview(key)
+            self.facts_label.setText(facts)
+            self.status_label.setText("Combined specimen rendered.")
+
+    def _on_render_failed(self, key, message) -> None:
+        if self.current and self.current.key == key:
+            self.preview.clear(); self.preview.setText(f"Font could not be rendered.\n\n{message}")
+            self.facts_label.setText("Source load/render failed.")
             self.status_label.setText("Font render failed; the font remains selected for review.")
+
+    def _prefetch_adjacent(self) -> None:
+        """Eagerly render the next couple of fonts so Next feels instant."""
+        wanted: list[FontRecord] = []
+        for record in self.visible:
+            if record.key not in self._pixmap_orig_cache:
+                wanted.append(record)
+                if len(wanted) >= 2:
+                    break
+        if wanted:
+            self._request_render(wanted, replace=False)
+
+    def _set_cached_preview(self, key: str) -> bool:
+        orig = self._pixmap_orig_cache.get(key)
+        if orig is None:
+            return False
+        size = self.preview.size()
+        scaled = self._pixmap_cache.get(key)
+        if scaled is None or scaled.size() != size:
+            scaled = orig.scaled(size, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+            self._pixmap_cache[key] = scaled
+        self.preview.setPixmap(scaled)
+        return True
+
+    def _trim_pixmap_cache(self, limit: int = 60) -> None:
+        while len(self._pixmap_orig_cache) > limit:
+            oldest = next(iter(self._pixmap_orig_cache))
+            self._pixmap_orig_cache.pop(oldest, None)
+            self._pixmap_cache.pop(oldest, None)
+
+    def resizeEvent(self, event) -> None:
+        super().resizeEvent(event)
+        self._pixmap_cache.clear()
 
     def clear_current(self, message: str) -> None:
         self.current = None; self.preview.clear(); self.preview.setText(message); self.name_label.setText("No font selected"); self.facts_label.clear(); self.status_label.setText(message)
@@ -1193,12 +1352,27 @@ class FontVaultWindow(QMainWindow):
             self.queue.setCurrentRow(target_row)
 
     def go_to_previous_font(self) -> None:
-        """Navigate to the previously viewed font (useful after randomization)."""
-        if self.previous_font and self.visible and self.previous_font.key in self.visible_index:
-            row = self.visible_index[self.previous_font.key]
-            self.queue.setCurrentRow(row)
-        else:
-            self.previous()
+        """Navigate back to the font viewed before the current one.
+
+        Remembers a single font (the one you were on when the selection last
+        changed), so it is the reliable undo for Randomize. It works across
+        queue pages: the previous font is looked up in the indexed filtered
+        view even when Randomize jumped to a different page.
+        """
+        previous = self.previous_font
+        if previous and previous.key in self.visible_index:
+            self.queue.setCurrentRow(self.visible_index[previous.key])
+            return
+        if previous and self.vault_id is not None:
+            index = self.db.find_filtered_index(
+                self.vault_id, previous.key,
+                self.search.text().strip(), self.filter.currentText(),
+                skip_broken=self.skip_broken.isChecked(),
+            )
+            if index is not None:
+                self.select_filtered_index(index)
+                return
+        self.previous()
 
     def select_filtered_index(self, index: int) -> None:
         """Navigate the full filtered collection while rendering only one page."""

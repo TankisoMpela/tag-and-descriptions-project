@@ -55,11 +55,24 @@ sub-millisecond queries, and near-zero memory footprint:
   intentionally not used as a breakage gate.
 - **Randomize** jumps to a different font in the current view without changing
   its saved review status.
+- **← Previous Font** (or `Alt+Left`) returns to the single font you were
+  viewing just before the current one — the reliable undo for Randomize. It
+  works even when Randomize jumped to another queue page: the previous font is
+  looked up by DB rank in the current filtered view.
 - The combined specimen renders the factual character sheet and “The quick
   brown fox jumps over the lazy dog.” together, with a visible gap between them.
 - Font metadata includes the internal `head` table creation and modification
   dates when the source font provides valid timestamps. These are historical
   metadata, not necessarily the date the typeface was originally designed.
+- Long metadata (license text, URLs, font dates) stays inside a compact
+  scrollable strip above the specimen, so it never pushes the specimen off the
+  preview area.
+- Specimens render in a background worker: switching fonts never blocks the UI.
+  Rendered pixmaps, font facts, and scaled previews are cached in memory per
+  font, and the next couple of fonts in the queue are prefetched so **Next**
+  feels instant. Selecting a new font cancels any in-flight prefetch so the
+  font you actually chose renders first. The current specimen is also generated
+  lazily and cached under `font-vault/data/cache/`.
 - **Mark used family** copies every style in the detected family into the next
   numbered folder under `font-factory/input/` (for example
   `font-factory/input/1-Amintattalic/`) and writes a manifest, while leaving the
@@ -68,8 +81,6 @@ sub-millisecond queries, and near-zero memory footprint:
   names such as Regular/Bold/Italic, fall back from generic placeholder names,
   and skip exact binary duplicates when copying a used family. Archive and Skip
   change the saved review status only; they do not delete or move source files.
-- The current specimen is generated lazily and cached under
-  `font-vault/data/cache/`.
 - `Create fsType=0 working copy…` writes a copy only. It never changes the
   original and does not grant licensing rights.
 
