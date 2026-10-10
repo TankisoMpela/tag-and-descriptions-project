@@ -4,10 +4,13 @@
 The raw image folder is intentionally treated as immutable input. In
 ``--auto-order`` mode, the first stable filename in each detected ratio is
 assigned ``thumbnail_main`` mechanically; all remaining files are numbered as
-promos independently. No visual thumbnail identification is performed.
-Exact source
-copies, bounded JPEG delivery files, and a traceable manifest are written
-beneath the output folder (which defaults to the raw folder itself).
+promos independently. No visual thumbnail identification is performed. When
+the seller supplied no 1:1 file at all, or only a single 1:1 file whose name
+marks it as the square thumbnail, the missing squares are derived from the
+3:2 set by white-padding with equal top/bottom bars; the derivation is
+recorded in the manifest. Exact source copies, bounded JPEG delivery files,
+and a traceable manifest are written beneath the output folder (which
+defaults to the raw folder itself).
 """
 
 from __future__ import annotations
@@ -95,6 +98,24 @@ def inspect_ratio(path: Path, label: str) -> tuple[int, int, float]:
 
 def ratio_matches(value: float, target: float) -> bool:
     return abs(value - target) <= RATIO_TOLERANCE
+
+
+def pad_to_square(source: Path, destination: Path) -> None:
+    """Derive a 1:1 copy of a 3:2 image with equal white top/bottom bars."""
+    try:
+        with Image.open(source) as image:
+            image.load()
+            width, height = image.size
+            if not ratio_matches(width / height, MAIN_RATIO):
+                fail(f"Cannot pad {source.name}: expected a 3:2 image, got {width}x{height}")
+            flat = Image.new("RGBA", (width, height), (255, 255, 255, 255))
+            flat.alpha_composite(image.convert("RGBA"))
+            canvas = Image.new("RGBA", (width, width), (255, 255, 255, 255))
+            canvas.paste(flat, (0, (width - height) // 2))
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            canvas.convert("RGB").save(destination, format="PNG")
+    except Exception as error:
+        fail(f"Could not pad {source.name} into a square: {error}")
 
 
 def canonical_copy(source: Path, destination: Path, *, overwrite: bool) -> None:
@@ -193,6 +214,7 @@ def write_manifest(
     square_japanese: Path | None,
     square_promos: list[Path],
     compose_log: str | None,
+    padded_from: dict[Path, Path],
 ) -> None:
     lines = [
         f"# Final Image Processing Manifest — {font_name}",
@@ -204,12 +226,20 @@ def write_manifest(
         f"- **JPEG delivery limit:** {JPEG_MAX_BYTES} bytes per main/square file.",
         "- **Raw source policy:** direct source files were preserved; no raw file was overwritten, renamed, or compressed.",
         "- **Numbering policy:** files are assigned mechanically in stable filename order within each ratio; the first file is `thumbnail_main` and remaining files are numbered `promo_1` upward. No visual thumbnail identification is performed.",
+    ]
+    if padded_from:
+        lines.append(
+            f"- **Square padding:** {len(padded_from)} square file(s) were derived from their "
+            "3:2 parent (shown in Raw source) with equal white top/bottom padding; Source "
+            "SHA-256 hashes the padded copy (parent hashes are in the main table)."
+        )
+    lines.extend([
         "",
         "## Main 3:2 delivery",
         "",
         "| Raw source | Role | Exact source copy | JPEG delivery | Dimensions | JPEG bytes | Source SHA-256 |",
         "|---|---|---|---|---:|---:|---|",
-    ]
+    ])
 
     main_rows = [(main_thumbnail, "thumbnail_main", "thumbnail_main.png")]
     main_rows.extend((source, f"promo_{index}", f"promo_{index}.png") for index, source in enumerate(main_promos, start=1))
@@ -240,8 +270,10 @@ def write_manifest(
     for source, role, canonical in square_rows:
         width, height, _ = inspect_ratio(source, f"square source {role}")
         jpeg = output_dir / "squares" / f"{Path(canonical).stem}.jpg"
+        parent = padded_from.get(source)
+        raw_label = f"{parent.name} (padded to 1:1)" if parent else source.name
         lines.append(markdown_table_row([
-            source.name,
+            raw_label,
             role,
             f"`source/1x1/{canonical}`",
             f"`squares/{jpeg.name}`",
@@ -255,7 +287,7 @@ def write_manifest(
         "## Final handoff",
         "",
         "- Use `main/` for 3:2 marketplace delivery JPEGs.",
-        "- Use `squares/` for independently supplied 1:1 marketplace delivery JPEGs.",
+        "- Use `squares/` for 1:1 marketplace delivery JPEGs (supplied files plus any white-padded derivatives).",
         "- This post-workflow processor does not package fonts, render videos, rewrite metadata, or alter the original raw images.",
     ])
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -272,7 +304,9 @@ def main() -> int:
     parser.add_argument(
         "--auto-order",
         action="store_true",
-        help="Mechanically sort direct files by filename within each ratio; first becomes thumbnail_main",
+        help="Mechanically sort direct files by filename within each ratio; first becomes "
+             "thumbnail_main. Missing squares are white-padded from the 3:2 set (equal "
+             "top/bottom bars) when no 1:1 file exists, or only a name-marked square thumbnail does",
     )
     parser.add_argument("--square-japanese-thumbnail", default=None,
                         help="Optional separate raw 1:1 Japanese thumbnail filename")
@@ -303,6 +337,12 @@ def main() -> int:
     if not all_images:
         fail(f"No direct raster images found in {source_dir}")
 
+    source_32 = output_dir / "source" / "3x2"
+    source_11 = output_dir / "source" / "1x1"
+    main_dir = output_dir / "main"
+    square_dir = output_dir / "squares"
+    padded_from: dict[Path, Path] = {}
+
     if args.auto_order:
         if args.main_thumbnail or args.square_thumbnail or args.square_japanese_thumbnail or args.main_promo or args.square_promo:
             fail("--auto-order cannot be combined with explicit thumbnail or promo filenames")
@@ -315,11 +355,40 @@ def main() -> int:
                 ratio_groups["1:1"].append(image)
             else:
                 fail(f"{image.name} is neither 3:2 nor 1:1; auto-order cannot classify it")
-        if not ratio_groups["3:2"] or not ratio_groups["1:1"]:
-            fail("--auto-order requires at least one direct 3:2 file and one direct 1:1 file")
-        main_thumbnail, square_thumbnail = ratio_groups["3:2"][0], ratio_groups["1:1"][0]
+        if not ratio_groups["3:2"]:
+            fail("--auto-order requires at least one direct 3:2 file")
+        three_two, squares = ratio_groups["3:2"], ratio_groups["1:1"]
         square_japanese = None
-        main_promos, square_promos = ratio_groups["3:2"][1:], ratio_groups["1:1"][1:]
+        main_thumbnail, main_promos = three_two[0], three_two[1:]
+        square_thumb_markers = ("thumb", "square", "1x1", "1:1", "1-1", "1_1")
+        if not squares:
+            print(
+                f"No 1:1 files supplied; deriving all {len(three_two)} square(s) from the "
+                "3:2 set (equal white top/bottom padding).",
+                file=sys.stderr,
+            )
+            square_thumbnail = source_11 / "thumbnail_main.png"
+            square_promos = [source_11 / f"promo_{index}.png" for index in range(1, len(three_two))]
+            padded_from[square_thumbnail] = main_thumbnail
+            for index, parent in enumerate(main_promos, start=1):
+                padded_from[source_11 / f"promo_{index}.png"] = parent
+        elif (
+            len(squares) == 1
+            and any(token in squares[0].name.lower() for token in square_thumb_markers)
+            and len(three_two) > 1
+        ):
+            print(
+                f"Only a square thumbnail was supplied; deriving {len(three_two) - 1} "
+                "supporting square(s) from the 3:2 promos (equal white top/bottom padding).",
+                file=sys.stderr,
+            )
+            square_thumbnail = squares[0]
+            square_promos = [source_11 / f"promo_{index}.png" for index in range(1, len(three_two))]
+            for index, parent in enumerate(main_promos, start=1):
+                padded_from[source_11 / f"promo_{index}.png"] = parent
+        else:
+            square_thumbnail = squares[0]
+            square_promos = squares[1:]
     else:
         if not args.main_thumbnail or not args.square_thumbnail:
             fail("Provide --main-thumbnail and --square-thumbnail, or use --auto-order")
@@ -335,9 +404,10 @@ def main() -> int:
     _, _, main_thumbnail_ratio = inspect_ratio(main_thumbnail, "main thumbnail")
     if not ratio_matches(main_thumbnail_ratio, MAIN_RATIO):
         fail(f"Main thumbnail must be 3:2; got {main_thumbnail.name} at ratio {main_thumbnail_ratio:.4f}")
-    _, _, square_thumbnail_ratio = inspect_ratio(square_thumbnail, "square thumbnail")
-    if not ratio_matches(square_thumbnail_ratio, SQUARE_RATIO):
-        fail(f"Square thumbnail must be 1:1; got {square_thumbnail.name} at ratio {square_thumbnail_ratio:.4f}")
+    if square_thumbnail not in padded_from:
+        _, _, square_thumbnail_ratio = inspect_ratio(square_thumbnail, "square thumbnail")
+        if not ratio_matches(square_thumbnail_ratio, SQUARE_RATIO):
+            fail(f"Square thumbnail must be 1:1; got {square_thumbnail.name} at ratio {square_thumbnail_ratio:.4f}")
     if square_japanese:
         _, _, japanese_ratio = inspect_ratio(square_japanese, "square Japanese thumbnail")
         if not ratio_matches(japanese_ratio, SQUARE_RATIO):
@@ -354,11 +424,6 @@ def main() -> int:
         print("Warning: no 3:2 supporting promos were supplied.", file=sys.stderr)
     if not square_promos:
         print("Warning: no 1:1 supporting promos were supplied.", file=sys.stderr)
-
-    source_32 = output_dir / "source" / "3x2"
-    source_11 = output_dir / "source" / "1x1"
-    main_dir = output_dir / "main"
-    square_dir = output_dir / "squares"
 
     main_rows = [(main_thumbnail, "thumbnail_main.png")]
     main_rows.extend((source, f"promo_{index}.png") for index, source in enumerate(main_promos, start=1))
@@ -383,8 +448,12 @@ def main() -> int:
             canonical_copy(source, staging_32 / canonical, overwrite=True)
             canonical_copy(source, source_32 / canonical, overwrite=args.overwrite)
         for source, canonical in square_rows:
-            canonical_copy(source, staging_11 / canonical, overwrite=True)
-            canonical_copy(source, source_11 / canonical, overwrite=args.overwrite)
+            if source in padded_from:
+                pad_to_square(padded_from[source], source)
+                canonical_copy(source, staging_11 / canonical, overwrite=True)
+            else:
+                canonical_copy(source, staging_11 / canonical, overwrite=True)
+                canonical_copy(source, source_11 / canonical, overwrite=args.overwrite)
 
         encode_args = [sys.executable, str(Path(__file__).with_name("encode_main_jpeg.py")),
                        str(staging_32), str(main_dir), "--max-bytes", str(JPEG_MAX_BYTES)]
@@ -424,10 +493,13 @@ def main() -> int:
         square_japanese=square_japanese,
         square_promos=square_promos,
         compose_log=None,
+        padded_from=padded_from,
     )
     if not manifest_path.is_file():
         fail(f"Expected generated manifest is missing: {manifest_path}")
     print(f"Final image processing complete: {output_dir}")
+    if padded_from:
+        print(f"Squares derived by equal white padding: {len(padded_from)}")
     print(f"Manifest: {output_dir / 'final-image-manifest.md'}")
     return 0
 

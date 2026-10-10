@@ -21,10 +21,13 @@ within each ratio, assigns the first 3:2 and first 1:1 files as
 raw direct file unchanged.
 Write exact canonical source copies plus compressed full-dimension JPEGs under
 `New-Images/source/3x2/`, `New-Images/source/1x1/`, `New-Images/main/`, and
-`New-Images/squares/`. Compose four `1000x1500` Pinterest PNGs from the 3:2
+`New-Images/squares/`. When the folder has no 1:1 file, or only a
+name-marked square thumbnail, the helper derives the missing squares with
+equal white top/bottom padding and records them in the manifest. Compose four
+`1000x1500` Pinterest PNGs from the 3:2
 source pool only and bound each to `<=700000` bytes with pngquant. Bound main
-and square JPEGs to `<=200000` bytes. Do not derive squares, pad or crop
-images, invent missing artwork, or overwrite raw files. Do not replace the
+and square JPEGs to `<=200000` bytes. Never pad, crop, or derive images
+yourself, invent missing artwork, or overwrite raw files. Do not replace the
 older `visuals/main/` or `visuals/squares/` directories unless the user makes
 that a separate explicit request.
 

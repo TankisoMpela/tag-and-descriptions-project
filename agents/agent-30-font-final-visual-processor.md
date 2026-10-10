@@ -25,13 +25,18 @@ This agent owns only the mechanical final-image delivery pass:
 
 - enumerate direct raw files mechanically; do not use vision, a contact sheet,
   image semantics, or visual judgment to identify a thumbnail;
-- classify 3:2 and 1:1 files independently; never derive a square from a
-  landscape image and never require the two ratios to have equal counts;
+- classify 3:2 and 1:1 files independently; when the folder contains no 1:1
+  file at all, or only a name-marked square thumbnail, the helper derives the
+  missing squares itself with equal white top/bottom padding and marks them
+  in the manifest; otherwise the supplied set is processed as-is and the two
+  counts need not match;
 - copy each selected raw file exactly into `New-Images/source/3x2/` or
-  `New-Images/source/1x1/` under canonical names;
-- encode the supplied 3:2 files as full-dimension JPEGs in
-  `New-Images/main/`, and the supplied 1:1 files as full-dimension JPEGs in
-  `New-Images/squares/`, each at or below `200000` bytes;
+  `New-Images/source/1x1/` under canonical names (helper-derived squares are
+  the helper's own padded copies in `source/1x1/`, marked in the manifest);
+- encode `New-Images/source/3x2/` as full-dimension JPEGs in
+  `New-Images/main/`, and `New-Images/source/1x1/` (supplied or padded) as
+  full-dimension JPEGs in `New-Images/squares/`, each at or below `200000`
+  bytes;
 - write `New-Images/final-image-manifest.md` with source-to-role mapping,
   dimensions, output paths, byte sizes, source hashes, compositor inputs, and
   the exact processing date.
@@ -49,9 +54,10 @@ package contents. Do not use vision or a contact sheet. Sort direct raw image
 filenames lexicographically within each supported ratio. The first 3:2 file is
 mechanically `thumbnail_main`; the remaining 3:2 files become `promo_1`,
 `promo_2`, and so on. Apply the same rule independently to the 1:1 files.
-Never create `thumbnail_japanese` in automatic mode. Do not pad a short set,
-create counterpart files, or silently discard an extra direct raw image. Files
-with unsupported ratios are blockers.
+Never create `thumbnail_japanese` in automatic mode. Never pad, crop, or
+create counterpart files yourself — the helper's automatic derivation above
+is the only permitted one — and never silently discard an extra direct raw
+image. Files with unsupported ratios are blockers.
 
 ## Required command
 
@@ -75,6 +81,9 @@ flags only when the user separately requests a manual mapping. Do not pass
 `--overwrite` can replace prior generated delivery files, but it never permits
 replacement of the raw direct files.
 
+Automatic mode also applies the conditional square-padding derivation (see
+Scope). No extra flag is needed; the run prints how many squares were padded.
+
 Pinterest panel composition is archived. See `archive/pinterest/README.md` to
 reinstate it.
 
@@ -85,7 +94,8 @@ Before reporting completion, confirm:
 - the raw timestamped/source files still exist unchanged;
 - every raw direct image appears exactly once in the manifest as a thumbnail
   or promo;
-- `source/3x2/` and `source/1x1/` contain exact canonical PNG copies;
+- `source/3x2/` and `source/1x1/` contain exact canonical PNG copies
+  (including any helper-derived padded squares, marked in the manifest);
 - main JPEGs are full-dimension 3:2 files and `<=200000` bytes;
 - square JPEGs are full-dimension 1:1 files and `<=200000` bytes;
 - the manifest is present and reports `COMPLETE`.
@@ -93,7 +103,9 @@ Before reporting completion, confirm:
 If any input is missing, a ratio is wrong, a file cannot be decoded, a
 thumbnail cannot be identified, or an output exceeds its limit, fail closed.
 Do not solve the problem by cropping, padding, inventing, or substituting an
-image.
+image; the helper's automatic padding described above is the only permitted
+derivation.
 
 Final response must report the exact `New-Images` output path, the main and
-square counts, the manifest path, and `No upload or publication claim`.
+square counts, the number of squares the helper white-padded (0 if none), the
+manifest path, and `No upload or publication claim`.
