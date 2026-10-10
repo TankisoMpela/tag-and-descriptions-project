@@ -15,6 +15,7 @@ import json
 import re
 import shutil
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 from fontTools.ttLib import TTFont
@@ -31,12 +32,28 @@ from PySide6.QtWidgets import (
 ROOT = Path(__file__).resolve().parent.parent
 INPUT_DIR = ROOT / "font-factory" / "input"
 CACHE_DIR = Path(__file__).resolve().parent / "data" / "cache" / "inspector"
+DELETED_LOG = INPUT_DIR / "deleted-fonts.md"
 FONT_EXTENSIONS = {".ttf", ".otf", ".woff", ".woff2"}
 
-ALPHA_LINES = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz")
-NUM_LINES = ("0123456789", "! ? . , : ; / & @ # % + - = ( ) [ ] { } \" ' < > | _ $ * ~ ^")
+DELETED_LOG_HEADER = """# Deleted fonts — not part of the family
 
-STRIP_W, STRIP_H = 1500, 210
+Fonts listed here were deleted from staged folders under `font-factory/input/`
+with the Input Inspector because the seller judged them **not to belong to the
+family**. Never restore, re-copy, or reintroduce these files into an input
+folder, a font package, or any pipeline step.
+
+## Entries
+
+"""
+
+SPECIMEN_LINES = (
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    "abcdefghijklmnopqrstuvwxyz",
+    "0123456789   ! ? . , : ; / & @ # % + - = ( ) [ ] { } \" ' < > | _ $ * ~ ^",
+)
+
+STRIP_W = 1500
+MAX_LINE_PX = 64
 
 
 def natural_key(text: str) -> list:
@@ -65,39 +82,39 @@ def renderable_path(path: Path) -> Path:
     return converted
 
 
-def render_strip(path: Path, mode: str) -> Path:
-    """Render one preview strip (alphabet or numerals+punctuation), cached on disk."""
+def render_strip(path: Path) -> Path:
+    """Render one combined strip (alphabet, digits, punctuation), cached on disk."""
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     try:
         stat = path.stat()
-        seed = f"{path}:{stat.st_mtime_ns}:{stat.st_size}:{mode}"
+        seed = f"{path}:{stat.st_mtime_ns}:{stat.st_size}"
     except OSError:
-        seed = f"{path}:{mode}"
+        seed = str(path)
     digest = hashlib.sha256(seed.encode("utf-8")).hexdigest()[:24]
     output = CACHE_DIR / f"{digest}.png"
     if output.exists():
         return output
     source = renderable_path(path)
-    lines = ALPHA_LINES if mode == "alpha" else NUM_LINES
-    image = Image.new("RGB", (STRIP_W, STRIP_H), (8, 8, 10))
-    draw = ImageDraw.Draw(image)
+    measure = ImageDraw.Draw(Image.new("RGB", (1, 1)))
     max_w = STRIP_W - 56
 
     def fitted(line: str) -> tuple[ImageFont.FreeTypeFont, int]:
         probe = ImageFont.truetype(str(source), 100)
-        probe_w = draw.textlength(line, font=probe)
-        size = max(16, min(74, int(100 * max_w / max(probe_w, 1))))
+        probe_w = measure.textlength(line, font=probe)
+        size = max(16, min(MAX_LINE_PX, int(100 * max_w / max(probe_w, 1))))
         font_obj = ImageFont.truetype(str(source), size)
-        while size > 16 and draw.textlength(line, font=font_obj) > max_w:
+        while size > 16 and measure.textlength(line, font=font_obj) > max_w:
             size -= 2
             font_obj = ImageFont.truetype(str(source), size)
         return font_obj, size
 
-    fitted_fonts = [fitted(line) for line in lines]
-    gap = 22
-    total = sum(size for _f, size in fitted_fonts) + gap * (len(lines) - 1)
-    y = max(8, (STRIP_H - total) // 2)
-    for line, (font_obj, size) in zip(lines, fitted_fonts):
+    fitted_fonts = [fitted(line) for line in SPECIMEN_LINES]
+    gap = 16
+    height = sum(size for _f, size in fitted_fonts) + gap * (len(SPECIMEN_LINES) - 1) + 26
+    image = Image.new("RGB", (STRIP_W, height), (8, 8, 10))
+    draw = ImageDraw.Draw(image)
+    y = 13
+    for line, (font_obj, size) in zip(SPECIMEN_LINES, fitted_fonts):
         draw.text((28, y), line, font=font_obj, fill=(245, 243, 238))
         y += size + gap
     image.save(output, format="PNG")
@@ -147,13 +164,34 @@ def prune_manifest(folder: Path, filename: str) -> None:
         pass
 
 
+def log_deletion(path: Path, source: Path | None) -> str | None:
+    """Record a family-mismatch deletion in input/deleted-fonts.md.
+
+    Returns an error message on failure, or None on success.
+    """
+    try:
+        if not DELETED_LOG.exists():
+            DELETED_LOG.write_text(DELETED_LOG_HEADER, encoding="utf-8")
+        stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        origin = str(source) if source else "unknown (no source recorded)"
+        entry = (
+            f"- **{stamp}** — `{path.name}` removed from `{path.parent.name}/`\n"
+            f"  - Original source: `{origin}`\n"
+            f"  - Reason: does not match the family (deleted in Input Inspector)\n"
+        )
+        with DELETED_LOG.open("a", encoding="utf-8") as handle:
+            handle.write(entry)
+    except OSError as error:
+        return str(error)
+    return None
+
+
 class FontRow(QFrame):
     """One staged font: name + return/delete buttons over a full-width preview strip."""
 
-    def __init__(self, path: Path, mode: str, parent: QWidget | None = None) -> None:
+    def __init__(self, path: Path, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.path = path
-        self.mode = mode
         self._pix: QPixmap | None = None
         self.setObjectName("fontRow")
 
@@ -186,12 +224,11 @@ class FontRow(QFrame):
         self.preview.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.preview.setMinimumHeight(80)
         outer.addWidget(self.preview)
-        self.apply_mode(mode)
+        self.load_preview()
 
-    def apply_mode(self, mode: str) -> None:
-        self.mode = mode
+    def load_preview(self) -> None:
         try:
-            image_path = render_strip(self.path, mode)
+            image_path = render_strip(self.path)
             pix = QPixmap(str(image_path))
             if pix.isNull():
                 raise RuntimeError("preview image could not be opened")
@@ -208,12 +245,10 @@ class FontRow(QFrame):
     def _fit(self) -> None:
         if self._pix is None or self._pix.isNull():
             return
-        width = self.preview.width()
+        width = min(self.preview.width(), STRIP_W)
         if width < 20:
             return
         scaled = self._pix.scaledToWidth(width, Qt.TransformationMode.SmoothTransformation)
-        if scaled.height() > 224:
-            scaled = self._pix.scaledToHeight(224, Qt.TransformationMode.SmoothTransformation)
         self.preview.setPixmap(scaled)
         self.preview.setMinimumHeight(scaled.height())
 
@@ -229,7 +264,6 @@ class InspectorWindow(QMainWindow):
         self.resize(1360, 860)
         self.setMinimumSize(1040, 700)
         self.setStyleSheet(self.styles())
-        self.mode = "alpha"
         self.folders: list[Path] = []
         self.rows: list[FontRow] = []
         self.current_idx = -1
@@ -297,9 +331,6 @@ class InspectorWindow(QMainWindow):
 
         toolbar = QHBoxLayout()
         toolbar.setSpacing(8)
-        self.mode_btn = self.button("Show: Numbers & Punctuation", self.toggle_mode)
-        self.mode_btn.setToolTip("Switch every preview strip between the alphabet\nand numbers + punctuation.")
-        toolbar.addWidget(self.mode_btn)
         self.prev_btn = self.button("◀ Previous", self.go_prev)
         self.next_btn = self.button("Next ▶", self.go_next, primary=True)
         toolbar.addWidget(self.prev_btn)
@@ -405,7 +436,7 @@ class InspectorWindow(QMainWindow):
             self.status.setText(f"{folder.name}: no font files.")
             return
         for path in fonts:
-            row = FontRow(path, self.mode)
+            row = FontRow(path)
             row.return_btn.clicked.connect(lambda _=False, p=path: self.return_font(p))
             row.delete_btn.clicked.connect(lambda _=False, p=path: self.delete_font(p))
             self.rows_layout.addWidget(row)
@@ -421,17 +452,6 @@ class InspectorWindow(QMainWindow):
             if widget is not None:
                 widget.setParent(None)
                 widget.deleteLater()
-
-    def toggle_mode(self) -> None:
-        self.mode = "num" if self.mode == "alpha" else "alpha"
-        if self.mode == "num":
-            self.mode_btn.setText("Show: Alphabet")
-            self.status.setText("Showing numbers and punctuation.")
-        else:
-            self.mode_btn.setText("Show: Numbers & Punctuation")
-            self.status.setText("Showing the alphabet.")
-        for row in self.rows:
-            row.apply_mode(self.mode)
 
     def go_prev(self) -> None:
         if self.current_idx > 0:
@@ -517,19 +537,29 @@ class InspectorWindow(QMainWindow):
             self,
             "Delete font",
             f"Delete {path.name} from {path.parent.name}?\n\n"
-            "This permanently removes the file.",
+            "This permanently removes the file and records it in\n"
+            "font-factory/input/deleted-fonts.md as not part of the family.",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.No,
         )
         if answer != QMessageBox.StandardButton.Yes:
             return
+        source = find_source(path.parent, path.name)
         try:
             path.unlink()
         except OSError as error:
             QMessageBox.critical(self, "Could not delete font", str(error))
             return
         prune_manifest(path.parent, path.name)
-        self.status.setText(f"Deleted {path.name}.")
+        log_error = log_deletion(path, source)
+        if log_error:
+            self.status.setText(
+                f"Deleted {path.name}, but the deletion log could not be updated: {log_error}"
+            )
+        else:
+            self.status.setText(
+                f"Deleted {path.name} — recorded in input/deleted-fonts.md (not part of the family)."
+            )
         self.reload_current()
 
 

@@ -92,8 +92,8 @@ python3 font-vault/input_inspector.py
 Input Inspector reviews the staged family folders under `font-factory/input/`
 that Font Vault's **Mark used family** creates. The sidebar lists every family
 folder with its font count; the main pane shows one preview row per font in the
-selected folder, rendering uppercase and lowercase (or, with **Show: Numbers &
-Punctuation**, digits and symbols) so stray fonts in a family are easy to spot.
+selected folder — uppercase, lowercase, digits, and punctuation together in a
+single cached strip — so stray fonts in a family are easy to spot.
 
 - **◀ Previous / Next ▶** move between family folders.
 - **↩ Return to source** sends a font back to the folder it was copied from,
@@ -101,7 +101,11 @@ Punctuation**, digits and symbols) so stray fonts in a family are easy to spot.
   If the original is still there, only the staged copy is removed; if it is
   missing, the file is moved back. The manifest is updated either way.
 - **✕ Delete** permanently removes a font from the staged folder (with
-  confirmation).
+  confirmation) and records the removal in
+  `font-factory/input/deleted-fonts.md` with its original source and the
+  reason "does not match the family". Never restore files listed there —
+  Agent 27 (font-image-generator) no longer checks original source
+  directories at all, so family completeness is verified here instead.
 
 Preview strips are cached under `font-vault/data/cache/inspector/`, so folders
 open instantly after the first render.

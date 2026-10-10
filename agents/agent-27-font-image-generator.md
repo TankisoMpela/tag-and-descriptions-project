@@ -26,11 +26,12 @@ Custom GPT instructions folder. Do not edit `custom-gpt/`.
 
 1. If the caller did not supply a final font name, **decide one now** from the
    description (see Naming policy below).
-2. Check the input folder's `font-vault-manifest.json` and `source-directory.txt`
-   (if present from Font Vault). Verify against the original source directory
-   to confirm whether all styles/weights in the font's family were retrieved
-   or if additional weights (e.g. Medium, Extrabold, Italic, Condensed) are
-   available in that source directory.
+2. ~~Check the input folder's manifest and verify the source directory for
+   additional weights.~~ **Retired:** family completeness is verified by the
+   seller in the Input Inspector (`font-vault/input_inspector.py`) before this
+   agent runs. Never re-copy, restore, or add font files from the original
+   source directory or Font Vault manifest; work only with the files already
+   present in the supplied font subdirectory.
 3. Run the **font behavior gate** below before writing any image copy. Keep the
    fact-sheet output as the factual record for copy accuracy, technical
    feasibility, shaping, and supported buyer jobs. Do not use machine-readable
