@@ -30,9 +30,13 @@ python3 bin/make_daily_pins.py brief --date D
 
 `pick` excludes any font pinned in the previous 14 days and writes
 `outputs/pinterest/D/selection.json`. `brief` writes `brief.md` with per-font
-name, board suggestion, blob image URL, product URL, description excerpt, a
-mechanical candidate-keyword seed (extracted from description.txt), and the
-font's most-used tags to rotate away from.
+name, board suggestion, ALL FOUR blob image URLs, both product-page URLs,
+description excerpt, a mechanical candidate-keyword seed (extracted from
+description.txt), the font's most-used tags to rotate away from, and its
+previous pins. You do not choose the image or the destination link — `assemble`
+takes one of the four images per pin (seeded by date, so a re-run gives the
+same CSV) and splits fonts that have both market pages evenly between Creative
+Market and Creative Fabrica.
 
 ## Step 2 — write pin copy (your only creative work)
 
@@ -42,6 +46,15 @@ FONT SEO STRATEGY" and the 3-PIN intent framework are your writing reference —
 read the two strategy sections only, not the whole file. Across the day's
 fonts, vary intent (aesthetic/specimen, crafter/Cricut, project/use-case) so
 the batch does not read as one template.
+
+First look at what this font has already been pinned with. `brief.md` prints
+an `ALREADY PINNED` block per font with its past dates, titles, keywords and
+most recent alt text; for anything older than that block use
+`python3 bin/pinterest_tag_ledger.py history --slug <slug> --full` (add
+`--json` for machine-readable). A new pin that reuses one of your own strings
+cannibalizes the old one, so write a different title shape, a different hook,
+and different keywords — not a synonym swap of the same sentence. A font with
+no history block is on its first pin; say so rather than inventing a past.
 
 ### Keywords (decide per font)
 
@@ -121,11 +134,11 @@ python3 bin/make_daily_pins.py assemble --date D
 Default stagger: 09:00 UTC start, one pin per hour (10 pins over 10 hours).
 The tool validates everything (lengths, alt text, uniqueness, boards, keyword
 format, future-dated slots within 14 days), writes `buffer.csv` (Buffer
-import: Text / Image URL / Title / Alt Text / Link / Board Name / Posting
-Time — the primary file), `pins.csv` (Pinterest-native fallback, no alt
-column), and `tag-report.md`, and records the day's tags and pin dates in the
-ledger. On validation failure, fix `copy.json` and re-run — never edit a CSV
-by hand.
+import — exact column order of Buffer's own Pinterest template: Text /
+Image URL / Board Name / Tags / Posting Time / Title / Alt Text / Link —
+the primary file), `pins.csv` (Pinterest-native fallback, no alt column),
+and `tag-report.md`, and records the day's tags and pin dates in the ledger.
+On validation failure, fix `copy.json` and re-run — never edit a CSV by hand.
 
 ## Step 4 — report and stop
 
@@ -157,9 +170,13 @@ touch Pinterest or Buffer, and make no publication claim.
   idempotently.
 - Alt text is required on every pin (1–500 chars) — buffer.csv carries it and
   it is our biggest documented click lever.
+- Every pin's text is recorded in the ledger when `assemble` runs. Read that
+  history before writing new copy and never re-ship a title, alt sentence or
+  keyword string this font has already used.
 - No hashtags anywhere in Keywords — plain comma-separated search terms.
-  Buffer's template has no Pinterest Keywords column (its `Tags` column is
-  Buffer-internal labels; omit it) — Keywords live in pins.csv only.
+  Buffer's template has no Pinterest Keywords column; its `Tags` column is
+  Buffer-internal labels (emit it empty, never fill it). Keywords live in
+  pins.csv only.
 - Titles: Title Case, 45–65 char target, primary keyword in the first 35
   chars, unique in batch. Descriptions: primary keyword in the first sentence
   (~75 chars). Never "click" in title or description; soft CTAs only.

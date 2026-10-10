@@ -66,7 +66,7 @@
     "pinterest-font-preparer": {
       "mode": "subagent",
       "prompt": "{file:./agents/agent-pinterest-font-preparer.md}",
-      "description": "Pinterest info gatherer for the Daily-Pinterest-Run pipeline: registers fonts, records product URLs and board suggestions, uploads one deterministic-random pin image to Vercel Blob, writes public-urls.md; no Pinterest-side action.",
+      "description": "Pinterest asset preparer for the Daily-Pinterest-Run pipeline: registers a font from its outputs/font-preparation folder, uploads all four pin images to Vercel Blob, records both product-page URLs and the description, writes public-urls.md; no Pinterest-side action.",
       "permission": {
         "task": "allow"
       }
@@ -74,7 +74,7 @@
     "daily-pinterest-run": {
       "mode": "subagent",
       "prompt": "{file:./agents/agent-daily-pinterest-run.md}",
-      "description": "Daily Pinterest pipeline: picks 10 ready fonts with 14-day exclusion, writes per-font copy with tag rotation from the ledger, and validates/assembles the staggered bulk-import pins.csv. Import stays a human step.",
+      "description": "Daily Pinterest pipeline: picks 10 ready fonts with 14-day exclusion, writes per-font title/description/alt/keywords after reading the font's pin history from the ledger, and validates/assembles the staggered buffer.csv plus pins.csv fallback. Import stays a human step.",
       "permission": {
         "task": "allow"
       }
@@ -122,13 +122,13 @@
       "agent": "booth-pdf-maker"
     },
     "pinterest-prepare": {
-      "description": "Register fonts for Pinterest: record product URLs and descriptions, upload one pin image each to Vercel Blob.",
-      "template": "Please run the pinterest-font-preparer agent to register these fonts into the Pinterest registry (match each to its outputs/font-preparation folder, set product URL and board suggestion, upload one pin image, write public-urls.md): {input}",
+      "description": "Register fonts for Pinterest: upload all four pin images to Vercel Blob, record both product-page URLs and the description.",
+      "template": "Please run the pinterest-font-preparer agent to register these fonts into the Pinterest registry (match each to its outputs/font-preparation folder, record both product-page URLs --market cm/cf and a board suggestion, upload all four pinterest images, write public-urls.md): {input}",
       "agent": "pinterest-font-preparer"
     },
     "pinterest-daily": {
       "description": "Run the daily Pinterest pipeline: pick 10 fonts, write pin copy with tag rotation, assemble the staggered bulk-import CSV.",
-      "template": "Please run the daily-pinterest-run agent to produce the bulk-import pins.csv for tomorrow (or the date given here) from the 10 randomly picked ready fonts: {input}",
+      "template": "Please run the daily-pinterest-run agent to produce the daily buffer.csv (plus pins.csv fallback) for tomorrow (or the date given here) from the 10 randomly picked ready fonts, reading each font's pin history first: {input}",
       "agent": "daily-pinterest-run"
     }
   }

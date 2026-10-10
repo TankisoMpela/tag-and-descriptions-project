@@ -1,6 +1,6 @@
 ---
 name: pinterest-font-preparer
-description: "Pinterest info gatherer for the Daily-Pinterest-Run pipeline. Registers fonts, records product URLs and board suggestions, uploads one deterministic-random pin image to Vercel Blob, and writes public-urls.md into the font folder. No Pinterest-side action."
+description: "Pinterest asset preparer for the Daily-Pinterest-Run pipeline. Registers a font from its outputs/font-preparation folder, uploads all four pin images to Vercel Blob, records both product-page URLs (Creative Market + Creative Fabrica) and the description, and writes public-urls.md into the font folder. No Pinterest-side action."
 permissionMode: acceptEdits
 ---
 

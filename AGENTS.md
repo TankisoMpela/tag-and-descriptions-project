@@ -97,18 +97,28 @@ directory, and trial URL; the product image comes from `{font-dir}/visuals/New-I
 
 Two agents; the archived Agent 10 stays archived and is not invoked.
 
-- `/pinterest-prepare` (pinterest-font-preparer) registers fonts into
-  `outputs/pinterest/registry.json` — product URL, board suggestion
-  (Handwritten / Display / Script / Decorative Fonts), and ONE pin image
-  uploaded to the `pinterest-pins-media` Vercel Blob store
+- `/pinterest-prepare` (pinterest-font-preparer) is run per new font, on its
+  `outputs/font-preparation/{NUM}-{slug}/` folder. It registers into
+  `outputs/pinterest/registry.json`: ALL FOUR images from
+  `visuals/New-Images/pinterest/` uploaded to the `pinterest-pins-media` Vercel
+  Blob store (one URL per image), BOTH product-page URLs (`--market cm` and
+  `--market cf`), the description (`description.txt`), and a board suggestion
+  (Handwritten / Display / Script / Decorative Fonts); it writes
+  `public-urls.md` into the font folder
   (`pinterest-assets/` holds the linked project; auth lives in
   `~/.config/papermoon/blob.env` — never commit or print the token).
 - `/pinterest-daily` (daily-pinterest-run) randomly picks 10 ready fonts per
   day (14-day re-pin exclusion), writes fresh title/description/alt/keywords
-  per font with tag rotation tracked in `outputs/research/pinterest-tags.sqlite`,
-  and validates + assembles `outputs/pinterest/{YYYY-MM-DD}/buffer.csv`
+  per font, and validates + assembles `outputs/pinterest/{YYYY-MM-DD}/buffer.csv`
   (Buffer free-plan import — carries Alt Text; staggered hourly from 09:00
-  UTC) plus `pins.csv` as the Pinterest-native fallback.
+  UTC) plus `pins.csv` as the Pinterest-native fallback. Per pin it takes ONE
+  of the font's four image links and ONE of its two product links (both
+  marketplaces split evenly, seeded by date so a re-run is identical).
+  Anti-cannibalization lives in `outputs/research/pinterest-tags.sqlite`:
+  `tag_uses` (keyword counts), `pinned_runs` (re-pin window) and `pins` — the
+  full text of every pin shipped, looked up with
+  `python3 bin/pinterest_tag_ledger.py history --slug <slug> --full` and
+  printed automatically in `brief.md` before new copy is written.
 
 Tools: `bin/pinterest_registry.py`, `bin/papermoon-blob.py`,
 `bin/pinterest_tag_ledger.py`, `bin/make_daily_pins.py`. Carousels are not

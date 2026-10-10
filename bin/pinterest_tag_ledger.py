@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""Per-font Pinterest tag ledger — stops fonts cannibalizing each other.
+"""Per-font Pinterest ledger — stops pins cannibalizing each other.
 
-outputs/research/pinterest-tags.sqlite records every keyword the daily run
-uses, per font. Before writing a pin the agent asks `avoid` for the least-used
-candidate tags for that font; after the CSV is assembled `record` logs the
-choice. `stats` shows usage counts and percentages so drift is visible.
+outputs/research/pinterest-tags.sqlite holds two kinds of record. `tag_uses`
+counts every keyword per font, so `avoid` can hand back the least-used
+candidates. `pins` holds the full text of every pin the daily run shipped —
+title, description, alt text, keywords, board, image and link — so `history`
+can answer "what did I already do for this font, and when" before new copy is
+written. `pinned_runs` is the 14-day re-pin exclusion the picker reads.
 
 Usage:
   python3 bin/pinterest_tag_ledger.py record --slug quiet-acre --date 2026-10-10 --tags "boho script font, wedding signage font"
   python3 bin/pinterest_tag_ledger.py avoid --slug quiet-acre --candidates "boho script font, wedding signage font, ..." --take 5
+  python3 bin/pinterest_tag_ledger.py history [--slug quiet-acre] [--limit 3] [--full]
   python3 bin/pinterest_tag_ledger.py stats [--slug quiet-acre]
   python3 bin/pinterest_tag_ledger.py reset --slug quiet-acre [--yes]
   Add --json to any command for machine-readable output.
@@ -37,6 +40,18 @@ CREATE TABLE IF NOT EXISTS pinned_runs (
     csv_path  TEXT,
     UNIQUE (font_slug, run_date)
 );
+CREATE TABLE IF NOT EXISTS pins (
+    font_slug   TEXT NOT NULL,
+    run_date    TEXT NOT NULL,
+    title       TEXT,
+    description TEXT,
+    alt         TEXT,
+    keywords    TEXT,
+    board       TEXT,
+    image_url   TEXT,
+    link        TEXT,
+    PRIMARY KEY (font_slug, run_date)
+);
 CREATE INDEX IF NOT EXISTS idx_tag_uses ON tag_uses (font_slug, tag);
 """
 
@@ -44,6 +59,7 @@ CREATE INDEX IF NOT EXISTS idx_tag_uses ON tag_uses (font_slug, tag);
 def open_db(path: Path = DB_PATH) -> sqlite3.Connection:
     path.parent.mkdir(parents=True, exist_ok=True)
     con = sqlite3.connect(path)
+    con.row_factory = sqlite3.Row
     con.executescript(SCHEMA)
     return con
 
@@ -64,6 +80,34 @@ def split_tags(raw: str) -> list[str]:
 
 def font_counts(con: sqlite3.Connection, slug: str) -> dict[str, int]:
     return dict(con.execute("SELECT tag, COUNT(*) FROM tag_uses WHERE font_slug=? GROUP BY tag", (slug,)))
+
+
+def record_pin(con: sqlite3.Connection, *, slug: str, date: str, title: str,
+               description: str, alt: str, keywords: list[str], board: str,
+               image_url: str, link: str) -> None:
+    """Keep the full text of a shipped pin so the next run can avoid it.
+
+    REPLACE rather than INSERT: re-running `assemble` for a date regenerates
+    the CSVs, and a stale copy of the previous wording would keep the old
+    phrases looking reusable.
+    """
+    con.execute("""
+        INSERT OR REPLACE INTO pins
+            (font_slug, run_date, title, description, alt, keywords, board,
+             image_url, link)
+        VALUES (?,?,?,?,?,?,?,?,?)
+    """, (slug, date, title, description, alt, ", ".join(keywords), board,
+          image_url, link))
+
+
+def font_pins(con: sqlite3.Connection, slug: str,
+              limit: int | None = None) -> list[dict]:
+    """This font's past pins, newest first — the anti-cannibalization record."""
+    sql = "SELECT * FROM pins WHERE font_slug=? ORDER BY run_date DESC"
+    if limit:
+        sql += " LIMIT ?"
+        return [dict(r) for r in con.execute(sql, (slug, limit))]
+    return [dict(r) for r in con.execute(sql, (slug,))]
 
 
 def cmd_record(args, con: sqlite3.Connection) -> int:
@@ -96,6 +140,45 @@ def cmd_avoid(args, con: sqlite3.Connection) -> int:
         print(json.dumps(out, indent=2))
     else:
         print("\n".join(take))
+    return 0
+
+
+def cmd_history(args, con: sqlite3.Connection) -> int:
+    """What this font has already been pinned with, and when."""
+    slugs = [args.slug] if args.slug else [
+        r[0] for r in con.execute("SELECT DISTINCT font_slug FROM pins ORDER BY font_slug")
+    ]
+    if not slugs:
+        print("(no pins recorded yet — every font is on its first run)")
+        return 0
+    report = []
+    for slug in slugs:
+        pins = font_pins(con, slug, args.limit)
+        runs = [r[0] for r in con.execute(
+            "SELECT run_date FROM pinned_runs WHERE font_slug=? ORDER BY run_date DESC",
+            (slug,))]
+        report.append({"slug": slug, "pin_count": len(pins),
+                       "run_dates": runs, "history": pins})
+    if args.json:
+        print(json.dumps(report, indent=2))
+        return 0
+    for r in report:
+        print(f"\n{r['slug']} — {r['pin_count']} pin(s) recorded"
+              f"; run dates: {', '.join(r['run_dates']) or 'none'}")
+        for p in r["history"]:
+            print(f"  {p['run_date']}  [{p['board']}]  {p['title']}")
+            if args.full:
+                print(f"      description: {p['description']}")
+                print(f"      alt:         {p['alt']}")
+                print(f"      keywords:    {p['keywords']}")
+                print(f"      image:       {p['image_url']}")
+                print(f"      link:        {p['link']}")
+        if not r["history"]:
+            used = font_counts(con, r["slug"])
+            for t, c in sorted(used.items(), key=lambda kv: (-kv[1], kv[0]))[:10]:
+                print(f"  {c}x  {t}")
+            if used:
+                print("  (pin text predates the history table — keywords shown)")
     return 0
 
 
@@ -134,12 +217,14 @@ def cmd_stats(args, con: sqlite3.Connection) -> int:
 
 def cmd_reset(args, con: sqlite3.Connection) -> int:
     n = con.execute("SELECT COUNT(*) FROM tag_uses WHERE font_slug=?", (args.slug,)).fetchone()[0]
+    p = con.execute("SELECT COUNT(*) FROM pins WHERE font_slug=?", (args.slug,)).fetchone()[0]
     if not args.yes:
-        sys.exit(f"error: {args.slug} has {n} recorded tag uses — pass --yes to clear them")
+        sys.exit(f"error: {args.slug} has {n} tag use(s) and {p} recorded pin(s) — pass --yes to clear them")
     con.execute("DELETE FROM tag_uses WHERE font_slug=?", (args.slug,))
     con.execute("DELETE FROM pinned_runs WHERE font_slug=?", (args.slug,))
+    con.execute("DELETE FROM pins WHERE font_slug=?", (args.slug,))
     con.commit()
-    print(f"{args.slug}: cleared {n} tag use(s)")
+    print(f"{args.slug}: cleared {n} tag use(s) and {p} pin record(s)")
     return 0
 
 
@@ -165,6 +250,14 @@ def main(argv=None) -> int:
     st = sub.add_parser("stats", parents=[common])
     st.add_argument("--slug")
     st.set_defaults(func=cmd_stats)
+
+    hi = sub.add_parser("history", parents=[common])
+    hi.add_argument("--slug")
+    hi.add_argument("--limit", type=int, default=5,
+                    help="most recent pins per font (default 5)")
+    hi.add_argument("--full", action="store_true",
+                    help="also print description, alt, keywords, image and link")
+    hi.set_defaults(func=cmd_history)
 
     rs = sub.add_parser("reset", parents=[common])
     rs.add_argument("--slug", required=True)

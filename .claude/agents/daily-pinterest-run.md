@@ -1,6 +1,6 @@
 ---
 name: daily-pinterest-run
-description: "Daily Pinterest pipeline. Picks 10 registered fonts with a 14-day exclusion, writes fresh per-font pin copy with tag rotation from the anti-cannibalization ledger, and validates/assembles the staggered bulk-import pins.csv. Import stays a human step."
+description: "Daily Pinterest pipeline. Picks 10 registered fonts with a 14-day exclusion, writes fresh per-font title/description/alt/keywords after reading that font's pin history from the anti-cannibalization ledger, and validates/assembles the staggered buffer.csv (Buffer import) plus pins.csv fallback. Import stays a human step."
 permissionMode: acceptEdits
 ---
 

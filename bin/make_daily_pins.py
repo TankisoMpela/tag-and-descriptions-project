@@ -41,10 +41,16 @@ import pinterest_tag_ledger  # noqa: E402
 EXCLUSION_DAYS = 14
 SCHEDULING_WINDOW_DAYS = 14
 MIN_KEYWORDS, MAX_KEYWORDS = 3, 10
+# How many of a font's own past pins brief.md shows. Enough to make repeated
+# phrasing obvious without burying the new copy under old copy.
+PRIOR_PINS_IN_BRIEF = 4
 CSV_HEADER = ["Title", "Media URL", "Pinterest board", "Thumbnail",
               "Description", "Link", "Publish date", "Keywords"]
-BUFFER_HEADER = ["Text", "Image URL", "Title", "Alt Text", "Link",
-                 "Board Name", "Posting Time"]
+# Exact column order from Buffer's own Pinterest import template
+# (~/Downloads/Buffer_Import_Template.csv): Text, Image URL, Board Name,
+# Tags, Posting Time, Title, Alt Text, Link — all cells quoted, UTF-8 BOM.
+BUFFER_HEADER = ["Text", "Image URL", "Board Name", "Tags", "Posting Time",
+                 "Title", "Alt Text", "Link"]
 
 # Mechanical candidate-keyword seed for brief.md (research 2026-10: Pinterest
 # ranks via pin title + description + board; these seeds just narrow the
@@ -83,6 +89,38 @@ def looks_like_shop_root(url: str) -> bool:
     """A shop/store root (no product path) — weak pin destination, worth flagging."""
     segments = [s for s in urlparse(url).path.split("/") if s]
     return len(segments) <= 1
+
+
+def pick_image_url(rec: dict, date: str) -> str | None:
+    """Seeded per (date, slug) choice among the font's uploaded pin images —
+    stable across re-assembles of the same day, random across days."""
+    images = sorted((rec.get("images") or {}).values(),
+                    key=lambda im: im.get("pathname", ""))
+    if not images:
+        return None
+    return random.Random(f"img:{date}:{rec['slug']}").choice(images)["url"]
+
+
+def assign_links(slugs: list[str], reg_fonts: dict, date: str) -> dict[str, str]:
+    """Per-pin destination: split fonts that have BOTH marketplace product
+    pages evenly between Creative Market and Creative Fabrica (5/5 of 10),
+    shuffled with the date seed; fonts with one URL get that URL."""
+    both = [s for s in slugs
+            if (reg_fonts[s].get("urls") or {}).get("creative_market")
+            and (reg_fonts[s].get("urls") or {}).get("creative_fabrica")]
+    rng = random.Random(f"links:{date}")
+    half = len(both) // 2
+    choices = ["creative_market"] * half + ["creative_fabrica"] * half
+    if len(both) % 2:
+        choices.append(rng.choice(["creative_market", "creative_fabrica"]))
+    rng.shuffle(choices)
+    out: dict[str, str] = {}
+    for slug, market in zip(both, choices):
+        out[slug] = reg_fonts[slug]["urls"][market]
+    for s in slugs:
+        if s not in out:
+            out[s] = pinterest_registry.primary_url(reg_fonts[s]) or ""
+    return out
 
 
 def extract_candidates(text: str, max_out: int = 12) -> list[str]:
@@ -139,10 +177,11 @@ def cmd_pick(args, con) -> int:
             print("warning: fewer eligible fonts than requested — register more fonts "
                   "or reset ledger pinned_runs")
         for s in chosen:
-            url = reg_fonts[s].get("product_url") or ""
-            if looks_like_shop_root(url):
-                print(f"warning: {s}: product_url {url!r} looks like a shop root, "
-                      f"not a product page — set-url before importing this CSV")
+            urls = reg_fonts[s].get("urls") or {}
+            for market, url in urls.items():
+                if url and looks_like_shop_root(url):
+                    print(f"warning: {s}: {market} URL {url!r} looks like a shop root, "
+                          f"not a product page — set-url before importing this CSV")
     return 0
 
 
@@ -158,24 +197,49 @@ def cmd_brief(args, con) -> int:
             desc = " ".join(raw.split())[:400]
         used = pinterest_tag_ledger.font_counts(con, slug)
         top_used = sorted(used.items(), key=lambda kv: -kv[1])[:8]
+        prior = pinterest_tag_ledger.font_pins(con, slug, PRIOR_PINS_IN_BRIEF)
         candidates = extract_candidates(desc) if desc else []
+        urls = r.get("urls") or {}
+        images = sorted((r.get("images") or {}).values(),
+                        key=lambda im: im.get("pathname", ""))
         entry = {
             "slug": slug, "number": r.get("number"), "name": r.get("name"),
-            "board": r.get("board"), "product_url": r.get("product_url"),
-            "image_url": r["image"]["url"], "description_excerpt": desc,
+            "board": r.get("board"), "urls": urls,
+            "image_urls": [im["url"] for im in images],
+            "today_image_url": pick_image_url(r, args.date),
+            "description_excerpt": desc,
             "candidates": candidates,
             "most_used_tags": [t for t, _ in top_used],
+            "previous_pins": prior,
         }
         brief_fonts.append(entry)
         lines.append(f"## {r['name']} ({slug})")
         lines.append(f"- Board suggestion: {r.get('board') or 'decide one of ' + ', '.join(pinterest_registry.BOARDS)}")
-        lines.append(f"- Image (Media URL): {r['image']['url']}")
-        lines.append(f"- Product URL (Link base): {r['product_url']}")
+        for i, im in enumerate(images, 1):
+            lines.append(f"- Pin image {i} (Media URL): {im['url']}")
+        if urls.get("creative_market"):
+            lines.append(f"- Creative Market product URL: {urls['creative_market']}")
+        if urls.get("creative_fabrica"):
+            lines.append(f"- Creative Fabrica product URL: {urls['creative_fabrica']}")
+        lines.append("- (The tool assigns each pin one of the four images and, "
+                     "when both URLs exist, splits destinations 5/5 between the "
+                     "marketplaces — seeded by date, stable across re-runs.)")
         lines.append(f"- Description source: {desc or '(no description.txt)'}…")
         if candidates:
             lines.append(f"- Candidate keywords (mechanical seed — vary phrasing, rotate via ledger): {', '.join(candidates)}")
         if entry["most_used_tags"]:
             lines.append(f"- Tags already used most (rotate away): {', '.join(entry['most_used_tags'])}")
+        if prior:
+            lines.append(f"- ALREADY PINNED — write copy that reads differently; "
+                         f"repeating your own strings is what cannibalizes:")
+            for p in prior:
+                lines.append(f"  - {p['run_date']} [{p['board']}] {p['title']}")
+                lines.append(f"      keywords: {p['keywords']}")
+            newest = prior[0]
+            if newest.get("alt"):
+                lines.append(f"  - most recent alt text: {newest['alt']}")
+        else:
+            lines.append("- No previous pin recorded for this font — first run.")
         lines.append("")
     text = "\n".join(lines)
     day_dir(args.date).mkdir(parents=True, exist_ok=True)
@@ -205,6 +269,7 @@ def validate(entries: list[dict], reg: dict, date: str, start_hour: int, interva
     rows: list[list[str]] = []
     titles: dict[str, int] = {}
     links: dict[str, int] = {}
+    batch_links = assign_links([e.get("slug") or "" for e in entries], reg["fonts"], date)
     now = datetime.now(timezone.utc)
     start = datetime.strptime(f"{date}T00:00:00", "%Y-%m-%dT%H:%M:%S").replace(
         hour=start_hour, tzinfo=timezone.utc)
@@ -247,14 +312,14 @@ def validate(entries: list[dict], reg: dict, date: str, start_hour: int, interva
             except SystemExit:
                 errors.append(f"{slug}: unknown board {board!r}")
                 continue
-        link = e.get("link") or r.get("product_url")
+        link = e.get("link") or batch_links.get(slug)
         if not link:
             errors.append(f"{slug}: no product URL in registry and no link in copy")
             continue
         link = add_utm(link, date, f"{slug}-{i + 1}")
         if e.get("link"):
             links[link] = links.get(link, 0) + 1
-        media = r.get("image", {}).get("url")
+        media = pick_image_url(r, date)
         if not media:
             errors.append(f"{slug}: no uploaded image URL in registry")
             continue
@@ -298,13 +363,21 @@ def cmd_assemble(args, con) -> int:
         w.writerow(CSV_HEADER)
         w.writerows(rows)
     buffer_path = out_dir / "buffer.csv"
-    buffer_rows = [[r[4], r[1], r[0], e["_alt"], r[5], r[2], e["_pub"]]
+    buffer_rows = [[r[4], r[1], r[2], "", e["_pub"], r[0], e["_alt"], r[5]]
                    for e, r in zip(entries, rows)]
     with buffer_path.open("w", newline="", encoding="utf-8-sig") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, quoting=csv.QUOTE_ALL)
         w.writerow(BUFFER_HEADER)
         w.writerows(buffer_rows)
     report = [f"# Tag report — {args.date}", ""]
+    # Record the shipped text itself, not just the keywords: the next run needs
+    # to see this font's old titles and alt text to avoid writing twins. Done
+    # before the tag loop so re-assembling an edited copy refreshes it too.
+    for e, row in zip(entries, rows):
+        pinterest_tag_ledger.record_pin(
+            con, slug=e["slug"], date=args.date, title=row[0], description=row[4],
+            alt=e["_alt"], keywords=e["_tags"], board=row[2], image_url=row[1],
+            link=row[5])
     already = {r[0] for r in con.execute(
         "SELECT DISTINCT font_slug FROM tag_uses WHERE run_date = ?", (args.date,))}
     for e in entries:

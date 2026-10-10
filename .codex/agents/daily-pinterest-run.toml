@@ -1,5 +1,5 @@
 name = "daily_pinterest_run"
-description = "Codex-registered daily Pinterest pipeline: picks 10 ready fonts with 14-day exclusion, writes per-font copy with ledger tag rotation, validates and assembles the staggered bulk-import pins.csv. Import stays a human step."
+description = "Codex-registered daily Pinterest pipeline: picks 10 ready fonts with 14-day exclusion, writes per-font title/description/alt/keywords after reading the font's pin history from the ledger, validates and assembles the staggered buffer.csv plus pins.csv fallback. Import stays a human step."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
