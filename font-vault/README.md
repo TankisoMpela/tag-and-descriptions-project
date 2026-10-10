@@ -96,6 +96,10 @@ selected folder — uppercase, lowercase, digits, and punctuation together in a
 single cached strip — so stray fonts in a family are easy to spot.
 
 - **◀ Previous / Next ▶** move between family folders.
+- **In Use** is a per-font checkable mark (gold when active). It is stored in
+  the folder's `in-use.txt` — one filename per line — purely as a local
+  tracker for which staged fonts are in use; it is removed automatically when
+  the font is returned or deleted.
 - **↩ Return to source** sends a font back to the folder it was copied from,
   using the folder's `font-vault-manifest.json` (or `source-directory.txt`).
   If the original is still there, only the staged copy is removed; if it is

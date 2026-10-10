@@ -186,6 +186,31 @@ def log_deletion(path: Path, source: Path | None) -> str | None:
     return None
 
 
+def load_in_use(folder: Path) -> set[str]:
+    """Return the filenames marked In Use in the folder's in-use.txt."""
+    target = folder / "in-use.txt"
+    if not target.exists():
+        return set()
+    try:
+        return {line.strip() for line in target.read_text(encoding="utf-8").splitlines() if line.strip()}
+    except OSError:
+        return set()
+
+
+def set_in_use(folder: Path, filename: str, used: bool) -> None:
+    """Add or remove a filename from the folder's in-use.txt (removes it when empty)."""
+    marks = load_in_use(folder)
+    if used:
+        marks.add(filename)
+    else:
+        marks.discard(filename)
+    target = folder / "in-use.txt"
+    if marks:
+        target.write_text("\n".join(sorted(marks)) + "\n", encoding="utf-8")
+    else:
+        target.unlink(missing_ok=True)
+
+
 class FontRow(QFrame):
     """One staged font: name + return/delete buttons over a full-width preview strip."""
 
@@ -208,6 +233,12 @@ class FontRow(QFrame):
         name.setObjectName("rowName")
         head.addWidget(name)
         head.addStretch()
+        self.use_btn = QPushButton("In Use")
+        self.use_btn.setCheckable(True)
+        self.use_btn.setObjectName("useToggle")
+        self.use_btn.setToolTip("Mark this font as In Use (stored in the folder's in-use.txt).")
+        self.use_btn.setChecked(path.name in load_in_use(path.parent))
+        head.addWidget(self.use_btn)
         self.return_btn = QPushButton("↩ Return to source")
         self.return_btn.setToolTip(
             "Send this font back to the folder it was copied from.\n"
@@ -294,6 +325,8 @@ class InspectorWindow(QMainWindow):
         QPushButton:disabled { color: #6a7174; background: #21252a; }
         QPushButton#primary { background: #d5a85e; color: #141414; font-weight: 700; }
         QPushButton#primary:hover { background: #efc777; }
+        QPushButton#useToggle:checked { background: #d5a85e; color: #141414; font-weight: 700; }
+        QPushButton#useToggle:checked:hover { background: #efc777; }
         QPushButton#danger { background: #3a2622; color: #e6b0a3; }
         QPushButton#danger:hover { background: #55352f; }
         QScrollArea { border: 0; background: transparent; }
@@ -437,6 +470,7 @@ class InspectorWindow(QMainWindow):
             return
         for path in fonts:
             row = FontRow(path)
+            row.use_btn.toggled.connect(lambda state, p=path: self.toggle_in_use(p, state))
             row.return_btn.clicked.connect(lambda _=False, p=path: self.return_font(p))
             row.delete_btn.clicked.connect(lambda _=False, p=path: self.delete_font(p))
             self.rows_layout.addWidget(row)
@@ -529,8 +563,20 @@ class InspectorWindow(QMainWindow):
             QMessageBox.critical(self, "Could not return font", str(error))
             return
         prune_manifest(folder, path.name)
+        set_in_use(folder, path.name, False)
         self.status.setText(f"Returned {path.name}: {action}.")
         self.reload_current()
+
+    def toggle_in_use(self, path: Path, state: bool) -> None:
+        try:
+            set_in_use(path.parent, path.name, state)
+        except OSError as error:
+            self.status.setText(f"Could not save In Use mark: {error}")
+            return
+        if state:
+            self.status.setText(f"Marked {path.name} as In Use.")
+        else:
+            self.status.setText(f"Removed In Use mark from {path.name}.")
 
     def delete_font(self, path: Path) -> None:
         answer = QMessageBox.question(
@@ -551,6 +597,7 @@ class InspectorWindow(QMainWindow):
             QMessageBox.critical(self, "Could not delete font", str(error))
             return
         prune_manifest(path.parent, path.name)
+        set_in_use(path.parent, path.name, False)
         log_error = log_deletion(path, source)
         if log_error:
             self.status.setText(
