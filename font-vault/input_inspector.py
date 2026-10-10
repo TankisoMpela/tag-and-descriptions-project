@@ -68,12 +68,21 @@ def count_fonts(folder: Path) -> int:
         return 0
 
 
+def cache_seed(path: Path) -> str:
+    """Cache identity for a font: replacing the file must invalidate its previews."""
+    try:
+        stat = path.stat()
+        return f"{path}:{stat.st_mtime_ns}:{stat.st_size}"
+    except OSError:
+        return str(path)
+
+
 def renderable_path(path: Path) -> Path:
     """Convert WOFF/WOFF2 to OTF once so PIL can render it."""
     if path.suffix.lower() not in {".woff", ".woff2"}:
         return path
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    converted = CACHE_DIR / (hashlib.sha256(str(path).encode()).hexdigest()[:20] + ".otf")
+    converted = CACHE_DIR / (hashlib.sha256(cache_seed(path).encode()).hexdigest()[:20] + ".otf")
     if not converted.exists():
         font = TTFont(path)
         font.flavor = None
@@ -85,12 +94,7 @@ def renderable_path(path: Path) -> Path:
 def render_strip(path: Path) -> Path:
     """Render one combined strip (alphabet, digits, punctuation), cached on disk."""
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    try:
-        stat = path.stat()
-        seed = f"{path}:{stat.st_mtime_ns}:{stat.st_size}"
-    except OSError:
-        seed = str(path)
-    digest = hashlib.sha256(seed.encode("utf-8")).hexdigest()[:24]
+    digest = hashlib.sha256(cache_seed(path).encode("utf-8")).hexdigest()[:24]
     output = CACHE_DIR / f"{digest}.png"
     if output.exists():
         return output
@@ -596,7 +600,15 @@ class InspectorWindow(QMainWindow):
                     path.unlink()
                     action = f"staged copy copied over {source}"
             else:
-                source.parent.mkdir(parents=True, exist_ok=True)
+                if not source.parent.is_dir():
+                    QMessageBox.information(
+                        self,
+                        "Source folder is gone",
+                        f"The recorded source folder no longer exists:\n{source.parent}\n\n"
+                        "The staged copy was left in this folder rather than moved to a\n"
+                        "guessed location. Use Delete if this font is not part of the family.",
+                    )
+                    return
                 shutil.move(str(path), str(source))
                 action = f"moved back to {source.parent}/"
         except OSError as error:
@@ -631,22 +643,30 @@ class InspectorWindow(QMainWindow):
         if answer != QMessageBox.StandardButton.Yes:
             return
         source = find_source(path.parent, path.name)
+        # Write the do-not-restore ledger before deleting: an unlink that leaves
+        # no entry would silently lose the reason the font was judged wrong.
+        log_error = log_deletion(path, source)
+        if log_error:
+            QMessageBox.critical(
+                self,
+                "Could not write the deletion log",
+                f"{log_error}\n\nThe font was not deleted.",
+            )
+            return
         try:
             path.unlink()
         except OSError as error:
-            QMessageBox.critical(self, "Could not delete font", str(error))
+            QMessageBox.critical(
+                self,
+                "Could not delete font",
+                f"{error}\n\nThe deletion log already records {path.name}; delete it again to make the two agree.",
+            )
             return
         prune_manifest(path.parent, path.name)
         set_in_use(path.parent, path.name, False)
-        log_error = log_deletion(path, source)
-        if log_error:
-            self.status.setText(
-                f"Deleted {path.name}, but the deletion log could not be updated: {log_error}"
-            )
-        else:
-            self.status.setText(
-                f"Deleted {path.name} — recorded in input/deleted-fonts.md (not part of the family)."
-            )
+        self.status.setText(
+            f"Deleted {path.name} — recorded in input/deleted-fonts.md (not part of the family)."
+        )
         self.reload_current()
 
 

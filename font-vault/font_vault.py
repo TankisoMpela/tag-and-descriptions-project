@@ -5,13 +5,14 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 import shutil
+import sqlite3
 import subprocess
 import sys
 import random
 import re
 import signal
+import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -35,6 +36,9 @@ CACHE_DIR = DATA_DIR / "cache"
 INPUT_DIR = ROOT / "font-factory" / "input"
 STATE_PATH = DATA_DIR / "state.json"
 DB_PATH = DATA_DIR / "vault.db"
+BACKUP_DIR = DATA_DIR / "backups"
+# A snapshot older than this is refreshed even when nothing was reviewed.
+BACKUP_MAX_AGE_SECONDS = 20 * 3600
 FONT_EXTENSIONS = {".ttf", ".otf", ".woff", ".woff2"}
 
 from db import VaultDB
@@ -51,6 +55,13 @@ class FontRecord:
 SAMPLE_SENTENCE = "The Quick Brown Fox Jumps Over The Lazy Dog."
 ANALYSIS_VERSION = 4
 MAX_QUEUE_ROWS = 2000
+# Measured across 771 sampled fonts the deep outline pass runs 88 ms at p95; the
+# slowest real file finished in 350 ms, so 0.5 s gives every font room to answer.
+DEEP_OUTLINE_TIMEOUT = 0.5
+
+
+class OutlineTimeoutError(Exception):
+    """The bounded outline pass ran out of time — no verdict about the font."""
 
 
 def pretty_display(display: str) -> str:
@@ -62,6 +73,12 @@ def pretty_display(display: str) -> str:
     """
     return re.sub(r"[-_]+", " ", display).title()
 
+# Words that describe a *style* rather than a family. These may be dropped from
+# a family name and are accepted as a filename suffix after the family stem.
+# Foundry/redistribution tags (db, ssi, bt, dtc, ef, itc, be, urw, com) are
+# deliberately NOT here: a vendor clone is a separate product with its own
+# outlines and licence, and stripping them merged "Bauhaus ITC", "Bauhaus BT"
+# and "Bauhaus EF" into one family, so "Mark used family" copied all of them.
 MODIFIER_TOKENS = {
     "thin", "hairline", "extra light", "extralight", "ultra light", "ultralight",
     "light", "book", "regular", "normal", "plain", "roman",
@@ -76,8 +93,39 @@ MODIFIER_TOKENS = {
     "outline", "inline", "shadow", "shadowed", "shaded", "3d", "open", "caps", "titling", "display",
     "bd", "lt", "bk", "blk", "rg", "sm",
     "demo", "trial", "free", "sample",
-    "db", "ssi", "bt", "dtc", "ef", "itc", "be", "urw", "com"
 }
+
+
+def is_style_token(word: str) -> bool:
+    return word.casefold() in MODIFIER_TOKENS
+
+
+SUBTOKEN_RE = re.compile(r"[A-Z]+(?=[A-Z][a-z]|\b|\d)|[A-Z]?[a-z]+|[0-9]+")
+
+
+def split_subtokens(value: str) -> list[str]:
+    """Cut a name into words: 'BulmerMTDisplay' → ['Bulmer', 'MT', 'Display']."""
+    parts: list[str] = []
+    for chunk in re.split(r"[\s\-_/.\\]+", value):
+        if chunk:
+            parts.extend(SUBTOKEN_RE.findall(chunk))
+    return parts
+
+
+def family_key_of(label: str) -> str:
+    """Comparison identity for a family name: spelling noise cancelled, nothing dropped.
+
+    'BulmerMTDisplay' and 'Bulmer MT Display' are one family written two ways, so
+    they must share a key. Re-segmenting (and casefolding) unifies them the way the
+    old filename route always could. Dropping style words is what the old guesser
+    did with this same splitter, and that is what merged 'Encode Sans Condensed'
+    with 'Encode Sans Narrow' — so this key keeps every word.
+
+    A label made only of punctuation splits into nothing; falling back to the raw
+    text keeps two such fonts from sharing an empty key and merging.
+    """
+    parts = [part.casefold() for part in split_subtokens(label)]
+    return " ".join(parts) if parts else " ".join(label.casefold().split())
 
 
 def clean_family_name(raw_name: str) -> str:
@@ -85,11 +133,11 @@ def clean_family_name(raw_name: str) -> str:
     for chunk in re.split(r"[\s\-_/.]+", raw_name):
         if not chunk:
             continue
-        if chunk.casefold() in MODIFIER_TOKENS:
+        if is_style_token(chunk):
             continue
-        subs = re.findall(r"[A-Z]+(?=[A-Z][a-z]|\b|\d)|[A-Z]?[a-z]+|[0-9]+", chunk)
+        subs = SUBTOKEN_RE.findall(chunk)
         for s in subs:
-            if s.casefold() not in MODIFIER_TOKENS:
+            if not is_style_token(s):
                 cleaned.append(s)
     if not cleaned:
         return raw_name
@@ -104,13 +152,12 @@ def detect_style_from_name(display_name: str, family_label: str) -> str:
     tokens = [c for c in re.split(r"[\s\-_/.]+", remainder) if c]
     style_parts = []
     for t in tokens:
-        tl = t.casefold()
-        if tl in MODIFIER_TOKENS:
+        if is_style_token(t):
             style_parts.append(t.capitalize())
         else:
-            subs = re.findall(r"[A-Z]+(?=[A-Z][a-z]|\b|\d)|[A-Z]?[a-z]+|[0-9]+", t)
+            subs = SUBTOKEN_RE.findall(t)
             for s in subs:
-                if s.casefold() in MODIFIER_TOKENS:
+                if is_style_token(s):
                     style_parts.append(s.capitalize())
     if style_parts:
         return " ".join(style_parts)
@@ -119,71 +166,154 @@ def detect_style_from_name(display_name: str, family_label: str) -> str:
 
 def is_valid_style_remainder(remainder: str) -> bool:
     """Ensure that the suffix remainder after the family stem contains only valid typographic style tokens."""
-    remainder = remainder.strip(" _-.()[]0123456789")
+    remainder = remainder.strip(" _-.()[]")
     if not remainder:
         return True
     words = [w for w in re.split(r"[\s\-_/.]+", remainder) if w]
     for w in words:
-        wl = w.casefold()
-        if wl in MODIFIER_TOKENS:
+        if is_style_token(w):
             continue
-        subs = re.findall(r"[A-Z]+(?=[A-Z][a-z]|\b|\d)|[A-Z]?[a-z]+|[0-9]+", w)
-        if not subs or not all(s.casefold() in MODIFIER_TOKENS for s in subs):
+        subs = SUBTOKEN_RE.findall(w)
+        if not subs or not all(is_style_token(s) for s in subs):
             return False
     return True
 
 
-def load_json(path: Path, default: dict) -> dict:
+GENERIC_NAMES = {"new", "font", "regular", "unknown", "unnamed", "untitled", ""}
+WEIGHT_NAMES = (
+    (100, "Thin"), (200, "Extra Light"), (300, "Light"), (400, "Regular"),
+    (500, "Medium"), (600, "Semi Bold"), (700, "Bold"), (800, "Extra Bold"),
+    (900, "Black"), (950, "Extra Black"),
+)
+WIDTH_NAMES = {
+    1: "Ultra Condensed", 2: "Extra Condensed", 3: "Condensed", 4: "Semi Condensed",
+    5: "", 6: "Semi Expanded", 7: "Expanded", 8: "Extra Expanded", 9: "Ultra Expanded",
+}
+
+
+@dataclass(frozen=True)
+class FamilyInfo:
+    key: str
+    label: str
+    style: str
+    source: str
+    display: str
+
+
+def normalize_family_text(value: str) -> str:
+    """Normalise separators only.
+
+    Metadata family names are the designer's own words, so nothing is dropped
+    from them: "Encode Sans Condensed" and "Bauhaus 93" are families, not
+    styles of "Encode Sans" or "Bauhaus".
+    """
+    return " ".join(part for part in re.split(r"[\s_./\\-]+", value.strip()) if part)
+
+
+def family_from_ps_name(ps_name: str) -> str:
+    """'BauhausITC-Bold' → 'BauhausITC'; the PostScript name's tail is the style."""
+    head, _, tail = ps_name.rpartition("-")
+    if head and is_valid_style_remainder(tail):
+        return head
+    return ps_name
+
+
+def weight_name(weight_class: int) -> str:
+    if weight_class <= 0:
+        return ""
+    return min(WEIGHT_NAMES, key=lambda item: abs(item[0] - weight_class))[1]
+
+
+def style_from_metrics(weight_class: int, width_class: int, italic: bool) -> str:
+    parts = [weight_name(weight_class), WIDTH_NAMES.get(width_class, ""), "Italic" if italic else ""]
+    return " ".join(part for part in parts if part)
+
+
+def read_family_metadata(path: Path) -> dict:
+    """Read the identity a font carries about itself: name records, plus the
+    numeric weight/width/slant its outlines were actually built to."""
+    names: dict[int, str] = {}
+    weight = width = 0
+    italic = False
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-        return value if isinstance(value, dict) else default
-    except FileNotFoundError:
-        return default
-    except json.JSONDecodeError:
-        backup = path.with_suffix(path.suffix + ".bak")
-        try:
-            recovered = json.loads(backup.read_text(encoding="utf-8"))
-            if isinstance(recovered, dict):
-                return recovered
-        except (FileNotFoundError, json.JSONDecodeError):
-            pass
-        return default
-
-
-def save_json(path: Path, value: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(".tmp")
-    # Prune redundant default items to keep state.json small and prevent UI freezes
-    if "items" in value and isinstance(value["items"], dict):
-        pruned_items = {
-            k: v for k, v in value["items"].items()
-            if v.get("status", "unreviewed") != "unreviewed" or v.get("classification") == "broken"
-        }
-        to_save = dict(value, items=pruned_items)
-    else:
-        to_save = value
-    tmp.write_text(json.dumps(to_save, indent=2, ensure_ascii=False), encoding="utf-8")
-    if path.exists():
-        shutil.copy2(path, path.with_suffix(path.suffix + ".bak"))
-    os.replace(tmp, path)
-
-
-def font_name(path: Path) -> str:
-    try:
-        with TTFont(path, lazy=True) as font:
-            for record in font["name"].names:
-                if record.nameID == 1 and record.platformID == 3:
-                    value = record.toUnicode().strip()
-                    if value:
-                        return value
+        with TTFont(path, lazy=True, ignoreDecompileErrors=True) as font:
+            for record in sorted(font["name"].names, key=lambda item: (item.nameID, item.platformID != 3)):
+                if record.nameID not in {1, 2, 6, 16, 17} or record.nameID in names:
+                    continue
+                try:
+                    value = " ".join(record.toUnicode().split())
+                except Exception:
+                    continue
+                if value:
+                    names[record.nameID] = value
+            try:
+                os2 = font["OS/2"]
+                weight = int(os2.usWeightClass or 0)
+                width = int(os2.usWidthClass or 0)
+                italic = bool(int(os2.fsSelection) & 1)
+            except Exception:
+                pass
     except Exception:
         pass
-    return path.stem
+    return {"names": names, "weight": weight, "width": width, "italic": italic}
 
 
-def key_for_file(path: Path) -> str:
-    stat = path.stat()
-    return f"file:{path.resolve()}:{stat.st_size}:{stat.st_mtime_ns}"
+def resolve_family(display: str, meta: dict) -> FamilyInfo:
+    """Work out which family a font belongs to, trusting the font first.
+
+    Order: typographic family (nameID 16), legacy family (1), PostScript name
+    prefix (6), then — only when the font says nothing usable — the filename
+    with style words removed. `source` records which tier answered, because a
+    font that names its own family must not be merged into a look-alike.
+    """
+    names = meta["names"]
+    label = ""
+    source = "filename"
+    for raw in (names.get(16), names.get(1)):
+        normalized = normalize_family_text(raw or "")
+        if normalized and normalized.casefold() not in GENERIC_NAMES:
+            label, source = normalized, "metadata"
+            break
+    if not label:
+        normalized = normalize_family_text(family_from_ps_name(names.get(6) or ""))
+        if normalized and normalized.casefold() not in GENERIC_NAMES:
+            label, source = normalized, "psname"
+    if not label:
+        label = clean_family_name(display)
+    # A common bad-metadata value in 125 Mil Fuentes is "New" for unrelated
+    # files, and style stripping can reduce those names to nothing.
+    if not label.strip():
+        label = display
+
+    style = names.get(17) or names.get(2) or ""
+    if style.casefold() in {"regular", "normal", "plain", "standard", ""}:
+        style = style_from_metrics(meta["weight"], meta["width"], meta["italic"]) or "Regular"
+        if style == "Regular":
+            style = detect_style_from_name(display, label)
+    return FamilyInfo(
+        key=family_key_of(label),
+        label=label,
+        style=style,
+        source=source,
+        display=display,
+    )
+
+
+def family_member_matches(target: FamilyInfo, candidate: FamilyInfo) -> bool:
+    """Decide whether `candidate` is a style of the `target` family."""
+    if candidate.key == target.key:
+        return True
+    # The font states a different family itself: its filename resembling the
+    # target is not evidence, it is a different product.
+    if candidate.source == "metadata":
+        return False
+    pattern = r"^" + re.escape(target.label) + r"([\s\-_.]|$)"
+    match = re.match(pattern, candidate.display, re.IGNORECASE)
+    if match:
+        return is_valid_style_remainder(candidate.display[match.end():])
+    if candidate.display.lower().startswith(target.label.lower()):
+        return is_valid_style_remainder(candidate.display[len(target.label):])
+    return False
 
 
 class DirectoryScanWorker(QObject):
@@ -293,6 +423,14 @@ class FontVaultWindow(QMainWindow):
         self.db = VaultDB(DB_PATH)
         # One-time transparent migration from state.json if needed
         self.db.migrate_from_state_json(STATE_PATH)
+        try:
+            self.backup_vault()
+        except (OSError, sqlite3.Error) as error:
+            QMessageBox.warning(
+                self,
+                "Could not back up the vault",
+                f"{error}\n\nReview data is not being snapshotted into {BACKUP_DIR}.",
+            )
         self.state = {"items": {}}
         self.records: list[FontRecord] = []
         self.filtered_records: list[FontRecord] = []
@@ -304,8 +442,9 @@ class FontVaultWindow(QMainWindow):
         self.vault_id: int | None = None
         self.source_kind = ""
         self.rng = random.SystemRandom()
-        self.family_cache: dict[str, tuple[str, str, str]] = {}
+        self.family_cache: dict[str, FamilyInfo] = {}
         self.queue_page = 0
+        self._closing = False
         self.scan_thread: QThread | None = None
         self.scan_worker: DirectoryScanWorker | None = None
         # Background specimen rendering + result caches
@@ -459,8 +598,10 @@ class FontVaultWindow(QMainWindow):
         self.search.setText(q)
         if self.filter.findText(f) >= 0:
             self.filter.setCurrentText(f)
-        # Restore in-memory records list from DB so navigation/family ops work
-        rows, _total = self.db.query_vault_fonts(vault_id, "", "All scanned", skip_broken=False, limit=-1)
+        # Keep one page of records in memory. Filtering, paging, navigation and
+        # family lookups all go through SQLite, so materialising the whole
+        # vault here only costs RAM.
+        rows, _total = self.db.query_vault_fonts(vault_id, "", "All scanned", skip_broken=False, limit=MAX_QUEUE_ROWS)
         self.records = [
             FontRecord(
                 key=r["file_key"],
@@ -534,11 +675,56 @@ class FontVaultWindow(QMainWindow):
             return
         unloaded = self.source_path
         self.records = []; self.filtered_records = []; self.visible = []; self.visible_index = {}; self.current = None; self.queue_page = 0
+        # Per-vault caches: statuses and family metadata live in SQLite, so the
+        # in-memory copies must be dropped or they accumulate across vaults.
+        self.state = {"items": {}}
+        self.family_cache = {}
+        self._pixmap_orig_cache = {}; self._pixmap_cache = {}; self._facts_cache = {}
         self.source_path = None; self.source_kind = ""; self.vault_id = None
         self.queue.clear(); self.preview.setText("No vault loaded.\n\nChoose a saved vault or open a directory.")
         self.name_label.setText("No font selected"); self.facts_label.clear(); self.batch_label.setText("No vault loaded · data saved")
         self.db.set_app_state("last_source", ""); self.populate_recent_vaults()
         self.status_label.setText(f"Unloaded {unloaded.name}. Review data and cache remain saved.")
+
+    def backup_vault(self) -> Path | None:
+        """Snapshot the review database, but only when there is something to protect.
+
+        A snapshot is written when none exists, when the newest one is older than
+        BACKUP_MAX_AGE_SECONDS, or when reviews changed after it — so a crash or a
+        bad WAL recovery loses at most one day of triage.
+        """
+        newest = max(BACKUP_DIR.glob("vault-*.db"), key=lambda p: p.stat().st_mtime, default=None)
+        if newest is not None:
+            stamp = int(newest.stat().st_mtime)
+            if time.time() - stamp < BACKUP_MAX_AGE_SECONDS and self.db.latest_review_epoch() <= stamp:
+                return None
+        snapshot = self.db.backup(BACKUP_DIR)
+        if snapshot is not None:
+            self.db.export_to_state_json(BACKUP_DIR / "reviews.json")
+        return snapshot
+
+    def closeEvent(self, event) -> None:
+        """Stop worker threads, snapshot the review data, then fold the WAL back in."""
+        self._closing = True
+        if self._render_worker is not None:
+            self._render_worker.cancelled = True
+        for thread in (self._render_thread, self.scan_thread):
+            if thread is not None and thread.isRunning():
+                thread.quit()
+                # quit() is only heard once the worker's run() returns; without this
+                # wait the QThread is destroyed while still running, which aborts.
+                if not thread.wait(10000):
+                    print("A worker thread did not stop; leaving it running.", file=sys.stderr)
+        try:
+            self.backup_vault()
+        except (OSError, sqlite3.Error) as error:
+            print(f"Vault backup failed on close: {error}", file=sys.stderr)
+        try:
+            self.db.conn.execute("PRAGMA wal_checkpoint(TRUNCATE);")
+        except sqlite3.Error:
+            pass
+        self.db.close()
+        super().closeEvent(event)
 
     def append_scan_records(self, records: list[FontRecord]) -> None:
         self.records.extend(records)
@@ -609,6 +795,7 @@ class FontVaultWindow(QMainWindow):
         if state.get("analysis_version") == ANALYSIS_VERSION and "classification" in state and (not deep or state.get("outline_checked")):
             return state
         result = {"classification": "reviewable", "reason": ""}
+        alarm_fired = False
         try:
             # Keep queue rebuilding lightweight. Corrupt old glyf tables can
             # otherwise make startup spend minutes unpacking invalid outlines.
@@ -625,10 +812,12 @@ class FontVaultWindow(QMainWindow):
                 # Outline checks are bounded because a few historical fonts
                 # contain malformed glyf data that can otherwise hang startup.
                 def timeout_handler(_signum, _frame):
-                    raise TimeoutError("outline inspection timed out")
+                    nonlocal alarm_fired
+                    alarm_fired = True
+                    raise OutlineTimeoutError("outline inspection timed out")
 
                 old_handler = signal.signal(signal.SIGALRM, timeout_handler)
-                signal.setitimer(signal.ITIMER_REAL, 0.35)
+                signal.setitimer(signal.ITIMER_REAL, DEEP_OUTLINE_TIMEOUT)
                 try:
                     glyph_set = font.getGlyphSet()
                     signatures: dict[str, str] = {}
@@ -643,13 +832,25 @@ class FontVaultWindow(QMainWindow):
                         result = {"classification": "broken", "reason": "blank " + "".join(blank)}
                     elif all(signatures[upper] == signatures[lower] for upper, lower in zip("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz")):
                         result = {"classification": "broken", "reason": "uppercase and lowercase outlines are identical"}
-                    state["outline_checked"] = True
                 finally:
                     signal.setitimer(signal.ITIMER_REAL, 0)
                     signal.signal(signal.SIGALRM, old_handler)
+                    # Only a pass that ran to completion is remembered, so the
+                    # bounded check does not repeat on every selection — and an
+                    # interrupted one is not, because running out of time is no
+                    # evidence about the font and a verdict this cheap would stick.
+                    if not alarm_fired:
+                        state["outline_checked"] = True
             font.close()
         except Exception as error:
-            result = {"classification": "broken", "reason": f"could not inspect font: {error}"}
+            if alarm_fired:
+                # The alarm can go off inside fontTools' lazy table loading, which
+                # swallows exceptions and hands back a half-built table. What we
+                # caught is that aftermath, not a defect in the font: leave the
+                # font reviewable and unverified so the next selection retries.
+                result = {"classification": "reviewable", "reason": ""}
+            else:
+                result = {"classification": "broken", "reason": f"could not inspect font: {error}"}
         state.update(result, analysis_version=ANALYSIS_VERSION)
         # Persist classification to SQLite so it survives app restarts
         self.db.upsert_review(
@@ -851,35 +1052,6 @@ class FontVaultWindow(QMainWindow):
             combined.save(combined_path, format="PNG")
         return combined_path
 
-    def sentence_path(self, record: FontRecord) -> Path:
-        digest = hashlib.sha256((record.key + ":sentence-v2").encode()).hexdigest()[:20]
-        target = CACHE_DIR / "sentence-renders" / f"{digest}.png"
-        if target.exists(): return target
-        source = self.renderable_path(record)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        width, height = 2400, 1300
-        image = Image.new("RGB", (width, height), (8, 8, 10)); draw = ImageDraw.Draw(image)
-        try:
-            title_font = ImageFont.truetype(str(source), 74)
-            sample_font = ImageFont.truetype(str(source), 152)
-        except Exception:
-            raise RuntimeError("This font could not be loaded for a sentence preview.")
-        title = pretty_display(record.display)
-        title_width = draw.textlength(title, font=title_font)
-        draw.text(((width - title_width) / 2, 150), title, font=title_font, fill=(155, 155, 155))
-        sentence = SAMPLE_SENTENCE
-        while sample_font.size > 40 and draw.textlength(sentence, font=sample_font) > width - 180:
-            sample_font = ImageFont.truetype(str(source), sample_font.size - 4)
-        sentence_width = draw.textlength(sentence, font=sample_font)
-        bbox = draw.textbbox((0, 0), sentence, font=sample_font)
-        sentence_y = (height - (bbox[3] - bbox[1])) / 2 + 50
-        draw.text(((width - sentence_width) / 2, sentence_y), sentence, font=sample_font, fill=(248, 248, 245))
-        caption = "NATURAL SENTENCE PREVIEW"
-        caption_width = draw.textlength(caption, font=title_font)
-        draw.text(((width - caption_width) / 2, 1000), caption, font=title_font, fill=(155, 155, 155))
-        image.save(target, format="PNG", optimize=True)
-        return target
-
     def inspect(self, record: FontRecord) -> str:
         return self.inspect_path(self.materialize(record))
 
@@ -952,6 +1124,8 @@ class FontVaultWindow(QMainWindow):
         self._start_render_batch(batch)
 
     def _start_render_batch(self, records: list[FontRecord]) -> None:
+        if self._closing:
+            return
         self._render_thread = QThread(self)
         self._render_worker = SpecimenRenderWorker(self, records)
         self._render_worker.cancelled = False
@@ -968,6 +1142,8 @@ class FontVaultWindow(QMainWindow):
     def _render_thread_finished(self) -> None:
         self._render_thread = None
         self._render_worker = None
+        if self._closing:
+            return
         if self._pending_renders:
             batch = self._pending_renders
             self._pending_renders = []
@@ -997,8 +1173,9 @@ class FontVaultWindow(QMainWindow):
 
     def _prefetch_adjacent(self) -> None:
         """Eagerly render the next couple of fonts so Next feels instant."""
+        start = max(self.queue.currentRow(), 0)
         wanted: list[FontRecord] = []
-        for record in self.visible:
+        for record in self.visible[start + 1:]:
             if record.key not in self._pixmap_orig_cache:
                 wanted.append(record)
                 if len(wanted) >= 2:
@@ -1052,55 +1229,36 @@ class FontVaultWindow(QMainWindow):
         if self.visible:
             self.queue.setCurrentRow(min(max(old_row, 0), len(self.visible) - 1))
 
-    def family_info_for_record(self, record: FontRecord) -> tuple[str, str, str]:
-        """Return (normalized key, display name, style) from font name metadata."""
-        if record.key in self.family_cache:
-            return self.family_cache[record.key]
-        names: dict[int, str] = {}
-        try:
-            with TTFont(self.materialize(record), lazy=True, ignoreDecompileErrors=True) as font:
-                for name in sorted(font["name"].names, key=lambda item: (item.nameID, item.platformID != 3)):
-                    if name.nameID in {1, 2, 16, 17} and name.nameID not in names:
-                        try:
-                            value = " ".join(name.toUnicode().strip().split())
-                            if value: names[name.nameID] = value
-                        except Exception:
-                            continue
-        except Exception:
-            names = {}
-        raw_family = names.get(16) or names.get(1) or record.display
-        # A common bad-metadata value in 125 Mil Fuentes is "New" for unrelated
-        # files. Treat generic placeholders as untrusted and fall back to the stem.
-        if raw_family.casefold() in {"new", "font", "regular", "unknown", "unnamed", "untitled"}:
-            raw_family = record.display
-        family_label = clean_family_name(raw_family)
-        family_key = " ".join(family_label.casefold().split())
-        style = names.get(17) or names.get(2) or "Regular"
-        if style.casefold() in {"regular", "normal", "plain", "standard", ""}:
-            detected_style = detect_style_from_name(record.display, family_label)
-            if detected_style and detected_style.casefold() != "regular":
-                style = detected_style
-        self.family_cache[record.key] = (family_key, family_label, style)
-        # Persist family metadata to DB so find_family_candidates can use the index
-        self.db.update_font_family_meta(record.key, family_key, family_label, style)
-        return family_key, family_label, style
+    def family_info(self, record: FontRecord) -> FamilyInfo:
+        """The family a font reports, cached per session and mirrored into the index."""
+        info = self.family_cache.get(record.key)
+        if info is None:
+            info = resolve_family(record.display, read_family_metadata(self.materialize(record)))
+            self.family_cache[record.key] = info
+            # Persist family metadata to DB so find_family_candidates can use the index
+            self.db.update_font_family_meta(record.key, info.key, info.label, info.style)
+        return info
 
     def family_for_record(self, record: FontRecord) -> str:
-        return self.family_info_for_record(record)[0]
+        return self.family_info(record).key
 
     def family_label_for_record(self, record: FontRecord) -> str:
-        return self.family_info_for_record(record)[1]
+        return self.family_info(record).label
 
     def find_family_members(self, target_record: FontRecord) -> list[FontRecord]:
         """Find all styles belonging to the same family using DB candidate pre-filtering and list adjacency."""
-        family_key, family_label, _style = self.family_info_for_record(target_record)
+        target_info = self.family_info(target_record)
+        family_key = target_info.key
         target_path = Path(target_record.source)
         target_dir = str(target_path.parent)
         prefix = family_key[:3] if len(family_key) >= 3 else family_key
 
         # 1. Fetch candidates from database (same directory + prefix matches, ordered alphabetically)
         if self.vault_id is not None:
-            db_candidates = self.db.find_family_candidates(self.vault_id, target_dir, prefix, family_key=family_key)
+            legacy_key = " ".join(target_info.label.casefold().split())
+            db_candidates = self.db.find_family_candidates(
+                self.vault_id, target_dir, prefix, family_key=family_key, legacy_family_key=legacy_key
+            )
             candidates = [
                 FontRecord(key=r["file_key"], display=r["display"], source=r["file_path"])
                 for r in db_candidates
@@ -1119,21 +1277,7 @@ class FontVaultWindow(QMainWindow):
         seen_keys: set[str] = set()
 
         def belongs_to_family(r: FontRecord) -> bool:
-            cand_family, cand_label, _cand_style = self.family_info_for_record(r)
-            if cand_family == family_key:
-                return True
-            # Check if filename/display stem starts with family label and the remainder is strictly style tokens
-            pat = r"^" + re.escape(family_label) + r"([\s\-_.]|$)"
-            m = re.match(pat, r.display, re.IGNORECASE)
-            if m:
-                remainder = r.display[m.end():]
-                if is_valid_style_remainder(remainder):
-                    return True
-            if r.display.lower().startswith(family_label.lower()):
-                remainder = r.display[len(family_label):]
-                if is_valid_style_remainder(remainder):
-                    return True
-            return False
+            return family_member_matches(target_info, self.family_info(r))
 
         # First pass: check candidates in the same directory and prefix matches
         for r in candidates:
@@ -1250,7 +1394,7 @@ class FontVaultWindow(QMainWindow):
             source = self.materialize(record)
             digest = hashlib.sha1(source.read_bytes()).hexdigest()
             if digest in seen_hashes:
-                copied.append({"source": str(source), "display": record.display, "style": self.family_info_for_record(record)[2], "duplicate_of": seen_hashes[digest]})
+                copied.append({"source": str(source), "display": record.display, "style": self.family_info(record).style, "duplicate_of": seen_hashes[digest]})
                 copied_records.append(record)
                 continue
             destination = destination_dir / source.name
@@ -1258,7 +1402,7 @@ class FontVaultWindow(QMainWindow):
                 destination = destination_dir / f"{source.stem}__{digest[:8]}{source.suffix}"
             shutil.copy2(source, destination)
             seen_hashes[digest] = str(destination)
-            copied.append({"source": str(source), "copied_to": str(destination), "display": record.display, "style": self.family_info_for_record(record)[2]})
+            copied.append({"source": str(source), "copied_to": str(destination), "display": record.display, "style": self.family_info(record).style})
             copied_records.append(record)
         for record in copied_records:
             self.item_state(record)["status"] = "used"

@@ -28,17 +28,26 @@ narrows the full indexed collection.
 ## Architecture & Persistence (SQLite WAL Engine)
 
 Font Vault uses an embedded SQLite database (`font-vault/data/vault.db`) running
-in Write-Ahead Log (`WAL`) mode with fast B-tree indices for rock-solid data integrity,
-sub-millisecond queries, and near-zero memory footprint:
+in Write-Ahead Log (`WAL`) mode with B-tree indices, one connection per thread,
+and rolling snapshots of the review data:
 
 - **Instant Opens:** Directories are indexed into SQLite on first load. Reopening a
-  vault takes ~0.01s without touching the filesystem.
+  vault reads only the page that is displayed, without touching the filesystem.
 - **ACID Reliability:** All reviews, skips, archives, and breakage findings are committed
-  with atomic transactions. Crashes or unexpected shutdowns cannot corrupt your data.
-- **Lean Memory:** True disk paging keeps UI memory consumption under 50 MB even with
-  100,000+ fonts across multiple large collections.
-- **Instant Search & Filters:** B-tree compound indexing handles filtering and keyword
-  searches in sub-millisecond time.
+  with atomic transactions, and each thread has its own connection so a background
+  scan can never finalize a write in progress on the UI thread.
+- **Backups:** The review database is snapshotted into `font-vault/data/backups/`
+  (`vault-<timestamp>.db`, plus a `reviews.json` ledger) at startup and on quit
+  whenever a snapshot is missing, older than 20 hours, or predates the last
+  review change — so a crash loses at most one day of triage. Keepers: the 10
+  newest.
+- **Bounded Memory:** The queue materializes at most `MAX_QUEUE_ROWS` records and
+  the preview caches are trimmed as they fill, so memory tracks the page you are
+  looking at rather than the whole collection.
+- **Search & Filters:** Filtering happens in SQL against the whole indexed vault,
+  with paging. A keyword search is a `LIKE '%term%'` match, which no B-tree index
+  can serve, so it scans the vault's rows and costs milliseconds rather than
+  sub-millisecond time.
 - **↻ Re-sync:** If you add new font files to an existing directory, click **↻ Re-sync**
   to incrementally discover and index new files while preserving all existing review
   decisions.
@@ -63,7 +72,11 @@ sub-millisecond queries, and near-zero memory footprint:
 - Long metadata (license text, URLs, font dates) stays inside a compact
   scrollable strip above the specimen, so it never pushes the specimen off the
   preview area.
-- Specimens render in a background worker: switching fonts never blocks the UI.
+- Specimens render in a background worker, so the preview never blocks the UI.
+  Opening a font does run its deep outline check on the UI thread, bounded by a
+  0.5 s timeout. A font that answers is never checked again; a font that runs out
+  of time is left unverified and retried on the next selection, because running
+  out of time is not evidence that the font is broken.
   Rendered pixmaps, font facts, and scaled previews are cached in memory per
   font, and the next couple of fonts in the queue are prefetched so **Next**
   feels instant. Selecting a new font cancels any in-flight prefetch so the
@@ -73,10 +86,32 @@ sub-millisecond queries, and near-zero memory footprint:
   numbered folder under `font-factory/input/` (for example
   `font-factory/input/1-Amintattalic/`) and writes a manifest, while leaving the
   original files untouched.
-- Family actions use the typographic family name when available, preserve style
-  names such as Regular/Bold/Italic, fall back from generic placeholder names,
-  and skip exact binary duplicates when copying a used family. Archive and Skip
-  change the saved review status only; they do not delete or move source files.
+- Family grouping is driven by what the font says about itself, in this order:
+  the typographic family (`nameID 16`, with its style from `nameID 17`), then the
+  legacy family (`nameID 1`), then the family part of the PostScript name
+  (`nameID 6`, e.g. `Chaz-CondensedBold` → Chaz Condensed), and only then the
+  filename. Weight, width and italic come from `OS/2` and `post` when the name
+  table is silent.
+- Two layers sit on top of that, and each keeps what the other is bad at:
+  the name the font reports is **shown and never stripped of words** — so
+  `Encode Sans Condensed`, `Encode Sans Narrow` and `Encode Sans Compressed`
+  are three families, and foundry tags (`BT`, `ITC`, `EF`, `URW`, …) keep vendor
+  clones apart — while the **comparison key** re-segments that same name, so
+  `BulmerMTDisplay` and `Bulmer MT Display`, or `Geo957` and `Geo 957`, are
+  recognized as one family rather than two. Re-segmenting can only cancel
+  spacing and capitalization noise; it never deletes a word, which is the
+  mistake the old filename guesser made.
+  Where the font's own name is missing or unusable, the old filename route still
+  answers: a staged file whose stem begins with the family and ends in recogniz-
+  able style words joins that family. A font that names a different family is
+  never pulled in by a look-alike filename.
+  Each resolved family is written back to the index, so a vault is read once, and
+  exact binary duplicates are skipped when a used family is copied.
+  The trade-off is deliberate: a folder can offer many small families to decide
+  on instead of one large lump, and grouping is only as tidy as the metadata the
+  fonts were shipped with.
+  Archive and Skip change the saved review status only; they do not delete or
+  move source files.
 - `Create fsType=0 working copy…` writes a copy only. It never changes the
   original and does not grant licensing rights.
 

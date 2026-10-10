@@ -4,12 +4,21 @@ from __future__ import annotations
 
 import json
 import logging
+import shutil
 import sqlite3
+import threading
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 logger = logging.getLogger("font_vault.db")
+
+# How long a writer waits for another thread's transaction to finish before
+# giving up with "database is busy".
+BUSY_TIMEOUT_MS = 10_000
+# Keep at most this many rolling snapshots in data/backups/.
+BACKUP_KEEP = 10
 
 @dataclass
 class FontItem:
@@ -29,21 +38,87 @@ class FontItem:
 
 
 class VaultDB:
+    """SQLite access with one connection per thread.
+
+    The scan and specimen-render workers write while the UI thread reads and
+    writes. Sharing a single connection would let one thread's `with conn:`
+    block commit or roll back another thread's half-written transaction, so
+    every thread gets its own handle and WAL serialises the writers.
+    """
+
     def __init__(self, db_path: Path) -> None:
         self.db_path = db_path
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
-        self.conn = sqlite3.connect(str(self.db_path), check_same_thread=False)
-        self.conn.row_factory = sqlite3.Row
-        self._init_pragmas()
+        self._local = threading.local()
+        self._all_connections: list[sqlite3.Connection] = []
         self._create_schema()
 
-    def _init_pragmas(self) -> None:
-        cur = self.conn.cursor()
+    @property
+    def conn(self) -> sqlite3.Connection:
+        conn = getattr(self._local, "conn", None)
+        if conn is None:
+            conn = sqlite3.connect(str(self.db_path))
+            conn.row_factory = sqlite3.Row
+            self._init_pragmas(conn)
+            self._local.conn = conn
+            self._all_connections.append(conn)
+        return conn
+
+    def _init_pragmas(self, conn: sqlite3.Connection) -> None:
+        cur = conn.cursor()
         cur.execute("PRAGMA journal_mode = WAL;")
         cur.execute("PRAGMA synchronous = NORMAL;")
         cur.execute("PRAGMA foreign_keys = ON;")
         cur.execute("PRAGMA temp_store = MEMORY;")
         cur.execute("PRAGMA cache_size = -64000;")  # 64MB cache
+        cur.execute(f"PRAGMA busy_timeout = {BUSY_TIMEOUT_MS};")
+
+    def close(self) -> None:
+        for conn in self._all_connections:
+            try:
+                conn.close()
+            except sqlite3.Error:
+                pass
+        self._all_connections.clear()
+        self._local = threading.local()
+
+    def latest_review_epoch(self) -> int:
+        """Unix time of the most recent review write (0 when nothing is saved)."""
+        cur = self.conn.cursor()
+        cur.execute("SELECT CAST(strftime('%s', MAX(updated_at)) AS INTEGER) FROM reviews")
+        row = cur.fetchone()
+        return int(row[0] or 0)
+
+    def backup(self, backup_dir: Path, keep: int = BACKUP_KEEP) -> Path | None:
+        """Snapshot the whole database into backup_dir, keeping the newest `keep`.
+
+        Uses SQLite's online backup API so a concurrent writer cannot produce a
+        torn copy. Returns the new snapshot, or None when there is nothing to
+        protect yet (a fresh vault has no reviews to lose).
+        """
+        cur = self.conn.cursor()
+        cur.execute("SELECT 1 FROM reviews LIMIT 1")
+        if cur.fetchone() is None:
+            return None
+        backup_dir.mkdir(parents=True, exist_ok=True)
+        stamp = time.strftime("%Y%m%d-%H%M%S")
+        target = backup_dir / f"vault-{stamp}.db"
+        tmp = backup_dir / f".vault-{stamp}.partial.db"
+        source = sqlite3.connect(str(self.db_path))
+        try:
+            dest = sqlite3.connect(str(tmp))
+            try:
+                with dest:
+                    source.backup(dest)
+            finally:
+                dest.close()
+        finally:
+            source.close()
+        tmp.replace(target)
+        for old in sorted(backup_dir.glob("vault-*.db"))[:-keep]:
+            old.unlink(missing_ok=True)
+        return target
+
 
     def _create_schema(self) -> None:
         cur = self.conn.cursor()
@@ -157,9 +232,14 @@ class VaultDB:
             return row["last_query"] or "", row["last_filter"] or "Review queue"
         return "", "Review queue"
 
-    def list_recent_vaults(self) -> list[dict[str, Any]]:
+    def list_recent_vaults(self, limit: int | None = 25) -> list[dict[str, Any]]:
         cur = self.conn.cursor()
-        cur.execute("SELECT id, path, name FROM vaults ORDER BY last_opened_at DESC LIMIT 25")
+        sql = "SELECT id, path, name FROM vaults ORDER BY last_opened_at DESC"
+        params: list[Any] = []
+        if limit is not None:
+            sql += " LIMIT ?"
+            params.append(limit)
+        cur.execute(sql, params)
         return [dict(r) for r in cur.fetchall()]
 
     def count_vault_fonts(self, vault_id: int) -> int:
@@ -256,9 +336,14 @@ class VaultDB:
             """, [(k, status, family_key, family_label) for k in file_keys])
 
     def find_family_candidates(
-        self, vault_id: int, parent_dir: str, prefix: str, family_key: str = ""
+        self, vault_id: int, parent_dir: str, prefix: str, family_key: str = "", legacy_family_key: str = ""
     ) -> list[dict[str, Any]]:
-        """Return candidate fonts in the same folder or sharing a prefix stem / family_key."""
+        """Return candidate fonts in the same folder or sharing a prefix stem / family_key.
+
+        `legacy_family_key` is the pre-re-segmentation spelling of the same family:
+        rows indexed before that change still hold it, and a stale key must not hide
+        a cross-folder member of the family being copied.
+        """
         cur = self.conn.cursor()
         dir_pattern = f"{parent_dir}/%"
         prefix_pattern = f"{prefix}%" if prefix else ""
@@ -286,9 +371,11 @@ class VaultDB:
                   f.file_path LIKE ?
                   OR (? != '' AND f.display LIKE ?)
                   OR (? != '' AND f.family_key = ?)
+                  OR (? != '' AND f.family_key = ?)
               )
             ORDER BY f.display ASC
-        """, (vault_id, dir_pattern, prefix_pattern, prefix_pattern, family_key, family_key))
+        """, (vault_id, dir_pattern, prefix_pattern, prefix_pattern, family_key, family_key,
+              legacy_family_key, legacy_family_key))
         return [dict(r) for r in cur.fetchall()]
 
     def _filter_clauses(self, filter_name: str, skip_broken: bool) -> tuple[list[str], list[Any]]:
@@ -437,14 +524,15 @@ class VaultDB:
         return migrated
 
     def export_to_state_json(self, json_path: Path) -> None:
-        """Export SQLite database back to state.json format for external backups."""
+        """Write every review to a human-readable JSON snapshot."""
+        vaults = self.list_recent_vaults(limit=None)
         data: dict[str, Any] = {
-            "sources": [v["path"] for v in self.list_recent_vaults()],
+            "sources": [v["path"] for v in vaults],
             "last_source": self.get_app_state("last_source", "") or "",
             "vaults": {},
             "items": {}
         }
-        for v in self.list_recent_vaults():
+        for v in vaults:
             p = Path(v["path"])
             q, f = self.get_vault_prefs(p)
             data["vaults"][v["path"]] = {"query": q, "filter": f}
@@ -464,67 +552,3 @@ class VaultDB:
         tmp = json_path.with_suffix(".tmp")
         tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
         tmp.replace(json_path)
-
-
-# Input vault inherits from VaultDB but uses separate tables in its own database
-class VaultInputDB(VaultDB):
-    """Database for font-vault-input (scanning font-factory/fonts directories)."""
-    
-    def _create_schema(self) -> None:
-        cur = self.conn.cursor()
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS vaults (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                path TEXT UNIQUE NOT NULL,
-                name TEXT NOT NULL,
-                last_opened_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                last_query TEXT DEFAULT '',
-                last_filter TEXT DEFAULT 'Review queue'
-            );
-        """)
-
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS font_records (
-                file_key TEXT PRIMARY KEY,
-                vault_id INTEGER REFERENCES vaults(id) ON DELETE CASCADE,
-                file_path TEXT NOT NULL,
-                file_size INTEGER NOT NULL,
-                mtime_ns INTEGER NOT NULL,
-                stem TEXT NOT NULL,
-                display TEXT NOT NULL,
-                family_key TEXT DEFAULT '',
-                family_label TEXT DEFAULT '',
-                style TEXT DEFAULT 'Regular',
-                indexed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-        """)
-
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS reviews (
-                file_key TEXT PRIMARY KEY,
-                status TEXT NOT NULL DEFAULT 'unreviewed',
-                classification TEXT NOT NULL DEFAULT 'reviewable',
-                broken_reason TEXT DEFAULT '',
-                outline_checked INTEGER NOT NULL DEFAULT 0,
-                family_key TEXT DEFAULT '',
-                family_label TEXT DEFAULT '',
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-        """)
-
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS app_state (
-                key TEXT PRIMARY KEY,
-                value TEXT NOT NULL
-            );
-        """)
-
-        cur.execute("CREATE INDEX IF NOT EXISTS idx_font_vault ON font_records(vault_id);")
-        cur.execute("CREATE INDEX IF NOT EXISTS idx_font_vault_display ON font_records(vault_id, display);")
-        cur.execute("CREATE INDEX IF NOT EXISTS idx_font_family ON font_records(family_key);")
-        cur.execute("CREATE INDEX IF NOT EXISTS idx_font_display ON font_records(display);")
-        cur.execute("CREATE INDEX IF NOT EXISTS idx_review_status ON reviews(status);")
-        cur.execute("CREATE INDEX IF NOT EXISTS idx_review_class ON reviews(classification);")
-        cur.execute("CREATE INDEX IF NOT EXISTS idx_review_family ON reviews(family_key);")
-        self.conn.commit()
-
