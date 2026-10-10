@@ -301,7 +301,6 @@ class FontVaultWindow(QMainWindow):
         self.filtered_index: dict[str, int] = {}
         self.current: FontRecord | None = None
         self.source_path: Path | None = None
-        self.previous_font: FontRecord | None = None
         self.vault_id: int | None = None
         self.source_kind = ""
         self.rng = random.SystemRandom()
@@ -339,8 +338,6 @@ class FontVaultWindow(QMainWindow):
             label.setCursor(Qt.CursorShape.IBeamCursor)
         self.copy_shortcut = QShortcut(QKeySequence.StandardKey.Copy, self.queue)
         self.copy_shortcut.activated.connect(self.copy_queue_selection)
-        self.previous_shortcut = QShortcut(QKeySequence("Alt+Left"), self)
-        self.previous_shortcut.activated.connect(self.go_to_previous_font)
         self.populate_recent_vaults()
         self.resume_last_vault()
 
@@ -410,7 +407,7 @@ class FontVaultWindow(QMainWindow):
         actions = QHBoxLayout(); actions.addStretch(); actions.addWidget(self.button("Create fsType=0 working copy…", self.create_installable_copy)); actions.addWidget(self.button("Mark used family", self.mark_used_family)); actions.addWidget(self.button("Archive family", self.archive_family))
         navigation = QVBoxLayout(); navigation.setSpacing(5)
         skip_button = self.button("Skip family →", self.skip_family); skip_button.setObjectName("skipFamily"); skip_button.setToolTip("Mark every style in this font family as skipped and move to the next family."); navigation.addWidget(skip_button)
-        movement = QHBoxLayout(); movement.setSpacing(5); movement.addWidget(self.button("← Previous Font", self.go_to_previous_font)); movement.addWidget(self.button("Next →", self.next, True)); navigation.addLayout(movement)
+        movement = QHBoxLayout(); movement.setSpacing(5); movement.addWidget(self.button("← Previous", self.previous)); movement.addWidget(self.button("Next →", self.next, True)); navigation.addLayout(movement)
         navigation.addWidget(self.button("Randomize", self.randomize)); actions.addLayout(navigation); main_layout.addLayout(actions)
         split.addWidget(sidebar); split.addWidget(main); split.setSizes([245, 1100]); outer.addWidget(split, 1)
         self.status_label.setObjectName("status"); outer.addWidget(self.status_label)
@@ -771,8 +768,6 @@ class FontVaultWindow(QMainWindow):
 
     def queue_selected(self, row: int) -> None:
         if 0 <= row < len(self.visible):
-            # Track previous font before changing selection
-            self.previous_font = self.current
             self.current = self.visible[row]
             state = self.analyze_record(self.current, deep=True)
             # DB persistence now happens inside analyze_record; no save_json needed here
@@ -831,7 +826,7 @@ class FontVaultWindow(QMainWindow):
         render_source = self.renderable_path(record)
         output = CACHE_DIR / "renders" / hashlib.sha256((record.key + ":combined-v3").encode()).hexdigest()[:20]; output.mkdir(parents=True, exist_ok=True); image_path = output / "main" / "specimen-alphabet-numerals.png"
         if not image_path.exists():
-            result = subprocess.run([sys.executable, str(RENDERER), str(render_source), str(output), "--name", record.display.title()], capture_output=True, text=True)
+            result = subprocess.run([sys.executable, str(RENDERER), str(render_source), str(output), "--name", record.display.title(), "--basic", "--fast-png"], capture_output=True, text=True)
             if result.returncode != 0: raise RuntimeError((result.stdout + result.stderr).strip()[-1000:])
         combined_path = output / "combined-specimen.png"
         if not combined_path.exists() or combined_path.stat().st_mtime_ns < image_path.stat().st_mtime_ns:
@@ -853,7 +848,7 @@ class FontVaultWindow(QMainWindow):
             sentence_width = draw.textlength(sentence, font=sentence_font)
             draw.text(((width - label_width) / 2, height + 45), label, font=label_font, fill=(155, 155, 155))
             draw.text(((width - sentence_width) / 2, height + 145), sentence, font=sentence_font, fill=(248, 248, 245))
-            combined.save(combined_path, format="PNG", optimize=True)
+            combined.save(combined_path, format="PNG")
         return combined_path
 
     def sentence_path(self, record: FontRecord) -> Path:
@@ -1350,42 +1345,6 @@ class FontVaultWindow(QMainWindow):
             self.refresh_list(select_first=False, reset_page=False)
         if 0 <= target_row < self.queue.count():
             self.queue.setCurrentRow(target_row)
-
-    def go_to_previous_font(self) -> None:
-        """Navigate back to the font viewed before the current one.
-
-        Remembers a single font (the one you were on when the selection last
-        changed), so it is the reliable undo for Randomize. It works across
-        queue pages: the previous font is looked up in the indexed filtered
-        view even when Randomize jumped to a different page.
-        """
-        previous = self.previous_font
-        if previous and previous.key in self.visible_index:
-            self.queue.setCurrentRow(self.visible_index[previous.key])
-            return
-        if previous and self.vault_id is not None:
-            index = self.db.find_filtered_index(
-                self.vault_id, previous.key,
-                self.search.text().strip(), self.filter.currentText(),
-                skip_broken=self.skip_broken.isChecked(),
-            )
-            if index is not None:
-                self.select_filtered_index(index)
-                return
-        self.previous()
-
-    def select_filtered_index(self, index: int) -> None:
-        """Navigate the full filtered collection while rendering only one page."""
-        total = getattr(self, "total_matches", len(self.visible))
-        if total <= 0:
-            return
-        index %= total
-        target_page, row = divmod(index, MAX_QUEUE_ROWS)
-        if target_page != self.queue_page:
-            self.queue_page = target_page
-            self.refresh_list(select_first=False, reset_page=False)
-        if 0 <= row < self.queue.count():
-            self.queue.setCurrentRow(row)
 
     def create_installable_copy(self) -> None:
         if not self.current: return

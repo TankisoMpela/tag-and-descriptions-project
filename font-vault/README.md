@@ -55,10 +55,6 @@ sub-millisecond queries, and near-zero memory footprint:
   intentionally not used as a breakage gate.
 - **Randomize** jumps to a different font in the current view without changing
   its saved review status.
-- **← Previous Font** (or `Alt+Left`) returns to the single font you were
-  viewing just before the current one — the reliable undo for Randomize. It
-  works even when Randomize jumped to another queue page: the previous font is
-  looked up by DB rank in the current filtered view.
 - The combined specimen renders the factual character sheet and “The quick
   brown fox jumps over the lazy dog.” together, with a visible gap between them.
 - Font metadata includes the internal `head` table creation and modification
@@ -86,3 +82,26 @@ sub-millisecond queries, and near-zero memory footprint:
 
 The renderer is the project helper `bin/render_font_specimens.py`, so the
 preview uses the same factual black-and-white specimen style as the font audit.
+
+## Input Inspector
+
+```bash
+python3 font-vault/input_inspector.py
+```
+
+Input Inspector reviews the staged family folders under `font-factory/input/`
+that Font Vault's **Mark used family** creates. The sidebar lists every family
+folder with its font count; the main pane shows one preview row per font in the
+selected folder, rendering uppercase and lowercase (or, with **Show: Numbers &
+Punctuation**, digits and symbols) so stray fonts in a family are easy to spot.
+
+- **◀ Previous / Next ▶** move between family folders.
+- **↩ Return to source** sends a font back to the folder it was copied from,
+  using the folder's `font-vault-manifest.json` (or `source-directory.txt`).
+  If the original is still there, only the staged copy is removed; if it is
+  missing, the file is moved back. The manifest is updated either way.
+- **✕ Delete** permanently removes a font from the staged folder (with
+  confirmation).
+
+Preview strips are cached under `font-vault/data/cache/inspector/`, so folders
+open instantly after the first render.

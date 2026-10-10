@@ -380,49 +380,6 @@ class VaultDB:
         items = [dict(row) for row in cur.fetchall()]
         return items, total_count
 
-    def find_filtered_index(
-        self,
-        vault_id: int,
-        file_key: str,
-        query: str = "",
-        filter_name: str = "Review queue",
-        skip_broken: bool = True,
-    ) -> int | None:
-        """Return the 0-based index of a font inside the current filtered view.
-
-        Mirrors query_vault_fonts' filtering/ordering so navigation can jump
-        straight to the exact page and row of a remembered font (for example
-        the font you were on before Randomize), even when it lives on another
-        page. Returns None when the font is not part of the current view.
-        """
-        cur = self.conn.cursor()
-        cur.execute(
-            "SELECT display FROM font_records WHERE vault_id = ? AND file_key = ?",
-            (vault_id, file_key),
-        )
-        target = cur.fetchone()
-        if not target:
-            return None
-        where_clauses, params = self._query_filter_params(vault_id, query, filter_name, skip_broken)
-        where_sql = " AND ".join(where_clauses)
-        # Confirm the target belongs to the current view before ranking.
-        cur.execute(f"""
-            SELECT COUNT(*) AS c
-            FROM font_records f
-            LEFT JOIN reviews r ON f.file_key = r.file_key
-            WHERE {where_sql} AND f.file_key = ?
-        """, [*params, file_key])
-        if cur.fetchone()["c"] == 0:
-            return None
-        # Rank using the same (display, file_key) ordering as the page query.
-        cur.execute(f"""
-            SELECT COUNT(*) AS rank
-            FROM font_records f
-            LEFT JOIN reviews r ON f.file_key = r.file_key
-            WHERE {where_sql} AND (f.display, f.file_key) <= (?, ?)
-        """, [*params, target["display"], file_key])
-        return cur.fetchone()["rank"] - 1
-
     def migrate_from_state_json(self, json_path: Path, force: bool = False) -> int:
         """Migrate legacy state.json into SQLite seamlessly (runs once unless forced)."""
         if not json_path.exists():
@@ -507,4 +464,67 @@ class VaultDB:
         tmp = json_path.with_suffix(".tmp")
         tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
         tmp.replace(json_path)
+
+
+# Input vault inherits from VaultDB but uses separate tables in its own database
+class VaultInputDB(VaultDB):
+    """Database for font-vault-input (scanning font-factory/fonts directories)."""
+    
+    def _create_schema(self) -> None:
+        cur = self.conn.cursor()
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS vaults (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                path TEXT UNIQUE NOT NULL,
+                name TEXT NOT NULL,
+                last_opened_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                last_query TEXT DEFAULT '',
+                last_filter TEXT DEFAULT 'Review queue'
+            );
+        """)
+
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS font_records (
+                file_key TEXT PRIMARY KEY,
+                vault_id INTEGER REFERENCES vaults(id) ON DELETE CASCADE,
+                file_path TEXT NOT NULL,
+                file_size INTEGER NOT NULL,
+                mtime_ns INTEGER NOT NULL,
+                stem TEXT NOT NULL,
+                display TEXT NOT NULL,
+                family_key TEXT DEFAULT '',
+                family_label TEXT DEFAULT '',
+                style TEXT DEFAULT 'Regular',
+                indexed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS reviews (
+                file_key TEXT PRIMARY KEY,
+                status TEXT NOT NULL DEFAULT 'unreviewed',
+                classification TEXT NOT NULL DEFAULT 'reviewable',
+                broken_reason TEXT DEFAULT '',
+                outline_checked INTEGER NOT NULL DEFAULT 0,
+                family_key TEXT DEFAULT '',
+                family_label TEXT DEFAULT '',
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS app_state (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL
+            );
+        """)
+
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_font_vault ON font_records(vault_id);")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_font_vault_display ON font_records(vault_id, display);")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_font_family ON font_records(family_key);")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_font_display ON font_records(display);")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_review_status ON reviews(status);")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_review_class ON reviews(classification);")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_review_family ON reviews(family_key);")
+        self.conn.commit()
 

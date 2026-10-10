@@ -200,11 +200,12 @@ def render_multilingual(font_path: Path, display_name: str, canvas_size: tuple[i
     return image
 
 
-def save_variants(render, main_path: Path, square_path: Path) -> None:
+def save_variants(render, main_path: Path, square_path: Path, optimize_png: bool = True) -> None:
     main_path.parent.mkdir(parents=True, exist_ok=True)
     square_path.parent.mkdir(parents=True, exist_ok=True)
-    render((2400, 1600)).save(main_path, format="PNG", optimize=True)
-    render((1600, 1600)).save(square_path, format="PNG", optimize=True)
+    kwargs = {"format": "PNG", "optimize": True} if optimize_png else {"format": "PNG"}
+    render((2400, 1600)).save(main_path, **kwargs)
+    render((1600, 1600)).save(square_path, **kwargs)
 
 
 def main() -> None:
@@ -212,6 +213,8 @@ def main() -> None:
     parser.add_argument("font", type=Path)
     parser.add_argument("output_dir", type=Path)
     parser.add_argument("--name", default=None, help="Display name; defaults to the font filename")
+    parser.add_argument("--basic", action="store_true", help="Render only the alphabet/numerals sheet and skip the (much slower) multilingual glyph sheet")
+    parser.add_argument("--fast-png", action="store_true", help="Skip PNG optimization for faster writes; use for local caches/previews that are decoded, not shipped")
     args = parser.parse_args()
     if args.font.suffix.lower() not in {".otf", ".ttf"}:
         raise SystemExit("The input must be an OTF or TTF file")
@@ -220,15 +223,18 @@ def main() -> None:
     display_name = args.name or args.font.stem
     main_dir = args.output_dir / "main"
     square_dir = args.output_dir / "squares"
-    save_variants(lambda size: render_basic(args.font, display_name, size), main_dir / "specimen-alphabet-numerals.png", square_dir / "specimen-alphabet-numerals.png")
-    save_variants(lambda size: render_multilingual(args.font, display_name, size), main_dir / "specimen-multilingual-glyphs.png", square_dir / "specimen-multilingual-glyphs.png")
+    kwargs = {"optimize_png": not args.fast_png}
+    save_variants(lambda size: render_basic(args.font, display_name, size), main_dir / "specimen-alphabet-numerals.png", square_dir / "specimen-alphabet-numerals.png", **kwargs)
+    if not args.basic:
+        save_variants(lambda size: render_multilingual(args.font, display_name, size), main_dir / "specimen-multilingual-glyphs.png", square_dir / "specimen-multilingual-glyphs.png", **kwargs)
     for path in (
         main_dir / "specimen-alphabet-numerals.png",
         main_dir / "specimen-multilingual-glyphs.png",
         square_dir / "specimen-alphabet-numerals.png",
         square_dir / "specimen-multilingual-glyphs.png",
     ):
-        print(f"Wrote {path}")
+        if path.exists():
+            print(f"Wrote {path}")
 
 
 if __name__ == "__main__":
