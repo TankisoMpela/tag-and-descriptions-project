@@ -25,11 +25,11 @@ This agent owns only the mechanical final-image delivery pass:
 
 - enumerate direct raw files mechanically; do not use vision, a contact sheet,
   image semantics, or visual judgment to identify a thumbnail;
-- classify 3:2 and 1:1 files independently; when the folder contains no 1:1
-  file at all, or only a name-marked square thumbnail, the helper derives the
-  missing squares itself with equal white top/bottom padding and marks them
-  in the manifest; otherwise the supplied set is processed as-is and the two
-  counts need not match;
+- classify 3:2 and 1:1 files independently after inspecting the folder (see
+  Square-set decision); when the seller's set lacks squares, the agent may
+  have the helper derive them with equal white top/bottom padding by passing
+  `--pad-squares` (the manifest marks every derived square); otherwise the
+  supplied set is processed as-is and the two counts need not match;
 - copy each selected raw file exactly into `New-Images/source/3x2/` or
   `New-Images/source/1x1/` under canonical names (helper-derived squares are
   the helper's own padded copies in `source/1x1/`, marked in the manifest);
@@ -54,10 +54,38 @@ package contents. Do not use vision or a contact sheet. Sort direct raw image
 filenames lexicographically within each supported ratio. The first 3:2 file is
 mechanically `thumbnail_main`; the remaining 3:2 files become `promo_1`,
 `promo_2`, and so on. Apply the same rule independently to the 1:1 files.
-Never create `thumbnail_japanese` in automatic mode. Never pad, crop, or
-create counterpart files yourself — the helper's automatic derivation above
-is the only permitted one — and never silently discard an extra direct raw
-image. Files with unsupported ratios are blockers.
+Never create `thumbnail_japanese` in automatic mode. Padding is only ever
+produced by the helper's `--pad-squares` derivation chosen in the decision
+below — never pad, crop, or create counterpart files yourself — and never
+silently discard an extra direct raw image. Files with unsupported ratios
+are blockers.
+
+## Square-set decision (inspect first)
+
+Before running the processor, inspect the folder mechanically and decide
+from the facts, not from vision:
+
+```bash
+python3 bin/check_new_images.py \
+  "outputs/font-preparation/{catalogue-number}-{font-slug}/visuals/New-Images"
+```
+
+Then choose, from the report:
+
+- unsupported or undecodable files → stop; they are blockers.
+- no 3:2 files → stop; the processor requires at least one 3:2 file.
+- no 1:1 files → add `--pad-squares`: every square is derived from the 3:2
+  set with equal white top/bottom padding, so the counts match.
+- exactly one 1:1 file, name-marked as the square thumbnail, and more than
+  one 3:2 file → add `--pad-squares`: the supplied thumbnail stays real and
+  only the supporting squares are derived from the 3:2 promos.
+- anything else (two or more 1:1 files; a lone 1:1 that is not name-marked;
+  a single 3:2 beside a single marked square) → run without the flag and
+  process the supplied set as-is; the two counts need not match.
+
+The report's `notes` field states the matching command. `--pad-squares` is
+only valid with `--auto-order`, and it is a no-op when the supplied squares
+already cover the set.
 
 ## Required command
 
@@ -81,9 +109,6 @@ flags only when the user separately requests a manual mapping. Do not pass
 `--overwrite` can replace prior generated delivery files, but it never permits
 replacement of the raw direct files.
 
-Automatic mode also applies the conditional square-padding derivation (see
-Scope). No extra flag is needed; the run prints how many squares were padded.
-
 Pinterest panel composition is archived. See `archive/pinterest/README.md` to
 reinstate it.
 
@@ -103,8 +128,8 @@ Before reporting completion, confirm:
 If any input is missing, a ratio is wrong, a file cannot be decoded, a
 thumbnail cannot be identified, or an output exceeds its limit, fail closed.
 Do not solve the problem by cropping, padding, inventing, or substituting an
-image; the helper's automatic padding described above is the only permitted
-derivation.
+image; the `--pad-squares` derivation chosen in the decision above is the
+only permitted derivation.
 
 Final response must report the exact `New-Images` output path, the main and
 square counts, the number of squares the helper white-padded (0 if none), the

@@ -4,13 +4,13 @@
 The raw image folder is intentionally treated as immutable input. In
 ``--auto-order`` mode, the first stable filename in each detected ratio is
 assigned ``thumbnail_main`` mechanically; all remaining files are numbered as
-promos independently. No visual thumbnail identification is performed. When
-the seller supplied no 1:1 file at all, or only a single 1:1 file whose name
-marks it as the square thumbnail, the missing squares are derived from the
-3:2 set by white-padding with equal top/bottom bars; the derivation is
-recorded in the manifest. Exact source copies, bounded JPEG delivery files,
-and a traceable manifest are written beneath the output folder (which
-defaults to the raw folder itself).
+promos independently. No visual thumbnail identification is performed. With
+``--pad-squares``, missing squares are derived from the 3:2 set by
+white-padding with equal top/bottom bars (every square when no 1:1 file
+exists; only the supporting squares when the sole 1:1 file is a name-marked
+square thumbnail); the derivation is recorded in the manifest. Exact source
+copies, bounded JPEG delivery files, and a traceable manifest are written
+beneath the output folder (which defaults to the raw folder itself).
 """
 
 from __future__ import annotations
@@ -33,7 +33,8 @@ IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp", ".avif", ".tif", ".tiff"}
 MAIN_RATIO = 3 / 2
 SQUARE_RATIO = 1.0
 RATIO_TOLERANCE = 0.025
-JPEG_MAX_BYTES = 300_000
+JPEG_MAX_BYTES = 200_000
+SQUARE_THUMB_MARKERS = ("thumb", "square", "1x1", "1:1", "1-1", "1_1")
 
 
 def fail(message: str) -> NoReturn:
@@ -304,10 +305,12 @@ def main() -> int:
     parser.add_argument(
         "--auto-order",
         action="store_true",
-        help="Mechanically sort direct files by filename within each ratio; first becomes "
-             "thumbnail_main. Missing squares are white-padded from the 3:2 set (equal "
-             "top/bottom bars) when no 1:1 file exists, or only a name-marked square thumbnail does",
+        help="Mechanically sort direct files by filename within each ratio; first becomes thumbnail_main",
     )
+    parser.add_argument("--pad-squares", action="store_true",
+                        help="With --auto-order: derive missing squares from the 3:2 set using equal "
+                             "white top/bottom padding (every square when no 1:1 file exists; only the "
+                             "supporting squares when the sole 1:1 file is a name-marked square thumbnail)")
     parser.add_argument("--square-japanese-thumbnail", default=None,
                         help="Optional separate raw 1:1 Japanese thumbnail filename")
     parser.add_argument("--main-promo", action="append", default=None,
@@ -358,12 +361,14 @@ def main() -> int:
         if not ratio_groups["3:2"]:
             fail("--auto-order requires at least one direct 3:2 file")
         three_two, squares = ratio_groups["3:2"], ratio_groups["1:1"]
+        if not squares and not args.pad_squares:
+            fail("--auto-order found no direct 1:1 file; rerun with --pad-squares to derive "
+                 "every square from the 3:2 set (equal white top/bottom padding)")
         square_japanese = None
         main_thumbnail, main_promos = three_two[0], three_two[1:]
-        square_thumb_markers = ("thumb", "square", "1x1", "1:1", "1-1", "1_1")
-        if not squares:
+        if args.pad_squares and not squares:
             print(
-                f"No 1:1 files supplied; deriving all {len(three_two)} square(s) from the "
+                f"Pad squares: deriving all {len(three_two)} square(s) from the "
                 "3:2 set (equal white top/bottom padding).",
                 file=sys.stderr,
             )
@@ -373,13 +378,14 @@ def main() -> int:
             for index, parent in enumerate(main_promos, start=1):
                 padded_from[source_11 / f"promo_{index}.png"] = parent
         elif (
-            len(squares) == 1
-            and any(token in squares[0].name.lower() for token in square_thumb_markers)
+            args.pad_squares
+            and len(squares) == 1
+            and any(token in squares[0].name.lower() for token in SQUARE_THUMB_MARKERS)
             and len(three_two) > 1
         ):
             print(
-                f"Only a square thumbnail was supplied; deriving {len(three_two) - 1} "
-                "supporting square(s) from the 3:2 promos (equal white top/bottom padding).",
+                f"Pad squares: deriving {len(three_two) - 1} supporting square(s) from the "
+                "3:2 promos; keeping the supplied square thumbnail (equal white top/bottom padding).",
                 file=sys.stderr,
             )
             square_thumbnail = squares[0]
@@ -390,6 +396,8 @@ def main() -> int:
             square_thumbnail = squares[0]
             square_promos = squares[1:]
     else:
+        if args.pad_squares:
+            fail("--pad-squares requires --auto-order")
         if not args.main_thumbnail or not args.square_thumbnail:
             fail("Provide --main-thumbnail and --square-thumbnail, or use --auto-order")
         main_thumbnail = ensure_inside(source_dir, args.main_thumbnail, "main thumbnail")
