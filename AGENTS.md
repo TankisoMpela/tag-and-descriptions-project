@@ -93,6 +93,29 @@ directory, and trial URL; the product image comes from `{font-dir}/visuals/New-I
 (mechanical `thumbnail_main` pick). One command: `python3 bin/make_booth_trial_pdf.py …` →
 `outputs/booth-pdfs/{slug}-trial-insert.pdf`. Canonical spec: `agents/agent-booth-pdf-maker.md`.
 
+## 📌 DAILY PINTEREST RUN (standalone pipeline — outside `/full-workflow`)
+
+Two agents; the archived Agent 10 stays archived and is not invoked.
+
+- `/pinterest-prepare` (pinterest-font-preparer) registers fonts into
+  `outputs/pinterest/registry.json` — product URL, board suggestion
+  (Handwritten / Display / Script / Decorative Fonts), and ONE pin image
+  uploaded to the `pinterest-pins-media` Vercel Blob store
+  (`pinterest-assets/` holds the linked project; auth lives in
+  `~/.config/papermoon/blob.env` — never commit or print the token).
+- `/pinterest-daily` (daily-pinterest-run) randomly picks 10 ready fonts per
+  day (14-day re-pin exclusion), writes fresh title/description/keywords per
+  font with tag rotation tracked in `outputs/research/pinterest-tags.sqlite`,
+  and validates + assembles `outputs/pinterest/{YYYY-MM-DD}/pins.csv`
+  (staggered hourly from 09:00 UTC) for Pinterest's Bulk create Pins importer.
+
+Tools: `bin/pinterest_registry.py`, `bin/papermoon-blob.py`,
+`bin/pinterest_tag_ledger.py`, `bin/make_daily_pins.py`. Carousels are not
+supported by the bulk CSV (one Media URL per row) — one image per pin.
+Uploading the CSV to Pinterest is always the human step; the agents make no
+publication claim. Open decision: keyword-candidate seed source (CM listing
+tags vs live `bin/search.js`) — the agent drafts candidates for now.
+
 ## 📁 WORKSPACE & OUTPUT DIRECTORY STRUCTURE
 
 All generated marketplace listing copy and font preparation outputs live under `outputs/`:

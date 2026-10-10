@@ -13,13 +13,27 @@ xd:/
 # Local playwright console logs
 .playwright-cli/
 
-# Marketplace listing outputs (generated, never versioned)
-outputs/
+# Marketplace listing outputs (generated, never versioned).
+# `outputs/*` (not `outputs/`) so the negations below actually work — git does
+# not descend into a wholly-ignored directory.
+outputs/*
 # ...except the hand-maintained BOOTH tag bank. It is NOT generated: it is
 # the authoritative tag source that build_booth_db.py --bank reads, and its
 # snapshot values exist nowhere else. Listed by the spec as 'the sole
 # permanent activity/tag baseline'.
+!outputs/research/
+outputs/research/*
 !outputs/research/booth-font-tag-bank.md
+# ...and the Pinterest daily-run registry: the authoritative font directory
+# (product URLs + public Blob image URLs) built by /pinterest-prepare; losing
+# it means re-uploading every image by hand.
+!outputs/pinterest/
+outputs/pinterest/*
+!outputs/pinterest/registry.json
+
+# Linked Vercel project for the Pinterest Blob store — holds .vercel/ and
+# .env.local with the RW token; never commit anything in it.
+pinterest-assets/
 
 # Python virtual environments
 .venv-deterministic-fonts/

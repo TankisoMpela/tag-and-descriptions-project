@@ -62,6 +62,22 @@
       "permission": {
         "task": "allow"
       }
+    },
+    "pinterest-font-preparer": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-pinterest-font-preparer.md}",
+      "description": "Pinterest info gatherer for the Daily-Pinterest-Run pipeline: registers fonts, records product URLs and board suggestions, uploads one deterministic-random pin image to Vercel Blob, writes public-urls.md; no Pinterest-side action.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "daily-pinterest-run": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-daily-pinterest-run.md}",
+      "description": "Daily Pinterest pipeline: picks 10 ready fonts with 14-day exclusion, writes per-font copy with tag rotation from the ledger, and validates/assembles the staggered bulk-import pins.csv. Import stays a human step.",
+      "permission": {
+        "task": "allow"
+      }
     }
   },
   "command": {
@@ -104,6 +120,16 @@
       "description": "Build a single-page Japanese branded trial-insert PDF from a BOOTH item URL, font directory, trial URL, and New-Images squares thumbnail.",
       "template": "Please run the booth-pdf-maker agent to build a one-page portrait trial-insert PDF. Use the BOOTH item URL, the local font directory, and the trial URL supplied here: {input}. Take the product image from {font-dir}/visuals/New-Images/squares/ (prefer thumbnail_main, else the first lexicographic image — no vision). Set Japanese customer copy with restrained top branding, a huge specimen in the product font, a single large GET YOUR FONT button linking to the trial URL with the URL also printed in plain text, a short about-trial section, a secondary BOOTH full-version link, and a small shop footer. Do not put a please-like-on-BOOTH CTA in the PDF. Write outputs/booth-pdfs/{slug}-trial-insert.pdf via bin/make_booth_trial_pdf.py. No upload claim.",
       "agent": "booth-pdf-maker"
+    },
+    "pinterest-prepare": {
+      "description": "Register fonts for Pinterest: record product URLs and descriptions, upload one pin image each to Vercel Blob.",
+      "template": "Please run the pinterest-font-preparer agent to register these fonts into the Pinterest registry (match each to its outputs/font-preparation folder, set product URL and board suggestion, upload one pin image, write public-urls.md): {input}",
+      "agent": "pinterest-font-preparer"
+    },
+    "pinterest-daily": {
+      "description": "Run the daily Pinterest pipeline: pick 10 fonts, write pin copy with tag rotation, assemble the staggered bulk-import CSV.",
+      "template": "Please run the daily-pinterest-run agent to produce the bulk-import pins.csv for tomorrow (or the date given here) from the 10 randomly picked ready fonts: {input}",
+      "agent": "daily-pinterest-run"
     }
   }
 }

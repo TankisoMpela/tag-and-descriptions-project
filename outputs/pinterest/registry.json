@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "fonts": {
+    "restrained-flourish": {
+      "slug": "restrained-flourish",
+      "number": 82,
+      "name": "Restrained Flourish",
+      "prep_path": "outputs/font-preparation/082-restrained-flourish",
+      "description_path": "outputs/font-preparation/082-restrained-flourish/description.txt",
+      "product_url": "https://creativemarket.com/TankisoMpela",
+      "board": "Script Fonts",
+      "image": {
+        "source": "outputs/font-preparation/082-restrained-flourish/visuals/New-Images/pinterest/pinterest_3.png",
+        "pathname": "fonts/restrained-flourish/pinterest_3.png",
+        "url": "https://btbyp3va1bt2lvot.public.blob.vercel-storage.com/fonts/restrained-flourish/pinterest_3.png",
+        "uploaded_at": "2026-10-10T20:00:40Z"
+      }
+    }
+  }
+}
