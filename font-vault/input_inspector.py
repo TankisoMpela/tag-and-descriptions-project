@@ -20,7 +20,7 @@ from pathlib import Path
 
 from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QFontMetrics, QPixmap
 from PySide6.QtWidgets import (
     QApplication, QFrame, QHBoxLayout, QLabel, QListWidget, QListWidgetItem,
@@ -212,7 +212,9 @@ def set_in_use(folder: Path, filename: str, used: bool) -> None:
 
 
 class FontRow(QFrame):
-    """One staged font: name + return/delete buttons over a full-width preview strip."""
+    """One staged font: name + mark/return/delete buttons over a full-width preview strip."""
+
+    activated = Signal()
 
     def __init__(self, path: Path, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -257,6 +259,10 @@ class FontRow(QFrame):
         outer.addWidget(self.preview)
         self.load_preview()
 
+    def mousePressEvent(self, event) -> None:
+        self.activated.emit()
+        super().mousePressEvent(event)
+
     def load_preview(self) -> None:
         try:
             image_path = render_strip(self.path)
@@ -297,6 +303,7 @@ class InspectorWindow(QMainWindow):
         self.setStyleSheet(self.styles())
         self.folders: list[Path] = []
         self.rows: list[FontRow] = []
+        self.active_row: FontRow | None = None
         self.current_idx = -1
         self.build_ui()
         self.folder_list.currentRowChanged.connect(self.folder_selected)
@@ -368,6 +375,7 @@ class InspectorWindow(QMainWindow):
         self.next_btn = self.button("Next ▶", self.go_next, primary=True)
         toolbar.addWidget(self.prev_btn)
         toolbar.addWidget(self.next_btn)
+        toolbar.addWidget(self.button("Next Unmarked →", self.next_unmarked))
         toolbar.addStretch()
         toolbar.addWidget(self.button("↻ Refresh", self.refresh_action))
         outer.addLayout(toolbar)
@@ -470,6 +478,7 @@ class InspectorWindow(QMainWindow):
             return
         for path in fonts:
             row = FontRow(path)
+            row.activated.connect(lambda r=row: self._activate_row(r))
             row.use_btn.toggled.connect(lambda state, p=path: self.toggle_in_use(p, state))
             row.return_btn.clicked.connect(lambda _=False, p=path: self.return_font(p))
             row.delete_btn.clicked.connect(lambda _=False, p=path: self.delete_font(p))
@@ -480,12 +489,43 @@ class InspectorWindow(QMainWindow):
 
     def _clear_rows(self) -> None:
         self.rows = []
+        self.active_row = None
         while self.rows_layout.count():
             item = self.rows_layout.takeAt(0)
             widget = item.widget()
             if widget is not None:
                 widget.setParent(None)
                 widget.deleteLater()
+
+    def _activate_row(self, row: FontRow, scroll: bool = False) -> None:
+        if self.active_row is not None and self.active_row is not row:
+            self.active_row.setStyleSheet("")
+        self.active_row = row
+        row.setStyleSheet(
+            "QFrame#fontRow { border: 2px solid #d5a85e; border-radius: 8px; }"
+        )
+        if scroll:
+            self.scroll.ensureWidgetVisible(row)
+
+    def next_unmarked(self) -> None:
+        """Jump to the next row that is not marked In Use (wraps within the folder)."""
+        if not self.rows:
+            return
+        start = 0
+        if self.active_row in self.rows:
+            start = self.rows.index(self.active_row) + 1
+        order = list(range(start, len(self.rows))) + list(range(0, start))
+        for index in order:
+            row = self.rows[index]
+            if not row.use_btn.isChecked():
+                self._activate_row(row, scroll=True)
+                self.status.setText(
+                    f"Next unmarked: {row.path.name} ({index + 1}/{len(self.rows)})"
+                )
+                return
+        self.status.setText(
+            "All fonts in this folder are marked In Use — use Next ▶ for the next family."
+        )
 
     def go_prev(self) -> None:
         if self.current_idx > 0:

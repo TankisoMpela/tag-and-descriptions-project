@@ -95,7 +95,9 @@ folder with its font count; the main pane shows one preview row per font in the
 selected folder — uppercase, lowercase, digits, and punctuation together in a
 single cached strip — so stray fonts in a family are easy to spot.
 
-- **◀ Previous / Next ▶** move between family folders.
+- **◀ Previous / Next ▶** move between family folders. **Next Unmarked →**
+  jumps to the next font in the current folder that is not marked In Use
+  (wrapping to the top; clicking any row selects it as the starting point).
 - **In Use** is a per-font checkable mark (gold when active). It is stored in
   the folder's `in-use.txt` — one filename per line — purely as a local
   tracker for which staged fonts are in use; it is removed automatically when
