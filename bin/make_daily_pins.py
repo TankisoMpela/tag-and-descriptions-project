@@ -2,14 +2,17 @@
 """Daily Pinterest run — pick fonts, brief the agent, assemble the bulk CSV.
 
 Mechanical half of the Daily-Pinterest-Run pipeline. The agent writes the
-creative copy (copy.json); this tool does selection, validation, staggered
-publish times, and the CSV that Pinterest's Bulk create Pins importer eats.
+creative copy (copy.json); this tool does selection, a mechanical
+candidate-keyword seed in the brief, validation, staggered publish times,
+and both CSVs: buffer.csv (Buffer free-plan import, carries Alt Text —
+primary destination) and pins.csv (Pinterest-native fallback).
 
 Outputs live in outputs/pinterest/{YYYY-MM-DD}/:
   selection.json  the fonts picked for the day (pick)
   brief.md        per-font facts for the agent to write from (brief)
   copy.json       agent-written pin copy (input to assemble)
-  pins.csv        final bulk-import file (assemble, CSV UTF-8)
+  buffer.csv      Buffer bulk-upload file — has Alt Text (assemble, primary)
+  pins.csv        Pinterest-native bulk-import file (assemble, fallback)
   tag-report.md   tag usage after recording (assemble)
 
 Usage:
@@ -25,6 +28,7 @@ import argparse
 import csv
 import json
 import random
+import re
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -39,6 +43,26 @@ SCHEDULING_WINDOW_DAYS = 14
 MIN_KEYWORDS, MAX_KEYWORDS = 3, 10
 CSV_HEADER = ["Title", "Media URL", "Pinterest board", "Thumbnail",
               "Description", "Link", "Publish date", "Keywords"]
+BUFFER_HEADER = ["Text", "Image URL", "Title", "Alt Text", "Link",
+                 "Board Name", "Posting Time"]
+
+# Mechanical candidate-keyword seed for brief.md (research 2026-10: Pinterest
+# ranks via pin title + description + board; these seeds just narrow the
+# agent's drafting space — the ledger still owns rotation).
+STYLE_TERMS = ("art deco", "sans serif", "sans-serif", "blackletter", "handwritten",
+               "calligraphy", "signature", "decorative", "minimalist", "minimal",
+               "geometric", "condensed", "monoline", "outline", "stencil", "rounded",
+               "serif", "script", "display", "retro", "vintage", "modern", "elegant",
+               "luxury", "bold", "brush", "slab", "gothic")
+USE_CASE_TERMS = ("save the date", "social media", "love letter", "baby shower",
+                  "t-shirt", "letterhead", "scrapbooking", "watermark", "packaging",
+                  "wedding", "invitation", "branding", "commercial", "halloween",
+                  "christmas", "valentine", "birthday", "instagram", "youtube",
+                  "certificate", "stationery", "craft", "cricut", "vinyl", "poster",
+                  "label", "logo", "brand", "menu", "sign", "card", "journal",
+                  "holiday", "easter", "spring", "summer", "love")
+FORMAT_TERMS = ("commercial use", "personal use", "alternates", "ligatures",
+                "swashes", "multilingual")
 
 
 def day_dir(date: str) -> Path:
@@ -59,6 +83,35 @@ def looks_like_shop_root(url: str) -> bool:
     """A shop/store root (no product path) — weak pin destination, worth flagging."""
     segments = [s for s in urlparse(url).path.split("/") if s]
     return len(segments) <= 1
+
+
+def extract_candidates(text: str, max_out: int = 12) -> list[str]:
+    """Mechanical keyword seed from a description: style/use-case/format hits
+    assembled into search-phrase candidates. A seed only — the agent varies
+    phrasing and the ledger rotates."""
+    t = " " + text.lower() + " "
+    def hit(term: str) -> bool:
+        return re.search(rf"(?<![a-z]){re.escape(term)}(?![a-z])", t) is not None
+    styles = [s for s in STYLE_TERMS if hit(s)]
+    uses = [u for u in USE_CASE_TERMS if hit(u)]
+    fmts = [f for f in FORMAT_TERMS if hit(f)]
+    out: list[str] = []
+    for u in uses[:2]:
+        for s in styles[:2]:
+            out.append(f"{u} {s} font")
+    for s in styles[:3]:
+        out.append(f"{s} font")
+    for u in uses[:3]:
+        out.append(f"{u} font")
+    out.extend(fmts[:3])
+    seen: set[str] = set()
+    res: list[str] = []
+    for c in out:
+        c = " ".join(c.split())
+        if c and c not in seen:
+            seen.add(c)
+            res.append(c)
+    return res[:max_out]
 
 
 def cmd_pick(args, con) -> int:
@@ -105,10 +158,12 @@ def cmd_brief(args, con) -> int:
             desc = " ".join(raw.split())[:400]
         used = pinterest_tag_ledger.font_counts(con, slug)
         top_used = sorted(used.items(), key=lambda kv: -kv[1])[:8]
+        candidates = extract_candidates(desc) if desc else []
         entry = {
             "slug": slug, "number": r.get("number"), "name": r.get("name"),
             "board": r.get("board"), "product_url": r.get("product_url"),
             "image_url": r["image"]["url"], "description_excerpt": desc,
+            "candidates": candidates,
             "most_used_tags": [t for t, _ in top_used],
         }
         brief_fonts.append(entry)
@@ -117,6 +172,8 @@ def cmd_brief(args, con) -> int:
         lines.append(f"- Image (Media URL): {r['image']['url']}")
         lines.append(f"- Product URL (Link base): {r['product_url']}")
         lines.append(f"- Description source: {desc or '(no description.txt)'}…")
+        if candidates:
+            lines.append(f"- Candidate keywords (mechanical seed — vary phrasing, rotate via ledger): {', '.join(candidates)}")
         if entry["most_used_tags"]:
             lines.append(f"- Tags already used most (rotate away): {', '.join(entry['most_used_tags'])}")
         lines.append("")
@@ -172,6 +229,9 @@ def validate(entries: list[dict], reg: dict, date: str, start_hour: int, interva
         desc = str(e.get("description", "")).strip()
         if not (1 <= len(desc) <= 500):
             errors.append(f"{slug}: description must be 1-500 chars (got {len(desc)})")
+        alt = str(e.get("alt", "")).strip()
+        if not (1 <= len(alt) <= 500):
+            errors.append(f"{slug}: alt must be 1-500 chars (got {len(alt)}) — buffer.csv needs it")
         kws = [pinterest_tag_ledger.norm(k) for k in e.get("keywords", [])]
         kws = list(dict.fromkeys(k for k in kws if k))
         if any("#" in k for k in kws):
@@ -202,6 +262,8 @@ def validate(entries: list[dict], reg: dict, date: str, start_hour: int, interva
         rows.append([title, media, board, "", desc, link,
                      pub.strftime("%Y-%m-%dT%H:%M:%S"), ", ".join(kws)])
         e["_tags"] = kws
+        e["_alt"] = alt
+        e["_pub"] = pub.strftime("%Y-%m-%d %H:%M")
     for t, n in titles.items():
         if n > 1:
             errors.append(f"duplicate title ×{n}: {t[:60]!r}")
@@ -235,6 +297,13 @@ def cmd_assemble(args, con) -> int:
         w = csv.writer(f)
         w.writerow(CSV_HEADER)
         w.writerows(rows)
+    buffer_path = out_dir / "buffer.csv"
+    buffer_rows = [[r[4], r[1], r[0], e["_alt"], r[5], r[2], e["_pub"]]
+                   for e, r in zip(entries, rows)]
+    with buffer_path.open("w", newline="", encoding="utf-8-sig") as f:
+        w = csv.writer(f)
+        w.writerow(BUFFER_HEADER)
+        w.writerows(buffer_rows)
     report = [f"# Tag report — {args.date}", ""]
     already = {r[0] for r in con.execute(
         "SELECT DISTINCT font_slug FROM tag_uses WHERE run_date = ?", (args.date,))}
@@ -255,8 +324,10 @@ def cmd_assemble(args, con) -> int:
         report.append(f"- heaviest tags now: " + ", ".join(f"{t} ({100 * c // total}%)" for t, c in top))
     con.commit()
     (out_dir / "tag-report.md").write_text("\n".join(report) + "\n")
-    print(f"pins.csv written: {csv_path} ({len(rows)} rows, publish {rows[0][6]} → {rows[-1][6]} UTC)")
-    print("import manually: Pinterest Business (desktop) → Settings → Import content → upload the CSV")
+    print(f"buffer.csv written: {buffer_path} ({len(buffer_rows)} rows, publish {rows[0][6]} → {rows[-1][6]} UTC)")
+    print(f"pins.csv written:   {csv_path} (Pinterest-native fallback, no alt text)")
+    print("import manually: Buffer (free) → Pinterest channel → settings → Bulk Upload → upload buffer.csv → Add Posts to Queue")
+    print("upload only after the previous batch has fully published (10-slot free queue)")
     return 0
 
 

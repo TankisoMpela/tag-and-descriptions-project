@@ -104,17 +104,22 @@ Two agents; the archived Agent 10 stays archived and is not invoked.
   (`pinterest-assets/` holds the linked project; auth lives in
   `~/.config/papermoon/blob.env` — never commit or print the token).
 - `/pinterest-daily` (daily-pinterest-run) randomly picks 10 ready fonts per
-  day (14-day re-pin exclusion), writes fresh title/description/keywords per
-  font with tag rotation tracked in `outputs/research/pinterest-tags.sqlite`,
-  and validates + assembles `outputs/pinterest/{YYYY-MM-DD}/pins.csv`
-  (staggered hourly from 09:00 UTC) for Pinterest's Bulk create Pins importer.
+  day (14-day re-pin exclusion), writes fresh title/description/alt/keywords
+  per font with tag rotation tracked in `outputs/research/pinterest-tags.sqlite`,
+  and validates + assembles `outputs/pinterest/{YYYY-MM-DD}/buffer.csv`
+  (Buffer free-plan import — carries Alt Text; staggered hourly from 09:00
+  UTC) plus `pins.csv` as the Pinterest-native fallback.
 
 Tools: `bin/pinterest_registry.py`, `bin/papermoon-blob.py`,
 `bin/pinterest_tag_ledger.py`, `bin/make_daily_pins.py`. Carousels are not
 supported by the bulk CSV (one Media URL per row) — one image per pin.
-Uploading the CSV to Pinterest is always the human step; the agents make no
-publication claim. Open decision: keyword-candidate seed source (CM listing
-tags vs live `bin/search.js`) — the agent drafts candidates for now.
+Uploading `buffer.csv` to Buffer (free: connect the Pinterest business
+channel, channel timezone = a no-DST UTC city like Reykjavik, 10-slot rolling
+queue — upload only after the previous batch published) is always the human
+step; the agents make no publication claim. Keyword candidates are seeded
+mechanically in `brief.md` from each font's description.txt, then rotated via
+the ledger — CM listing tags / `bin/search.js` validation remain optional
+future seed sources.
 
 ## 📁 WORKSPACE & OUTPUT DIRECTORY STRUCTURE
 

@@ -1,12 +1,14 @@
 ---
 name: agent-daily-pinterest-run
-description: Daily Pinterest pipeline. Randomly picks 10 registered fonts, writes fresh per-pin title/description/keywords with tag rotation from the anti-cannibalization ledger, and assembles the staggered bulk-import pins.csv. Manual import stays a human step.
+description: Daily Pinterest pipeline. Randomly picks 10 registered fonts, writes fresh per-pin title/description/alt/keywords with tag rotation from the anti-cannibalization ledger, and assembles the staggered bulk-import buffer.csv (Buffer free import — carries alt text) plus pins.csv fallback. Manual import stays a human step.
 user-invocable: true
 ---
 
 # Daily-Pinterest-Run
 
-You produce one day's Pinterest Bulk-create CSV from the font registry. All
+You produce one day's Pinterest pin batch from the font registry — a
+`buffer.csv` for Buffer's free bulk uploader (carries alt text; primary
+destination) plus a `pins.csv` Pinterest-native fallback. All
 mechanics live in `bin/` tools — run them from the project root; never
 reimplement selection, validation, staggering or CSV writing yourself.
 
@@ -28,42 +30,86 @@ python3 bin/make_daily_pins.py brief --date D
 
 `pick` excludes any font pinned in the previous 14 days and writes
 `outputs/pinterest/D/selection.json`. `brief` writes `brief.md` with per-font
-name, board suggestion, blob image URL, product URL, description excerpt, and
-the font's most-used tags to rotate away from.
+name, board suggestion, blob image URL, product URL, description excerpt, a
+mechanical candidate-keyword seed (extracted from description.txt), and the
+font's most-used tags to rotate away from.
 
 ## Step 2 — write pin copy (your only creative work)
 
-For each selected font write a title, description, and final keywords. The
-archive spec `archive/specs/agent-10-pinterest-fonts-specialist.md` §"PINTEREST
+For each selected font write a title, description, alt text, and final
+keywords. The archive spec `archive/specs/agent-10-pinterest-fonts-specialist.md` §"PINTEREST
 FONT SEO STRATEGY" and the 3-PIN intent framework are your writing reference —
 read the two strategy sections only, not the whole file. Across the day's
 fonts, vary intent (aesthetic/specimen, crafter/Cricut, project/use-case) so
 the batch does not read as one template.
 
-Per font:
+### Keywords (decide per font)
 
-1. Candidates: draft 8–12 keyword candidates from the description excerpt and
-   the font's style/use cases. (Open decision — not yet settled: candidates
-   may later be seeded from CM listing tags or live `bin/search.js` validation;
-   until then draft them yourself.)
-2. `python3 bin/pinterest_tag_ledger.py avoid --slug <slug> --candidates "<c1, c2, …>" --take 6`
-   → use the returned least-used tags as the pin's Keywords.
-3. Title: 1–100 chars, primary keyword phrase front-loaded within the first
-   ~50 chars, unique across the batch.
-4. Description: 1–500 chars, 3–4 natural sentences (hook+keyword,
-   style/vibe+secondary keyword, features incl. file formats and commercial
-   license, CTA). No tag dumps. Never invent specs — use only what the brief
-   states.
-5. Board: use the brief's suggestion unless it clearly fits another of the
-   four (`Handwritten / Display / Script / Decorative Fonts`) better.
-6. Link: leave it out — the tool derives it from the registry and appends
-   unique utm params per row.
+1. Start from the brief's "Candidate keywords" line — a mechanical seed from
+   the description. Extend with style/use-case words the seed missed; target
+   8–14 candidates total.
+2. Rotate: `python3 bin/pinterest_tag_ledger.py avoid --slug <slug> --candidates "<c1, c2, …>" --take 6`
+   → prefer never-used, then least-used. Prefer *fresh phrasings* of the same
+   intent over repeating last run's strings ("wedding script font" →
+   "script font for wedding invitations") — exact-string repetition is what
+   cannibalizes your own pins.
+3. Final mix of 6: 2 style terms + 2 use-case terms + 1 qualifier/audience
+   term + 1 seasonal/experimental slot (from the calendar below, when in its
+   lead window).
+
+### Title (research: 1M-pin study 2025)
+
+- Target **45–65 chars** (tool enforces 1–100). **Title Case.** Unique in
+  the batch (tool enforces).
+- Primary keyword phrase inside the **first 30–35 chars** (feed truncates).
+- Vary the template across the batch:
+  1. `{Primary Keyword} — {Font Name} | {Use Case}`
+  2. `{Use Case} Font: {Style} {Font Name}`
+  3. Question/curiosity form, max 2 per batch.
+- Never the word "click", no bait, and don't restate the description's
+  opening — the title adds its own info.
+
+### Description (≤500 chars tool limit; aim 150–300)
+
+- Sentence 1: primary keyword + use-case hook, keyword within the first
+  ~75 chars.
+- Sentences 2–3: style/vibe, 3–5 keywords woven into natural sentences,
+  features from the brief only (formats, commercial license — never invent).
+- Close with a soft CTA, never "click": "Perfect for invitations, logos, and
+  packaging." / "Download {Font Name} for your next project."
+
+### Alt text (required — buffer.csv carries it; the biggest documented click lever)
+
+- One sentence describing what the image shows: font name + style + specimen
+  ("Elegant serif font specimen spelling 'Marren' in luxury logo style").
+- 80–200 chars target (tool enforces 1–500). The primary keyword may appear
+  naturally; never copy the description wholesale; never invent features not
+  in the brief.
+
+### Placement notes
+
+- Board: use the brief's suggestion unless another of the four clearly fits.
+  Board title/description are ranking signals — don't park everything on one.
+- The CSV Keywords column mirrors the 3–6 final phrases, comma-separated.
+  Pinterest indexes title + description + board + alt text; treat the
+  Keywords column (pins.csv only) as supporting, not the ranking lever.
+- Link: leave it out — the tool derives it from the registry and appends
+  unique utm params per row.
+
+### Seasonal keyword calendar (lead: publish 45–60 days ahead, 60–90 for Christmas)
+
+| Quarter | Themes | Example phrases |
+|---|---|---|
+| Q1 | Valentine's (Dec–Feb lead), winter | romantic script font, valentine font, winter handwriting font |
+| Q2 | Easter (Feb–Mar), Mother's Day (Mar), wedding season (Apr–Jun) | easter font, floral script font, wedding invitation font |
+| Q3 | Summer crafts, Halloween (Jul–Aug lead) | summer display font, halloween font, spooky gothic font |
+| Q4 | Christmas (Sep–Oct lead), New Year | christmas script font, festive display font, new year font |
 
 Write `outputs/pinterest/D/copy.json` — a JSON list, one object per selected
 font, in the selection order:
 
 ```json
-[{"slug": "…", "title": "…", "description": "…", "keywords": ["…"], "board": "…"}]
+[{"slug": "…", "title": "…", "description": "…", "alt": "…", "keywords": ["…"], "board": "…"}]
 ```
 
 ## Step 3 — assemble
@@ -73,26 +119,51 @@ python3 bin/make_daily_pins.py assemble --date D
 ```
 
 Default stagger: 09:00 UTC start, one pin per hour (10 pins over 10 hours).
-The tool validates everything (lengths, uniqueness, boards, keyword format,
-future-dated slots within 14 days), writes `pins.csv` (CSV UTF-8) +
-`tag-report.md`, and records the day's tags and pin dates in the ledger. On
-validation failure, fix `copy.json` and re-run — never edit the CSV by hand.
+The tool validates everything (lengths, alt text, uniqueness, boards, keyword
+format, future-dated slots within 14 days), writes `buffer.csv` (Buffer
+import: Text / Image URL / Title / Alt Text / Link / Board Name / Posting
+Time — the primary file), `pins.csv` (Pinterest-native fallback, no alt
+column), and `tag-report.md`, and records the day's tags and pin dates in the
+ledger. On validation failure, fix `copy.json` and re-run — never edit a CSV
+by hand.
 
 ## Step 4 — report and stop
 
-Report: `outputs/pinterest/D/pins.csv` path, number of rows, publish window
-(first/last UTC times), boards used, and the manual import step:
-Pinterest Business on desktop → Settings → Import content → upload the CSV.
+Report: `outputs/pinterest/D/buffer.csv` path (primary), number of rows,
+publish window (first/last UTC times), boards used, and the manual import
+step:
+
+1. One-time setup: create a Buffer free account (or use an existing one) →
+   connect the Pinterest business account as a channel → open that channel's
+   settings (⚙️) and set its timezone to a UTC city with no DST (search
+   "Reykjavik") so the CSV's UTC times publish exactly as written.
+2. Each run: publish.buffer.com → select the Pinterest channel → settings
+   cog → General → Bulk Upload → upload `buffer.csv` → review the preview →
+   **Add Posts to Queue**. Only do this after the previous batch's last pin
+   has published — the free plan holds 10 waiting posts and silently drops
+   any rows beyond the free slots.
+3. Fallback: `pins.csv` still works via Pinterest Business on desktop →
+   Settings → Import content, but carries no alt text.
+
 Recommend testing the first small batch and never exceeding ~10 pins/day on a
 young account.
 
 End with "Import is pending — human step." You never upload the CSV, never
-touch Pinterest, and make no publication claim.
+touch Pinterest or Buffer, and make no publication claim.
 
 ## Hard rules
 
-- One CSV per date folder; re-running `assemble` regenerates it idempotently.
+- One CSV set per date folder; re-running `assemble` regenerates both files
+  idempotently.
+- Alt text is required on every pin (1–500 chars) — buffer.csv carries it and
+  it is our biggest documented click lever.
 - No hashtags anywhere in Keywords — plain comma-separated search terms.
+  Buffer's template has no Pinterest Keywords column (its `Tags` column is
+  Buffer-internal labels; omit it) — Keywords live in pins.csv only.
+- Titles: Title Case, 45–65 char target, primary keyword in the first 35
+  chars, unique in batch. Descriptions: primary keyword in the first sentence
+  (~75 chars). Never "click" in title or description; soft CTAs only.
+- Aim for 6 keywords per pin using the mix rule; 3–10 accepted by the tool.
 - Facts come from the brief only. If a font's description excerpt contradicts
   its name/category, flag it instead of writing copy for it.
 - Blob tokens and `.env` contents must never appear in any output.
