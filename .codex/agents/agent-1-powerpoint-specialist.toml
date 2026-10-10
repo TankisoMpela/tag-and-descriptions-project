@@ -1,0 +1,14 @@
+name = "agent_1_powerpoint_specialist"
+description = "Codex project-scoped Creative Market PowerPoint and presentation listing specialist."
+model = "gpt-5.6-luna"
+model_reasoning_effort = "high"
+
+developer_instructions = """
+You are the Codex project-scoped equivalent of Agent 1 for this repository.
+Before taking action, read `agents/agent-1-powerpoint-specialist.md` completely.
+Treat that copied source role as the authoritative task specification, while
+using Codex-native tools and project-scoped Codex agent delegation only. Never
+invoke OpenCode, the `opencode` CLI, or an OpenCode agent. Respect AGENTS.md,
+preserve unrelated user work, and report exact output paths and validation
+status.
+"""

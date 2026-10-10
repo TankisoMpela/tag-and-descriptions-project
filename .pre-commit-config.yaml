@@ -1,0 +1,27 @@
+# Pre-commit hooks for the tag & description project.
+#
+# Install once:  pre-commit install
+# Run manually:  pre-commit run --all-files
+#
+# The pipeline is fully local (private repo), so hooks are local `system`
+# entries rather than remote repos. `npm run validate` covers config JSON,
+# Python byte-compilation, and font-factory staging hygiene.
+
+repos:
+  - repo: local
+    hooks:
+      - id: npm-validate
+        name: npm run validate (config JSON, python compile, font-factory hygiene)
+        entry: npm run validate
+        language: system
+        pass_filenames: false
+        always_run: true
+
+  - repo: local
+    hooks:
+      - id: font-factory-strict
+        name: font-factory pathological-slug gate (fail on concatenation dirs)
+        entry: python3 bin/validate_font_factory.py
+        language: system
+        pass_filenames: false
+        always_run: true

@@ -1,0 +1,192 @@
+ONE-OFF SUPPORTING FONT IMAGE REIMAGINATION PROMPT — 1:1 PERSONAL VERSION
+
+Create exactly one new square supporting font image from the supplied references.
+
+Use the full 3:2 rules in `supporting-image-reimagination-prompt.txt` as the
+authoritative content and fidelity specification, with these square-specific
+overrides for this run:
+
+The square must be a customer-facing flat 2D graphic viewed straight-on. No
+live-action or photographic environment, room, landscape, product mockup,
+tabletop scene, physical object, perspective surface, hands, people, or 3D
+staging is allowed. Use only a flat color field, poster, label artwork,
+editorial panel, 2D illustration, collage, or restrained graphic texture. The
+font lettering must remain flat and front-facing; no extrusion, inflation,
+sculpting, bending, or lettering wrapped around depth.
+
+INPUTS
+- Font seed/specimen image: [ATTACH FONT SEED]
+- Old supporting image to transform: [ATTACH ONE OLD SUPPORTING IMAGE]
+- Approved main thumbnail for family resemblance, if available: [ATTACH APPROVED MAIN]
+- Final font name: [ENTER FINAL FONT NAME]
+- Theme variant for THIS image from theme.txt: [PASTE THIS IMAGE'S ONE-LINE theme_variant SECTION HERE]
+- Supporting-image theme sentence from Font Renamer (fallback only): [PASTE THE EXACT ONE-SENTENCE THEME HERE IF THE VARIANT IS MISSING]
+- Output filename: [promo_1.png / promo_2.png / NEXT PROMO NUMBER]
+
+TEXT LAYOUT AND WORD INTEGRITY — HARD REQUIREMENT
+Because this square may be generated programmatically, inspect every visible
+word and text block before finalizing the canvas. No word may be clipped by the
+canvas edge, hidden by artwork, or broken by an accidental line wrap. If a
+word is cut off or split across lines, fix the composition before output:
+widen the text area, adjust tracking or line spacing, or reflow only at
+complete-word boundaries. Treat reducing the type size or moving the block as a
+last resort and use the smallest change that restores legibility -- the
+placeholder's type geometry is the composition (see TEXT PLACEHOLDER LAYOUT).
+Never accept a clipped, half-rendered, or unintentionally hyphenated word.
+Every required word must be fully visible and legible at the final square size.
+
+THEME VARIANT HANDOFF — REQUIRED
+Use the pasted `Theme variant` for this exact image (the section under this
+image's `##` heading in `theme.txt`) as the creative north star for this square
+panel. It is the Agent 27-authored direction that tailors the font's shared
+flat 2D world — art language, palette family, atmosphere root — to this board's
+own lettering, copy, layout, and role. Translate it into the art or visual
+language, palette/color relationships, atmosphere, and energy or communication
+mode of the supporting copy. It is direction for the font's visual world, not text to print on the
+image.
+
+Do not repeat the variant verbatim, reuse one hardcoded phrase across
+every panel, or turn it into a rigid square template. Choose copy and hierarchy
+for this particular source image and make this square materially differentiated
+from the other supporting images and from the 3:2 version. A short sentence,
+one full-screen word, a label, a headline, a compact editorial line, or another
+purposeful format may be right depending on the font and source. If the variant
+is missing or blank, fall back to the global `Supporting-image theme sentence`;
+if both are missing, stop and ask the user to paste one rather than
+inventing a replacement theme.
+
+TEXT PLACEHOLDER LAYOUT — DO NOT MOVE OR RESIZE THE TYPE
+The supplied text placeholder for this ratio is the art-directed type
+composition. Its type size, position, alignment, line breaks, and visual
+prominence are the brief, not a draft to improve. Build the artwork around the
+type; never recompose the type to suit the artwork.
+
+- Do not move, resize, re-crop, re-stack, re-align, re-order, or shrink the
+  typography.
+- The square placeholder has its own layout. Honouring it is not the same as
+  cropping the 3:2 image -- this panel is square, its type geometry is whatever
+  the square placeholder shows, and that geometry is fixed.
+- Do not shrink the type to make room for artwork. Take space from the artwork,
+  never from the type.
+- Keep the type exactly as visually dominant as it is in the placeholder. The
+  type is the product; the artwork is the context around it.
+- The type's colour, material, and treatment may be adapted. Its geometry may
+  not.
+- The one exception: if the type would otherwise be clipped, hidden, or
+  illegible, change the minimum geometry needed, keeping the same relative
+  position, alignment, and prominence. Never reduce its size for composition.
+
+PRIMARY TASK
+Reimagine the old supporting image as one complete, finished 1:1 supporting
+    image for personal use alongside the marketplace 3:2 version. Use the supplied
+image as raw material for the font, lettering, copy inspiration, mood, and
+broad purpose, then make your own creative choices. Preserve useful product
+meaning where appropriate. Make a materially new concept rather than a crop,
+recolor, reskin, or padded version of the old image or the 3:2 image.
+
+WHITE-BOARD TRANSFORMATION OVERRIDE — STRICT
+When the supplied old image is a white-background text placeholder, do not
+recreate that blank white board in the square output. Treat it as raw material
+for the font lettering, copy, hierarchy, and broad purpose only. A white field
+with the same text simply placed on it — or a realistic object behind the same
+layout — fails.
+
+Build a complete square marketplace design with a deliberate visual treatment:
+use a considered color/background, abstract flat graphic art, editorial grid or
+rules, paper/ink/print texture, restrained illustration, or a controlled 2D
+graphic texture that suits this font. Keep the typography exactly where the
+square placeholder puts it, at the size it gives it -- do not resize, move,
+stack, crop, align, or reorder it. Design the field, artwork, and texture around
+that fixed type geometry. Keep the font lettering large and legible at small
+gallery size.
+White may be one designed element, but it cannot be the untouched default
+canvas. The result should look like a finished type specimen, poster, label,
+flat package-art panel, editorial card, or other credible font application — not a
+text overlay waiting for design.
+
+SQUARE COMPOSITION
+- Design the composition as a square from the beginning; do not crop or derive
+  it from the 3:2 image.
+- Keep all important lettering and copy inside generous safe margins and fully
+  visible at small preview size.
+- Use one clear presentation of the font lettering, with a coherent visual
+  relationship between the type, background, and supporting copy.
+- The font lettering must remain flat and front-facing: no extrusion, inflation,
+  sculpting, freestanding 3D lettering, or lettering wrapped around cylinders,
+  boxes, walls, signs, plinths, or any object with depth.
+- Only flat editorial design, poster/label artwork, 2D collage, illustration,
+  and controlled graphic paper/ink textures are allowed. Photography, physical
+  packaging or paper applications, and abstract glossy 3D concept art are
+  forbidden.
+- Keep the visual world deliberately simple. Prefer a solid color or flat graphic
+  field, quiet editorial grid, 2D illustration, poster/label artwork, or one
+  restrained graphic motif. Simplicity is intentional art direction, not an
+  unfinished result.
+- **No decorative shadow or dappled light.** Do not add cast shadows, leaf or
+  foliage shadows, blind or window-frame shadows, wall shadows, or a soft shadow
+  gradient laid over the composition. This is the most overused way to make a
+  panel read as "premium", it appears by default, and it is not a concept. Include
+  a real light-and-shadow effect only when the composition's own idea depends on
+  it, never as atmosphere or a finishing layer. Do not substitute mood lighting,
+  glow, grain, or paper texture for the same effect.
+- Do not use photography, rooms, busy landscapes, cinematic set dressing, piles
+  of props, physical materials, or multiple interacting objects.
+- Use no more than two supporting graphic elements besides the lettering and
+  required copy. Do not add objects merely to make the image feel finished.
+  Flat color, paper/ink texture used as 2D art, simple geometry, restrained
+  illustration, and abstract flat art are the required alternatives to 3D
+  environments.
+- Preserve the source's truthful product purpose and as much legible truthful
+  subtext as possible. Remove old branding, URLs, handles, unsupported claims,
+  and unreadable text. Do not add unprovided attribution or studio copy.
+- Change at least four meaningful decisions from the old reference, including
+  graphic context, flat visual language, background composition, crop of the
+  artwork, palette, copy treatment, or secondary motifs. The typography's
+  placement and size are not among the decisions you may change.
+- Make the pasted theme variant evident through the square's art/visual
+  language, palette, atmosphere, and copy energy, while keeping this panel
+  distinct from the other supporting images.
+- Reimagining does not require visual complexity: a materially new color field,
+  close-up graphic crop, paper/ink study rendered as 2D art, or minimal graphic
+  composition is valid and preferred
+  when it communicates the font clearly.
+
+UNSEEN GLYPH AND TYPOGRAPHY BOUNDARY — SQUARE OVERRIDE
+Use the product font only for glyphs and lettering visibly supplied in the
+attached font seed/specimen or white reference board. Do not infer unseen
+letterforms, complete a word with guessed glyphs, extrapolate the style to
+unsupported letters or symbols, or redraw product lettering from memory. If
+new supporting copy needs characters that were not supplied, render it in
+clearly generic auxiliary typography that is visibly different and secondary;
+never make it look like evidence of the product font.
+
+OUTPUT
+- Generate exactly one complete image in one generation/editing operation.
+- Target 1:1, preferably 1500x1500, 1536x1536, or 1600x1600.
+- Do not create a 3:2 image, Pinterest image, collage, or long-scroll panel.
+- Do not use post-processing or an overlay to repair spelling, glyph fidelity,
+  or missing copy. Regenerate the complete image if the result fails.
+
+FINAL SELF-CHECK
+Reject and regenerate if the product lettering is generic, misspelled,
+distorted, guessed from unseen glyphs, clipped, incorrectly colored for the
+composition, or rendered as 3D; if any photograph, live-action environment,
+physical object, perspective surface, product mockup, or depth staging appears;
+if the
+result is merely a crop/reskin; if it merely recreates a white text board or
+leaves the typography on an empty white canvas without a designed
+background/graphic treatment; if the typography was moved, resized, or
+re-cropped from the placeholder, or made less dominant than it was; if truthful relevant copy was unnecessarily dropped; if old
+branding or invented claims appear; or if the output is not 1:1.
+Also reject it if the composition does not express the pasted theme variant
+through its art, palette, atmosphere, and copy energy, makes every supporting
+panel feel the same, or prints the theme variant as a slogan.
+
+RESPONSE AFTER GENERATION
+State only:
+MODE 2 SQUARE COMPLETE — save as prepared_visuals/1x1/[OUTPUT FILENAME]
+Copy fidelity: [PASS/FAIL]
+Flat (non-3D) lettering: [PASS/FAIL]
+Reimagined square context: [PASS/FAIL]
+Supporting copy: [MAIN FONT FAITHFUL / NON-FOCUS REIMAGINED / OMITTED AS IRRELEVANT / FAIL]
+Any visible problem: [SHORT NOTE]

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Prefer the former user-local ImageMagick 7 runtime when it exists, otherwise
+# use the native ImageMagick installation restored on this machine.
+if [[ -x "${IMAGEMAGICK7_ROOT:-}/usr/bin/magick" ]]; then
+  exec "${IMAGEMAGICK7_ROOT}/usr/bin/magick" "$@"
+elif [[ -x /home/tankiso/.local/share/imagemagick7/usr/bin/magick ]]; then
+  exec /home/tankiso/.local/share/imagemagick7/usr/bin/magick "$@"
+else
+  exec /usr/bin/magick "$@"
+fi

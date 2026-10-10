@@ -1,0 +1,121 @@
+ONE-OFF MAIN THUMBNAIL FONT IMAGE PROMPT
+
+Create exactly one new main marketplace thumbnail from the two supplied images:
+1. a font seed/specimen PNG, and
+2. the old main thumbnail to transform.
+
+This prompt is authoritative for this run. The new font name is supplied by the user (in the seed / input). PaperMoon is the studio name — the new studio name replacing the old studio's branding. PaperMoon appears only as an optional small attribution wordmark, never as the font name.
+
+INPUTS
+- Font seed/specimen PNG: [ATTACH FONT SEED PNG]
+- Old main thumbnail: [ATTACH OLD THUMBNAIL]
+- New font name: [ENTER FINAL FONT NAME]
+- Studio name: PaperMoon
+- Output filename: thumbnail_main.png
+
+PRIMARY TASK
+Reimagine the old thumbnail into one new concept-led main listing image for the supplied font name. Use the seed PNG as the sole authority for the font's letterforms and use the old thumbnail as the authoritative source for product purpose, truthful copy, and factual claims. The result must sell the font through an arresting visual premise while preserving complete commercial clarity and factual accuracy.
+
+This is a ONE-SHOT generation. Do the inspection, text inventory, art-direction choice, composition, and final self-check internally before producing the image. Do not ask questions, produce alternatives, or require a second correction pass.
+
+FOCAL HIERARCHY & LIVELY SCENES — HERO FONT COMMANDS THE FRAME
+1. **Font Name Dominance**: The supplied font name is the undisputed hero. It must command **dominant visual scale (55% to 85% of visual width or height depending on name length)**, with massive scale, highest contrast, and instant readability at small marketplace preview sizes (300px).
+2. **Lively & Rich Backgrounds Permitted**: The background scene, environment, or artwork may be lively, active, detailed, character-filled, or visually rich as long as the **hierarchy remains crystal clear**.
+3. **Clear Visual Separation**: Use contrast, depth of field, negative space around the lettering, or silhouette framing so active background elements celebrate and frame the hero title without cluttering, crossing out, or shrinking it.
+4. **Clean Factual Layout**: Keep all mandatory factual copy (formats, weights, features) clean, ordered, and compact in the outer margins or quiet corners. Do not let text blocks scatter across the visual center.
+
+CREATIVE NORTH STAR & GENRE MATCHING — NO BIAS LOCKS
+Do not default to animals, character mascots, or any single visual trope. Choose an art direction that naturally matches the specific genre, weight, era, and mood of the seed font:
+- **Display & Heavy Fonts**: Brutalist poster, album sleeve, industrial signage, high-impact editorial cover.
+- **Serif & Luxury Fonts**: Architectural monograph, editorial magazine jacket, high-end gallery specimen, literary book cover.
+- **Sans-Serif & Modern Fonts**: Swiss graphic poster, tech exhibition card, minimalist signage, modern packaging.
+- **Script & Decorative Fonts**: Vintage label, event ticket, hand-crafted packaging, retro travel poster.
+- **Blackletter, Vintage & Retro**: Historic manuscript, antique label, woodblock print, retro packaging.
+- **Handwritten & Brush Fonts**: Studio notebook, editorial sketch, poster art, craft label.
+- **Monospace & Code Fonts**: Technical manual, terminal poster, modernist grid, data specimen.
+
+Build the image around ONE clear, genre-matched premise:
+- an invented product, book, magazine, album, poster, or packaging artifact;
+- an active, cinematic, illustrative, or photographic scene where the background action frames the hero title;
+- a single or multi-element visual story where the image and text interact naturally;
+- a compelling image/text relationship where the font name is instantly recoverable at first glance.
+
+LETTERING FIDELITY — MOST IMPORTANT
+1. Preserve the exact letterforms and distinctive glyph shapes shown in the font seed. Do not substitute a generic typeface, redraw the font, regularize unusual forms, change spelling, or invent missing glyphs.
+2. Render the new font name exactly as supplied, with the supplied capitalization. The visible hero lettering must use the supplied seed font style.
+3. The supplied new font name replaces the old font name. Do not show both names, retain the old name, or create a variation of either name.
+4. If the seed shows a specimen word, preserve its letterforms and spelling only where useful; the supplied product name remains the hero.
+5. Keep all lettering readable, correctly spelled, unclipped, and inside safe margins. Do not let glare, props, shadows, folds, patterns, or perspective obscure critical glyphs.
+6. **Forbidden Lettering Color**: Do not use the same color for the font lettering as the original reference image. Choose a new, distinct lettering color that works with the new palette and maintains high contrast against the background.
+
+PRE-DESIGN COPY AND FACT INVENTORY — DO THIS PRIVATELY BEFORE GENERATING
+Inspect the old thumbnail at full resolution and make an internal inventory of every legible text block:
+- the old font name, which must be replaced by the supplied new name;
+- the main descriptor or slogan;
+- style, weight, format, glyph, category, language, and feature labels;
+- every factual statement, feature description, compatibility/format/language claim, and buyer-useful supporting copy;
+- old creator, studio, foundry, URL, and handle text.
+
+The user-supplied old reference image is authoritative for the font's factual claims. Treat every legible factual statement and feature claim shown there as verified and mandatory source copy for the new thumbnail. Preserve its exact wording, spelling, capitalization, and punctuation wherever possible. Do not fact-check it away, summarize it away, weaken it, or omit it because the new composition is difficult. If space is tight, redesign the layout, reflow the copy into compact corner blocks, or adjust background details until every required fact and claim remains readable.
+
+Omit text only when it is the old font name (replace it with the supplied new name), old creator/studio/foundry branding, a URL or handle, unreadable text, or purely decorative filler. Never label a legible reference claim as unsupported. If text cannot be read confidently, omit that unreadable text rather than guessing. Never invent copy.
+
+If the old thumbnail contains a PaperMoon wordmark, you may include PaperMoon once as a small studio attribution wordmark in a corner. PaperMoon is the studio name, never the font name. Omit it if it clutters the composition.
+
+BACKGROUND AND MEDIUM — FLEXIBLE ART DIRECTION
+Choose any coherent medium or background style that matches the font (photography, photomontage, flat editorial, print illustration, poster design, or paper collage).
+
+Rules:
+- Active, lively, or detailed scenes are welcome provided the hero font name remains the obvious, dominant subject.
+- Prefer matte, tactile, graphic, or editorial finishes: paper grain, believable shadows, print ink, natural wear, and controlled depth of field.
+- Lettering may be flat graphic ink, or placed with mild ordinary print perspective on the planar face of a book, poster, card, ticket, or package.
+- FORBIDDEN: CGI, glossy synthetic 3D rendering, Unreal/Octane-style lighting, floating 3D geometry, plastic gloss, chrome, liquid swirls, artificial podiums, or extruded 3D sign letters.
+
+LAYOUT AND THUMBNAIL CLARITY
+- Make the supplied font name the massive, obvious hero: commanding visual scale (55%–85%), with strong contrast and instant 300px preview readability.
+- Maintain clear visual hierarchy: background action and elements must frame and highlight the title, never obscure or shrink it.
+- Keep all important text inside an approximate 8–10% outer safe margin.
+- Keep supporting factual copy (formats, weights, features) ordered and compact in quiet margins or corners.
+- Keep PaperMoon small and secondary.
+- Do not create a square image, Pinterest image, collage of alternatives, or long-scroll image.
+
+OUTPUT RULES
+- Generate exactly one complete image in one generation/editing operation.
+- Target 3:2, preferably 1500x1000, 1536x1024, or 1600x1067.
+- Build the complete font lettering, chosen background/medium, composition, and supporting copy together in the same operation.
+- Do not produce a background-only version, a text-only version, or multiple concepts.
+- Do not use post-processing, a second turn, or a later overlay to repair wrong spelling, substitute glyphs, or add missing copy. The one generated image must be complete.
+
+Before committing, inspect the finished image as if it were reduced to approximately 300 pixels wide. The hero font name must dominate the frame and read instantly. If any background element competes with or shrinks the title, enlarge the title and adjust the background contrast or separation within the same generation operation.
+
+FINAL SELF-CHECK BEFORE ACCEPTING
+Complete this check internally before returning the one generated image. Do not ask for a second turn or return an avoidable failure:
+- Does the hero font name command dominant visual scale (55%–85% of frame) with highest contrast?
+- Is the visual hierarchy clear so background elements frame rather than crowd the font?
+- Is the art direction matched to the specific font genre (Display, Serif, Sans, Script, Vintage, Blackletter, Mono, etc.) without cliché locks?
+- Is the supplied font name misspelled, incorrectly capitalized, or set in a substituted font?
+- Are distinctive seed glyphs missing, generic, or visibly redrawn?
+- Did the lettering reuse the same color as the original reference image? If yes, change the lettering color.
+- Is the main lettering extruded, inflated, sculpted as 3D type, or wrapped around a 3D surface?
+- Is the lettering itself 3D, wrapped around curvature, or distorted by severe perspective? Mild ordinary print perspective on a planar package, poster, book, card, sleeve, ticket, or label is allowed.
+- Did the image accidentally combine a real-looking photograph with glossy synthetic 3D objects or a fake rendered environment?
+- Was any factual statement, feature, format, compatibility, language, style, or weight claim from the old reference omitted or weakened? If yes, reflow copy into quiet corners and redesign.
+- Is any required text clipped, hidden, unreadable, or covered by glare?
+- Did old creator branding, a URL, a handle, or an invented product claim appear?
+- Does the image still read clearly at approximately 300 pixels wide?
+- Is the output not 3:2 or does it contain multiple alternatives?
+
+If a check fails, correct the composition within this same single generation operation before committing. Never knowingly return a correctable failure.
+
+RESPONSE AFTER GENERATION
+State only:
+MODE 1 COMPLETE — save as prepared_visuals/thumbnail_main.png
+Font name: [SUPPLIED FONT NAME]
+Background medium: [PHOTOGRAPHY / EDITORIAL POSTER / ILLUSTRATION / COLLAGE]
+Hero font scale: [DOMINANT 55-85% / FAIL]
+Focal hierarchy check: [CLEAR SEPARATION & HIERARCHY / FAIL]
+Genre-matched concept: [MATCHES FONT STYLE / FLEXIBLE / FAIL]
+Seed-letterform fidelity: [PASS/FAIL]
+Flat (non-3D) lettering: [PASS/FAIL]
+Supporting copy: [ALL FACTS PRESERVED / ALLOWED NON-FACT COPY OMITTED / FAIL]
+Any visible problem: [SHORT NOTE]

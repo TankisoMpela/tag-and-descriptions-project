@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "BOOTH Data Collector",
+  "version": "1.0.0",
+  "description": "Full-buffet BOOTH collector: list cards (name, price, likes, position) + item detail pages (description, tags, variants). Exports CSV + JSONL for rank/tag analysis.",
+  "minimum_chrome_version": "109",
+  "permissions": ["storage", "downloads", "tabs", "unlimitedStorage"],
+  "host_permissions": ["https://booth.pm/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://booth.pm/*"],
+      "js": ["shared.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "BOOTH Data Collector",
+    "default_popup": "popup.html"
+  }
+}

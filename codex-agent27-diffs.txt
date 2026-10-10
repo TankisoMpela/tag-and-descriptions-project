@@ -1,0 +1,356 @@
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md ===
+@@ -238,11 +238,13 @@
+   string recorded in the plan JSON under that image), followed by 2–4
+-  supporting lines: the shared world constants to keep (from the global theme
+-  sentence: art language, palette family, atmosphere root) and the
+-  panel-specific variation to explore (motif, texture, colour emphasis, shape
+-  language, composition dressing) that best completes the board's authored
+-  display word/phrase, layout, role, and ratio composition;
++  supporting lines. State the shared world constants briefly once, then spend
++  most of the section on the panel-specific direction: a distinct motif,
++  texture, colour emphasis, shape language, focal arrangement, and composition
++  dressing that completes that board's authored display word/phrase, layout,
++  role, and ratio composition;
+ - the set must feel like one campaign — same flat 2D graphic world, same
+   palette family, same atmosphere root — while each panel stays visibly
+-  different ("same feel, sameish"): never ten unrelated ideas, and never ten
+-  copies of the same description;
++  different. Treat the global theme as a constraint, not copy to repeat:
++  never restate the full concept in every variant, never reuse the same motif
++  or composition, and never write ten near-identical prompts. Each variant
++  must introduce at least two materially new visual decisions;
+ - every variant inherits the flat-2D constraints of the global theme sentence:
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml ===
+@@ -41,8 +41,11 @@
+ opening with that image's one-line `theme_variant` (the same string recorded in
+-the plan JSON under that image) plus 2–4 supporting lines of shared world
+-constants (art language, palette family, atmosphere root from the global theme
+-sentence) and panel-specific variation (motif, texture, colour emphasis, shape
+-language, composition dressing). Every variant keeps the theme sentence's flat
++the plan JSON under that image) plus 2–4 supporting lines. State the shared
++world constants briefly, then prioritize panel-specific variation (a distinct
++motif, texture, colour emphasis, shape language, focal arrangement, and
++composition dressing). Treat the global theme as a constraint, not copy to
++repeat: every variant must introduce at least two materially new visual
++decisions, and no motif, layout language, or near-identical prompt may be
++reused. Every variant keeps the theme sentence's flat
+ 2D world and palette family while tailoring to that board's authored lettering
+-and layout, so the set reads as one campaign ("same feel, sameish"); every
++and layout, so the set reads as one campaign; every
+ variant inherits the flat-2D restrictions (no live 3D, photograph,
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md ===
+@@ -248,3 +248,7 @@
+   or composition, and never write ten near-identical prompts. Each variant
+-  must introduce at least two materially new visual decisions;
++  must introduce at least two materially new visual decisions. Across the
++  eight promos, use at least six distinct visual strategies (for example:
++  typographic border, radial ornament, asymmetrical corner cluster, flowing
++  letterform trail, modular frame, negative-space mark, or pattern field),
++  selecting strategies that fit the font rather than filling a checklist;
+ - every variant inherits the flat-2D constraints of the global theme sentence:
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml ===
+@@ -47,3 +47,7 @@
+ decisions, and no motif, layout language, or near-identical prompt may be
+-reused. Every variant keeps the theme sentence's flat
++reused. Across the eight promos, use at least six distinct visual strategies
++that fit the font (such as a typographic border, radial ornament, asymmetric
++corner cluster, flowing letterform trail, modular frame, negative-space mark,
++or pattern field), rather than repeating one concept or filling a checklist.
++Every variant keeps the theme sentence's flat
+ 2D world and palette family while tailoring to that board's authored lettering
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md ===
+@@ -218,8 +218,12 @@
+ `supporting_image_theme` must be the one-sentence handoff authored in the naming
+-stage above, carried verbatim into the plan. Use it as the shared visual and copy
+-north star for the promos: it should influence the art language, palette,
+-atmosphere, and display-copy energy, while each promo still chooses its own
+-differentiated phrase format, role, and layout. Preserve the same one-line
+-handoff in `visual-handoff-manifest.md`. Never print the theme sentence itself
+-or use it as a fixed phrase list.
++stage above, carried verbatim into the plan. Treat it as a **loose inspiration
++anchor**, not a rigid art bible: it may influence the overall mood, but it does
++not require every image to repeat the same setting, palette, atmosphere, motif,
++or illustration treatment. Let each promo pursue a substantially different
++concept when that better showcases the font. Coherence comes from the font's
++letterforms, typography, authored copy, and brand quality—not from repeating
++the same visual world. Each promo still chooses its own differentiated phrase
++format, role, and layout. Preserve the same one-line handoff in
++`visual-handoff-manifest.md`. Never print the theme sentence itself or use it as
++a fixed phrase list.
+ 
+@@ -243,9 +247,10 @@
+   role, and ratio composition;
+-- the set must feel like one campaign — same flat 2D graphic world, same
+-  palette family, same atmosphere root — while each panel stays visibly
+-  different. Treat the global theme as a constraint, not copy to repeat:
+-  never restate the full concept in every variant, never reuse the same motif
+-  or composition, and never write ten near-identical prompts. Each variant
+-  must introduce at least two materially new visual decisions. Across the
+-  eight promos, use at least six distinct visual strategies (for example:
++- the set should feel like a thoughtfully art-directed font campaign, but the
++  global theme is only a loose thread, not a constraint that forces matching
++  scenery or palette. Promos may vary strongly in concept, visual metaphor,
++  palette emphasis, atmosphere, and illustration language. Never restate the
++  full concept in every variant, never reuse the same motif or composition, and
++  never write ten near-identical prompts. Each variant must introduce at least
++  two materially new visual decisions. Across the eight promos, use at least
++  six distinct visual strategies (for example:
+   typographic border, radial ornament, asymmetrical corner cluster, flowing
+@@ -253,3 +258,5 @@
+   selecting strategies that fit the font rather than filling a checklist;
+-- every variant inherits the flat-2D constraints of the global theme sentence:
++- every variant remains a flat-2D graphic direction, but it does not need to
++  inherit the global theme sentence's exact palette or atmosphere. Keep only
++  the medium-level safety restrictions below:
+   no live 3D environment, photograph, room/landscape/tabletop scene, staged
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml ===
+@@ -44,6 +44,8 @@
+ motif, texture, colour emphasis, shape language, focal arrangement, and
+-composition dressing). Treat the global theme as a constraint, not copy to
+-repeat: every variant must introduce at least two materially new visual
+-decisions, and no motif, layout language, or near-identical prompt may be
+-reused. Across the eight promos, use at least six distinct visual strategies
++composition dressing). Treat the global theme as a loose inspiration anchor,
++not a rigid shared world: promos may vary substantially in concept, palette
++emphasis, atmosphere, motif, and illustration language. Never restate the full
++concept in every variant; every variant must introduce at least two materially
++new visual decisions, and no motif, layout language, or near-identical prompt
++may be reused. Across the eight promos, use at least six distinct visual strategies
+ that fit the font (such as a typographic border, radial ornament, asymmetric
+@@ -51,5 +53,3 @@
+ or pattern field), rather than repeating one concept or filling a checklist.
+-Every variant keeps the theme sentence's flat
+-2D world and palette family while tailoring to that board's authored lettering
+-and layout, so the set reads as one campaign; every
++Coherence comes from the font identity, typography, and authored copy; every
+ variant inherits the flat-2D restrictions (no live 3D, photograph,
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md ===
+@@ -288,3 +288,5 @@
+ Every supporting promo should have a dominant readable phrase and one concise
+-supporting block; keep that secondary copy small and purposeful. Record a concise
++supporting block; keep that secondary copy small and purposeful. Treat each
++word as indivisible: never author a phrase that requires a word to be split
++across lines, clipped, or pushed outside the safe area. Record a concise
+ font-specific `role` or buyer question for each promo, keep those roles
+@@ -299,5 +301,7 @@
+ `word`, or `large`), never `small` or `micro`. Before handoff, ensure every
+-block fits inside the safe canvas area in both ratios; shorten or reline copy,
+-relocate it, or change its scale when necessary. The renderer fills the canvas
+-with large, readable typography so the resulting PNG is a useful reference for
++block fits inside the safe canvas area in both ratios and no two text bounding
++boxes overlap; shorten copy, reline only between complete words, relocate
++blocks, or change their scale when necessary. The renderer now fails on word
++fragments, overflow, or unresolved overlap rather than accepting a least-bad
++layout. It fills the canvas with large, readable typography so the resulting PNG is a useful reference for
+ the later image-model prompt.
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml ===
+@@ -82,3 +82,7 @@
+ decision. The dominant block must be substantial and all copy must fit the
+-canvas without becoming tiny. The helper must also render the separate factual
++canvas without becoming tiny. Treat each word as indivisible: never author
++copy that needs a mid-word line break. No text bounding boxes may overlap. The
++helper now fails on word fragments, overflow, or unresolved overlap, so revise
++the authored copy, placement, or scale before rerunning it. The helper must
++also render the separate factual
+ specimen families.
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml ===
+@@ -82,3 +82,5 @@
+ decision. The dominant block must be substantial and all copy must fit the
+-canvas without becoming tiny. Treat each word as indivisible: never author
++canvas without becoming tiny. The renderer reserves space for secondary
++blocks before committing the dominant block and can step it down from `hero`
++to `word` or `large` when needed. Treat each word as indivisible: never author
+ copy that needs a mid-word line break. No text bounding boxes may overlap. The
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md ===
+@@ -303,5 +303,7 @@
+ boxes overlap; shorten copy, reline only between complete words, relocate
+-blocks, or change their scale when necessary. The renderer now fails on word
+-fragments, overflow, or unresolved overlap rather than accepting a least-bad
+-layout. It fills the canvas with large, readable typography so the resulting PNG is a useful reference for
++blocks, or change their scale when necessary. The renderer reserves space for
++the secondary blocks before committing the dominant block and can step the
++dominant block down from `hero` to `word` or `large` when that is needed. It
++fails on word fragments, overflow, or unresolved overlap rather than accepting
++a least-bad layout. It fills the canvas with large, readable typography so the resulting PNG is a useful reference for
+ the later image-model prompt.
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md ===
+@@ -229,2 +229,31 @@
+ 
++### Thumbnail theme quality gate
++
++The `thumbnail_main` and `thumbnail_japanese` variants are not generic mood
++boards or palette summaries. They must be the strongest visual concepts in the
++set because the thumbnail is the first product impression. Each thumbnail
++variant must explicitly author all of the following in one compact prompt:
++
++- one font-specific concept hook tied to the font's actual construction,
++  personality, era, or naming anchor;
++- one visible thing happening or changing, such as a poster being pasted, a
++  marquee lighting up, a label being hand-lettered, a print-registration shift,
++  a ticket being stamped, or an illustrated gesture unfolding;
++- the exact hero lettering treatment: what the font name is doing in the image,
++  its scale, crop, placement, and relationship to the action;
++- one deliberate contrast or framing device that makes the lettering pop
++  immediately at thumbnail size;
++- a restrained supporting detail that makes the concept feel authored rather
++  than like a generic background.
++
++Reject thumbnail variants that are only adjective stacks such as “premium,
++editorial, textured, warm,” or that merely repeat the global theme sentence.
++The thumbnail must show a memorable visual premise with the font visibly
++performing inside it. The action must frame or activate the lettering, never
++cover it. Do not use an arbitrary prop, generic atmospheric backdrop, or a
++concept that could advertise any font. The Japanese thumbnail may translate or
++adapt the same premise, but it must still have its own clear action and
++lettering contrast. Supporting promos may remain more varied and exploratory;
++this quality gate applies specifically to both thumbnails.
++
+ ## Per-image theme variants (`visual-direction/theme.txt`)
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml ===
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml ===
+@@ -91,2 +91,13 @@
+ 
++Apply a stricter concept gate to `thumbnail_main` and `thumbnail_japanese` than
++to the supporting promos. Each thumbnail theme variant must name a
++font-specific concept hook; one visible action or change; the hero lettering's
++scale, crop, placement, and interaction with that action; a contrast or framing
++device that makes the lettering pop at thumbnail size; and one restrained
++authored detail. Reject adjective-only mood boards, generic backgrounds,
++arbitrary props, and concepts that could advertise any font. The action must
++activate or frame the lettering without covering it. The Japanese thumbnail may
++adapt the premise, but must still have its own explicit action and contrast
++mechanism.
++
+ Run the helper and its mechanical validator from the project root with the
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md ===
+@@ -257,2 +257,9 @@
+ this quality gate applies specifically to both thumbnails.
++Do not let the generator fall back to cream paper, charcoal-and-gold,
++cardboard, foil, stationery, packaging, marble, fabric, or a tasteful still
++life. These are not thumbnail concepts; they are only permitted when the
++font's specific evidence requires them. Prefer type-led poster logic: an
++oversized crop, a colour-field collision, repeated glyph structure, a
++letterform-shaped frame, directional movement, or another graphic relationship
++that makes the font itself desirable.
+ 
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml ===
+@@ -101,2 +101,7 @@
+ mechanism.
++Do not default to cream paper, charcoal-and-gold, cardboard, foil, stationery,
++packaging, marble, fabric, or a tasteful still life. Prefer type-led poster
++logic: oversized crop, colour-field collision, repeated glyph structure,
++letterform-shaped frame, directional movement, or another graphic relationship
++that makes the font itself desirable.
+ 
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md ===
+@@ -265,2 +265,12 @@
+ 
++Do not infer the art direction from a category label alone. Before locking the
++thumbnail or promo system, compare the actual seed letterforms, the description
++and era, the name associations, and the buyer use the panel should communicate.
++Privately develop three materially different art-direction routes with
++different composition and energy, then select the one that best reveals this
++font's behaviour. The route may be quiet, severe, playful, strange, ornate,
++technical, tactile, or loud; no route is mandatory. Across the eight promos,
++vary visual grammar and copy role while preserving only the family constants
++that the font genuinely supports.
++
+ ## Per-image theme variants (`visual-direction/theme.txt`)
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml ===
+@@ -102,6 +102,7 @@
+ Do not default to cream paper, charcoal-and-gold, cardboard, foil, stationery,
+-packaging, marble, fabric, or a tasteful still life. Prefer type-led poster
+-logic: oversized crop, colour-field collision, repeated glyph structure,
+-letterform-shaped frame, directional movement, or another graphic relationship
+-that makes the font itself desirable.
++packaging, marble, fabric, or a tasteful still life. Use type-led
++decision-making, but do not force every font into a poster: oversized crop,
++colour-field collision, repeated glyph structure, letterform-shaped frame,
++directional movement, ornamental composition, quiet specimen space, or another
++graphic relationship may be appropriate when the font's evidence supports it.
+ 
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md ===
+@@ -260,6 +260,7 @@
+ life. These are not thumbnail concepts; they are only permitted when the
+-font's specific evidence requires them. Prefer type-led poster logic: an
+-oversized crop, a colour-field collision, repeated glyph structure, a
+-letterform-shaped frame, directional movement, or another graphic relationship
+-that makes the font itself desirable.
++font's specific evidence requires them. Use type-led decision-making, but do
++not force every font into a poster: an oversized crop, colour-field collision,
++repeated glyph structure, letterform-shaped frame, directional movement,
++ornamental composition, quiet specimen space, or another graphic relationship
++may be appropriate when the font's evidence supports it.
+ 
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md ===
+@@ -276,2 +276,16 @@
+ 
++Context is an authored design decision, not a reusable backdrop. For the
++thumbnail, let the semantic tension, imagery, rhythm, or emotional charge of
++the final font name influence the concept when it genuinely fits the font's
++visual evidence; the name may suggest a world, action, metaphor, or attitude,
++but never an unsupported literal product claim. For each supporting promo, let
++the exact dominant display phrase and its buyer/use-case role influence the
++context, action, visual metaphor, and composition. A phrase such as a place,
++event, object, motion, mood, or social use can change the panel's situation
++without being printed as a fake claim. Do not reuse one context across the
++thumbnail and all promos merely to preserve family resemblance. Family
++resemblance comes from letterform fidelity, quality, and selected visual
++constants—not from repeating the same setting, object, palette treatment, or
++layout.
++
+ ## Per-image theme variants (`visual-direction/theme.txt`)
+
+
+=== /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml ===
+@@ -108,2 +108,13 @@
+ 
++Context is an authored design decision, not a reusable backdrop. For the
++thumbnail, let the final font name's semantic tension, imagery, rhythm, or
++emotional charge influence the concept when it genuinely fits the font's
++visual evidence; the name may suggest a world, action, metaphor, or attitude,
++but never an unsupported literal product claim. For each supporting promo, let
++the exact dominant display phrase and its buyer/use-case role influence the
++context, action, visual metaphor, and composition. Do not reuse one context
++across the thumbnail and all promos. Family resemblance comes from letterform
++fidelity, quality, and selected visual constants—not from repeating the same
++setting, object, palette treatment, or layout.
++
+ Run the helper and its mechanical validator from the project root with the
+

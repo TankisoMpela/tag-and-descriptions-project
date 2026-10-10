@@ -1,0 +1,141 @@
+ONE-OFF MAIN THUMBNAIL FONT IMAGE PROMPT
+
+Create exactly one new main marketplace thumbnail from the two supplied images:
+1. a font seed/specimen PNG, and
+2. the old main thumbnail to transform.
+
+This prompt is authoritative for this run. The new font name is supplied by the user (in the seed / input). FontFairy is the studio name — the new studio name replacing the old studio's branding. FontFairy appears only as a small attribution wordmark, never as the font name.
+
+INPUTS
+- Font seed/specimen PNG: [ATTACH FONT SEED PNG]
+- Old main thumbnail: [ATTACH OLD THUMBNAIL]
+- New font name: [ENTER FINAL FONT NAME]
+- Studio name: FontFairy
+- Output filename: thumbnail_main.png
+
+PRIMARY TASK
+Reimagine the old thumbnail into one new premium main listing image for the supplied font name. Use the seed PNG as the sole authority for the font's letterforms and use the old thumbnail for product purpose, truthful copy, hierarchy, and the type of specimen the buyer needs to see.
+
+CONCEPT-LED THUMBNAIL FRAMEWORK
+- Find one strong concept hook from the font name, personality, era, historical reference, intended use, or most distinctive visual quality. Turn that hook into the art direction instead of choosing a generic "premium font" backdrop.
+- The font is the product. Everything else is stage design. The background must communicate genre, mood, use, contrast, or a specific relationship to the font; it must not exist only to fill empty space.
+- Use the real supplied seed as the letterform authority during this single generation. Preserve distinctive glyphs, unusual terminals, swashes, ligatures, counters, or other visible traits as faithfully as the generation allows. Do not create a separate typesetting or compositing step.
+- Make the thumbnail feel specific to this font, not interchangeable with hundreds of similar listings. A viewer should understand both what the font looks like and why the concept belongs to it.
+
+This is a ONE-SHOT generation. Do the inspection, text inventory, art-direction choice, composition, and final self-check internally before producing the image. Do not ask questions, produce alternatives, or require a second correction pass.
+
+Do not recreate the old thumbnail. Do not make a reskin, recolor, cleanup, or near-copy. Keep the same product purpose, but make a materially different art direction through a new context, composition, crop, palette, and/or material language. Preserve the useful information and commercial clarity, not the old visual styling.
+
+LETTERING FIDELITY — MOST IMPORTANT
+1. Preserve the exact letterforms and distinctive glyph shapes shown in the font seed. Do not substitute a generic typeface, redraw the font, regularize unusual forms, change spelling, or invent missing glyphs.
+2. Render the new font name exactly as supplied, with the supplied capitalization. The visible hero lettering must use the supplied seed font style.
+3. The supplied new font name replaces the old font name. Do not show both names, retain the old name, or create a variation of either name.
+4. If the seed shows a specimen word, preserve its letterforms and spelling only where useful; the supplied product name remains the hero.
+5. Keep all lettering readable, correctly spelled, unclipped, and inside safe margins. Do not let glare, props, shadows, folds, patterns, or perspective obscure critical glyphs.
+
+PRE-DESIGN COPY AND FACT INVENTORY — DO THIS PRIVATELY BEFORE GENERATING
+Inspect the old thumbnail at full resolution and make an internal inventory of every legible text block:
+- the old font name, which must be replaced by the supplied new name;
+- the main descriptor or slogan;
+- style, weight, format, glyph, category, language, and feature labels;
+- every factual statement, feature description, compatibility/format/language claim, and buyer-useful supporting copy;
+- old creator, studio, foundry, URL, and handle text.
+
+The user-supplied old reference image is authoritative for the font's factual claims. Treat every legible factual statement and feature claim shown there as verified and mandatory source copy for the new thumbnail. Preserve its exact wording, spelling, capitalization, and punctuation wherever possible. Do not fact-check it away, summarize it away, weaken it, or omit it because the new composition is difficult. If space is tight, redesign the layout, reflow the copy, or reduce decorative elements until every required fact and claim remains readable.
+
+Omit text only when it is the old font name (replace it with the supplied new name), old creator/studio/foundry branding, a URL or handle, unreadable text, or purely decorative filler. Never label a legible reference claim as unsupported. If text cannot be read confidently, omit that unreadable text rather than guessing. Never invent copy.
+
+If the old thumbnail contains a FontFairy wordmark, keep FontFairy once as a small studio attribution wordmark. FontFairy is the studio name, never the font name.
+
+BACKGROUND AND MEDIUM — CHOOSE ONE COHERENT MODE
+Choose exactly one of these modes before generating. Do not blend a real photograph with synthetic 3D objects or a fake rendered environment.
+
+REAL PHOTOGRAPHY MODE:
+- Use a genuinely photographic, believable real-world background with natural perspective, physically plausible light, and ordinary material behavior.
+- The background does not need to depict the font's literal use. It may be an unrelated but mood-compatible setting such as paper, a desk, fabric, plaster, architecture, a book, a studio wall, or a restrained botanical/detail scene.
+- Prefer matte, tactile, imperfect, editorial photography: real grain, believable shadows, natural wear, and controlled depth of field.
+- Keep the photograph quiet behind the lettering. It must support the font's mood without becoming a lifestyle advertisement.
+- Do not use CGI, 3D rendering, Unreal/Octane-style lighting, impossible geometry, floating objects, plastic gloss, chrome, liquid surfaces, cosmetic swirls, artificial podiums, or a synthetic "premium product render" environment.
+
+FLAT EDITORIAL MODE:
+- Use a deliberately two-dimensional composition: solid color fields, paper or ink texture, printed grain, cut-paper shapes, collage, geometric blocks, borders, or a restrained editorial grid.
+- Keep the finish matte, graphic, tactile, and print-like rather than digitally glossy.
+- Flat lettering may float, overlap flat shapes, or sit against the flat composition, but it must remain visually flat and faithful to the seed.
+- Do not simulate a room, floor, wall, stage, studio, pedestal, product-render environment, or dimensional abstract sculpture.
+- Do not use CGI, 3D rendering, Unreal/Octane-style lighting, impossible geometry, floating objects, plastic gloss, chrome, liquid surfaces, cosmetic swirls, artificial podiums, or a synthetic "premium product render" environment.
+
+FLAT EDITORIAL MODE:
+- Use a deliberately two-dimensional composition: solid color fields, paper or ink texture, printed grain, cut-paper shapes, collage, geometric blocks, borders, or a restrained editorial grid.
+- Keep the finish matte, graphic, tactile, and print-like rather than digitally glossy.
+- Flat lettering may float, overlap flat shapes, or sit against the flat composition, but it must remain visually flat and faithful to the seed.
+- Do not simulate a room, floor, wall, stage, studio, pedestal, product-render environment, or dimensional abstract sculpture.
+
+If the choice is uncertain, use FLAT EDITORIAL MODE. Never default to the generic hybrid look of a photorealistic-looking background combined with glossy 3D shapes or a red-liquid/plastic "premium" surface.
+
+REIMAGINATION REQUIREMENTS
+Change three major creative decisions from the old thumbnail, prioritizing:
+- setting or material language;
+- composition, grid, focal hierarchy, or crop;
+- palette or lighting.
+
+An optional fourth change is allowed only if it improves clarity. Do not change things merely to satisfy a count. Preserve the product purpose, readable copy hierarchy, and font identity. The result must be recognizably different without becoming generic AI concept art.
+
+Use one clear visual concept, not a collage of competing ideas. Use no more than three supporting visual elements. Decorative objects must never overlap or compete with the hero lettering.
+
+CREATIVE QUALITY FILTER — GUIDE BY FAILURE, NOT BY STYLE
+- Choose the most appropriate visual treatment freely after inspecting the font. Do not prescribe or default to a particular medium, palette, era, or marketplace template.
+- Reject any background, prop, texture, or decorative mark that does not strengthen the font's personality, use, contrast, or presentation. Prefer one bold visual decision over many supporting details.
+- Familiar solutions such as white material backdrops, stationery mockups, torn-paper arrangements, orbiting lines, generic wide photography, and atmospheric stock scenes are not forbidden, but must not be used as automatic answers. Use them only when the specific concept genuinely requires them.
+- If the result feels generic, cluttered, timid, or AI-staged, simplify the concept and strengthen the typography, crop, contrast, or composition rather than adding more elements.
+
+LAYOUT AND THUMBNAIL CLARITY
+- Treat the output as a commercial marketplace product card, not a movie poster or lifestyle advertisement.
+- Make the supplied font name the obvious hero: large, high-contrast, and readable immediately.
+- Keep all important text inside an approximate 8–10% outer safe margin.
+- Keep the hero name within the central 70% of the canvas and give it roughly 55–70% of the visual emphasis.
+- Keep supporting copy in one or two calm, ordered blocks. Do not scatter labels around the scene.
+- Keep FontFairy small and secondary.
+- Use negative space deliberately. A clean flat composition is allowed and is preferable to adding meaningless props.
+- Keep enough contrast and scale for the title and main descriptor to survive a small marketplace preview. Do not shrink truthful copy until it becomes decorative noise.
+- Do not create a square image, Pinterest image, collage of alternatives, or long-scroll image.
+
+OUTPUT RULES
+- Generate exactly one complete image in one generation/editing operation.
+- Target 3:2, preferably 1500x1000, 1536x1024, or 1600x1067.
+- Build the complete font lettering, chosen background/medium, composition, and supporting copy together in the same operation.
+- Do not produce a background-only version, a text-only version, or multiple concepts.
+- Do not use post-processing, a second turn, or a later overlay to repair wrong spelling, substitute glyphs, or add missing copy. The one generated image must be complete.
+
+Before committing, inspect the finished image as if it were reduced to approximately 300 pixels wide. The supplied font name must still read instantly, the main descriptor must remain useful, the visual mode must still look intentional, and no background element may overpower the product. If the composition fails this small-size check, simplify it and enlarge/reposition the typography within the same generation operation rather than adding more detail.
+
+FINAL SELF-CHECK BEFORE ACCEPTING
+Complete this check internally before returning the one generated image. Do not ask for a second turn or return an avoidable failure:
+- Is the supplied font name misspelled, incorrectly capitalized, or set in a substituted font?
+- Are distinctive seed glyphs missing, generic, or visibly redrawn?
+- Is the main lettering extruded, inflated, sculpted as 3D type, or wrapped around a 3D surface?
+- Is the lettering itself 3D, or is it perspective-applied onto an object with depth?
+- Did the image accidentally combine a real-looking photograph with glossy synthetic 3D objects or a fake rendered environment?
+- Does the new image copy the old layout, scene, crop, or palette too closely?
+- Does the concept hook come from this font specifically, or could the same image advertise almost any font?
+- Does every major background element support the font's genre, mood, use, contrast, or concept?
+- Are the font's distinctive visible glyph traits represented as faithfully as possible in this single generation?
+- Does the image still work at approximately 250–350px wide, with the title and concept remaining immediately legible?
+- Was any legible, truthful, relevant main text or subtext from the old thumbnail unnecessarily dropped, changed, or replaced with nonsense?
+- Was any factual statement, feature, format, compatibility, language, style, or weight claim from the old reference omitted or weakened? If yes, fail and redesign.
+- Is any required text clipped, hidden, unreadable, or covered by glare?
+- Did old creator branding, a URL, a handle, or an invented product claim appear?
+- Does the image still read clearly at approximately 300 pixels wide?
+- Is the output not 3:2 or does it contain multiple alternatives?
+
+If a check fails, correct the composition within this same single generation operation before committing. Never knowingly return a correctable failure.
+
+RESPONSE AFTER GENERATION
+State only:
+MODE 1 COMPLETE — save as prepared_visuals/thumbnail_main.png
+Font name: [SUPPLIED FONT NAME]
+Background mode: [REAL PHOTOGRAPHY / FLAT EDITORIAL]
+Seed-letterform fidelity: [PASS/FAIL]
+Flat (non-3D) lettering: [PASS/FAIL]
+Reimagined thumbnail: [PASS/FAIL]
+Supporting copy: [ALL FACTS PRESERVED / ALLOWED NON-FACT COPY OMITTED / FAIL]
+Any visible problem: [SHORT NOTE]

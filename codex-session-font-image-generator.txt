@@ -1,0 +1,707 @@
+=== ASSISTANT ===
+I’ll inspect the BOOTH research snapshot and the relevant database-derived evidence, then give you a practical recommendation for the paid-only vs free-trial model.
+
+=== ASSISTANT ===
+Based on the BOOTH database, I’d launch paid from the jump.
+
+The evidence points to this:
+
+- Pure-free fonts had a median of only 2 likes in their first 30 days—identical to paid products—so free did not create an early-engagement advantage.
+- Free products show a high overall median of 109 likes, but that is heavily confounded by older, established, highly visible products; it does not prove that making a new product free causes success.
+- Paid pricing works best when split clearly:
+  - Personal Use: ¥500
+  - Commercial Use: ¥1,500
+  - Pro/multi-weight bundle: ¥2,200–¥2,500
+- Avoid the ¥501–¥1,500 “dead zone” for a single general product, especially pricing Commercial Use around ¥1,000.
+
+My recommendation:
+
+1. Make the complete font paid immediately.
+2. Offer Personal Use at ¥500 and Commercial Use at ¥1,500.
+3. Add a ¥0 Free Trial Demo only if it is a genuinely limited, non-commercial sample that helps buyers evaluate the typeface.
+4. Do not release the full Personal Use version for free.
+
+So the strongest model is “paid full version + optional restricted demo,” not “free full version leading to paid commercial use.” The relevant findings are in the [BOOTH collection analysis]( /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/research/booth-collection-analysis-2026-09-09.md:207) and [pricing blueprint]( /home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/research/booth-agent-overhaul-blueprint-2026-09-09.md:26).
+
+=== ASSISTANT ===
+I’ll update the BOOTH listing agent and the font-preparation agent so the workflow has no Free Trial Demo at all, then I’ll check for nearby instructions or validator assumptions that would otherwise keep requiring one.
+
+=== ASSISTANT ===
+The core behavior is now updated: BOOTH outputs only paid Commercial Use and paid Personal Use, while font prep creates matching complete-binary archives rather than a subsetted demo. I’m doing a final consistency check on the registered agent instructions and validator.
+
+=== ASSISTANT ===
+Updated the paid-only model.
+
+Changes made:
+
+- BOOTH agent now outputs only:
+  - Commercial Use: ¥1,500+  
+  - Personal Use: ¥500
+- Removed Free Trial Demo variant instructions.
+- Font prep now creates:
+  - `Font-Name-Commercial-Use.zip`
+  - `Font-Name-Personal-Use.zip`
+- Both archives use complete identical font binaries; only Personal Use includes the like-request note.
+- Updated the BOOTH validator to require Commercial Use + Personal Use variants.
+- Updated workflow and registered agent templates.
+
+Validated `opencode.json` and the BOOTH validator successfully.
+
+=== ASSISTANT ===
+I’m using the browser-control workflow to inspect BOOTH’s Fonts category and locate Story-wisp’s current page and ranking position.
+
+=== ASSISTANT ===
+The connected in-app browser isn’t available in this session, so I’m checking the public BOOTH category page directly as a fallback and will distinguish the category position from any search-result position.
+
+=== ASSISTANT ===
+I found Story Wisp on the BOOTH Fonts category:
+
+- Category: [BOOTH Fonts](https://booth.pm/en/browse/Fonts)
+- Page: 1
+- BOOTH position field: 49
+- Human-counted position: approximately 50th item
+- Listing: [STORY WISP【絵本調カリグラフィ】](https://booth.pm/en/items/8864660)
+- Price shown: ¥1,299
+- Shop: fontfairy
+
+The Fonts category currently shows 4,967 items. citeturn0view0
+
+=== ASSISTANT ===
+You’re right—the earlier result was not a reliable popularity ranking. I’ll check BOOTH’s actual popularity-sort URL and locate Story Wisp within that ordering.
+
+=== ASSISTANT ===
+You’re correct. The earlier position 49 was from the newer/default ordering, not the popularity sort.
+
+BOOTH’s popularity URL is:
+
+[https://booth.pm/en/browse/Fonts?sort=popular](https://booth.pm/en/browse/Fonts?sort=popular)
+
+I couldn’t reliably read the paginated popularity results because BOOTH returned a Cloudflare 403 outside an authenticated browser session. Therefore I can’t honestly give Story Wisp’s popularity page/position yet.
+
+BOOTH’s “Popularity” ranking uses multiple signals—orders, order timing, likes, and relevance—not likes alone. [BOOTH’s ranking explanation](https://booth.pixiv.help/hc/ja/articles/12290150926617--%E4%BA%BA%E6%B0%97%E9%A0%86-%E3%81%A8-%E3%82%B9%E3%82%AD%E9%A0%86-%E3%81%AE%E9%81%95%E3%81%84) confirms this.
+
+=== ASSISTANT ===
+I’ll update the full-workflow orchestration and its workspace guidance so X and DLsite are no longer stages, and free campaigns are treated as retired rather than an active fallback. I’ll preserve standalone agents unless the workflow instructions explicitly invoke them.
+
+=== ASSISTANT ===
+The full workflow now has six stages: Agent 27 → Agent 13 → BOOTH → Pixiv → Creative Fabrica → YellowImages. I’ve also removed campaign-state handoffs from that orchestrator and am checking the final wording for stale X/DLsite or free-campaign references.
+
+=== ASSISTANT ===
+Updated `/full-workflow`:
+
+1. Agent 27 — naming and provisional visuals  
+2. Agent 13 — font preparation  
+3. BOOTH — paid listing  
+4. Pixiv — paid promotional post  
+5. Creative Fabrica  
+6. YellowImages  
+
+Removed from the full workflow:
+
+- X
+- DLsite
+- Free-campaign inputs, trial states, deadlines, and campaign handoffs
+
+Updated:
+
+- [agent-28-full-workflow.md](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-28-full-workflow.md)
+- [opencode.json](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/opencode.json)
+- [AGENTS.md](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/AGENTS.md)
+
+Standalone X and DLsite agents remain available for explicit separate requests.
+
+=== ASSISTANT ===
+I’ll adjust the font-image generator’s theme-variant instructions so the global concept stays coherent while each image gets distinct subject matter, composition, motif, and colour emphasis rather than repeating the same sentence. Then I’ll check the handoff validator’s expectations so the change remains mechanically valid.
+
+=== ASSISTANT ===
+Updated the font image generator instructions.
+
+It now requires:
+
+- Shared theme constants to be stated briefly, not repeated in every variant.
+- At least two materially new visual decisions per image.
+- No repeated motifs, layouts, or near-identical prompts.
+- At least six distinct visual strategies across the eight promos.
+- More emphasis on each board’s unique focal arrangement, texture, colour balance, and composition.
+
+Updated:
+
+- [agent-27-font-image-generator.md](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md)
+- [font-image-generator.toml](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml)
+
+The validator compatibility remains unchanged.
+
+=== ASSISTANT ===
+I’ll loosen the art-direction rule further: the theme sentence will become a loose inspiration anchor, while each promo can pursue a substantially different concept, motif, palette emphasis, and composition. Coherence will come from the font’s identity and typography—not repeated scenery or atmosphere.
+
+=== ASSISTANT ===
+Loosened the theme direction further.
+
+The generator now treats `supporting_image_theme` as a loose inspiration anchor. Each promo may substantially vary in:
+
+- Concept and visual metaphor
+- Palette emphasis
+- Atmosphere
+- Motif and illustration language
+- Composition and focal arrangement
+
+Coherence now comes primarily from the font’s identity, typography, and authored copy. It also requires at least six distinct visual strategies across the eight promos.
+
+Updated:
+
+- [agent-27-font-image-generator.md](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md)
+- [font-image-generator.toml](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml)
+
+=== ASSISTANT ===
+I’ll simplify the BOOTH workflow to one complete-font offer: no Commercial Use/Personal Use split in the listing. The font-prep specialist will still generate both archive files for your internal delivery options, as requested. I’ll update the BOOTH agent, validator, and registered workflow wording accordingly.
+
+=== ASSISTANT ===
+Updated the BOOTH workflow to sell each font as one complete paid offer.
+
+BOOTH now uses exactly one variant:
+
+`{FONT NAME} | 完全版 | Full Font`
+
+Removed from BOOTH:
+
+- Commercial Use / Personal Use split
+- Free Trial Demo
+- Free campaigns
+- License-tier pricing logic
+
+Font prep remains unchanged and will continue creating both Commercial Use and Personal Use archive files.
+
+Updated:
+
+- [agent-20-booth-fonts-specialist.md](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-20-booth-fonts-specialist.md)
+- [validate_booth_listing.py](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/bin/validate_booth_listing.py)
+- [booth-fonts-specialist.toml](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/booth-fonts-specialist.toml)
+- [AGENTS.md](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/AGENTS.md)
+- [opencode.json](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/opencode.json)
+
+JSON and validator checks pass.
+
+=== ASSISTANT ===
+This is a larger workflow change, so I’m mapping the existing BOOTH, font-prep, image-processing, and workflow-agent contracts first. I’ll then create a separate combined “BOOTH-ready font” agent without disturbing the existing font-prep specialist, and change the BOOTH tag contract to 18+ while removing the sibling-overlap gate.
+
+=== ASSISTANT ===
+I’m using the font-workflow instructions because this changes the registered font preparation and BOOTH pipeline. I’ll add a separate “ready font → processed assets → BOOTH listing” path, keep the existing font-prep specialist intact, raise BOOTH tags to 18–30, and remove sibling-overlap gating entirely.
+
+=== ASSISTANT ===
+The new ready-font path is now wired as both a standalone `/booth-font-ready` command and an explicit `READY_FONT_BOOTH_MODE` branch of `/full-workflow`. It preserves raw images, creates ≤200 KB main/square deliveries with ImageMagick white padding, delegates the existing font-prep package pass, and emits only the BOOTH listing markdown. I’m running structural checks now and cleaning any stale tag-contract references.
+
+=== ASSISTANT ===
+Checks passed for Python compilation, JSON syntax, repository whitespace, and a live ImageMagick smoke test: landscape 3:2 images received equal top/bottom padding, portrait images received equal side padding, and all generated JPEGs were under 200 KB. I also fixed the repository’s `bin/magick7` wrapper so its strict shell mode no longer fails when the optional ImageMagick root variable is unset.
+
+=== ASSISTANT ===
+Implemented the BOOTH workflow changes.
+
+- BOOTH now requires 18–30 validated tags.
+- Sibling overlap/saturation checks were removed from the validator and workflow.
+- Added ready-font shortcut agent:
+  - [agent-33-booth-ready-font-specialist.md](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-33-booth-ready-font-specialist.md)
+  - `/booth-font-ready`
+  - `READY_FONT_BOOTH_MODE` support inside `/full-workflow`
+- Added image processor:
+  - [prepare_booth_font_images.py](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/bin/prepare_booth_font_images.py)
+  - Preserves raw images.
+  - Creates original-ratio and square JPEGs.
+  - Adds centered white padding.
+  - Enforces ≤200 KB per image.
+- Fixed the ImageMagick wrapper issue in [magick7](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/bin/magick7).
+- The new path prepares font files under `outputs/font-preparation/` and creates only the BOOTH listing markdown.
+
+Usage:
+
+```text
+/booth-font-ready
+font directory: ...
+final name: ...
+description: ...
+product number: optional
+```
+
+No specific font was processed yet because you haven’t supplied its directory and description in this turn.
+
+=== ASSISTANT ===
+I’ll update the supporting-image reimagination prompt instructions so text layout is treated as a hard readability check: no clipped words, no accidental wrapping, and any broken word must be re-laid out until the full word fits cleanly on the canvas.
+
+=== ASSISTANT ===
+Added hard text-layout instructions to all supporting and thumbnail reimagination prompts:
+
+- Font supporting images, 3:2 and square
+- Font thumbnails, 3:2 and square
+- Procreate brush supporting images and thumbnails
+
+They now require the generator to fix clipped words, accidental mid-word wrapping, hidden text, and unsafe placement before producing the final image. Validation passed with `git diff --check`.
+
+=== ASSISTANT ===
+You’re right—I over-applied it. I’ll keep the instruction only in the two font supporting-image prompt files and remove it from both thumbnail prompts and the Procreate prompts.
+
+=== ASSISTANT ===
+Corrected. The instruction now exists only in:
+
+- [supporting-image-reimagination-prompt.txt](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/custom-gpt/supporting-image-reimagination-prompt.txt)
+- [supporting-image-reimagination-prompt-square.txt](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/custom-gpt/supporting-image-reimagination-prompt-square.txt)
+
+All thumbnail and Procreate prompt changes were removed.
+
+=== ASSISTANT ===
+The text-layout instruction I added did not ask for serif lettering or a new font style. I’m checking the exact supporting prompt wording and the theme-variant handoff to identify which instruction actually allowed the generator to prioritize “serif.”
+
+=== ASSISTANT ===
+The part that likely caused it was not the text-layout instruction I added. It was the theme-variant handoff:
+
+- “Use the pasted `Theme variant` … as the creative north star”
+- “Translate it into the chosen art or visual language…”
+- The supplied variant itself said: “Cosette in large serif lettering”
+
+That conflicted with the stronger font-seed rule:
+
+> “Use the supplied font seed/specimen as the sole authority for the font letterforms.”
+
+The generator incorrectly prioritized the theme’s “serif” descriptor over the seed image. The prompt also says “make your own creative choices,” which leaves room for that kind of drift.
+
+The `[ATTACH FONT SEED]` text is only a placeholder label; it did not instruct the generator to ignore the attached image.
+
+So the actual failure was an insufficient conflict rule. The prompt needs to explicitly say:
+
+> If the theme variant describes a font style—such as serif, sans-serif, script, brush, blackletter, or handwritten—that conflicts with the supplied seed, ignore that style description completely. The seed image always controls the font’s letterforms, stroke character, weight, and classification. The theme may control only the background, palette, atmosphere, composition, and non-font art direction.
+
+The invented copy was also a generation failure against the existing “never invent copy” rule, not something caused by my recent text-layout addition.
+
+=== ASSISTANT ===
+Understood. I’ll fully reverse my last prompt edit and remove the text-layout block from the supporting-image reimagination prompts, leaving their prior instructions unchanged.
+
+=== ASSISTANT ===
+Reversed. The added text-layout instructions were removed from both supporting-image reimagination prompts, restoring them to their previous state. `git diff --check` passes.
+
+=== ASSISTANT ===
+Yes. “Cosette Marque” instructions existed in the specific font workspace, not in the generic supporting-image prompt:
+
+- [theme.txt](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/7-Cafespro-weekend/visual-direction/theme.txt:39) explicitly said: “Cosette in large serif lettering.”
+- [visual-plan.json](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/7-Cafespro-weekend/visual-direction/visual-plan.json:94) repeated the same serif direction.
+- [font-name-report.md](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/7-Cafespro-weekend/visual-direction/font-name-report.md:131) described Cosette Marque as a “high-contrast luxury display serif.”
+
+The generic prompt correctly says the supplied font seed controls the letterforms, but the Cosette-specific theme and name report incorrectly classified it as serif. That is what introduced the conflicting direction.
+
+=== ASSISTANT ===
+I’ll restore the text-integrity instructions only in the two font supporting-image reimagination prompts, leaving thumbnails and Procreate prompts untouched.
+
+=== ASSISTANT ===
+Restored the instructions only in the two supporting-image prompts. Thumbnail and Procreate prompts remain unchanged. `git diff --check` passes.
+
+=== ASSISTANT ===
+I’ll tighten the font-image-generator’s layout contract and its placeholder-generation checks. I’m going to inspect the generator instructions and the prepared-visual helper so the fix addresses both prompt guidance and the programmatic layout that is producing wrapped or overlapping copy.
+
+=== ASSISTANT ===
+I found the actual mechanical problem: the placeholder renderer currently breaks an oversized word into character pieces, and if no collision-free placement exists it silently returns the least-bad overlapping layout. I’m changing both behaviors to hard failures so the agent must shorten/reline/reposition the plan instead of producing bad prepared visuals.
+
+=== ASSISTANT ===
+The fix now has a hard mechanical gate: words are never split into character fragments, and unresolved text-box collisions or overflow raise an error instead of being silently emitted. The agent instructions also require complete-word reflow and non-overlapping boxes. I’m testing the updated renderer against an existing font plan.
+
+=== ASSISTANT ===
+Fixed the font-image-generator at the renderer level.
+
+Changes:
+
+- Words can no longer be split into character fragments.
+- Text overflow now fails instead of clipping.
+- Overlapping text blocks now fail instead of choosing the “least-bad” layout.
+- The agent instructions now require complete-word reflow and non-overlapping text boxes.
+- The master workflow instructions were updated too.
+
+Files changed:
+
+- [generate_font_text_placeholders.py](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/bin/generate_font_text_placeholders.py)
+- [font_outline_renderer.py](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/bin/font_outline_renderer.py)
+- [agent-27-font-image-generator.md](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md)
+- [font-image-generator.toml](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml)
+
+I tested it against the existing Cosette Marque plan, and it now correctly stops on an overlap rather than generating the bad layout. `git diff --check` and Python compilation pass.
+
+=== ASSISTANT ===
+Yes. I tested it against the existing Cosette Marque visual plan using the project virtual environment.
+
+The renderer stopped with:
+
+```text
+ValueError: no collision-free placement for copy
+'begins with the first letter'
+```
+
+That is the intended result: it rejected the overlap instead of generating a bad PNG.
+
+Python compilation and `git diff --check` also pass. The full handoff did not complete because the existing plan contains a layout collision that now requires correction.
+
+=== ASSISTANT ===
+There is a better way: the agent should not have to solve all geometry by hand. I’m going to make the renderer automatically reserve the hero block first, then place secondary copy into remaining regions, progressively reduce secondary copy when needed, and only fail when the text genuinely cannot fit. That gives the agent a safe default instead of relying on perfect authored coordinates.
+
+=== ASSISTANT ===
+Yes—there is now an easier automatic path.
+
+The renderer will:
+
+1. Place the dominant text first.
+2. Reserve space for all secondary text before committing its final size.
+3. Automatically reduce the hero from `hero` to `word` or `large` if needed.
+4. Try alternate anchors and smaller secondary scales.
+5. Keep every word intact.
+6. Fail only if no safe layout exists, instead of generating overlap or clipped text.
+
+I also updated the agent instructions so it knows this behavior and is told to use complete-word reflow.
+
+The previous Cosette plan now gets past the original overlap-prone placeholder stage; the longer test reached the specimen-rendering stage before I stopped it. Python compilation and whitespace checks pass.
+
+=== ASSISTANT ===
+I’ll inspect how your existing `opencode2` isolation is configured, then mirror that pattern for `opencode-2`, `opencode-3`, and `opencode-4` without changing the base `opencode` setup.
+
+=== ASSISTANT ===
+I found the distinction: your existing `opencode2/3/4` wrappers point to the separate `opencode2.exe` build. I’ll create new hyphenated commands that use the actual base `/home/tankiso/.opencode/bin/opencode`, each with completely separate XDG config, data, state, and cache roots.
+
+=== ASSISTANT ===
+Created and tested:
+
+- `opencode-2`
+- `opencode-3`
+- `opencode-4`
+
+They use the actual base `/home/tankiso/.opencode/bin/opencode`, not the `opencode2.exe` build.
+
+Each has isolated:
+
+- `~/.config/opencode-{2,3,4}`
+- `~/Projects/.opencode-{2,3,4}-data`
+- `~/Projects/.opencode-{2,3,4}-state`
+- `~/Projects/.opencode-{2,3,4}-cache`
+
+All three report version `1.18.31`.
+
+=== ASSISTANT ===
+I’ll verify whether OpenCode stores an installation/device identifier outside the XDG roots or derives one from the machine, so I can tell you whether these are truly separate identities or only separate config/data directories.
+
+=== ASSISTANT ===
+No—not like a completely new machine.
+
+They currently have:
+
+- Separate OpenCode config directories
+- Separate databases and session history
+- Separate auth/account state
+- Separate cache and model state
+
+But they still share:
+
+- The same Linux machine
+- The same OS/user identity
+- The same network/IP
+- The same OpenCode binary
+- The same project/worktree identity
+
+I confirmed OpenCode generated the same project ID for the same repository across the isolated environment:
+
+```text
+aa46c6cc3613016776727b4697271cc79f83be96
+```
+
+So they are isolated OpenCode profiles, not virtual machines with separate machine IDs. If a service fingerprints the actual computer, network, or OS user, all four will still appear to come from the same machine.
+
+=== ASSISTANT ===
+I’ll update the final-font-images workflow so it never uses vision or tries to identify thumbnails semantically. It will assign deterministic filenames by sorted input order, preserving that order and numbering all images mechanically.
+
+=== ASSISTANT ===
+The automatic mode is working as intended in a smoke test: it sorted each ratio independently, assigned the first filename as `thumbnail_main`, numbered the rest `promo_1`, and never made a visual judgment. I’m doing the final syntax checks now.
+
+=== ASSISTANT ===
+Updated the final-font-images workflow so it does not use vision or identify thumbnails semantically.
+
+It now runs:
+
+```bash
+python3 bin/process_final_font_images.py <New-Images> \
+  --font-name "..." \
+  --auto-order \
+  --overwrite
+```
+
+Behavior:
+
+- Sorts direct filenames lexicographically within each ratio.
+- First 3:2 image becomes `thumbnail_main`.
+- Remaining 3:2 images become `promo_1`, `promo_2`, etc.
+- First 1:1 image becomes `thumbnail_main`.
+- Remaining 1:1 images become `promo_1`, `promo_2`, etc.
+- Does not create or infer `thumbnail_japanese`.
+- Does not use contact sheets, image viewing, or semantic judgment.
+
+I tested it with synthetic 3:2 and 1:1 files, and the manifest assigned the roles mechanically as intended.
+
+=== ASSISTANT ===
+I’ll add `opencode-5` through `opencode-8`, keeping each XDG root separate. I’ll also mirror the base OpenCode configuration into each isolated profile so they retain the same MCP/provider setup, while project-local agents and skills remain available from the repository.
+
+=== ASSISTANT ===
+Created four additional isolated profiles:
+
+- `opencode-5`
+- `opencode-6`
+- `opencode-7`
+- `opencode-8`
+
+Each has separate:
+
+- `~/.config/opencode-{5–8}`
+- `~/Projects/.opencode-{5–8}-data`
+- `~/Projects/.opencode-{5–8}-state`
+- `~/Projects/.opencode-{5–8}-cache`
+
+I copied the base OpenCode configuration into each profile, so they retain the same MCP definitions. Since they run from the project directory, they also retain access to the project’s `opencode.json`, agents, `.opencode/skills`, `.mcp.json`, and related workflow files.
+
+Verified:
+
+- All report OpenCode `1.18.31`.
+- Each profile sees all 19 configured MCP servers.
+- `opencode-5 agent list` loads successfully from the project.
+- Each wrapper uses the actual base OpenCode binary, not `opencode2.exe`.
+
+=== ASSISTANT ===
+I’ll tighten the BOOTH contract to exactly 18 best-evidence tags: no filler, no alternates beyond 18, and no below-18 fallback under the current launch contract. I’ll update the specialist instructions, validator, templates, and project doctrine consistently.
+
+=== ASSISTANT ===
+I’m applying the BOOTH tag rule consistently now: exactly 18 carefully ranked tags, with no filler and no overflow. I’m checking the specialist instructions and validator together so the agent cannot quietly produce 17 or 19.
+
+=== ASSISTANT ===
+Understood: the correct contract is **10–18 tags**—never padded to reach 18, never fewer than 10, and never more than 18. I’ll make the agent select only the strongest fitting tags within that range and stop/report an evidence gap if fewer than 10 can be defended.
+
+=== ASSISTANT ===
+The contract is now changed to 10–18, including the validator’s active heading. Historical 18–30 listings remain parseable, but newly generated BOOTH listings must use the new 10–18 heading and cannot use a below-10 fallback. I’m running consistency checks now.
+
+=== ASSISTANT ===
+Updated the BOOTH specialist contract to:
+
+- **Minimum:** 10 tags
+- **Maximum:** 18 tags
+- Select only the strongest, best-supported terms
+- Never pad toward 18 with weak synonyms
+- Stop and report an evidence gap if fewer than 10 qualify
+- Validator now enforces the active `10–18` heading and rejects 19+
+
+Updated the specialist instructions, ready-font specialist, project doctrine, command templates, README, and validator. Syntax and JSON checks pass.
+
+=== ASSISTANT ===
+Got it. I’ll keep the 10-tag minimum as an output requirement, but remove the stop condition: when fewer than 10 top-tier tags qualify, the agent must fill the remaining slots with the next-best relevant, evidence-documented candidates—using near-gate or low-activity exceptions where justified—without exceeding 18 or inventing filler.
+
+=== ASSISTANT ===
+Updated. BOOTH now requires **10–18 tags**, but it will not stop if fewer than 10 top-tier tags qualify.
+
+The agent must:
+
+- Select strongest high-lift tags first.
+- Use the next-best relevant near-gate or low-activity tags to reach 10.
+- Document weaker evidence honestly.
+- Avoid irrelevant filler, unsupported synonyms, and padding.
+- Never exceed 18 tags.
+
+Validator, specialist instructions, project doctrine, and ready-font workflow all pass syntax checks.
+
+=== ASSISTANT ===
+I’ll inspect the OpenCode configuration and isolated profile homes for permission/sandbox settings, then report exactly what is allowed and any differences between profiles. I’ll keep this read-only.
+
+=== ASSISTANT ===
+No—not all of them are explicitly set to allow everything.
+
+- `opencode`, `opencode-5`, `opencode-6`, `opencode-7`, and `opencode-8`: `permission.* = "allow"`.
+- `opencode-2`, `opencode-3`, and `opencode-4`: no permission block at all, so they use defaults.
+- The project `opencode.json` only grants each registered agent `task: allow`; it does not globally allow every permission type.
+
+So the isolated profiles `opencode-2` through `opencode-4` are not currently configured with full permissions.
+
+=== ASSISTANT ===
+I found the gap in `opencode-2`, `opencode-3`, and `opencode-4`. I’m adding the same global `permission.* = "allow"` setting to those three isolated profiles and then verifying all eight profiles.
+
+=== ASSISTANT ===
+Done. All eight OpenCode profiles now explicitly have:
+
+```json
+"permission": {
+  "*": "allow"
+}
+```
+
+Verified successfully for `opencode` and `opencode-2` through `opencode-8`.
+
+=== ASSISTANT ===
+I’m using the `font-workflow` skill because this changes the font image generator’s workflow contract and thumbnail handoff. I’ll inspect the generator instructions and the thumbnail/theme templates, then tighten thumbnail concepts around a clear scene, impressive font display, readable composition, and visual contrast.
+
+=== ASSISTANT ===
+The weak point is clear: the generator’s contract says “theme variant,” but it does not force the thumbnail variant to contain a concrete visual event, a font-specific hero treatment, or a contrast mechanism. I’m adding a thumbnail-only design brief so `theme.txt` must describe what is happening, how the lettering is displayed, and how the surrounding art makes it pop.
+
+=== ASSISTANT ===
+I tightened the font image generator’s thumbnail instructions.
+
+`thumbnail_main` and `thumbnail_japanese` now must include:
+
+- A font-specific concept hook
+- Something visibly happening or changing
+- An impressive hero-lettering treatment with scale, crop, and placement
+- A contrast/framing device that makes the lettering pop at small size
+- One authored supporting detail
+
+It now rejects generic palette descriptions, adjective-only concepts, arbitrary props, and backgrounds that could advertise any font. Supporting promos remain more flexible.
+
+Updated:
+
+- [agent-27-font-image-generator.md](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md)
+- [font-image-generator.toml](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml)
+- [Font Renamer.txt](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/custom-gpt/Font%20Renamer.txt)
+
+TOML validation and diff checks pass.
+
+=== ASSISTANT ===
+I’ll locate the `Restrained Flourish` font workspace and rewrite only its thumbnail theme entries in `visual-direction/theme.txt`, leaving the supporting-image themes unchanged.
+
+=== ASSISTANT ===
+I found the workspace: `font-factory/fonts/9-Equity`, whose final name is `Restrained Flourish`. Its current thumbnail themes are exactly the weak pattern you described—“clean white background, centered lettering, subtle interest.” I’m replacing both thumbnail entries with active, font-specific editorial concepts and synchronizing the plan’s `theme_variant` fields so validation stays intact.
+
+=== ASSISTANT ===
+Rewrote the `Restrained Flourish` thumbnail themes in:
+
+- [theme.txt](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/9-Equity/visual-direction/theme.txt)
+- [visual-plan.json](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/9-Equity/visual-direction/visual-plan.json)
+
+The new concepts include active editorial print actions, strong cream/charcoal contrast, gold registration marks, and prominent lettering treatments designed to make the font pop. The theme and plan cross-check passes.
+
+=== ASSISTANT ===
+You’re right—the previous rewrite only swapped in another “luxury editorial” recipe. I’ll research the visual language behind YouWorkForThem-style font thumbnails and broader type-marketplace cover design first, then I’ll revise the generator’s thumbnail instructions around composition, typography, and concept—not cardboard, gold, or “premium” decoration.
+
+=== ASSISTANT ===
+The research points to a different principle: YouWorkForThem’s font presentation is type-led and specimen-like—large lettering, unusual visual behavior, strong graphic decisions, and multiple ways to inspect the face—not a generic luxury product mockup. Their product pages also separate image galleries, glyphs, type testing, and keyword/style information, which supports treating the thumbnail as an expressive type poster rather than a cardboard scene. [YouWorkForThem product presentation](https://www.youworkforthem.com/font/T1593/palette) [YouWorkForThem font catalog](https://www.youworkforthem.com/search/title/fonts)
+
+I’m changing the instructions to enforce that direction and explicitly ban the recurring cream-paper/gold/premium-cardboard default.
+
+=== ASSISTANT ===
+You were right—the issue was the assumed visual language. YouWorkForThem’s presentation is more type-led: large expressive lettering, strong graphic compositions, multiple specimen views, glyph inspection, and type testing—not “premium cardboard with gold.” [Product example](https://www.youworkforthem.com/font/T1593/palette) [Font catalog](https://www.youworkforthem.com/search/title/fonts)
+
+I updated the generator instructions to:
+
+- Treat thumbnails as expressive type posters/specimen covers.
+- Build around the font’s actual letterform behavior.
+- Use scale, cropping, repetition, colour blocking, asymmetry, and graphic tension.
+- Ban cream-paper, charcoal-and-gold, cardboard, foil, stationery, packaging, and tasteful-still-life defaults.
+- Require a concept that would not work for just any font.
+
+I also rewrote `Restrained Flourish` away from the cardboard/gold direction with a sharper black, vermilion, cobalt, and warm-white graphic-poster concept. The theme file and visual plan remain synchronized and validate successfully.
+
+=== ASSISTANT ===
+I’ll extend the supporting-image rules with the same research-informed principle, but keep them flexible across the full font range. The key will be: premium fonts can still be quiet, luxurious, or material-led when the font earns it; the instructions will reject only generic defaults, not premium aesthetics. I’ll also rewrite the remaining `Restrained Flourish` promo themes so they feel like one sharp typographic campaign instead of repeated “cream/charcoal/gold” cards.
+
+=== ASSISTANT ===
+The supporting instructions currently have the opposite overfit in places: they force every promo into a “premium flat 2D” treatment and repeatedly suggest paper, labels, editorial cards, and restrained materials. I’m broadening them into a style-adaptive system: refined fonts may use quiet luxury, but only when their letterforms support it; expressive, playful, technical, rough, retro, and decorative fonts get different visual logic.
+
+=== ASSISTANT ===
+Yes. The supporting instructions were too close to a single “premium flat editorial” aesthetic. I extended them with a style-adaptive system:
+
+- Refined fonts can use quiet luxury, precision, whitespace, and restraint.
+- Expressive fonts can use loud colour, cropping, pattern, rhythm, and irregularity.
+- Technical fonts can use grids, diagrams, systems, and modular structures.
+- Soft or human fonts can use warmth and looseness without defaulting to stationery or weddings.
+- Premium now means resolved and intentional—not cardboard, gold, foil, marble, or expensive-looking props.
+
+This is closer to the useful part of YouWorkForThem’s presentation: font-led specimens, strong type behavior, varied visual systems, and separate ways to inspect the typeface—not one universal visual treatment. [YouWorkForThem example](https://www.youworkforthem.com/font/T1593/palette) [Font catalog](https://www.youworkforthem.com/search/title/fonts)
+
+I also rewrote all eight `Restrained Flourish` promo themes with different strategies:
+
+- Identity poster
+- Asymmetric editorial index
+- Modular label system
+- Contemporary romantic poster
+- Monogram construction board
+- Expressive reading poster
+- Layered watermark study
+- Graphic message poster
+
+The `theme.txt` and `visual-plan.json` entries remain synchronized and validated.
+
+=== ASSISTANT ===
+I’ll audit the current art-direction rules for hidden bias—especially repeated palette, material, layout, and “premium” defaults—and explain how the font-type branching actually works. I’ll make a small correction only if I find a real overfitting rule.
+
+=== ASSISTANT ===
+The audit shows one remaining bias: the supporting prompt still says to prefer a fixed order of flat fields, editorial grids, posters, and labels. That can make unrelated fonts converge even though the newer adaptation section is better. I’m removing that ordering and adding a per-font decision process so the category never dictates the look by itself.
+
+=== ASSISTANT ===
+It now handles other fonts through the font’s actual evidence, not just category labels.
+
+The decision process is:
+
+1. Inspect the real letterforms, description, era, name associations, and intended buyer use.
+2. Privately generate three materially different art-direction routes.
+3. Choose the route that best exposes that font’s behavior.
+4. Vary composition, colour, energy, copy role, and visual grammar across the eight promos.
+5. Preserve only justified family constants.
+
+Examples:
+
+- Refined fonts: quiet space, precise alignment, subtle contrast.
+- Expressive/display fonts: bold colour, cropping, rhythm, repetition.
+- Technical/geometric fonts: grids, diagrams, modular systems.
+- Human/handwritten fonts: warmth, looseness, illustration.
+- Retro/novelty fonts: period-specific graphic language without forcing a generic vintage treatment.
+
+I also removed the fixed “flat field → editorial grid → poster” preference order. There is still a deliberate flat 2D constraint for this workflow, but the internal art direction is no longer locked to one aesthetic. The instructions now explicitly reject repeating a route just because it worked for another font.
+
+The YouWorkForThem reference influenced the move toward font-led specimen logic and varied type behavior, not copying one visual style. [YouWorkForThem product example](https://www.youworkforthem.com/font/T1593/palette)
+
+=== ASSISTANT ===
+I’ll pull the exact new instruction blocks from the generator and supporting-image prompts so I can show you precisely what controls bias, what still remains fixed, and where the workflow still has an intentional constraint.
+
+=== ASSISTANT ===
+The exact wording reveals one residual tendency: it still says “prefer type-led poster logic,” which could make the generator overproduce posters even while avoiding cardboard. I’m changing that to “use type-led decision-making, with poster logic only when appropriate,” so the examples are options rather than defaults. The flat 2D restriction remains intentional for this workflow.
+
+=== ASSISTANT ===
+The exact anti-bias rules now say:
+
+> “Do not infer the art direction from a category label alone.”
+
+The generator must compare:
+
+- Actual seed letterforms
+- Description and era
+- Name associations
+- Intended buyer/use
+- The font’s construction and behavior
+
+It must then:
+
+> “Privately develop three materially different art-direction routes with different composition and energy, then select the one that best reveals this font’s behaviour.”
+
+The allowed direction can be:
+
+> “quiet, severe, playful, strange, ornate, technical, tactile, or loud; no route is mandatory.”
+
+For thumbnails, it must also provide:
+
+- A font-specific concept hook
+- Something visibly happening
+- The exact hero lettering treatment
+- A contrast/framing device
+- One authored supporting detail
+
+It rejects:
+
+> “adjective-only mood boards, generic backgrounds, arbitrary props, and concepts that could advertise any font.”
+
+I also corrected the remaining poster bias. It now says:
+
+> “Use type-led decision-making, but do not force every font into a poster.”
+
+Possible treatments include oversized cropping, colour collisions, repeated glyph structures, ornamental compositions, quiet specimen space, or another approach justified by the font.
+
+The honest limitation: this reduces bias but cannot guarantee perfect randomness from a language model. The workflow still intentionally requires flat, straight-on 2D artwork, so it will not spontaneously choose photography, rooms, or 3D product scenes. Within that boundary, the art direction is now explicitly font-evidence-driven rather than category-driven.
+
+Updated:
+
+- [agent-27-font-image-generator.md](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/agents/agent-27-font-image-generator.md)
+- [font-image-generator.toml](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/.codex/agents/font-image-generator.toml)
+- [Font Renamer.txt](/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/custom-gpt/Font%20Renamer.txt)
+
+=== ASSISTANT ===
+Exactly—that is the missing layer. I’ll add an explicit context-selection rule: the font name and overall vibe can steer the thumbnail’s world, while each supporting phrase can steer that panel’s situation, action, and visual metaphor. The campaign will retain quality/family coherence without repeating the same setting or design language.

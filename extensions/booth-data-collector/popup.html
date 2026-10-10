@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BOOTH Data Collector</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>BOOTH Data Collector</h1>
+    <span id="status-chip" class="chip chip-idle">idle</span>
+  </header>
+
+  <section id="context-box" class="box">
+    <div class="kv"><span>Context</span><b id="ctx-url">no BOOTH page detected</b></div>
+    <div class="kv"><span>Tag</span><b id="ctx-tag">-</b></div>
+    <div class="kv"><span>Category</span><b id="ctx-category">-</b></div>
+    <div class="kv"><span>Sort</span><b id="ctx-sort">-</b></div>
+  </section>
+
+  <section class="box stats">
+    <div class="stat"><span>Pages</span><b id="stat-pages">0</b></div>
+    <div class="stat"><span>Cards</span><b id="stat-cards">0</b></div>
+    <div class="stat"><span>Details</span><b id="stat-details">0</b></div>
+  </section>
+
+  <section class="box">
+    <details id="settings-details" open>
+      <summary>Settings</summary>
+      <div class="form">
+        <label>Max pages (0 = unlimited)
+          <input id="set-maxpages" type="number" min="0" step="1" value="0">
+        </label>
+        <label>Max items (0 = unlimited)
+          <input id="set-maxitems" type="number" min="0" step="1" value="500">
+        </label>
+        <label class="row"><input id="set-details" type="checkbox" checked> Fetch item details (desc / tags / variants)</label>
+        <label>Detail concurrency (1-6)
+          <input id="set-concurrency" type="number" min="1" max="6" step="1" value="3">
+        </label>
+        <label>Delay between detail fetches (ms)
+          <input id="set-delay" type="number" min="0" step="100" value="900">
+        </label>
+      </div>
+    </details>
+  </section>
+
+  <section class="box actions">
+    <div class="btn-row">
+      <button id="btn-start" class="btn btn-primary">▶ Start crawl</button>
+      <button id="btn-stop" class="btn btn-danger" disabled>■ Stop</button>
+    </div>
+    <div class="btn-row">
+      <button id="btn-csv" class="btn" disabled>⬇ CSV</button>
+      <button id="btn-jsonl" class="btn" disabled>⬇ JSONL</button>
+      <button id="btn-clear" class="btn btn-ghost">🗑 Clear</button>
+    </div>
+  </section>
+
+  <section class="box">
+    <div class="kv"><span>Hint</span><b id="hint">Open a BOOTH tag or /browse/ page, set the sort you want to record (e.g. popularity), then Start. The extension walks pages on your active tab and fetches item details in the background.</b></div>
+  </section>
+
+  <pre id="log">
+  </pre>
+
+  <script src="shared.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

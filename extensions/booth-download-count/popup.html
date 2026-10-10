@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BOOTH Download Count & Product Details</title>
+  <style>
+    :root {
+      --booth-blue: #47b1bf;
+      --dark: #1f2937;
+      --light: #f9fafb;
+      --border: #e5e7eb;
+      --ok: #16a34a;
+      --warn: #d97706;
+      --err: #dc2626;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      width: 460px;
+      max-height: 600px;
+      overflow-y: auto;
+      background: var(--light);
+      color: var(--dark);
+      font-size: 13px;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(135deg, var(--booth-blue), #2c7a86);
+      color: #fff;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 5;
+    }
+    header h1 { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .badge {
+      font-size: 11px;
+      background: rgba(255,255,255,0.25);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .status-bar {
+      padding: 8px 16px;
+      font-size: 12px;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+    .status-dot.scanning { background: var(--warn); animation: pulse 1s infinite; }
+    .status-dot.done { background: var(--ok); }
+    .status-dot.error { background: var(--err); }
+    .status-dot.idle { background: var(--border); }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .actions {
+      padding: 12px 16px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+    button {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--dark);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    button:hover:not(:disabled) { background: #f3f4f6; border-color: #cbd5e1; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    button.primary {
+      background: var(--booth-blue);
+      border-color: var(--booth-blue);
+      color: #fff;
+    }
+    button.primary:hover:not(:disabled) { background: #2c7a86; }
+    button.success { background: var(--ok); border-color: var(--ok); color: #fff; }
+
+    .content { padding: 12px 16px; }
+    .empty { color: #6b7280; text-align: center; padding: 30px 16px; line-height: 1.5; }
+
+    .item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .item h3 { font-size: 13.5px; font-weight: 700; margin-bottom: 4px; }
+    .item .url { font-size: 11px; color: var(--booth-blue); word-break: break-all; }
+    .item .meta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; font-size: 12px; }
+    .item .meta span b { color: var(--dark); }
+    .item .tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
+    .tag {
+      background: #eef6f7;
+      color: #2c7a86;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 11px;
+    }
+    .variants-table, .downloads-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+    .variants-table th, .downloads-table th {
+      text-align: left;
+      padding: 4px 6px;
+      background: #f3f4f6;
+      font-weight: 600;
+    }
+    .variants-table td, .downloads-table td {
+      padding: 4px 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .downloads-table td.num, .variants-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .section-label {
+      margin-top: 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      font-weight: 700;
+    }
+    .btn-row { display: flex; gap: 8px; margin-top: 10px; }
+    .toast {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--dark);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+    .toast.show { opacity: 1; }
+    .expand { margin-top: 8px; font-size: 11px; color: var(--booth-blue); cursor: pointer; font-weight: 600; }
+    .collapsed .details { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>
+      <span>🛒 BOOTH Details</span>
+      <span class="badge" id="itemCount">0 items</span>
+    </h1>
+  </header>
+
+  <div class="status-bar">
+    <span class="status-dot idle" id="statusDot"></span>
+    <span id="statusText">Ready. Open the BOOTH seller items page then click Scan.</span>
+  </div>
+
+  <div class="actions">
+    <button id="scanBtn" class="primary">🔍 Scan Dashboard</button>
+    <button id="copyBtn" disabled>📋 Copy</button>
+    <button id="csvBtn" disabled>💾 Export CSV</button>
+    <button id="debugBtn" disabled title="Copy diagnostics + raw HTML section for debugging">🔧 Debug</button>
+    <button id="collapseBtn">⊟ Collapse all</button>
+  </div>
+
+  <div class="content" id="content">
+    <div class="empty">
+      Click <b>Scan Dashboard</b> to extract product details and per-variant download counts.
+      <br /><br />
+      <small>Tip: be on <code>https://manage.booth.pm/items/</code> (seller dashboard) and logged in.</small>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

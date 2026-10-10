@@ -7,6 +7,11 @@ node_modules/
 .pipeline/
 q/
 q.zip
+xd:/
+.fallow/
+
+# Local playwright console logs
+.playwright-cli/
 
 # Marketplace listing outputs (generated, never versioned)
 outputs/
@@ -35,7 +40,23 @@ font-factory/.trash/
 .opencode/package-lock.json
 .env*
 
+# Codex session dumps (transient, large)
+codex-session-*.jsonl
+
 # Large font collections and working copies (too large for git)
 font-factory/Fonts/
 font-factory/input/
 font-factory/visuals/
+# Per-font source workspaces (raw font binaries, visual references) and
+# generated preparation packages — binary-heavy, regenerable from sources.
+font-factory/fonts/
+font-factory/font-preparation/
+
+# Procreate/Photoshop brush binary packs (source .abr/.brushset/.zip) —
+# the brush agent specs in brush-factory/ itself are still versioned.
+brush-factory/brushes/
+
+# Archived research collectors and raw scraped data (html.gz pages + local
+# tag DBs) belong to archived workflows and are regenerable by re-running
+# the collectors; the archive/ guidance specs stay versioned.
+archive/research/

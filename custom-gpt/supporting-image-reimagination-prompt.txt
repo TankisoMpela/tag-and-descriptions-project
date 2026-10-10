@@ -1,0 +1,105 @@
+ONE-OFF SUPPORTING FONT IMAGE REIMAGINATION PROMPT
+
+Create exactly one new supporting font listing image from the supplied references.
+
+This prompt is authoritative for this run. It overrides any generic instruction that allows realistic 3D object surfaces here. The font lettering must never be rendered on or wrapped onto a 3D surface — no perspective-applied text on cylinders, boxes, walls, signs, plinths, or any object with depth. The lettering does not have to sit on a background or surface: it may float freely in the composition, sit on a ribbon or a shape, or rest against a real-world (photographic) background or a flat design — whichever the composition calls for. Abstract 3D concept art is forbidden. Every composition must be either a real-world background or a flat surface with flat art — never a 3D scene, and never lettering that is itself 3D (no extrusion, inflation, or freestanding 3D sign lettering).
+
+INPUTS
+- Font seed/specimen image: [ATTACH FONT SEED]
+- Old supporting image to transform: [ATTACH ONE OLD SUPPORTING IMAGE]
+- Approved main thumbnail for family resemblance, if available: [ATTACH APPROVED MAIN]
+- Final font name: [ENTER FINAL FONT NAME]
+- Output filename: [promo_1.png / promo_2.png / NEXT PROMO NUMBER]
+
+TEXT PLACEHOLDER LAYOUT — DO NOT MOVE OR RESIZE THE TYPE
+The supplied text placeholder is the art-directed type composition for this
+panel. Its type size, position, alignment, line breaks, and visual prominence
+are the brief, not a draft to improve. Build the artwork around the type; never
+recompose the type to suit the artwork.
+
+- Do not move, resize, re-crop, re-stack, re-align, re-order, or shrink the
+  typography.
+- Do not shrink the type to make room for artwork. Take space from the artwork,
+  never from the type's position or size.
+- Keep the type exactly as visually dominant as it is in the placeholder. The
+  type is the product; the artwork is the context around it.
+- The type's colour, material, and treatment may be adapted to the new world.
+  Its geometry may not.
+- The one exception: if the type would otherwise be clipped, hidden, or
+  illegible, change the minimum geometry needed, keeping the same relative
+  position, alignment, and prominence. Never reduce its size for composition.
+
+PRIMARY TASK
+Reimagine the old supporting image as a genuinely new premium 3:2 supporting image. Keep the old image's product purpose and any useful, readable copy, but do not recreate its scene, object arrangement, palette, or styling. This governs the artwork only: the typography's position and size come from the text placeholder and are not yours to change. The result must look like a new art-directed image in the same product family, not a reskin or a cleaned-up copy.
+
+LETTERING RULE — MOST IMPORTANT
+1. Use the supplied font seed/specimen as the sole authority for the font letterforms. Preserve the exact visible font lettering, distinctive glyph shapes, spelling, and capitalization. Do not substitute a generic font, redraw the font, or invent letters.
+2. The font lettering must never be rendered on or wrapped onto a 3D surface. It may float freely in the composition, sit on a ribbon or a shape, sit on a flat surface (poster, card, label, paper/card/packaging), or rest against a real-world photographic background — whichever the composition calls for. The lettering itself must stay flat: no extrusion, inflated/bent typography, or freestanding 3D sign lettering.
+3. The background may be a real-life photograph, a flat, straight-on design, or nothing at all. The lettering may be presented on it, over it, or floating independently. Floating lettering is allowed; lettering applied around a 3D object is not.
+4. Make the lettering readable and faithful. Do not place critical glyphs under glare, folds, deep curvature, props, or crop boundaries.
+5. Treat every legible text element in the old supporting image as intentional product copy, not decoration. Preserve the main font name **and as much truthful subtext as possible**: slogans, descriptors, feature labels, weight/style names, glyph/category labels, language labels, and short product messages.
+6. Keep the old reference's wording, spelling, capitalization, and punctuation wherever the copy is legible, accurate, and relevant. Do not preserve only the main font name while discarding the supporting text.
+7. Preserve the placeholder's type geometry exactly (see TEXT PLACEHOLDER LAYOUT above). Its placement and scale are fixed; only colour, material, and treatment adapt to the new world. Do not rewrite or omit copy merely to make the redesign easier.
+
+FOCUS RULE
+- Identify the main focus first: the supplied font seed lettering is the only lettering that must be preserved with exact font-letterform fidelity — it is the product being sold.
+- Supporting text is still required source copy when it is legible, truthful, and relevant. Preserve it as closely as possible; reword or omit it only when it is unreadable, irrelevant, conflicts with the supplied font, old branding/URL/handle, or an unsupported claim.
+
+SUPPORTING COPY RULE
+- Keep as much of the old reference's legible, truthful subtext as possible. Do not isolate copied text on a blank background; integrate it into the new context: for example, print it on a package panel, place it on a small editorial card, put it on a paper insert, or make it part of a coherent product label.
+- Never add fake features, URLs, social handles, studio names, unsupported language, or marketing claims.
+- Remove old creator/studio/foundry branding. Use PaperMoon only as a small studio attribution wordmark when attribution is genuinely needed — it is the studio name, not the font name.
+
+REIMAGINATION REQUIREMENTS
+Change at least four major creative decisions from the old image:
+- physical object or product context;
+- setting/background and material language;
+- composition/grid and focal hierarchy;
+- camera angle or crop;
+- palette and lighting;
+- colour and treatment applied to the type (never its placement or scale);
+- supporting copy treatment;
+- secondary props, motifs, or surface texture.
+
+Do not merely change the background, recolor the old image, replace one object, or put the old text on an empty surface. Do not recreate the old image with different colors. Make the new context materially different while keeping the same font-product purpose.
+
+ART DIRECTION
+- Premium, intentional, editorial, and commercially usable.
+- Real-world photographic backgrounds or flat, straight-on designs are welcome, but keep the composition controlled rather than cinematic or cluttered.
+- **No decorative shadow or dappled light.** Do not add cast shadows, leaf shadows, foliage shadows, blind or window-frame shadows, wall shadows, shadow of a hand, plant, or object, or a soft shadow gradient laid over the composition. This is the single most overused way to make an image read as "premium", it appears in almost every generation by default, and it is not a concept. Use a real light-and-shadow effect only when the composition's own idea depends on it, never as atmosphere, texture, background filler, or a finishing layer. If you would describe the image as "premium because of the shadows", remove them.
+- Do not reach for mood lighting, lens blur, glow, grain, or paper texture as a substitute for the same effect. One image may use one of these only if the concept requires it; the set must not repeat it.
+- The font should be the clear subject. Use enough contrast and scale for marketplace-thumbnail readability.
+- Use safe margins. Keep all required lettering and copy fully visible, correctly spelled, and unclipped.
+- Prefer one clear presentation of the main font lettering — floating, on a ribbon/shape, or on a flat surface — with supporting copy integrated naturally into the scene.
+- Do not create a square image, Pinterest image, collage of multiple alternatives, or a long-scroll panel.
+
+OUTPUT
+- Generate exactly one image.
+- Target 3:2, preferably 1500x1000, 1536x1024, or 1600x1067.
+- Build the complete lettering, surface, and background together in one generation/editing operation. Do not generate a background first and add the font later with an overlay.
+- Do not use post-processing to repair wrong spelling, substitute glyphs, or paste the lettering on afterward.
+- If the font lettering, required copy, or lettering presentation is wrong, reject the image and regenerate the complete image.
+
+FINAL SELF-CHECK BEFORE ACCEPTING
+Reject and regenerate if any answer is yes:
+- Is the font lettering generic, misspelled, distorted, or made from the wrong typeface?
+- Is the lettering itself 3D — extruded, inflated, sculpted, or wrapped around a 3D surface?
+- Is abstract 3D concept art used instead of a real-world background or a flat surface with flat art?
+- Did the result copy the old composition or merely recolor/reskin it?
+- Was the placeholder's type moved, resized, re-cropped, or made less
+  dominant than it was? (yes = reject)
+
+- Was any legible, truthful, relevant main font copy or supporting subtext unnecessarily dropped, rewritten, or replaced with nonsense?
+- Is any required text clipped, hidden, unreadable, or covered by glare?
+- Did old creator branding, a URL, a handle, or an invented product claim appear?
+- Is the output not 3:2 or does it contain multiple alternative images?
+- Does the image lean on decorative shadow, dappled light, or a shadow overlay to look premium? (yes = reject)
+
+RESPONSE AFTER GENERATION
+State only:
+MODE 2 COMPLETE — save as [OUTPUT FILENAME]
+Copy fidelity: [PASS/FAIL]
+Flat (non-3D) lettering: [PASS/FAIL]
+Reimagined context: [PASS/FAIL]
+Supporting copy: [MAIN FONT FAITHFUL / NON-FOCUS REIMAGINED / OMITTED AS IRRELEVANT / FAIL]
+Any visible problem: [SHORT NOTE]

@@ -1,0 +1,92 @@
+ONE-OFF SUPPORTING PROCREATE BRUSH IMAGE REIMAGINATION PROMPT
+
+Create exactly one new supporting marketplace image for a Procreate brush set from the supplied references.
+
+This prompt is authoritative for this run. The image is a brush product visual, not a font specimen, packaging mockup, or generic illustration. Artwork and visible brush behavior are the subject; typography is supporting information only.
+
+INPUTS
+- Old supporting image to transform: [ATTACH ONE OLD SUPPORTING IMAGE]
+- Approved main thumbnail for family resemblance, if available: [ATTACH APPROVED MAIN]
+- Brush product description: [PASTE USER-PROVIDED BRUSH DESCRIPTION]
+- Final brush product name: [ENTER FINAL BRUSH PRODUCT NAME]
+- Supporting-image role: [BRUSH BEHAVIOR / MATERIAL FEATURE / USE CASE / INCLUDED CONTENT]
+- Output filename: [promo_1.png / promo_2.png / NEXT PROMO NUMBER]
+
+PRIMARY TASK
+
+Reimagine the old supporting image as one genuinely new premium 3:2 supporting image for the supplied Procreate brush set. Use the user-provided description as the authority for the product purpose, intended use, materials, brush behavior, included content, and supported claims. Use the old image to understand visual brush evidence, information hierarchy, and the type of result buyers need to see. Do not copy its subject, composition, crop, palette, scene, layout, slogans, or styling outside the locked brush showcase area. The result must look like a new art-directed image in the same FontFairy product family, not a recolor, reskin, cleanup, or near-copy.
+
+**ABSOLUTE BRUSH SHOWCASE LOCK:** The dedicated area where the brushes, swatches, strokes, pressure tapers, and texture samples are shown is locked and delicate. Preserve that entire area exactly as supplied: same location, same boundaries, same scale, same arrangement, same marks, same samples, same labels, same texture, and same visual content. Do not move, resize, crop, repaint, redraw, replace, recolor, restyle, simplify, expand, or reinterpret any part of it. Change only the separate artwork area and other non-showcase design elements around it. If the showcase area overlaps the artwork, preserve the showcase pixels and redesign the artwork around it.
+
+This is a ONE-SHOT generation. Inspect the references, inventory the supported facts, choose a new concept, and complete the self-check internally before producing exactly one image. Do not produce alternatives or a collage of options.
+
+BRUSH FIDELITY AND PRODUCT TRUTH
+1. First interpret the user-provided description to identify the actual brush medium, intended use, and behaviors to demonstrate. Preserve the stroke character, texture behavior, and material language shown in the reference. The result should look as though the same brush set made the new artwork.
+2. Change what is drawn. Choose a new, focused subject or practical application that is clearly different from the old image. Prefer a simple closeup, crop, controlled materials study, or single use-case rather than a complex scene.
+3. Make the brush effect visible. Show the marks, edges, grain, pressure variation, layering, fallout, or other behavior that the supplied brush genuinely produces.
+4. Demonstrate a different brush behavior or use from the approved main thumbnail when possible. Do not repeat the same hero artwork or merely zoom into it.
+5. Do not invent brush names, brush counts, materials, app versions, compatibility claims, included extras, or other product facts. Treat the description as the primary source for facts and the reference as visual evidence. If a fact is not supplied in the description or legible in the reference, do not print it.
+6. Use short labels only when they describe a visible and supported behavior. Examples include `Dry edge`, `Soft wash`, or `Grain detail` only if the brush actually demonstrates that behavior.
+7. Match the original artwork's skill level, finish, detail density, and believable complexity. Do not make the new artwork unrealistically polished, technically impossible, generic, or far simpler or more complex than the reference.
+8. The locked brush showcase is not part of the reimagination. It must remain exactly unchanged and in exactly the same area while the new artwork is designed around it.
+
+TEXT AND BRANDING
+- Use the final brush product name exactly as supplied. Keep it readable but secondary to the artwork and brush evidence.
+- Preserve only truthful, relevant copy from the old image. Rewrite it into clean natural English when necessary; do not preserve misspellings, nonsense, duplicate text, or unreadable lettering.
+- Remove old studio names, logos, watermarks, URLs, handles, and old product names. The only allowed studio attribution is the small secondary wordmark `FontFairy`.
+- Do not add fake marketing claims or dense paragraphs. Every visible word must be purposeful, legible, correctly spelled, and inside the safe area.
+
+REIMAGINATION REQUIREMENTS
+Change at least four major creative decisions from the old image:
+- artwork subject or use-case;
+- setting, background, or material context;
+- composition, grid, and focal hierarchy;
+- palette and lighting;
+- camera angle, crop, or viewpoint;
+- brush demonstration arrangement;
+- lettering and supporting-copy treatment;
+- secondary props, motifs, or surface texture.
+
+Do not use a wide landscape, busy multi-object scene, crowd, complicated anatomy, or decorative composition that hides the brush result. Keep one coherent visual idea with a clear focal point. Do not use CGI 3D objects, extruded lettering, plastic gloss, or artificial floating 3D product objects.
+
+ART DIRECTION AND FORMAT
+- Premium, intentional, editorial, and commercially usable.
+- Maintain visual family resemblance with the approved main thumbnail through restrained FontFairy branding, not by copying its layout or artwork.
+- Use a controlled closeup, materials board, or practical use-case scene appropriate to the specified supporting-image role.
+- Target landscape 3:2, preferably 1500x1000, 1536x1024, or 1600x1067.
+- Keep the product name, labels, brush evidence, and important artwork within safe 8–10% outer margins for square marketplace auto-crops.
+- Do not create a square image, Pinterest image, main thumbnail, long-scroll presentation, or multiple alternatives.
+
+OUTPUT RULES
+- Generate exactly one complete image in one generation/editing operation.
+- Intended destination: `brush-factory/brushes/{brush-slug}/prepared_visuals/[OUTPUT FILENAME]`.
+- Build the artwork, brush marks, typography, and supporting details together. Do not add text or paste brush swatches afterward as an overlay.
+- If the product name, required copy, or brush behavior is wrong or visibly corrupted, reject the image and regenerate the complete image.
+
+FINAL SELF-CHECK BEFORE ACCEPTING
+Reject and regenerate if any answer is yes:
+- Is the result not landscape 3:2 or is important content clipped?
+- Did it copy the old subject, composition, branding, or distinctive layout?
+- Is it only a recolored or reskinned version of the reference?
+- Is the artwork too complex or does it hide the brush effect?
+- Is the brush medium or stroke behavior generic, misleading, or unsupported?
+- Does the image accurately reflect the user-provided description and intended use?
+- Is the new artwork at the same believable skill level, finish, detail density, and complexity as the original?
+- Was the locked brush showcase area kept exactly unchanged and in exactly the same location?
+- Is the product name wrong, misspelled, distorted, or unreadable?
+- Was truthful, relevant supporting copy unnecessarily dropped or replaced with nonsense?
+- Did old branding, a URL, a handle, or an invented claim appear?
+- Are any labels or key artwork outside safe margins?
+- Does it repeat the approved main thumbnail instead of proving a different use or behavior?
+- Was any part of the brush showcase area moved, resized, cropped, redrawn, recolored, restyled, or replaced?
+
+RESPONSE AFTER GENERATION
+State only:
+MODE 2 COMPLETE — save as [OUTPUT FILENAME]
+Supporting-image role: [ROLE]
+Brush behavior demonstrated: [SHORT DESCRIPTION]
+New artwork subject: [SHORT DESCRIPTION]
+3:2 ratio and safe margins: [PASS/FAIL]
+Description, copy, and branding check: [PASS/FAIL]
+Reimagined context: [PASS/FAIL]
+Any visible problem: [SHORT NOTE]

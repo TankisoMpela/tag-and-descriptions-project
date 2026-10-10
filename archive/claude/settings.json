@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Agent",
+      "Task",
+      "Bash(python3 bin/validate_booth_listing.py *)",
+      "Bash(python3 bin/validate_x_campaign.py *)",
+      "Bash(python3 bin/validate_marketore_listing.py *)",
+      "Bash(node bin/search.js *)"
+    ]
+  }
+}

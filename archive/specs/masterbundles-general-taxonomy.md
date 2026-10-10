@@ -1,0 +1,993 @@
+# MasterBundles General Category Taxonomy
+
+Live baseline captured from the public vendor upload form:
+`https://masterbundles.com/sell-your-deal/`
+
+Captured through Firecrawl on 2026-08-08. The authenticated browser form independently reported the same tree structure: 7 top-level branches, 971 category nodes, and three nesting levels. The runtime agent must refresh this tree from the live form before relying on it because labels and IDs can change.
+
+- Total category nodes: 971
+- Depth 1: 7
+- Depth 2: 133
+- Depth 3: 831
+
+## Complete tree
+
+- Add-ons
+  - Affinity
+    - Photo
+  - Illustrator Add-ons
+    - Brushes
+    - Presets
+  - InDesign
+  - Lightroom Add-ons
+    - Actions
+    - Presets
+  - Photoshop Plugins
+    - Actions
+    - Brushes
+    - Color Palettes
+    - Layer Styles & Overlays
+  - Procreate Brushes
+- Crafters
+  - Paper Cutting
+- Fonts
+  - 40s
+  - 60s
+  - Adventure
+  - Angry
+  - Art Deco
+  - Astrological
+  - Barber Shop
+  - BBQ
+  - Bee
+  - Beer
+  - Biker
+  - Blackletter
+  - Boho
+  - Border
+  - Boutique
+  - Bubble
+  - Butterfly
+  - Calculator
+  - California
+  - Car
+  - Chunky
+  - Display
+    - Bold
+    - Decorative
+    - Modern
+    - Pixel
+    - Retro
+    - Script
+    - Vintage
+  - Earthy
+  - Easter
+  - Edgy
+  - Evil
+  - Fairytale
+  - Fantasy
+  - Farm
+  - Flame
+  - Futuristic
+  - Glitch
+  - Golf
+  - Gothic Tattoo
+  - Graffiti
+  - Halloween
+    - Bone
+  - Handpainted
+  - Happy
+  - Harry Potter
+  - Hippie
+  - Indian
+  - Japanese
+  - Juicy
+  - Logo
+  - Money
+  - Mystic
+  - Nature
+  - Nautical
+  - Navy
+  - Old English
+  - Plant
+  - Playful
+  - Preschool
+  - Quirky
+  - Sad
+  - Sans Serif
+    - Bold
+    - Classic
+    - Handwriting
+    - Humanist
+    - Modern
+    - Monospaced
+    - Outline
+    - Slab
+    - Small
+    - Tattoo
+    - Thick
+    - Thin
+    - Vintage
+  - Script
+    - Antique
+    - Athletic
+    - Baroque
+    - Bold
+    - Brush
+    - Calligraphy
+    - Christmas
+    - Cricut
+    - Cursive
+    - Dancing
+    - Embroidery
+    - Fancy
+    - Girly
+    - Lettering
+    - Masculine
+    - Monoline
+    - Old
+    - Retro
+    - Signature
+    - Tattoo
+    - Thick
+    - Thin
+    - Trendy
+    - Urban
+    - Vintage
+    - Wedding
+    - Western
+    - Writing
+  - Serif
+    - Bold
+    - Classic
+    - Fancy
+    - Handwriting
+    - Humanist
+    - Modern
+    - Monospaced
+    - Old Style
+    - Outline
+    - Retro
+    - Slab
+    - Square
+    - Vintage
+  - Shaky
+  - Sick
+  - Soccer
+  - Space
+  - Split
+  - Star Wars
+  - Streetwear
+  - SVG
+  - Swirl
+  - Symbol
+  - Tall
+  - Techno
+  - Thanksgiving
+  - Tokyo
+  - Tough
+  - Travel
+  - Tropical
+  - Vegas
+  - Vine
+  - Watercolor
+  - Watermark
+  - Weed
+  - Whimsical
+  - Whiskey
+  - Y2K
+- Freebies
+  - Free Add-ons
+    - Free Illustrator Add-ons
+    - Free Lightroom Add-ons
+    - Free Photoshop Addons
+  - Free eBooks
+  - Free Fonts
+    - Free Alien Font
+    - Free Anime Fonts
+    - Free Baseball Fonts
+    - Free Black Metal Fonts
+    - Free Christmas Fonts
+    - Free Distressed Font
+    - Free Farmhouse Fonts
+    - Free Girly Fonts
+    - Free Graffiti Font
+    - Free Halloween Fonts
+    - Free Ice Cream Font
+    - Free Meme Font
+    - Free Mexican Fonts
+    - Free Nautical Font
+    - Free Patrick Fonts
+    - Free Retro Fonts
+    - Free Rustic Fonts
+    - Free Sexy Font
+    - Free Thanksgiving Fonts
+    - Free Tiny Fonts
+    - Free Urban Font
+    - Free Victorian Fonts
+    - Free Wedding Fonts
+    - Ink Free Font
+  - Free Graphics
+    - Free Icons
+    - Free Illustrations
+    - Free Logos
+    - Free Patterns
+    - Wallpaper
+  - Free Photos
+  - Free SVGs
+    - Animal SVG Free
+    - Bird SVG Free
+    - Cartoon
+    - Christmas
+    - Crown SVG Free
+    - Easter
+    - Fashion SVG
+    - Floral SVG FREE
+    - Flower SVG
+    - Free Halloween SVG
+    - Heart SVG Free
+    - Love SVG Free
+    - Magic
+    - Military
+    - Star Wars SVG Free
+    - Thanksgiving SVG Free
+    - Travel
+    - Wreath SVG Free
+  - Free Templates
+    - Free Calendars
+    - Free Mockups
+    - Free Presentations
+    - Free Printables
+    - Free Resume
+    - Free Social Media Templates
+    - Free Website Templates
+- Graphics
+  - Backgrounds
+    - Aesthetic
+    - Animal
+    - Apple Watch Faces
+    - Beach
+    - Black
+    - Blue
+    - Christmas
+    - Colored
+    - Cosmic
+    - Easter
+    - Fall
+    - Floral
+    - Golden Backgrounds
+    - Gradient
+    - Holiday
+    - Holographic
+    - Marble
+    - Nature
+    - Paper
+    - Pastel
+    - Purple
+    - Rainbow
+    - Roses
+    - Rustic
+    - Sky
+    - Snowflake
+    - Space
+    - Spring
+    - Star
+    - Sunset
+    - Valentine's Day
+    - Vintage
+    - Watercolor
+    - Winter
+    - Zoom
+  - Badges
+    - Army
+    - Gym
+    - Scout
+    - Security
+  - Characters
+    - 3D
+    - Animal
+    - Boy
+    - Christmas
+    - Girl
+    - Kids
+    - Pregnant
+    - SuperHero
+  - Gradients
+  - Icons
+    - Aesthetic
+    - Airport
+    - Animal
+    - App Icons
+    - Arrows
+    - Baby
+    - Beauty
+    - Black
+    - Black Message
+    - Black Settings
+    - Blue Messages
+    - Build
+    - Business
+    - Christmas
+    - Cinema
+    - Colored
+    - Customer Support
+    - Dental
+    - DIY
+    - Doctor
+    - Dotted
+    - Duotone
+    - Education
+    - Fashion
+    - Finance
+    - Flat
+    - Food
+    - Furniture
+    - Game
+    - Gardening
+    - Hippie
+    - Human Resources
+    - Job
+    - Line Art
+    - Logistics
+    - Material
+    - Medical
+    - Music
+    - Nature
+    - Outline
+    - Photography
+    - Religion
+    - Retro
+    - Rounded
+    - Sailing
+    - Science
+    - Sewing
+    - Sharp
+    - Shipping
+    - Shopping
+    - Social Media
+    - Solid
+    - Space
+    - Sport
+    - Technology
+    - Theater
+    - Travel
+    - Weather
+    - Web Design
+    - Wedding
+  - Illustrations
+    - Abstract
+    - Acorn
+    - Adventures
+    - Africa
+    - Airplane
+    - Animal
+    - Anime
+    - April Fool
+    - Art Deco
+    - Babies
+    - Back to School
+    - Balloon
+    - Beach
+    - Binoculars
+    - Birds
+    - Birthday
+    - Botanical
+    - Broom
+    - Buildings
+    - Business
+    - Camera
+    - Canada Day
+    - Candle
+    - Car
+    - Cartoon
+    - Cave
+    - Chains
+    - Checkmark
+    - Christmas
+    - Circus
+    - Clothing
+    - Crafting
+    - Crystal
+    - Desert
+    - Dice
+    - Doodle
+    - Earth day
+    - Easter
+    - Embroidery
+    - Fall
+    - Family
+    - Father's Day
+    - Fireworks
+    - Flag Day
+    - Flowers
+    - Food
+    - Fourth of July
+    - France
+    - Furniture
+    - Glue
+    - Gnome
+    - Groundhog Day
+    - Hair Salon
+    - Hairdresser
+    - Halloween
+    - Hanukkah
+    - Harry Potter
+    - Hippie
+    - India
+    - Indonesian
+    - Insect
+    - Jail
+    - Japanese
+    - Kids
+    - Kitchen
+    - Knife
+    - Labor Day
+    - Lawnmower
+    - LGBT
+    - Line Art
+    - Love
+    - Mailbox
+    - Mardi Gras
+    - Medical
+    - Memorial Day
+    - Military
+    - Mop
+    - Mother's Day
+    - Moustache
+    - Museum
+    - Music
+    - Muslim
+    - Mystery
+    - Native American
+    - Nautical
+    - New Year
+    - Pajama
+    - Parents day
+    - Passport
+    - Pearl Harbor
+    - Purim
+    - Rainbow
+    - Religious
+    - Remembrance Day
+    - River
+    - Road
+    - Rope
+    - Rosh Hashana
+    - Sea
+    - Sewing
+    - Shovel
+    - Soap
+    - Space
+    - Spain
+    - Sports
+    - Spring
+    - St. Patricks Day
+    - Stairs
+    - Star Wars
+    - Submarine
+    - Summer
+    - Sunglasses
+    - Sunset
+    - Thanksgiving
+    - Toilet
+    - Tornado
+    - Train
+    - Turkey
+    - Ukrainian
+    - Veterans Day
+    - Volcano
+    - Water
+    - Zodiac
+    - Сinco de mayo
+  - Infographics
+  - Logos
+    - 3D
+    - Adventure
+    - Agriculture
+    - Animal
+    - Architecture
+    - Bank
+    - Barber Logo
+    - Beach
+    - Beauty
+    - Bird
+    - Book
+    - Brain
+    - Brand
+    - Broom
+    - Business
+    - Camera
+    - Car
+    - Church
+    - Circle
+    - Construction Logo
+    - Eco
+    - Farm
+    - Fashion
+    - Feminine
+    - Finance
+    - Fire
+    - Floral
+    - Food
+    - Gaming
+    - Geometric
+    - Hair
+    - Halloween
+    - Hat
+    - Heart
+    - Islamic
+    - Jewelry
+    - Lashes
+    - Law
+    - Letter
+    - Lettering
+    - Love
+    - Luxury Logo
+    - Medical
+    - Military
+    - Mind
+    - Minimal
+    - Money
+    - Monogram
+    - Music Logo
+    - Navy
+    - Organic Logo
+    - Photography
+    - Real Estate
+    - Royal Logo
+    - School
+    - Science
+    - Signature
+    - Sport
+    - Star
+    - Tech
+    - Travel Logo
+    - Tree
+    - Trucking
+    - Vintage
+  - Patterns
+    - Abstract
+    - Animals
+    - Art Deco
+    - Bird
+    - Black and White
+    - Car
+    - Chevron
+    - Christmas
+    - Diamond
+    - Dotted
+    - Easter
+    - Fall
+    - Flowers
+    - Food
+    - Fractal
+    - Geometric
+    - Gingham
+    - Halloween
+    - Heart
+    - Herringbone
+    - Hexagon
+    - Houndstooth
+    - Insect
+    - Kids
+    - Lace
+    - Leaves
+    - Mandala
+    - Mother's Day
+    - National
+    - Nautical
+    - Polka Dot
+    - Rainbow
+    - Retro
+    - Rustic
+    - Sinusoidal
+    - Sport
+    - St. Patrick's Day
+    - Star
+    - Stripe
+    - Thanksgiving
+    - Tie Dye
+    - Travel
+    - Triangle
+    - Valentine’s day
+    - Vintage
+    - Watercolor
+    - Zentangle
+  - T-Shirts
+    - 4th of july
+    - Animal
+    - Astrology
+    - Barber
+    - Bird
+    - Botanical
+    - Breast Cancer
+    - Camping
+    - Car
+    - Church
+    - Cinco De Mayo
+    - Cycling
+    - Earth Day
+    - Easter
+    - Fall
+    - Family
+    - Fashion
+    - Father’s Day
+    - Firefighter
+    - Flower
+    - Food
+    - Gaming
+    - Halloween
+    - Hiking
+    - Hippie
+    - Hunting
+    - Juneteenth
+    - Kids
+    - Labor Day
+    - LGBT
+    - Love
+    - Mardi Gras
+    - Marilyn Monroe
+    - Medicine & Healthcare
+    - Mother’s Day
+    - Motivational
+    - Motorcycle
+    - Movie
+    - Music
+    - Mythology
+    - Nurse
+    - Photography
+    - Pregnancy
+    - Religion
+    - Retro
+    - Sarcastic
+    - Science
+    - Space
+    - Sport
+    - Spring
+    - St. Patrick’S Day
+    - Summer
+    - Surfing
+    - Tattoo
+    - Thanksgiving
+    - Travel
+    - Typography
+    - Ukraine
+    - Urban
+    - Veteran's Day
+    - Viking
+    - Vintage
+    - Wedding
+    - Winter
+    - Women’s Day
+    - Сhristmas
+  - Textures
+    - Abstract
+    - Art
+    - Black
+    - Brick
+    - Canvas
+    - Color
+    - Concrete
+    - Fabric
+    - Fashion
+    - Fine Art
+    - Glass
+    - Glitch
+    - Glitter
+    - Gold Foil
+    - Gradient
+    - Grunge
+    - Holographic
+    - Leather
+    - Marble
+    - Metallic
+    - Nature
+    - Paint
+    - Paper
+    - Plastic
+    - Purple
+    - Volcano
+    - Wood
+- Stock Content
+  - Audio
+    - Sound effects
+    - Stock Music
+  - Footage
+    - After effects
+    - Final Cut
+    - Motion
+    - Premiere Pro
+  - Photo
+    - Horizontal
+    - Photo Bundles
+    - Vertical
+  - SVG Files
+    - Adventure SVG
+    - Air Force
+    - Airplane SVG
+    - Anchor SVG
+    - Angel Wings SVG
+    - Animal SVG
+    - Anime SVG
+    - Apple SVG
+    - Arrow SVG
+    - Balloon
+    - Banner
+    - Barbie SVG
+    - Birthday SVG
+    - Boho SVG
+    - Border
+    - Bow SVG
+    - Box SVG
+    - Breast Cancer SVG
+    - Brush Stroke SVG
+    - Building
+    - Camera
+    - Car
+    - Cartoon
+    - Christmas SVG
+    - Coffee SVG
+    - Country SVG
+    - Crown SVG
+    - Dallas Cowboys SVG
+    - Disney SVG
+    - Easter SVG
+    - Education
+    - Fall SVG
+    - Fashion SVG
+    - Fathers Day SVG
+    - Flag SVG
+    - Flame SVG
+    - Floral SVG
+    - Flower SVG
+    - Food SVG
+    - Frame
+    - Gamer SVG
+    - Gnome SVG
+    - Guns SVG
+    - Halloween SVG
+    - Harry Potter
+    - Home
+    - Hunting SVG
+    - Instagram SVG
+    - Islamic
+    - Jesus SVG
+    - Kids SVG
+    - Love SVG
+    - Medical
+    - Memorial SVG
+    - Military
+    - Money
+    - Mother’s Day
+    - Motorcycle SVG
+    - Movie SVG
+    - Mushroom
+    - Music SVG
+    - Nature
+    - Nautical
+    - New Year
+    - Ohio State
+    - People SVG
+    - Pride
+    - Quotes SVG
+    - Rainbow SVG
+    - Ribbon
+    - Sarcastic
+    - Space
+    - Sport SVG
+    - Spring
+    - St. Patricks Day
+    - Star Wars SVG
+    - Stethoscope SVG
+    - Summer SVG
+    - Thanksgiving SVG
+    - Toilet Paper SVG
+    - Tooth
+    - Toy
+    - Travel SVG
+    - Truck SVG
+    - Unicorn SVG
+    - Water Bottle
+    - Wedding Ring SVG
+    - Work
+- Templates
+  - 3D Models
+    - 3ds Max
+    - Animal
+    - Architecture
+    - Blender
+    - Car Model
+    - Food
+    - Furniture
+    - Low-poly
+    - Maya
+    - Obj
+  - Business Card
+    - Blank
+    - Double Sided
+    - Illustrator
+    - Makeup Artist
+    - Medical
+    - Minimalist
+    - Modern
+    - Photography
+    - Photoshop
+    - Real Estate
+    - Rounded Corner
+    - Simple
+    - Tech
+  - Certificates
+    - Award
+    - Editable
+    - Gift
+    - Printable
+    - Word
+  - e-Book
+    - Book Cover
+    - Business
+    - Children's
+    - Recipe
+  - Email
+    - Email signature
+  - Graduation Announcement
+  - KDP Interiors
+  - Landings
+    - Agency
+    - Automotive
+    - Black Friday
+    - Blogger
+    - Casino
+    - Copywriting
+    - CV Landing
+    - Dark Style
+    - eBook
+    - Event
+    - Figma
+    - Gym
+    - Healthcare
+    - Portfolio
+    - Product
+    - Real Estate
+    - SaaS
+    - Unbounce
+    - Webinar
+  - Letterhead
+  - Magazines
+  - Mockups
+    - Mobile & Web Devices
+    - Print
+    - Product
+    - Scene Creator
+  - Notion
+    - Aesthetic
+    - Book Tracker
+    - Content
+    - Dashboard
+    - Finance
+    - Habit
+    - Health
+    - Landing Page
+    - Planner
+    - Product Management
+    - Progress
+    - Project Management
+    - Reading List
+    - Recipe
+    - Resume
+    - Workout
+  - Presentations
+    - Google Slides
+    - Keynote
+    - Powerpoint
+  - Printable
+    - Brochures
+    - Calendar
+    - Cards & Postcards
+    - Coloring Pages
+    - Flyers
+    - Invitations
+    - Invoice
+    - Menu
+    - Planner
+    - Posters
+    - Proposal
+    - Scrapbook Alphabet
+    - Stickers
+  - Prompt
+    - ChatGPT
+    - Midjourney
+  - Resume
+    - Acting
+    - Architecture
+    - Blank
+    - Business
+    - Chef
+    - College
+    - Curriculum vitae
+    - Dance
+    - Dentist
+    - Designer
+    - Doctor
+    - Engineering
+    - Fashion
+    - Federal
+    - Finance
+    - Healthcare
+    - Hotel
+    - IT
+    - Lawyer
+    - Marketing
+    - Medical Resume
+    - Music
+    - Nanny
+    - Nursing
+    - Pharmacy
+    - Phlebotomy
+    - Photographer
+    - Physician
+    - Pilot
+    - Project Manager
+    - Real Estate
+    - Restaurant hostess
+    - Restaurant manager
+    - Sales manager
+    - Sorority
+    - Student
+    - Surgical
+    - Teacher
+    - Vet
+  - Shopify
+    - Blog
+    - Fashion
+    - Kids
+    - Magazine
+    - Minimal
+    - Responsive
+    - Restaurant
+    - Сlothing
+  - Social Media
+    - Facebook
+    - Google Display Banner
+    - Instagram
+    - LinkedIn Background Banners
+    - Pinterest
+    - Snapchat
+    - Twitter
+    - Youtube Thumbnail
+  - Tools
+  - UI Kits
+    - Buttons
+    - Chatting
+    - Dating
+    - eCommerce
+    - Figma
+    - Food Delivery
+    - Medical
+    - Online Course
+    - Sketch
+    - Social Media
+    - Table
+    - Travel
+  - Wordpress
+    - Blog
+    - Building
+    - Church
+    - Elementor
+    - Minimalist
+    - Newspapers
+    - Podcast
+    - Portfolio
+    - Real estate
+    - Restaurant
+    - Selling
+    - Video
+    - Wedding
+    - WooCommerce
+
+## Runtime selection rules
+
+- Treat this file as a readable baseline only; scrape or inspect the live vendor form before producing a listing.
+- Preserve the complete parent-to-child path, including repeated labels under different parents.
+- For authenticated uploads, map the selected path to the live checkbox IDs/name values at runtime; never hardcode IDs from this snapshot.
+- If the live tree differs, record the differences in the listing research notes and use the live tree as authoritative.
+

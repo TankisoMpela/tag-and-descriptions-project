@@ -1,0 +1,13 @@
+# Python dependencies for the mechanical helpers in bin/.
+#
+# The active pipeline needs a font/raster stack for the render bridge helpers
+# and validators. Versions are intentionally unpinned (floor-only) so the
+# helpers work across the project's own virtualenvs and CI runners; bump the
+# floors only when a script needs a newer API.
+#
+# Install with:  uv sync   (preferred)   or   pip install -r requirements.txt
+
+fontTools>=4.50
+Pillow>=10.0
+uharfbuzz>=0.40
+PySide6>=6.6

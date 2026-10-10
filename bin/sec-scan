@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# Security Scan Wrapper Script
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+if [ "$EUID" -ne 0 ]; then
+  echo -e "${RED}[ERROR] Please run this script with sudo:${NC}"
+  echo "    sudo sec-scan"
+  exit 1
+fi
+
+echo -e "${BLUE}================================================================${NC}"
+echo -e "${BLUE}           Starting Consolidated Security Audit Scan            ${NC}"
+echo -e "${BLUE}================================================================${NC}"
+
+# 1. Update rkhunter data files
+echo -e "\n${YELLOW}[1/4] Updating Rootkit Hunter Database...${NC}"
+rkhunter --update --nocolor 2>&1 | grep -E "Update|Error|Warning" || echo "Database updated."
+
+# 2. Run chkrootkit
+echo -e "\n${YELLOW}[2/4] Running chkrootkit scan...${NC}"
+chkrootkit_out=$(chkrootkit 2>&1)
+# Filter chkrootkit output to show only infected or warning lines to avoid spam
+warnings=$(echo "$chkrootkit_out" | grep -E "INFECTED|WARNING")
+if [ -z "$warnings" ]; then
+  echo -e "${GREEN}[OK] chkrootkit found no rootkits or warnings.${NC}"
+else
+  echo -e "${RED}[ALERT] chkrootkit reports:${NC}"
+  echo "$warnings"
+fi
+
+# 3. Run rkhunter
+echo -e "\n${YELLOW}[3/4] Running rkhunter check...${NC}"
+# --sk skips keystrokes, --check runs check, --rwo prints only warnings
+rkhunter_warnings=$(rkhunter --check --sk --rwo 2>&1)
+
+if [ -z "$rkhunter_warnings" ]; then
+  echo -e "${GREEN}[OK] rkhunter found no warnings.${NC}"
+else
+  echo -e "${RED}[ALERT] rkhunter found the following warning(s):${NC}"
+  echo "$rkhunter_warnings"
+fi
+
+# 4. Check for high CPU processes (miner activity check)
+echo -e "\n${YELLOW}[4/4] Checking for high-resource processes...${NC}"
+high_cpu=$(ps -eo pid,ppid,%cpu,cmd --sort=-%cpu | head -n 4)
+echo "$high_cpu"
+
+echo -e "\n${BLUE}================================================================${NC}"
+echo -e "${GREEN}Scan complete.${NC}"
+echo -e "${BLUE}================================================================${NC}"

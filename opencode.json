@@ -1,0 +1,109 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "booth-fonts-specialist": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-20-booth-fonts-specialist.md}",
+      "description": "BOOTH font SEO-copy specialist. Defaults to a limited-time free campaign (FREE_ACTIVE): a Japanese-first free-offer title/description opening with the offer, a BOOTH like CTA, validated tags including free-campaign tags, and the permanent paid copy state; no technical package, media, license, or upload QA.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "creative-fabrica-fonts-specialist": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-29-creative-fabrica-fonts-specialist.md}",
+      "description": "Creative Fabrica font listing and SEO research specialist. Produces a Fonts-category listing with exactly 40 researched tags and clearly labelled engagement and purchase observations; live tag verification only when explicitly requested; no upload claim.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "cm-fonts-specialist": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-2-fonts-specialist.md}",
+      "description": "Creative Market font listing specialist using the complete local Creative Market font corpus and deterministic tag-pattern bank; no long live-research loop.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "font-final-visual-processor": {
+      "prompt": "{file:./agents/agent-30-font-final-visual-processor.md}",
+      "description": "Post-workflow processor for seller-replaced font images. Separates final raw images into 3:2 and 1:1 sets, preserves exact source copies, compresses JPEG delivery files, and writes an audit manifest without changing the raw files.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "font-image-generator": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-27-font-image-generator.md}",
+      "description": "FontFairy font text-placeholder handoff agent. Runs before font-prep, decides a new evocative name only when none is supplied, and creates deterministic canonical 3:2 and 1:1 placeholders plus factual specimens. It does not use OpenPencil, image-generation tools, visual inspection, or OCR; final artwork replacement is a separate optional seller step.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "font-prep-specialist": {
+      "prompt": "{file:./agents/agent-13-font-prep-specialist.md}",
+      "description": "FontFairy Font Preparation & Metadata Specialist. Consumes prevalidated Agent-27 visual handoffs without inspecting image content, creates a font-named binary folder plus clean Commercial Use and Personal Use ZIPs and a demo-stamped Free-Trial-Demo ZIP. Derivative, Pinterest, and showcase-video work is archived; do none of it. Input: font-factory/fonts/{slug}/ plus an explicit prepared_visuals instruction. Output: outputs/font-preparation/{slug}/.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "full-workflow": {
+      "mode": "primary",
+      "prompt": "{file:./agents/agent-28-full-workflow.md}",
+      "description": "Strict active font launch workflow: Agent 27 provisional text handoff (deciding a new font name itself when none is supplied), continuous Agent 13 preparation, then BOOTH, Pixiv, and Creative Fabrica. X, DLsite, YellowImages, and other marketplace stages are paused.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "booth-pdf-maker": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-booth-pdf-maker.md}",
+      "description": "Builds a single-page Japanese branded trial-insert PDF from a BOOTH item URL, local font directory, trial URL, and New-Images squares thumbnail. No upload claim.",
+      "permission": {
+        "task": "allow"
+      }
+    }
+  },
+  "command": {
+    "booth-font": {
+      "description": "Run the booth-fonts-specialist agent to generate a BOOTH font listing for a font product.",
+      "template": "Please run the booth-fonts-specialist agent to generate an optimized BOOTH listing (campaign mode FREE_ACTIVE unless told otherwise) for this font product: {input}",
+      "agent": "booth-fonts-specialist"
+    },
+    "creative-fabrica-font": {
+      "description": "Run the Creative Fabrica Font Listing and SEO Research Specialist on a font product.",
+      "template": "Please run the creative-fabrica-fonts-specialist agent to generate a Creative Fabrica Fonts listing with a product title of no more than 30 characters, never adding the category word font/fonts, exactly 40 researched tags, live category/tag/PDP evidence, and clearly labelled engagement and purchase signals: {input}",
+      "agent": "creative-fabrica-fonts-specialist"
+    },
+    "cm-font": {
+      "description": "Run the local-corpus Creative Market font listing specialist.",
+      "template": "Please run the cm-fonts-specialist agent using every parseable Markdown listing in outputs/creativemarket and the generated local tag-pattern bank; produce exactly 30 product-fit tags and the validated Creative Market PDP: {input}",
+      "agent": "cm-fonts-specialist"
+    },
+    "font-final-images": {
+      "description": "Run the standalone post-workflow final font image processor on a seller-created visuals/New-Images folder.",
+      "template": "Please run the font-final-visual-processor agent after all font preparation and requested marketplace work are complete. Use the exact font-preparation output directory and raw visuals/New-Images folder supplied here: {input}. Do not use vision or determine which image is semantically a thumbnail. Run bin/process_final_font_images.py --auto-order so direct filenames are sorted independently within 3:2 and 1:1; the first in each ratio becomes thumbnail_main and the rest become promo_1 upward. Create exact source copies and <=200 KB main/square JPEG delivery files, and write final-image-manifest.md inside New-Images. Do not alter raw images, old visuals/main or visuals/squares folders, font files, or metadata; do not invoke full-workflow and make no upload claim.",
+      "agent": "font-final-visual-processor"
+    },
+    "font-images": {
+      "description": "Run the FontFairy font image generator before font preparation. It creates a fast mechanical text-placeholder handoff, plans 3:2 and 1:1 outputs, and leaves a strict Agent-13 handoff. Final artwork replacement is a separate optional seller step.",
+      "template": "Please run the registered font-image-generator agent before font preparation. Use the exact font workspace, product description, and optional factual references supplied here. When the user supplies a final font name, use it exactly; when not, decide the best evocative name yourself under the agent's Naming policy and never run name-uniqueness research. Create the deterministic text-placeholder handoff with short, font-specific copy, canonical filenames, factual specimens, and mechanical validation. Do not use OpenPencil, image-generation tools, visual inspection, or OCR, and do not invoke font-prep automatically. Finish with READY FOR FONT PREP HANDOFF and the exact prepared_visuals path: {input}",
+      "agent": "font-image-generator"
+    },
+    "font-prep": {
+      "description": "FontFairy font preparation — package, audit and lay out the font, then hand off the specimen set.",
+      "template": "Please run the font-prep-specialist agent with this exact instruction: {input}. Finish the font metadata, package/archive copies, technical audit, and the factual-specimen handoff. Treat Agent-27 prepared_visuals as deferred for creative artwork: do not copy, compress, rename, inspect, or compose any thumbnail, supporting promo, video, or Pinterest asset. Copy only the four named factual specimen PNGs unchanged from prepared_visuals/specimens/3x2/ and prepared_visuals/specimens/1x1/ into the numbered output's specimens/ folders. Leave an empty visuals/New-Images/ drop directory for the seller.",
+      "agent": "font-prep-specialist"
+    },
+    "full-workflow": {
+      "description": "Run the full-workflow agent through the complete sequential font launch from visual generation through preparation, BOOTH, Pixiv, and Creative Fabrica. X, DLsite, YellowImages, and other marketplace stages are paused.",
+      "template": "Please run the full-workflow agent with the exact font workspace directory, old font description, and any factual constraints supplied here. If the user supplied a new font name, pass it through; if not, Agent 27 decides the final name itself (name-uniqueness research is forbidden). Execute visual generation, continuous font preparation, BOOTH, Pixiv, and Creative Fabrica strictly sequentially; X, DLsite, YellowImages, and all other marketplace stages stay paused: {input}",
+      "agent": "full-workflow"
+    },
+    "booth-pdf-maker": {
+      "description": "Build a single-page Japanese branded trial-insert PDF from a BOOTH item URL, font directory, trial URL, and New-Images squares thumbnail.",
+      "template": "Please run the booth-pdf-maker agent to build a one-page portrait trial-insert PDF. Use the BOOTH item URL, the local font directory, and the trial URL supplied here: {input}. Take the product image from {font-dir}/visuals/New-Images/squares/ (prefer thumbnail_main, else the first lexicographic image — no vision). Set Japanese customer copy with restrained top branding, a huge specimen in the product font, a single large GET YOUR FONT button linking to the trial URL with the URL also printed in plain text, a short about-trial section, a secondary BOOTH full-version link, and a small shop footer. Do not put a please-like-on-BOOTH CTA in the PDF. Write outputs/booth-pdfs/{slug}-trial-insert.pdf via bin/make_booth_trial_pdf.py. No upload claim.",
+      "agent": "booth-pdf-maker"
+    }
+  }
+}

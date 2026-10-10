@@ -1,0 +1,389 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "cm-powerpoint-specialist": {
+      "prompt": "{file:./agents/agent-1-powerpoint-specialist.md}",
+      "description": "PowerPoint & Presentation Template Description & Tags Specialist. Takes any presentation product (PowerPoint, Google Slides, Keynote) and produces optimized PDP title, description, 30 validated tags, meta description, and alt text.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "cm-fonts-specialist": {
+      "prompt": "{file:./agents/agent-2-fonts-specialist.md}",
+      "description": "Font Product Description, Tags & Classification Specialist. Takes any font product and produces an optimized PDP title, description, exactly 30 validated tags, SEO metadata, and one current Creative Market font classification.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "cm-mockups-specialist": {
+      "prompt": "{file:./agents/agent-3-mockups-specialist.md}",
+      "description": "Mockup Product Description & Tags Specialist. Takes any mockup product and produces optimized PDP title, description, 30 validated tags, meta description, and alt text.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "cm-general-specialist": {
+      "prompt": "{file:./agents/agent-4-general-specialist.md}",
+      "description": "General Creative Market Description & Tags Specialist. Takes any Creative Market product (graphics, templates, brushes, photos, add-ons) and produces optimized PDP title, description, 30 validated tags, meta description, and alt text.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "etsy-specialist": {
+      "prompt": "{file:./agents/agent-5-etsy-specialist.md}",
+      "description": "Etsy Listing, Description & Tags Specialist. Takes any product (digital or physical) and produces optimized Etsy title, description, 13 validated tags (max 20 chars), category, attributes, materials, and alt text.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "etsy-fonts-specialist": {
+      "prompt": "{file:./agents/agent-6-etsy-fonts-specialist.md}",
+      "description": "Etsy Font Listing, Description & Tags Specialist. Takes any font product and produces optimized Etsy title, description, 13 validated tags (max 20 chars), category, attributes, materials, license guidance, and alt text.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "etsy-powerpoint-specialist": {
+      "prompt": "{file:./agents/agent-7-etsy-powerpoint-specialist.md}",
+      "description": "Etsy PowerPoint & Presentation Template Listing, Description & Tags Specialist. Takes any presentation product (PowerPoint, Google Slides, Keynote) and produces optimized Etsy title, description, 13 validated tags (max 20 chars), category, attributes, materials, license guidance, and alt text.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "masterbundles-fonts-specialist": {
+      "prompt": "{file:./agents/agent-8-masterbundles-fonts-specialist.md}",
+      "description": "MasterBundles Font Listing, Description & Tags Specialist. Takes any font product and produces optimized MasterBundles title, description, validated tags, category, and asset specs.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "masterbundles-general-specialist": {
+      "prompt": "{file:./agents/agent-17-masterbundles-general-specialist.md}",
+      "description": "MasterBundles General Product Listing, Description, Taxonomy & SEO Specialist. Handles any MasterBundles product across Graphics, Add-ons, Fonts, Freebies, Stock Content, Templates, and nested category dropdowns using the live vendor taxonomy.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "cubebrush-fonts-specialist": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-9-cubebrush-fonts-specialist.md}",
+      "description": "Cubebrush Font Listing, Description & Tags Specialist. Takes any font product and produces optimized Cubebrush title, description (300+ words), 20 validated tags + 10 extended, category, Basic/Commercial license, image specs, and AI-content tagging check.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "booth-fonts-specialist": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-20-booth-fonts-specialist.md}",
+      "description": "BOOTH paid font SEO-copy specialist. Produces Japanese-first title, description, tags, and SEO evidence; no package, media, pricing, license, or upload QA.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "the-converter": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/the-converter.md}",
+      "description": "Content-verified raster image converter. Decodes AVIF and other supported formats into genuine PNG files without renaming, creative editing, or changing source files.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "behance-fonts-specialist": {
+      "prompt": "{file:./agents/agent-21-behance-fonts-specialist.md}",
+      "description": "Behance font portfolio and asset-listing specialist. Produces a paste-ready project title, Creative Fields, up to 10 project tags, description, image sequence, image tags, alt text, CTA, and research; no upload claim.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "pixiv-fonts-specialist": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-22-pixiv-fonts-specialist.md}",
+      "description": "Pixiv font discovery and BOOTH-funnel specialist. Produces three Japanese-first, view-oriented Illustration post packages with up to 10 tags each, approved image order, and native BOOTH linking; no upload claim.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "creative-fabrica-fonts-specialist": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-29-creative-fabrica-fonts-specialist.md}",
+      "description": "Creative Fabrica font listing and SEO research specialist. Produces a Fonts-category listing with exactly 40 researched tags, live category/tag/PDP evidence, and clearly labelled engagement and purchase observations; no upload claim.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "yellowimages-fonts-specialist": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-23-yellowimages-fonts-specialist.md}",
+      "description": "YellowImages Creative Store font listing specialist. Produces a 30-tag SEO package with YellowImages canonical terms first, researched supplemental tags, title, description, and category; no upload claim.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "marketore-fonts-specialist": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-24-marketore-fonts-specialist.md}",
+      "description": "Marketore font listing and SEO research specialist. Produces the exact Fonts taxonomy, exactly 10 canonical vocabulary tags, first-sentence meta description, compatibility, observed price tiers, and evidence; no upload claim.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "all-fonts-workflow": {
+      "mode": "primary",
+      "prompt": "{file:./agents/agent-14-marketplace-workflow.md}",
+      "description": "Strict sequential native-OpenCode font workflow: delegate BOOTH, Marketore, then YellowImages through registered in-session agents. Creative Market, MasterBundles, Cubebrush, Pixiv, Behance, and Pinterest are paused from the default run and remain explicitly invokable.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "pinterest-fonts-specialist": {
+      "prompt": "{file:./agents/agent-10-pinterest-fonts-specialist.md}",
+      "description": "Pinterest Font Traffic & SEO Specialist. Generates four intent-separated Pins using the four mechanically composed Pinterest assets, with exact Creative Market product-page links, titles, descriptions, alt text, related topics, and board strategy.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "freemium-fonts-specialist": {
+      "prompt": "{file:./agents/agent-11-dafont-fontspace-specialist.md}",
+      "description": "DaFont & FontSpace Freemium Conversion Specialist. Takes any font product and produces optimized DaFont/FontSpace submission metadata and a standalone license/readme text file (HOW_TO_USE_&_COMMERCIAL_LICENSE.txt) packaged inside the zip to convert free downloaders into commercial buyers.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "namemaker-specialist": {
+      "prompt": "{file:./agents/agent-12-namemaker-specialist.md}",
+      "description": "Font Naming & Marketplace Uniqueness Validation Specialist. Takes font description, old name, and font specimen image, generates 10 candidate names, and searches DaFont, FontSpace, and Creative Market to select the #1 winning unique font name.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "font-image-generator": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-27-font-image-generator.md}",
+      "description": "FontFairy font text-placeholder handoff agent. Runs before font-prep, decides a new evocative name only when none is supplied, and creates deterministic canonical 3:2 and 1:1 placeholders plus factual specimens. It does not use OpenPencil, image-generation tools, visual inspection, or OCR; final artwork replacement is a separate optional seller step.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "font-prep-specialist": {
+      "prompt": "{file:./agents/agent-13-font-prep-specialist.md}",
+      "description": "FontFairy Font Preparation & Metadata Specialist. Consumes prevalidated Agent-27 visual handoffs without inspecting image content, creates a font-named binary folder plus byte-identical Commercial Use and Personal Use ZIP copies, mechanically prepares derivatives, and renders the main and Etsy showcase videos. Input: font-factory/fonts/{slug}/ plus an explicit prepared_visuals instruction. Output: outputs/font-preparation/{slug}/.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "full-workflow": {
+      "mode": "primary",
+      "prompt": "{file:./agents/agent-28-full-workflow.md}",
+      "description": "Strict full font launch workflow: Agent 27 visual generation (deciding a new font name itself when none is supplied), continuous Agent 13 preparation, then BOOTH, Pixiv, and Creative Fabrica sequentially. Marketore, YellowImages, and DLsite are paused.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "cm-procreate-brushes-specialist": {
+      "prompt": "{file:./agents/agent-15-cm-procreate-brushes-specialist.md}",
+      "description": "Creative Market Procreate Brush Listing Specialist. Researches live brush listings and produces a max-36-character title, approximately 400-word description, exactly 30 tags, metadata, content disclosure, and alt text.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "cubebrush-procreate-brushes-specialist": {
+      "prompt": "{file:./agents/agent-16-cubebrush-procreate-brushes-specialist.md}",
+      "description": "Cubebrush Procreate Brush Listing Specialist. Researches live brush listings and produces a keyword-first title, 300+ word description, 20 primary plus 10 extended terms, Basic/Commercial/Studio license guidance, image handoff, and AI-content check.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "brush-visual-prep-specialist": {
+      "prompt": "{file:./agents/agent-18-brush-visual-prep-specialist.md}",
+      "description": "Procreate Brush Visual Handoff Specialist. Validates supplied Brush-Factory visuals, creates mechanical derivatives, and writes a visual manifest without changing source artwork or brush files.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "booth-procreate-brushes-specialist": {
+      "prompt": "{file:./agents/agent-25-booth-procreate-brushes-specialist.md}",
+      "description": "Standalone BOOTH Procreate brush specialist. Pads approved 3:2 images into square delivery copies, compresses both ratios, creates a Japanese README with the FontFairy BOOTH URL, repackages a separate BOOTH ZIP, and produces a Japanese-first ordinary brush title, plain-text description, and exactly 30 live-evidence tags.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "ivoryglass-marketplace-workflow": {
+      "mode": "primary",
+      "prompt": "{file:./agents/agent-26-ivoryglass-marketplace-workflow.md}",
+      "description": "Sequential marketplace workflow for IvoryGlass: BOOTH, Cubebrush, YellowImages, then Marketore. Strict one-at-a-time delegation.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "all-brushes-workflow": {
+      "prompt": "{file:./agents/agent-19-all-brushes-workflow.md}",
+      "description": "Unified paid Procreate brush workflow: visual preparation, Creative Market, Cubebrush, then MasterBundles with shared product numbering.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "font-final-visual-processor": {
+      "prompt": "{file:./agents/agent-30-font-final-visual-processor.md}",
+      "description": "Post-workflow processor for seller-replaced font images. Separates final raw images into 3:2 and 1:1 sets, preserves exact source copies, compresses JPEG delivery files, composes four Pinterest variants, and writes an audit manifest without changing the raw files.",
+      "permission": {
+        "task": "allow"
+      }
+    }
+  },
+  "command": {
+    "cm-powerpoint": {
+      "description": "Run the PowerPoint/Presentation Description & Tags Specialist on a product.",
+      "template": "Please run the cm-powerpoint-specialist agent to generate an optimized PDP for this presentation template product: {input}",
+      "agent": "cm-powerpoint-specialist"
+    },
+    "cm-font": {
+      "description": "Run the Font Description & Tags Specialist on a font product.",
+      "template": "Please run the cm-fonts-specialist agent to generate an optimized PDP for this font product: {input}",
+      "agent": "cm-fonts-specialist"
+    },
+    "cm-mockup": {
+      "description": "Run the Mockup Description & Tags Specialist on a mockup product.",
+      "template": "Please run the cm-mockups-specialist agent to generate an optimized PDP for this mockup product: {input}",
+      "agent": "cm-mockups-specialist"
+    },
+    "cm-general": {
+      "description": "Run the General Description & Tags Specialist on any Creative Market product.",
+      "template": "Please run the cm-general-specialist agent to generate an optimized PDP for this product: {input}",
+      "agent": "cm-general-specialist"
+    },
+    "etsy": {
+      "description": "Run the Etsy Listing, Description & Tags Specialist on a product.",
+      "template": "Please run the etsy-specialist agent to generate an optimized Etsy listing for this product: {input}",
+      "agent": "etsy-specialist"
+    },
+    "etsy-font": {
+      "description": "Run the Etsy Font Listing, Description & Tags Specialist on a font product.",
+      "template": "Please run the etsy-fonts-specialist agent to generate an optimized Etsy font listing for this font product: {input}",
+      "agent": "etsy-fonts-specialist"
+    },
+    "etsy-powerpoint": {
+      "description": "Run the Etsy PowerPoint & Presentation Template Listing, Description & Tags Specialist on a presentation product.",
+      "template": "Please run the etsy-powerpoint-specialist agent to generate an optimized Etsy listing for this PowerPoint/presentation template product: {input}",
+      "agent": "etsy-powerpoint-specialist"
+    },
+    "masterbundles-font": {
+      "description": "Run the MasterBundles Font Listing, Description & Tags Specialist on a font product.",
+      "template": "Please run the masterbundles-fonts-specialist agent to generate an optimized MasterBundles font listing for this font product: {input}",
+      "agent": "masterbundles-fonts-specialist"
+    },
+    "masterbundles-general": {
+      "description": "Run the standalone MasterBundles General Product Specialist on any product.",
+      "template": "Please run the masterbundles-general-specialist agent to generate an optimized MasterBundles listing, live category path, properties, SEO, and upload checklist for this product: {input}",
+      "agent": "masterbundles-general-specialist"
+    },
+    "cubebrush-font": {
+      "description": "Run the Cubebrush Font Listing, Description & Tags Specialist on a font product.",
+      "template": "Please run the cubebrush-fonts-specialist agent to generate an optimized Cubebrush font listing for this font product: {input}",
+      "agent": "cubebrush-fonts-specialist"
+    },
+    "cb-font": {
+      "description": "Run the Cubebrush Font Listing, Description & Tags Specialist on a font product.",
+      "template": "Please run the cubebrush-fonts-specialist agent to generate an optimized Cubebrush font listing for this font product: {input}",
+      "agent": "cubebrush-fonts-specialist"
+    },
+    "booth-font": {
+      "description": "Run the BOOTH paid font listing specialist on a font product.",
+      "template": "Please run the booth-fonts-specialist agent to generate an optimized paid BOOTH listing for this font product: {input}",
+      "agent": "booth-fonts-specialist"
+    },
+    "behance-font": {
+      "description": "Run the Behance Font Portfolio, Discovery & Asset Listing Specialist on a font product after the marketplace stages.",
+      "template": "Please run the behance-fonts-specialist agent to generate a paste-ready Behance project package for this font product: {input}",
+      "agent": "behance-fonts-specialist"
+    },
+    "pixiv-font": {
+      "description": "Run the Pixiv Font Discovery & BOOTH Funnel Specialist on a font product after the BOOTH listing.",
+      "template": "Please run the pixiv-fonts-specialist agent to generate three paste-ready Pixiv Illustration post packages that funnel to the exact BOOTH item URL: {input}",
+      "agent": "pixiv-fonts-specialist"
+    },
+    "yellowimages-font": {
+      "description": "Run the YellowImages Creative Store Font Listing Specialist on a font product.",
+      "template": "Please run the yellowimages-fonts-specialist agent to generate an optimized YellowImages Creative Store font listing with exactly 30 canonical-first researched tags: {input}",
+      "agent": "yellowimages-fonts-specialist"
+    },
+    "marketore-font": {
+      "description": "Run the Marketore Font Listing and SEO Research Specialist on a font product.",
+      "template": "Please run the marketore-fonts-specialist agent to generate a Marketore listing with exact Fonts taxonomy, exactly 10 canonical vocabulary tags, evidence-led weighting, a meta-safe first sentence, compatibility, and observed price tiers: {input}",
+      "agent": "marketore-fonts-specialist"
+    },
+    "all-fonts": {
+      "description": "Run the active font workflow sequentially: BOOTH, Marketore, then YellowImages. Creative Market, MasterBundles, Cubebrush, Pixiv, Behance, and Pinterest are paused.",
+      "template": "Please run the all-fonts-workflow agent for this font product. Use the registered in-session agent mechanism with the exact specialist IDs, strictly waiting for each active stage before starting the next; leave Creative Market, MasterBundles, Cubebrush, Pixiv, Behance, and Pinterest paused: {input}",
+      "agent": "all-fonts-workflow"
+    },
+    "pinterest-font": {
+      "description": "Run the Pinterest Font Traffic & SEO Specialist to generate a four-Pin package for a font product.",
+      "template": "Please run the pinterest-fonts-specialist agent to generate a four-Pin Pinterest traffic package for this font product: {input}",
+      "agent": "pinterest-fonts-specialist"
+    },
+    "freemium-font": {
+      "description": "Run the DaFont & FontSpace Freemium Conversion Specialist on a font product.",
+      "template": "Please run the freemium-fonts-specialist agent to generate optimized DaFont/FontSpace submission metadata and commercial license zip readme for this font product: {input}",
+      "agent": "freemium-fonts-specialist"
+    },
+    "dafont-font": {
+      "description": "Run the DaFont & FontSpace Freemium Conversion Specialist on a font product.",
+      "template": "Please run the freemium-fonts-specialist agent to generate optimized DaFont/FontSpace submission metadata and commercial license zip readme for this font product: {input}",
+      "agent": "freemium-fonts-specialist"
+    },
+    "namemaker": {
+      "description": "Run the NameMaker Font Naming & Uniqueness Specialist on a font description/image.",
+      "template": "Please run the namemaker-specialist agent to generate and verify a unique font name for this font product: {input}",
+      "agent": "namemaker-specialist"
+    },
+    "font-images": {
+      "description": "Run the FontFairy font image generator before font preparation. It creates a fast mechanical text-placeholder handoff, plans 3:2 and 1:1 outputs, and leaves a strict Agent-13 handoff. Final artwork replacement is a separate optional seller step.",
+      "template": "Please run the registered font-image-generator agent before font preparation. Use the exact font workspace, product description, and optional factual references supplied here. When the user supplies a final font name, use it exactly; when not, decide the best evocative name yourself under the agent's Naming policy and never run name-uniqueness research. Create the deterministic text-placeholder handoff with short, font-specific copy, canonical filenames, factual specimens, and mechanical validation. Do not use OpenPencil, image-generation tools, visual inspection, or OCR, and do not invoke font-prep automatically. Finish with READY FOR FONT PREP HANDOFF and the exact prepared_visuals path: {input}",
+      "agent": "font-image-generator"
+    },
+    "font-prep": {
+      "description": "FontFairy font preparation in two passes: first metadata/packages, then the explicit prevalidated Agent-27 visual handoff.",
+      "template": "Please run the font-prep-specialist agent with this exact instruction: {input}. Agent 27 must already have produced the prepared_visuals handoff. On the first pass, finish metadata/packages and stop; only process images when the input explicitly says to continue/resume and provides the exact prepared_visuals directory.",
+      "agent": "font-prep-specialist"
+    },
+    "full-workflow": {
+      "description": "Run the complete sequential font launch workflow from visual generation through preparation, BOOTH, Pixiv, and Creative Fabrica. Marketore, YellowImages, and DLsite are paused.",
+      "template": "Please run the full-workflow agent with the exact font workspace directory, old font description, and any factual constraints supplied here. If the user supplied a new font name, pass it through; if not, Agent 27 decides the final name itself (name-uniqueness research is forbidden). Execute visual generation, continuous font preparation, BOOTH, Pixiv, and Creative Fabrica strictly sequentially; do not delegate Marketore, YellowImages, or DLsite: {input}",
+      "agent": "full-workflow"
+    },
+    "pinterest-compose": {
+      "description": "Build four 2:3 Pinterest PNG variants from a product image directory and compress each below 700 KB.",
+      "template": "Run the repository's deterministic four-variant Pinterest image composer for this request: {input}. Parse the supplied product image directory and product name, then run `python3 bin/compose_pinterest.py <source-directory> --product <product-name> --variants 4 --count 3 --seed 2026 --output-dir <output-directory>/visuals/pinterest` from the project root. The script must choose prepared 3:2 images from the untouched source directory, deterministically shuffle the full image pool for each variant, stack them with ImageMagick, write pinterest_1.png through pinterest_4.png under the separate Pinterest output directory, and report each exact output path, inputs, dimensions, and byte size. Apply the repository's bounded pngquant compression step afterward when marketplace-size files are required. Do not edit or overwrite source images and do not generate replacement artwork."
+    },
+    "cm-brush": {
+      "description": "Run the Creative Market Procreate Brush Listing Specialist on a brush product.",
+      "template": "Please run the cm-procreate-brushes-specialist agent to generate an optimized Creative Market Procreate brush listing for this product: {input}",
+      "agent": "cm-procreate-brushes-specialist"
+    },
+    "cb-brush": {
+      "description": "Run the Cubebrush Procreate Brush Listing Specialist on a brush product.",
+      "template": "Please run the cubebrush-procreate-brushes-specialist agent to generate an optimized Cubebrush Procreate brush listing for this product: {input}",
+      "agent": "cubebrush-procreate-brushes-specialist"
+    },
+    "booth-brush": {
+      "description": "Run the standalone BOOTH Procreate brush preparation and SEO listing specialist.",
+      "template": "Please run the booth-procreate-brushes-specialist agent for this Brush-Factory product: {input}",
+      "agent": "booth-procreate-brushes-specialist"
+    },
+    "ivoryglass-marketplaces": {
+      "description": "Run the IvoryGlass marketplace sequence: BOOTH, Cubebrush, YellowImages, then Marketore, strictly one at a time.",
+      "template": "Please run the ivoryglass-marketplace-workflow agent for the font product IvoryGlass. Use OpenCode's native registered-agent delegation mechanism with the exact specialist IDs and run strictly one at a time: {input}",
+      "agent": "ivoryglass-marketplace-workflow"
+    },
+    "all-brushes": {
+      "description": "Run the complete unified Procreate brush workflow: prepare visuals, then Creative Market, Cubebrush, and MasterBundles sequentially.",
+      "template": "Please run the all-brushes-workflow agent for this exact Brush-Factory product: {input}",
+      "agent": "all-brushes-workflow"
+    },
+    "font-final-images": {
+      "description": "Run the Font Final Visual Processor on seller-replaced font images in a New-Images folder.",
+      "template": "Please run the font-final-visual-processor agent to process the final replacement images for this font: {input}",
+      "agent": "font-final-visual-processor"
+    }
+  }
+}

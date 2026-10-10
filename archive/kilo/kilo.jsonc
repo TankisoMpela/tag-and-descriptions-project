@@ -1,0 +1,43 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "model": "opencode/big-pickle",
+  "permission": {
+    "*": "allow",
+    "external_directory": {
+      "/home/tankiso/Projects/MCP-and-Integrations/**": "allow",
+      "/home/tankiso/.nvm/**": "allow"
+    }
+  },
+  "mcp": {
+    "context7": {
+      "type": "local",
+      "command": ["npx", "-y", "@upstash/context7-mcp"],
+      "enabled": true,
+      "timeout": 45000
+    },
+    "tavily": {
+      "type": "local",
+      "command": ["python3", "/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/tavily_mcp.py"],
+      "enabled": true,
+      "timeout": 45000
+    },
+    "exa": {
+      "type": "local",
+      "command": ["python3", "/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/exa_mcp.py"],
+      "enabled": true,
+      "timeout": 45000
+    },
+    "serper": {
+      "type": "local",
+      "command": ["python3", "/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/serper_mcp.py"],
+      "enabled": true,
+      "timeout": 45000
+    },
+    "firecrawl": {
+      "type": "local",
+      "command": ["python3", "/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/firecrawl_mcp.py"],
+      "enabled": true,
+      "timeout": 45000
+    }
+  }
+}

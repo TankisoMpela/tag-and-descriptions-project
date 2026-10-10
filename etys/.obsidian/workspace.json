@@ -1,0 +1,208 @@
+{
+  "main": {
+    "id": "cebf71153c5925a0",
+    "type": "split",
+    "children": [
+      {
+        "id": "0cce221563bea258",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "32b5e8dd00ed24c5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "18-educraft-education-powerpoint-template.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "18-educraft-education-powerpoint-template"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2b9d4cf3c7215047",
+    "type": "split",
+    "children": [
+      {
+        "id": "e10a60b911e33644",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9c734dd606d70612",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "fe5db8d10f3974ec",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "88a95f7da9dac110",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "a8bdaea6b4837599",
+    "type": "split",
+    "children": [
+      {
+        "id": "ae159054190b9e36",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a6123644604927b2",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "18-educraft-education-powerpoint-template.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for 18-educraft-education-powerpoint-template"
+            }
+          },
+          {
+            "id": "28bc76f90b19ecbf",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "18-educraft-education-powerpoint-template.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from 18-educraft-education-powerpoint-template"
+            }
+          },
+          {
+            "id": "0159fb65b6351274",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "bedde972d37fe60d",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "410af1d1706a8d95",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "18-educraft-education-powerpoint-template.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of 18-educraft-education-powerpoint-template"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "32b5e8dd00ed24c5",
+  "lastOpenFiles": [
+    "19-xcellent-creative-powerpoint-template.md",
+    "17-mylight-creative-powerpoint-template.md",
+    "18-educraft-education-powerpoint-template.md",
+    "16-basepoint-multipurpose-powerpoint-template.md",
+    "15-automotive-powerpoint-presentation-template.md",
+    "14-bloom-minimalist-powerpoint-template.md",
+    "13-enhance-procreate-brushes-bundle.md",
+    "12-neon-light-procreate-brushes.md",
+    "11-monoline-signature-font.md",
+    "10-mangoks-handwritten-font.md",
+    "9-anguine-handwritten-script-font.md",
+    "8-desert-rose-script-font.md",
+    "7-bravura-sans-font.md",
+    "6-ink-riot-brush-graffiti-font.md",
+    "5-lavelvet-handwritten-script-font.md",
+    "4-lumina-modern-calligraphy-font.md",
+    "3-groovy-wave-retro-70s-font.md",
+    "2-lysandra-handwritten-script-font.md",
+    "1-lysandra-handwritten-font.md"
+  ]
+}

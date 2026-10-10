@@ -1,0 +1,81 @@
+ONE-OFF MAIN THUMBNAIL PROCREATE BRUSH IMAGE PROMPT
+
+Create exactly one new main marketplace thumbnail for a Procreate brush set from ONE single input image:
+1. the old main thumbnail image to transform, and
+2. the new brush product name supplied by the user.
+
+CRITICAL DIFFERENCE FROM FONT PROMPTS:
+- THERE IS NO SEED IMAGE FOR BRUSHES. The old main thumbnail is the sole visual input.
+- THE ARTWORK CONTENT AND SUBJECT MATTER MUST CHANGE COMPLETELY. Do not copy or reskin the subject of the old image (e.g. if the old reference shows a lion, floral, or portrait, draw a completely new, distinct subject concept).
+- CLOSEUP / MACRO SHOTS ONLY — ABSOLUTELY NO COMPLEX SCENES OR WIDE SHOTS. The new artwork subject MUST be a tight, simple closeup (e.g. single botanical petal/flower detail, close-up face crop, single fruit/object, focused stroke detail). Never draw complex multi-object scenes, wide landscapes, busy backgrounds, or crowds to prevent AI hallucinations and rendering errors.
+- THE COLOR PALETTE MUST CHANGE TO A NEW, FRESH COMBINATION.
+- THE ARTSTYLE AND BRUSHWORK MUST BE ABSOLUTELY PRESERVED. The rendering technique, stroke character, medium fidelity, and paint/ink handling from the original must remain identical in aesthetic quality.
+- THE BRUSH DEMONSTRATION / SWATCH AREA MUST BE PRESERVED. The dedicated section showing the brush swatches, stroke tapers, pressure variations, and texture samples must remain a core structural element of the thumbnail.
+
+FontFairy is the studio name — replacing the old studio's branding. FontFairy appears only as an optional small attribution wordmark or clean brand badge, never overriding the hero artwork or product title.
+
+INPUTS
+- Old main thumbnail: [ATTACH OLD THUMBNAIL REFERENCE]
+- Brush product description: [PASTE USER-PROVIDED BRUSH DESCRIPTION]
+- New brush product name: [ENTER FINAL BRUSH PRODUCT NAME]
+- Studio name: FontFairy
+- Output filename: thumbnail_main.png
+
+PRIMARY TASK
+Reimagine the old thumbnail into one new concept-led main listing cover image for the supplied Procreate brush set. Use the user-provided brush description as the authority for what the set does, its intended use, materials, brush count, included extras, and supported product claims. Use the old thumbnail to extract the visual brush artstyle, stroke characteristics, medium type, factual evidence, and brush swatch showcase layout. Render a completely NEW, SIMPLE CLOSEUP artwork subject concept with a NEW color palette, while strictly preserving the original artstyle, brushwork technique, artwork skill level, realistic complexity, and brush demonstration area.
+
+**ABSOLUTE BRUSH SHOWCASE LOCK:** The dedicated area where the brushes, swatches, strokes, pressure tapers, and texture samples are shown is locked and delicate. Preserve that entire area exactly as supplied: same location, same boundaries, same scale, same arrangement, same marks, same samples, same labels, same texture, and same visual content. Do not move, resize, crop, repaint, redraw, replace, recolor, restyle, simplify, expand, or reinterpret any part of it. Change only the separate artwork area and other non-showcase design elements around it. If the showcase area overlaps the artwork, preserve the showcase pixels and redesign the artwork around it.
+
+This is a ONE-SHOT generation. Do the inspection, fact inventory, artstyle analysis, new concept choice, and final self-check internally before producing the image. Do not ask questions, produce alternatives, or require a second correction pass.
+
+CONCEPT REIMAGINATION & ARTSTYLE PRESERVATION RULES
+1. **New Simple Closeup Artwork Subject**: You MUST create a brand-new illustration subject focusing strictly on a tight, simple CLOSEUP (e.g. single macro flower bloom, focused eye/face crop, single fruit detail, close-up paper/canvas stroke texture). FORBIDDEN: wide shots, complex multi-character compositions, detailed scenery, or busy backgrounds. Simple closeups eliminate AI hallucinations, warped geometry, and rendering errors.
+2. **New Color Palette**: Choose a fresh, vibrant, or sophisticated new color harmony distinct from the reference image's palette.
+3. **Absolute Artstyle & Brushwork Fidelity**: Keep the exact same brush medium physics and rendering style shown in the reference (e.g. wet-on-wet watercolor washes, thick impasto gouache knife drag, dry graphite tooth, smooth manga G-pen inking, or soft pastel fallout). The new artwork must look like it was drawn by the exact same artist using the exact same brush set.
+4. **Preserved Brush Swatch / Demonstration Area**: The locked showcase area MUST remain exactly where it is and exactly as it appears in the reference. It is not a design element to reinterpret. Use the description to understand the behavior shown there, but do not invent, alter, replace, or add samples.
+5. **Original Skill-Level Fidelity**: The new artwork must be rendered at the same skill level, finish, detail density, and believable complexity as the original. Do not create an unrealistically polished masterpiece, a technically impossible result, or artwork that is far simpler or more complex than the reference. Match the original's level of human/artistic plausibility while changing the subject.
+6. **Hero Product Title**: Display the new product name in clean, high-contrast, professional typography in the upper-center or upper-side margin, paired with a small subtitle "PROCREATE BRUSHES".
+7. **Feature Badge & Factual Claims**: Preserve honest product facts supported by both the description and reference (such as brush count, `.brushset` format, canvas textures, or Procreate compatibility). If the sources disagree, do not guess or print the disputed fact. Display a clean badge reading "[COUNT] BRUSHES • .BRUSHSET" only when the count and format are confirmed.
+
+TEXT AND BRANDING RULES
+- Strip away all old studio logos, legacy watermarks, outdated product names, handles, and URLs.
+- Replace the product title with the new user-supplied brush product name.
+- FontFairy is the studio name; use it as a small, secondary attribution mark.
+- All visible text must be correctly spelled, legible, and natural English.
+
+LAYOUT AND SAFE MARGINS
+- Target 3:2 landscape ratio, preferably 1500x1000, 1536x1024, or 1600x1067.
+- Keep all critical title text, badges, and brush swatch areas inside safe 8–10% outer margins so 1:1 square auto-crops (Etsy/Cubebrush) do not clip essential content.
+- Do not produce CGI 3D extruded sign text, plastic gloss, or artificial floating 3D objects.
+
+OUTPUT RULES
+- Generate exactly one complete image in one generation/editing operation.
+- Destination concept: prepared_visuals/thumbnail_main.png.
+- Build the complete new artwork subject, brush swatches, title typography, and badges together in the same operation.
+
+FINAL SELF-CHECK BEFORE ACCEPTING
+Complete this check internally before returning the generated image:
+- Is the new artwork subject a SIMPLE CLOSEUP / MACRO SHOT (no wide shots, complex scenes, or busy backgrounds)?
+- Was the old artwork subject replaced with a COMPLETELY NEW concept art subject?
+- Was a NEW, fresh color palette used?
+- Was the original ARTSTYLE and BRUSHWORK technique strictly preserved in the new artwork?
+- Is the new artwork at the same believable skill level, finish, detail density, and complexity as the original?
+- Was the locked brush showcase area kept exactly unchanged and in exactly the same location?
+- Does the artwork accurately demonstrate the behavior and intended use described by the user?
+- Is the BRUSH SWATCH / STROKE DEMONSTRATION AREA exactly unchanged, in the same area, and fully visible?
+- Was the new product name spelled correctly in clean typography?
+- Were old studio logos, watermarks, and old product names removed and replaced with FontFairy and the new title?
+- Are all titles, badges, and brush swatches within safe margins for 1:1 square auto-crops?
+- Is the aspect ratio 3:2 landscape?
+
+RESPONSE AFTER GENERATION
+State only:
+MODE 1 COMPLETE — save as prepared_visuals/thumbnail_main.png
+Brush product name: [SUPPLIED BRUSH NAME]
+New artwork subject: [SIMPLE CLOSEUP DESCRIPTION]
+New color palette: [NEW PALETTE SUMMARY]
+Closeup restriction verified: [CLOSEUP ONLY / NO WIDE SHOTS / FAIL]
+Artstyle & brushwork fidelity: [STRICTLY PRESERVED / FAIL]
+Brush swatch area preserved: [YES / FAIL]
+Supporting factual copy: [DESCRIPTION AND REFERENCE FACTS PRESERVED / FAIL]
+Any visible problem: [SHORT NOTE]
