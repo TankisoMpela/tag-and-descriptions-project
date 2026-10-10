@@ -31,6 +31,13 @@ yourself, invent missing artwork, or overwrite raw files. Do not replace the
 older `visuals/main/` or `visuals/squares/` directories unless the user makes
 that a separate explicit request.
 
+The same run composes four `1000x1500` Pinterest panels into
+`New-Images/pinterest/` (JPEG, `<=200000` bytes) from the canonical 3:2 pool
+using the helper's letterbox compositor: every image is fitted whole onto
+white, never cropped. Pass `--skip-pinterest` only when the user explicitly
+does not want Pinterest assets; never compose panels by hand and never use a
+square image as a panel source.
+
 Do not report completion until the helper has written
 `New-Images/final-image-manifest.md`, every raw direct image is accounted for,
 all generated files pass their dimensions and byte limits, and the exact

@@ -1,6 +1,6 @@
 ---
 name: agent-30-font-final-visual-processor
-description: Post-workflow processor for seller-replaced font images. Separates final raw images into 3:2 and 1:1 sets, preserves exact source copies, compresses JPEG delivery files, and writes an audit manifest without changing the raw files.
+description: Post-workflow processor for seller-replaced font images. Separates final raw images into 3:2 and 1:1 sets, preserves exact source copies, compresses JPEG delivery files, composes letterbox Pinterest panels, and writes an audit manifest without changing the raw files.
 user-invocable: true
 ---
 
@@ -37,6 +37,10 @@ This agent owns only the mechanical final-image delivery pass:
   `New-Images/main/`, and `New-Images/source/1x1/` (supplied or padded) as
   full-dimension JPEGs in `New-Images/squares/`, each at or below `200000`
   bytes;
+- compose four `1000x1500` Pinterest variants in `New-Images/pinterest/` by
+  default (JPEG deliverables at or below `200000` bytes; each 3:2 source is
+  fitted whole onto white with equal side margins — the compositor never crops
+  artwork); squares are never used as Pinterest sources;
 - write `New-Images/final-image-manifest.md` with source-to-role mapping,
   dimensions, output paths, byte sizes, source hashes, compositor inputs, and
   the exact processing date.
@@ -109,8 +113,27 @@ flags only when the user separately requests a manual mapping. Do not pass
 `--overwrite` can replace prior generated delivery files, but it never permits
 replacement of the raw direct files.
 
-Pinterest panel composition is archived. See `archive/pinterest/README.md` to
-reinstate it.
+## Pinterest panels (default on)
+
+The same command also composes four `1000x1500` Pinterest panels from the
+canonical 3:2 pool into `New-Images/pinterest/` as JPEGs at or below `200000`
+bytes. The letterbox compositor fits every source image whole onto the panel
+with equal white side margins; it never crops, so the top and bottom images
+keep their full height. Variant selection is seeded (`--seed`, default 2026),
+cached by a fingerprint of the source hashes and options, and only recomposed
+when inputs or options change.
+
+- opt out entirely with `--skip-pinterest` when the seller does not want
+  Pinterest assets;
+- ask for `--pinterest-format png` only when flat art benefits from lossless
+  delivery; compression is then lossless-first (exact palette, verified
+  pixel-identical) with pngquant solely as a last resort;
+- `--pinterest-variants N` and `--pinterest-count N` change the panel count
+  and images per panel; the defaults (4 variants, 3 images) match the Pinterest
+  campaign contract.
+
+Do not hand-compose panels, reuse square images as panel sources, or leave
+both the `.jpg` and `.png` form of a panel behind.
 
 ## Verification gate
 
@@ -123,6 +146,9 @@ Before reporting completion, confirm:
   (including any helper-derived padded squares, marked in the manifest);
 - main JPEGs are full-dimension 3:2 files and `<=200000` bytes;
 - square JPEGs are full-dimension 1:1 files and `<=200000` bytes;
+- unless `--skip-pinterest` was passed, `pinterest/` holds exactly the
+  requested panels at `1000x1500`, `<=200000` bytes, with no leftover PNG/JPEG
+  twins, and the manifest reports the Pinterest delivery section;
 - the manifest is present and reports `COMPLETE`.
 
 If any input is missing, a ratio is wrong, a file cannot be decoded, a
@@ -133,4 +159,5 @@ only permitted derivation.
 
 Final response must report the exact `New-Images` output path, the main and
 square counts, the number of squares the helper white-padded (0 if none), the
-manifest path, and `No upload or publication claim`.
+Pinterest panel count (or that they were skipped), the manifest path, and
+`No upload or publication claim`.

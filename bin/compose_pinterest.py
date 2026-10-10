@@ -123,39 +123,31 @@ def collect_images(directory: Path, mode: str, count: int | None) -> tuple[str, 
     raise SystemExit("Could not find usable product images.")
 
 def compose(convert: str, images: list[Path], width: int, raw_output: Path) -> None:
+    """Stack images into a 2:3 panel by fitting each one whole — never cropping.
+
+    Every image is scaled to fit inside its slot, then centred on a white
+    canvas of the slot size. Landscape 3:2 sources keep their full content;
+    the leftover width becomes equal white margins instead of a centre-crop
+    that used to slice the top and bottom images of a 3-image stack.
+    """
     target_height = round(width * 1.5)
+    count = len(images)
+    if count < 1:
+        raise SystemExit("compose_pinterest: no images to stack")
+    slot_heights = [target_height // count] * count
+    for index in range(target_height % count):
+        slot_heights[index] += 1
     with tempfile.TemporaryDirectory(prefix="pinterest-compose-") as temp_dir:
-        resized: list[Path] = []
-        for index, image in enumerate(images, start=1):
-            resized_image = Path(temp_dir) / f"image-{index}.png"
-            run([convert, str(image), "-resize", f"{width}x", str(resized_image)])
-            resized.append(resized_image)
-        if len(images) >= 3:
-            run([
-                convert,
-                *[str(image) for image in resized],
-                "-append",
-                "-gravity",
-                "center",
-                "-crop",
-                f"{width}x{target_height}+0+0",
-                "+repage",
-                str(raw_output),
-            ])
-            return
-        panel_height = round(target_height / len(images))
         panels: list[Path] = []
-        for index, image in enumerate(images, start=1):
+        for index, (image, slot_height) in enumerate(zip(images, slot_heights), start=1):
             panel = Path(temp_dir) / f"panel-{index}.png"
             run([
                 convert,
                 str(image),
-                "-resize",
-                f"{width}x{panel_height}^",
-                "-gravity",
-                "center",
-                "-crop",
-                f"{width}x{panel_height}+0+0",
+                "-resize", f"{width}x{slot_height}",
+                "-background", "white",
+                "-gravity", "center",
+                "-extent", f"{width}x{slot_height}",
                 "+repage",
                 str(panel),
             ])

@@ -1,16 +1,27 @@
-# Pinterest image generation — ARCHIVED 2026-09-21
+# Pinterest image generation — REINSTATED 2026-10-10
 
-Archived because the workflow does not use Pinterest right now. Nothing here is
-deleted: this is the complete, working capability, and the steps below put it
-back exactly as it was.
+The capability is live again in `bin/`. `compose_pinterest.py` and
+`validate_pinterest_listing.py` were moved back to `bin/`, the Pinterest blocks
+were ported into the live `bin/process_final_font_images.py`, and the
+compositor was fixed in the same pass: panels are **letterboxed** (each 3:2
+source is fitted whole onto the panel with equal white side margins) instead of
+stacked-and-centre-cropped, which used to slice the top and bottom images out
+of the pin. `PINTEREST_MAX_BYTES` is now `200_000`, matching the other delivery
+caps; the fingerprint version string is `letterbox-v2`, so old cached panels
+recompose once.
 
-## What is here
+The sections below are kept as the historical record of the archive and its
+original 2026-09-21 design. The reinstatement snapshot
+`process_final_font_images-pinterest-aware.py` has been deleted (git history
+preserves it); the live processor is now the reference implementation.
+
+## What was archived on 2026-09-21
 
 | File | Was at | Role |
 |---|---|---|
-| `compose_pinterest.py` | `bin/` | Composes 1000x1500 2:3 Pinterest panels by stacking 3:2 sources. Supports the multi-variant mode (`--variants`) and `--jpeg-companions`. |
-| `validate_pinterest_listing.py` | `bin/` | Validates a Pinterest listing against the platform contract. |
-| `process_final_font_images-pinterest-aware.py` | `bin/process_final_font_images.py` | The **full** Agent 30 processor as it existed with Pinterest support. This is the reinstatement reference: it contains the panel composition, the fingerprint cache, the format-aware delivery paths, the stale-format cleanup and the Pinterest manifest rows. |
+| `compose_pinterest.py` | `bin/` | Composes 1000x1500 2:3 Pinterest panels. Supports the multi-variant mode (`--variants`) and `--jpeg-companions`. **Reinstated at `bin/compose_pinterest.py` with the letterbox fix.** |
+| `validate_pinterest_listing.py` | `bin/` | Validates a Pinterest listing against the platform contract. **Reinstated at `bin/validate_pinterest_listing.py`.** |
+| `process_final_font_images-pinterest-aware.py` | `bin/process_final_font_images.py` | The full Agent 30 processor as it existed with Pinterest support. **Reinstatement reference; deleted after porting the blocks into the live processor on 2026-10-10.** |
 
 ## Why the snapshot exists
 
