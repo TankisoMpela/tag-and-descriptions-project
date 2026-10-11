@@ -9,16 +9,16 @@
 The brief is how a font actually ships: one JSON with five fresh headlines, one
 theme and one colour-ladder offset per pin, so the set reads as five designs.
 Without it every pin takes the same --line, which is what made a batch feel
-samey. With it the pins are written `pinterest_1..5` in PIN_ORDER, the shape the
-Pinterest registry expects.
-
-hero, set, wall, phrase, full_stack. Each pin gets its own theme — its own ground,
+samey. With it the pins are written `pinterest_1..5` in the brief's class order —
+elegant is hero, set, wall, phrase, full_stack; blackletter is initials, knotband,
+scriptorium, folio, carol — which is the shape the Pinterest registry expects
+either way. Each pin gets its own theme — its own ground,
 device and artwork — and inside each pin the rows walk down a colour ladder, so one
 font's set is five designs rather than one muted palette applied five times. Every
 text slot declares a box and is auto-fitted against it, so nothing overlaps or runs
 off the canvas; --json reports layout violations and ink the contrast guard had to
-lift. --stress is the proof: six faces x five templates x three copy lengths, and
-the run is clean at zero.
+lift. --stress is the proof: every class x six faces x five templates x three copy
+lengths, and the run is clean at zero.
 """
 from __future__ import annotations
 
@@ -47,6 +47,10 @@ JPEG_STEPS = (90, 85, 80)   # tried in order when a pin has to ship as JPEG
 # Design order — what a buyer scrolls into, and the numbering the registry
 # uploads by. Note sorted(TEMPLATES) is alphabetical, which is not this.
 PIN_ORDER = ("hero", "set", "wall", "phrase", "full_stack")
+BLACK_ORDER = ("initials", "knotband", "scriptorium", "folio", "carol")
+# A brief's optional "class" picks the order; every class still ships
+# pinterest_1..5, so the registry, blob and daily tools never learn the word.
+CLASS_ORDERS = {"elegant": PIN_ORDER, "blackletter": BLACK_ORDER}
 LABEL = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Regular.ttf")
 LABEL_B = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Medium.ttf")
 CLEAN = {"liga": 0}         # display ligs stripe the specimen marks
@@ -96,6 +100,12 @@ THEMES = {
                      device="grid",  art="grove"),
     "clay":     dict(pal="tangerine", mode="dark", pool=0.16, tooth=2800, seed=4,
                      device="rings", art="coast"),
+    # Two class-owned worlds. `cls` keeps them out of the elegant rotation: the
+    # manuscript ground only appears when a brief says blackletter (or names it).
+    "vellum":   dict(pal="marigold", mode="paper", pool=0.12, tooth=2600, seed=7,
+                     device="bands", art="knot", cls="blackletter"),
+    "gilded":   dict(pal="cobalt", mode="dark", pool=0.17, tooth=4800, seed=2,
+                     device="rays", art="foil", cls="blackletter"),
 }
 THEME_NAMES = list(THEMES)
 
@@ -111,15 +121,26 @@ THEME_PREF = {
     "set":        ("sage", "bone", "clay"),
     "full_stack": ("bone", "midnight", "sage", "ember"),
     "phrase":     ("clay", "sage", "bone"),
+    # The blackletter class. `knotband` and `carol` are liturgical — a vellum
+    # ground under drawn furniture; `scriptorium` is the writing desk at night, so
+    # it wants dark; `initials` and `folio` carry either.
+    "initials":    ("vellum", "bone", "gilded"),
+    "knotband":    ("vellum", "bone", "sage"),
+    "scriptorium": ("gilded", "midnight", "moss"),
+    "folio":       ("vellum", "gilded", "clay"),
+    "carol":       ("vellum", "sage", "gilded"),
 }
 
 
-def assign_themes(seed, names):
+def assign_themes(seed, names, cls="elegant"):
     """One theme per pin, no repeats, rotated by the font name so two fonts of
     the same shape still do not ship the same colour world — and a re-run of the
     same font lands identically."""
     rot = int(hashlib.sha256(seed.encode()).hexdigest(), 16)
     used, out = set(), {}
+    # A class-owned world (vellum, gilded) never leaks into another class's
+    # rotation; a brief can still ask for it explicitly.
+    pool = [t for t in THEME_NAMES if THEMES[t].get("cls") in (None, cls)]
     for i, name in enumerate(names):
         pref = THEME_PREF[name]
         pref = pref[(rot + i) % len(pref):] + pref[:(rot + i) % len(pref)]
@@ -127,7 +148,7 @@ def assign_themes(seed, names):
         # spent, borrow from any unused world rather than repeating one, which is
         # how five pins on six themes ship with no two alike.
         free = [t for t in pref if t not in used] or \
-               [t for t in THEME_NAMES if t not in used]
+               [t for t in pool if t not in used]
         out[name] = pick = free[0] if free else pref[0]
         used.add(pick)
     return out
@@ -450,12 +471,12 @@ class Type:
             x += adv + tracking
         return out, x
 
-    def fit(self, text, size, width, tracking=0.0):
+    def fit(self, text, size, width, tracking=0.0, features=None):
         """Scale so the run lands exactly on `width`."""
-        w = self.measure(text, size, tracking)
+        w = self.measure(text, size, tracking, features)
         return size * width / w if w else size
 
-    def floor_to(self, text, size, width, tracking=0.0):
+    def floor_to(self, text, size, width, tracking=0.0, features=None):
         """Step down whole 64ths until the run really measures `width` or less.
 
         Scaling by the exact ratio is not enough: `snap` makes the advance a step
@@ -463,7 +484,7 @@ class Type:
         it came from and still measures over. Only dropping a bucket helps, and
         a row that measures over its own wrapper is a row that breaks in two.
         """
-        while size > 0 and self.measure(text, size, tracking) > width:
+        while size > 0 and self.measure(text, size, tracking, features) > width:
             size = (math.floor(size * 64.0) - 1) / 64.0
         return max(size, 0.0)
 
@@ -475,11 +496,11 @@ class Type:
         canvas.restore()
         return p
 
-    def wrap(self, text, width, size, tracking=0.0):
+    def wrap(self, text, width, size, tracking=0.0, features=None):
         lines, cur = [], ""
         for word in text.split():
             trial = f"{cur} {word}".strip()
-            if self.measure(trial, size, tracking) <= width or not cur:
+            if self.measure(trial, size, tracking, features) <= width or not cur:
                 cur = trial
             else:
                 lines.append(cur)
@@ -651,25 +672,27 @@ def _slot(sh, name):
     return next((x for x in reversed(sh.slots) if x.name == name), None)
 
 
-def layout(t, text, width, size, tracking=0.0, leading=0.86, max_lines=8):
+def layout(t, text, width, size, tracking=0.0, leading=0.86, max_lines=8,
+           features=None):
     """-> (lines, paths, step, ink_top, ink_bot, ink_w) or None if it can't be laid."""
     if not text.strip():
         return [], [], 0.0, 0.0, 0.0, 0.0
-    lines = t.wrap(text, width, size, tracking)
+    lines = t.wrap(text, width, size, tracking, features)
     if len(lines) > max_lines:
         return None
     step = size * leading
-    paths = [t.path(ln, size, tracking)[0] for ln in lines]
+    paths = [t.path(ln, size, tracking, features)[0] for ln in lines]
     tops = [p.getBounds().y() + i * step for i, p in enumerate(paths)]
     bots = [p.getBounds().bottom() + i * step for i, p in enumerate(paths)]
     return (lines, paths, step, min(tops), max(bots),
             max(p.getBounds().width() for p in paths))
 
 
-def fit(t, text, box, hi, lo=8.0, tracking=0.0, leading=0.86, max_lines=8):
+def fit(t, text, box, hi, lo=8.0, tracking=0.0, leading=0.86, max_lines=8,
+        features=None):
     """Largest size <= hi whose wrapped ink fits `box` in both axes (None if < lo)."""
     def fits(s):
-        laid = layout(t, text, box.w, s, tracking, leading, max_lines)
+        laid = layout(t, text, box.w, s, tracking, leading, max_lines, features)
         return laid and laid[3] >= -1e9 and laid[4] - laid[3] <= box.h + 1 \
             and laid[5] <= box.w + 1
 
@@ -780,11 +803,11 @@ class Sheet:
     def text(self, name, t, string, box, *, hi, lo=10.0, color=None, grad=None,
              tracking=0.0, track=0.0, leading=0.86, max_lines=8, align="center",
              valign="middle", min_read=0.0, bleed=False, alpha=1.0, min_contrast=4.5,
-             hatch=None, glow=None):
+             hatch=None, glow=None, features=None):
         tracking = tracking + hi * track
-        size = fit(t, string, box, hi, lo, tracking, leading, max_lines)
+        size = fit(t, string, box, hi, lo, tracking, leading, max_lines, features)
         if size is None:
-            laid = layout(t, string, box.w, lo, tracking, leading, 999)
+            laid = layout(t, string, box.w, lo, tracking, leading, 999, features)
             n = len(laid[0]) if laid else 0
             worst = max(string.split(), key=lambda w: t.measure(w, lo))
             ww = t.measure(worst, lo)
@@ -798,7 +821,7 @@ class Sheet:
             self.problems.append(f"{name}: cannot fit a {box.w:.0f}x{box.h:.0f} slot — {why}")
             return None
         lines, paths, step, top, bot, _w = layout(t, string, box.w, size, tracking,
-                                                  leading, max_lines)
+                                                  leading, max_lines, features)
         if not lines:
             return None
         ink_h = bot - top
@@ -842,7 +865,8 @@ class Sheet:
         self.slots.append(Slot(name, box, Box(x0, y0, x1 - x0, y1 - y0), size,
                                len(lines), bleed))
         if size < min_read:
-            floor_laid = layout(t, string, box.w, min_read, tracking, leading, 999)
+            floor_laid = layout(t, string, box.w, min_read, tracking, leading, 999,
+                                features)
             room = 0
             if floor_laid and floor_laid[0]:
                 step = max(min_read * leading, 1.0)
@@ -884,9 +908,14 @@ class Sheet:
 TEMPLATES = {}
 
 
-def template(name, blurb):
+def cls_names(cls):
+    """Template names owned by one class, in design order."""
+    return [n for n in CLASS_ORDERS[cls] if n in TEMPLATES]
+
+
+def template(name, blurb, cls="elegant"):
     def deco(fn):
-        TEMPLATES[name] = (fn, blurb)
+        TEMPLATES[name] = (fn, blurb, cls)
         return fn
     return deco
 
@@ -970,6 +999,16 @@ def device(sh, P, kind, dark):
             a = math.radians(-186 + i * 11)
             cv.drawLine(W * 0.14, H * 0.86,
                         W * 0.14 + math.cos(a) * 1500, H * 0.86 + math.sin(a) * 1500, q)
+    elif kind == "hatch":
+        # Manuscript ruling: faint lines the scribe pricked before he wrote, plus
+        # the margin line they were pricked to. Under the type, never against it.
+        y0, y1 = int(H * 0.16), int(H * 0.86)
+        step = 46
+        for i in range((y1 - y0) // step):
+            rule(cv, M * 0.66, y0 + i * step, W - M * 0.66, y0 + i * step,
+                 mute, 1.0, 0.11)
+        rule(cv, W * 0.13, y0 - 40, W * 0.13, y1 + 40,
+             P["accent"], 1.2, 0.14)
 
 
 def tones(P, family):
@@ -1121,7 +1160,7 @@ def usable(ctx, ch):
     return ch in ctx["chars"] and ch not in ctx["flagged"]
 
 
-def fit_measure(T, text, width, hi):
+def fit_measure(T, text, width, hi, features=None):
     """Largest size whose INK — not merely its advance — reaches the measure.
 
     A swashy face can carry ink 10% past its advance width, so sizing by the
@@ -1131,12 +1170,12 @@ def fit_measure(T, text, width, hi):
     measure can come back a fraction over it, and the wrapper silently breaks
     the row in two.
     """
-    size = min(hi, T.fit(text, hi, width))
+    size = min(hi, T.fit(text, hi, width, features=features))
     if size <= 0:
         return 0.0
-    ink_w = T.path(text, size)[0].getBounds().width()
+    ink_w = T.path(text, size, features=features)[0].getBounds().width()
     size *= min(1.0, width / ink_w) if ink_w > 0 else 1.0
-    return T.floor_to(text, size, width)
+    return T.floor_to(text, size, width, features=features)
 
 
 def pack_lines(words, n):
@@ -1442,15 +1481,196 @@ def orn_eye(cv, cx, cy, s, rgb, alpha=1.0):
     cv.drawCircle(cx, cy, s * 0.24, paint(C(rgb, alpha)))
 
 
+def orn_triquetra(cv, cx, cy, s, rgb, alpha=1.0):
+    """The trinity knot: three circles through each other's centres, ringed.
+
+    Not filigree guessed at — this is the three-fold knot of the Book of Kells and
+    the high crosses, and it is drawn as pure stroke so it takes the pin's own ink
+    and survives the 200px thumbnail.
+    """
+    q = paint(C(rgb, alpha), style=skia.Paint.kStroke_Style, width=max(2.0, s * 0.075))
+    r = s * 0.56
+    for i in range(3):
+        a = math.tau * i / 3 - math.pi / 2
+        cv.drawCircle(cx + math.cos(a) * r * 0.577, cy + math.sin(a) * r * 0.577,
+                      r, q)
+    cv.drawCircle(cx, cy, s, q)
+
+
+def orn_fleur(cv, cx, cy, s, rgb, alpha=1.0):
+    """Fleur-de-lis: a spear petal between two scrolling sides, banded and footed."""
+    cv.save()
+    cv.translate(cx, cy)
+    q = paint(C(rgb, alpha))
+
+    def leaf(side):
+        p = skia.Path()
+        p.moveTo(side * 0.10 * s, 0.16 * s)
+        p.cubicTo(side * 0.60 * s, 0.12 * s, side * 0.80 * s, -0.26 * s,
+                  side * 0.60 * s, -0.52 * s)
+        p.cubicTo(side * 0.46 * s, -0.26 * s, side * 0.26 * s, -0.02 * s,
+                  side * 0.12 * s, 0.06 * s)
+        p.close()
+        return p
+
+    mid = skia.Path()
+    mid.moveTo(0, -s)
+    mid.cubicTo(0.30 * s, -0.54 * s, 0.22 * s, -0.04 * s, 0, 0.18 * s)
+    mid.cubicTo(-0.22 * s, -0.04 * s, -0.30 * s, -0.54 * s, 0, -s)
+    mid.close()
+    foot = skia.Path()
+    foot.moveTo(-0.12 * s, 0.34 * s)
+    foot.lineTo(0.12 * s, 0.34 * s)
+    foot.cubicTo(0.18 * s, 0.66 * s, 0.26 * s, 0.84 * s, 0.34 * s, 0.96 * s)
+    foot.lineTo(-0.34 * s, 0.96 * s)
+    foot.cubicTo(-0.26 * s, 0.84 * s, -0.18 * s, 0.66 * s, -0.12 * s, 0.34 * s)
+    foot.close()
+    cv.drawPath(mid, q)
+    cv.drawPath(leaf(1), q)
+    cv.drawPath(leaf(-1), q)
+    cv.drawRect(skia.Rect.MakeXYWH(-0.30 * s, 0.16 * s, 0.60 * s, 0.18 * s), q)
+    cv.drawPath(foot, q)
+    cv.restore()
+
+
+def orn_vine(cv, cx, cy, s, rgb, alpha=1.0, leaves=5, rot=0):
+    """A marginal vine: a serpentine stem with pointed leaves alternating off it.
+
+    This is the pen-work in the white margin of an insular page — the thing a frond
+    (a straight feathered spine) does not do. The stem is one cubic; the leaves are
+    sampled off it at parameter t so they sit ON the curve rather than beside it.
+    """
+    p0, p1, p2, p3 = (0, -s), (s * 0.36, -s * 0.34), (-s * 0.36, s * 0.34), (0, s)
+
+    def at(t):
+        u, iu = 1 - t, t
+        return (iu ** 3 * p0[0] + 3 * iu ** 2 * t * p1[0] + 3 * iu * t ** 2 * p2[0] + t ** 3 * p3[0],
+                iu ** 3 * p0[1] + 3 * iu ** 2 * t * p1[1] + 3 * iu * t ** 2 * p2[1] + t ** 3 * p3[1])
+
+    cv.save()
+    cv.translate(cx, cy)
+    cv.rotate(rot)
+    q = paint(C(rgb, alpha), style=skia.Paint.kStroke_Style, width=max(1.6, s * 0.055))
+    spine = skia.Path()
+    spine.moveTo(*p0)
+    spine.cubicTo(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1])
+    cv.drawPath(spine, q)
+    L = s * 0.46
+    for i in range(leaves):
+        t = (i + 0.5) / leaves
+        px, py = at(t)
+        side = 1 if i % 2 else -1
+        lf = skia.Path()
+        lf.moveTo(px, py)
+        lf.quadTo(px + side * L * 0.52, py - L * 0.44, px + side * L, py - L * 0.02)
+        lf.quadTo(px + side * L * 0.52, py + L * 0.34, px, py)
+        cv.drawPath(lf, paint(C(rgb, alpha * 0.85)))
+    cv.drawCircle(p3[0], p3[1], s * 0.075, paint(C(rgb, alpha)))
+    cv.restore()
+
+
 ORNAMENTS = {"star": orn_star, "sun": orn_sun, "wave": orn_wave, "blob": orn_blob,
              "frond": orn_frond, "arc": orn_arc, "fan": orn_fan, "dots": orn_dots,
-             "eye": orn_eye}
+             "eye": orn_eye, "triquetra": orn_triquetra, "fleur": orn_fleur,
+             "vine": orn_vine}
 
 
 def draw_orn(sh, name, kind, cx, cy, s, rgb, alpha=1.0, collide=True, **kw):
     """Draw an ornament and register the box it owns, so verify() still rules."""
     ORNAMENTS.get(kind, orn_star)(sh.cv, cx, cy, s, rgb, alpha, **kw)
     sh.mark(f"orn-{name}", Box(cx - s, cy - s, 2 * s, 2 * s), collide=collide)
+
+
+# ------------------------------------------------------------ the manuscript kit
+#
+# The blackletter class needs furniture, not just type: a band of interlace, the
+# frame of an initial, the ruled frame of a folio. These are the same vector kit as the
+# ornaments — beziers and rules, no images — with one trick the ornaments never
+# needed: an interlace has to pass *over and under*, and a raster painter cannot
+# do that with draw order alone. So each crossing cuts a notch of ground colour
+# out of the strand that loses, then redraws the winner on top of the gap, which
+# is precisely how a scribe solved it with two pens.
+
+def _strips(sh, name, box, t=12.0, collide=True):
+    """Register a frame as four edge strips, so the picture inside stays legal.
+
+    One box for the whole frame would report every letter inside it as a collision
+    with its own border; four strips say the truth — the ink is the border.
+    """
+    sh.mark(f"{name}-t", Box(box.x, box.y, box.w, t), collide=collide)
+    sh.mark(f"{name}-b", Box(box.x, box.b - t, box.w, t), collide=collide)
+    sh.mark(f"{name}-l", Box(box.x, box.y + t, t, box.h - 2 * t), collide=collide)
+    sh.mark(f"{name}-r", Box(box.r - t, box.y + t, t, box.h - 2 * t), collide=collide)
+
+
+def knot_band(sh, box, rgb, ground, waves=4, weight=None, alpha=1.0):
+    """A plaited ribbon: two strands out of phase, crossing twice a wave.
+
+    The strands are sines half a period apart, so every crossing is a coin toss the
+    drawing has to settle. It settles alternately — strand A over at the even
+    crossings, B over at the odd — which is the only rule that makes a braid read
+    as woven rather than as two lines that happen to touch.
+    """
+    w = weight or max(6.0, box.h * 0.30)
+    amp = max(2.0, (box.h - w) / 2.0)
+    ink = paint(C(rgb, alpha), style=skia.Paint.kStroke_Style, width=w)
+    # The casing is deliberately wider than the strand: the sliver of ground left
+    # showing where a ribbon passes over another is what makes interlace read as
+    # woven at feed size. Too wide and the crossings turn into cream blobs.
+    cut = paint(C(ground, 1.0), style=skia.Paint.kStroke_Style, width=w * 1.30)
+    mid = box.y + box.h / 2
+
+    def strand(phase, t0=0.0, t1=1.0, n=200):
+        p = skia.Path()
+        for i in range(n + 1):
+            t = t0 + (t1 - t0) * i / n
+            x = box.x + box.w * t
+            y = mid + amp * math.sin(math.tau * waves * t + phase)
+            p.lineTo(x, y) if i else p.moveTo(x, y)
+        return p
+
+    sh.cv.drawPath(strand(0.0), ink)
+    sh.cv.drawPath(strand(math.pi, 0.0, 1.0), cut)
+    sh.cv.drawPath(strand(math.pi), ink)
+    win = (w * 2.2) / box.w
+    for k in range(0, 2 * waves + 1, 2):
+        tc_ = k / (2.0 * waves)
+        t0, t1 = max(0.0, tc_ - win / 2), min(1.0, tc_ + win / 2)
+        sh.cv.drawPath(strand(math.pi, t0, t1, 24), cut)
+        sh.cv.drawPath(strand(0.0, t0, t1, 24), ink)
+    sh.mark("knot", box)
+
+
+def illum_box(sh, box, rgb, accent, alpha=1.0):
+    """A drop-capital's frame: double rule, hairline inside, fleurons at the corners."""
+    q = paint(C(rgb, alpha), style=skia.Paint.kStroke_Style,
+              width=max(3.0, box.w * 0.014))
+    sh.cv.drawRect(skia.Rect.MakeXYWH(box.x, box.y, box.w, box.h), q)
+    i2 = 9.0
+    sh.cv.drawRect(skia.Rect.MakeXYWH(box.x + i2, box.y + i2, box.w - 2 * i2,
+                                      box.h - 2 * i2),
+                   paint(C(rgb, alpha * 0.6), style=skia.Paint.kStroke_Style, width=1.4))
+    s = max(13.0, box.w * 0.055)
+    for j, (fx, fy) in enumerate(((0, 0), (1, 0), (0, 1), (1, 1))):
+        draw_orn(sh, f"cb{j}", "fleur", box.x + i2 + s + fx * (box.w - 2 * (i2 + s)),
+                 box.y + i2 + s + fy * (box.h - 2 * (i2 + s)), s, accent, 0.9,
+                 collide=False)
+    _strips(sh, "illum", box, t=max(10.0, box.w * 0.030))
+
+
+def border_frame(sh, box, rgb, accent=None, alpha=0.85):
+    """Folio rule: a hairline frame, a second line inside it, marks at the corners."""
+    sh.cv.drawRect(skia.Rect.MakeXYWH(box.x, box.y, box.w, box.h),
+                   paint(C(rgb, alpha), style=skia.Paint.kStroke_Style, width=1.6))
+    i2 = 7.0
+    sh.cv.drawRect(skia.Rect.MakeXYWH(box.x + i2, box.y + i2, box.w - 2 * i2,
+                                      box.h - 2 * i2),
+                   paint(C(rgb, alpha * 0.45), style=skia.Paint.kStroke_Style,
+                         width=1.0))
+    for fx, fy in ((0, 0), (1, 0), (0, 1), (1, 1)):
+        sh.cv.drawCircle(box.x + fx * box.w, box.y + fy * box.h, 3.2,
+                         paint(C(accent or rgb, alpha)))
+    _strips(sh, "frame", box, t=8.0)
 
 
 # ------------------------------------------------------------------- templates
@@ -1759,6 +1979,327 @@ def t_full_stack(sh, ctx):
               lead_frac=0.30)
 
 
+# =============================================== the blackletter / celtic class
+#
+# The elegant set says "type foundry"; this class says "scriptorium" — and says it
+# with the same machinery: the same ground, the same colour ladder, the same fitted
+# slots and footer rail, plus furniture from the manuscript tradition. Interlace,
+# the ruled initial box, rubrication in the scribe's red, pricked ruling lines.
+# Type stays the subject in all five; the drawings frame it, never compete with it.
+
+
+@template("initials", "the illuminated initial: the face's own first letter ruled and gilded, its name beside it",
+          cls="blackletter")
+def t_initials(sh, ctx):
+    """A manuscript page opens with an initial, so this pin is that opening.
+
+    The letter is the face's own — the first one its headline can actually draw —
+    set inside double rules with fleurons at the corners, and pen-work climbing the
+    empty foot of the name column beside it, which is where a scribe tied an initial
+    to the page. The name answers across the column in the next rungs of the ladder,
+    and the headline runs under both. Nothing here is a texture: the box, the fringe
+    and the rubric red are all drawn, so they cost nothing at the byte level.
+    """
+    P, T, L = ctx["pal"], ctx["display"], ctx["label"]
+    dark = bg(sh, P, ctx["th"], pool=0.10)
+    ink, mute, _ = field(P)
+    line = shout(ctx, clean(ctx, ctx["copy"]["line"] or ctx["name"])).strip()
+    ch = next((c for c in line if c.isalpha() and usable(ctx, c)), "")
+    if not ch:
+        sh.problems.append("initials: the face draws no letter of this headline")
+        return
+    y0 = eyebrow(sh, ctx, "Illuminated Initial") + 46
+    side = min(470.0, (W - 2 * M) * 0.46)
+    ib = Box(M, y0, side, side)
+    illum_box(sh, ib, ink, P["accent"])
+    sh.text("cap", T, ch, Box(ib.x + 48, ib.y + 42, ib.w - 96, ib.h - 84),
+            hi=420, lo=70, max_lines=1, min_read=110, **tone(P, 1))
+    col = Box(ib.r + 76, ib.y + 8, W - M - ib.r - 76, ib.h - 16)
+    name = shout(ctx, clean(ctx, ctx["name"])).strip() or line
+    measure_rows(sh, T, P, pack_lines(name.split(), 2), col, "nm", hi=210,
+                 min_read=34, lead_frac=0.07)
+    # Marginal pen-work in the foot of the name column: a one-word name leaves the
+    # column half empty, and a dead band is a composition bug, not a margin.
+    nm = _slot(sh, "nm0")
+    free = (nm.ink.b if nm else col.y) + 30
+    if col.b - free > 150:
+        for i in range(2):
+            draw_orn(sh, f"vine{i}", "vine", col.x + col.w * (0.34 + 0.30 * i),
+                     free + 66 + i * 82, 74, P["accent2"], 0.6,
+                     rot=-12 + 24 * i, collide=False)
+    stage = Box(M, ib.b + 44, W - 2 * M, H - ib.b - 320)
+    measure_rows(sh, T, P, pack_lines(line.split(), 3), stage, "line", hi=150,
+                 min_read=32, fill=True, lead_frac=0.05)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx)
+
+
+@template("knotband", "the character set funnelled under a band of interlace, inside a folio frame",
+          cls="blackletter")
+def t_knotband(sh, ctx):
+    """The alphabet as a woven band wears it.
+
+    Same funnel the elegant `set` uses — one pair, two, three, each row set to the
+    measure — because the funnel is the shape that keeps the first line enormous.
+    What changes is the frame: a plaited ribbon across the head of the page, a
+    folio rule round the whole block, and a triquetra where the two meet. The braid
+    is drawn with real over-and-under, so the pin reads as made rather than tiled.
+    """
+    P, T, L = ctx["pal"], ctx["display"], ctx["label"]
+    dark = bg(sh, P, ctx["th"], pool=0.08)
+    ink, mute, _ = field(P)
+    ground = P["deep1"] if dark else P["paper1"]
+    ups = [c for c in ascii_uppercase if usable(ctx, c)]
+    los = [c for c in ascii_lowercase if usable(ctx, c)]
+    n = min(6, len(ups), len(los))
+    if n < 3:
+        sh.problems.append("knotband: the face carries too few letters to pair up")
+        return
+    pairs = [f"{ups[i]}{los[i]}" for i in range(n)]
+    rows, i = [], 0
+    for want in (1, 2, 3):
+        rows.append(" ".join(pairs[i:i + want]))
+        i += want
+    rows = [r for r in rows if r]
+
+    y0 = eyebrow(sh, ctx, "Interlaced Set") + 40
+    band = Box(M + 12, y0, W - 2 * (M + 12), 56)
+    knot_band(sh, band, ink, ground, waves=5)
+    frame = Box(M - 12, band.b + 26, W - 2 * (M - 12), H - band.b - 284)
+    border_frame(sh, frame, mute, P["accent"])
+    draw_orn(sh, "kn", "triquetra", frame.x + 44, frame.y - 4, 26, P["accent"], 0.95,
+             collide=False)
+    stage = Box(frame.x + 34, frame.y + 30, frame.w - 68, frame.h - 96)
+    measure_rows(sh, T, P, rows, stage, "pair", hi=880, min_read=40,
+                 lead_frac=0.045, taper=True)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx, at=f"{len(ups)} Upper \u00b7 {len(los)} Lower \u00b7")
+
+
+@template("scriptorium", "the desk: words, digits and oddments ruled like a pricked manuscript page",
+          cls="blackletter")
+def t_scriptorium(sh, ctx):
+    """A wall of the face, on the lines a scribe pricked before he wrote.
+
+    The elegant `wall` fills the frame with everything the face can set; here the
+    same block sits on faint ruling, inside a ruled frame, with the knot at the
+    foot of the page where a colophon goes. The ruling is a device, not a grid: it
+    is drawn under the type at near the noise floor, so it reads as prepared skin
+    rather than as a table.
+    """
+    P, T = ctx["pal"], ctx["display"]
+    dark = bg(sh, P, ctx["th"], dev=False)
+    device(sh, P, "hatch", dark)
+    ink, mute, _ = field(P)
+    words = [w for w in shout(ctx, clean(ctx, ctx["copy"]["line"])).split() if w]
+    digits = "".join(c for c in "0123456789" if usable(ctx, c) and c not in ctx["flagged"])
+    punct = " ".join(c for c in "&@?!%*()" if usable(ctx, c) and c not in ctx["flagged"])
+    seq = []
+    if words:
+        seq.append(" ".join(words[:2]))
+    if len(digits) >= 6:
+        seq.append(digits)
+    if len(words) > 2:
+        seq.append(" ".join(words[2:4]))
+    if len(punct.split()) >= 4:
+        seq.append(punct)
+    if len(words) > 4:
+        seq.append(" ".join(words[4:6]))
+    seq = [s for s in seq if s]
+    if not seq:
+        sh.problems.append("scriptorium: nothing to set — the face carries no letters or digits")
+        return
+
+    y0 = eyebrow(sh, ctx, "Scriptorium") + 40
+    frame = Box(M - 14, y0, W - 2 * (M - 14), H - y0 - 250)
+    border_frame(sh, frame, mute, P["accent"])
+    stage = Box(frame.x + 40, frame.y + 34, frame.w - 80, frame.h - 164)
+    measure_rows(sh, T, P, seq, stage, "row", hi=440, min_read=30, fill=True,
+                 lead_frac=0.028)
+    draw_orn(sh, "seal", "triquetra", frame.x + frame.w - 66, frame.b - 62, 46,
+             P["accent"], 0.95)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx)
+
+
+@template("folio", "the rubricated line: the first word drawn in the scribe's red, vines above and below",
+          cls="blackletter")
+def t_folio(sh, ctx):
+    """What the font says, set like a page and corrected by hand.
+
+    The block is the elegant `phrase` spine — a short line of copy, one rung of the
+    ladder per line, artwork reserved in bands above and below so the type shrinks
+    rather than walking over it. The move that makes it a manuscript is the
+    rubric: the first word is drawn a second time in the red pen, over the ink it
+    already sits on, which is literally what a rubricator did. Its contrast is
+    re-measured against the pixels under it, so the red can never go muddy.
+    """
+    P, T = ctx["pal"], ctx["display"]
+    dark = bg(sh, P, ctx["th"])
+    ink, mute, _ = field(P)
+    acc, red = P["accent"], P["accent2"]
+    # The furniture is the class, not the colour world: a shared theme may bring a
+    # nautical art set with it, and a scallop shell on a manuscript page is a lie.
+    art = ORN_SETS["foil" if dark else "knot"]
+    y0 = eyebrow(sh, ctx, "Rubricated") + 40
+
+    top = Box(M, y0, W - 2 * M, 220)
+    for i, (kind, fx_, fy, s, alpha) in enumerate(art["top"]):
+        draw_orn(sh, f"t{i}", kind, top.x + top.w * fx_,
+                 top.y + max(s, min(top.h * fy, top.h - s)), s,
+                 acc if i % 2 else ink, alpha)
+    band = Box(M, H - 500, W - 2 * M, 190)
+    src = clean(ctx, ctx["copy"]["line"]).strip()
+    if 0 < len(src.split()) < 3:
+        sh.notes.append(f"folio: {len(src.split())} words is a label, not a phrase "
+                        f"— write three or four")
+    words = [w for w in shout(ctx, src or ctx["name"]).split() if w]
+    if not words:
+        sh.problems.append("folio: the line has no words this face can draw")
+        return
+    # Never more lines than half the words: a scribe who left one word standing
+    # alone at the foot of the block was out of room, not being stylish.
+    lines = pack_lines(words, min(4, max(2, len(words) // 2)))
+    stage = Box(M + 20, top.b + 30, W - 2 * (M + 20), band.y - top.b - 130)
+    measure_rows(sh, T, P, lines, stage, "folio", hi=270, min_read=44, fill=True,
+                 lead_frac=0.05)
+
+    first = _slot(sh, "folio0")
+    head = lines[0].split()[0] if first and first.size else ""
+    if head:
+        # Placed off the line's BASELINE, not its ink top: the tallest ascender in
+        # the row is usually further back in the sentence, and anchoring to the top
+        # floats the rubric word a few points above the word it is redrawing.
+        size = first.size
+        lb = T.path(lines[0], size)[0].getBounds()
+        p, _w = T.path(head, size)
+        b = p.getBounds()
+        red = readable(sh._behind(first.ink) or lum(P["paper1"]), red, 4.5)
+        sh.cv.save()
+        sh.cv.translate(first.ink.x - lb.left(), first.ink.y - lb.top())
+        sh.cv.drawPath(p, paint(C(red, 1.0)))
+        sh.cv.restore()
+
+    rule(sh.cv, W / 2 - 90, band.y - 40, W / 2 + 90, band.y - 40, acc, 2.4, 0.9)
+    draw_orn(sh, "fl", "fleur", W / 2, band.y - 40, 24, acc, 1.0, collide=False)
+    for i, (kind, fx_, fy, s, alpha) in enumerate(art["bottom"]):
+        draw_orn(sh, f"b{i}", kind, M + (W - 2 * M) * fx_,
+                 band.y + max(s, min(band.h * fy, band.h - s)), s,
+                 red if i % 2 else acc, alpha)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx)
+
+
+@template("carol", "the specimen sheet with its alternates: the same word plain and shaped by the face's own OpenType features",
+          cls="blackletter")
+def t_carol(sh, ctx):
+    """The foundry spec sheet, with the one line a blackletter buyer came for.
+
+    Name, purpose, then the alphabet at the size the page can carry — the shape of
+    `full_stack`, because a specimen pin is saved for the character set whatever
+    class it is in. What this adds is the alternate showcase: the same word drawn
+    twice, once with the default shaping and once with the feature tags the brief
+    asked for, at one shared size so the difference is the letterforms and nothing
+    else. It only appears when the face actually ships the features and the brief
+    actually names them — an empty promise of an ornament is worse than none.
+    """
+    P, T, L = ctx["pal"], ctx["display"], ctx["label"]
+    bg(sh, P, ctx["th"], pool=0.10)
+    ink, mute, _ = field(P)
+    measure = W - 2 * M
+    facts = ctx["facts"]
+    ups = [c for c in ascii_uppercase if usable(ctx, c)]
+    los = [c for c in ascii_lowercase if usable(ctx, c)]
+    ftrs = ctx.get("ftrs") or {}
+
+    feat = (" + ".join(sorted(ftrs)).upper() + " Alternates" if ftrs else
+            (" ".join(sorted(facts["features"])[:2]) if facts["features"] else
+             f"{facts['glyphs']} Glyphs"))
+    sh.text("hdr-l", L, f"({feat})", Box(M, 62, 460, 24), hi=20, lo=12,
+            color=ink, track=0.14, align="left", valign="top", min_read=12)
+    sh.text("hdr-r", L, "(OTF / TTF / WOFF)", Box(W - M - 460, 62, 460, 24), hi=20,
+            lo=12, color=ink, track=0.14, align="right", valign="top", min_read=12)
+
+    name = shout(ctx, clean(ctx, ctx["name"])).strip()
+    lines = pack_lines(name.split() or shout(ctx, clean(ctx, ctx["copy"]["line"])).split(), 2)
+    y = 124
+    for i, ln in enumerate(lines):
+        size = fit_measure(T, ln, measure, 300.0)
+        if size <= 0:
+            continue
+        h = T.path(ln, size)[0].getBounds().height()
+        sh.text(f"n{i}", T, ln, Box(M, y, measure, h + 2), hi=size, lo=size,
+                leading=0.86, max_lines=1, min_read=40, valign="top",
+                min_contrast=5.0 if i else 6.5,
+                glow=(mix(rung(P, i), P["accent"], 0.4), 0.055, 0.34),
+                **tone(P, 1 if i else 0))
+        y += h + 26
+    y += 20
+    tag = tc(clean(ctx, ctx["copy"].get("over") or f"{facts['glyphs']}-glyph display"))
+    sh.text("tag", L, tag, Box(M, y, measure, 36), hi=30, lo=14, color=ink,
+            track=0.30, align="center", valign="top", min_read=14)
+    y += 56
+
+    sample = shout(ctx, clean(ctx, ctx["copy"].get("word") or ctx["name"])).strip()
+    if ftrs and facts["features"] and sample:
+        w = measure - 150
+        hi = 118.0
+        size = min(fit_measure(T, sample, w, hi),
+                   fit_measure(T, sample, w, hi, ftrs))
+        if size > 0:
+            # Both lines in the same ink, deliberately: the point of the pair is
+            # that the letterforms differ, and walking the colour ladder between
+            # them makes the buyer compare the colours instead of the glyphs.
+            for i, (cap, feats) in enumerate((("Default", None),
+                                              (" + ".join(sorted(ftrs)).upper(), ftrs))):
+                sh.text(f"alt{i}", T, sample, Box(M + 150, y, w, size * 1.22),
+                        hi=size, lo=size, max_lines=1, align="left", valign="top",
+                        min_read=28, features=feats, color=ink)
+                label(sh.cv, L, cap, M, y + size * 0.72, 17, mute, tracking=3.2,
+                      alpha=0.85)
+                y += size * 1.34
+            rule(sh.cv, M, y + 4, W - M, y + 4, ink, 1.0, 0.30)
+            y += 22
+    else:
+        sh.text("copy", L, tc(ctx["copy"]["line"]), Box(M + 60, y, measure - 120, 96),
+                hi=21, lo=13, color=mute, align="center", valign="top",
+                leading=1.42, max_lines=3, min_read=13)
+        slot = _slot(sh, "copy")
+        y = (slot.ink.b if slot else y + 96) + 26
+
+    rule(sh.cv, M, y, W - M, y, ink, 1.4, 0.5)
+    draw_orn(sh, "div0", "triquetra", W / 2, y, 15, P["accent"], 1.0, collide=False)
+    y += 20
+    sh.text("sec-l", L, "Full Character Set", Box(M, y, 400, 24), hi=20, lo=12,
+            color=ink, track=0.16, align="left", valign="top", min_read=12)
+    sh.text("sec-r", L, f"{len(ups)} Upper \u00b7 {len(los)} Lower",
+            Box(W - M - 400, y, 400, 24), hi=20, lo=12, color=ink, track=0.16,
+            align="right", valign="top", min_read=12)
+
+    rows = spec_grid(T, [ups, los], measure, max(H - 124 - (y + 46), 160.0))
+    if rows:
+        tall = (sum(h for _r, _s, h in rows)
+                + rows[0][1] * 0.30 * max(len(rows) - 1, 0))
+        ground = (sh._behind(Box(M, y + 46, measure, min(tall, H - 124 - y - 46)))
+                  or lum(P["deep2"]))
+    else:
+        ground = lum(P["deep2"])
+    crisp = [readable(ground, rung(P, i), 4.5) for i in range(len(P["tone"]))]
+    bloom = [mix(c, P["accent2"] if i % 2 else P["accent"], 0.45)
+             for i, c in enumerate(crisp)]
+
+    def paint_row(off):
+        def f(p, j, i):
+            k = (i + off) % len(crisp)
+            box = p.getBounds()
+            halo(sh.cv, p, bloom[k], max(5.0, box.height() * 0.055), 0.42)
+            sh.cv.drawPath(p, paint(C(crisp[k], 1.0)))
+        return f
+
+    draw_rows(sh, T, rows, Box(M, y + 46, measure, 1), paint_row(0), "chars",
+              lead_frac=0.30)
+
+
 ORN_SETS = {
     "grove": dict(top=[("frond", 0.10, 0.62, 128, 0.9), ("star", 0.44, 0.16, 40, 1.0),
                        ("sun", 0.72, 0.44, 86, 1.0), ("star", 0.93, 0.70, 30, 0.85)],
@@ -1772,10 +2313,21 @@ ORN_SETS = {
                        ("star", 0.88, 0.66, 34, 0.9), ("blob", 0.28, 0.86, 34, 0.7)],
                   bottom=[("eye", 0.24, 0.48, 74, 0.9), ("dots", 0.62, 0.40, 96, 0.9),
                           ("blob", 0.90, 0.62, 52, 0.8)]),
+    # Manuscript sets, one per class theme. The knot world is interlace and
+    # fleurons; the foil world is gilding — starry, sharper, fewer bigger marks.
+    "knot": dict(top=[("fleur", 0.12, 0.50, 96, 0.95), ("triquetra", 0.50, 0.44, 76, 1.0),
+                      ("fleur", 0.88, 0.50, 96, 0.95)],
+                 bottom=[("vine", 0.14, 0.46, 104, 0.9), ("triquetra", 0.50, 0.50, 64, 0.95),
+                         ("vine", 0.86, 0.46, 104, 0.9)]),
+    "foil": dict(top=[("star", 0.20, 0.40, 54, 1.0), ("fleur", 0.50, 0.48, 110, 1.0),
+                      ("star", 0.80, 0.40, 54, 1.0)],
+                 bottom=[("triquetra", 0.24, 0.50, 72, 0.95), ("fan", 0.52, 0.54, 92, 0.85),
+                         ("triquetra", 0.80, 0.50, 72, 0.95)]),
 }
 
 
-def build_ctx(font_path, name, copy, palette=None, mode=None, about=""):
+def build_ctx(font_path, name, copy, palette=None, mode=None, about="",
+              cls="elegant"):
     """Everything a pin needs, decided from the font's own data.
 
     The theme per pin and the showcase family are resolved here once, so a run is
@@ -1799,8 +2351,9 @@ def build_ctx(font_path, name, copy, palette=None, mode=None, about=""):
         "name": name, "copy": copy,
         "display": display, "label": Type(LABEL_B if LABEL_B.exists() else LABEL),
         "tt": TTFont(str(font_path), fontNumber=0),
-        "family": family, "why": why,
-        "themes": assign_themes(name or Path(font_path).stem, sorted(TEMPLATES)),
+        "family": family, "why": why, "class": cls,
+        "themes": assign_themes(name or Path(font_path).stem,
+                                sorted(cls_names(cls)), cls),
         "tone_offs": {},
         "palette_override": palette, "mode_override": mode,
     }
@@ -1862,7 +2415,7 @@ def clean(ctx, text):
 
 
 def render(name, ctx):
-    fn, _blurb = TEMPLATES[name]
+    fn, _blurb, _cls = TEMPLATES[name]
     surf = skia.Surface.MakeRasterN32Premul(W, H)
     sh = Sheet(surf)
     th, pal = theme_for(name, ctx)
@@ -1916,13 +2469,18 @@ def check_brief(brief, out=None):
     — run from the repo root, the way every `bin/` tool is run.
     """
     bad, warns = [], []
+    cls = brief.get("class") or "elegant"
+    if cls not in CLASS_ORDERS:
+        return [f'class "{cls}" is not one of ' + ", ".join(CLASS_ORDERS)], []
+    order = CLASS_ORDERS[cls]
     pins = brief.get("pins") or {}
-    missing = [t for t in PIN_ORDER if t not in pins]
+    missing = [t for t in order if t not in pins]
     if missing:
         bad.append("no pin copy for: " + ", ".join(missing))
-    unknown = [t for t in pins if t not in PIN_ORDER]
+    unknown = [t for t in pins if t not in order]
     if unknown:
-        bad.append("unknown template(s) in brief: " + ", ".join(unknown))
+        bad.append(f"unknown template(s) for class {cls}: "
+                   + ", ".join(unknown))
     if not (brief.get("about") or "").strip():
         bad.append('brief needs "about" — the outlines alone misclassify '
                    "handwritten, tech and blackletter faces")
@@ -2036,6 +2594,9 @@ def main():
     ap.add_argument("--mode", choices=("dark", "paper"),
                     help="override the theme's own ground")
     ap.add_argument("--template", action="append", choices=sorted(TEMPLATES))
+    ap.add_argument("--class", dest="cls", choices=tuple(CLASS_ORDERS),
+                    help="template family; default is the brief's class, "
+                         "else elegant")
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--json", action="store_true", dest="as_json")
     ap.add_argument("--stress", action="store_true")
@@ -2043,8 +2604,11 @@ def main():
     args = ap.parse_args()
 
     if args.list:
-        for k, (_f, blurb) in TEMPLATES.items():
-            print(f"  {k:11s} {blurb}")
+        for cls in CLASS_ORDERS:
+            print(f"  [{cls}]")
+            for k in cls_names(cls):
+                _f, blurb, _c = TEMPLATES[k]
+                print(f"    {k:13s} {blurb}")
         return 0
 
     if args.stress:
@@ -2054,6 +2618,9 @@ def main():
         ap.error("--font is required unless --list or --stress")
     brief = (json.loads(Path(args.brief).read_text(encoding="utf-8"))
              if args.brief else None)
+    cls = args.cls or (brief or {}).get("class") or "elegant"
+    if cls not in CLASS_ORDERS:
+        ap.error(f"unknown class {cls!r} — try one of {', '.join(CLASS_ORDERS)}")
     warns = []
     if brief is not None:
         bad, warns = check_brief(brief, Path(args.out))
@@ -2066,7 +2633,7 @@ def main():
                     {"line": args.line, "sub": args.sub, "over": args.over,
                      "word": args.word},
                     args.palette, args.mode,
-                    args.about or (brief or {}).get("about", ""))
+                    args.about or (brief or {}).get("about", ""), cls=cls)
     per = {}
     if brief is not None:
         themes, offs, copies = dict(ctx["themes"]), {}, {}
@@ -2077,7 +2644,8 @@ def main():
             copies[t] = {k: (pin.get(k) or "")
                          for k in ("line", "sub", "over", "word")}
         ctx = dict(ctx, themes=themes, tone_offs=offs)
-        per = {t: dict(ctx, copy=c) for t, c in copies.items()}
+        per = {t: dict(ctx, copy=c, ftrs=brief["pins"][t].get("ftrs") or {})
+               for t, c in copies.items()}
     if not args.as_json:
         print(f"  {title}: {ctx['family']} — {ctx['why'][0] if ctx['why'] else 'default'}")
         print("  themes: " + ", ".join(f"{k}={v}" for k, v in sorted(ctx["themes"].items())))
@@ -2089,12 +2657,17 @@ def main():
         (out / "pins.brief.json").write_text(
             json.dumps(brief, indent=2, ensure_ascii=False) + "\n",
             encoding="utf-8")
-    names = args.template or sorted(TEMPLATES)
+    owned = cls_names(cls)
+    names = args.template or owned
+    stray = [n for n in names if n not in owned]
+    if stray:
+        ap.error(f"template(s) {', '.join(stray)} are not in class {cls!r}; "
+                 f"this class has {', '.join(owned)}")
     errors, notes, payload = [], [], []
     for name in names:
         surf, sh = render(name, per.get(name, ctx))
         img = surf.makeImageSnapshot()
-        stem = f"pinterest_{PIN_ORDER.index(name) + 1}" if per else name
+        stem = f"pinterest_{CLASS_ORDERS[cls].index(name) + 1}" if per else name
         ship, size, note = save_pin(img, out, stem)
         if note:
             sh.notes.append(note)
@@ -2133,22 +2706,26 @@ def stress(args):
     if not faces:
         print("stress: pass --faces name=path:name=path", file=sys.stderr)
         return 2
-    names = args.template or sorted(TEMPLATES)
     cells, errors = [], []
     for fname, fpath in faces:
-        base = build_ctx(fpath, fname, {}, args.palette, args.mode)
-        print(f"  {fname}: {base['family']} — "
-              + (base["why"][0] if base["why"] else "default"))
-        for tname in names:
-            for cname, line in COPIES.items():
-                ctx = dict(base, copy={"line": line, "sub": "", "over": "",
-                                       "word": "Whiskey"})
-                surf, sh = render(tname, ctx)
-                errs = as_errors(tname, sh)
-                errors += [dict(e, face=fname, copy=cname) for e in errs]
-                cells.append(_down(surf.makeImageSnapshot(), 260))
-                print(f"  {fname[:9]:9s} {tname:10s} {cname:6s} "
-                      f"{'ok' if not errs else 'FAIL ' + errs[0]['message'][:74]}")
+        for fam in CLASS_ORDERS:
+            base = build_ctx(fpath, fname, {}, args.palette, args.mode, cls=fam)
+            names = [t for t in cls_names(fam)
+                     if args.template is None or t in args.template]
+            if not names:
+                continue
+            print(f"  {fname} [{fam}]: {base['family']} — "
+                  + (base["why"][0] if base["why"] else "default"))
+            for tname in names:
+                for cname, line in COPIES.items():
+                    ctx = dict(base, copy={"line": line, "sub": "", "over": "",
+                                           "word": "Whiskey"})
+                    surf, sh = render(tname, ctx)
+                    errs = as_errors(tname, sh)
+                    errors += [dict(e, face=fname, copy=cname) for e in errs]
+                    cells.append(_down(surf.makeImageSnapshot(), 260))
+                    print(f"  {fname[:9]:9s} {tname:10s} {cname:6s} "
+                          f"{'ok' if not errs else 'FAIL ' + errs[0]['message'][:74]}")
     cols = 5
     tw, th = 260, 390
     rows = math.ceil(len(cells) / cols)

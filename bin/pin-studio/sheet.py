@@ -2,17 +2,23 @@
 
     bin/pin-studio/.venv/bin/python bin/pin-studio/sheet.py <dir> [width] [names...]
 """
+import json
 import sys
 from pathlib import Path
 
 import skia
 
 sys.path.insert(0, str(Path(__file__).parent))
-from pin_studio import LABEL, LABEL_B, PIN_ORDER, _down  # noqa: E402
+from pin_studio import CLASS_ORDERS, LABEL, LABEL_B, _down  # noqa: E402
 
 d = Path(sys.argv[1])
 w = int(sys.argv[2]) if len(sys.argv) > 2 else 300
-names = sys.argv[3:] or [f"pinterest_{i + 1}" for i in range(len(PIN_ORDER))]
+bf = d / "pins.brief.json"
+order = CLASS_ORDERS["elegant"]
+if bf.exists():
+    order = CLASS_ORDERS.get(json.loads(bf.read_text()).get("class") or "elegant",
+                             CLASS_ORDERS["elegant"])
+names = sys.argv[3:] or [f"pinterest_{i + 1}" for i in range(len(order))]
 imgs = []
 for n in names:
     for ext in (".jpg", ".png"):
@@ -21,7 +27,7 @@ for n in names:
             imgs.append((n, _down(skia.Image.MakeFromEncoded(
                 skia.Data.MakeFromFileName(str(p))), w)))
             break
-label = {f"pinterest_{i + 1}": t for i, t in enumerate(PIN_ORDER)}
+label = {f"pinterest_{i + 1}": t for i, t in enumerate(order)}
 tw, th = w, int(w * 1.5)
 pad = 10
 sheet = skia.Surface.MakeRasterN32Premul(len(imgs) * (tw + pad) + pad, th + 2 * pad)
