@@ -3408,21 +3408,22 @@ def spec_stage(sh, y0):
     return Box(sh.m, y0, sh.w - 2 * sh.m, spec_floor(sh) - y0)
 
 
-def spec_orn_band(sh, ctx, y0):
-    """The head band every non-manuscript class already draws: its own ornaments.
+def spec_orn_band(sh, ctx, y0, part="top"):
+    """The band of ornaments the sheet's own theme carries, at the head or the foot.
 
     Each theme carries an ornament set, so one helper gives elegant the arch and the
-    star, sports the chevrons and script the nibs — the sheet is wearing the same
-    art its pins wear, which is what makes the pair visibly one font. `set` draws it
-    to break up a funnel; a sheet draws it as the head. Returns the bottom of the
-    ink, because an ornament that hangs below its box takes the first row's air.
+    star, sports the chevrons and script the nibs and loops — the sheet is wearing
+    the same art its pins wear, which is what makes the pair visibly one font. `set`
+    draws it to break up a funnel; a sheet draws it as its heading. Returns the
+    bottom of the ink, because an ornament that hangs below its box takes the first
+    row's air.
     """
     P = ctx["pal"]
     ink, _mute, _ = field(P)
     art = ORN_SETS[ctx["th"]["art"]]
     band = Box(sh.m, y0, sh.w - 2 * sh.m, int(round(76 * sh.vscale)))
     bot = band.b
-    for i, (kind, fx_, fy, s, alpha) in enumerate(art["top"]):
+    for i, (kind, fx_, fy, s, alpha) in enumerate(art[part]):
         # 0.46 of the size a pin gives the same ornament: on a pin the band
         # shares the page with a headline, on a sheet the type is the subject.
         s = s * 0.46 * sh.scale
@@ -3503,6 +3504,22 @@ def spec_figures(sh, ctx):
             f"{spec_span(marks, all_marks, 'Punctuation')} \u00b7")
 
 
+def spec_spread(stage, n, ink, design):
+    """Where a block shorter than its stage goes: (lead, air above the first row).
+
+    The leftover goes into the leads, up to a point: rows standing down the page
+    is what a specimen looks like, rows huddled under the heading with all the air
+    beneath them is what a list looks like. Past a little over twice the design
+    leading the rest is split above and below the block instead, because two rows
+    of letters with a page's worth of nothing between them is not a set, it is two
+    rows that gave up on each other.
+    """
+    if n <= 1:
+        return 0.0, max(0.0, stage.h - ink) / 2
+    lead = min(max(design, (stage.h - ink) / (n - 1)), design * 2.2)
+    return lead, max(0.0, (stage.h - ink - lead * (n - 1)) / 2)
+
+
 def spec_char_block(sh, ctx, seqs, stage):
     """The characters, at one point size, standing down the whole stage.
 
@@ -3516,13 +3533,8 @@ def spec_char_block(sh, ctx, seqs, stage):
     collision.
 
     The grid cannot grow the type past the measure, so on a square sheet the ten
-    figures bind the width and the block comes out shorter than its stage. The
-    leftover goes into the leads, up to a point: rows standing down the page is
-    what a specimen looks like, rows huddled under the ornament with all the air
-    beneath them is what a list looks like. Past that point the rest of the
-    difference is split above and below the block instead, because two rows of
-    letters with a page's worth of nothing between them is not a set, it is two
-    rows that gave up on each other.
+    figures bind the width and the block comes out shorter than its stage. `spec_spread`
+    decides where the difference goes.
     """
     P, T = ctx["pal"], ctx["display"]
     gap = GAPROW * sh.scale
@@ -3534,10 +3546,7 @@ def spec_char_block(sh, ctx, seqs, stage):
               or lum(P["deep2"]))
     q = paint(C(readable(ground, rung(P, 0), 4.5), 1.0))
     ink = sum(h for _r, _s, h in rows)
-    design = rows[0][1] * 0.30
-    air = (stage.h - ink) / max(len(rows) - 1, 1)
-    lead = min(max(design, air), design * 2.2) if len(rows) > 1 else 0.0
-    spare = max(0.0, (stage.h - ink - lead * (len(rows) - 1)) / 2)
+    lead, spare = spec_spread(stage, len(rows), ink, rows[0][1] * 0.30)
     draw_rows(sh, T, rows, Box(stage.x, stage.y + spare, stage.w, stage.h),
               lambda p, j, i: sh.cv.drawPath(p, q), "row", gap=gap, lead=lead)
     return len(rows)
@@ -3680,14 +3689,14 @@ def s_numerals_blackletter(sh, ctx):
     footer(sh, ctx, at=claim, exact=True)
 
 
-def spec_lane_rules(sh, ctx, stage, n):
-    """A hairline under every row: `lane`'s start list, drawn after the type.
+def spec_row_rules(sh, ctx, stage, n):
+    """A hairline under every row, drawn after the type.
 
     The rule is what a monoline gets judged on — the spacing has to hold when every
-    row shares a baseline — and it is the one piece of this class's furniture that
-    is structure rather than ornament, which is why sports gets a treatment of its
-    own rather than another band of chevrons. Drawn after the rows, so it can never
-    cross ink, and clamped to the stage, so the last one cannot step on the footer.
+    row shares a baseline — and it is the one piece of this furniture that is
+    structure rather than ornament, which is why it is drawn rather than banded.
+    After the rows, so it can never cross ink, and clamped to the stage, so the
+    last one cannot step on the footer.
     """
     _ink, mute, _ = field(ctx["pal"])
     for i in range(n):
@@ -3718,7 +3727,7 @@ def s_letters_sports(sh, ctx):
     if not n:
         sh.problems.append("letters: no row of A\u2013J can be set to this measure")
         return
-    spec_lane_rules(sh, ctx, stage, n)
+    spec_row_rules(sh, ctx, stage, n)
     edge_type(sh, ctx, EDGE(ctx))
     footer(sh, ctx, at=claim, exact=True)
 
@@ -3744,7 +3753,151 @@ def s_numerals_sports(sh, ctx):
     if not n:
         sh.problems.append("numerals: no row of figures can be set to this measure")
         return
-    spec_lane_rules(sh, ctx, stage, n)
+    spec_row_rules(sh, ctx, stage, n)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx, at=claim, exact=True)
+
+
+# ---------------------------------------------------------------- the script pair
+
+
+def spec_pieces(run, n):
+    """A run cut into n pieces as near equal as the letters allow."""
+    n = max(1, min(n, len(run)))
+    out, i = [], 0
+    for j in range(n):
+        take = round(len(run) * (j + 1) / n) - i
+        out.append(run[i:i + take])
+        i += take
+    return out
+
+
+def spec_hand(sh, ctx, runs, stage):
+    """Joined runs at one pen size, as [(text, size, baseline, ink top), ...].
+
+    Not `spec_grid`, which sizes a row on the advance total including the gap it
+    inserts between cells: ten joined capitals reach only two-thirds of the column
+    that way, so the line stops short of the margin it was cut to. A script's
+    alphabet exists as a run, so these rows are strings, and they start at the left
+    margin because writing starts at the left margin.
+
+    Each run may be cut into pieces, and the search takes the largest pen that both
+    fits the stage and fills it: a square sheet has the landscape's height and a
+    fifth less width, so two runs of ten letters leave most of it empty while four
+    runs of five fill it at a size nobody needs to squint at.
+    """
+    T, P = ctx["display"], ctx["pal"]
+    best = None
+    for n in range(1, 4):
+        seqs = [p for r in runs for p in spec_pieces(r, n) if p]
+        size = min(fit_measure(T, r, stage.w, 900.0 * sh.scale) for r in seqs)
+        if size <= 0:
+            continue
+        ink = sum(T.path(r, size)[0].getBounds().height() for r in seqs)
+        block = ink + size * 0.30 * (len(seqs) - 1)
+        size *= min(1.0, stage.h / block) if block else 1.0
+        score = (min(block, stage.h) >= 0.62 * stage.h, size)
+        if best is None or score > best[0]:
+            best = (score, seqs, size)
+    if not best:
+        return []
+    _score, seqs, size = best
+    laid = [(r, T.path(r, size)[0].getBounds()) for r in seqs]
+    lead, spare = spec_spread(stage, len(laid),
+                              sum(b.height() for _r, b in laid), size * 0.30)
+    ground = (sh._behind(Box(stage.x, stage.y, stage.w, min(stage.h, 300.0)))
+              or lum(P["deep2"]))
+    crisp = [readable(ground, rung(P, i), 4.5) for i in range(len(P["tone"]))]
+    out, y = [], stage.y + spare
+    for i, (r, b) in enumerate(laid):
+        sh.text(f"run{i}", T, r, Box(stage.x, y, stage.w, b.height() + 2),
+                hi=size, lo=size, max_lines=1, align="left", valign="top",
+                min_read=0.05 * sh.h, color=crisp[i % len(crisp)])
+        out.append((r, size, y - b.top(), y))
+        y += b.height() + lead
+    return out
+
+
+def spec_hand_rules(sh, ctx, laid):
+    """The ruled hand: a line to write on, and the line the letters touch above it.
+
+    Both measured off the run that was drawn rather than off the metrics table:
+    the baseline is where this renderer put the pen, and a rule guessed from
+    units-per-em lands a descender's depth under the letters it belongs to.
+    """
+    _ink, mute, _ = field(ctx["pal"])
+
+    def line(y, alpha):
+        if sh.m <= y <= spec_floor(sh):
+            rule(sh.cv, sh.m, y, sh.w - sh.m, y, mute, 1.2, alpha)
+
+    for i, (_text, _size, base, top) in enumerate(laid):
+        # The first row's top line is the head rule's job already; two hairlines
+        # twenty pixels apart read as a mistake rather than as ruling.
+        if i:
+            line(top, 0.35)
+        line(base, 0.55)
+
+
+def spec_pen_stage(sh, ctx, y0):
+    """The stage, stopped short of the foot band the manuscript class writes on.
+
+    Drawing the band here rather than in both bodies is the point: a sheet that
+    reserved the room and forgot the nibs, or the other way round, is the same
+    sheet with a hole in it.
+    """
+    top = spec_floor(sh) - int(round(76 * sh.vscale))
+    spec_orn_band(sh, ctx, top, part="bottom")
+    return Box(sh.m, y0, sh.w - 2 * sh.m,
+               top - int(round(40 * sh.vscale)) - y0)
+
+
+@specimen("script", "letters",
+          "A–J and a–j written as joined runs on a ruled hand")
+def s_letters_script(sh, ctx):
+    """`markup`'s proof without its funnel.
+
+    The pin packs the whole alphabet into rows because a proof has to carry it;
+    the sheet has twenty letters and the whole page, so the runs stay joined and
+    the pen is as big as the stage allows.
+    """
+    spec_bg(sh, ctx, pool=0.10)
+    built = spec_letters(sh, ctx)
+    if not built:
+        return
+    ups, los, claim = built
+    laid = spec_hand(sh, ctx, ["".join(ups), "".join(los)],
+                     spec_pen_stage(sh, ctx, spec_head(sh, ctx, "Character Set")))
+    if not laid:
+        sh.problems.append("letters: no joined run of A–J fits this page")
+        return
+    spec_hand_rules(sh, ctx, laid)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx, at=claim, exact=True)
+
+
+@specimen("script", "numerals",
+          "the figures and the marks, ruled like a pen drill")
+def s_numerals_script(sh, ctx):
+    """Ciphers and marks on cells, standing on the sheet's own lines.
+
+    The alphabet is set as runs because a script's letters only exist joined.
+    Punctuation does not join, and ten figures against twenty-one marks cannot
+    both reach the measure at one pen size — one of the two rows would stop short
+    of the margin it was cut to. So this sheet takes the grid, and keeps the class
+    in the foot band and the rules.
+    """
+    spec_bg(sh, ctx, pool=0.10)
+    built = spec_figures(sh, ctx)
+    if not built:
+        return
+    figs, marks, claim = built
+    stage = spec_pen_stage(sh, ctx, spec_head(sh, ctx, "Figures & Punctuation"))
+    n = spec_char_block(sh, ctx, [figs, marks], stage)
+    if not n:
+        sh.problems.append("numerals: no row of figures can be set to this measure")
+        return
+    spec_row_rules(sh, ctx, stage, n)
     edge_type(sh, ctx, EDGE(ctx))
     footer(sh, ctx, at=claim, exact=True)
 
