@@ -20,8 +20,15 @@ sport, athletic, esports, racing, gym, varsity, letterman or jersey; the five
 **handwritten / script** templates carry a face whose description says handwritten, hand
 lettering, script, cursive, calligraphy, signature or wedding lettering. The brief's
 optional `"class"` field is what chooses between them (blackletter piloted with
-Braewick, sports with Circuit Sprint, script with Silken Flourish). Marker, chalk, paint
-and grunge brushes remain note-only — "not designed yet".
+Braewick, sports with Circuit Sprint, script with Silken Flourish).
+
+**Four is the set — this is closed, not paused.** A brush, marker, chalk, paint or
+grunge face stays elegant permanently: its difference is texture, not composition, and
+`hero` and `wall` already carry a thick stroke better than a script ever did. Of the 35
+prepared fonts, one description says brush — Kuro Ripper, the very face this contract is
+regression-gated on — against 20 that say handwritten or script and 4 that say sport.
+A fifth class would cost a pilot, a stress delta, five doc sites and six mirror patches
+to serve one font that is already served.
 
 ---
 
