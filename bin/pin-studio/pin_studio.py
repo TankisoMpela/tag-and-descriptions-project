@@ -1302,7 +1302,8 @@ def draw_rows(sh, T, sized, stage, paint_fn, prefix="row", lead_frac=0.10):
 
 
 def measure_rows(sh, T, P, seq, stage, prefix, hi=460.0, min_read=30.0,
-                 fill=False, lead_frac=0.03, min_contrast=4.5, taper=False):
+                 fill=False, lead_frac=0.03, min_contrast=4.5, taper=False,
+                 centre=False):
     """Set each row to the measure, stack them, scale the block to the stage.
 
     The shared spine of the funnel pins. `fill` lets the block *grow* to reach the
@@ -1311,6 +1312,8 @@ def measure_rows(sh, T, P, seq, stage, prefix, hi=460.0, min_read=30.0,
     to 64ths and a row multiplied back up can overshoot by a hair and wrap in two.
     `taper` spends a height shortfall on the first row rather than on every row,
     which is what keeps a funnel's lower lines at the margin.
+    `centre` splits the shortfall that survives the re-clamp above and below the
+    block, instead of leaving it all under the last line.
     Each row takes the next rung of the colour ladder.
     """
     def rows_at(width):
@@ -1343,10 +1346,16 @@ def measure_rows(sh, T, P, seq, stage, prefix, hi=460.0, min_read=30.0,
     if not fill:
         k = min(1.0, k)
     lead *= k
-    y = stage.y
-    for i, (s, size, _ih) in enumerate(sized):
+    laid = []
+    for s, size, _ih in sized:
         size = fit_measure(T, s, stage.w, size * k)
-        ih = T.path(s, size)[0].getBounds().height()
+        laid.append((s, size, T.path(s, size)[0].getBounds().height()))
+    # A row re-clamped to the measure can come in shorter than its share of the
+    # stage, and then the whole shortfall pools under the last line — a block of
+    # type sitting high on the page with air under it. `centre` splits it.
+    block = sum(h for _s, _z, h in laid) + lead * (len(laid) - 1)
+    y = stage.y + (max(0.0, (stage.h - block) / 2.0) if centre else 0.0)
+    for i, (s, size, ih) in enumerate(laid):
         sh.text(f"{prefix}{i}", T, s, Box(stage.x, y, stage.w, ih + 2),
                 hi=size, lo=size, leading=0.86, max_lines=1, min_read=min_read,
                 valign="top", min_contrast=min_contrast, **tone(P, i))
@@ -2008,12 +2017,12 @@ def t_initials(sh, ctx):
     if not ch:
         sh.problems.append("initials: the face draws no letter of this headline")
         return
-    y0 = eyebrow(sh, ctx, "Illuminated Initial") + 46
-    side = min(470.0, (W - 2 * M) * 0.46)
+    y0 = eyebrow(sh, ctx, "Illuminated Initial") + 34
+    side = min(500.0, (W - 2 * M) * 0.575)
     ib = Box(M, y0, side, side)
     illum_box(sh, ib, ink, P["accent"])
     sh.text("cap", T, ch, Box(ib.x + 48, ib.y + 42, ib.w - 96, ib.h - 84),
-            hi=420, lo=70, max_lines=1, min_read=110, **tone(P, 1))
+            hi=560, lo=70, max_lines=1, min_read=120, **tone(P, 1))
     col = Box(ib.r + 76, ib.y + 8, W - M - ib.r - 76, ib.h - 16)
     name = shout(ctx, clean(ctx, ctx["name"])).strip() or line
     measure_rows(sh, T, P, pack_lines(name.split(), 2), col, "nm", hi=210,
@@ -2025,11 +2034,11 @@ def t_initials(sh, ctx):
     if col.b - free > 150:
         for i in range(2):
             draw_orn(sh, f"vine{i}", "vine", col.x + col.w * (0.34 + 0.30 * i),
-                     free + 66 + i * 82, 74, P["accent2"], 0.6,
+                     free + 74 + i * 96, 88, P["accent2"], 0.6,
                      rot=-12 + 24 * i, collide=False)
-    stage = Box(M, ib.b + 44, W - 2 * M, H - ib.b - 320)
+    stage = Box(M, ib.b + 34, W - 2 * M, H - ib.b - 282)
     measure_rows(sh, T, P, pack_lines(line.split(), 3), stage, "line", hi=150,
-                 min_read=32, fill=True, lead_frac=0.05)
+                 min_read=32, fill=True, lead_frac=0.05, centre=True)
     edge_type(sh, ctx, EDGE(ctx))
     footer(sh, ctx)
 
@@ -2062,14 +2071,14 @@ def t_knotband(sh, ctx):
         i += want
     rows = [r for r in rows if r]
 
-    y0 = eyebrow(sh, ctx, "Interlaced Set") + 40
+    y0 = eyebrow(sh, ctx, "Interlaced Set") + 32
     band = Box(M + 12, y0, W - 2 * (M + 12), 56)
     knot_band(sh, band, ink, ground, waves=5)
-    frame = Box(M - 12, band.b + 26, W - 2 * (M - 12), H - band.b - 284)
+    frame = Box(M - 12, band.b + 26, W - 2 * (M - 12), H - band.b - 292)
     border_frame(sh, frame, mute, P["accent"])
     draw_orn(sh, "kn", "triquetra", frame.x + 44, frame.y - 4, 26, P["accent"], 0.95,
              collide=False)
-    stage = Box(frame.x + 34, frame.y + 30, frame.w - 68, frame.h - 96)
+    stage = Box(frame.x + 34, frame.y + 30, frame.w - 68, frame.h - 62)
     measure_rows(sh, T, P, rows, stage, "pair", hi=880, min_read=40,
                  lead_frac=0.045, taper=True)
     edge_type(sh, ctx, EDGE(ctx))
@@ -2110,11 +2119,11 @@ def t_scriptorium(sh, ctx):
         sh.problems.append("scriptorium: nothing to set — the face carries no letters or digits")
         return
 
-    y0 = eyebrow(sh, ctx, "Scriptorium") + 40
+    y0 = eyebrow(sh, ctx, "Scriptorium") + 30
     frame = Box(M - 14, y0, W - 2 * (M - 14), H - y0 - 250)
     border_frame(sh, frame, mute, P["accent"])
-    stage = Box(frame.x + 40, frame.y + 34, frame.w - 80, frame.h - 164)
-    measure_rows(sh, T, P, seq, stage, "row", hi=440, min_read=30, fill=True,
+    stage = Box(frame.x + 40, frame.y + 24, frame.w - 56, frame.h - 132)
+    measure_rows(sh, T, P, seq, stage, "row", hi=520, min_read=30, fill=True,
                  lead_frac=0.028)
     draw_orn(sh, "seal", "triquetra", frame.x + frame.w - 66, frame.b - 62, 46,
              P["accent"], 0.95)
@@ -2141,14 +2150,15 @@ def t_folio(sh, ctx):
     # The furniture is the class, not the colour world: a shared theme may bring a
     # nautical art set with it, and a scallop shell on a manuscript page is a lie.
     art = ORN_SETS["foil" if dark else "knot"]
-    y0 = eyebrow(sh, ctx, "Rubricated") + 40
+    y0 = eyebrow(sh, ctx, "Rubricated") + 30
 
-    top = Box(M, y0, W - 2 * M, 220)
+    top = Box(M, y0, W - 2 * M, 150)
     for i, (kind, fx_, fy, s, alpha) in enumerate(art["top"]):
+        s = min(s, top.h / 2.2)  # a band that shrinks carries smaller furniture
         draw_orn(sh, f"t{i}", kind, top.x + top.w * fx_,
                  top.y + max(s, min(top.h * fy, top.h - s)), s,
                  acc if i % 2 else ink, alpha)
-    band = Box(M, H - 500, W - 2 * M, 190)
+    band = Box(M, H - 372, W - 2 * M, 120)
     src = clean(ctx, ctx["copy"]["line"]).strip()
     if 0 < len(src.split()) < 3:
         sh.notes.append(f"folio: {len(src.split())} words is a label, not a phrase "
@@ -2160,9 +2170,9 @@ def t_folio(sh, ctx):
     # Never more lines than half the words: a scribe who left one word standing
     # alone at the foot of the block was out of room, not being stylish.
     lines = pack_lines(words, min(4, max(2, len(words) // 2)))
-    stage = Box(M + 20, top.b + 30, W - 2 * (M + 20), band.y - top.b - 130)
-    measure_rows(sh, T, P, lines, stage, "folio", hi=270, min_read=44, fill=True,
-                 lead_frac=0.05)
+    stage = Box(M + 20, top.b + 22, W - 2 * (M + 20), band.y - top.b - 96)
+    measure_rows(sh, T, P, lines, stage, "folio", hi=340, min_read=44, fill=True,
+                 lead_frac=0.05, centre=True)
 
     first = _slot(sh, "folio0")
     head = lines[0].split()[0] if first and first.size else ""
@@ -2180,9 +2190,10 @@ def t_folio(sh, ctx):
         sh.cv.drawPath(p, paint(C(red, 1.0)))
         sh.cv.restore()
 
-    rule(sh.cv, W / 2 - 90, band.y - 40, W / 2 + 90, band.y - 40, acc, 2.4, 0.9)
-    draw_orn(sh, "fl", "fleur", W / 2, band.y - 40, 24, acc, 1.0, collide=False)
+    rule(sh.cv, W / 2 - 90, band.y - 34, W / 2 + 90, band.y - 34, acc, 2.4, 0.9)
+    draw_orn(sh, "fl", "fleur", W / 2, band.y - 34, 24, acc, 1.0, collide=False)
     for i, (kind, fx_, fy, s, alpha) in enumerate(art["bottom"]):
+        s = min(s, band.h / 2.2)
         draw_orn(sh, f"b{i}", kind, M + (W - 2 * M) * fx_,
                  band.y + max(s, min(band.h * fy, band.h - s)), s,
                  red if i % 2 else acc, alpha)
@@ -2234,16 +2245,16 @@ def t_carol(sh, ctx):
                 glow=(mix(rung(P, i), P["accent"], 0.4), 0.055, 0.34),
                 **tone(P, 1 if i else 0))
         y += h + 26
-    y += 20
+    y += 14
     tag = tc(clean(ctx, ctx["copy"].get("over") or f"{facts['glyphs']}-glyph display"))
     sh.text("tag", L, tag, Box(M, y, measure, 36), hi=30, lo=14, color=ink,
             track=0.30, align="center", valign="top", min_read=14)
-    y += 56
+    y += 42
 
     sample = shout(ctx, clean(ctx, ctx["copy"].get("word") or ctx["name"])).strip()
     if ftrs and facts["features"] and sample:
-        w = measure - 150
-        hi = 118.0
+        w = measure - 132
+        hi = 150.0
         size = min(fit_measure(T, sample, w, hi),
                    fit_measure(T, sample, w, hi, ftrs))
         if size > 0:
@@ -2252,7 +2263,7 @@ def t_carol(sh, ctx):
             # them makes the buyer compare the colours instead of the glyphs.
             for i, (cap, feats) in enumerate((("Default", None),
                                               (" + ".join(sorted(ftrs)).upper(), ftrs))):
-                sh.text(f"alt{i}", T, sample, Box(M + 150, y, w, size * 1.22),
+                sh.text(f"alt{i}", T, sample, Box(M + 132, y, w, size * 1.22),
                         hi=size, lo=size, max_lines=1, align="left", valign="top",
                         min_read=28, features=feats, color=ink)
                 label(sh.cv, L, cap, M, y + size * 0.72, 17, mute, tracking=3.2,
