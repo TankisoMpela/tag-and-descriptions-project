@@ -736,6 +736,10 @@ class Sheet:
     def __init__(self, surface):
         self.surf = surface
         self.cv = surface.getCanvas()
+        # A sub-sheet is a card of its own, so its checks have to be against the
+        # card: sampling or verifying against the page would let type run off the
+        # paper it is printed on and call that clean.
+        self.w, self.h = surface.width(), surface.height()
         self.slots: list[Slot] = []
         self.problems: list[str] = []
         self.notes: list[str] = []
@@ -779,7 +783,7 @@ class Sheet:
         self.problems += [f"card/{m}" for m in sub.verify()]
         self.notes += [f"card/{n}" for n in sub.notes]
 
-    def _behind(self, box, w=W, h=H):
+    def _behind(self, box):
         """Median relative luminance of whatever is already painted in `box`.
 
         Measured off the sheet rather than assumed from the palette: a slot can
@@ -787,7 +791,7 @@ class Sheet:
         ground colour is how you end up shipping white on white.
         """
         x0, y0 = max(0, int(box.x)), max(0, int(box.y))
-        w, h = min(w - x0, int(box.w)), min(h - y0, int(box.h))
+        w, h = min(self.w - x0, int(box.w)), min(self.h - y0, int(box.h))
         if w < 12 or h < 12:
             return None
         img = self.surf.makeImageSnapshot()
@@ -905,7 +909,8 @@ class Sheet:
         msgs = list(self.problems)
         for s in self.slots:
             b = s.ink
-            if not s.bleed and (b.x < 1 or b.y < 1 or b.r > W - 1 or b.b > H - 1):
+            if not s.bleed and (b.x < 1 or b.y < 1 or b.r > self.w - 1
+                                or b.b > self.h - 1):
                 msgs.append(f"OFF-CANVAS {s.name}: ink spans x {b.x:.0f}..{b.r:.0f} "
                             f"y {b.y:.0f}..{b.b:.0f}")
         for i, a in enumerate(self.slots):
