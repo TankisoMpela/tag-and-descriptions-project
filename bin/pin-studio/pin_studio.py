@@ -794,8 +794,15 @@ class Sheet:
         # in the shipped templates is counted from that. Carrying the ratio on the
         # sheet means a different frame scales instead of breaking, and at the
         # pin's 1000 px both of these are the numbers the globals already say.
+        #
+        # Two ratios, because a 2400x1600 sheet is not a pin scaled up: `scale`
+        # sizes *type* (the short edge is what a letter has to be legible against)
+        # and `vscale` moves things *down the page*, which has nothing to do with
+        # the width. Using `scale` for both parked a specimen's footer 336 px up a
+        # 1600-px sheet and let the last row of letters walk over it.
         self.m = int(round(min(self.w, self.h) * 0.084))
         self.scale = min(self.w, self.h) / 1000.0
+        self.vscale = self.h / float(H)
         self.slots: list[Slot] = []
         self.problems: list[str] = []
         self.notes: list[str] = []
@@ -1211,7 +1218,7 @@ def eyebrow(sh, ctx, text, invert=False, y=None):
     P, L = ctx["pal"], ctx["label"]
     ink, mute, _ = field(P, invert)
     text = tc(text)
-    y = int(round(128 * sh.scale)) if y is None else y
+    y = int(round(128 * sh.vscale)) if y is None else y
     hi, lo = 21 * sh.scale, 13 * sh.scale
     sh.text("eyebrow", L, text, Box(sh.m, y, sh.w - 2 * sh.m - 70, 26), hi=hi, lo=lo,
             color=mute, track=0.22, align="left", valign="top", min_read=lo)
@@ -1264,15 +1271,15 @@ def edge_type(sh, ctx, text, invert=False, x=None, cy=None):
 def footer(sh, ctx, at="Set in", invert=False):
     P, L = ctx["pal"], ctx["label"]
     ink, mute, _ = field(P, invert)
-    rail = sh.h - int(round(236 * sh.scale))
+    rail = sh.h - int(round(236 * sh.vscale))
     rule(sh.cv, sh.m, rail, sh.m + int(round(96 * sh.scale)), rail, P["accent"], 3.0)
     sh.text("name", L, tc(f"{at} {ctx['name']}"),
-            Box(sh.m, sh.h - int(round(210 * sh.scale)), sh.w - 2 * sh.m, 40),
+            Box(sh.m, sh.h - int(round(210 * sh.vscale)), sh.w - 2 * sh.m, 40),
             hi=27 * sh.scale, lo=18 * sh.scale, color=ink, track=0.16, align="left",
             valign="top", min_read=18 * sh.scale)
     if ctx["copy"].get("sub"):
         sh.text("sub", L, tc(ctx["copy"]["sub"]),
-                Box(sh.m, sh.h - int(round(172 * sh.scale)), sh.w - 2 * sh.m, 34),
+                Box(sh.m, sh.h - int(round(172 * sh.vscale)), sh.w - 2 * sh.m, 34),
                 hi=20 * sh.scale, lo=14 * sh.scale, color=mute,
                 track=0.16, align="left", valign="top", min_read=14 * sh.scale)
 
@@ -1432,7 +1439,7 @@ def draw_rows(sh, T, sized, stage, paint_fn, prefix="row", lead_frac=0.10):
 
 def measure_rows(sh, T, P, seq, stage, prefix, hi=460.0, min_read=30.0,
                  fill=False, lead_frac=0.03, min_contrast=4.5, taper=False,
-                 centre=False):
+                 centre=False, flat=False):
     """Set each row to the measure, stack them, scale the block to the stage.
 
     The shared spine of the funnel pins. `fill` lets the block *grow* to reach the
@@ -1443,7 +1450,9 @@ def measure_rows(sh, T, P, seq, stage, prefix, hi=460.0, min_read=30.0,
     which is what keeps a funnel's lower lines at the margin.
     `centre` splits the shortfall that survives the re-clamp above and below the
     block, instead of leaving it all under the last line.
-    Each row takes the next rung of the colour ladder.
+    Each row takes the next rung of the colour ladder — unless `flat`, which is
+    what a factual sheet wants: two rows in two colours read as a colour study
+    about the alphabet rather than as the alphabet.
     """
     def rows_at(width):
         out = []
@@ -1487,7 +1496,8 @@ def measure_rows(sh, T, P, seq, stage, prefix, hi=460.0, min_read=30.0,
     for i, (s, size, ih) in enumerate(laid):
         sh.text(f"{prefix}{i}", T, s, Box(stage.x, y, stage.w, ih + 2),
                 hi=size, lo=size, leading=0.86, max_lines=1, min_read=min_read,
-                valign="top", min_contrast=min_contrast, **tone(P, i))
+                valign="top", min_contrast=min_contrast,
+                **tone(P, 0 if flat else i))
         y += ih + lead
     return y - lead
 
@@ -3308,6 +3318,172 @@ ORN_SETS = {
 }
 
 
+# ================================================================ the specimen set
+#
+# The same four classes, on the second surface the marketplace asks for: the two
+# factual sheets that replace `render_font_specimens.py`. Nothing here is authored
+# copy — a specimen says what the face can draw and nothing else — so a body needs
+# three things and no more: the glyphs, the class's own furniture, and the frame it
+# was registered on. Which is why every one of them reads `sh.w / sh.h / sh.m /
+# sh.scale` and not the module globals: the pin templates keep their literals
+# because a 1000x1500 page is what they were tuned against, and a sheet that is
+# 2400 px wide is not that page scaled up, it is a different composition.
+
+
+def specimen(cls, sheet, blurb):
+    """Register one body at both specimen frames.
+
+    The sheet is the design; the ratio is only the paper it gets printed on. Both
+    names come from one function, so a class cannot ship a landscape sheet whose
+    square twin drifted — and if a render ever shows the square genuinely wanting a
+    different row plan, that is when the body splits, not before.
+    """
+    def deco(fn):
+        for frame in SPECIMEN_FRAMES:
+            TEMPLATES[f"{cls}_{sheet}_{frame}"] = (fn, blurb, cls, frame)
+        return fn
+    return deco
+
+
+# A–J, not A–Z. Ten letters at the measure is one enormous legible sample;
+# twenty-six is a completeness proof the buyer cannot read at thumbnail size, and
+# the completeness proof already exists — it is the character count in the footer.
+LETTERS_UP = "ABCDEFGHIJ"
+LETTERS_LOW = "abcdefghij"
+FIGURES = "0123456789"
+PUNCT = "! ? . , : ; / & @ # % + - = * ( ) < > { }"
+
+
+def spec_bg(sh, ctx, **kw):
+    """The ground under a specimen: flat, untextured, and wearing no device.
+
+    `tooth=0` is parity with the Pillow sheets these replace, not thrift — a
+    specimen is the one image in the package that has to be *right*, and 9000
+    circles of noise over a 2400x1600 field costs near-entropy bytes to say
+    nothing. `dev=False` is the other half: `device()` counts its steps against a
+    1500-px page, so its bands walk off a landscape sheet. The furniture a sheet
+    needs is drawn by the body, in the box it actually has.
+    """
+    return bg(sh, ctx["pal"], ctx["th"], dev=False, tooth=0, **kw)
+
+
+def spec_head(sh, ctx, label):
+    """The tracked caption and its hairline — every sheet opens the same way."""
+    return eyebrow(sh, ctx, label) + int(round(40 * sh.vscale))
+
+
+def spec_stage(sh, y0):
+    """The band a sheet sets its letters in: from under the head to the footer.
+
+    292/1500 is the pin's own footer footprint, so the reserve is counted the same
+    way `footer()` counts its rails — down from the bottom edge, by the height
+    ratio. Two rules for the same strip of paper is how a row of letters ends up
+    printed over the name line.
+    """
+    return Box(sh.m, y0, sh.w - 2 * sh.m,
+               int(round(sh.h - y0 - 292 * sh.vscale)))
+
+
+def spec_split(sh, T, ups, los, stage, lead_frac=0.12):
+    """Letters per row, chosen by the sheet rather than by the body.
+
+    Ten to a line is right on a 2400-px landscape and leaves a square with two thin
+    bands and half a page of air; five to a line doubles the type and fills it. So
+    each candidate is measured the way `measure_rows` will actually set it — every
+    row fitted to the measure, the block scaled into the stage, the lead a
+    fraction of the stage rather than of the type — and the plan that ends up with
+    the largest letters wins. On the landscape that is two rows reaching both
+    margins; on the square it is four rows at twice the size. Same decision,
+    asked of the frame instead of hard-coded per ratio.
+    """
+    best = None
+    for k in (10, 5, 4):
+        rows = [" ".join(c[i:i + k]) for c in (ups, los) for i in range(0, len(c), k)]
+        rows = [r for r in rows if r]
+        sized = [(r, fit_measure(T, r, stage.w, 900.0 * sh.scale)) for r in rows]
+        sized = [(r, s) for r, s in sized if s > 0]
+        if not sized:
+            continue
+        lead = stage.h * lead_frac
+        tall = sum(T.path(r, s)[0].getBounds().height() for r, s in sized)
+        tall += lead * (len(sized) - 1)
+        eff = min(s for _r, s in sized) * min(1.0, stage.h / tall) if tall else 0.0
+        if best is None or eff > best[0]:
+            best = (eff, [r for r, _s in sized])
+    return best[1] if best else []
+
+
+def spec_rows(sh, ctx, rows, y0, lead=0.12):
+    """The rows, set to the measure and spread over what is left of the sheet.
+
+    `flat` is the whole point of a specimen: one ink for every row. The pin ladder
+    exists to make five headlines look like five designs, and a colour study about
+    the alphabet is not the same picture as the alphabet.
+    """
+    P, T = ctx["pal"], ctx["display"]
+    return measure_rows(sh, T, P, rows, spec_stage(sh, y0), "row",
+                        hi=900.0 * sh.scale, min_read=0.05 * sh.h, fill=True,
+                        centre=True, lead_frac=lead, flat=True)
+
+
+def spec_letters(sh, ctx):
+    """The A–J and a–j the face actually carries, as (caps, lowercase, claim).
+
+    A face that is missing half of a–j is a fact about the face, so it says so in
+    the footer rather than shipping a row with holes in it; a caps-only face gets
+    the capitals twice, which is the honest specimen of it.
+    """
+    ups = [c for c in LETTERS_UP if usable(ctx, c)]
+    los = [c for c in LETTERS_LOW if usable(ctx, c)]
+    if len(ups) < 4 and len(los) < 4:
+        sh.problems.append("letters: the face carries too few of A–J or a–j "
+                           "to set a specimen")
+        return None
+    if not los:
+        return ups, ups, f"{len(ups)} caps \u00b7 uppercase only \u00b7"
+    if not ups:
+        return los, los, f"{len(los)} letters \u00b7 lowercase only \u00b7"
+    return ups, los, f"{len(ups)} caps \u00b7 {len(los)} lowercase \u00b7"
+
+
+@specimen("elegant", "letters",
+          "A–J and a–j to the measure, under the grove band")
+def s_letters_elegant(sh, ctx):
+    """`set`'s grammar without the funnel: the ornament band, then the letters.
+
+    The elegant pin funnels 1/2/3 pairs because it has to sell a *feeling* about
+    the alphabet. A factual sheet does not: every letter is set at one size on its
+    own row so a buyer can compare the shapes against each other, and the number
+    of letters per row is whatever the sheet is wide enough to carry big.
+    """
+    P = ctx["pal"]
+    spec_bg(sh, ctx, pool=0.08)
+    ink, mute, _ = field(P)
+    built = spec_letters(sh, ctx)
+    if not built:
+        return
+    ups, los, claim = built
+    T = ctx["display"]
+    y0 = spec_head(sh, ctx, "Character Set")
+    art = ORN_SETS[ctx["th"]["art"]]
+    band = Box(sh.m, y0, sh.w - 2 * sh.m, int(round(76 * sh.vscale)))
+    bot = band.b
+    for i, (kind, fx_, fy, s, alpha) in enumerate(art["top"]):
+        s = s * 0.46 * sh.scale
+        cy = band.y + max(s * 0.6, min(band.h * fy, band.h - s * 0.6))
+        draw_orn(sh, f"orn{i}", kind, band.x + band.w * fx_, cy, s,
+                 P["accent"] if i % 2 else ink, alpha * 0.75)
+        bot = max(bot, cy + s)
+    y1 = bot + int(round(14 * sh.vscale))
+    rows = spec_split(sh, T, ups, los, spec_stage(sh, y1))
+    if not rows:
+        sh.problems.append("letters: no row of A–J can be set to this measure")
+        return
+    spec_rows(sh, ctx, rows, y1)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx, at=claim)
+
+
 def build_ctx(font_path, name, copy, palette=None, mode=None, about="",
               cls="elegant"):
     """Everything a pin needs, decided from the font's own data.
@@ -3534,6 +3710,34 @@ def check_brief(brief, out=None):
     return bad, warns
 
 
+SPECIMEN_MAX_BYTES = 500_000  # reported, never engineered around
+
+
+def save_specimen(img, out, frame, sheet):
+    """Write one specimen sheet: a flat PNG, no ladder and no JPEG fallback.
+
+    The 200 KB cap is a Pinterest rule, and these files are not pins — nothing
+    downstream has ever capped them. A sheet that blows past 500 KB is therefore
+    reported rather than quietly re-encoded, because the first lever is the pool
+    radius and the last one is the type, and a silently-lossy specimen of a face
+    someone is selling is worse than a big file.
+    """
+    d = out / frame
+    d.mkdir(parents=True, exist_ok=True)
+    ship = d / f"specimen-{sheet}.png"
+    img.save(str(ship))
+    from PIL import Image
+    with Image.open(ship) as im:
+        im.load()
+        im.save(ship, "PNG", optimize=True)
+        size = ship.stat().st_size
+        w, h = im.size
+    if (w, h) != FRAMES[frame]:
+        raise SystemExit(f"{ship}: wrote {w}x{h}, the {frame} frame is "
+                         f"{FRAMES[frame][0]}x{FRAMES[frame][1]}")
+    return ship, size
+
+
 def save_pin(img, out, stem):
     """Write one pin under the cap; returns (path, bytes, note-or-None).
 
@@ -3593,17 +3797,23 @@ def main():
                     help="template family; default is the brief's class, "
                          "else elegant")
     ap.add_argument("--list", action="store_true")
+    ap.add_argument("--specimens", action="store_true",
+                    help="draw the class's specimen sheets instead of its pins: the "
+                         "same four classes at 3x2 and 1x1, written into "
+                         "<out>/3x2 and <out>/1x1. No authored copy, no brief rules.")
     ap.add_argument("--json", action="store_true", dest="as_json")
     ap.add_argument("--stress", action="store_true")
     ap.add_argument("--faces", default="", help="name=path:name=path for --stress")
     args = ap.parse_args()
 
     if args.list:
+        names = cls_names_spec if args.specimens else cls_names
+        width = 24 if args.specimens else 13
         for cls in CLASS_ORDERS:
             print(f"  [{cls}]")
-            for k in cls_names(cls):
+            for k in names(cls):
                 _f, blurb, _c, _fr = TEMPLATES[k]
-                print(f"    {k:13s} {blurb}")
+                print(f"    {k:{width}s} {blurb}")
         return 0
 
     if args.stress:
@@ -3617,16 +3827,23 @@ def main():
     if cls not in CLASS_ORDERS:
         ap.error(f"unknown class {cls!r} — try one of {', '.join(CLASS_ORDERS)}")
     warns = []
-    if brief is not None:
+    if brief is not None and not args.specimens:
+        # check_brief() exists to stop five *authored* headlines repeating each
+        # other. A specimen run authors nothing; it takes the brief for the theme
+        # and the tone the class's set-equivalent pin was given.
         bad, warns = check_brief(brief, Path(args.out))
         if bad:
             for m in bad:
                 print(f"  brief: {m}", file=sys.stderr)
             return 2
     title = args.name or (brief or {}).get("name", "")
-    ctx = build_ctx(args.font, title,
-                    {"line": args.line, "sub": args.sub, "over": args.over,
-                     "word": args.word},
+    copy = ({"line": "", "sub": "", "over": "", "word": ""} if args.specimens else
+            {"line": args.line, "sub": args.sub, "over": args.over,
+             "word": args.word})
+    # A specimen sheet is drawn from the font and nothing else: the marketing
+    # lines a brief authors are the pins' business, and a footer that printed
+    # "invitation suite · editorial" over a factual sheet would be an ad.
+    ctx = build_ctx(args.font, title, copy,
                     args.palette, args.mode,
                     args.about or (brief or {}).get("about", ""), cls=cls)
     per = {}
@@ -3648,11 +3865,11 @@ def main():
         print(f"  brief: {m}", file=sys.stderr)
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    if brief is not None:
+    if brief is not None and not args.specimens:
         (out / "pins.brief.json").write_text(
             json.dumps(brief, indent=2, ensure_ascii=False) + "\n",
             encoding="utf-8")
-    owned = cls_names(cls)
+    owned = cls_names_spec(cls) if args.specimens else cls_names(cls)
     names = args.template or owned
     stray = [n for n in names if n not in owned]
     if stray:
@@ -3662,16 +3879,24 @@ def main():
     for name in names:
         surf, sh = render(name, per.get(name, ctx))
         img = surf.makeImageSnapshot()
-        stem = f"pinterest_{CLASS_ORDERS[cls].index(name) + 1}" if per else name
-        ship, size, note = save_pin(img, out, stem)
+        if args.specimens:
+            _, sheet, frame = name.rsplit("_", 2)
+            ship, size = save_specimen(img, out, frame, sheet)
+            note = None
+        else:
+            stem = (f"pinterest_{CLASS_ORDERS[cls].index(name) + 1}"
+                    if per else name)
+            ship, size, note = save_pin(img, out, stem)
         if note:
             sh.notes.append(note)
         kb = size / 1024
         errs = as_errors(name, sh)
-        if size > MAX_BYTES:
+        cap = SPECIMEN_MAX_BYTES if args.specimens else MAX_BYTES
+        if size > cap:
             errs.append({"template": name, "slot": "file",
                          "message": f"{kb:.0f} KB exceeds the "
-                                    f"{MAX_BYTES // 1000} KB pin cap"})
+                                    f"{cap // 1000} KB "
+                                    f"{'specimen' if args.specimens else 'pin'} cap"})
         errors += errs
         notes += [{"template": name, "slot": n.split(":", 1)[0], "message": n}
                   for n in sh.notes]
@@ -3679,7 +3904,7 @@ def main():
                         "slots": [{"slot": s.name, "size": round(s.size, 1),
                                    "lines": s.lines} for s in sh.slots]})
         if not args.as_json:
-            print(f"  {name:11s} {kb:5.0f} KB  " +
+            print(f"  {name:24s} {kb:5.0f} KB  " +
                   "  ".join(f"{s.name}={s.size:.0f}px/{s.lines}L" for s in sh.slots))
             for e in errs:
                 print(f"      ! {e['message']}")
