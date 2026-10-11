@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 import skia
+import pin_studio as ps
 from pin_studio import M, W, H, Box, Sheet, Type
 
 FACES = {
@@ -126,6 +127,48 @@ sh6c.text("onband", t, "Cosette", Box(M, 300, W - 2 * M, 260), hi=180,
           grad=((30, 30, 30), (250, 250, 250)))
 case("a gradient is judged by its weakest end",
      any("lifted" in n for n in sh6c.notes), (sh6c.notes or ["nothing"])[0][:92])
+
+print("\n7. the specimen frames: 3:2 and 1:1 hold their own geometry")
+# The pins were tuned on one 1000x1500 page; the sheets are drawn on two others.
+# What that can break is exactly four things, so all four are checked on every
+# template rather than on the one that was being looked at that day.
+SPEC_FACES = {
+    "elegant": "outputs/font-preparation/077-kuro-ripper/Kuro-Ripper/KuroRipper-Regular.otf",
+    "blackletter": "font-factory/font-preparation/braewick/Braewick/Braewick-Regular.otf",
+    "sports": "outputs/font-preparation/074-circuit-sprint/Circuit-Sprint/CircuitSprint-Regular.otf",
+    "script": "outputs/font-preparation/082-restrained-flourish/Restrained-Flourish/RestrainedFlourish-Regular.otf",
+}
+for cls, fpath in SPEC_FACES.items():
+    ctx = ps.build_ctx(ROOT / fpath, "", dict.fromkeys(("line", "sub", "over", "word"), ""),
+                       cls=cls)
+    for name in ps.SPECIMEN_ORDERS[cls]:
+        _surf, sh = ps.render(name, ctx)
+        floor = sh.h - sh.m
+        low = [s.name for s in sh.slots if s.ink.b > floor + 1]
+        case(f"{name}: nothing prints below the foot margin", not low, str(low)[:70])
+        # The rows are the sheet's subject: on a 1600px page a row whose ink is
+        # shorter than 80px is a thumbnail, not a specimen. Measured as ink
+        # height because most rows are drawn as outlines, not through Sheet.text.
+        rows = [s for s in sh.slots if s.name.startswith(("row", "run"))]
+        case(f"{name}: the sheet drew its characters", bool(rows), f"{len(rows)} rows")
+        thin = [f"{s.name}={s.ink.h:.0f}" for s in rows if s.ink.h < 0.05 * sh.h]
+        case(f"{name}: every row is drawn at reading size", not thin, str(thin)[:70])
+        spill = [f"{s.name}[{s.ink.x:.0f}..{s.ink.r:.0f}]" for s in rows
+                 if s.ink.x < sh.m - 1 or s.ink.r > sh.w - sh.m + 1]
+        case(f"{name}: no row hangs out of the side margins", not spill, str(spill)[:70])
+        # The kernel's own two checks, on the frame the templates were not tuned for.
+        v = sh.verify()
+        case(f"{name}: nothing lands off the canvas",
+             not [m for m in v if m.startswith("OFF-CANVAS")], str(v)[:70])
+        case(f"{name}: no row collides with another block",
+             not [m for m in v if m.startswith("OVERLAP")], str(v)[:70])
+        text = [s for s in sh.slots if s.size > 0]
+        blind = [s.name for s in text if sh._behind(s.box) is None]
+        case(f"{name}: the ground under every line was measured", not blind,
+             str(blind)[:70])
+        # The specimen ground is one flat tone by design, so a lift is not a
+        # difficult page — it is the body sampling the wrong colour.
+        case(f"{name}: no ink needed lifting", not sh.notes, str(sh.notes)[:70])
 
 print(f"\n{'ALL GREEN' if fails == 0 else str(fails) + ' FAILURE(S)'}")
 sys.exit(1 if fails else 0)

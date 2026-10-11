@@ -1274,12 +1274,17 @@ def footer(sh, ctx, at="Set in", invert=False, exact=False):
     ink, mute, _ = field(P, invert)
     rail = sh.h - int(round(236 * sh.vscale))
     rule(sh.cv, sh.m, rail, sh.m + int(round(96 * sh.scale)), rail, P["accent"], 3.0)
+    # One line when a subtitle follows, the rest of the band when it does not.
+    # A specimen's claim is long and factual — "Figures 0–9 less 0 9 · Lowercase
+    # a–j drawn as capitals" — and a 40px slot makes it wrap with nowhere to go,
+    # which ships the sheet with the font's name missing.
+    band = 40 if ctx["copy"].get("sub") else sh.h - sh.m - int(round(210 * sh.vscale))
     # `exact` keeps the prefix as written. The specimen sheets report a range
     # ("Lowercase a–j"), and title-casing it into "A–J" claims letters the sheet
     # does not show; the pins' "Set in" ships as "Set In", so that stays.
     sh.text("name", L, f"{at} {tc(ctx['name'])}" if exact
             else tc(f"{at} {ctx['name']}"),
-            Box(sh.m, sh.h - int(round(210 * sh.vscale)), sh.w - 2 * sh.m, 40),
+            Box(sh.m, sh.h - int(round(210 * sh.vscale)), sh.w - 2 * sh.m, band),
             hi=27 * sh.scale, lo=18 * sh.scale, color=ink, track=0.16, align="left",
             valign="top", min_read=18 * sh.scale)
     if ctx["copy"].get("sub"):
@@ -1439,10 +1444,17 @@ def draw_rows(sh, T, sized, stage, paint_fn, prefix="row", lead_frac=0.10,
             paint_fn(p, j, i)
             sh.cv.translate(widths[j] + gap, 0)
         sh.cv.restore()
-        sh.mark(f"{prefix}{i}", Box(min(x + p.getBounds().left() for p in paths), y,
-                                    max(p.getBounds().right() for p in paths)
-                                    - min(x + p.getBounds().left() for p in paths),
-                                    bot_i - top_i))
+        # Every glyph's own box has to be offset by where its pen came down:
+        # `getBounds()` is path-local, and the pen walks right by the advances.
+        # Register the row without that offset and its ink rect sits back near
+        # x=0, which makes the canvas checks for the row vacuous.
+        pen, edges = x, []
+        for j, p in enumerate(paths):
+            b = p.getBounds()
+            edges.append((pen + b.left(), pen + b.right()))
+            pen += widths[j] + gap
+        x0, x1 = min(e[0] for e in edges), max(e[1] for e in edges)
+        sh.mark(f"{prefix}{i}", Box(x0, y, x1 - x0, bot_i - top_i))
         y += (bot_i - top_i) + lead
     return y
 
