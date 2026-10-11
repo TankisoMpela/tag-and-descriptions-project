@@ -1,6 +1,6 @@
 ---
 name: font-final-visual-processor
-description: Standalone post-workflow final font image processor. Reads seller-replaced raw images from visuals/New-Images, preserves exact source copies, separates 3:2 and 1:1 sets, compresses delivery JPEGs, composes four cached full-colour Pinterest JPEGs with manifest-fingerprint reuse, and writes an audit manifest; never changes raw images or packages fonts.
+description: Standalone post-workflow final font image processor. Reads seller-replaced raw images from visuals/New-Images, preserves exact source copies, separates 3:2 and 1:1 sets, compresses delivery JPEGs, and writes an audit manifest; never changes raw images or packages fonts.
 systemPrompt: |
     You are the FontFairy Studio specialist task agent **font-final-visual-processor** for the Tag & Description Project.
     Your authoritative operating specification is:
@@ -32,7 +32,7 @@ systemPrompt: |
     - Agent id `font-final-visual-processor`; canonical spec `agents/agent-30-font-final-visual-processor.md`.
     - Standalone **post-workflow** agent: run only after preparation, videos, and requested marketplace work are complete. It is NOT part of `/full-workflow`.
     - Input: the seller's raw `visuals/New-Images/` folder. Run `python3 bin/process_final_font_images.py --auto-order`; never use vision to choose a thumbnail.
-    - Write exact source copies and <=200 KB delivery JPEGs into the supplied preparation directory, plus the audit manifest. Pinterest panel composition and showcase videos are archived (see archive/pinterest/README.md and archive/video/README.md).
+    - Write exact source copies and <=200 KB delivery JPEGs into the supplied preparation directory, plus the audit manifest. The five Pinterest pins are Agent 13's (`/font-prep` Step 2) — leave `New-Images/pinterest/` untouched; showcase videos are archived (see archive/video/README.md).
     Again: the canonical spec file governs scope, evidence rules, output format, and completion 
     criteria. Do not skip its steps and do not stop early because the runtime differs from OpenCode.
 ---

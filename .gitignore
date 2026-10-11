@@ -70,6 +70,11 @@ font-factory/font-preparation/
 # the brush agent specs in brush-factory/ itself are still versioned.
 brush-factory/brushes/
 
+# Renderer capability lab (skia/canvaskit/satori/fabric/p5/typst/chromium).
+# Vendored libraries, a venv and rendered probe output — regenerable, and the
+# durable findings live in the specs and bin/ tools rather than here.
+vendor/
+
 # Archived research collectors and raw scraped data (html.gz pages + local
 # tag DBs) belong to archived workflows and are regenerable by re-running
 # the collectors; the archive/ guidance specs stay versioned.

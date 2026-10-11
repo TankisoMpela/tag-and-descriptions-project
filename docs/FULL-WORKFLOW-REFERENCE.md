@@ -18,7 +18,7 @@ the final image processor is deliberately **outside** it.
   /full-workflow  (agent-28 orchestrates; owns routing, not content)
         │
         ├─ 1  font-image-generator        (agent 27)  art direction + provisional visuals
-        ├─ 2  font-prep-specialist        (agent 13)  package, metadata, specimens, drop dir
+        ├─ 2  font-prep-specialist        (agent 13)  package, metadata, specimens, five Pinterest pins
         ├─ 3  booth-fonts-specialist      (agent 20)  Japanese-first BOOTH listing
         ├─ 4  cm-fonts-specialist          (agent 2)   Creative Market corpus listing
         └─ 5  creative-fabrica-fonts-specialist (agent 29)  Creative Fabrica listing
@@ -27,7 +27,7 @@ the final image processor is deliberately **outside** it.
                                       │
         seller drops their own artwork into visuals/New-Images/
                                       │
-        └─ /font-final-images  (agent 30)  delivery JPEGs + manifest
+        └─ /font-final-images  (agent 30)  delivery JPEGs + manifest (pinterest/ untouched)
 ```
 
 **Why this order.** Agent 27 must decide the final name before anything writes
@@ -81,22 +81,26 @@ The mechanical packaging pass.
 | | |
 |---|---|
 | **Provided** | the font workspace, final name, product number, and Agent 27's `prepared_visuals/` (for the four specimen PNGs only) |
-| **Produces** | `outputs/font-preparation/{NUM}-{slug}/` — the font-named folder with OTF/TTF/WOFF/WOFF2, `description.txt`, all three delivery archives, `specimens/`, an **empty** `visuals/New-Images/`, and three reports |
-| **Tools** | `bin/prepare_font_package.py` (which runs `font_preflight_audit.py` and `font_package_audit.py` itself), `bin/validate_font_factory.py --strict` |
+| **Produces** | `outputs/font-preparation/{NUM}-{slug}/` — the font-named folder with OTF/TTF/WOFF/WOFF2, `description.txt`, all three delivery archives, `specimens/`, `visuals/New-Images/` (the seller's drop directory, pre-filled only with `pinterest/pinterest_1..5` at `<=200000` bytes each plus `pins.brief.json`), and three reports |
+| **Tools** | `bin/prepare_font_package.py` (which runs `font_preflight_audit.py` and `font_package_audit.py` itself), `bin/render-pins --brief` (the five designed pins), `bin/validate_font_factory.py --strict` |
 | **Ends with** | `READY FOR FINAL IMAGES` |
 
-**Process — one command.** `prepare_font_package.py` performs the entire pass:
+**Process — one command plus one brief.** `prepare_font_package.py` performs the entire mechanical pass:
 discover inputs → pre-flight audit → name table → OS/2 flags → OTF/TTF/WOFF/WOFF2
 → copy specimens → create the drop directory → write the reports → build both
-archives → run the technical audit. The agent's only judgement work is
-`description.txt`. This replaced 9 numbered steps and 13 command blocks.
+archives → run the technical audit. The agent's judgement work is
+`description.txt` and the pin brief: it authors `pins.brief.json` (five fresh
+headlines, one theme and tone offset per pin, from this font's own description
+facts) and renders the five pins with one `bin/render-pins --brief` command,
+which refuses self-repeating copy. This replaced 9 numbered steps and 13 command blocks.
 
 **Two behaviours worth knowing**, both from bugs found while building it:
 
 - **Name ID 10 is deliberately preserved.** It carries the original founder's
   credit. Every other ID is overwritten with the studio's.
-- **Specimens are the only thing copied from Agent 27.** The 23 drafts stay in
-  `font-factory/` forever; they must not reach `outputs/`.
+- **Specimens are the only images copied from Agent 27.** The 23 drafts stay in
+  `font-factory/` forever; they must not reach `outputs/`. The pins are not
+  copied or composed from them — they are rendered from the font binary.
 
 ---
 
@@ -185,7 +189,10 @@ The delivery pass for the seller's own artwork.
 independently → copy each exactly under canonical names → encode delivery JPEGs
 → write the manifest. **No vision, no contact sheet, no semantics** — the first
 stable filename in each ratio becomes `thumbnail_main` and the rest become
-`promo_N`. A square is never derived from a landscape.
+`promo_N`. A square is never derived from a landscape. **Pinterest is not
+yours**: the five designed pins already sit in `New-Images/pinterest/` from
+Agent 13, and the letterbox panel path stays off unless the user explicitly
+passes `--pinterest`.
 
 **Why it is outside the workflow.** Its input is the seller's artwork, which only
 exists after they have seen Agent 27's drafts and done their own image-model
@@ -239,6 +246,7 @@ Every tool the workflow's agents name, why it exists, and its measured cost.
 | `font_package_audit.py` | Verifies fsType per format (0 Pro, 4 Freemium). **Caught a real defect**: `079-semilya-fontera`'s Demo shipped fsType 0 where Freemium needs 4. | incl. |
 | OpenType Sanitizer | Run by the packager over all eight delivered files as an **independent** parser. It parses every table where the audit above reads only fsType/name IDs/glyph count through fontTools, which loads some malformed fonts without complaint until a broken table is touched. Skipped with a note when `ots-sanitize` is absent. | ≈0.3 s |
 | `validate_font_factory.py --strict` | Staging hygiene — catches the pathologically space-joined slug and stray rasters in a font root. | ~0.1 s |
+| `bin/render-pins --brief` | The five Pinterest pins in one command: validates the brief (no repeated headline, no shipped phrase reused, distinct themes, ≥50% token overlap refused), renders hero/set/wall/phrase/full_stack as `pinterest_1..5`, re-encodes over-cap PNGs to JPEG at 4:2:0 until under 200 000 bytes, and copies `pins.brief.json` beside them. Runs on the skia venv in `bin/pin-studio/`. | ≈4 s (5 pins) |
 
 ### Agents 2 / 20 / 29
 | Tool | Why |
@@ -297,6 +305,7 @@ already enforces were removed from the prose.
 | `ots-sanitize` | the independent font parser gate (optional: skipped with a note if absent) |
 | `node` | `bin/search.js` for the three listing agents |
 | Python: `Pillow`, `fontTools`, `uharfbuzz`, `PyYAML` | images, font parsing, shaping, frontmatter |
+| `bin/pin-studio/.venv` (`skia-python`) | `bin/render-pins` — untracked; recreate with the one-line command the wrapper prints when it is missing |
 
 **No longer needed, because their features are archived:**
 
@@ -317,6 +326,7 @@ already enforces were removed from the prose.
 | Listing agents never inspect packages, fonts, images or licenses | preparation owns technical QA; duplication caused wrong claims |
 | Agent 27's `prepared_visuals/` are drafts and stay in `font-factory/` | they have not been through the seller's image-model pass |
 | Agent 13 copies only the four factual specimens | the 23 creative PNGs must never reach `outputs/` |
+| The five pins are rendered from the font binary, never composed from drafts | designed copy over a real glyph set beats a letterboxed promo |
 | Every listing validator is fail-closed | a listing is not complete because it looks complete |
 | No stage claims upload or publication | the workflow produces copy and research handoffs only |
 
@@ -334,17 +344,22 @@ outputs/font-preparation/{NUM}-{slug}/
   {Font-Name}-Commercial-Use.zip, {Font-Name}-Personal-Use.zip, {Font-Name}-Free-Trial-Demo.zip
   description.txt, specimens/, name-report.md, audit-report.md,
   specimen-source-manifest.md
-  visuals/New-Images/   EMPTY — the seller's drop directory
+  visuals/New-Images/   the seller's drop directory, pre-filled only with
+                        pinterest/ (pinterest_1..5 + pins.brief.json from agent 13)
 outputs/booth/          {NUM}-{slug}-booth.md + booth-tag-ledger.md
 outputs/pixiv/          {NUM}-{slug}-pixiv.md + pixiv-tag-ledger.md
 outputs/creative-fabrica/ {NUM}-{slug}-cf.md
 ```
 
 Post-workflow, inside `visuals/New-Images/`: `source/3x2`, `source/1x1`,
-`main/`, `squares/`, `final-image-manifest.md`.
+`main/`, `squares/`, `final-image-manifest.md` — beside the `pinterest/` pins
+Agent 13 already rendered, which this pass leaves untouched.
 
 **Archived and reinstatable, with guides:** `archive/video/` (showcase videos),
-`archive/pinterest/` (panel composition), `archive/skills-legacy/font-workflow/`
+`archive/pinterest/` (the legacy Agent-10 four-pin flow — live pin design now
+lives in `bin/pin-studio/` + Agent 13 STEP 2, and Agent 30's letterbox panel
+composition is off by default behind `--pinterest`),
+`archive/skills-legacy/font-workflow/`
 (superseded two-pass pipeline), `archive/opencode/` (the full 31-agent registry).
 
 ---

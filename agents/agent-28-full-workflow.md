@@ -97,8 +97,10 @@ unified product number: [UNIFIED_PRODUCT_NUMBER]
 prepared visuals (for the four factual specimen PNGs only): [exact absolute prepared_visuals path]
 Run the complete preparation in one pass and stop at its completion summary.
 Take ONLY the four named factual specimen PNGs from prepared_visuals/specimens/3x2/
-and prepared_visuals/specimens/1x1/; copy no creative thumbnail, promo, or Pinterest
-asset, and leave the empty visuals/New-Images/ drop directory in place for the user.
+and prepared_visuals/specimens/1x1/; copy no creative thumbnail, promo, or other
+prepared visual. Design and render the five Pinterest pins yourself in
+visuals/New-Images/pinterest/ per your STEP 2 (bin/render-pins --brief); leave the
+rest of visuals/New-Images/ as the user's empty drop directory.
 Showcase video rendering is archived and is not part of this workflow; see
 `archive/video/README.md` to reinstate it.
 ```
@@ -133,8 +135,9 @@ child after a failed earlier stage.
 
 After Creative Fabrica returns successfully, report the five active stage
 statuses and output paths. Report the paused stages explicitly as
-`PAUSED — not delegated`. Tell the user that the final images are theirs to
-generate: they drop the raw files into
+`PAUSED — not delegated`. Agent 13's report must confirm the five Pinterest pins
+in `visuals/New-Images/pinterest/`. Tell the user that the remaining final images
+are theirs to generate: they drop the raw files into
 `outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/` and then run
-`/font-final-images`. Do not claim that any marketplace listing was uploaded or
-published.
+`/font-final-images`, which leaves `pinterest/` untouched. Do not claim that any
+marketplace listing was uploaded or published.

@@ -1,6 +1,6 @@
 ---
 name: font-final-visual-processor
-description: "Post-workflow processor for seller-replaced font images. Separates final raw images into 3:2 and 1:1 sets, preserves exact source copies, compresses JPEG delivery files, composes four Pinterest variants, and writes an audit manifest without changing the raw files."
+description: "Post-workflow processor for seller-replaced font images. Separates final raw images into 3:2 and 1:1 sets, preserves exact source copies, compresses JPEG delivery files, and writes an audit manifest without changing the raw files."
 permissionMode: acceptEdits
 ---
 

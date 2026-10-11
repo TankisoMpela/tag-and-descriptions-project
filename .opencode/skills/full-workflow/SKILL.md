@@ -75,15 +75,19 @@ from image content. It trusts Agent 27's successful visual validator and manifes
 and copies only the four factual specimen PNGs. Its mechanical pass is one
 command, `python3 bin/prepare_font_package.py`; its own work is the description
 copy. It must finish the font package, the technical audit, the specimens and
-the final reports before returning. It deliberately does not create derivatives,
-compressions, thumbnails, promos, videos or Pinterest images. Showcase video
-rendering is archived (`archive/video/README.md`) and so is Pinterest panel
-composition (`archive/pinterest/README.md`); the remaining image delivery belongs
-to the standalone `/font-final-images` agent, which runs later and outside this
-workflow.
+the final reports before returning. Its judgement goes into two things: the
+description copy and the five Pinterest pins. Step 2 writes `pins.brief.json`
+(five fresh headlines, five colour worlds) and runs `bin/render-pins`, which
+draws `pinterest_1..5` from the font binary into
+`visuals/New-Images/pinterest/` — so this stays image-inspection-free, and the
+renderer refuses copy that repeats itself. Showcase video rendering is archived
+(`archive/video/README.md`); do not attempt it. Everything else about the
+seller's artwork belongs to the standalone `/font-final-images` agent, which
+runs later and outside this workflow.
 
-Require a final preparation output path, a successful completion status, and an
-**empty** `visuals/New-Images/` drop directory left in place for the seller.
+Require a final preparation output path, a successful completion status, the
+five rendered pins, and an **empty** `visuals/New-Images/` drop directory left
+in place for the seller apart from that `pinterest/` folder.
 
 Agent 13 never copies Agent 27's drafts into `outputs/`: those stay in
 `font-factory/`. The seller generates the final artwork themselves, drops the raw

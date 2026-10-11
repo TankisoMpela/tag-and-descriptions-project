@@ -32,7 +32,7 @@ Agent 13 is responsible for:
 - optional Freemium demo subsetting when explicitly requested;
 - marketplace description at the preparation output root and audit reports;
 - consuming Agent-27's prevalidated 3:2, 1:1, and specimen handoff without inspecting image content, then mechanically encoding creative images (`≤500 KB`);
-- mechanically composing four Pinterest outputs (`≤700 KB`) from the supplied 3:2 images.
+- designing and rendering the five Pinterest pins (`bin/render-pins --brief`, each `<=200000` bytes) into `visuals/New-Images/pinterest/` from the font binary and this font's own `description.txt`.
 
 Agent 13 is **not** responsible for:
 - generating or researching names;
@@ -57,7 +57,7 @@ font-factory/fonts/{input-slug}/
     ├── visual-handoff-manifest.md  (Agent-27 visual QA record)
     └── VISUAL-HANDOFF-READY.md
 
-Agent 27 creates both thumbnail ratios, both supporting-image ratios, and the four factual specimen outputs. If the optional Pinterest image is absent, Agent 13 may mechanically compose four Pinterest variants from the completed 3:2 images; it does not generate replacement artwork.
+Agent 27 creates both thumbnail ratios, both supporting-image ratios, and the four factual specimen outputs. Pinterest is not part of this handoff: Agent 13 designs and renders the five pins from the font binary in its own STEP 2.
 
 The two ratios are planned independently. A mixed `New-Images` folder may
 contain both 3:2 and 1:1 references, but references are not silently treated as
@@ -77,7 +77,7 @@ Agent 13 writes to `outputs/font-preparation/{new-slug}/`:
   each containing that font folder only;
 - exact source copies under `visuals/source/3x2/` and `visuals/source/1x1/`;
 - full-dimension JPEG delivery copies under `visuals/main/` and `visuals/squares/`, each compressed to `≤500 KB`;
-- four mechanically composed Pinterest images under `visuals/pinterest/`, each kept at `≤700 KB`;
+- the five designed Pinterest pins `pinterest_1..5` under `visuals/New-Images/pinterest/`, each at or below `200000` bytes, plus `pins.brief.json`;
 - one shared crop-safe marketplace thumbnail under `visuals/platforms/`;
 - four Agent-27 factual specimen PNGs copied into the corresponding source and
   delivery folders;
@@ -88,6 +88,6 @@ Agent 13 writes to `outputs/font-preparation/{new-slug}/`:
 Agent 27 validates the plan, copy, dimensions, naming, crop safety, and
 contrast mechanically before handoff; it does not claim that placeholders are
 final creative artwork. If its validator reports a missing or failed asset,
-stop and report the exact filename. Agent 13 does not reopen images. A missing
-Pinterest image is not a blocker; compose it from the valid copied 3:2 images.
-Never derive a square from a 3:2 image, and no long-scroll is created.
+stop and report the exact filename. Agent 13 does not reopen images; its pins
+are rendered from the font binary by `bin/render-pins`, never composed from the
+3:2 pool. Never derive a square from a 3:2 image, and no long-scroll is created.

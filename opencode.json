@@ -27,7 +27,7 @@
     },
     "font-final-visual-processor": {
       "prompt": "{file:./agents/agent-30-font-final-visual-processor.md}",
-      "description": "Post-workflow processor for seller-replaced font images. Separates final raw images into 3:2 and 1:1 sets, preserves exact source copies, compresses JPEG delivery files, composes letterbox Pinterest panels, and writes an audit manifest without changing the raw files.",
+      "description": "Post-workflow processor for seller-replaced font images. Separates final raw images into 3:2 and 1:1 sets, preserves exact source copies, compresses JPEG delivery files, and writes an audit manifest without changing the raw files.",
       "permission": {
         "task": "allow"
       }
@@ -42,7 +42,7 @@
     },
     "font-prep-specialist": {
       "prompt": "{file:./agents/agent-13-font-prep-specialist.md}",
-      "description": "FontFairy Font Preparation & Metadata Specialist. Consumes prevalidated Agent-27 visual handoffs without inspecting image content, creates a font-named binary folder plus clean Commercial Use and Personal Use ZIPs and a demo-stamped Free-Trial-Demo ZIP. Derivative, Pinterest, and showcase-video work is archived; do none of it. Input: font-factory/fonts/{slug}/ plus an explicit prepared_visuals instruction. Output: outputs/font-preparation/{slug}/.",
+      "description": "FontFairy Font Preparation & Metadata Specialist. Consumes prevalidated Agent-27 visual handoffs without inspecting image content, creates a font-named binary folder plus clean Commercial Use and Personal Use ZIPs and a demo-stamped Free-Trial-Demo ZIP, then designs and renders the five Pinterest pins from the font binary with bin/render-pins. Derivative and showcase-video work is archived; do none of it. Input: font-factory/fonts/{slug}/ plus an explicit prepared_visuals instruction. Output: outputs/font-preparation/{NUM}-{slug}/.",
       "permission": {
         "task": "allow"
       }
@@ -66,7 +66,7 @@
     "pinterest-font-preparer": {
       "mode": "subagent",
       "prompt": "{file:./agents/agent-pinterest-font-preparer.md}",
-      "description": "Pinterest asset preparer for the Daily-Pinterest-Run pipeline: registers a font from its outputs/font-preparation folder, uploads all four pin images to Vercel Blob, records both product-page URLs and the description, writes public-urls.md; no Pinterest-side action.",
+      "description": "Pinterest asset preparer for the Daily-Pinterest-Run pipeline: registers a font from its outputs/font-preparation folder, uploads all five pin images to Vercel Blob, records both product-page URLs and the description, writes public-urls.md; no Pinterest-side action.",
       "permission": {
         "task": "allow"
       }
@@ -108,7 +108,7 @@
     },
     "font-prep": {
       "description": "FontFairy font preparation — package, audit and lay out the font, then hand off the specimen set.",
-      "template": "Please run the font-prep-specialist agent with this exact instruction: {input}. Finish the font metadata, package/archive copies, technical audit, and the factual-specimen handoff. Treat Agent-27 prepared_visuals as deferred for creative artwork: do not copy, compress, rename, inspect, or compose any thumbnail, supporting promo, video, or Pinterest asset. Copy only the four named factual specimen PNGs unchanged from prepared_visuals/specimens/3x2/ and prepared_visuals/specimens/1x1/ into the numbered output's specimens/ folders. Leave an empty visuals/New-Images/ drop directory for the seller.",
+      "template": "Please run the font-prep-specialist agent with this exact instruction: {input}. Finish the font metadata, package/archive copies, technical audit, and the factual-specimen handoff. Treat Agent-27 prepared_visuals as deferred for creative artwork: do not copy, compress, rename, inspect, or compose any thumbnail, supporting promo, or video asset from them. Then run Step 2: write pins.brief.json with five fresh headlines in five colour worlds and render it with bin/render-pins. Copy only the four named factual specimen PNGs unchanged from prepared_visuals/specimens/3x2/ and prepared_visuals/specimens/1x1/ into the numbered output's specimens/ folders. Leave visuals/New-Images/ empty for the seller's own artwork, apart from the pinterest/ pins you rendered.",
       "agent": "font-prep-specialist"
     },
     "full-workflow": {
@@ -122,8 +122,8 @@
       "agent": "booth-pdf-maker"
     },
     "pinterest-prepare": {
-      "description": "Register fonts for Pinterest: upload all four pin images to Vercel Blob, record both product-page URLs and the description.",
-      "template": "Please run the pinterest-font-preparer agent to register these fonts into the Pinterest registry (match each to its outputs/font-preparation folder, record both product-page URLs --market cm/cf and a board suggestion, upload all four pinterest images, write public-urls.md): {input}",
+      "description": "Register fonts for Pinterest: upload all five pin images to Vercel Blob, record both product-page URLs and the description.",
+      "template": "Please run the pinterest-font-preparer agent to register these fonts into the Pinterest registry (match each to its outputs/font-preparation folder, record both product-page URLs --market cm/cf and a board suggestion, upload all five pinterest images, write public-urls.md): {input}",
       "agent": "pinterest-font-preparer"
     },
     "pinterest-daily": {

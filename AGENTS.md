@@ -44,8 +44,9 @@ stage's final result before starting the next. The only registered agents for th
 five specialists below plus the `full-workflow` orchestrator.
 
 1. `font-image-generator` (Agent 27) — bespoke visual handoff.
-2. `font-prep-specialist` (Agent 13) — metadata/package pass, specimens, and an
-   empty `visuals/New-Images/` drop directory. It never copies or processes final images.
+2. `font-prep-specialist` (Agent 13) — metadata/package pass, specimens, the five
+   designed Pinterest pins, and an empty `visuals/New-Images/` drop directory. It never
+   copies or processes the seller's final images.
 3. `booth-fonts-specialist` (Agent 20) — BOOTH listing; default campaign is a
    limited-time free offer (`FREE_ACTIVE`) with free-campaign tags and a like CTA.
 4. `cm_fonts_specialist` (Agent 2) — Creative Market font listing using a bounded
@@ -54,8 +55,10 @@ five specialists below plus the `full-workflow` orchestrator.
 5. `creative-fabrica-fonts-specialist` (Agent 29) — Creative Fabrica Fonts listing.
 
 Every other agent (Pixiv, Cubebrush, YellowImages, DLsite, Etsy, MasterBundles,
-Marketore, Behance, Pinterest, X, Telegram, namemaker, brush workflows, the-converter,
-font-final-visual-processor, booth-ready) is archived under `archive/` and must not be invoked.
+Marketore, Behance, the legacy Pinterest agent 10, X, Telegram, namemaker, brush
+workflows, the-converter, booth-ready) is archived under `archive/` and must not be
+invoked. `/font-final-images` (Agent 30) and the two Pinterest pipeline agents below
+are live, but deliberately outside `/full-workflow`.
 
 ### Default package copies (Agent 13)
 
@@ -81,9 +84,11 @@ Relocated to `agents/reference/AGENTS-annex-visual-handoff.md` — read it if yo
 font-image-generator or the font-final-visual-processor.
 
 Agent 27's `prepared_visuals/` are DRAFTS: they stay in `font-factory/` and are never copied
-into `outputs/`. Agent 13 copies only the four factual specimen PNGs and leaves an empty
-`visuals/New-Images/` drop directory. The seller drops their own generated images there and
-runs `/font-final-images` (Agent 30), which is deliberately outside `/full-workflow`.
+into `outputs/`. Agent 13 copies only the four factual specimen PNGs, renders the five
+designed Pinterest pins into `visuals/New-Images/pinterest/`, and leaves the rest of
+`visuals/New-Images/` empty. The seller drops their own generated images there and
+runs `/font-final-images` (Agent 30), which is deliberately outside `/full-workflow` and
+now touches only `main/` and `squares/` — never `pinterest/`.
 
 ## 📄 TRIAL INSERT PDF (`/booth-pdf-maker` — standalone)
 
@@ -97,9 +102,19 @@ directory, and trial URL; the product image comes from `{font-dir}/visuals/New-I
 
 Two agents; the archived Agent 10 stays archived and is not invoked.
 
+The pins are made upstream, by Agent 13 Step 2: write a `pins.brief.json` (five
+fresh headlines, five themes), run `bin/render-pins`, and `pinterest_1..5` land
+in `visuals/New-Images/pinterest/`. Canonical specs for that creative half:
+`docs/PIN-ART-DIRECTION.md` (how a font becomes five designed pins — concept,
+hook-first copy, non-deterministic roll vs reasoned call, checks) and
+`docs/SKIA-PIN-RENDERER.md` (probe-verified capability reference for the
+renderer, which lives in `bin/pin-studio/`; it overrides upstream skia web docs
+for this wheel). Pin images are designed from the font binary, never mashed
+together, and neither Pinterest agent designs one.
+
 - `/pinterest-prepare` (pinterest-font-preparer) is run per new font, on its
   `outputs/font-preparation/{NUM}-{slug}/` folder. It registers into
-  `outputs/pinterest/registry.json`: ALL FOUR images from
+  `outputs/pinterest/registry.json`: ALL FIVE images from
   `visuals/New-Images/pinterest/` uploaded to the `pinterest-pins-media` Vercel
   Blob store (one URL per image), BOTH product-page URLs (`--market cm` and
   `--market cf`), the description (`description.txt`), and a board suggestion
@@ -112,7 +127,7 @@ Two agents; the archived Agent 10 stays archived and is not invoked.
   per font, and validates + assembles `outputs/pinterest/{YYYY-MM-DD}/buffer.csv`
   (Buffer free-plan import — carries Alt Text; staggered hourly from 09:00
   UTC) plus `pins.csv` as the Pinterest-native fallback. Per pin it takes ONE
-  of the font's four image links and ONE of its two product links (both
+  of the font's five image links and ONE of its two product links (both
   marketplaces split evenly, seeded by date so a re-run is identical).
   Anti-cannibalization lives in `outputs/research/pinterest-tags.sqlite`:
   `tag_uses` (keyword counts), `pinned_runs` (re-pin window) and `pins` — the
@@ -120,7 +135,8 @@ Two agents; the archived Agent 10 stays archived and is not invoked.
   `python3 bin/pinterest_tag_ledger.py history --slug <slug> --full` and
   printed automatically in `brief.md` before new copy is written.
 
-Tools: `bin/pinterest_registry.py`, `bin/papermoon-blob.py`,
+Tools: `bin/render-pins` (the skia renderer in `bin/pin-studio/`, run by Agent 13),
+`bin/pinterest_registry.py`, `bin/papermoon-blob.py`,
 `bin/pinterest_tag_ledger.py`, `bin/make_daily_pins.py`. Carousels are not
 supported by the bulk CSV (one Media URL per row) — one image per pin.
 Uploading `buffer.csv` to Buffer (free: connect the Pinterest business

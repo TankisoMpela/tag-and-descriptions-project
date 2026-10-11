@@ -31,19 +31,22 @@ The seller creates the final artwork themselves, outside the pipeline.
 
 1. `/font-images` → phrase-led creative briefs, supporting placeholders, and four
    factual specimen PNGs under `prepared_visuals/specimens/{3x2,1x1}/`.
-2. `/font-prep` → the single preparation pass: metadata, package, videos, the
-   specimens, and an **empty** `outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/`
-   drop directory. Agent 13 copies ONLY the four factual specimen PNGs out of
-   `prepared_visuals/specimens/`; it copies no creative thumbnail, promo, or
-   Pinterest asset, composes nothing, and compresses nothing.
+2. `/font-prep` → the single preparation pass: metadata, package, the
+   specimens, the five designed Pinterest pins, and an **empty**
+   `outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/` drop directory
+   apart from `New-Images/pinterest/`. Agent 13 copies ONLY the four factual
+   specimen PNGs out of `prepared_visuals/specimens/`; it copies no creative
+   thumbnail or promo, and composes or compresses nothing from the seller's
+   artwork. The five pins are drawn from the font binary by `bin/render-pins`
+   from a `pins.brief.json` it writes itself (`docs/PIN-ART-DIRECTION.md`).
 3. **Seller step (manual):** generate the final images with the image model and
    drop the raw files directly into
    `outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/`.
 4. `/font-final-images` (Agent 30) → classifies the raw 3:2 and 1:1 files,
-   preserves exact source copies, writes full-dimension delivery JPEGs, composes
-   the four `1000x1500` Pinterest variants, and writes
-   `New-Images/final-image-manifest.md`. This agent is deliberately outside
-   `/full-workflow`.
+   preserves exact source copies, writes full-dimension delivery JPEGs into
+   `main/` and `squares/`, and writes `New-Images/final-image-manifest.md`. It
+   leaves `New-Images/pinterest/` alone — those are Agent 13's designed pins.
+   This agent is deliberately outside `/full-workflow`.
 
 ## Running it
 

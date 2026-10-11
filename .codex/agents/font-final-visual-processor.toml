@@ -1,5 +1,5 @@
 name = "font_final_visual_processor"
-description = "Post-workflow processor for seller-replaced font images. Separates final 3:2 and 1:1 images, creates bounded JPEG delivery copies and four Pinterest variants, and writes an audit manifest without changing raw files."
+description = "Post-workflow processor for seller-replaced font images. Separates final 3:2 and 1:1 images, creates bounded JPEG delivery copies, and writes an audit manifest without changing raw files. Pinterest pins belong to /font-prep (Agent 13) and are left untouched."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
@@ -31,12 +31,12 @@ yourself, invent missing artwork, or overwrite raw files. Do not replace the
 older `visuals/main/` or `visuals/squares/` directories unless the user makes
 that a separate explicit request.
 
-The same run composes four `1000x1500` Pinterest panels into
-`New-Images/pinterest/` (JPEG, `<=200000` bytes) from the canonical 3:2 pool
-using the helper's letterbox compositor: every image is fitted whole onto
-white, never cropped. Pass `--skip-pinterest` only when the user explicitly
-does not want Pinterest assets; never compose panels by hand and never use a
-square image as a panel source.
+The five `1000x1500` Pinterest pins are designed from the font binary by
+`/font-prep` (Agent 13) and already sit in `New-Images/pinterest/` when this
+agent runs. Leave that folder alone: do not compose, delete, rename, resize or
+re-encode anything in it. The letterbox compositor is off by default and is
+reached only with `--pinterest`, on a seller's explicit request for panels
+instead of designed pins.
 
 Do not report completion until the helper has written
 `New-Images/final-image-manifest.md`, every raw direct image is accounted for,

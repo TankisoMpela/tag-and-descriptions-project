@@ -10,7 +10,7 @@ Delegate the task below to the **`font-prep-specialist`** subagent defined in `.
 Task:
 
 ```
-Please run the font-prep-specialist agent with this exact instruction: $ARGUMENTS. Finish the font metadata, package/archive copies, technical audit, and the factual-specimen handoff. Treat Agent-27 prepared_visuals as deferred for creative artwork: do not copy, compress, rename, inspect, or compose any thumbnail, supporting promo, video, or Pinterest asset. Copy only the four named factual specimen PNGs unchanged from prepared_visuals/specimens/3x2/ and prepared_visuals/specimens/1x1/ into the numbered output's specimens/ folders. Leave an empty visuals/New-Images/ drop directory for the seller.
+Please run the font-prep-specialist agent with this exact instruction: $ARGUMENTS. Finish the font metadata, package/archive copies, technical audit, and the factual-specimen handoff. Treat Agent-27 prepared_visuals as deferred for creative artwork: do not copy, compress, rename, inspect, or compose any thumbnail, supporting promo, or video asset from them. Then run Step 2: write pins.brief.json with five fresh headlines in five colour worlds and render it with bin/render-pins. Copy only the four named factual specimen PNGs unchanged from prepared_visuals/specimens/3x2/ and prepared_visuals/specimens/1x1/ into the numbered output's specimens/ folders. Leave visuals/New-Images/ empty for the seller's own artwork, apart from the pinterest/ pins you rendered.
 ```
 
 After the subagent returns, report its output paths, validator status, evidence, and any blocked facts. Never claim publication or an upload.

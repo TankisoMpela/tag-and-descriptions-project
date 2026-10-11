@@ -534,7 +534,8 @@ def write_manifest(
 
     lines.extend(["", "## Pinterest delivery", ""])
     if not pinterest_enabled:
-        lines.append("Pinterest generation was explicitly skipped.")
+        lines.append("No panels composed: the five designed Pinterest pins come from "
+                     "`/font-prep` (Agent 13), not from this pass.")
     else:
         lines.extend([
             (
@@ -635,7 +636,10 @@ def main() -> int:
         action="store_true",
         help="Explicitly ask the Pinterest compositor for JPEG companions; omitted by default",
     )
-    parser.add_argument("--skip-pinterest", action="store_true")
+    parser.add_argument("--pinterest", action="store_true",
+                        help="Compose letterbox panels into <out>/pinterest/. Off by "
+                             "default: Agent 13 designs the five real pins into that "
+                             "folder and these would overwrite them")
     parser.add_argument("--pinterest-format", choices=("jpeg", "png"), default="jpeg",
                         help="Pinterest deliverable format; JPEG keeps full colour at "
                              "roughly half the bytes of a palette-quantised PNG")
@@ -767,7 +771,7 @@ def main() -> int:
     pinterest_compression: dict[str, str] = {}
     compose_log: str | None = None
 
-    if not args.skip_pinterest:
+    if args.pinterest:
         if args.pinterest_variants < 1:
             fail("--pinterest-variants must be at least 1")
         if args.pinterest_count < 1:
@@ -800,7 +804,7 @@ def main() -> int:
         generated_paths.extend((source_32 / canonical, main_dir / Path(canonical).with_suffix(".jpg")))
     for _, canonical in square_rows:
         generated_paths.extend((source_11 / canonical, square_dir / Path(canonical).with_suffix(".jpg")))
-    if not args.skip_pinterest and not pinterest_cache_hit_flag:
+    if args.pinterest and not pinterest_cache_hit_flag:
         generated_paths.extend(
             pinterest_delivery_paths(pinterest_dir, args.pinterest_variants, args.pinterest_format)
         )
@@ -834,7 +838,7 @@ def main() -> int:
 
         if pinterest_cache_hit_flag:
             compose_log = "Pinterest outputs already valid; recomposition was skipped."
-        if not args.skip_pinterest and not pinterest_cache_hit_flag:
+        if args.pinterest and not pinterest_cache_hit_flag:
             pinterest_status = "composed"
             compose_command = [
                 sys.executable,
@@ -884,7 +888,7 @@ def main() -> int:
     for jpeg in list(main_dir.glob("*.jpg")) + list(square_dir.glob("*.jpg")):
         if jpeg.stat().st_size > JPEG_MAX_BYTES:
             fail(f"JPEG exceeds {JPEG_MAX_BYTES} bytes: {jpeg}")
-    if not args.skip_pinterest:
+    if args.pinterest:
         # A previous run may have delivered the other format. Leaving both would
         # leave the seller unsure which file to upload, so drop the other one
         # whether this run composed panels or reused the cache.
@@ -913,7 +917,7 @@ def main() -> int:
         square_promos=square_promos,
         compose_log=compose_log,
         padded_from=padded_from,
-        pinterest_enabled=not args.skip_pinterest,
+        pinterest_enabled=args.pinterest,
         pinterest_status=pinterest_status,
         pinterest_fingerprint_data=pinterest_fingerprint_data,
         pinterest_compression=pinterest_compression,
