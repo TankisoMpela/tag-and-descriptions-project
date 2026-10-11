@@ -215,13 +215,37 @@ The brief — every one of the five template keys is required:
   `description.txt`. `word` is hero's specimen word; `sub`/`over` are the small
   lines.
 
+**One optional field: `"class"`.** Default `"elegant"` — the five keys above
+serve every face. Add `"class": "blackletter"` **only** when the seller's own
+words say blackletter, celtic, uncial, gaelic or gothic; that swaps the five
+keys for `initials knotband scriptorium folio carol`, and opens two extra
+worlds, `vellum` and `gilded`, for its themes. No other class exists yet — a
+brush, handwritten or tech face stays elegant.
+
+```json
+{"name": "Braewick", "class": "blackletter", "about": "…rugged blackletter…",
+ "pins": {
+   "initials":    {"line": "…", "theme": "vellum", "tone": 0},
+   "knotband":    {"line": "…", "theme": "bone",   "tone": 2},
+   "scriptorium": {"line": "…", "theme": "gilded", "tone": 1},
+   "folio":       {"line": "…", "theme": "clay",   "tone": 0},
+   "carol":       {"line": "…", "theme": "sage",   "tone": 3,
+                   "ftrs": {"ss01": 1}}}}
+```
+
+`ftrs` (any pin, but it means something on `carol`) names the face's own
+OpenType features — `salt`, `ss01`…`ss04` — that the alternates row draws
+beside the defaults. Omit it and the row shows the plain setting.
+
 The renderer refuses a brief that repeats itself: a stock line, two pins that
 share their words, a repeated theme, or a headline another font already shipped
-(it checks the `pins.brief.json` left beside every rendered set). Fix the copy
-and re-run — that is the whole repair, never the templates.
+(it checks the `pins.brief.json` left beside every rendered set). It also
+refuses the wrong five keys for the class. Fix the copy and re-run — that is
+the whole repair, never the templates.
 
-Deliverable: `pinterest_1..5` (hero, set, wall, phrase, full_stack), each at or
-below `200000` bytes, plus `pins.brief.json`, and the command exiting 0.
+Deliverable: `pinterest_1..5` (in the class's own order — elegant is hero, set,
+wall, phrase, full_stack), each at or below `200000` bytes, plus
+`pins.brief.json`, and the command exiting 0.
 
 ## 📝 STEP 3: SUMMARY REPORT & USER VERIFICATION
 

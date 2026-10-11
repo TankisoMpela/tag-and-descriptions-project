@@ -77,12 +77,13 @@ command, `python3 bin/prepare_font_package.py`; its own work is the description
 copy. It must finish the font package, the technical audit, the specimens and
 the final reports before returning. Its judgement goes into two things: the
 description copy and the five Pinterest pins. Step 2 writes `pins.brief.json`
-(five fresh headlines, five colour worlds) and runs `bin/render-pins`, which
-draws `pinterest_1..5` from the font binary into
-`visuals/New-Images/pinterest/` — so this stays image-inspection-free, and the
-renderer refuses copy that repeats itself. Showcase video rendering is archived
-(`archive/video/README.md`); do not attempt it. Everything else about the
-seller's artwork belongs to the standalone `/font-final-images` agent, which
+(five fresh headlines, five colour worlds, plus `"class": "blackletter"` only
+when the seller's own words say blackletter, celtic, uncial, gaelic or gothic)
+and runs `bin/render-pins`, which draws `pinterest_1..5` from the font binary
+into `visuals/New-Images/pinterest/` — so this stays image-inspection-free, and
+the renderer refuses copy that repeats itself. Showcase video rendering is
+archived (`archive/video/README.md`); do not attempt it. Everything else about
+the seller's artwork belongs to the standalone `/font-final-images` agent, which
 runs later and outside this workflow.
 
 Require a final preparation output path, a successful completion status, the

@@ -8,22 +8,27 @@ what it should *choose* to do, and in what order.
 forward-looking statement about nothing. A pin is a small poster whose subject is
 letterforms.
 
-**Status (locked 2026-10).** The five templates are the design and the design phase is
-closed: production is Agent 13 STEP 2 (`/font-prep`, inside `/full-workflow`), which
-authors `pins.brief.json` and runs one `bin/render-pins --brief` command. No template
-work happens without a new user instruction, and the other font classes are
-note-only: brush (Kuro Ripper), handwritten (FineLetter), tech/sports (IronRush),
-blackletter/celtic (Braewick) each earned the label "not designed yet" — today's
-five are **the elegant set templates** and carry every font until told otherwise.
+**Status (locked 2026-10; second class added 2026-10-11).** The templates are the
+design and the design phase is closed: production is Agent 13 STEP 2 (`/font-prep`,
+inside `/full-workflow`), which authors `pins.brief.json` and runs one `bin/render-pins
+--brief` command. No template work happens without a new user instruction. There are
+now two classes. The five **elegant** templates carry every font by default; the five
+**blackletter / celtic** templates carry a face whose own description says blackletter,
+celtic, uncial, gaelic or gothic, and the brief's optional `"class"` field is what
+chooses between them (piloted with Braewick). The remaining classes are note-only —
+brush (Kuro Ripper), handwritten (FineLetter) and tech/sports (IronRush) each still
+carry the label "not designed yet".
 
 ---
 
 ## 0. What is decided here and what is decided in code
 
-The templates are the spec now. `bin/pin-studio/pin_studio.py` ships five tested
-compositions — `hero`, `set`, `wall`, `phrase`, `full_stack`, rendered and numbered
-`pinterest_1..5` in that order — evolved from the `out/v6-black` series, and `--stress`
-proves them across faces and copy lengths.
+The templates are the spec now. `bin/pin-studio/pin_studio.py` ships ten tested
+compositions in two classes — elegant `hero`, `set`, `wall`, `phrase`, `full_stack`
+and blackletter `initials`, `knotband`, `scriptorium`, `folio`, `carol` — each class
+rendered and numbered `pinterest_1..5` in its own design order, evolved from the
+`out/v6-black` series, and `--stress` proves them across faces, classes and copy
+lengths.
 
 Everything below that is a *mechanical* rule has moved into that code and is no longer
 a thing to remember:
@@ -93,6 +98,11 @@ every row to measure, filling the frame), `phrase` (a short line of copy with dr
 ornaments around it), and `full_stack` (the specimen sheet: name, purpose, and the
 alphabet filling the page). Grounds mix dark and paper *within* a set — that contrast
 is part of why the series reads as designed rather than generated.
+
+A `"class": "blackletter"` brief ships a different five, in its own order:
+`initials`, `knotband`, `scriptorium`, `folio`, `carol` (§4). Same field, same rail,
+same gates, same `pinterest_1..5` filenames — the numbering is the only thing the class
+changes about the contract, and nothing downstream learns the word.
 
 ---
 
@@ -172,6 +182,28 @@ the subject. If a concept cannot be described without the word "glyph", reconsid
 a high-contrast serif earns 1/3/10; a chunky display earns 2/8/11; a script earns
 1/6/14; a geometric sans earns 4/7/13. Never let a random draw produce two
 single-word-hero layouts in one set — slot 2 is reserved once.
+
+**The blackletter class rolls its own die.** The menu above is the elegant set — it is
+what a font is *about*, chosen per pin. A `"class": "blackletter"` brief does not
+choose from it: its five templates are one subject seen five ways, namely the
+manuscript page, and each pin's concept is fixed because the *object* it depicts is
+fixed.
+
+| # | Template | The object | What it proves about the face |
+|---|---|---|---|
+| 1 | `initials` | the illuminated opening — the face's own first letter ruled and gilded in a double-ruled box, corner fleurons, pen-work vine in the margin | its heaviest single glyph still reads at poster scale |
+| 2 | `knotband` | interlaced band over a ruled `Aa` funnel | capitals and minuscules agree, at three sizes |
+| 3 | `scriptorium` | the writing desk: word/digit/punctuation wall on pricked ruling lines, sealed with a triquetra | the whole working set, including the numerals a blackletter usually fakes |
+| 4 | `folio` | the rubricated phrase — first word redrawn in the red pen | running text, and the red-ink move that names the tradition |
+| 5 | `carol` | the spec sheet, defaults beside the face's own `salt`/`ss0x` alternates, then the alphabet | the alternates exist and what they change |
+
+The furniture is drawn, not imported: `knot_band`, `illum_box`, `border_frame`,
+`orn_triquetra`, `orn_fleur`, `orn_vine` and the `hatch` device in
+`bin/pin-studio/pin_studio.py`, so it costs nothing at the byte level and takes the
+theme's own ink. Two colour worlds belong to the class only — `vellum` (marigold on
+paper) and `gilded` (cobalt dark) — and `assign_themes()` keeps them out of the
+elegant rotation: an elegant set draws from the six shared worlds, a blackletter set
+from all eight.
 
 ---
 
@@ -466,10 +498,12 @@ The locked production run — Agent 13 STEP 2, inside `/full-workflow`:
    mislabels FineLetter, IronRush and Braewick).
 2. Write five fresh headlines (§5 rules) — none from `COPIES`, no overlap between
    pins, none already shipped by another font — and assign one distinct theme plus a
-   tone rung per pin. Author it all once as `pins.brief.json`.
-3. One command renders: `bin/render-pins --brief …` validates the brief, renders
-   `hero`, `set`, `wall`, `phrase`, `full_stack` into `pinterest_1..5`, and enforces
-   the checks (§12) as it goes.
+   tone rung per pin. Author it all once as `pins.brief.json`. If the seller's words
+   say blackletter, celtic, uncial, gaelic or gothic, say `"class": "blackletter"` at
+   the top of that file; the five keys change with it, and so do `vellum`/`gilded`.
+3. One command renders: `bin/render-pins --brief …` validates the brief, renders the
+   class's five templates into `pinterest_1..5`, and enforces the checks (§12) as it
+   goes.
 4. `visuals/New-Images/pinterest/` (with `pins.brief.json`) is then picked up by
    `/pinterest-prepare`, and `/pinterest-daily` pairs each pin with one of the two
    product links in `buffer.csv` / `pins.csv`. **Uploading to Buffer/Pinterest stays

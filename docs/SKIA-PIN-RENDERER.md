@@ -673,6 +673,15 @@ Drawing a finished raster into a smaller frame:
   for the channel order you must use when sampling.
 * Pinterest dedupes near-identical pins. Five pins per font that differ only in palette
   will be collapsed; §2 of `docs/PIN-ART-DIRECTION.md` is the structural answer.
+* A **class** changes the design order, never the ship contract. `CLASS_ORDERS` maps
+  `elegant` → `hero set wall phrase full_stack` and `blackletter` →
+  `initials knotband scriptorium folio carol`; both write `pinterest_1..5`, so the
+  registry, the blob uploader and the daily run never learn the word. `check_brief()`
+  refuses a brief whose five keys do not match its `"class"` (default `elegant`) or an
+  unknown class outright, and `assign_themes()` filters the pool by each theme's own
+  `cls`, so the two class worlds (`vellum`, `gilded`) never surface in an elegant
+  rotation. `--class` runs a family with no brief; `--stress` sweeps every face through
+  both.
 
 ---
 
@@ -693,6 +702,8 @@ Drawing a finished raster into a smaller frame:
 | Duotone grade of a rendered layer | `ColorFilters.Matrix` luma rows then bias columns (§3) |
 | Ghost word (a second voice in the dead band) | Tier B `allocRunPosH` at a mid rung, paint one step off the ground, `kMultiply`, inside `cv.clipRect(band)` |
 | Third ink from two plates | two `drawRect`s, the second `Paint(BlendMode=kMultiply)` — overlap reads as a new colour, measured `[40, 27, 23]` |
+| Interlaced plait band | two sine strands a half-period out of phase, each stroked; at every crossing the *loser* is re-stroked in the ground colour at 1.30× width and the winner redrawn on top — over/under with no clip path and one extra paint state |
+| Rubricate one word of a line already set | shape the whole line once and take `getBounds()`, then `cv.translate(ink.x - b.left(), ink.y - b.top())` and `drawPath` the word's own outline. Anchor on the **baseline**, not the row's ink top: the tallest ascender usually sits further back in the sentence, and top-anchoring floats the overprint several points off the word it redoubles |
 | Vector take of the same design | `PDF.MakeDocument` / `SVGCanvas.Make` (§9) |
 
 ---
