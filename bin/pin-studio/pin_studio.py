@@ -11,9 +11,9 @@ theme and one colour-ladder offset per pin, so the set reads as five designs.
 Without it every pin takes the same --line, which is what made a batch feel
 samey. With it the pins are written `pinterest_1..5` in the brief's class order —
 elegant is hero, set, wall, phrase, full_stack; blackletter is initials, knotband,
-scriptorium, folio, carol; sports is crest, bib, lane, finish, timer — which is the
-shape the Pinterest registry expects
-either way. Each pin gets its own theme — its own ground,
+scriptorium, folio, carol; sports is crest, bib, lane, finish, timer; script is
+guide, copybook, trace, sample, markup — which is the shape the Pinterest registry
+expects either way. Each pin gets its own theme — its own ground,
 device and artwork — and inside each pin the rows walk down a colour ladder, so one
 font's set is five designs rather than one muted palette applied five times. Every
 text slot declares a box and is auto-fitted against it, so nothing overlaps or runs
@@ -50,10 +50,11 @@ JPEG_STEPS = (90, 85, 80)   # tried in order when a pin has to ship as JPEG
 PIN_ORDER = ("hero", "set", "wall", "phrase", "full_stack")
 BLACK_ORDER = ("initials", "knotband", "scriptorium", "folio", "carol")
 SPORT_ORDER = ("crest", "bib", "lane", "finish", "timer")
+SCRIPT_ORDER = ("guide", "copybook", "trace", "sample", "markup")
 # A brief's optional "class" picks the order; every class still ships
 # pinterest_1..5, so the registry, blob and daily tools never learn the word.
 CLASS_ORDERS = {"elegant": PIN_ORDER, "blackletter": BLACK_ORDER,
-                "sports": SPORT_ORDER}
+                "sports": SPORT_ORDER, "script": SCRIPT_ORDER}
 LABEL = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Regular.ttf")
 LABEL_B = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Medium.ttf")
 CLEAN = {"liga": 0}         # display ligs stripe the specimen marks
@@ -92,6 +93,15 @@ PALETTES = {
                   (20, 22, 27), (243, 246, 249), (245, 204, 25), (88, 196, 232)),
     "chrome":    ((30, 34, 40), (52, 58, 66), (224, 228, 234), (198, 204, 212),
                   (26, 30, 36), (240, 244, 248), (150, 24, 36), (18, 74, 130)),
+    # The two script worlds are deliberately the two greys of the bench itself: a
+    # pencil and an ink bottle. Every other ground is coloured because warm
+    # neutral type wanted a field with a mood; here the neutrality *is* the mood,
+    # and the warmth comes from the two pencils — red for the correction, blue for
+    # the note — so the ladder still runs four distinguishable tones.
+    "graphite":  ((52, 56, 64), (74, 80, 92), (243, 244, 246), (216, 220, 228),
+                  (30, 34, 42), (247, 249, 252), (168, 40, 50), (22, 92, 142)),
+    "inkwell":   ((16, 24, 30), (30, 44, 52), (230, 238, 236), (198, 212, 212),
+                  (12, 20, 26), (238, 244, 244), (232, 180, 74), (98, 188, 200)),
 }
 PAL_NAMES = list(PALETTES)
 
@@ -113,7 +123,8 @@ THEMES = {
                      device="rings", art="coast"),
     # Class-owned worlds. `cls` keeps them out of the elegant rotation: the
     # manuscript grounds only appear when a brief says blackletter, the neutral
-    # ones only when it says sports (or names the world itself).
+    # ones only when it says sports, the two grey ones only when it says script
+    # (or the brief names the world itself).
     "vellum":   dict(pal="marigold", mode="paper", pool=0.12, tooth=2600, seed=7,
                      device="bands", art="knot", cls="blackletter"),
     "gilded":   dict(pal="cobalt", mode="dark", pool=0.17, tooth=4800, seed=2,
@@ -122,6 +133,12 @@ THEMES = {
                      device="lanes", art="gantry", cls="sports"),
     "chrome":   dict(pal="chrome", mode="paper", pool=0.12, tooth=2600, seed=1,
                      device="grid", art="sector", cls="sports"),
+    # Both script worlds wear the same device on purpose: the pricked band is not
+    # one theme's decoration, it is the ground this class is drawn on.
+    "graphite": dict(pal="graphite", mode="paper", pool=0.12, tooth=2400, seed=10,
+                     device="ruling", art="penwork", cls="script"),
+    "inkwell":  dict(pal="inkwell", mode="dark", pool=0.15, tooth=4400, seed=12,
+                     device="ruling", art="flourish", cls="script"),
 }
 THEME_NAMES = list(THEMES)
 
@@ -153,6 +170,16 @@ THEME_PREF = {
     "lane":        ("asphalt", "moss", "chrome"),
     "finish":      ("chrome", "asphalt", "midnight"),
     "timer":       ("asphalt", "midnight", "chrome"),
+    # The script class. `copybook` and `sample` are paper objects — a drill page
+    # and a pinned sample both want the light ground; `trace` and `markup` are the
+    # ink ones. Only this class's own worlds and the six shared ones are named:
+    # `assign_themes` filters its fallback pool by class but not the shortlist, so
+    # a preference for another class's world would smuggle it in.
+    "guide":       ("graphite", "inkwell", "bone"),
+    "copybook":    ("graphite", "inkwell", "sage"),
+    "trace":       ("inkwell", "graphite", "ember"),
+    "sample":      ("graphite", "inkwell", "moss"),
+    "markup":      ("inkwell", "graphite", "midnight"),
 }
 
 
@@ -1048,6 +1075,22 @@ def device(sh, P, kind, dark):
             rule(cv, M * 0.6, y0 + i * step, W - M * 0.6, y0 + i * step,
                  mute, 1.0, 0.13)
         rule(cv, W * 0.5, y0 - 30, W * 0.5, y1, P["accent"], 1.4, 0.12)
+    elif kind == "ruling":
+        # A penman's band rather than `hatch`'s manuscript ruling: the lines come
+        # in pairs, a waist and a hair above it, stacked down the page, because a
+        # writing hand pricks *bands* — and the margin is two lines, the double
+        # rule a practice sheet is folded to. No slant guides: `device()` cannot
+        # see the face it is under, and a diagonal rule behind an upright letter
+        # is an instruction the letter does not follow.
+        y0, y1 = int(H * 0.16), int(H - 250)
+        step = 92
+        for i in range((y1 - y0) // step):
+            y = y0 + i * step
+            rule(cv, M * 0.7, y, W - M * 0.7, y, mute, 1.0, 0.10)
+            rule(cv, M * 0.7, y + 22, W - M * 0.7, y + 22, mute, 1.0, 0.07)
+        for dx in (0.0, 8.0):
+            rule(cv, W * 0.11 + dx, y0 - 40, W * 0.11 + dx, y1 + 40,
+                 P["accent"], 1.2, 0.12)
 
 
 def tones(P, family):
@@ -1668,11 +1711,49 @@ def orn_bracket(cv, cx, cy, s, rgb, alpha=1.0):
     _stroke(cv, p, rgb, max(2.5, s * 0.12), alpha)
 
 
+def orn_nib(cv, cx, cy, s, rgb, alpha=1.0):
+    """The pointed pen: a nib's outline, its slit and its vent hole.
+
+    Stroked rather than filled, like the rest of the kit, so the slit reads without
+    the ornament having to know what colour the ground behind it is.
+    """
+    w = max(2.2, s * 0.07)
+    p = skia.Path()
+    p.moveTo(cx, cy - s * 0.92)
+    p.lineTo(cx + s * 0.34, cy + s * 0.06)
+    p.lineTo(cx, cy + s * 0.86)
+    p.lineTo(cx - s * 0.34, cy + s * 0.06)
+    p.close()
+    _stroke(cv, p, rgb, w, alpha)
+    slit = skia.Path()
+    slit.moveTo(cx, cy + s * 0.60)
+    slit.lineTo(cx, cy - s * 0.30)
+    _stroke(cv, slit, rgb, max(1.8, s * 0.05), alpha * 0.9)
+    cv.drawCircle(cx, cy - s * 0.14, max(2.2, s * 0.10),
+                  paint(C(rgb, alpha), style=skia.Paint.kStroke_Style,
+                        width=max(1.6, s * 0.045)))
+
+
+def orn_loop(cv, cx, cy, s, rgb, alpha=1.0):
+    """One written flourish loop — the cross-over a hand makes at the end of a word.
+
+    Deliberately monoline. The renderer can fake a pointed pen's thick and thin, and
+    a flourish that fakes them contradicts whatever face it is drawn beside.
+    """
+    p = skia.Path()
+    p.moveTo(cx - s * 0.88, cy + s * 0.52)
+    p.cubicTo(cx - s * 0.30, cy - s * 0.92, cx + s * 0.82, cy - s * 0.42,
+              cx + s * 0.20, cy + s * 0.18)
+    p.cubicTo(cx - s * 0.42, cy + s * 0.78, cx + s * 0.30, cy + s * 0.86,
+              cx + s * 0.86, cy + s * 0.10)
+    _stroke(cv, p, rgb, max(2.4, s * 0.09), alpha)
+
+
 ORNAMENTS = {"star": orn_star, "sun": orn_sun, "wave": orn_wave, "blob": orn_blob,
              "frond": orn_frond, "arc": orn_arc, "fan": orn_fan, "dots": orn_dots,
              "eye": orn_eye, "triquetra": orn_triquetra, "fleur": orn_fleur,
              "vine": orn_vine, "chevron": orn_chevron, "checker": orn_checker,
-             "bracket": orn_bracket}
+             "bracket": orn_bracket, "nib": orn_nib, "loop": orn_loop}
 
 
 def draw_orn(sh, name, kind, cx, cy, s, rgb, alpha=1.0, collide=True, **kw):
@@ -2751,6 +2832,379 @@ def t_timer(sh, ctx):
     footer(sh, ctx, at=f"{claim} \u00b7")
 
 
+# ------------------------------------------------------------------ the script class
+#
+# Handwriting is the one class whose evidence is a *line*: a script is taught on a
+# ruled band, drilled a letter at a time, traced before it is inked, pinned up when
+# it is finished and proofed against the whole alphabet. So the five objects are the
+# penman's bench, and the shared truth across all five is that the letters are set
+# standing on something. No template here *depends* on a gradient, and that is
+# load-bearing rather than stylistic: `script` is in FLOWING, which replaces the
+# ladder's third rung with a flat mix, but under `--stress` the same binary can
+# classify otherwise and the gradient returns on its own and stripes the joins. So
+# the lettering itself is always one colour — `tone(P, 0)`, `rung()`, or a flat mix —
+# and only the headline rows walk the shared ladder the other classes walk.
+# Every metric is measured from the binary: a cap height is 0.715em on one script
+# and 1.015em on another.
+
+
+@template("guide", "the specimen word on a band ruled at the face's own cap, waist and descender",
+          cls="script")
+def t_guide(sh, ctx):
+    """A script you cannot rule is a script you cannot learn, so this pin rules it.
+
+    The three faint lines are not a frame and not a constant: they are the ink
+    bounds of the face's own capital, minuscule and descender at the size the word
+    is actually set at, and they run past the word on both sides so they read as
+    the page's ruling rather than a box drawn around one letter. The baseline is
+    the heaviest line on the page because it is the only one a hand cannot miss.
+
+    Flat rung 0, and no ghost. `hero` owns the giant initial behind the type; a
+    band with a ghost letter in it is a hero with lines under it.
+    """
+    P, T = ctx["pal"], ctx["display"]
+    facts = ctx["facts"]
+    dark = bg(sh, P, ctx["th"], pool=0.10)
+    ink, mute, _ = field(P)
+    measure = W - 2 * M
+    asked = tc(clean(ctx, ctx["copy"].get("word") or "")).split()
+    word = " ".join(asked or tc(clean(ctx, ctx["name"])).split()[:1])
+    if not word:
+        sh.problems.append("guide: nothing for the band to hold")
+        return
+    y0 = eyebrow(sh, ctx, "Penman's Band")
+    BASE = y0 + 268.0
+
+    size = fit_measure(T, word, measure - 60, 430.0)
+    b100 = T.path(word, 100.0)[0].getBounds()
+    if b100.height() > 0:
+        size = min(size, 100.0 * 560.0 / b100.height())
+    # The band has a ceiling as well as a floor: a script's ascender overshoots its
+    # own cap, so the word's tallest ink is capped against the eyebrow rule above
+    # and the descender room below, both measured from the binary.
+    if b100.top() < 0:
+        size = min(size, 100.0 * (BASE - y0 - 26) / -b100.top())
+    if size < 90:
+        sh.problems.append(f"guide: the word only reaches {size:.0f}px on the band — "
+                           f"that is a caption, not a specimen")
+        return
+
+    def band(chances):
+        """Ink bounds of the first glyph of this class the face really carries."""
+        ch = next((c for c in chances if c and usable(ctx, c)), "")
+        return T.path(ch, size)[0].getBounds() if ch else None
+
+    capb = band([facts.get("simple"), "H", "A", "E", "O"])
+    xhb = band(["x", "o", "e", "a", "n"])
+    dscb = band(["g", "j", "p", "q", "y"])
+    wb = T.path(word, size)[0].getBounds()
+    L, R = M * 0.55, W - M * 0.55
+    rule(sh.cv, L, BASE, R, BASE, ink, 1.6, 0.62)
+    if capb:
+        rule(sh.cv, L, BASE + capb.top(), R, BASE + capb.top(), mute, 1.2, 0.40)
+    if xhb:
+        rule(sh.cv, L, BASE + xhb.top(), R, BASE + xhb.top(), mute, 1.2, 0.55)
+    if dscb:
+        rule(sh.cv, L, BASE + dscb.bottom(), R, BASE + dscb.bottom(), mute, 1.2, 0.40)
+    low = BASE + max(wb.bottom(), dscb.bottom() if dscb else 0.0)
+    draw_orn(sh, "nib", "nib", R - 26, BASE - 12, 24, P["accent"], 0.95,
+             collide=False)
+    # `sh.text` puts the ink's top at the box's top when valign is "top", and the
+    # path's bounds are measured from the baseline, so this box is what lands the
+    # baseline on BASE exactly — the rules above are drawn from the same bounds.
+    sh.text("word", T, word, Box(M, BASE + wb.top(), measure, wb.height() + 2),
+            hi=size, lo=size, max_lines=1, valign="top", min_read=60,
+            **tone(P, 0))
+
+    line = shout(ctx, clean(ctx, ctx["copy"]["line"] or ctx["name"])).strip()
+    words = [w for w in line.split() if w]
+    if words:
+        stage = Box(M, low + 50, measure, 1242 - low - 50)
+        measure_rows(sh, T, P, pack_lines(words, 3), stage, "guid", hi=200,
+                     min_read=40, fill=True, lead_frac=0.05, centre=True)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx)
+
+
+@template("copybook", "the drill page: one letter five times on a rule, the copies fading as the hand goes",
+          cls="script")
+def t_copybook(sh, ctx):
+    """The way a script is taught, which is also the way it is proved twice.
+
+    One model letter at full ink and four attempts after it walking toward the
+    ground — which is what a practice sheet actually looks like — and every row
+    standing on its own baseline, so the descenders cross the line rather than
+    dodge it. The letters come from the brief's own word when it supplies four of
+    them, because a drill page for a face called Silken should be practising Silken.
+
+    `readable()` is load-bearing here, not tidy: `draw_rows` paints raw paths, so
+    without it the fourth and fifth copies would simply vanish into the paper.
+    """
+    P, T = ctx["pal"], ctx["display"]
+    dark = bg(sh, P, ctx["th"], pool=0.10)
+    ink, mute, _ = field(P)
+    measure = W - 2 * M
+    word = tc(clean(ctx, ctx["copy"].get("word") or ctx["name"]))
+    mine = list(dict.fromkeys(c for c in word.lower()
+                             if c.isalpha() and usable(ctx, c)))
+    los = [c for c in ascii_lowercase if usable(ctx, c)]
+    letters = (mine if len(mine) >= 4 else los)[:6]
+    if len(letters) < 4:
+        sh.problems.append("copybook: the face carries too few letters to drill")
+        return
+    y0 = eyebrow(sh, ctx, "Copybook")
+    y = y0 + 46
+    stage = Box(M, y, measure, 1242 - y - 96)
+
+    reps = [[c] * 5 for c in letters]
+    size = min(measure / max(row_metrics(T, r, 100.0)[:2]) * 100.0 for r in reps)
+    size = min(size, 220.0)
+    lead = size * 0.30
+    block = sum(row_metrics(T, r, size)[2] for r in reps) + lead * (len(reps) - 1)
+    if block:
+        size *= min(1.0, stage.h / block)
+        lead = size * 0.30
+        sized = [(r, size, row_metrics(T, r, size)[2]) for r in reps]
+    else:
+        sized = []
+    if not sized or size < 60:
+        sh.problems.append("copybook: these letters will not stand five across a page")
+        return
+    tall = sum(h for _r, _s, h in sized) + lead * (len(sized) - 1)
+    ground = sh._behind(Box(M, y, measure, min(tall, stage.h))) or lum(P["deep2"])
+    base = P["deep2"] if dark else P["paper2"]
+
+    def paint_drill(p, j, i):
+        sh.cv.drawPath(p, paint(C(readable(ground, mix(ink, base, j * 0.13), 4.5),
+                                  1.0)))
+
+    draw_rows(sh, T, sized, Box(M, y, measure, 1), paint_drill, "copy",
+              lead_frac=0.30)
+    for i, (row, s, _h) in enumerate(sized):
+        slot = _slot(sh, f"copy{i}")
+        if not slot:
+            continue
+        top_i = min(T.path(c, s)[0].getBounds().top() for c in row)
+        rule(sh.cv, M * 0.6, slot.ink.y - top_i, W - M * 0.6, slot.ink.y - top_i,
+             mute, 1.2, 0.5)
+    edge_type(sh, ctx, f"{len(letters)} Letters")
+    footer(sh, ctx, at=f"{len(letters)} Letters \u00b7")
+
+
+@template("trace", "the logotype inked over its own offset outline, the pencil line left showing",
+          cls="script")
+def t_trace(sh, ctx):
+    """The one pin that shows how the lettering was made, by leaving the making on.
+
+    A signwriter traces the word first and the pencil stays visible at one edge of
+    the ink. So the outline is drawn at an offset that scales with the word — never
+    a constant, or a small word would carry a heavy ghost — and the inked pass goes
+    over it. `folio` rubricates the same ink in red and `finish` runs its echo back
+    in stripes; both restate the lettering in its own place. This one restates it
+    beside it, which is the only move here that shows a hand working rather than a
+    face printed.
+    """
+    P, T = ctx["pal"], ctx["display"]
+    dark = bg(sh, P, ctx["th"], pool=0.12)
+    ink, mute, _ = field(P)
+    acc = P["accent"]
+    art = ORN_SETS["penwork" if dark else "flourish"]
+    measure = W - 2 * M
+    asked = tc(clean(ctx, ctx["copy"].get("word") or "")).split()
+    word = " ".join(asked or tc(clean(ctx, ctx["name"])).split()[:2])
+    if not word:
+        sh.problems.append("trace: no word to lay the pencil under")
+        return
+    y0 = eyebrow(sh, ctx, "Trace-Through")
+    size = fit_measure(T, word, measure - 60, 340.0)
+    if size < 60:
+        sh.problems.append(f"trace: the word only reaches {size:.0f}px")
+        return
+    wp = T.path(word, size)[0]
+    b = wp.getBounds()
+    bw, bh = b.width(), b.height()
+    ix = M + (measure - bw) / 2
+    iy = y0 + 210 - bh / 2
+    d = size * 0.05
+    sh.cv.save()
+    sh.cv.translate(ix + d - b.left(), iy + d - b.top())
+    wireframe(sh.cv, wp, acc, weight=max(1.6, size * 0.006), alpha=0.75)
+    sh.cv.restore()
+    sh.mark("pencil", Box(ix + d, iy + d, bw, bh), collide=False)
+    sh.text("word", T, word, Box(M, iy, measure, bh + 2), hi=size, lo=size,
+            max_lines=1, valign="top", min_read=60, **tone(P, 0))
+
+    src = clean(ctx, ctx["copy"]["line"]).strip()
+    words = [w for w in shout(ctx, src or ctx["name"]).split() if w]
+    band = Box(M, H - 372, W - 2 * M, 120)
+    slot = _slot(sh, "word")
+    if slot and words:
+        stage = Box(M, slot.ink.b + 58, measure, band.y - slot.ink.b - 118)
+        measure_rows(sh, T, P, pack_lines(words, 3), stage, "trac", hi=170,
+                     min_read=40, fill=True, lead_frac=0.05, centre=True)
+    for i, (kind, fx_, fy, s, alpha) in enumerate(art["bottom"]):
+        s = min(s, band.h / 2.2)
+        draw_orn(sh, f"b{i}", kind, M + measure * fx_,
+                 band.y + max(s, min(band.h * fy, band.h - s)), s,
+                 P["accent2"] if i % 2 else acc, alpha)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx)
+
+
+@template("sample", "the lettered quote on a piece of paper, tipped and taped at the corners",
+          cls="script")
+def t_sample(sh, ctx):
+    """The buyer's actual job: words as artwork, on a surface, in one ink.
+
+    The card is a sheet of its own, so the type inside it gets the same fit,
+    contrast and off-canvas checks as type on the page — which is the only reason a
+    rotated card can be trusted at all. It is painted flat rather than with `bg()`
+    or `device()`, because both are written against the full frame and would sample
+    off the paper; the ruling they leave behind belongs to the bench, not the card.
+
+    The ladder inside the card is a single ink. A pinned sample is one pen on one
+    sheet, and four colours on a piece of paper is a poster, not a sample.
+    """
+    P, T, L = ctx["pal"], ctx["display"], ctx["label"]
+    dark = bg(sh, P, ctx["th"], pool=0.10)
+    line = shout(ctx, clean(ctx, ctx["copy"]["line"] or ctx["name"])).strip()
+    words = [w for w in line.split() if w]
+    if not words:
+        sh.problems.append("sample: nothing to letter on the card")
+        return
+    eyebrow(sh, ctx, "Pinned Sample")
+    CW, CH = 620.0, 800.0
+    sub = sh.sub(CW, CH)
+    sub.cv.drawRect(skia.Rect.MakeXYWH(0, 0, CW, CH), paint(C(P["paper1"])))
+    Pc = dict(P, tone=[dict(color=P["ink"])] * 4)
+    kin = P["ink"]
+    kmut = mix(P["ink"], P["paper2"], 0.34)
+    over = tc(clean(ctx, ctx["copy"].get("over") or "")) or tc(clean(ctx, ctx["name"]))
+
+    sub.text("k-ov", L, over, Box(44, 56, CW - 88, 28), hi=24, lo=13, color=kmut,
+             track=0.26, align="left", valign="top", min_read=13)
+    stage = Box(44, 118, CW - 88, 452)
+    measure_rows(sub, T, Pc, pack_lines(words, min(4, max(2, len(words)))), stage,
+                 "card", hi=200, min_read=38, fill=True, lead_frac=0.05,
+                 centre=True)
+    rule(sub.cv, 44, 612, CW - 44, 612, kin, 1.2, 0.45)
+    sig = tc(clean(ctx, ctx["name"])).split()[0]
+    sub.text("k-sig", T, sig, Box(44, 636, CW - 88, 110), hi=96, lo=22, color=kmut,
+             max_lines=1, align="left", valign="top", min_read=22)
+    sh.paste(sub, 500, 712, angle=-2.2)
+
+    sh.cv.save()
+    sh.cv.translate(500, 712)
+    sh.cv.rotate(-2.2)
+    tape = mix(P["paper2"], P["deep2"], 0.5)
+    for sx in (-1, 1):
+        sh.cv.save()
+        sh.cv.translate(sx * CW / 2, -CH / 2 + 8)
+        sh.cv.rotate(38 * sx)
+        sh.cv.drawRect(skia.Rect.MakeXYWH(-66, -17, 132, 34), paint(C(tape, 0.34)))
+        sh.cv.restore()
+    sh.cv.restore()
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx)
+
+
+@template("markup", "the marked-up proof: the name, the tag, then every letter joined and standing on its own rule",
+          cls="script")
+def t_markup(sh, ctx):
+    """The specimen sheet this class has to earn: the whole set, written, not spelled out.
+
+    `full_stack` and `timer` both lay the character set out as cells, because a
+    monoline is one letter at a time. A script is not — its alphabet only exists as
+    a run, so the rows here are *strings*, sized as strings, at one pen size, and
+    they start at the left margin because writing starts at the left margin. That
+    rules out `spec_grid`, which sizes a row on its advance total including the gap
+    it inserts between cells: nine joined capitals measure two-thirds of the
+    column that way and the line stops short of the margin it was cut to.
+
+    Flat rungs and no halo. The bloom is `full_stack`'s signature, and a proof is
+    read for faults under the flattest light it can be given.
+    """
+    P, T, L = ctx["pal"], ctx["display"], ctx["label"]
+    facts = ctx["facts"]
+    dark = bg(sh, P, ctx["th"], pool=0.12)
+    ink, mute, _ = field(P)
+    measure = W - 2 * M
+    ups = [c for c in ascii_uppercase if usable(ctx, c)]
+    los = [c for c in ascii_lowercase if usable(ctx, c)]
+    digits = "".join(c for c in "0123456789" if usable(ctx, c))
+    punct = "".join(c for c in "&@?!'.,;-" if usable(ctx, c))
+    if len(ups) + len(los) < 12:
+        sh.problems.append("markup: the face carries too few letters to proof out")
+        return
+
+    y = eyebrow(sh, ctx, "Marked-Up Proof") + 36
+    for i, ln in enumerate(pack_lines(shout(ctx, clean(ctx, ctx["name"])).split(), 2)):
+        ns = fit_measure(T, ln, measure, 190.0)
+        if ns <= 0:
+            continue
+        hb = T.path(ln, ns)[0].getBounds()
+        sh.text(f"n{i}", T, ln, Box(M, y, measure, hb.height() + 2), hi=ns, lo=ns,
+                max_lines=1, align="left", valign="top", min_read=44, **tone(P, i))
+        y += hb.height() + 18
+    tag = tc(clean(ctx, ctx["copy"].get("over") or ctx["copy"].get("sub")
+                   or f"{facts['glyphs']}-glyph script"))
+    sh.text("tag", L, tag, Box(M, y + 6, measure, 30), hi=28, lo=13, color=mute,
+            track=0.28, align="left", valign="top", min_read=13)
+    y += 52
+    rule(sh.cv, M, y, W - M, y, ink, 1.3, 0.45)
+    rule(sh.cv, M, y, M + 76, y, P["accent"], 3.2)
+    y += 34
+
+    room = max(1242 - y, 200.0)
+
+    def rows_for(k):
+        out = []
+        for src in (los, ups):
+            if not src:
+                continue
+            q = math.ceil(len(src) / math.ceil(len(src) / k))
+            out += ["".join(src[i:i + q]) for i in range(0, len(src), q)]
+        if len(digits) >= 6:
+            out.append(digits)
+        if len(punct) >= 4:
+            out.append(punct)
+        return out
+
+    best = None
+    for k in range(3, 15):
+        cand = rows_for(k)
+        sz = min(fit_measure(T, r, measure, 240.0) for r in cand)
+        if sz <= 0:
+            continue
+        block = sum(T.path(r, sz)[0].getBounds().height() for r in cand) \
+            + sz * 0.30 * (len(cand) - 1)
+        kk = min(1.0, room / block) if block else 1.0
+        if best is None or sz * kk > best[0]:
+            best = (sz * kk, cand)
+    if not best:
+        sh.problems.append("markup: no packing of this alphabet fits the proof")
+        return
+    size, seqs = best
+    laid = []
+    for r in seqs:
+        s = fit_measure(T, r, measure, size)
+        laid.append((r, s, T.path(r, s)[0].getBounds()))
+    tall = sum(b.height() for _r, _s, b in laid) + size * 0.30 * (len(laid) - 1)
+    ground = sh._behind(Box(M, y, measure, min(tall, room))) or lum(P["deep2"])
+    crisp = [readable(ground, rung(P, i), 4.5) for i in range(len(P["tone"]))]
+
+    yy = y
+    for i, (r, s, b) in enumerate(laid):
+        sh.text(f"r{i}", T, r, Box(M, yy, measure, b.height() + 2), hi=s, lo=s,
+                max_lines=1, align="left", valign="top", min_read=40,
+                color=crisp[i % len(crisp)])
+        rule(sh.cv, M, yy - b.top(), W - M, yy - b.top(), mute, 1.2, 0.5)
+        yy += b.height() + size * 0.30
+    claim = f"{len(ups)} Upper \u00b7 {len(los)} Lower"
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx, at=f"{claim} \u00b7")
+
+
 ORN_SETS = {
     "grove": dict(top=[("frond", 0.10, 0.62, 128, 0.9), ("star", 0.44, 0.16, 40, 1.0),
                        ("sun", 0.72, 0.44, 86, 1.0), ("star", 0.93, 0.70, 30, 0.85)],
@@ -2788,6 +3242,22 @@ ORN_SETS = {
                    bottom=[("chevron", 0.22, 0.50, 76, 0.9),
                            ("checker", 0.50, 0.50, 62, 1.0),
                            ("chevron", 0.86, 0.50, 76, 0.9)]),
+    # The two bench sets, again chosen by class rather than world. `loop` is wide and
+    # `nib` is narrow, so they are spaced to alternate rather than to match; `vine`
+    # doubles as the flourish it actually is — a looped pen stroke, unlike a frond on
+    # a race bib.
+    "penwork": dict(top=[("loop", 0.18, 0.50, 84, 0.95),
+                         ("nib", 0.50, 0.46, 66, 1.0),
+                         ("loop", 0.82, 0.50, 84, 0.95)],
+                    bottom=[("nib", 0.24, 0.50, 58, 0.95),
+                            ("vine", 0.50, 0.48, 96, 0.9),
+                            ("nib", 0.76, 0.50, 58, 0.95)]),
+    "flourish": dict(top=[("vine", 0.16, 0.46, 96, 0.9),
+                          ("loop", 0.50, 0.50, 92, 1.0),
+                          ("vine", 0.84, 0.46, 96, 0.9)],
+                     bottom=[("loop", 0.26, 0.50, 78, 0.9),
+                             ("nib", 0.52, 0.46, 62, 0.95),
+                             ("loop", 0.78, 0.50, 78, 0.9)]),
 }
 
 
