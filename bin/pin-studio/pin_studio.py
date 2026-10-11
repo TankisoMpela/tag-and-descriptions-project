@@ -1449,7 +1449,7 @@ def draw_rows(sh, T, sized, stage, paint_fn, prefix="row", lead_frac=0.10,
 
 def measure_rows(sh, T, P, seq, stage, prefix, hi=460.0, min_read=30.0,
                  fill=False, lead_frac=0.03, min_contrast=4.5, taper=False,
-                 centre=False, flat=False):
+                 centre=False):
     """Set each row to the measure, stack them, scale the block to the stage.
 
     The shared spine of the funnel pins. `fill` lets the block *grow* to reach the
@@ -1460,9 +1460,7 @@ def measure_rows(sh, T, P, seq, stage, prefix, hi=460.0, min_read=30.0,
     which is what keeps a funnel's lower lines at the margin.
     `centre` splits the shortfall that survives the re-clamp above and below the
     block, instead of leaving it all under the last line.
-    Each row takes the next rung of the colour ladder — unless `flat`, which is
-    what a factual sheet wants: two rows in two colours read as a colour study
-    about the alphabet rather than as the alphabet.
+    Each row takes the next rung of the colour ladder.
     """
     def rows_at(width):
         out = []
@@ -1507,7 +1505,7 @@ def measure_rows(sh, T, P, seq, stage, prefix, hi=460.0, min_read=30.0,
         sh.text(f"{prefix}{i}", T, s, Box(stage.x, y, stage.w, ih + 2),
                 hi=size, lo=size, leading=0.86, max_lines=1, min_read=min_read,
                 valign="top", min_contrast=min_contrast,
-                **tone(P, 0 if flat else i))
+                **tone(P, i))
         y += ih + lead
     return y - lead
 
@@ -3394,16 +3392,20 @@ def spec_head(sh, ctx, label):
     return eyebrow(sh, ctx, label) + int(round(40 * sh.vscale))
 
 
+def spec_floor(sh):
+    """The line nothing is printed below — `footer()` counts its rails from here."""
+    return int(round(sh.h - 292 * sh.vscale))
+
+
 def spec_stage(sh, y0):
     """The band a sheet sets its letters in: from under the head to the footer.
 
-    292/1500 is the pin's own footer footprint, so the reserve is counted the same
-    way `footer()` counts its rails — down from the bottom edge, by the height
-    ratio. Two rules for the same strip of paper is how a row of letters ends up
-    printed over the name line.
+    The 292/1500 reserve is the pin's own footer footprint, so it is counted the
+    same way `footer()` counts its rails — down from the bottom edge, by the
+    height ratio. Two rules for the same strip of paper is how a row of letters
+    ends up printed over the name line.
     """
-    return Box(sh.m, y0, sh.w - 2 * sh.m,
-               int(round(sh.h - y0 - 292 * sh.vscale)))
+    return Box(sh.m, y0, sh.w - 2 * sh.m, spec_floor(sh) - y0)
 
 
 def spec_grove_band(sh, ctx, y0):
@@ -3425,48 +3427,6 @@ def spec_grove_band(sh, ctx, y0):
                  P["accent"] if i % 2 else ink, alpha * 0.75)
         bot = max(bot, cy + s)
     return bot
-
-
-def spec_split(sh, T, ups, los, stage, lead_frac=0.12):
-    """Letters per row, chosen by the sheet rather than by the body.
-
-    Ten to a line is right on a 2400-px landscape and leaves a square with two thin
-    bands and half a page of air; five to a line doubles the type and fills it. So
-    each candidate is measured the way `measure_rows` will actually set it — every
-    row fitted to the measure, the block scaled into the stage, the lead a
-    fraction of the stage rather than of the type — and the plan that ends up with
-    the largest letters wins. On the landscape that is two rows reaching both
-    margins; on the square it is four rows at twice the size. Same decision,
-    asked of the frame instead of hard-coded per ratio.
-    """
-    best = None
-    for k in (10, 5, 4):
-        rows = [" ".join(c[i:i + k]) for c in (ups, los) for i in range(0, len(c), k)]
-        rows = [r for r in rows if r]
-        sized = [(r, fit_measure(T, r, stage.w, 900.0 * sh.scale)) for r in rows]
-        sized = [(r, s) for r, s in sized if s > 0]
-        if not sized:
-            continue
-        lead = stage.h * lead_frac
-        tall = sum(T.path(r, s)[0].getBounds().height() for r, s in sized)
-        tall += lead * (len(sized) - 1)
-        eff = min(s for _r, s in sized) * min(1.0, stage.h / tall) if tall else 0.0
-        if best is None or eff > best[0]:
-            best = (eff, [r for r, _s in sized])
-    return best[1] if best else []
-
-
-def spec_rows(sh, ctx, rows, y0, lead=0.12):
-    """The rows, set to the measure and spread over what is left of the sheet.
-
-    `flat` is the whole point of a specimen: one ink for every row. The pin ladder
-    exists to make five headlines look like five designs, and a colour study about
-    the alphabet is not the same picture as the alphabet.
-    """
-    P, T = ctx["pal"], ctx["display"]
-    return measure_rows(sh, T, P, rows, spec_stage(sh, y0), "row",
-                        hi=900.0 * sh.scale, min_read=0.05 * sh.h, fill=True,
-                        centre=True, lead_frac=lead, flat=True)
 
 
 def spec_letters(sh, ctx):
@@ -3491,29 +3451,88 @@ def spec_letters(sh, ctx):
     return ups, los, f"{up} \u00b7 {low} \u00b7"
 
 
+def spec_figures(sh, ctx):
+    """The figures and marks the face actually carries, as (figures, marks, claim).
+
+    A face missing digits is a fact about the face: it is reported as a problem and
+    the sheet still shows what survives, because a short row nobody flagged is how a
+    broken font ships. The claim names the ranges rather than counting them — see
+    `spec_span`.
+    """
+    all_marks = PUNCT.split()
+    figs = [c for c in FIGURES if usable(ctx, c)]
+    marks = [c for c in all_marks if usable(ctx, c)]
+    if len(figs) < 10:
+        sh.problems.append(f"numerals: the face carries {len(figs)} of the ten figures")
+    if len(marks) < 4:
+        sh.problems.append(f"numerals: only {len(marks)} punctuation marks to show")
+    if not figs and not marks:
+        sh.problems.append("numerals: nothing to set \u2014 no figures and no marks")
+        return None
+    return (figs, marks,
+            f"{spec_span(figs, FIGURES, 'Figures 0\u20139')} \u00b7 "
+            f"{spec_span(marks, all_marks, 'Punctuation')} \u00b7")
+
+
+def spec_char_block(sh, ctx, seqs, stage):
+    """The characters, at one point size, standing down the whole stage.
+
+    One size across every row is the factual claim the sheet exists to make: fit
+    each row to the measure on its own and a face whose capitals are wide comes
+    back with lowercase 40% larger than the uppercase above it, which is not the
+    font's proportion but the layout's. Same for four marks against ten figures.
+    So `spec_grid` sets the block — one size, the letters shared out evenly, the
+    largest the page can carry — and the gap between characters scales with the
+    sheet, because `GAPROW`'s 14 px is a pin's air and a landscape sheet's
+    collision.
+
+    The grid cannot grow the type past the measure, so on a square sheet the ten
+    figures bind the width and the block comes out shorter than its stage. The
+    leftover goes into the leads, up to a point: rows standing down the page is
+    what a specimen looks like, rows huddled under the ornament with all the air
+    beneath them is what a list looks like. Past that point the rest of the
+    difference is split above and below the block instead, because two rows of
+    letters with a page's worth of nothing between them is not a set, it is two
+    rows that gave up on each other.
+    """
+    P, T = ctx["pal"], ctx["display"]
+    gap = GAPROW * sh.scale
+    rows = spec_grid(T, seqs, stage.w, stage.h, hi=900.0 * sh.scale,
+                     lead_frac=0.30, gap=gap)
+    if not rows:
+        return False
+    ground = (sh._behind(Box(stage.x, stage.y, stage.w, min(stage.h, 300.0)))
+              or lum(P["deep2"]))
+    q = paint(C(readable(ground, rung(P, 0), 4.5), 1.0))
+    ink = sum(h for _r, _s, h in rows)
+    design = rows[0][1] * 0.30
+    air = (stage.h - ink) / max(len(rows) - 1, 1)
+    lead = min(max(design, air), design * 2.2) if len(rows) > 1 else 0.0
+    spare = max(0.0, (stage.h - ink - lead * (len(rows) - 1)) / 2)
+    draw_rows(sh, T, rows, Box(stage.x, stage.y + spare, stage.w, stage.h),
+              lambda p, j, i: sh.cv.drawPath(p, q), "row", gap=gap, lead=lead)
+    return True
+
+
 @specimen("elegant", "letters",
-          "A–J and a–j to the measure, under the grove band")
+          "A–J and a–j at one size, under the grove band")
 def s_letters_elegant(sh, ctx):
     """`set`'s grammar without the funnel: the ornament band, then the letters.
 
     The elegant pin funnels 1/2/3 pairs because it has to sell a *feeling* about
-    the alphabet. A factual sheet does not: every letter is set at one size on its
-    own row so a buyer can compare the shapes against each other, and the number
-    of letters per row is whatever the sheet is wide enough to carry big.
+    the alphabet. A factual sheet does not: every letter stands at the same size,
+    and how many share a row is whatever the sheet can carry big.
     """
     spec_bg(sh, ctx, pool=0.08)
     built = spec_letters(sh, ctx)
     if not built:
         return
     ups, los, claim = built
-    T = ctx["display"]
     y0 = spec_head(sh, ctx, "Character Set")
     y1 = spec_grove_band(sh, ctx, y0) + int(round(14 * sh.vscale))
-    rows = spec_split(sh, T, ups, los, spec_stage(sh, y1))
-    if not rows:
-        sh.problems.append("letters: no row of A–J can be set to this measure")
+    if not spec_char_block(sh, ctx, [ups, los], spec_stage(sh, y1)):
+        sh.problems.append("letters: no row of A\u2013J can be set to this measure")
         return
-    spec_rows(sh, ctx, rows, y1)
     edge_type(sh, ctx, EDGE(ctx))
     footer(sh, ctx, at=claim, exact=True)
 
@@ -3521,58 +3540,112 @@ def s_letters_elegant(sh, ctx):
 @specimen("elegant", "numerals",
           "the ten figures and the marks, one size, on the same band")
 def s_numerals_elegant(sh, ctx):
-    """Figures and punctuation at a single size, because they are being compared.
-
-    `spec_grid` rather than `measure_rows`: sizing each row to the measure on its
-    own would set four marks twice as large as the ten figures above them, and a
-    character set whose letters disagree in size makes the eye read the layout
-    instead of the type. The gap between characters scales with the sheet too —
-    `GAPROW` is 14 px, which is a pin's air and a landscape sheet's collision.
-
-    A face missing figures is a fact about the face: the count is reported as a
-    problem and the sheet still shows what survives, because a short row nobody
-    flagged is how a broken font ships.
-    """
-    P = ctx["pal"]
+    """The grove band again, so the two sheets are visibly one pair."""
     spec_bg(sh, ctx, pool=0.08)
-    marks_all = PUNCT.split()
-    figs = [c for c in FIGURES if usable(ctx, c)]
-    marks = [c for c in marks_all if usable(ctx, c)]
-    if len(figs) < 10:
-        sh.problems.append(f"numerals: the face carries {len(figs)} of the ten figures")
-    if len(marks) < 4:
-        sh.problems.append(f"numerals: only {len(marks)} punctuation marks to show")
-    if not figs and not marks:
-        sh.problems.append("numerals: nothing to set — no figures and no marks")
+    built = spec_figures(sh, ctx)
+    if not built:
         return
-    T = ctx["display"]
+    figs, marks, claim = built
     y0 = spec_head(sh, ctx, "Figures & Punctuation")
     y1 = spec_grove_band(sh, ctx, y0) + int(round(14 * sh.vscale))
-    stage = spec_stage(sh, y1)
-    gap = GAPROW * sh.scale
-    rows = spec_grid(T, [figs, marks], stage.w, stage.h,
-                     hi=900.0 * sh.scale, lead_frac=0.30, gap=gap)
-    if not rows:
+    if not spec_char_block(sh, ctx, [figs, marks], spec_stage(sh, y1)):
         sh.problems.append("numerals: no row of figures can be set to this measure")
         return
-    # One ink, judged against the ground the block actually sits on.
-    ground = (sh._behind(Box(stage.x, stage.y, stage.w, min(stage.h, 300.0)))
-              or lum(P["deep2"]))
-    q = paint(C(readable(ground, rung(P, 0), 4.5), 1.0))
-    # `spec_grid` cannot grow the type past the measure, so on a square sheet the
-    # ten figures bind the width and the block comes out shorter than its stage.
-    # The leftover goes into the leads: rows standing on a ruled baseline at the
-    # bottom of the page is what a specimen looks like; rows huddled under the
-    # ornament with the air underneath them is what a list looks like.
-    ink = sum(h for _r, _s, h in rows)
-    air = (stage.h - ink) / max(len(rows) - 1, 1)
-    lead = max(rows[0][1] * 0.30, air) if len(rows) > 1 else 0.0
-    draw_rows(sh, T, rows, Box(stage.x, stage.y, stage.w, stage.h),
-              lambda p, j, i: sh.cv.drawPath(p, q), "row", gap=gap, lead=lead)
     edge_type(sh, ctx, EDGE(ctx))
-    footer(sh, ctx, exact=True,
-           at=f"{spec_span(figs, FIGURES, 'Figures 0\u20139')} \u00b7 "
-              f"{spec_span(marks, marks_all, 'Punctuation')} \u00b7")
+    footer(sh, ctx, at=claim, exact=True)
+
+
+def spec_folio(sh, ctx, y0, dark, cap=""):
+    """The blackletter page: a braid across the head, a folio rule round the block.
+
+    `knotband`'s furniture, and every part of it is already box-driven, which is
+    why this class needed no new drawing machinery — only someone to hand it boxes
+    that are the size of the sheet. The braid's wavelength is the pin's, so a wide
+    page gets more of them rather than the same five stretched out.
+
+    `cap` is the numerals sheet's illuminated initial: the ampersand the face
+    carries, ruled and gilded, with the braid running out of the right side of it
+    the way a manuscript's decoration runs out of the initial.
+    """
+    P, T = ctx["pal"], ctx["display"]
+    s = sh.scale
+    ink, mute, _ = field(P)
+    ground = P["deep1"] if dark else P["paper1"]
+    x, head = sh.m, 0
+    bh = int(round(56 * s))
+    if cap:
+        side = int(round(120 * s))
+        ib = Box(sh.m, y0, side, side)
+        illum_box(sh, ib, ink, P["accent"])
+        # Rubricated, but measured against the ground it actually sits on: the
+        # accent of a vellum theme is 4.2:1 on its own paper, and a sheet whose
+        # one showpiece needs the legibility system to rescue it is a colour bug.
+        g = sh._behind(ib) or lum(ground)
+        sh.text("cap", T, cap, Box(ib.x + 0.11 * side, ib.y + 0.09 * side,
+                                   side * 0.78, side * 0.82),
+                hi=side * 0.9, lo=20, max_lines=1, min_read=0.05 * sh.h,
+                color=readable(g, rung(P, 1), 4.5))
+        x, head = ib.r + int(round(24 * s)), side
+    band = Box(x, y0 + (head - bh) // 2, sh.w - sh.m - x, bh)
+    knot_band(sh, band, ink, ground,
+              waves=max(4, int(round(band.w / (162 * s)))))
+    top = max(band.b, y0 + head) + int(round(26 * s))
+    frame = Box(sh.m - int(round(12 * s)), top,
+                sh.w - 2 * (sh.m - int(round(12 * s))), spec_floor(sh) - top)
+    border_frame(sh, frame, mute, P["accent"])
+    draw_orn(sh, "kn", "triquetra", frame.x + int(round(44 * s)),
+             frame.y - int(round(4 * s)), 26 * s, P["accent"], 0.95,
+             collide=False)
+    pad = int(round(34 * s))
+    return Box(frame.x + pad, frame.y + int(round(30 * s)),
+               frame.w - 2 * pad, frame.h - int(round(62 * s)))
+
+
+@specimen("blackletter", "letters",
+          "A–J and a–j inside a folio rule, under a band of interlace")
+def s_letters_blackletter(sh, ctx):
+    """`knotband`'s frame without its funnel: the letters on rows of their own.
+
+    The pin funnels pairs because a woven band wants a shape to sit under. A sheet
+    wants the letters comparable, so they stand at one size and the frame takes
+    whatever is left of the page, which is the part that scales by itself.
+    """
+    dark = spec_bg(sh, ctx, pool=0.08)
+    built = spec_letters(sh, ctx)
+    if not built:
+        return
+    ups, los, claim = built
+    stage = spec_folio(sh, ctx, spec_head(sh, ctx, "Character Set"), dark)
+    if not spec_char_block(sh, ctx, [ups, los], stage):
+        sh.problems.append("letters: no row of A\u2013J can be set to this measure")
+        return
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx, at=claim, exact=True)
+
+
+@specimen("blackletter", "numerals",
+          "figures and marks ruled like a folio, opened with an illuminated &")
+def s_numerals_blackletter(sh, ctx):
+    """The same page, with the initial the numerals sheet has earned.
+
+    An ampersand is the one figure-adjacent mark a blackletter buyer judges the
+    face by, so it is the letter that opens the page — and it is drawn from the
+    face, not pasted on, which is what makes it a specimen rather than ornament.
+    """
+    dark = spec_bg(sh, ctx, pool=0.08)
+    built = spec_figures(sh, ctx)
+    if not built:
+        return
+    figs, marks, claim = built
+    cap = next((c for c in "&0123456789" if usable(ctx, c)),
+               marks[0] if marks else "")
+    stage = spec_folio(sh, ctx, spec_head(sh, ctx, "Figures & Punctuation"),
+                       dark, cap)
+    if not spec_char_block(sh, ctx, [figs, marks], stage):
+        sh.problems.append("numerals: no row of figures can be set to this measure")
+        return
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx, at=claim, exact=True)
 
 
 def build_ctx(font_path, name, copy, palette=None, mode=None, about="",
