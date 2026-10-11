@@ -43,6 +43,10 @@ from fontTools.pens.recordingPen import RecordingPen
 W, H = 1000, 1500
 M = 84                      # outer margin
 BG_SCALE = 4                # grounds are painted at 1/BG_SCALE and upscaled
+# A template's frame is the surface it is drawn on. `pin` is the shipped size and
+# the one everything below was tuned at; the two specimen frames exist because the
+# marketplace handoff already demands exactly these pixel dimensions.
+FRAMES = {"pin": (W, H), "3x2": (2400, 1600), "1x1": (1600, 1600)}
 MAX_BYTES = 200_000         # documented pin cap, in the bytes the specs quote
 JPEG_STEPS = (90, 85, 80)   # tried in order when a pin has to ship as JPEG
 # Design order — what a buyer scrolls into, and the numbering the registry
@@ -595,36 +599,37 @@ def stem_ratio(t, ch, size=200):
 
 # ------------------------------------------------------------------- surfaces
 
-def ground(canvas, top, bottom, w=W, h=H):
+def ground(canvas, top, bottom, w=None, h=None):
     shader = skia.GradientShader.MakeLinear(
-        [skia.Point(0, 0), skia.Point(0, h)], [C(top), C(bottom)])
+        [skia.Point(0, 0), skia.Point(0, h or H)], [C(top), C(bottom)])
     p = paint()
     p.setShader(shader)
-    canvas.drawRect(skia.Rect.MakeXYWH(0, 0, w, h), p)
+    canvas.drawRect(skia.Rect.MakeXYWH(0, 0, w or W, h or H), p)
 
 
 def light_pool(canvas, cx, cy, r, rgb, strength=0.30, mode=skia.BlendMode.kScreen,
-               w=W, h=H):
+               w=None, h=None):
     shader = skia.GradientShader.MakeRadial(
         skia.Point(cx, cy), r, [C(rgb, strength), C(rgb, 0.0)])
     p = paint()
     p.setShader(shader)
     p.setBlendMode(mode)
-    canvas.drawRect(skia.Rect.MakeXYWH(0, 0, w, h), p)
+    canvas.drawRect(skia.Rect.MakeXYWH(0, 0, w or W, h or H), p)
 
 
-def speckle(canvas, rgb, n=9000, seed=4, alpha=0.05, rad=1.5, w=W, h=H):
+def speckle(canvas, rgb, n=9000, seed=4, alpha=0.05, rad=1.5, w=None, h=None):
     rng = random.Random(seed)
     path = skia.Path()
     for _ in range(n):
-        path.addCircle(rng.uniform(0, w), rng.uniform(0, h), rng.uniform(rad * 0.4, rad))
+        path.addCircle(rng.uniform(0, w or W), rng.uniform(0, h or H),
+                       rng.uniform(rad * 0.4, rad))
     canvas.drawPath(path, paint(C(rgb, alpha)))
 
 
-def dot_grid(canvas, rgb, step=26, rad=2.2, alpha=0.16, x0=M, y0=None, x1=None, y1=None):
+def dot_grid(canvas, rgb, step=26, rad=2.2, alpha=0.16, x0=None, y0=None, x1=None, y1=None):
     path = skia.Path()
     for y in range(y0, y1, step):
-        for x in range(x0, x1, step):
+        for x in range(x0 if x0 is not None else M, x1, step):
             path.addCircle(x, y, rad)
     canvas.drawPath(path, paint(C(rgb, alpha)))
 
@@ -767,6 +772,12 @@ class Sheet:
         # card: sampling or verifying against the page would let type run off the
         # paper it is printed on and call that clean.
         self.w, self.h = surface.width(), surface.height()
+        # The pin's own margin is 84 px on a 1000-px short edge, and every offset
+        # in the shipped templates is counted from that. Carrying the ratio on the
+        # sheet means a different frame scales instead of breaking, and at the
+        # pin's 1000 px both of these are the numbers the globals already say.
+        self.m = int(round(min(self.w, self.h) * 0.084))
+        self.scale = min(self.w, self.h) / 1000.0
         self.slots: list[Slot] = []
         self.problems: list[str] = []
         self.notes: list[str] = []
@@ -801,7 +812,7 @@ class Sheet:
                     cy + x * math.sin(a) + y * math.cos(a))
                    for x in (-w2, w2) for y in (-h2, h2)]
         xs, ys = [c[0] for c in corners], [c[1] for c in corners]
-        if min(xs) < 0 or max(xs) > W or min(ys) < 0 or max(ys) > H:
+        if min(xs) < 0 or max(xs) > self.w or min(ys) < 0 or max(ys) > self.h:
             self.problems.append(
                 f"card at ({cx:.0f},{cy:.0f}) {angle:+.1f}deg runs off the canvas: "
                 f"x {min(xs):.0f}..{max(xs):.0f}, y {min(ys):.0f}..{max(ys):.0f}")
@@ -969,9 +980,9 @@ def cls_names(cls):
     return [n for n in CLASS_ORDERS[cls] if n in TEMPLATES]
 
 
-def template(name, blurb, cls="elegant"):
+def template(name, blurb, cls="elegant", frame="pin"):
     def deco(fn):
-        TEMPLATES[name] = (fn, blurb, cls)
+        TEMPLATES[name] = (fn, blurb, cls, frame)
         return fn
     return deco
 
@@ -997,23 +1008,24 @@ def bg(sh, P, th, invert=False, pool=None, tooth=None, dev=True):
     and the over-cap pins ship as JPEG — which is how the good ones always shipped.
     """
     dark = (P["mode"] == "dark") != invert
-    w, h = W // BG_SCALE, H // BG_SCALE
+    w, h = sh.w // BG_SCALE, sh.h // BG_SCALE
     sub = skia.Surface.MakeRasterN32Premul(w, h)
     cv = sub.getCanvas()
     ground(cv, P["deep1"] if dark else P["paper1"],
            P["deep2"] if dark else P["paper2"], w, h)
     p = th["pool"] if pool is None else pool
-    light_pool(cv, w * 0.72, h * (0.26 if dark else 0.18), 900 // BG_SCALE, P["accent"],
+    light_pool(cv, w * 0.72, h * (0.26 if dark else 0.18),
+               int(round(900 * sh.scale)) // BG_SCALE, P["accent"],
                p if dark else p * 0.42,
                skia.BlendMode.kScreen if dark else skia.BlendMode.kMultiply, w, h)
     sh.cv.drawImageRect(sub.makeImageSnapshot(), skia.Rect.MakeWH(w, h),
-                        skia.Rect.MakeWH(W, H),
+                        skia.Rect.MakeWH(sh.w, sh.h),
                         skia.SamplingOptions(skia.FilterMode.kLinear,
                                              skia.MipmapMode.kNone))
     t = th["tooth"] if tooth is None else tooth
     if t:
         speckle(sh.cv, P["glow"] if dark else P["ink"], n=t, seed=th["seed"],
-                alpha=0.05, rad=1.4)
+                alpha=0.05, rad=1.4, w=sh.w, h=sh.h)
     if dev:
         device(sh, P, th["device"], dark)
     return dark
@@ -1026,55 +1038,61 @@ def device(sh, P, kind, dark):
     reading as duplicates is that one carries a dot field and the next carries
     rings. Alpha is deliberately near the noise floor — a device you notice is a
     device competing with the type.
+
+    The steps here (`i * 46`, `90 + i * 74`, a 5-band run starting at `H*0.56`) are
+    counted against a 1500-px page, so the anchors scale but the counts do not:
+    a device that fits the pin walks off a landscape sheet. Specimens therefore
+    paint `bg(..., dev=False)` and draw their own furniture.
     """
+    Wd, Hd, Md = sh.w, sh.h, sh.m
     ink, mute = (P["glow"], mix(P["glow"], P["deep2"], 0.4)) if dark \
         else (P["ink"], mix(P["ink"], P["paper2"], 0.4))
     cv = sh.cv
     if kind == "dots":
-        dot_grid(cv, mute, step=34, rad=2.0, alpha=0.20, x0=M, y0=int(H * 0.62),
-                 x1=W - M, y1=int(H - 250))
+        dot_grid(cv, mute, step=34, rad=2.0, alpha=0.20, x0=Md, y0=int(Hd * 0.62),
+                 x1=Wd - Md, y1=int(Hd - 250))
     elif kind == "grid":
         for i in range(9):
-            y = H * 0.60 + i * 46
-            rule(cv, M, y, W - M, y, mute, 1.0, 0.16)
+            y = Hd * 0.60 + i * 46
+            rule(cv, Md, y, Wd - Md, y, mute, 1.0, 0.16)
         for i in range(9):
-            x = M + i * ((W - 2 * M) / 8)
-            rule(cv, x, H * 0.60, x, H - 250, mute, 1.0, 0.16)
+            x = Md + i * ((Wd - 2 * Md) / 8)
+            rule(cv, x, Hd * 0.60, x, Hd - 250, mute, 1.0, 0.16)
     elif kind == "bands":
         for i in range(5):
-            y = H * 0.56 + i * 96
+            y = Hd * 0.56 + i * 96
             q = paint(C(mute, 0.07))
-            cv.drawRect(skia.Rect.MakeXYWH(0, y, W, 46), q)
+            cv.drawRect(skia.Rect.MakeXYWH(0, y, Wd, 46), q)
     elif kind == "rings":
         q = paint(C(mute, 0.16), style=skia.Paint.kStroke_Style, width=1.6)
         for i in range(6):
-            cv.drawCircle(W * 0.82, H * 0.80, 90 + i * 74, q)
+            cv.drawCircle(Wd * 0.82, Hd * 0.80, 90 + i * 74, q)
     elif kind == "rays":
         q = paint(C(mute, 0.14), style=skia.Paint.kStroke_Style, width=2.2)
         for i in range(13):
             a = math.radians(-186 + i * 11)
-            cv.drawLine(W * 0.14, H * 0.86,
-                        W * 0.14 + math.cos(a) * 1500, H * 0.86 + math.sin(a) * 1500, q)
+            cv.drawLine(Wd * 0.14, Hd * 0.86,
+                        Wd * 0.14 + math.cos(a) * 1500, Hd * 0.86 + math.sin(a) * 1500, q)
     elif kind == "hatch":
         # Manuscript ruling: faint lines the scribe pricked before he wrote, plus
         # the margin line they were pricked to. Under the type, never against it.
-        y0, y1 = int(H * 0.16), int(H * 0.86)
+        y0, y1 = int(Hd * 0.16), int(Hd * 0.86)
         step = 46
         for i in range((y1 - y0) // step):
-            rule(cv, M * 0.66, y0 + i * step, W - M * 0.66, y0 + i * step,
+            rule(cv, Md * 0.66, y0 + i * step, Wd - Md * 0.66, y0 + i * step,
                  mute, 1.0, 0.11)
-        rule(cv, W * 0.13, y0 - 40, W * 0.13, y1 + 40,
+        rule(cv, Wd * 0.13, y0 - 40, Wd * 0.13, y1 + 40,
              P["accent"], 1.2, 0.14)
     elif kind == "lanes":
         # The track under the type: water-lane lines ruled the length of the page,
         # and the one centre line a rower is told to hold. Same near-silence
         # contract as `hatch` — a device you notice fights the headline.
-        y0, y1 = int(H * 0.14), int(H - 250)
+        y0, y1 = int(Hd * 0.14), int(Hd - 250)
         step = 58
         for i in range((y1 - y0) // step):
-            rule(cv, M * 0.6, y0 + i * step, W - M * 0.6, y0 + i * step,
+            rule(cv, Md * 0.6, y0 + i * step, Wd - Md * 0.6, y0 + i * step,
                  mute, 1.0, 0.13)
-        rule(cv, W * 0.5, y0 - 30, W * 0.5, y1, P["accent"], 1.4, 0.12)
+        rule(cv, Wd * 0.5, y0 - 30, Wd * 0.5, y1, P["accent"], 1.4, 0.12)
     elif kind == "ruling":
         # A penman's band rather than `hatch`'s manuscript ruling: the lines come
         # in pairs, a waist and a hair above it, stacked down the page, because a
@@ -1082,14 +1100,14 @@ def device(sh, P, kind, dark):
         # rule a practice sheet is folded to. No slant guides: `device()` cannot
         # see the face it is under, and a diagonal rule behind an upright letter
         # is an instruction the letter does not follow.
-        y0, y1 = int(H * 0.16), int(H - 250)
+        y0, y1 = int(Hd * 0.16), int(Hd - 250)
         step = 92
         for i in range((y1 - y0) // step):
             y = y0 + i * step
-            rule(cv, M * 0.7, y, W - M * 0.7, y, mute, 1.0, 0.10)
-            rule(cv, M * 0.7, y + 22, W - M * 0.7, y + 22, mute, 1.0, 0.07)
+            rule(cv, Md * 0.7, y, Wd - Md * 0.7, y, mute, 1.0, 0.10)
+            rule(cv, Md * 0.7, y + 22, Wd - Md * 0.7, y + 22, mute, 1.0, 0.07)
         for dx in (0.0, 8.0):
-            rule(cv, W * 0.11 + dx, y0 - 40, W * 0.11 + dx, y1 + 40,
+            rule(cv, Wd * 0.11 + dx, y0 - 40, Wd * 0.11 + dx, y1 + 40,
                  P["accent"], 1.2, 0.12)
 
 
@@ -1165,17 +1183,19 @@ def _eyebrow_rule(sh):
     return slot.ink.b + 16 if slot else 170
 
 
-def eyebrow(sh, ctx, text, invert=False, y=128):
+def eyebrow(sh, ctx, text, invert=False, y=None):
     """Small tracked title case over a hairline: the series' opening signature."""
     P, L = ctx["pal"], ctx["label"]
     ink, mute, _ = field(P, invert)
     text = tc(text)
-    sh.text("eyebrow", L, text, Box(M, y, W - 2 * M - 70, 26), hi=21, lo=13,
-            color=mute, track=0.22, align="left", valign="top", min_read=13)
+    y = int(round(128 * sh.scale)) if y is None else y
+    hi, lo = 21 * sh.scale, 13 * sh.scale
+    sh.text("eyebrow", L, text, Box(sh.m, y, sh.w - 2 * sh.m - 70, 26), hi=hi, lo=lo,
+            color=mute, track=0.22, align="left", valign="top", min_read=lo)
     slot = _slot(sh, "eyebrow")
     if not slot:
         return y
-    rule(sh.cv, M, slot.ink.b + 16, W - M, slot.ink.b + 16, ink, 1.0, 0.30)
+    rule(sh.cv, sh.m, slot.ink.b + 16, sh.w - sh.m, slot.ink.b + 16, ink, 1.0, 0.30)
     return slot.ink.b + 16
 
 
@@ -1206,28 +1226,32 @@ def edge_type(sh, ctx, text, invert=False, x=None, cy=None):
     P, L = ctx["pal"], ctx["label"]
     ink, mute, _ = field(P, invert)
     text = tc(text)
-    x = x if x is not None else W - 34
-    cy = cy if cy is not None else H * 0.66
+    x = x if x is not None else sh.w - int(round(34 * sh.scale))
+    cy = cy if cy is not None else sh.h * 0.66
+    size, track = 19 * sh.scale, 4.2 * sh.scale
     sh.cv.save()
     sh.cv.translate(x, cy)
     sh.cv.rotate(-90)
-    label(sh.cv, L, text, 0, 0, 19, mute, tracking=4.2, alpha=0.62)
+    label(sh.cv, L, text, 0, 0, size, mute, tracking=track, alpha=0.62)
     sh.cv.restore()
-    sh.mark("edge", Box(x - 24, cy - L.measure(text, 19, 4.2), 24,
-                        L.measure(text, 19, 4.2)), collide=False)
+    sh.mark("edge", Box(x - 24 * sh.scale, cy - L.measure(text, size, track),
+                        24 * sh.scale, L.measure(text, size, track)), collide=False)
 
 
 def footer(sh, ctx, at="Set in", invert=False):
     P, L = ctx["pal"], ctx["label"]
     ink, mute, _ = field(P, invert)
-    rule(sh.cv, M, H - 236, M + 96, H - 236, P["accent"], 3.0)
-    sh.text("name", L, tc(f"{at} {ctx['name']}"), Box(M, H - 210, W - 2 * M, 40),
-            hi=27, lo=18, color=ink, track=0.16, align="left", valign="top",
-            min_read=18)
+    rail = sh.h - int(round(236 * sh.scale))
+    rule(sh.cv, sh.m, rail, sh.m + int(round(96 * sh.scale)), rail, P["accent"], 3.0)
+    sh.text("name", L, tc(f"{at} {ctx['name']}"),
+            Box(sh.m, sh.h - int(round(210 * sh.scale)), sh.w - 2 * sh.m, 40),
+            hi=27 * sh.scale, lo=18 * sh.scale, color=ink, track=0.16, align="left",
+            valign="top", min_read=18 * sh.scale)
     if ctx["copy"].get("sub"):
         sh.text("sub", L, tc(ctx["copy"]["sub"]),
-                Box(M, H - 172, W - 2 * M, 34), hi=20, lo=14, color=mute,
-                track=0.16, align="left", valign="top", min_read=14)
+                Box(sh.m, sh.h - int(round(172 * sh.scale)), sh.w - 2 * sh.m, 34),
+                hi=20 * sh.scale, lo=14 * sh.scale, color=mute,
+                track=0.16, align="left", valign="top", min_read=14 * sh.scale)
 
 
 EDGE = lambda ctx: (f"{ctx['facts']['glyphs']} Glyphs"
@@ -3350,8 +3374,9 @@ def clean(ctx, text):
 
 
 def render(name, ctx):
-    fn, _blurb, _cls = TEMPLATES[name]
-    surf = skia.Surface.MakeRasterN32Premul(W, H)
+    fn, _blurb, _cls, frame = TEMPLATES[name]
+    fw, fh = FRAMES[frame]
+    surf = skia.Surface.MakeRasterN32Premul(fw, fh)
     sh = Sheet(surf)
     th, pal = theme_for(name, ctx)
     ctx = dict(ctx, copy={k: clean(ctx, v or "") for k, v in ctx["copy"].items()},
@@ -3542,7 +3567,7 @@ def main():
         for cls in CLASS_ORDERS:
             print(f"  [{cls}]")
             for k in cls_names(cls):
-                _f, blurb, _c = TEMPLATES[k]
+                _f, blurb, _c, _fr = TEMPLATES[k]
                 print(f"    {k:13s} {blurb}")
         return 0
 
