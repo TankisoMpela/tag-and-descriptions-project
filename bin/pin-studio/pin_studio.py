@@ -4251,6 +4251,12 @@ def main():
     cls = args.cls or (brief or {}).get("class") or "elegant"
     if cls not in CLASS_ORDERS:
         ap.error(f"unknown class {cls!r} — try one of {', '.join(CLASS_ORDERS)}")
+    if args.specimens and not (args.cls or (brief or {}).get("class")):
+        # A pin with no class still has four authored headlines to argue with; a
+        # specimen has none, so the default would ship a blackletter's sheets in
+        # an elegant's clothes and nothing downstream could tell.
+        ap.error("--specimens needs --class: the sheet says what the font is, "
+                 "so it cannot guess")
     warns = []
     if brief is not None and not args.specimens:
         # check_brief() exists to stop five *authored* headlines repeating each

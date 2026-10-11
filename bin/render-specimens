@@ -1,0 +1,5 @@
+#!/bin/sh
+# The two factual specimen sheets, at 3:2 and 1:1, drawn from the font file alone.
+# Same renderer and same venv as the pins; --specimens is what switches the run.
+d=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+exec "$d/render-pins" --specimens "$@"
