@@ -1,0 +1,10 @@
+#!/bin/sh
+# The pin renderer needs skia, which the system python3 does not have.
+d=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+py="$d/pin-studio/.venv/bin/python"
+if [ ! -x "$py" ]; then
+	echo "bin/pin-studio/.venv is missing (virtualenvs are not versioned). Rebuild with:" >&2
+	echo "  uv venv bin/pin-studio/.venv && uv pip install --python bin/pin-studio/.venv/bin/python -r bin/pin-studio/requirements.txt" >&2
+	exit 2
+fi
+exec "$py" "$d/pin-studio/pin_studio.py" "$@"
