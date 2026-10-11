@@ -59,6 +59,24 @@ SCRIPT_ORDER = ("guide", "copybook", "trace", "sample", "markup")
 # pinterest_1..5, so the registry, blob and daily tools never learn the word.
 CLASS_ORDERS = {"elegant": PIN_ORDER, "blackletter": BLACK_ORDER,
                 "sports": SPORT_ORDER, "script": SCRIPT_ORDER}
+# The same four classes, on their second surface: the factual specimen sheets that
+# replace the Pillow ones. Two sheets per class, each drawn at both marketplace
+# ratios, so the order is four names per class and the registry holds sixteen —
+# eight bodies, each registered twice. The class is in the name because TEMPLATES
+# is flat and `letters_3x2` cannot belong to four classes at once.
+SPECIMEN_FRAMES = ("3x2", "1x1")
+SPECIMEN_SHEETS = ("letters", "numerals")
+SPECIMEN_ORDERS = {cls: tuple(f"{cls}_{s}_{f}"
+                              for f in SPECIMEN_FRAMES for s in SPECIMEN_SHEETS)
+                   for cls in CLASS_ORDERS}
+# One theme per class, not per sheet: sixteen preference rows would be sixteen
+# chances to drift, and a specimen is one kind of picture whatever the class.
+SPECIMEN_THEME = {"elegant": "sage", "blackletter": "vellum",
+                  "sports": "asphalt", "script": "graphite"}
+# ...and with a brief in hand the sheet wears the world the class's set-equivalent
+# pin wore, so a shop's five pins and its two specimens are one series.
+SPECIMEN_SET = {"elegant": "set", "blackletter": "knotband",
+                "sports": "lane", "script": "markup"}
 LABEL = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Regular.ttf")
 LABEL_B = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Medium.ttf")
 CLEAN = {"liga": 0}         # display ligs stripe the specimen marks
@@ -978,6 +996,11 @@ TEMPLATES = {}
 def cls_names(cls):
     """Template names owned by one class, in design order."""
     return [n for n in CLASS_ORDERS[cls] if n in TEMPLATES]
+
+
+def cls_names_spec(cls):
+    """Specimen sheet names owned by one class, in design order."""
+    return [n for n in SPECIMEN_ORDERS[cls] if n in TEMPLATES]
 
 
 def template(name, blurb, cls="elegant", frame="pin"):
@@ -3353,8 +3376,20 @@ def shout(ctx, text):
 
 
 def theme_for(name, ctx):
-    """The theme instance for one pin: its palette, its mode, its colour ladder."""
-    th = dict(THEMES[ctx["themes"].get(name, THEME_PREF[name][0])])
+    """The theme instance for one sheet: its palette, its mode, its colour ladder.
+
+    Only the five pins get a rolled theme, because only the five pins are asked to
+    look different from each other. A specimen sheet carries no authored copy, so
+    it takes the class's own ground — or, with a brief in hand, whatever the
+    class's set-equivalent pin was given.
+    """
+    _fn, _blurb, tcls, frame = TEMPLATES[name]
+    key = ctx["themes"].get(name)
+    if key is None:
+        key = (SPECIMEN_THEME[tcls] if frame != "pin" else THEME_PREF[name][0])
+        if frame != "pin":
+            key = ctx["themes"].get(SPECIMEN_SET[tcls], key)
+    th = dict(THEMES[key])
     if ctx["palette_override"]:
         th["pal"] = ctx["palette_override"]
     if ctx["mode_override"]:
