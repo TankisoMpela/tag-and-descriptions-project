@@ -3408,12 +3408,14 @@ def spec_stage(sh, y0):
     return Box(sh.m, y0, sh.w - 2 * sh.m, spec_floor(sh) - y0)
 
 
-def spec_grove_band(sh, ctx, y0):
-    """The elegant band: the theme's own ornament row, at half size.
+def spec_orn_band(sh, ctx, y0):
+    """The head band every non-manuscript class already draws: its own ornaments.
 
-    `set` draws it to break up a funnel; a sheet draws it so the two sheets are
-    visibly one pair. Returns the bottom of the ink, because an ornament that
-    hangs below its box takes the first row's air with it.
+    Each theme carries an ornament set, so one helper gives elegant the arch and the
+    star, sports the chevrons and script the nibs — the sheet is wearing the same
+    art its pins wear, which is what makes the pair visibly one font. `set` draws it
+    to break up a funnel; a sheet draws it as the head. Returns the bottom of the
+    ink, because an ornament that hangs below its box takes the first row's air.
     """
     P = ctx["pal"]
     ink, _mute, _ = field(P)
@@ -3421,6 +3423,8 @@ def spec_grove_band(sh, ctx, y0):
     band = Box(sh.m, y0, sh.w - 2 * sh.m, int(round(76 * sh.vscale)))
     bot = band.b
     for i, (kind, fx_, fy, s, alpha) in enumerate(art["top"]):
+        # 0.46 of the size a pin gives the same ornament: on a pin the band
+        # shares the page with a headline, on a sheet the type is the subject.
         s = s * 0.46 * sh.scale
         cy = band.y + max(s * 0.6, min(band.h * fy, band.h - s * 0.6))
         draw_orn(sh, f"orn{i}", kind, band.x + band.w * fx_, cy, s,
@@ -3436,6 +3440,7 @@ def spec_letters(sh, ctx):
     the footer rather than shipping a row with holes in it; a caps-only face gets
     the capitals twice, which is the honest specimen of it.
     """
+    T = ctx["display"]
     ups = [c for c in LETTERS_UP if usable(ctx, c)]
     los = [c for c in LETTERS_LOW if usable(ctx, c)]
     if len(ups) < 4 and len(los) < 4:
@@ -3448,6 +3453,30 @@ def spec_letters(sh, ctx):
         return ups, ups, f"{up} \u00b7 uppercase only \u00b7"
     if not ups:
         return los, los, f"{low} \u00b7 lowercase only \u00b7"
+    # Unicameral faces — a lot of brush and chiselled display work — ship a
+    # lowercase that is the capital copied, sometimes with a different sidebearing
+    # but the same outline. Two rows then look like a rendering bug; the label is
+    # what makes them a fact.
+    def shape(ch):
+        p = T.path(ch, 100)[0]
+        pts = [(q.x(), q.y()) for q in p.getPoints()]
+        if not pts:
+            return None
+        x0, y0 = pts[0]
+        # Relative to the pen's first point: a sidebearing is a translation.
+        return [int(v) for v in p.getVerbs()], [(x - x0, y - y0)
+                                               for x, y in pts]
+
+    def copied(a, b):
+        # 100 px is drawn on a 1/64-pixel grid, so two copies of one outline can
+        # still differ by that much; 0.05 is that noise and nothing visible.
+        if not a or not b or a[0] != b[0] or len(a[1]) != len(b[1]):
+            return False
+        return all(abs(x - u) <= 0.05 and abs(y - v) <= 0.05
+                   for (x, y), (u, v) in zip(a[1], b[1]))
+
+    if all(copied(shape(c), shape(c.upper())) for c in los):
+        return ups, los, f"{up} \u00b7 {low} drawn as capitals \u00b7"
     return ups, los, f"{up} \u00b7 {low} \u00b7"
 
 
@@ -3500,7 +3529,7 @@ def spec_char_block(sh, ctx, seqs, stage):
     rows = spec_grid(T, seqs, stage.w, stage.h, hi=900.0 * sh.scale,
                      lead_frac=0.30, gap=gap)
     if not rows:
-        return False
+        return 0
     ground = (sh._behind(Box(stage.x, stage.y, stage.w, min(stage.h, 300.0)))
               or lum(P["deep2"]))
     q = paint(C(readable(ground, rung(P, 0), 4.5), 1.0))
@@ -3511,11 +3540,11 @@ def spec_char_block(sh, ctx, seqs, stage):
     spare = max(0.0, (stage.h - ink - lead * (len(rows) - 1)) / 2)
     draw_rows(sh, T, rows, Box(stage.x, stage.y + spare, stage.w, stage.h),
               lambda p, j, i: sh.cv.drawPath(p, q), "row", gap=gap, lead=lead)
-    return True
+    return len(rows)
 
 
 @specimen("elegant", "letters",
-          "A–J and a–j at one size, under the grove band")
+          "A–J and a–j at one size, under the theme's ornament band")
 def s_letters_elegant(sh, ctx):
     """`set`'s grammar without the funnel: the ornament band, then the letters.
 
@@ -3529,7 +3558,7 @@ def s_letters_elegant(sh, ctx):
         return
     ups, los, claim = built
     y0 = spec_head(sh, ctx, "Character Set")
-    y1 = spec_grove_band(sh, ctx, y0) + int(round(14 * sh.vscale))
+    y1 = spec_orn_band(sh, ctx, y0) + int(round(14 * sh.vscale))
     if not spec_char_block(sh, ctx, [ups, los], spec_stage(sh, y1)):
         sh.problems.append("letters: no row of A\u2013J can be set to this measure")
         return
@@ -3540,14 +3569,14 @@ def s_letters_elegant(sh, ctx):
 @specimen("elegant", "numerals",
           "the ten figures and the marks, one size, on the same band")
 def s_numerals_elegant(sh, ctx):
-    """The grove band again, so the two sheets are visibly one pair."""
+    """The same band again, so the two sheets are visibly one pair."""
     spec_bg(sh, ctx, pool=0.08)
     built = spec_figures(sh, ctx)
     if not built:
         return
     figs, marks, claim = built
     y0 = spec_head(sh, ctx, "Figures & Punctuation")
-    y1 = spec_grove_band(sh, ctx, y0) + int(round(14 * sh.vscale))
+    y1 = spec_orn_band(sh, ctx, y0) + int(round(14 * sh.vscale))
     if not spec_char_block(sh, ctx, [figs, marks], spec_stage(sh, y1)):
         sh.problems.append("numerals: no row of figures can be set to this measure")
         return
@@ -3586,7 +3615,10 @@ def spec_folio(sh, ctx, y0, dark, cap=""):
                 hi=side * 0.9, lo=20, max_lines=1, min_read=0.05 * sh.h,
                 color=readable(g, rung(P, 1), 4.5))
         x, head = ib.r + int(round(24 * s)), side
-    band = Box(x, y0 + (head - bh) // 2, sh.w - sh.m - x, bh)
+    # Centred against the initial when there is one; never above y0, which is
+    # where the head rule ended — a band with nothing beside it would otherwise
+    # be half over the caption.
+    band = Box(x, y0 + max(0, (head - bh) // 2), sh.w - sh.m - x, bh)
     knot_band(sh, band, ink, ground,
               waves=max(4, int(round(band.w / (162 * s)))))
     top = max(band.b, y0 + head) + int(round(26 * s))
@@ -3648,6 +3680,75 @@ def s_numerals_blackletter(sh, ctx):
     footer(sh, ctx, at=claim, exact=True)
 
 
+def spec_lane_rules(sh, ctx, stage, n):
+    """A hairline under every row: `lane`'s start list, drawn after the type.
+
+    The rule is what a monoline gets judged on — the spacing has to hold when every
+    row shares a baseline — and it is the one piece of this class's furniture that
+    is structure rather than ornament, which is why sports gets a treatment of its
+    own rather than another band of chevrons. Drawn after the rows, so it can never
+    cross ink, and clamped to the stage, so the last one cannot step on the footer.
+    """
+    _ink, mute, _ = field(ctx["pal"])
+    for i in range(n):
+        s = _slot(sh, f"row{i}")
+        if s:
+            y = min(s.ink.b + int(round(12 * sh.scale)), stage.b)
+            rule(sh.cv, stage.x, y, stage.x + stage.w, y, mute, 1.2, 0.55)
+
+
+@specimen("sports", "letters",
+          "A–J and a–j at one size, every row standing on its own rule")
+def s_letters_sports(sh, ctx):
+    """The start list, which was already the sheet's grammar.
+
+    `lane` puts twenty-six capitals on rules because a team sheet is the only
+    thing a monoline has to be good at; the sheet puts twenty letters on the same
+    rules and asks the same question at twice the size.
+    """
+    spec_bg(sh, ctx, pool=0.08)
+    built = spec_letters(sh, ctx)
+    if not built:
+        return
+    ups, los, claim = built
+    y0 = spec_head(sh, ctx, "Character Set")
+    stage = spec_stage(sh, spec_orn_band(sh, ctx, y0)
+                       + int(round(14 * sh.vscale)))
+    n = spec_char_block(sh, ctx, [ups, los], stage)
+    if not n:
+        sh.problems.append("letters: no row of A\u2013J can be set to this measure")
+        return
+    spec_lane_rules(sh, ctx, stage, n)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx, at=claim, exact=True)
+
+
+@specimen("sports", "numerals",
+          "figures and marks on the timing board's own lines")
+def s_numerals_sports(sh, ctx):
+    """The split-time row: figures first, marks under them, each on a rule.
+
+    A race sheet's numbers are the whole document, and this is the one place on
+    the pair where the face is checked at the size it will actually be used — the
+    scoreboard, not the poster.
+    """
+    spec_bg(sh, ctx, pool=0.08)
+    built = spec_figures(sh, ctx)
+    if not built:
+        return
+    figs, marks, claim = built
+    y0 = spec_head(sh, ctx, "Figures & Punctuation")
+    stage = spec_stage(sh, spec_orn_band(sh, ctx, y0)
+                       + int(round(14 * sh.vscale)))
+    n = spec_char_block(sh, ctx, [figs, marks], stage)
+    if not n:
+        sh.problems.append("numerals: no row of figures can be set to this measure")
+        return
+    spec_lane_rules(sh, ctx, stage, n)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx, at=claim, exact=True)
+
+
 def build_ctx(font_path, name, copy, palette=None, mode=None, about="",
               cls="elegant"):
     """Everything a pin needs, decided from the font's own data.
@@ -3656,6 +3757,11 @@ def build_ctx(font_path, name, copy, palette=None, mode=None, about="",
     reproducible from the font alone: same file, same names, same colours.
     """
     cmap, flagged, facts = audit(font_path)
+    tt = TTFont(str(font_path), fontNumber=0)
+    # A sheet that names nothing sells nothing. When nobody authored a name the
+    # font's own family record speaks — that is a fact about the file, which is
+    # all a specimen is allowed to carry.
+    name = name or (tt["name"].getDebugName(1) or Path(font_path).stem).strip()
     display = Type(font_path)
     facts["stem"] = stem_ratio(display, facts["simple"] or "H")
     over = 0
@@ -3672,11 +3778,10 @@ def build_ctx(font_path, name, copy, palette=None, mode=None, about="",
         "facts": facts, "chars": {chr(cp) for cp in cmap}, "flagged": flagged,
         "name": name, "copy": copy,
         "display": display, "label": Type(LABEL_B if LABEL_B.exists() else LABEL),
-        "tt": TTFont(str(font_path), fontNumber=0),
+        "tt": tt,
         "family": family, "why": why, "class": cls,
-        "themes": assign_themes(name or Path(font_path).stem,
-                                sorted(cls_names(cls)), cls),
-        "tone_offs": {},
+        "themes": assign_themes(name, sorted(cls_names(cls)), cls),
+        "tone_offs": {}, "briefed": False,
         "palette_override": palette, "mode_override": mode,
     }
 
@@ -3727,7 +3832,10 @@ def theme_for(name, ctx):
     key = ctx["themes"].get(name)
     if key is None:
         key = (SPECIMEN_THEME[tcls] if frame != "pin" else THEME_PREF[name][0])
-        if frame != "pin":
+        # Only a brief is a decision. Without one, `themes` is the roll, and a
+        # sheet that took its ground from a hash of the filename would be a
+        # coin flip wearing the name of a plan.
+        if frame != "pin" and ctx["briefed"]:
             key = ctx["themes"].get(SPECIMEN_SET[tcls], key)
     th = dict(THEMES[key])
     if ctx["palette_override"]:
@@ -4019,7 +4127,7 @@ def main():
             offs[t] = int(pin.get("tone") or 0)
             copies[t] = {k: (pin.get(k) or "")
                          for k in ("line", "sub", "over", "word")}
-        ctx = dict(ctx, themes=themes, tone_offs=offs)
+        ctx = dict(ctx, themes=themes, tone_offs=offs, briefed=True)
         per = {t: dict(ctx, copy=c, ftrs=brief["pins"][t].get("ftrs") or {})
                for t, c in copies.items()}
     if not args.as_json:
