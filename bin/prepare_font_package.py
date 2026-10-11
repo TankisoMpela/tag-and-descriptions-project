@@ -2,10 +2,10 @@
 """Deterministic font preparation for the FontFairy workflow (Agent 13).
 
 This is the whole mechanical pass in one invocation: discover the raw fonts,
-rewrite the name table and OS/2 flags, emit OTF/TTF/WOFF/WOFF2, copy the factual
-specimens, leave the empty image drop directory, write the audit reports, and
-build the three delivery archives, and sanitizes every delivered format with the
-OpenType Sanitizer as an independent second parser.
+rewrite the name table and OS/2 flags, emit OTF/TTF/WOFF/WOFF2, leave the empty
+image drop directory, write the audit reports, build the three delivery archives,
+and sanitize every delivered format with the OpenType Sanitizer as an independent
+second parser.
 
 An OTF (CFF) source is the master and the TTF is derived from it with cu2qu. A
 glyf-only source — the usual shape of a marketplace demo download — is handled
@@ -366,24 +366,6 @@ def run_preflight(workspace: Path) -> tuple[str, bool]:
     return (result.stdout or result.stderr).strip(), result.returncode == 0
 
 
-def copy_specimens(workspace: Path, out: Path) -> list[tuple[str, str, int, str]]:
-    """Copy the four factual specimen PNGs unchanged. Return mapping rows."""
-    source = workspace / "prepared_visuals" / "specimens"
-    rows: list[tuple[str, str, int, str]] = []
-    for ratio in ("3x2", "1x1"):
-        src_dir = source / ratio
-        if not src_dir.is_dir():
-            continue
-        dst_dir = out / "specimens" / ratio
-        dst_dir.mkdir(parents=True, exist_ok=True)
-        for png in sorted(src_dir.glob("*.png")):
-            target = dst_dir / png.name
-            shutil.copy2(png, target)
-            digest = hashlib.sha256(target.read_bytes()).hexdigest()
-            rows.append((rel(png), rel(target), target.stat().st_size, digest))
-    return rows
-
-
 def build_archive(
     target: Path,
     package: Path,
@@ -534,9 +516,8 @@ def main() -> int:
         generated.extend(make_woff(otf))
         print(f"  ttf/woff/woff2 {otf.stem}")
 
-    specimen_rows = copy_specimens(workspace, out)
     (out / "visuals" / "New-Images").mkdir(parents=True, exist_ok=True)
-    print(f"  specimens      {len(specimen_rows)} copied; drop directory ready")
+    print("  drop directory ready; specimens are rendered in Step 2b")
 
     if args.description_file:
         shutil.copy2(args.description_file, out / "description.txt")
@@ -558,26 +539,8 @@ def main() -> int:
         f"- Package derivation: {args.name} → {package.name}", "",
         "## Output Paths",
         f"- Font Package: {rel(package)}/",
-        f"- Specimens: {rel(out / 'specimens')}/",
     ]
     (out / "name-report.md").write_text("\n".join(name_report) + "\n", encoding="utf-8")
-
-    # specimen-source-manifest.md
-    manifest = ["# Specimen Source Manifest", "",
-                f"## Copy Status: {'SUCCESS' if specimen_rows else 'NO SPECIMENS FOUND'}", ""]
-    if specimen_rows:
-        manifest += ["All factual specimen PNGs were copied unchanged from the Agent 27 handoff.", "",
-                     "### Source → Destination Mapping", "",
-                     "| Source Path | Destination Path | Byte Size | SHA-256 |",
-                     "|-------------|------------------|-----------|---------|"]
-        for src, dst, size, digest in specimen_rows:
-            manifest.append(f"| {src} | {dst} | {size} | {digest} |")
-    else:
-        manifest += [f"No specimens found under {rel(workspace / 'prepared_visuals' / 'specimens')}; nothing was copied.", ""]
-    manifest += ["", "### Notes",
-                 "- Specimens were copied byte-for-byte; no resize, recompress, rename or recolor",
-                 "- Creative marketing images remain deferred and were not processed"]
-    (out / "specimen-source-manifest.md").write_text("\n".join(manifest) + "\n", encoding="utf-8")
 
     # archives — Commercial and Personal both carry the clean package (Personal
     # may add the like note); Free-Trial-Demo is rebuilt from a temporary tree
@@ -638,7 +601,6 @@ def main() -> int:
     print(f"✅ Font Metadata & Package Complete: {rel(out)}/")
     print(f"- Winning Font Name: {args.name} (Slug: {slug})")
     print(f"- Pro package: {', '.join(sorted({p.suffix[1:].upper() for p in generated}))}")
-    print(f"- Specimens: {len(specimen_rows)} file(s)")
     print(f"- Free-Trial-Demo watermark: {stamp_note}")
     print(f"- Final images: NOT PROCESSED — drop them into "
           f"{rel(out)}/visuals/New-Images/ then run /font-final-images")

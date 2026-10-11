@@ -731,24 +731,6 @@ def write_marker(root: Path, status: str, prepared_path: Path | None = None) -> 
     (root / "VISUAL-HANDOFF-READY.md").write_text("\n".join(marker) + "\n", encoding="utf-8")
 
 
-def render_specimens(staging: Path, primary_font: Path, font_name: str) -> None:
-    specimen_output = Path(tempfile.mkdtemp(prefix="font-specimens-", dir=str(staging.parent)))
-    try:
-        renderer = Path(__file__).resolve().parent / "render_font_specimens.py"
-        subprocess.run(
-            [sys.executable, str(renderer), str(primary_font), str(specimen_output), "--name", font_name],
-            check=True,
-            cwd=Path(__file__).resolve().parent.parent,
-        )
-        for source_ratio, target_ratio in (("main", "3x2"), ("squares", "1x1")):
-            target = staging / "specimens" / target_ratio
-            target.mkdir(parents=True, exist_ok=True)
-            for source in specimen_output.joinpath(source_ratio).glob("specimen-*.png"):
-                shutil.copy2(source, target / source.name)
-    finally:
-        shutil.rmtree(specimen_output, ignore_errors=True)
-
-
 def validate(staging: Path, allow_pending: bool = False) -> None:
     validator = Path(__file__).resolve().parent / "validate_font_visual_handoff.py"
     command = [
@@ -897,7 +879,6 @@ def main() -> int:
                 write_placeholder_png(svg, staging / ratio / f"promo_{index}.png")
                 layout.append((f"promo_{index}", ratio, size, boxes))
         write_space_report(staging, layout)
-        render_specimens(staging, primary_font, font_name)
         write_manifest(staging, plan)
         derived = write_derived_views(plan_path.parent, plan)
         write_marker(staging, "pending", output)

@@ -26,10 +26,6 @@ MAX_PROMO_PHRASE_WORDS = 6
 
 
 PROMO_RE = re.compile(r"^promo_(\d+)\.png$")
-# A tuple, not a set: iterating a set of strings follows hash order, which
-# varies per process and made this validator print the same failures in a
-# different order on every run.
-SPECIMEN_NAMES = ("specimen-alphabet-numerals.png", "specimen-multilingual-glyphs.png")
 
 
 def check_png(path: Path, expected_size: tuple[int, int], failures: list[str]) -> None:
@@ -430,10 +426,6 @@ def validate_handoff_documents(
     for required in required_paths:
         if required not in manifest:
             failures.append(f"visual manifest is missing an asset row for {required}")
-    for ratio in ("3x2", "1x1"):
-        for name in SPECIMEN_NAMES:
-            if f"{ratio}/{name}" not in manifest:
-                failures.append(f"visual manifest is missing an asset row for {ratio}/{name}")
 
 
 def validate_art_direction(root: Path, failures: list[str]) -> None:
@@ -676,11 +668,6 @@ def main() -> int:
 
     validate_handoff_documents(root, counts, failures, args.allow_pending_marker)
 
-    for ratio, size in (("3x2", (2400, 1600)), ("1x1", (1600, 1600))):
-        specimen_dir = root / "specimens" / ratio
-        for name in SPECIMEN_NAMES:
-            check_png(specimen_dir / name, size, failures)
-
     plan_mode = None
     plan_path = root.parent / "visual-direction" / "visual-plan.json"
     if plan_path.is_file():
@@ -719,7 +706,7 @@ def main() -> int:
             print(f"[FAIL] {failure}")
         return 1
 
-    total = 3 + len(counts["3x2"]) * 2 + len(SPECIMEN_NAMES) * 2
+    total = 3 + len(counts["3x2"]) * 2
     if plan_mode in {"text_placeholder", "placeholder", "white_text", None}:
         source_label = "PNG/text placeholder handoff"
     else:
