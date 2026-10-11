@@ -207,20 +207,28 @@ The brief — every one of the five template keys is required:
 - `about` is required and it decides which showcase family the font is laid
   out as; the outlines alone misclassify handwritten, tech and blackletter
   faces, so say what the seller said.
-- `theme` is one of `midnight sage ember bone moss clay`, five pins want five
-  different ones (omit it and the tool rotates them for you). `tone` is 0-3:
-  which rung of the colour ladder the headline lands on.
+- `theme` is one of `midnight sage ember bone moss clay`, plus the class worlds
+  below; five pins want five different ones (omit it and the tool rotates them
+  for you). `tone` is 0-3: which rung of the colour ladder the headline lands on.
 - `line` is the headline. Five pins are five different thoughts about the font —
   what it is, what it is for, what it does to a page — written from
   `description.txt`. `word` is hero's specimen word; `sub`/`over` are the small
   lines.
 
 **One optional field: `"class"`.** Default `"elegant"` — the five keys above
-serve every face. Add `"class": "blackletter"` **only** when the seller's own
-words say blackletter, celtic, uncial, gaelic or gothic; that swaps the five
-keys for `initials knotband scriptorium folio carol`, and opens two extra
-worlds, `vellum` and `gilded`, for its themes. No other class exists yet — a
-brush, handwritten or tech face stays elegant.
+serve every face.
+
+- Add `"class": "blackletter"` **only** when the seller's own words say
+  blackletter, celtic, uncial, gaelic or gothic; that swaps the five keys for
+  `initials knotband scriptorium folio carol`, and opens two extra worlds,
+  `vellum` and `gilded`, for its themes.
+- Add `"class": "sports"` **only** when the seller's own words say sport,
+  athletic, esports, racing, gym, varsity, letterman or jersey; that swaps the
+  five keys for `crest bib lane finish timer`, and opens two extra worlds,
+  `asphalt` and `chrome`. Its `word` field means something on `crest` (the
+  nameplate token); `over` is the meet line on `bib`.
+
+No other class exists yet — a brush or handwritten face stays elegant.
 
 ```json
 {"name": "Braewick", "class": "blackletter", "about": "…rugged blackletter…",
@@ -231,6 +239,21 @@ brush, handwritten or tech face stays elegant.
    "folio":       {"line": "…", "theme": "clay",   "tone": 0},
    "carol":       {"line": "…", "theme": "sage",   "tone": 3,
                    "ftrs": {"ss01": 1}}}}
+
+{"name": "Circuit Sprint", "class": "sports",
+ "about": "…crafted to fuel designs with the pulse of competition and the energy of sport…ideal for athletic branding, team merchandise, sports event posters…",
+ "pins": {
+   "crest":  {"line": "A badge cut for the front of a jersey", "word": "Apex",
+              "theme": "asphalt", "sub": "Athletic branding"},
+   "bib":    {"line": "Read it from the back row",
+              "over": "Regional Time Trial - Lane 4",
+              "theme": "chrome",  "sub": "Team merchandise"},
+   "lane":   {"line": "Twenty-six capitals, one weight, zero hesitation",
+              "theme": "moss",    "sub": "Sports event posters"},
+   "finish": {"line": "Legible at full sprint",
+              "theme": "midnight", "sub": "Product packaging"},
+   "timer":  {"line": "The whole working set, lit at once",
+              "theme": "ember",   "sub": "Energy drink labels"}}}
 ```
 
 `ftrs` (any pin, but it means something on `carol`) names the face's own

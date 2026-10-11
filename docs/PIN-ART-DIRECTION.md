@@ -8,27 +8,29 @@ what it should *choose* to do, and in what order.
 forward-looking statement about nothing. A pin is a small poster whose subject is
 letterforms.
 
-**Status (locked 2026-10; second class added 2026-10-11).** The templates are the
-design and the design phase is closed: production is Agent 13 STEP 2 (`/font-prep`,
-inside `/full-workflow`), which authors `pins.brief.json` and runs one `bin/render-pins
---brief` command. No template work happens without a new user instruction. There are
-now two classes. The five **elegant** templates carry every font by default; the five
-**blackletter / celtic** templates carry a face whose own description says blackletter,
-celtic, uncial, gaelic or gothic, and the brief's optional `"class"` field is what
-chooses between them (piloted with Braewick). The remaining classes are note-only —
-brush (Kuro Ripper), handwritten (FineLetter) and tech/sports (IronRush) each still
-carry the label "not designed yet".
+**Status (locked 2026-10; second class added 2026-10-11; third class added
+2026-10-11).** The templates are the design and the design phase is closed: production
+is Agent 13 STEP 2 (`/font-prep`, inside `/full-workflow`), which authors
+`pins.brief.json` and runs one `bin/render-pins --brief` command. No template work
+happens without a new user instruction. There are now three classes. The five
+**elegant** templates carry every font by default; the five **blackletter / celtic**
+templates carry a face whose own description says blackletter, celtic, uncial, gaelic
+or gothic; the five **tech / sports** templates carry a face whose description says
+sport, athletic, esports, racing, gym, varsity, letterman or jersey. The brief's
+optional `"class"` field is what chooses between them (blackletter piloted with
+Braewick, sports with Circuit Sprint). Brush and handwritten remain note-only —
+"not designed yet".
 
 ---
 
 ## 0. What is decided here and what is decided in code
 
-The templates are the spec now. `bin/pin-studio/pin_studio.py` ships ten tested
-compositions in two classes — elegant `hero`, `set`, `wall`, `phrase`, `full_stack`
-and blackletter `initials`, `knotband`, `scriptorium`, `folio`, `carol` — each class
-rendered and numbered `pinterest_1..5` in its own design order, evolved from the
-`out/v6-black` series, and `--stress` proves them across faces, classes and copy
-lengths.
+The templates are the spec now. `bin/pin-studio/pin_studio.py` ships fifteen tested
+compositions in three classes — elegant `hero`, `set`, `wall`, `phrase`, `full_stack`;
+blackletter `initials`, `knotband`, `scriptorium`, `folio`, `carol`; and sports `crest`,
+`bib`, `lane`, `finish`, `timer` — each class rendered and numbered `pinterest_1..5` in
+its own design order, evolved from the `out/v6-black` series, and `--stress` proves them
+across faces, classes and copy lengths.
 
 Everything below that is a *mechanical* rule has moved into that code and is no longer
 a thing to remember:
@@ -100,9 +102,10 @@ alphabet filling the page). Grounds mix dark and paper *within* a set — that c
 is part of why the series reads as designed rather than generated.
 
 A `"class": "blackletter"` brief ships a different five, in its own order:
-`initials`, `knotband`, `scriptorium`, `folio`, `carol` (§4). Same field, same rail,
-same gates, same `pinterest_1..5` filenames — the numbering is the only thing the class
-changes about the contract, and nothing downstream learns the word.
+`initials`, `knotband`, `scriptorium`, `folio`, `carol` (§4). A `"class": "sports"`
+brief ships a third five: `crest`, `bib`, `lane`, `finish`, `timer` (§4). Same field,
+same rail, same gates, same `pinterest_1..5` filenames — the numbering is the only thing
+the class changes about the contract, and nothing downstream learns the word.
 
 ---
 
@@ -204,6 +207,31 @@ theme's own ink. Two colour worlds belong to the class only — `vellum` (marigo
 paper) and `gilded` (cobalt dark) — and `assign_themes()` keeps them out of the
 elegant rotation: an elegant set draws from the six shared worlds, a blackletter set
 from all eight.
+
+**The sports class rolls the same way, and answers the same objection.** A
+`"class": "sports"` brief is one race meet seen five ways, from the timing gantry: the
+badge, the number, the start list, the photo finish, the board. Nothing on the page is
+soft — every object is a chamfered panel, a ruled card or a hairline, because a frond on
+a race bib is the same lie a vine on a jersey is.
+
+| # | Template | The object | What it proves about the face |
+|---|---|---|---|
+| 1 | `crest` | the club badge: the face's own initial in a chamfered shield, a nameplate bar struck across the plate, chevrons at the shoulders | the letterform still identifies at logo scale, inside a shape, against a hard border — the buyer's actual job |
+| 2 | `bib` | the race number pinned to a vest: four figures in a ruled card, the meet line under them, the phrase at the foot | figures and capitals read across a gymnasium, at the largest size the page can hold |
+| 3 | `lane` | the start list: every capital the face carries at **one** size, each row standing on its own hairline, two colours alternating like lanes | even colour and rhythm side by side — the spacing proof a monoline must pass |
+| 4 | `finish` | the photo finish: a phrase cut by the centre beam, its first line run back once in stripes | running text, and the face under a motion treatment |
+| 5 | `timer` | the timing board: name, tag, then capitals, figures and punctuation in one matrix on a dot field | the whole working set at one size, including the digits `full_stack` refuses |
+
+`lane` and `timer` are the class's answer to a caps-only face: they count what they
+show (`26 Caps`, `26 Caps · 8 Figures`) instead of inheriting the `26 Upper · 26 Lower`
+claim, and they never print a lowercase the binary does not draw. The figures come from
+`usable()`, never from a typed string — a face whose `0` shares its glyph with `O` ships
+"1234", not "2026". The furniture is `orn_chevron`, `orn_checker`, `orn_bracket`,
+`crest_panel`, the `lanes` device and the `gantry` / `sector` ornament sets; `art` is
+chosen by class, never by theme, so a warm shared world cannot smuggle a scallop shell
+onto a start list. Two worlds belong to the class — `asphalt` (neutral dark, signal
+yellow) and `chrome` (paper, race red) — and `assign_themes()` keeps them out of every
+other rotation.
 
 ---
 
@@ -500,7 +528,9 @@ The locked production run — Agent 13 STEP 2, inside `/full-workflow`:
    pins, none already shipped by another font — and assign one distinct theme plus a
    tone rung per pin. Author it all once as `pins.brief.json`. If the seller's words
    say blackletter, celtic, uncial, gaelic or gothic, say `"class": "blackletter"` at
-   the top of that file; the five keys change with it, and so do `vellum`/`gilded`.
+   the top of that file; if they say sport, athletic, esports, racing, gym, varsity,
+   letterman or jersey, say `"class": "sports"`. The five keys change with it, and so
+   do the worlds — `vellum`/`gilded` for blackletter, `asphalt`/`chrome` for sports.
 3. One command renders: `bin/render-pins --brief …` validates the brief, renders the
    class's five templates into `pinterest_1..5`, and enforces the checks (§12) as it
    goes.

@@ -674,14 +674,15 @@ Drawing a finished raster into a smaller frame:
 * Pinterest dedupes near-identical pins. Five pins per font that differ only in palette
   will be collapsed; §2 of `docs/PIN-ART-DIRECTION.md` is the structural answer.
 * A **class** changes the design order, never the ship contract. `CLASS_ORDERS` maps
-  `elegant` → `hero set wall phrase full_stack` and `blackletter` →
-  `initials knotband scriptorium folio carol`; both write `pinterest_1..5`, so the
-  registry, the blob uploader and the daily run never learn the word. `check_brief()`
-  refuses a brief whose five keys do not match its `"class"` (default `elegant`) or an
-  unknown class outright, and `assign_themes()` filters the pool by each theme's own
-  `cls`, so the two class worlds (`vellum`, `gilded`) never surface in an elegant
-  rotation. `--class` runs a family with no brief; `--stress` sweeps every face through
-  both.
+  `elegant` → `hero set wall phrase full_stack`, `blackletter` →
+  `initials knotband scriptorium folio carol` and `sports` →
+  `crest bib lane finish timer`; all three write `pinterest_1..5`, so the registry, the
+  blob uploader and the daily run never learn the word. `check_brief()` refuses a brief
+  whose five keys do not match its `"class"` (default `elegant`) or an unknown class
+  outright, and `assign_themes()` filters the pool by each theme's own `cls`, so the
+  class worlds (`vellum`, `gilded` for blackletter; `asphalt`, `chrome` for sports)
+  never surface in another class's rotation. `--class` runs a family with no brief;
+  `--stress` sweeps every face through all three.
 
 ---
 
