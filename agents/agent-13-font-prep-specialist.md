@@ -227,8 +227,16 @@ serve every face.
   five keys for `crest bib lane finish timer`, and opens two extra worlds,
   `asphalt` and `chrome`. Its `word` field means something on `crest` (the
   nameplate token); `over` is the meet line on `bib`.
+- Add `"class": "script"` **only** when the seller's own words say handwritten,
+  hand lettering, script, cursive, calligraphy, signature or wedding lettering;
+  that swaps the five keys for `guide copybook trace sample markup`, and opens
+  two extra worlds, `graphite` and `inkwell`. Its `word` is what sits on the
+  ruled band and what gets traced; `line` is the lettering on the pinned card.
+  `over`/`sub` are the small lines above and below it.
 
-No other class exists yet — a brush or handwritten face stays elegant.
+No other class exists yet — a brush, marker, chalk or paint face stays elegant,
+and the classifier is not consulted for any of them: only the seller's own words
+are.
 
 ```json
 {"name": "Braewick", "class": "blackletter", "about": "…rugged blackletter…",
@@ -253,7 +261,22 @@ No other class exists yet — a brush or handwritten face stays elegant.
    "finish": {"line": "Legible at full sprint",
               "theme": "midnight", "sub": "Product packaging"},
    "timer":  {"line": "The whole working set, lit at once",
-              "theme": "ember",   "sub": "Energy drink labels"}}}
+              "theme": "ember",   "sub": "Energy drink labels"}}
+
+{"name": "Silken Flourish", "class": "script",
+ "about": "…an elegant, stylish hand-lettering font with very smooth, clean lines…perfect for logos, printed quotes, invitations, cards, product packaging, headers, logotype…",
+ "pins": {
+   "guide":    {"line": "One line, held steady to the end", "word": "Silken",
+                "theme": "graphite", "sub": "Logotype"},
+   "copybook": {"line": "The join is the whole difficulty", "word": "Flourish",
+                "theme": "sage",     "sub": "Letterhead"},
+   "trace":    {"line": "Pencil first, ink after, always", "word": "Silken",
+                "theme": "ember",    "sub": "Invitations"},
+   "sample":   {"line": "A quote worth the paper",
+                "over": "Printed quotes", "theme": "moss",
+                "sub": "Cards and packaging"},
+   "markup":   {"line": "Every letter this hand can write",
+                "theme": "inkwell",  "sub": "Apparel design"}}}
 ```
 
 `ftrs` (any pin, but it means something on `carol`) names the face's own

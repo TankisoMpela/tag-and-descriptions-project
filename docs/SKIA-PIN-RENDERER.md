@@ -675,14 +675,23 @@ Drawing a finished raster into a smaller frame:
   will be collapsed; §2 of `docs/PIN-ART-DIRECTION.md` is the structural answer.
 * A **class** changes the design order, never the ship contract. `CLASS_ORDERS` maps
   `elegant` → `hero set wall phrase full_stack`, `blackletter` →
-  `initials knotband scriptorium folio carol` and `sports` →
-  `crest bib lane finish timer`; all three write `pinterest_1..5`, so the registry, the
-  blob uploader and the daily run never learn the word. `check_brief()` refuses a brief
+  `initials knotband scriptorium folio carol`, `sports` → `crest bib lane finish timer`
+  and `script` → `guide copybook trace sample markup`; all four write `pinterest_1..5`,
+  so the registry, the blob uploader and the daily run never learn the word.
+  `check_brief()` refuses a brief
   whose five keys do not match its `"class"` (default `elegant`) or an unknown class
   outright, and `assign_themes()` filters the pool by each theme's own `cls`, so the
-  class worlds (`vellum`, `gilded` for blackletter; `asphalt`, `chrome` for sports)
-  never surface in another class's rotation. `--class` runs a family with no brief;
-  `--stress` sweeps every face through all three.
+  class worlds (`vellum`, `gilded` for blackletter; `asphalt`, `chrome` for sports;
+  `graphite`, `inkwell` for script) never surface in another class's rotation.
+  `--class` runs a family with no brief; `--stress` sweeps every face through all four.
+* `Sheet` remembers the size of the surface it was given (`self.w`, `self.h`), so a
+  **sub-sheet** is checked against its own paper and not the page: `Sheet.sub(w, h)` +
+  `Sheet.paste(sub, cx, cy, angle)` is how `sample` prints a tipped, taped card, and the
+  contrast sampler (`_behind`) and the off-canvas check (`verify`) both clamp to the
+  card. A slot that overruns the card reports as `card/<slot>` on the parent; problems
+  raised inside the sub-sheet are folded in the same way. `bg()` and `device()` are
+  written against the full frame's `W×H` globals and must not be called on a sub-sheet —
+  paint the card's ground flat (`cv.drawRect`) and let the bench keep its ruling.
 
 ---
 

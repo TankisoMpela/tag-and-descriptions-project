@@ -9,28 +9,31 @@ forward-looking statement about nothing. A pin is a small poster whose subject i
 letterforms.
 
 **Status (locked 2026-10; second class added 2026-10-11; third class added
-2026-10-11).** The templates are the design and the design phase is closed: production
-is Agent 13 STEP 2 (`/font-prep`, inside `/full-workflow`), which authors
-`pins.brief.json` and runs one `bin/render-pins --brief` command. No template work
-happens without a new user instruction. There are now three classes. The five
-**elegant** templates carry every font by default; the five **blackletter / celtic**
+2026-10-11; fourth class added 2026-10-11).** The templates are the design and the design
+phase is closed: production is Agent 13 STEP 2 (`/font-prep`, inside `/full-workflow`),
+which authors `pins.brief.json` and runs one `bin/render-pins --brief` command. No
+template work happens without a new user instruction. There are now four classes. The
+five **elegant** templates carry every font by default; the five **blackletter / celtic**
 templates carry a face whose own description says blackletter, celtic, uncial, gaelic
 or gothic; the five **tech / sports** templates carry a face whose description says
-sport, athletic, esports, racing, gym, varsity, letterman or jersey. The brief's
+sport, athletic, esports, racing, gym, varsity, letterman or jersey; the five
+**handwritten / script** templates carry a face whose description says handwritten, hand
+lettering, script, cursive, calligraphy, signature or wedding lettering. The brief's
 optional `"class"` field is what chooses between them (blackletter piloted with
-Braewick, sports with Circuit Sprint). Brush and handwritten remain note-only —
-"not designed yet".
+Braewick, sports with Circuit Sprint, script with Silken Flourish). Marker, chalk, paint
+and grunge brushes remain note-only — "not designed yet".
 
 ---
 
 ## 0. What is decided here and what is decided in code
 
-The templates are the spec now. `bin/pin-studio/pin_studio.py` ships fifteen tested
-compositions in three classes — elegant `hero`, `set`, `wall`, `phrase`, `full_stack`;
-blackletter `initials`, `knotband`, `scriptorium`, `folio`, `carol`; and sports `crest`,
-`bib`, `lane`, `finish`, `timer` — each class rendered and numbered `pinterest_1..5` in
-its own design order, evolved from the `out/v6-black` series, and `--stress` proves them
-across faces, classes and copy lengths.
+The templates are the spec now. `bin/pin-studio/pin_studio.py` ships twenty tested
+compositions in four classes — elegant `hero`, `set`, `wall`, `phrase`, `full_stack`;
+blackletter `initials`, `knotband`, `scriptorium`, `folio`, `carol`; sports `crest`,
+`bib`, `lane`, `finish`, `timer`; and script `guide`, `copybook`, `trace`, `sample`,
+`markup` — each class rendered and numbered `pinterest_1..5` in its own design order,
+evolved from the `out/v6-black` series, and `--stress` proves them across faces, classes
+and copy lengths.
 
 Everything below that is a *mechanical* rule has moved into that code and is no longer
 a thing to remember:
@@ -103,7 +106,9 @@ is part of why the series reads as designed rather than generated.
 
 A `"class": "blackletter"` brief ships a different five, in its own order:
 `initials`, `knotband`, `scriptorium`, `folio`, `carol` (§4). A `"class": "sports"`
-brief ships a third five: `crest`, `bib`, `lane`, `finish`, `timer` (§4). Same field,
+brief ships a third five: `crest`, `bib`, `lane`, `finish`, `timer` (§4). A
+`"class": "script"` brief ships a fourth: `guide`, `copybook`, `trace`, `sample`,
+`markup` (§4). Same field,
 same rail, same gates, same `pinterest_1..5` filenames — the numbering is the only thing
 the class changes about the contract, and nothing downstream learns the word.
 
@@ -232,6 +237,33 @@ chosen by class, never by theme, so a warm shared world cannot smuggle a scallop
 onto a start list. Two worlds belong to the class — `asphalt` (neutral dark, signal
 yellow) and `chrome` (paper, race red) — and `assign_themes()` keeps them out of every
 other rotation.
+
+**The script class rolls the same way a third time.** A `"class": "script"` brief is one
+lettering artist's bench seen five ways, and the thing every pin depicts is the same:
+letters that are *written on a line*. That is what separates the five from the elegant
+ones, and it is why nothing here depends on a gradient — a joined face is painted flat
+(`script ∈ FLOWING`), and a template that leaned on the gradient would change character
+whenever `--stress` re-classified the face.
+
+| # | Template | The object | What it proves about the face |
+|---|---|---|---|
+| 1 | `guide` | the penman's band: the specimen word on rules struck at the binary's own cap, waist and descender, nib at the end of the line | the letterform has metrics you can measure — a script you cannot rule is a script you cannot learn |
+| 2 | `copybook` | the drill page: one letter five times per row, each row on its own baseline, the copies fading toward the paper as the hand goes | the same letter written twice is the same letter, and the joins survive being looked at |
+| 3 | `trace` | the logotype inked over its own offset wireframe, the pencil left showing at one edge | the word as a mark, and how it was built |
+| 4 | `sample` | the lettered quote on a tipped, taped piece of paper — a sub-sheet, so its type is fitted and verified against the card, not the page | the buyer's actual job: words as artwork on a surface, in one ink |
+| 5 | `markup` | the marked-up proof: name and tag, then the whole set as **connected runs**, left-aligned, each standing on a full-width rule | the alphabet joined the way it is written, at one pen size, including the figures |
+
+The geometry is measured, never assumed: a cap is 0.715 em on one script and 1.015 em on
+another, and a script's ascender overshoots its own cap, so every rule on `guide` comes
+from `T.path()` ink bounds at the size the type is actually set at. The alphabet rows are
+sized as **strings** with `fit_measure()` rather than as cells with `spec_grid()`, because
+the gap `spec_grid` inserts between letters is exactly what a joined run does not have —
+nine joined capitals measure two-thirds of the column that way and the line stops short
+of the margin it was cut to. `markup` is also the only template in any class that sets
+type to the **left** margin, because writing starts there. The furniture is
+`orn_nib`, `orn_loop`, the `ruling` device and the `penwork` / `flourish` sets — `vine`
+does double duty as the flourish it actually is — and the two class-owned worlds are
+`graphite` (pencil grey, red and blue accents) and `inkwell` (blue-black, gold and cyan).
 
 ---
 
@@ -529,8 +561,11 @@ The locked production run — Agent 13 STEP 2, inside `/full-workflow`:
    tone rung per pin. Author it all once as `pins.brief.json`. If the seller's words
    say blackletter, celtic, uncial, gaelic or gothic, say `"class": "blackletter"` at
    the top of that file; if they say sport, athletic, esports, racing, gym, varsity,
-   letterman or jersey, say `"class": "sports"`. The five keys change with it, and so
-   do the worlds — `vellum`/`gilded` for blackletter, `asphalt`/`chrome` for sports.
+   letterman or jersey, say `"class": "sports"`; if they say handwritten, hand
+   lettering, script, cursive, calligraphy, signature or wedding lettering, say
+   `"class": "script"`. The five keys change with it, and so
+   do the worlds — `vellum`/`gilded` for blackletter, `asphalt`/`chrome` for sports,
+   `graphite`/`inkwell` for script.
 3. One command renders: `bin/render-pins --brief …` validates the brief, renders the
    class's five templates into `pinterest_1..5`, and enforces the checks (§12) as it
    goes.

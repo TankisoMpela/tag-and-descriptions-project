@@ -79,8 +79,9 @@ the final reports before returning. Its judgement goes into two things: the
 description copy and the five Pinterest pins. Step 2 writes `pins.brief.json`
 (five fresh headlines, five colour worlds, plus `"class": "blackletter"` only
 when the seller's own words say blackletter, celtic, uncial, gaelic or gothic,
-and `"class": "sports"` only when they say sport, athletic, esports, racing,
-gym, varsity, letterman or jersey)
+`"class": "sports"` only when they say sport, athletic, esports, racing, gym,
+varsity, letterman or jersey, and `"class": "script"` only when they say
+handwritten, hand lettering, script, cursive, calligraphy, signature or wedding lettering)
 and runs `bin/render-pins`, which draws `pinterest_1..5` from the font binary
 into `visuals/New-Images/pinterest/` — so this stays image-inspection-free, and
 the renderer refuses copy that repeats itself. Showcase video rendering is
