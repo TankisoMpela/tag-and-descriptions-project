@@ -1220,7 +1220,8 @@ def eyebrow(sh, ctx, text, invert=False, y=None):
     text = tc(text)
     y = int(round(128 * sh.vscale)) if y is None else y
     hi, lo = 21 * sh.scale, 13 * sh.scale
-    sh.text("eyebrow", L, text, Box(sh.m, y, sh.w - 2 * sh.m - 70, 26), hi=hi, lo=lo,
+    sh.text("eyebrow", L, text, Box(sh.m, y, sh.w - 2 * sh.m - 70,
+                                    26 * sh.scale), hi=hi, lo=lo,
             color=mute, track=0.22, align="left", valign="top", min_read=lo)
     slot = _slot(sh, "eyebrow")
     if not slot:
@@ -1268,12 +1269,16 @@ def edge_type(sh, ctx, text, invert=False, x=None, cy=None):
                         24 * sh.scale, L.measure(text, size, track)), collide=False)
 
 
-def footer(sh, ctx, at="Set in", invert=False):
+def footer(sh, ctx, at="Set in", invert=False, exact=False):
     P, L = ctx["pal"], ctx["label"]
     ink, mute, _ = field(P, invert)
     rail = sh.h - int(round(236 * sh.vscale))
     rule(sh.cv, sh.m, rail, sh.m + int(round(96 * sh.scale)), rail, P["accent"], 3.0)
-    sh.text("name", L, tc(f"{at} {ctx['name']}"),
+    # `exact` keeps the prefix as written. The specimen sheets report a range
+    # ("Lowercase a–j"), and title-casing it into "A–J" claims letters the sheet
+    # does not show; the pins' "Set in" ships as "Set In", so that stays.
+    sh.text("name", L, f"{at} {tc(ctx['name'])}" if exact
+            else tc(f"{at} {ctx['name']}"),
             Box(sh.m, sh.h - int(round(210 * sh.vscale)), sh.w - 2 * sh.m, 40),
             hi=27 * sh.scale, lo=18 * sh.scale, color=ink, track=0.16, align="left",
             valign="top", min_read=18 * sh.scale)
@@ -1336,21 +1341,21 @@ def pack_lines(words, n):
     return out
 
 
-def row_metrics(T, chars, size):
+GAPROW = 14.0
+
+
+def row_metrics(T, chars, size, gap=GAPROW):
     """(advance total, ink width, ink height) for a spaced row at `size`."""
     paths = [T.path(c, size)[0] for c in chars]
     widths = [T.measure(c, size) for c in chars]
     edge, pen = 0.0, 0.0
     for p, adv in zip(paths, widths):
         edge = max(edge, pen + p.getBounds().right())
-        pen += adv + GAPROW
+        pen += adv + gap
     ink_w = edge - paths[0].getBounds().left()
     ink_h = (max(p.getBounds().bottom() for p in paths)
              - min(p.getBounds().top() for p in paths))
-    return sum(widths) + GAPROW * (len(chars) - 1), ink_w, ink_h
-
-
-GAPROW = 14.0
+    return sum(widths) + gap * (len(chars) - 1), ink_w, ink_h
 
 
 def row_block(T, rows, width):
@@ -1365,7 +1370,7 @@ def row_block(T, rows, width):
     return out
 
 
-def spec_grid(T, seqs, width, room, hi=420.0, lead_frac=0.30):
+def spec_grid(T, seqs, width, room, hi=420.0, lead_frac=0.30, gap=GAPROW):
     """[(row, size, ink height)] — the alphabet at ONE size, the largest the page
     can carry, with the letters shared out evenly.
 
@@ -1385,7 +1390,7 @@ def spec_grid(T, seqs, width, room, hi=420.0, lead_frac=0.30):
     def at100(row):
         m = unit.get(row)
         if m is None:
-            m = unit[row] = row_metrics(T, row, 100.0)
+            m = unit[row] = row_metrics(T, row, 100.0, gap)
         return m
 
     best = None
@@ -1410,16 +1415,21 @@ def spec_grid(T, seqs, width, room, hi=420.0, lead_frac=0.30):
     return best[1] if best else []
 
 
-def draw_rows(sh, T, sized, stage, paint_fn, prefix="row", lead_frac=0.10):
-    """Draw rows sized by row_block, top-aligned inside the stage given."""
+def draw_rows(sh, T, sized, stage, paint_fn, prefix="row", lead_frac=0.10,
+              gap=GAPROW, lead=None):
+    """Draw rows sized by row_block, top-aligned inside the stage given.
+
+    `lead` overrides the fraction-of-type gap: a block shorter than its stage
+    should spend the difference *between* the lines, not leave it under them.
+    """
     if not sized:
         return stage.y
-    lead = sized[0][1] * lead_frac
+    lead = sized[0][1] * lead_frac if lead is None else lead
     y = stage.y
     for i, (row, size, ih) in enumerate(sized):
         widths = [T.measure(c, size) for c in row]
         paths = [T.path(c, size)[0] for c in row]
-        row_w = sum(widths) + GAPROW * (len(row) - 1)
+        row_w = sum(widths) + gap * (len(row) - 1)
         x = stage.x + (stage.w - row_w) / 2
         top_i = min(p.getBounds().top() for p in paths)
         bot_i = max(p.getBounds().bottom() for p in paths)
@@ -1427,7 +1437,7 @@ def draw_rows(sh, T, sized, stage, paint_fn, prefix="row", lead_frac=0.10):
         sh.cv.translate(x, y - top_i)
         for j, p in enumerate(paths):
             paint_fn(p, j, i)
-            sh.cv.translate(widths[j] + GAPROW, 0)
+            sh.cv.translate(widths[j] + gap, 0)
         sh.cv.restore()
         sh.mark(f"{prefix}{i}", Box(min(x + p.getBounds().left() for p in paths), y,
                                     max(p.getBounds().right() for p in paths)
@@ -3354,6 +3364,18 @@ FIGURES = "0123456789"
 PUNCT = "! ? . , : ; / & @ # % + - = * ( ) < > { }"
 
 
+def spec_span(shown, full, label):
+    """The sample's own label, plus whichever characters the face left out.
+
+    A count on a specimen sheet is a claim about the font: "10 caps" reads as
+    though the alphabet stopped at J, when it is only what this sheet chose to
+    show. So the footer names the range it sampled and spends its one number on
+    the gap a buyer would otherwise have to discover alone.
+    """
+    miss = [c for c in full if c not in shown]
+    return label if not miss else f"{label} less {' '.join(miss)}"
+
+
 def spec_bg(sh, ctx, **kw):
     """The ground under a specimen: flat, untextured, and wearing no device.
 
@@ -3382,6 +3404,27 @@ def spec_stage(sh, y0):
     """
     return Box(sh.m, y0, sh.w - 2 * sh.m,
                int(round(sh.h - y0 - 292 * sh.vscale)))
+
+
+def spec_grove_band(sh, ctx, y0):
+    """The elegant band: the theme's own ornament row, at half size.
+
+    `set` draws it to break up a funnel; a sheet draws it so the two sheets are
+    visibly one pair. Returns the bottom of the ink, because an ornament that
+    hangs below its box takes the first row's air with it.
+    """
+    P = ctx["pal"]
+    ink, _mute, _ = field(P)
+    art = ORN_SETS[ctx["th"]["art"]]
+    band = Box(sh.m, y0, sh.w - 2 * sh.m, int(round(76 * sh.vscale)))
+    bot = band.b
+    for i, (kind, fx_, fy, s, alpha) in enumerate(art["top"]):
+        s = s * 0.46 * sh.scale
+        cy = band.y + max(s * 0.6, min(band.h * fy, band.h - s * 0.6))
+        draw_orn(sh, f"orn{i}", kind, band.x + band.w * fx_, cy, s,
+                 P["accent"] if i % 2 else ink, alpha * 0.75)
+        bot = max(bot, cy + s)
+    return bot
 
 
 def spec_split(sh, T, ups, los, stage, lead_frac=0.12):
@@ -3439,11 +3482,13 @@ def spec_letters(sh, ctx):
         sh.problems.append("letters: the face carries too few of A–J or a–j "
                            "to set a specimen")
         return None
+    up = spec_span(ups, LETTERS_UP, "Uppercase A\u2013J")
+    low = spec_span(los, LETTERS_LOW, "Lowercase a\u2013j")
     if not los:
-        return ups, ups, f"{len(ups)} caps \u00b7 uppercase only \u00b7"
+        return ups, ups, f"{up} \u00b7 uppercase only \u00b7"
     if not ups:
-        return los, los, f"{len(los)} letters \u00b7 lowercase only \u00b7"
-    return ups, los, f"{len(ups)} caps \u00b7 {len(los)} lowercase \u00b7"
+        return los, los, f"{low} \u00b7 lowercase only \u00b7"
+    return ups, los, f"{up} \u00b7 {low} \u00b7"
 
 
 @specimen("elegant", "letters",
@@ -3456,32 +3501,78 @@ def s_letters_elegant(sh, ctx):
     own row so a buyer can compare the shapes against each other, and the number
     of letters per row is whatever the sheet is wide enough to carry big.
     """
-    P = ctx["pal"]
     spec_bg(sh, ctx, pool=0.08)
-    ink, mute, _ = field(P)
     built = spec_letters(sh, ctx)
     if not built:
         return
     ups, los, claim = built
     T = ctx["display"]
     y0 = spec_head(sh, ctx, "Character Set")
-    art = ORN_SETS[ctx["th"]["art"]]
-    band = Box(sh.m, y0, sh.w - 2 * sh.m, int(round(76 * sh.vscale)))
-    bot = band.b
-    for i, (kind, fx_, fy, s, alpha) in enumerate(art["top"]):
-        s = s * 0.46 * sh.scale
-        cy = band.y + max(s * 0.6, min(band.h * fy, band.h - s * 0.6))
-        draw_orn(sh, f"orn{i}", kind, band.x + band.w * fx_, cy, s,
-                 P["accent"] if i % 2 else ink, alpha * 0.75)
-        bot = max(bot, cy + s)
-    y1 = bot + int(round(14 * sh.vscale))
+    y1 = spec_grove_band(sh, ctx, y0) + int(round(14 * sh.vscale))
     rows = spec_split(sh, T, ups, los, spec_stage(sh, y1))
     if not rows:
         sh.problems.append("letters: no row of A–J can be set to this measure")
         return
     spec_rows(sh, ctx, rows, y1)
     edge_type(sh, ctx, EDGE(ctx))
-    footer(sh, ctx, at=claim)
+    footer(sh, ctx, at=claim, exact=True)
+
+
+@specimen("elegant", "numerals",
+          "the ten figures and the marks, one size, on the same band")
+def s_numerals_elegant(sh, ctx):
+    """Figures and punctuation at a single size, because they are being compared.
+
+    `spec_grid` rather than `measure_rows`: sizing each row to the measure on its
+    own would set four marks twice as large as the ten figures above them, and a
+    character set whose letters disagree in size makes the eye read the layout
+    instead of the type. The gap between characters scales with the sheet too —
+    `GAPROW` is 14 px, which is a pin's air and a landscape sheet's collision.
+
+    A face missing figures is a fact about the face: the count is reported as a
+    problem and the sheet still shows what survives, because a short row nobody
+    flagged is how a broken font ships.
+    """
+    P = ctx["pal"]
+    spec_bg(sh, ctx, pool=0.08)
+    marks_all = PUNCT.split()
+    figs = [c for c in FIGURES if usable(ctx, c)]
+    marks = [c for c in marks_all if usable(ctx, c)]
+    if len(figs) < 10:
+        sh.problems.append(f"numerals: the face carries {len(figs)} of the ten figures")
+    if len(marks) < 4:
+        sh.problems.append(f"numerals: only {len(marks)} punctuation marks to show")
+    if not figs and not marks:
+        sh.problems.append("numerals: nothing to set — no figures and no marks")
+        return
+    T = ctx["display"]
+    y0 = spec_head(sh, ctx, "Figures & Punctuation")
+    y1 = spec_grove_band(sh, ctx, y0) + int(round(14 * sh.vscale))
+    stage = spec_stage(sh, y1)
+    gap = GAPROW * sh.scale
+    rows = spec_grid(T, [figs, marks], stage.w, stage.h,
+                     hi=900.0 * sh.scale, lead_frac=0.30, gap=gap)
+    if not rows:
+        sh.problems.append("numerals: no row of figures can be set to this measure")
+        return
+    # One ink, judged against the ground the block actually sits on.
+    ground = (sh._behind(Box(stage.x, stage.y, stage.w, min(stage.h, 300.0)))
+              or lum(P["deep2"]))
+    q = paint(C(readable(ground, rung(P, 0), 4.5), 1.0))
+    # `spec_grid` cannot grow the type past the measure, so on a square sheet the
+    # ten figures bind the width and the block comes out shorter than its stage.
+    # The leftover goes into the leads: rows standing on a ruled baseline at the
+    # bottom of the page is what a specimen looks like; rows huddled under the
+    # ornament with the air underneath them is what a list looks like.
+    ink = sum(h for _r, _s, h in rows)
+    air = (stage.h - ink) / max(len(rows) - 1, 1)
+    lead = max(rows[0][1] * 0.30, air) if len(rows) > 1 else 0.0
+    draw_rows(sh, T, rows, Box(stage.x, stage.y, stage.w, stage.h),
+              lambda p, j, i: sh.cv.drawPath(p, q), "row", gap=gap, lead=lead)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx, exact=True,
+           at=f"{spec_span(figs, FIGURES, 'Figures 0\u20139')} \u00b7 "
+              f"{spec_span(marks, marks_all, 'Punctuation')} \u00b7")
 
 
 def build_ctx(font_path, name, copy, palette=None, mode=None, about="",
