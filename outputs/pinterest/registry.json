@@ -7,14 +7,80 @@
       "name": "Restrained Flourish",
       "prep_path": "outputs/font-preparation/082-restrained-flourish",
       "description_path": "outputs/font-preparation/082-restrained-flourish/description.txt",
-      "product_url": "https://creativemarket.com/TankisoMpela",
       "board": "Script Fonts",
-      "image": {
-        "source": "outputs/font-preparation/082-restrained-flourish/visuals/New-Images/pinterest/pinterest_3.png",
-        "pathname": "fonts/restrained-flourish/pinterest_3.png",
-        "url": "https://btbyp3va1bt2lvot.public.blob.vercel-storage.com/fonts/restrained-flourish/pinterest_3.png",
-        "uploaded_at": "2026-10-10T20:00:40Z"
+      "urls": {
+        "creative_market": "https://creativemarket.com/TankisoMpela",
+        "creative_fabrica": null
+      },
+      "images": {
+        "3": {
+          "source": "outputs/font-preparation/082-restrained-flourish/visuals/New-Images/pinterest/pinterest_3.png",
+          "pathname": "fonts/restrained-flourish/pinterest_3.png",
+          "url": "https://btbyp3va1bt2lvot.public.blob.vercel-storage.com/fonts/restrained-flourish/pinterest_3.png",
+          "uploaded_at": "2026-10-10T20:00:40Z"
+        },
+        "1": {
+          "source": "outputs/font-preparation/082-restrained-flourish/visuals/New-Images/pinterest/pinterest_1.png",
+          "pathname": "fonts/restrained-flourish/pinterest_1.png",
+          "url": "https://btbyp3va1bt2lvot.public.blob.vercel-storage.com/fonts/restrained-flourish/pinterest_1.png",
+          "uploaded_at": "2026-10-11T00:00:22Z"
+        },
+        "2": {
+          "source": "outputs/font-preparation/082-restrained-flourish/visuals/New-Images/pinterest/pinterest_2.png",
+          "pathname": "fonts/restrained-flourish/pinterest_2.png",
+          "url": "https://btbyp3va1bt2lvot.public.blob.vercel-storage.com/fonts/restrained-flourish/pinterest_2.png",
+          "uploaded_at": "2026-10-11T00:00:27Z"
+        },
+        "4": {
+          "source": "outputs/font-preparation/082-restrained-flourish/visuals/New-Images/pinterest/pinterest_4.png",
+          "pathname": "fonts/restrained-flourish/pinterest_4.png",
+          "url": "https://btbyp3va1bt2lvot.public.blob.vercel-storage.com/fonts/restrained-flourish/pinterest_4.png",
+          "uploaded_at": "2026-10-11T00:00:32Z"
+        }
       }
+    },
+    "kuro-ripper": {
+      "urls": {
+        "creative_market": null,
+        "creative_fabrica": null
+      },
+      "images": {
+        "1": {
+          "source": "outputs/font-preparation/077-kuro-ripper/visuals/New-Images/pinterest/pinterest_1.jpg",
+          "pathname": "fonts/kuro-ripper/pinterest_1.jpg",
+          "url": "https://btbyp3va1bt2lvot.public.blob.vercel-storage.com/fonts/kuro-ripper/pinterest_1.jpg",
+          "uploaded_at": "2026-10-11T14:00:37Z"
+        },
+        "2": {
+          "source": "outputs/font-preparation/077-kuro-ripper/visuals/New-Images/pinterest/pinterest_2.jpg",
+          "pathname": "fonts/kuro-ripper/pinterest_2.jpg",
+          "url": "https://btbyp3va1bt2lvot.public.blob.vercel-storage.com/fonts/kuro-ripper/pinterest_2.jpg",
+          "uploaded_at": "2026-10-11T14:00:41Z"
+        },
+        "3": {
+          "source": "outputs/font-preparation/077-kuro-ripper/visuals/New-Images/pinterest/pinterest_3.jpg",
+          "pathname": "fonts/kuro-ripper/pinterest_3.jpg",
+          "url": "https://btbyp3va1bt2lvot.public.blob.vercel-storage.com/fonts/kuro-ripper/pinterest_3.jpg",
+          "uploaded_at": "2026-10-11T14:00:45Z"
+        },
+        "4": {
+          "source": "outputs/font-preparation/077-kuro-ripper/visuals/New-Images/pinterest/pinterest_4.jpg",
+          "pathname": "fonts/kuro-ripper/pinterest_4.jpg",
+          "url": "https://btbyp3va1bt2lvot.public.blob.vercel-storage.com/fonts/kuro-ripper/pinterest_4.jpg",
+          "uploaded_at": "2026-10-11T14:00:48Z"
+        },
+        "5": {
+          "source": "outputs/font-preparation/077-kuro-ripper/visuals/New-Images/pinterest/pinterest_5.jpg",
+          "pathname": "fonts/kuro-ripper/pinterest_5.jpg",
+          "url": "https://btbyp3va1bt2lvot.public.blob.vercel-storage.com/fonts/kuro-ripper/pinterest_5.jpg",
+          "uploaded_at": "2026-10-11T14:00:51Z"
+        }
+      },
+      "slug": "kuro-ripper",
+      "number": 77,
+      "name": "Kuro Ripper",
+      "prep_path": "outputs/font-preparation/077-kuro-ripper",
+      "description_path": "outputs/font-preparation/077-kuro-ripper/description.txt"
     }
   }
 }

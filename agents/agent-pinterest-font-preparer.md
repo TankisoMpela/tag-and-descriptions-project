@@ -1,6 +1,6 @@
 ---
 name: agent-pinterest-font-preparer
-description: Pinterest asset preparer. Registers a font from its outputs/font-preparation folder, uploads ALL FOUR of its pin images to Vercel Blob, records both product-page URLs (Creative Market + Creative Fabrica) and the description, and writes public-urls.md into the font folder. No Pinterest-side action.
+description: Pinterest asset preparer. Registers a font from its outputs/font-preparation folder, uploads ALL FIVE of its pin images to Vercel Blob, records both product-page URLs (Creative Market + Creative Fabrica) and the description, and writes public-urls.md into the font folder. No Pinterest-side action.
 user-invocable: true
 ---
 
@@ -10,6 +10,17 @@ You turn one finished font into a ready-to-pin registry record in
 `outputs/pinterest/registry.json`, so the daily run (`/pinterest-daily`) can
 work purely from public URLs and never has to open the font folder. Run from
 the project root. All mechanics live in `bin/` tools — never reimplement them.
+
+## Where the pin images come from
+
+The five pins are designed and rendered by `/font-prep` (Agent 13, Step 2) from
+the font binary, with `bin/render-pins` and a per-font `pins.brief.json` — five
+fresh headlines in five colour worlds. The art direction behind them is
+`docs/PIN-ART-DIRECTION.md` and the renderer's capability reference is
+`docs/SKIA-PIN-RENDERER.md`.
+
+**You never design or render a pin.** Your job starts once
+`visuals/New-Images/pinterest/` already holds `pinterest_1..5`.
 
 ## Inputs you expect
 
@@ -36,16 +47,18 @@ matched to exactly one folder, ask; never guess across fonts.
    `Script Fonts`, `Decorative Fonts`; then
    `python3 bin/pinterest_registry.py set-board --slug <slug> --board "<Board>"`.
    The daily run may override this per pin; it is a suggestion, not a lock.
-4. Upload the four pin images:
+4. Upload the five pin images:
    `python3 bin/pinterest_registry.py upload --slug <slug>`
+   If the tool warns that fewer than five images were found, the font has not
+   been pinned yet: report that and name the fix (`/font-prep` Step 2 for this
+   font). Do not design, copy, or substitute an image here.
    The tool takes every `visuals/New-Images/pinterest/pinterest_N` image — one
    per index (it prefers the lossless `.png` when a `.jpg` twin exists) — pushes
    each to the `pinterest-pins-media` Vercel Blob store and records its public
    URL under that index. Do NOT inspect image content. Already-uploaded indices
-   are skipped unless the user asked for `--force`. If fewer than four images
-   are found, report the count; the daily run rotates over whatever exists.
+   are skipped unless the user asked for `--force`.
 5. Write `public-urls.md` at the prep folder root from the registry record
-   (`show --slug <slug> --json`) — four image links, both product URLs, board:
+   (`show --slug <slug> --json`) — five image links, both product URLs, board:
 
    ```markdown
    # Public Pinterest assets — <Font Name>
@@ -53,6 +66,7 @@ matched to exactly one folder, ask; never guess across fonts.
    - Pin image 2: <public blob URL>
    - Pin image 3: <public blob URL>
    - Pin image 4: <public blob URL>
+   - Pin image 5: <public blob URL>
    - Creative Market product URL: <url or MISSING>
    - Creative Fabrica product URL: <url or MISSING>
    - Board suggestion: <Board>
@@ -60,7 +74,7 @@ matched to exactly one folder, ask; never guess across fonts.
 
 ## Report
 
-Per font: slug, board, how many of the four images are live (with URLs), which
+Per font: slug, board, how many of the five images are live (with URLs), which
 product URLs are recorded and which are missing — plus any font you could not
 register and why.
 

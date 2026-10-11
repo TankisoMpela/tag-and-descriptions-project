@@ -221,7 +221,7 @@ def cmd_brief(args, con) -> int:
             lines.append(f"- Creative Market product URL: {urls['creative_market']}")
         if urls.get("creative_fabrica"):
             lines.append(f"- Creative Fabrica product URL: {urls['creative_fabrica']}")
-        lines.append("- (The tool assigns each pin one of the four images and, "
+        lines.append(f"- (The tool assigns each pin one of the {len(images)} images and, "
                      "when both URLs exist, splits destinations 5/5 between the "
                      "marketplaces — seeded by date, stable across re-runs.)")
         lines.append(f"- Description source: {desc or '(no description.txt)'}…")

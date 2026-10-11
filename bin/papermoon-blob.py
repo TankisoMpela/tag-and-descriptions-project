@@ -145,7 +145,7 @@ def main(argv=None) -> int:
     up = sub.add_parser("upload", parents=[common], help="upload one image and print its public URL")
     up.add_argument("file")
     up.add_argument("--slug", help="font slug for the default pathname fonts/{slug}/…")
-    up.add_argument("--index", type=int, help="pinterest image number (1-4)")
+    up.add_argument("--index", type=int, help="pinterest image number (1-5)")
     up.add_argument("--pathname", help="explicit target pathname (overrides --slug/--index)")
     up.set_defaults(func=cmd_upload)
 

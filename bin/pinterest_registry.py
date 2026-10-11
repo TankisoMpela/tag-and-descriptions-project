@@ -4,14 +4,14 @@
 outputs/pinterest/registry.json is the single directory the daily run works
 from: one record per font with its preparation folder, description path,
 TWO product-page URLs (Creative Market + Creative Fabrica), a suggested
-board, and the public Blob URLs of ALL FOUR pin images.
+board, and the public Blob URLs of ALL FIVE pin images.
 
 Usage:
   python3 bin/pinterest_registry.py add --slug quiet-acre --number 90 [--name "Quiet Acre"]
   python3 bin/pinterest_registry.py set-url --slug quiet-acre --url https://creativemarket.com/... [--market creative_market]
   python3 bin/pinterest_registry.py set-url --slug quiet-acre --url https://creativefabrica.com/... --market creative_fabrica
   python3 bin/pinterest_registry.py set-board --slug quiet-acre --board "Script Fonts"
-  python3 bin/pinterest_registry.py upload --slug quiet-acre [--index 3] [--force]   (default: all four images)
+  python3 bin/pinterest_registry.py upload --slug quiet-acre [--index 3] [--force]   (default: all five images)
   python3 bin/pinterest_registry.py list [--ready]
   python3 bin/pinterest_registry.py show --slug quiet-acre
   Add --json to any command for machine-readable output.
@@ -31,8 +31,9 @@ REGISTRY_PATH = Path("outputs/pinterest/registry.json")
 BOARDS = ["Handwritten Fonts", "Display Fonts", "Script Fonts", "Decorative Fonts"]
 MARKETS = ["creative_market", "creative_fabrica"]
 IMAGE_GLOBS = ("*.png", "*.jpg", "*.jpeg")
-# Each font is prepared with four pin images; the daily run picks one per pin.
-EXPECTED_IMAGES = 4
+# Each font ships five designed pins (hero, set, wall, phrase, full_stack);
+# the daily run picks one per pin.
+EXPECTED_IMAGES = 5
 
 
 def migrate(rec: dict) -> dict:

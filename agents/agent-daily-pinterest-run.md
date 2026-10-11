@@ -30,18 +30,22 @@ python3 bin/make_daily_pins.py brief --date D
 
 `pick` excludes any font pinned in the previous 14 days and writes
 `outputs/pinterest/D/selection.json`. `brief` writes `brief.md` with per-font
-name, board suggestion, ALL FOUR blob image URLs, both product-page URLs,
+name, board suggestion, ALL FIVE blob image URLs, both product-page URLs,
 description excerpt, a mechanical candidate-keyword seed (extracted from
 description.txt), the font's most-used tags to rotate away from, and its
 previous pins. You do not choose the image or the destination link — `assemble`
-takes one of the four images per pin (seeded by date, so a re-run gives the
+takes one of the five images per pin (seeded by date, so a re-run gives the
 same CSV) and splits fonts that have both market pages evenly between Creative
 Market and Creative Fabrica.
 
 ## Step 2 — write pin copy (your only creative work)
 
 For each selected font write a title, description, alt text, and final
-keywords. The archive spec `archive/specs/agent-10-pinterest-fonts-specialist.md` §"PINTEREST
+keywords. The artwork itself is designed upstream, per
+`docs/PIN-ART-DIRECTION.md` (the pin is a typographic poster whose hook is a
+phrase and whose font name is subtext) — your CSV copy must not contradict the
+image's copy or turn it back into a sales pitch, because a pin that reads as an
+ad is not saved. The archive spec `archive/specs/agent-10-pinterest-fonts-specialist.md` §"PINTEREST
 FONT SEO STRATEGY" and the 3-PIN intent framework are your writing reference —
 read the two strategy sections only, not the whole file. Across the day's
 fonts, vary intent (aesthetic/specimen, crafter/Cricut, project/use-case) so
