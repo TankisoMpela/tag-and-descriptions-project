@@ -11,7 +11,8 @@ theme and one colour-ladder offset per pin, so the set reads as five designs.
 Without it every pin takes the same --line, which is what made a batch feel
 samey. With it the pins are written `pinterest_1..5` in the brief's class order —
 elegant is hero, set, wall, phrase, full_stack; blackletter is initials, knotband,
-scriptorium, folio, carol — which is the shape the Pinterest registry expects
+scriptorium, folio, carol; sports is crest, bib, lane, finish, timer — which is the
+shape the Pinterest registry expects
 either way. Each pin gets its own theme — its own ground,
 device and artwork — and inside each pin the rows walk down a colour ladder, so one
 font's set is five designs rather than one muted palette applied five times. Every
@@ -48,9 +49,11 @@ JPEG_STEPS = (90, 85, 80)   # tried in order when a pin has to ship as JPEG
 # uploads by. Note sorted(TEMPLATES) is alphabetical, which is not this.
 PIN_ORDER = ("hero", "set", "wall", "phrase", "full_stack")
 BLACK_ORDER = ("initials", "knotband", "scriptorium", "folio", "carol")
+SPORT_ORDER = ("crest", "bib", "lane", "finish", "timer")
 # A brief's optional "class" picks the order; every class still ships
 # pinterest_1..5, so the registry, blob and daily tools never learn the word.
-CLASS_ORDERS = {"elegant": PIN_ORDER, "blackletter": BLACK_ORDER}
+CLASS_ORDERS = {"elegant": PIN_ORDER, "blackletter": BLACK_ORDER,
+                "sports": SPORT_ORDER}
 LABEL = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Regular.ttf")
 LABEL_B = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Medium.ttf")
 CLEAN = {"liga": 0}         # display ligs stripe the specimen marks
@@ -81,6 +84,14 @@ PALETTES = {
                  (10, 40, 30), (240, 252, 238), (126, 224, 140), (248, 194, 60)),
     "tangerine": ((116, 42, 10), (172, 70, 16), (255, 238, 214), (250, 220, 186),
                   (96, 30, 6), (255, 246, 232), (255, 214, 90), (96, 206, 220)),
+    # The two sports worlds are neutral grounds with one warm and one cool signal
+    # each, because a race number is yellow and a penalty flag is red — the colour
+    # carries the meaning, not the mood. No browns: on a hard monoline they read as
+    # a printing fault rather than as warmth.
+    "asphalt":   ((24, 26, 31), (41, 45, 52), (233, 236, 240), (206, 211, 218),
+                  (20, 22, 27), (243, 246, 249), (245, 204, 25), (88, 196, 232)),
+    "chrome":    ((30, 34, 40), (52, 58, 66), (224, 228, 234), (198, 204, 212),
+                  (26, 30, 36), (240, 244, 248), (150, 24, 36), (18, 74, 130)),
 }
 PAL_NAMES = list(PALETTES)
 
@@ -100,12 +111,17 @@ THEMES = {
                      device="grid",  art="grove"),
     "clay":     dict(pal="tangerine", mode="dark", pool=0.16, tooth=2800, seed=4,
                      device="rings", art="coast"),
-    # Two class-owned worlds. `cls` keeps them out of the elegant rotation: the
-    # manuscript ground only appears when a brief says blackletter (or names it).
+    # Class-owned worlds. `cls` keeps them out of the elegant rotation: the
+    # manuscript grounds only appear when a brief says blackletter, the neutral
+    # ones only when it says sports (or names the world itself).
     "vellum":   dict(pal="marigold", mode="paper", pool=0.12, tooth=2600, seed=7,
                      device="bands", art="knot", cls="blackletter"),
     "gilded":   dict(pal="cobalt", mode="dark", pool=0.17, tooth=4800, seed=2,
                      device="rays", art="foil", cls="blackletter"),
+    "asphalt":  dict(pal="asphalt", mode="dark", pool=0.16, tooth=3000, seed=8,
+                     device="lanes", art="gantry", cls="sports"),
+    "chrome":   dict(pal="chrome", mode="paper", pool=0.12, tooth=2600, seed=1,
+                     device="grid", art="sector", cls="sports"),
 }
 THEME_NAMES = list(THEMES)
 
@@ -129,6 +145,14 @@ THEME_PREF = {
     "scriptorium": ("gilded", "midnight", "moss"),
     "folio":       ("vellum", "gilded", "clay"),
     "carol":       ("vellum", "sage", "gilded"),
+    # The sports class. `lane` and `timer` are the two that must read as equipment,
+    # so they lead with the grounds no other class owns; the rest take a shared
+    # world now and then so a five-pin set is not one grey series.
+    "crest":       ("asphalt", "chrome", "midnight"),
+    "bib":         ("chrome", "asphalt", "bone"),
+    "lane":        ("asphalt", "moss", "chrome"),
+    "finish":      ("chrome", "asphalt", "midnight"),
+    "timer":       ("asphalt", "midnight", "chrome"),
 }
 
 
@@ -1009,6 +1033,16 @@ def device(sh, P, kind, dark):
                  mute, 1.0, 0.11)
         rule(cv, W * 0.13, y0 - 40, W * 0.13, y1 + 40,
              P["accent"], 1.2, 0.14)
+    elif kind == "lanes":
+        # The track under the type: water-lane lines ruled the length of the page,
+        # and the one centre line a rower is told to hold. Same near-silence
+        # contract as `hatch` — a device you notice fights the headline.
+        y0, y1 = int(H * 0.14), int(H - 250)
+        step = 58
+        for i in range((y1 - y0) // step):
+            rule(cv, M * 0.6, y0 + i * step, W - M * 0.6, y0 + i * step,
+                 mute, 1.0, 0.13)
+        rule(cv, W * 0.5, y0 - 30, W * 0.5, y1, P["accent"], 1.4, 0.12)
 
 
 def tones(P, family):
@@ -1578,10 +1612,62 @@ def orn_vine(cv, cx, cy, s, rgb, alpha=1.0, leaves=5, rot=0):
     cv.restore()
 
 
+# ------------------------------------------------------- the angular set
+#
+# Every ornament above is curvy or organic — a shell, a frond, a vine. A sports
+# pin drawn with a scallop is the same lie as a blackletter pin drawn with a
+# sunburst, so the class gets its own three marks, all straight strokes, and all
+# of them kept inside the ±s box draw_orn() registers: ink outside the mark is
+# ink verify() cannot see.
+def orn_chevron(cv, cx, cy, s, rgb, alpha=1.0, steps=3):
+    """Speed arrows: nested V's pointing right, the marshal's chevron."""
+    w, h = s * 0.42, s * 0.56
+    p = skia.Path()
+    spread = (s * 1.80 - w) / max(steps - 1, 1)
+    for i in range(steps):
+        x = cx - s * 0.90 + i * spread
+        p.moveTo(x, cy - h)
+        p.lineTo(x + w, cy)
+        p.lineTo(x, cy + h)
+    _stroke(cv, p, rgb, max(3.0, s * 0.13), alpha)
+
+
+def orn_checker(cv, cx, cy, s, rgb, alpha=1.0, cells=4):
+    """The finish board: half the cells filled, the ground colour doing the rest."""
+    side = 2 * s / cells
+    q = paint(C(rgb, alpha))
+    for i in range(cells):
+        for j in range(cells):
+            if (i + j) % 2:
+                continue
+            cv.drawRect(skia.Rect.MakeXYWH(cx - s + i * side, cy - s + j * side,
+                                           side, side), q)
+    cv.drawRect(skia.Rect.MakeXYWH(cx - s, cy - s, 2 * s, 2 * s),
+                paint(C(rgb, alpha * 0.7), style=skia.Paint.kStroke_Style,
+                      width=max(1.6, s * 0.05)))
+
+
+def orn_bracket(cv, cx, cy, s, rgb, alpha=1.0):
+    """Two corner brackets facing each other — the timing gantry's sight mark.
+
+    Drawn as a pair because an ornament placed from an ORN_SET has no idea which
+    way up it is: two 180°-opposite corners read as one deliberate mark anywhere.
+    """
+    a, l = s * 0.80, s * 0.55
+    p = skia.Path()
+    for dx, dy in ((-1, -1), (1, 1)):
+        x, y = cx + dx * a, cy + dy * a
+        p.moveTo(x - dx * l, y)
+        p.lineTo(x, y)
+        p.lineTo(x, y + dy * l)
+    _stroke(cv, p, rgb, max(2.5, s * 0.12), alpha)
+
+
 ORNAMENTS = {"star": orn_star, "sun": orn_sun, "wave": orn_wave, "blob": orn_blob,
              "frond": orn_frond, "arc": orn_arc, "fan": orn_fan, "dots": orn_dots,
              "eye": orn_eye, "triquetra": orn_triquetra, "fleur": orn_fleur,
-             "vine": orn_vine}
+             "vine": orn_vine, "chevron": orn_chevron, "checker": orn_checker,
+             "bracket": orn_bracket}
 
 
 def draw_orn(sh, name, kind, cx, cy, s, rgb, alpha=1.0, collide=True, **kw):
@@ -1680,6 +1766,48 @@ def border_frame(sh, box, rgb, accent=None, alpha=0.85):
         sh.cv.drawCircle(box.x + fx * box.w, box.y + fy * box.h, 3.2,
                          paint(C(accent or rgb, alpha)))
     _strips(sh, "frame", box, t=8.0)
+
+
+def crest_panel(sh, box, rgb, accent, alpha=0.9):
+    """A club shield: chamfered shoulders, straight sides, a point at the foot.
+
+    The one panel this class draws that nothing else in the set does, so its ink
+    is registered as strips rather than one box — a letter inside a crest must not
+    be reported as colliding with its own border.
+    """
+    x, y, w, h, r = box.x, box.y, box.w, box.h, box.r
+    ch, sl = 14.0, h * 0.16          # the chamfer cut and the shoulder line
+
+    def ring(ix, iy, iw, ih):
+        ir, ib, cx = ix + iw, iy + ih, ix + iw / 2
+        p = skia.Path()
+        p.moveTo(ix + ch, iy)
+        p.lineTo(ir - ch, iy)
+        p.lineTo(ir, iy + sl)
+        p.lineTo(ir, iy + ih * 0.62)
+        p.lineTo(ir - iw * 0.20, ib - ih * 0.10)
+        p.lineTo(cx, ib)
+        p.lineTo(ix + iw * 0.20, ib - ih * 0.10)
+        p.lineTo(ix, iy + ih * 0.62)
+        p.lineTo(ix, iy + sl)
+        p.close()
+        return p
+
+    i2 = 11.0
+    _stroke(sh.cv, ring(x, y, w, h), rgb, max(3.0, w * 0.012), alpha)
+    _stroke(sh.cv, ring(x + i2, y + i2, w - 2 * i2, h - 2 * i2), rgb,
+            max(1.4, w * 0.005), alpha * 0.55)
+    for fx in (0.30, 0.50, 0.70):
+        sh.cv.drawCircle(x + w * fx, y + sl * 0.5, max(2.6, w * 0.010),
+                         paint(C(accent, alpha)))
+    # The ink is the head edge and the two straight sides — there is no bottom
+    # rule to collide with, and marking the foot of the box would report every
+    # letter in the field as overlapping a line that was never drawn there.
+    t = 12.0
+    sh.mark("crest-t", Box(x, y, w, t))
+    for sx in (x, r - t):
+        sh.mark(f"crest-{'l' if sx == x else 'r'}",
+                Box(sx, y + t, t, h * 0.62 - 2 * t))
 
 
 # ------------------------------------------------------------------- templates
@@ -2311,6 +2439,313 @@ def t_carol(sh, ctx):
               lead_frac=0.30)
 
 
+# ==================================================== the tech / sports class
+#
+# Elegant says "type foundry", blackletter says "scriptorium"; this class says
+# "timing gantry" — one race meet seen five ways: its badge, its number, its start
+# list, its photo finish, its board. Every object is a hard-edged panel or a rule,
+# because a soft ornament on a hard monoline is the same lie as a scallop shell on
+# a manuscript page. These faces are sold as all-caps faces, so the set is an
+# all-caps world by fact: no template here asks the page to show a lowercase it
+# cannot honestly deliver.
+
+
+@template("crest", "the club badge: the face's own initial in a pointed shield, wordmark bar across it",
+          cls="sports")
+def t_crest(sh, ctx):
+    """A crest is what this lettering is bought for, so one pin simply is one.
+
+    The shield carries the face's simplest capital, the bar across its point carries
+    a single word of it, and the headline runs underneath — the three things a buyer
+    actually does with a sports face (logo, wordmark, poster line) in one image. The
+    bar is painted before the word is fitted, so the contrast guard is measuring the
+    bar and not the page behind it.
+    """
+    P, T = ctx["pal"], ctx["display"]
+    facts = ctx["facts"]
+    dark = bg(sh, P, ctx["th"], pool=0.10)
+    ink, mute, _ = field(P)
+    line = shout(ctx, clean(ctx, ctx["copy"]["line"] or ctx["name"])).strip()
+    words = [w for w in line.split() if w]
+    ch = facts["simple"] if usable(ctx, facts["simple"]) else ""
+    ch = ch or next((c for c in line if c.isalpha() and usable(ctx, c)), "")
+    if not ch or not words:
+        sh.problems.append("crest: nothing for the shield and bar to draw")
+        return
+    y0 = eyebrow(sh, ctx, "Club Crest") + 34
+
+    pb = Box(296, y0, 408, 372)
+    crest_panel(sh, pb, ink, P["accent"])
+    sh.text("cap", T, ch, Box(pb.x + 34, pb.y + 42, pb.w - 68, 210),
+            hi=300, lo=70, max_lines=1, min_read=110, **tone(P, 1))
+    for i, cx in enumerate((150, 850)):
+        draw_orn(sh, f"sh{i}", "chevron", cx, pb.y + 110, 58,
+                 P["accent"] if i else ink, 0.95, collide=False)
+
+    bar = Box(196, pb.y + 272, 608, 86)
+    sh.cv.drawRect(skia.Rect.MakeXYWH(bar.x, bar.y, bar.w, bar.h), paint(C(rung(P, 1))))
+    # One word only: a bar this high holds about twelve letters before the fit has
+    # to shrink the type under what a thumbnail can read. clean() has already
+    # dropped anything the face cannot draw.
+    named = [w for w in tc(clean(ctx, ctx["name"])).split() if len(w) <= 12]
+    asked = tc(clean(ctx, ctx["copy"].get("word") or "")).split()
+    token = (asked or named or words)[0]
+    sh.text("word", T, token, Box(bar.x + 30, bar.y + 10, bar.w - 60, bar.h - 20),
+            hi=88, lo=14, track=0.10, valign="top", min_read=30,
+            color=P["deep1"] if dark else P["paper1"])
+
+    stage = Box(M, bar.b + 22, W - 2 * M, 1242 - bar.b - 22)
+    measure_rows(sh, T, P, pack_lines(words, 3), stage, "crest", hi=190,
+                 min_read=40, fill=True, lead_frac=0.05, centre=True)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx)
+
+
+@template("bib", "the race number: four figures pinned to a ruled card, the meet line under them",
+          cls="sports")
+def t_bib(sh, ctx):
+    """The number on a vest is the purest test of a sports face there is.
+
+    Readable across a gymnasium, from one glyph to the next, with nothing around it.
+    So the card carries figures at the largest size the frame can hold and the
+    headline takes the foot of the page. The figures come from the face's own usable
+    set — a demo-stamped or placeholder digit is not a specimen, so a four-figure
+    number is built from what the font actually draws rather than written down.
+    """
+    P, T, L = ctx["pal"], ctx["display"], ctx["label"]
+    facts = ctx["facts"]
+    dark = bg(sh, P, ctx["th"], pool=0.12)
+    ink, mute, _ = field(P)
+    line = shout(ctx, clean(ctx, ctx["copy"]["line"] or ctx["name"])).strip()
+    words = [w for w in line.split() if w]
+    if not words:
+        sh.problems.append("bib: the line has no words this face can draw")
+        return
+    digits = "".join(c for c in "0123456789" if usable(ctx, c))
+    num = digits[:4] if len(digits) >= 4 else words[0]
+    y0 = eyebrow(sh, ctx, "Race Number") + 34
+
+    frame = Box(M + 40, y0, W - 2 * (M + 40), 500)
+    border_frame(sh, frame, ink, P["accent"])
+    numslot = sh.text("num", T, tc(num), Box(frame.x + 34, frame.y + 34,
+                                             frame.w - 68, 330),
+                      hi=440, lo=60, max_lines=1, min_read=140, **tone(P, 1))
+    tag = tc(clean(ctx, ctx["copy"].get("over") or ctx["copy"].get("sub")
+                   or f"{facts['glyphs']}-glyph display"))
+    y = _slot(sh, "num").ink.b + 26 if numslot else frame.y + 380
+    sh.text("meet", L, tag, Box(frame.x + 34, y, frame.w - 68, 44), hi=30, lo=14,
+            color=mute, track=0.30, align="center", valign="top")
+
+    stage = Box(M, frame.b + 36, W - 2 * M, 1242 - frame.b - 36)
+    measure_rows(sh, T, P, pack_lines(words, 3), stage, "bib", hi=200,
+                 min_read=42, fill=True, lead_frac=0.05, centre=True)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx)
+
+
+@template("lane", "the start list: every capital the face carries, at one size, standing on its own rule",
+          cls="sports")
+def t_lane(sh, ctx):
+    """The spacing proof a monoline has to pass.
+
+    A team sheet is twenty-six names in one weight, and that is the whole pin: one
+    size for every letter, each row standing on a hairline, two colours alternating
+    like lanes. `full_stack` sizes its grid to fit the page; this one is bound by the
+    measure, which is why the same face stands a third larger here — and why the
+    sequence is the capitals alone. A row of letters that already touches both
+    margins cannot be grown by taking the copy out of the way.
+    """
+    P, T, L = ctx["pal"], ctx["display"], ctx["label"]
+    dark = bg(sh, P, ctx["th"], dev=False)
+    device(sh, P, "lanes", dark)
+    ink, mute, _ = field(P)
+    measure = W - 2 * M
+    ups = [c for c in ascii_uppercase if usable(ctx, c)]
+    if len(ups) < 8:
+        sh.problems.append("lane: the face carries too few capitals to line up")
+        return
+    line = shout(ctx, clean(ctx, ctx["copy"]["line"] or ctx["name"])).strip()
+    y0 = eyebrow(sh, ctx, "Start List") + 30
+    # The alphabet is the subject, so the line is allowed to go small here in a way
+    # it is not allowed to go small on `crest` or `bib`: three lines inside a fixed
+    # head, and a floor that stops a 100-character brief from failing the pin.
+    sh.text("head", T, line, Box(M, y0, measure, 78), hi=66, lo=16, max_lines=3,
+            min_read=18, valign="top", **tone(P, 0))
+    slot = _slot(sh, "head")
+    y = (slot.ink.b if slot else y0 + 78) + 46
+
+    rows = spec_grid(T, [ups], measure, max(1242 - (y + 40), 200.0))
+    if not rows:
+        sh.problems.append("lane: no packing of these capitals fits the page")
+        return
+    tall = sum(h for _r, _s, h in rows) + rows[0][1] * 0.30 * max(len(rows) - 1, 0)
+    ground = sh._behind(Box(M, y + 40, measure, min(tall, 1242 - y - 40))) \
+        or lum(P["deep2"])
+    crisp = [readable(ground, rung(P, i), 4.5) for i in range(2)]
+
+    def paint_lane(p, j, i):
+        sh.cv.drawPath(p, paint(C(crisp[i % 2], 1.0)))
+
+    draw_rows(sh, T, rows, Box(M, y + 40, measure, 1), paint_lane, "lane",
+              lead_frac=0.30)
+    for i in range(len(rows)):
+        s = _slot(sh, f"lane{i}")
+        if s:
+            rule(sh.cv, M, s.ink.b + 12, W - M, s.ink.b + 12, mute, 1.2, 0.55)
+    edge_type(sh, ctx, f"{len(ups)} Caps")
+    footer(sh, ctx, at=f"{len(ups)} Caps \u00b7")
+
+
+@template("finish", "the photo finish: a phrase under the beam, its first line run back once in motion",
+          cls="sports")
+def t_finish(sh, ctx):
+    """What the face does to a sentence, and what the beam does to the face.
+
+    The elegant `phrase` spine — copy as the subject, artwork banded above and below
+    — with the timing gantry's own furniture, and one move that only a photo finish
+    makes: the beam is ruled *before* the type, so the letters cross it rather than
+    sit beside it, and the first line is drawn a second time in stripes twenty-four
+    pixels back. That is the rubricator's trick from `folio` turned sideways — a
+    restatement of the same ink, not a second thought.
+    """
+    P, T = ctx["pal"], ctx["display"]
+    dark = bg(sh, P, ctx["th"])
+    ink, mute, _ = field(P)
+    acc = P["accent"]
+    art = ORN_SETS["gantry" if dark else "sector"]
+    y0 = eyebrow(sh, ctx, "Photo Finish") + 30
+
+    top = Box(M, y0, W - 2 * M, 150)
+    for i, (kind, fx_, fy, s, alpha) in enumerate(art["top"]):
+        s = min(s, top.h / 2.2)  # a band that shrinks carries smaller furniture
+        draw_orn(sh, f"t{i}", kind, top.x + top.w * fx_,
+                 top.y + max(s, min(top.h * fy, top.h - s)), s,
+                 acc if i % 2 else ink, alpha)
+    # One spine, not a stripe: the beam is the gantry's centre line, so it runs
+    # through the middle ornament of both bands and the type crosses it.
+    beam = W * 0.5
+    rule(sh.cv, beam, top.b + 12, beam, H - 372 - 12, acc, 2.4, 0.8)
+    band = Box(M, H - 372, W - 2 * M, 120)
+    src = clean(ctx, ctx["copy"]["line"]).strip()
+    if 0 < len(src.split()) < 3:
+        sh.notes.append(f"finish: {len(src.split())} words is a label, not a phrase "
+                        f"— write three or four")
+    words = [w for w in shout(ctx, src or ctx["name"]).split() if w]
+    if not words:
+        sh.problems.append("finish: the line has no words this face can draw")
+        return
+    # One line shorter than `phrase`'s cut: a photo finish is a stack of lines
+    # crossing the beam, and the extra break is what lets the block stand at full
+    # height instead of pooling under a measure-bound row.
+    lines = pack_lines(words, min(4, max(2, len(words) - 1)))
+    stage = Box(M + 20, top.b + 24, W - 2 * (M + 20), band.y - top.b - 104)
+    measure_rows(sh, T, P, lines, stage, "fin", hi=300, min_read=44, fill=True,
+                 lead_frac=0.05, centre=True)
+
+    f0 = _slot(sh, "fin0")
+    if f0 and f0.size:
+        p, _w = T.path(lines[0], f0.size)
+        b = p.getBounds()
+        sh.cv.save()
+        sh.cv.translate(f0.ink.x - b.left() - 30, f0.ink.y - b.top())
+        hatched(sh.cv, p, P["accent2"], gap=8, weight=2.4, angle=0, alpha=0.62)
+        sh.cv.restore()
+        sh.mark("echo", Box(f0.ink.x - 30, f0.ink.y, f0.ink.w, f0.ink.h),
+                collide=False)
+
+    for i, (kind, fx_, fy, s, alpha) in enumerate(art["bottom"]):
+        s = min(s, band.h / 2.2)
+        draw_orn(sh, f"b{i}", kind, M + (W - 2 * M) * fx_,
+                 band.y + max(s, min(band.h * fy, band.h - s)), s,
+                 P["accent2"] if i % 2 else acc, alpha)
+    edge_type(sh, ctx, EDGE(ctx))
+    footer(sh, ctx)
+
+
+@template("timer", "the timing board: name, tag, then caps, figures and punctuation in one matrix on a dot field",
+          cls="sports")
+def t_timer(sh, ctx):
+    """Everything the face can send, at one size, the way a gantry board sends it.
+
+    The specimen shape this class shares with `full_stack`, and the place the two
+    part company: `full_stack` refuses digits and punctuation because they cost the
+    letters their size (`wall` spends them on phrase rows instead), and it walks a
+    colour ladder under a bloom that reads as light. A timing board has no light —
+    it has pixels. So the rungs stay flat, the ground is a dot matrix, and the set
+    is the whole working alphabet: capitals, the figures the face actually draws,
+    and the punctuation, which is what a buyer typing a scoreboard checks first.
+
+    The count line says `Caps`, not `Upper / Lower`. This face is sold as an
+    all-caps face, and a pin that claims twenty-six lowercase letters it cannot
+    show is the one thing a specimen sheet must never do.
+    """
+    P, T, L = ctx["pal"], ctx["display"], ctx["label"]
+    dark = bg(sh, P, ctx["th"], pool=0.10, dev=False)
+    device(sh, P, "dots", dark)
+    ink, mute, _ = field(P)
+    measure = W - 2 * M
+    facts = ctx["facts"]
+    ups = [c for c in ascii_uppercase if usable(ctx, c)]
+    digits = "".join(c for c in "0123456789" if usable(ctx, c))
+    punct = [c for c in "&@?!%*()" if usable(ctx, c)]
+    if len(ups) < 8:
+        sh.problems.append("timer: the face carries too few capitals to board out")
+        return
+
+    sh.text("hdr-l", L, f"({facts['glyphs']} Glyphs)", Box(M, 62, 460, 24), hi=20,
+            lo=12, color=ink, track=0.14, align="left", valign="top", min_read=12)
+    sh.text("hdr-r", L, "(OTF / TTF / WOFF)", Box(W - M - 460, 62, 460, 24), hi=20,
+            lo=12, color=ink, track=0.14, align="right", valign="top", min_read=12)
+
+    name = shout(ctx, clean(ctx, ctx["name"])).strip()
+    lines = pack_lines(name.split() or
+                       shout(ctx, clean(ctx, ctx["copy"]["line"])).split(), 2)
+    y = 124
+    for i, ln in enumerate(lines):
+        size = fit_measure(T, ln, measure, 340.0)
+        if size <= 0:
+            continue
+        h = T.path(ln, size)[0].getBounds().height()
+        sh.text(f"n{i}", T, ln, Box(M, y, measure, h + 2), hi=size, lo=size,
+                leading=0.86, max_lines=1, min_read=40, valign="top",
+                min_contrast=5.0 if i else 6.5, **tone(P, 1 if i else 0))
+        y += h + 26
+    y += 14
+    tag = tc(clean(ctx, ctx["copy"].get("over") or f"{facts['glyphs']}-glyph display"))
+    sh.text("tag", L, tag, Box(M, y, measure, 36), hi=30, lo=14, color=ink,
+            track=0.30, align="center", valign="top", min_read=14)
+    y += 42
+
+    rule(sh.cv, M, y, W - M, y, ink, 1.4, 0.5)
+    rule(sh.cv, W / 2 - 34, y, W / 2 + 34, y, P["accent"], 3.4)
+    y += 20
+    sh.text("sec-l", L, "Full Character Set", Box(M, y, 400, 24), hi=20, lo=12,
+            color=ink, track=0.16, align="left", valign="top", min_read=12)
+    claim = f"{len(ups)} Caps" + (f" \u00b7 {len(digits)} Figures" if digits else "")
+    sh.text("sec-r", L, claim, Box(W - M - 400, y, 400, 24), hi=20, lo=12,
+            color=ink, track=0.16, align="right", valign="top", min_read=12)
+
+    seqs = [ups] + ([list(digits)] if len(digits) >= 4 else []) \
+               + ([punct] if len(punct) >= 4 else [])
+    rows = spec_grid(T, seqs, measure, max(1242 - (y + 46), 160.0))
+    if not rows:
+        sh.problems.append("timer: no packing of this character set fits the board")
+        return
+    tall = (sum(h for _r, _s, h in rows)
+            + rows[0][1] * 0.30 * max(len(rows) - 1, 0))
+    ground = (sh._behind(Box(M, y + 46, measure, min(tall, 1242 - y - 46)))
+              or lum(P["deep2"]))
+    crisp = [readable(ground, rung(P, i), 4.5) for i in range(len(P["tone"]))]
+
+    def paint_cell(p, j, i):
+        sh.cv.drawPath(p, paint(C(crisp[i % len(crisp)], 1.0)))
+
+    draw_rows(sh, T, rows, Box(M, y + 46, measure, 1), paint_cell, "chars",
+              lead_frac=0.30)
+    edge_type(sh, ctx, claim)
+    footer(sh, ctx, at=f"{claim} \u00b7")
+
+
 ORN_SETS = {
     "grove": dict(top=[("frond", 0.10, 0.62, 128, 0.9), ("star", 0.44, 0.16, 40, 1.0),
                        ("sun", 0.72, 0.44, 86, 1.0), ("star", 0.93, 0.70, 30, 0.85)],
@@ -2334,6 +2769,20 @@ ORN_SETS = {
                       ("star", 0.80, 0.40, 54, 1.0)],
                  bottom=[("triquetra", 0.24, 0.50, 72, 0.95), ("fan", 0.52, 0.54, 92, 0.85),
                          ("triquetra", 0.80, 0.50, 72, 0.95)]),
+    # The two sports sets, chosen by class and never by colour world: everything
+    # straight-edged, one big mark per band so a 300px thumbnail still reads.
+    "gantry": dict(top=[("chevron", 0.18, 0.50, 88, 1.0),
+                        ("bracket", 0.50, 0.50, 64, 0.95),
+                        ("chevron", 0.82, 0.50, 88, 1.0)],
+                   bottom=[("checker", 0.20, 0.50, 58, 1.0),
+                           ("bracket", 0.50, 0.48, 64, 0.9),
+                           ("checker", 0.84, 0.50, 58, 1.0)]),
+    "sector": dict(top=[("bracket", 0.16, 0.50, 60, 0.95),
+                        ("chevron", 0.50, 0.50, 92, 1.0),
+                        ("bracket", 0.84, 0.50, 60, 0.95)],
+                   bottom=[("chevron", 0.22, 0.50, 76, 0.9),
+                           ("checker", 0.50, 0.50, 62, 1.0),
+                           ("chevron", 0.86, 0.50, 76, 0.9)]),
 }
 
 
