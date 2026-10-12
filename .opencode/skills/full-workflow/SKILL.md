@@ -55,7 +55,6 @@ image-generation tools, visual inspection, or OCR. Require:
 - `prepared_visuals/1x1/thumbnail_japanese.png` with the same name-only
   thumbnail treatment;
 - 4-8 sequential `promo_N.png` files in both ratios;
-- four factual specimen PNGs;
 - `visual-handoff-manifest.md`, and `VISUAL-HANDOFF-READY.md`.
 
 Require the exact response marker `READY FOR FONT PREP HANDOFF`, the exact
@@ -66,16 +65,15 @@ Agent 13 without all three.
 ### Continuous font preparation
 
 Invoke `font-prep-specialist` with the exact phrase `FULL WORKFLOW CONTINUOUS
-MODE`, the original workspace, the new name, the old description, and the
-prepared-visual path from Agent 27. Agent 13 must execute its complete run in
+MODE`, the original workspace, the new name, and the old description.
+Agent 13 must execute its complete run in
 one invocation and must not stop at the metadata/package handoff.
 
 Agent 13 is not allowed to open, visually inspect, OCR, thumbnail, or reason
-from image content. It trusts Agent 27's successful visual validator and manifest
-and copies only the four factual specimen PNGs. Its mechanical pass is one
-command, `python3 bin/prepare_font_package.py`; its own work is the description
-copy. It must finish the font package, the technical audit, the specimens and
-the final reports before returning. Its judgement goes into two things: the
+from image content, and it copies nothing from Agent 27's drafts. Its mechanical
+pass is one command, `python3 bin/prepare_font_package.py`; its own work is the
+description copy. It must finish the font package, the technical audit, the
+specimen sheets and the final reports before returning. Its judgement goes into two things: the
 description copy and the five Pinterest pins. Step 2 writes `pins.brief.json`
 (five fresh headlines, five colour worlds, plus `"class": "blackletter"` only
 when the seller's own words say blackletter, celtic, uncial, gaelic or gothic,
@@ -83,15 +81,18 @@ when the seller's own words say blackletter, celtic, uncial, gaelic or gothic,
 varsity, letterman or jersey, and `"class": "script"` only when they say
 handwritten, hand lettering, script, cursive, calligraphy, signature or wedding lettering)
 and runs `bin/render-pins`, which draws `pinterest_1..5` from the font binary
-into `visuals/New-Images/pinterest/` — so this stays image-inspection-free, and
-the renderer refuses copy that repeats itself. Showcase video rendering is
+into `visuals/New-Images/pinterest/`; its Step 2b then renders the two factual
+specimen sheets at both ratios with `bin/render-specimens --class`, which refuses
+to guess the class. So this stays image-inspection-free, and the renderer refuses
+copy that repeats itself. Showcase video rendering is
 archived (`archive/video/README.md`); do not attempt it. Everything else about
 the seller's artwork belongs to the standalone `/font-final-images` agent, which
 runs later and outside this workflow.
 
 Require a final preparation output path, a successful completion status, the
-five rendered pins, and an **empty** `visuals/New-Images/` drop directory left
-in place for the seller apart from that `pinterest/` folder.
+five rendered pins, the four specimen sheets, and an **empty**
+`visuals/New-Images/` drop directory left in place for the seller apart from
+that `pinterest/` folder.
 
 Agent 13 never copies Agent 27's drafts into `outputs/`: those stay in
 `font-factory/`. The seller generates the final artwork themselves, drops the raw

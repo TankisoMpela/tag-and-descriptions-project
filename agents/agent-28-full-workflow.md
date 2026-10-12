@@ -43,9 +43,9 @@ Cubebrush, Etsy, Behance, Pinterest, and all other marketplace stages.
 
 Do not repeatedly paste the entire old description, workspace tree, or prior
 research into every child prompt. Pass the exact source paths, the final name,
-the unified number, and only the factual constraints needed by that child. Pass the
-prepared-visuals path to Agent 13 only so it can take the four factual specimen PNGs
-from `prepared_visuals/specimens/`. Each specialist reads its own standing instructions and
+the unified number, and only the factual constraints needed by that child. Agent 13
+needs no path into `prepared_visuals/`: it renders the pins and the factual specimen
+sheets from the font binary. Each specialist reads its own standing instructions and
 its product-specific source once. Do not ask the parent to summarize or
 duplicate a child's research report in the final response.
 
@@ -82,7 +82,7 @@ Draft visuals (provisional; stay in font-factory, never copied into outputs/): [
 Verify that the returned path is the workspace's `prepared_visuals/` directory
 and that the child reports a successful visual validator. Do not invoke Agent
 13 without this result. These visuals are drafts for the user's own image-model
-step: Agent 13 takes only the four factual specimen PNGs from them.
+step: Agent 13 copies nothing from them.
 
 ### 2. Agent 13
 
@@ -94,12 +94,11 @@ font workspace: [exact workspace]
 final name: [new name]
 description: [old description]
 unified product number: [UNIFIED_PRODUCT_NUMBER]
-prepared visuals (for the four factual specimen PNGs only): [exact absolute prepared_visuals path]
 Run the complete preparation in one pass and stop at its completion summary.
-Take ONLY the four named factual specimen PNGs from prepared_visuals/specimens/3x2/
-and prepared_visuals/specimens/1x1/; copy no creative thumbnail, promo, or other
-prepared visual. Design and render the five Pinterest pins yourself in
-visuals/New-Images/pinterest/ per your STEP 2 (bin/render-pins --brief); leave the
+Copy nothing from prepared_visuals/. Design and render the five Pinterest pins yourself in
+visuals/New-Images/pinterest/ per your STEP 2 (bin/render-pins --brief), render the two
+factual specimen sheets at both ratios per your STEP 2b (bin/render-specimens --class,
+same class as the brief), and leave the
 rest of visuals/New-Images/ as the user's empty drop directory.
 Showcase video rendering is archived and is not part of this workflow; see
 `archive/video/README.md` to reinstate it.

@@ -575,7 +575,8 @@ The locked production run — Agent 13 STEP 2, inside `/full-workflow`:
    `graphite`/`inkwell` for script.
 3. One command renders: `bin/render-pins --brief …` validates the brief, renders the
    class's five templates into `pinterest_1..5`, and enforces the checks (§12) as it
-   goes.
+   goes. Step 2b then draws the same class's two specimen sheets on the landscape
+   frames (§15).
 4. `visuals/New-Images/pinterest/` (with `pins.brief.json`) is then picked up by
    `/pinterest-prepare`, and `/pinterest-daily` pairs each pin with one of the two
    product links in `buffer.csv` / `pins.csv`. **Uploading to Buffer/Pinterest stays
@@ -586,3 +587,34 @@ A worked proof that the documented renderer techniques are executable lives in
 technique, all checks green) — §13 of the renderer doc carries its last measured
 output. It stays in the capability lab; the production path is `bin/pin-studio/`
 behind `bin/render-pins`.
+
+## 15. The same class system's second surface: the specimen sheets
+
+The four classes exist because a font's character is a *claim*, and a claim about a
+blackletter and a claim about a script cannot be made in the same clothes. A pin makes
+that claim with copy — a headline someone wrote. The specimen sheets make the same claim
+with the font's own inventory: `ABCDEFGHIJ abcdefghij` on one sheet,
+`0123456789` and the punctuation run on the other, each at 3:2 (2400x1600) and at 1:1
+(1600x1600). Eight template bodies, registered at two frames, so sixteen names; Agent 13
+picks the class in Step 2b exactly as it picks it for the pins, from the seller's own words.
+
+The design rules that carry over, and the two that do not:
+
+- **The class treatment is taken from the class's `set`-equivalent pin, not invented.**
+  Elegant keeps the ornament band and the centred ladder; blackletter keeps the knot band,
+  the border frame and the illuminated initial; sports keeps the start-list grammar — one
+  rule under each row; script keeps joined runs standing on measured baselines.
+- **Fill the frame you are given.** A landscape sheet is not a pin with margins: the rows
+  are sized to the measure and the space a short block leaves goes *between* the lines, not
+  under them. `min_read` is `0.05 * sheet height`, so a row plan tuned for one page cannot
+  pass on another by shrinking.
+- **A sheet states facts, and only facts it can check.** It shows A–J, so it says A–J —
+  never "10 uppercase and 10 lowercase", which reads as a claim about the whole character
+  set. What the face lacks is named on the sheet ("Figures 0–9 less 0 9"); a caps-only face
+  gets the capitals twice with the label "drawn as capitals", which is measured from the
+  outlines, not guessed from a category.
+- **No copy is authored here, so nothing is invented either.** No headline, no invented
+  showcase family, no `ftrs` content, and the multilingual script family is gone: the
+  sample is the alphabet and the figures, on purpose, so it can be read at thumbnail size.
+- **The 200 KB Pinterest ladder does not apply.** These are PNG under a reported 500 KB
+  ceiling; over it is an error to look at, never a silent JPEG.

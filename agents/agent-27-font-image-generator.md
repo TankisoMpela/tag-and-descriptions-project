@@ -169,8 +169,10 @@ unless the user explicitly requests it.
 
 ## Scope and quality bar
 
-- Create one creative thumbnail and 4-8 supporting images, plus the two factual
-  specimen families, in both required ratios.
+- Create one creative thumbnail and 4-8 supporting images, in both required
+  ratios. The two factual specimen sheets are not yours: Agent 13 renders them
+  from class templates in Step 2b, because they need the class call you never
+  make.
 - Choose the number and roles of supporting images from the font and its buyer
   questions. Four is the minimum handoff contract, not a fixed role checklist:
   omit a weak idea and replace it with a stronger proof of the font's
@@ -995,7 +997,6 @@ font-factory/fonts/{slug}/
   prepared_visuals/         <- rendered and validated by the renderer
     3x2/thumbnail_main.png, promo_N.png
     1x1/thumbnail_main.png, thumbnail_japanese.png, promo_N.png
-    specimens/3x2/*.png and specimens/1x1/*.png
     visual-handoff-manifest.md
     VISUAL-HANDOFF-READY.md
 ```
@@ -1198,16 +1199,14 @@ Batch the authoring pass, then batch the mechanical pass:
    not a concept and will render as a flat panel. Then re-run the renderer and
    re-read the report. This loop is the point: the plan is the source of truth,
    so the fix is always a plan field, never the derived views.
-5. The renderer also creates the four factual specimen PNGs from the primary
-   font. It is mechanical; it must not create replacement artwork.
-6. The renderer writes the manifest and runs the strict validator itself (once
+5. The renderer writes the manifest and runs the strict validator itself (once
    with a pending marker, once with `PASS`). Read its exit status. Do not call an
    image good merely because it passes a file check.
 
 ## Final handoff
 
 The renderer already performed the final handoff. It writes
-`visual-handoff-manifest.md` (one row per image and the four specimens, with
+`visual-handoff-manifest.md` (one row per image, with
 dimensions, displayed copy, source font, ratio review, contrast review, status)
 and `VISUAL-HANDOFF-READY.md`, validating once with a pending marker and once
 with `validation: PASS`.

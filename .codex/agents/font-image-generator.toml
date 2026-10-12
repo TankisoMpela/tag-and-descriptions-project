@@ -34,7 +34,7 @@ The directory-mode preflight automatically cross-checks all family members for:
 If the vendor package ships both OTF and TTF for the same style (common),
 the family check will flag duplicate style names and weight signatures —
 this is expected for format pairs, not an error. Verify from file names,
-note it in the handoff, and use OTF files only for specimens.
+note it in the handoff, and use OTF files only for rendering.
 
 Record family consistency findings, kern/GPOS/GSUB status, and shaping
 results in the visual plan metadata or existing handoff notes. Do not make

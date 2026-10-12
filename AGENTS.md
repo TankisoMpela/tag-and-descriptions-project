@@ -44,9 +44,9 @@ stage's final result before starting the next. The only registered agents for th
 five specialists below plus the `full-workflow` orchestrator.
 
 1. `font-image-generator` (Agent 27) — bespoke visual handoff.
-2. `font-prep-specialist` (Agent 13) — metadata/package pass, specimens, the five
-   designed Pinterest pins, and an empty `visuals/New-Images/` drop directory. It never
-   copies or processes the seller's final images.
+2. `font-prep-specialist` (Agent 13) — metadata/package pass, the rendered specimen
+   sheets, the five designed Pinterest pins, and an empty `visuals/New-Images/` drop
+   directory. It never copies or processes the seller's final images.
 3. `booth-fonts-specialist` (Agent 20) — BOOTH listing; default campaign is a
    limited-time free offer (`FREE_ACTIVE`) with free-campaign tags and a like CTA.
 4. `cm_fonts_specialist` (Agent 2) — Creative Market font listing using a bounded
@@ -84,7 +84,8 @@ Relocated to `agents/reference/AGENTS-annex-visual-handoff.md` — read it if yo
 font-image-generator or the font-final-visual-processor.
 
 Agent 27's `prepared_visuals/` are DRAFTS: they stay in `font-factory/` and are never copied
-into `outputs/`. Agent 13 copies only the four factual specimen PNGs, renders the five
+into `outputs/`. Agent 13 copies nothing from them: it renders the two
+factual specimen sheets at both ratios (`bin/render-specimens`, Step 2b) and the five
 designed Pinterest pins into `visuals/New-Images/pinterest/`, and leaves the rest of
 `visuals/New-Images/` empty. The seller drops their own generated images there and
 runs `/font-final-images` (Agent 30), which is deliberately outside `/full-workflow` and
@@ -162,7 +163,6 @@ tag-and-description-project/
 │       └── prepared_visuals/           ← Agent 27 DRAFT visuals; stay here, never copied to outputs/
 │           ├── 3x2/                    ← thumbnail_main.png and promo_N.png
 │           ├── 1x1/                    ← thumbnail_main.png, thumbnail_japanese.png, promo_N.png
-│           ├── specimens/              ← two factual specimen families per ratio
 │           └── visual-handoff-manifest.md
 ├── outputs/                            ← ALL MARKETPLACE LISTING OUTPUTS
 │   ├── font-preparation/               ← Agent 13 {NUM}-{slug} packages, ZIP copies, and visual derivatives

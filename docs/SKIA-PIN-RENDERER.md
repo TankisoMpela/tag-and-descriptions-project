@@ -684,6 +684,26 @@ Drawing a finished raster into a smaller frame:
   class worlds (`vellum`, `gilded` for blackletter; `asphalt`, `chrome` for sports;
   `graphite`, `inkwell` for script) never surface in another class's rotation.
   `--class` runs a family with no brief; `--stress` sweeps every face through all four.
+* The class system has a **second surface**: the factual specimen sheets, on frames the
+  pins never use. `FRAMES` is the only place a page size is written — `pin` (1000x1500),
+  `3x2` (2400x1600), `1x1` (1600x1600) — and `@template(..., frame=...)` selects one, so
+  `render()` makes the surface and nothing else decides its size. A `Sheet` carries its
+  own geometry: `sh.w`/`sh.h` are the surface, `sh.m` is `round(min(w,h) * 0.084)`,
+  `sh.scale` is `min(w,h)/1000` for **type** and `sh.vscale` is `h/1500` for **position**.
+  At 1000x1500 those are 84, 1.0 and 1.0, so every pin keeps the exact integers it shipped
+  with and a landscape sheet gets its own proportionally. Shared furniture (`bg`,
+  `device`, `eyebrow`, `footer`, `edge_type`) reads them off the sheet; the 20 pin
+  template bodies still read the module-level `W H M GAPROW` globals, deliberately — a
+  frame has to be data on the sheet rather than a rebinding of globals, or the literal
+  `1242`-family anchors inside those bodies silently disagree with the page.
+* **`device()` is not available to a specimen sheet.** Its branches mix fractional `H`
+  anchors with absolute step counts, so a 5-band x 96px run starting at `H*0.56` walks off
+  a 1600px page. Re-tuning it would move every shipped pin for no gain, so the sheets take
+  `bg()` plus their own drawn furniture and `--specimens` never calls it.
+* `--specimens` refuses to run without `--class`, and a specimen never enters
+  `check_brief()` or `--stress`: there is no authored copy to police, and sweeping copy
+  lengths is the wrong harness for a fixed glyph list. Its byte ceiling is a *reported*
+  500 KB, PNG only, never the pins' 200 KB JPEG ladder.
 * `Sheet` remembers the size of the surface it was given (`self.w`, `self.h`), so a
   **sub-sheet** is checked against its own paper and not the page: `Sheet.sub(w, h)` +
   `Sheet.paste(sub, cx, cy, angle)` is how `sample` prints a tipped, taped card, and the

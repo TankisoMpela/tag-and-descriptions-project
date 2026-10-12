@@ -10,7 +10,7 @@ Agent 27 (`font-image-generator`) runs before Agent 13. It derives the visual
 concept, copy, background, contrast, effects, and ratio-specific layouts from the
 specific font. It authors a cohesive phrase/concept ledger, `theme.txt`,
 `visual-plan.json`, and image notes, then creates a fast mechanical
-text-placeholder handoff and the two factual specimen families. It reviews the
+text-placeholder handoff. It reviews the
 handoff with deterministic machine QA only (the agent has no vision or OCR tool
 and never inspects rendered PNGs), and never claims placeholders are final
 artwork. It never modifies font binaries or claims an upload; vision is never
@@ -29,16 +29,16 @@ The seller creates the final artwork themselves, outside the pipeline.
 
 ## Required order
 
-1. `/font-images` → phrase-led creative briefs, supporting placeholders, and four
-   factual specimen PNGs under `prepared_visuals/specimens/{3x2,1x1}/`.
+1. `/font-images` → phrase-led creative briefs and supporting placeholders. The
+   factual specimen sheets are **not** part of this handoff.
 2. `/font-prep` → the single preparation pass: metadata, package, the
-   specimens, the five designed Pinterest pins, and an **empty**
+   specimen sheets, the five designed Pinterest pins, and an **empty**
    `outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/` drop directory
-   apart from `New-Images/pinterest/`. Agent 13 copies ONLY the four factual
-   specimen PNGs out of `prepared_visuals/specimens/`; it copies no creative
-   thumbnail or promo, and composes or compresses nothing from the seller's
-   artwork. The five pins are drawn from the font binary by `bin/render-pins`
-   from a `pins.brief.json` it writes itself (`docs/PIN-ART-DIRECTION.md`).
+   apart from `New-Images/pinterest/`. Agent 13 copies nothing out of
+   `prepared_visuals/`; it renders both deliverables itself from the font
+   binary — the five pins with `bin/render-pins` from a `pins.brief.json` it
+   writes itself (`docs/PIN-ART-DIRECTION.md`), and the two specimen sheets at
+   both ratios with `bin/render-specimens` (Step 2b).
 3. **Seller step (manual):** generate the final images with the image model and
    drop the raw files directly into
    `outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/`.

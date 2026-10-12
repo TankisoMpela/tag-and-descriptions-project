@@ -18,7 +18,6 @@ Agent 27 is responsible for:
 - selecting concrete buyer-use contexts only when the font's supported use
   cases make them appropriate, while allowing construction or glyph proof when
   that is the stronger evidence;
-- the two factual font specimen families previously owned by Agent 13;
 - `VISUAL-HANDOFF-READY.md` and the explicit Agent-13 handoff message.
 
 Agent 13 is responsible for:
@@ -31,8 +30,9 @@ Agent 13 is responsible for:
   ASCII punctuation);
 - optional Freemium demo subsetting when explicitly requested;
 - marketplace description at the preparation output root and audit reports;
-- consuming Agent-27's prevalidated 3:2, 1:1, and specimen handoff without inspecting image content, then mechanically encoding creative images (`≤500 KB`);
+- consuming Agent-27's prevalidated 3:2 and 1:1 handoff without inspecting image content, then mechanically encoding creative images (`≤500 KB`);
 - designing and rendering the five Pinterest pins (`bin/render-pins --brief`, each `<=200000` bytes) into `visuals/New-Images/pinterest/` from the font binary and this font's own `description.txt`.
+- rendering the two factual specimen sheets at both ratios (`bin/render-specimens --class …` into `specimens/{3x2,1x1}/`) — they need the class call, which only Agent 13 makes.
 
 Agent 13 is **not** responsible for:
 - generating or researching names;
@@ -51,13 +51,12 @@ font-factory/fonts/{input-slug}/
 │   └── supporting/                  (original supporting images)
 ├── visual-direction/               (Agent 27 art direction, plan, and review)
 └── prepared_visuals/               (Agent 27 visual handoff)
-    ├── specimens/                  (two factual specimen families per ratio)
     ├── 3x2/                        (thumbnail_main.png, promo_N.png)
     ├── 1x1/                        (thumbnail_main.png, thumbnail_japanese.png, promo_N.png)
     ├── visual-handoff-manifest.md  (Agent-27 visual QA record)
     └── VISUAL-HANDOFF-READY.md
 
-Agent 27 creates both thumbnail ratios, both supporting-image ratios, and the four factual specimen outputs. Pinterest is not part of this handoff: Agent 13 designs and renders the five pins from the font binary in its own STEP 2.
+Agent 27 creates both thumbnail ratios and both supporting-image ratios. Pinterest is not part of this handoff: Agent 13 designs and renders the five pins from the font binary in its own STEP 2. Neither is the specimen sheet: Agent 13 renders those in STEP 2b.
 
 The two ratios are planned independently. A mixed `New-Images` folder may
 contain both 3:2 and 1:1 references, but references are not silently treated as
@@ -79,8 +78,8 @@ Agent 13 writes to `outputs/font-preparation/{new-slug}/`:
 - full-dimension JPEG delivery copies under `visuals/main/` and `visuals/squares/`, each compressed to `≤500 KB`;
 - the five designed Pinterest pins `pinterest_1..5` under `visuals/New-Images/pinterest/`, each at or below `200000` bytes, plus `pins.brief.json`;
 - one shared crop-safe marketplace thumbnail under `visuals/platforms/`;
-- four Agent-27 factual specimen PNGs copied into the corresponding source and
-  delivery folders;
+- the four specimen sheets (`specimen-letters.png`, `specimen-numerals.png` at each
+  ratio), rendered by Agent 13 into `specimens/3x2/` and `specimens/1x1/`;
 - main `1920x1080` text-only font showcase MP4 and dedicated Etsy `1920x960`
   2:1 showcase MP4 plus `etsy-video-script.txt`;
 - `visual-source-manifest.md`.

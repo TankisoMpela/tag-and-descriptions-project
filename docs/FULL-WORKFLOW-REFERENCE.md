@@ -18,7 +18,7 @@ the final image processor is deliberately **outside** it.
   /full-workflow  (agent-28 orchestrates; owns routing, not content)
         │
         ├─ 1  font-image-generator        (agent 27)  art direction + provisional visuals
-        ├─ 2  font-prep-specialist        (agent 13)  package, metadata, specimens, five Pinterest pins
+        ├─ 2  font-prep-specialist        (agent 13)  package, metadata, specimen sheets, five Pinterest pins
         ├─ 3  booth-fonts-specialist      (agent 20)  Japanese-first BOOTH listing
         ├─ 4  cm-fonts-specialist          (agent 2)   Creative Market corpus listing
         └─ 5  creative-fabrica-fonts-specialist (agent 29)  Creative Fabrica listing
@@ -53,7 +53,7 @@ and it never inspects a PNG it produced.
 | | |
 |---|---|
 | **Provided** | font workspace, the final name when the user supplies one (otherwise it decides one under its Naming policy), the old product description, any factual constraints |
-| **Produces** | `font-factory/fonts/{slug}/visual-direction/visual-plan.json` (the single source), `candidate-review.md`, and `prepared_visuals/` — 19 placeholder PNGs (9 at 3:2, 10 at 1:1) + 4 factual specimens, 23 PNGs total, plus derived `theme.txt`, `image-notes/`, `art-direction.md`, `visual-handoff-manifest.md`, `VISUAL-HANDOFF-READY.md` |
+| **Produces** | `font-factory/fonts/{slug}/visual-direction/visual-plan.json` (the single source), `candidate-review.md`, and `prepared_visuals/` — 19 placeholder PNGs (9 at 3:2, 10 at 1:1), plus derived `theme.txt`, `image-notes/`, `art-direction.md`, `visual-handoff-manifest.md`, `VISUAL-HANDOFF-READY.md` |
 | **Tools** | `bin/font_fact_sheet.py`, `bin/generate_font_text_placeholders.py` |
 | **Ends with** | `READY FOR FONT PREP HANDOFF` |
 
@@ -80,27 +80,30 @@ The mechanical packaging pass.
 
 | | |
 |---|---|
-| **Provided** | the font workspace, final name, product number, and Agent 27's `prepared_visuals/` (for the four specimen PNGs only) |
+| **Provided** | the font workspace, final name, and product number — nothing is taken from Agent 27's `prepared_visuals/` |
 | **Produces** | `outputs/font-preparation/{NUM}-{slug}/` — the font-named folder with OTF/TTF/WOFF/WOFF2, `description.txt`, all three delivery archives, `specimens/`, `visuals/New-Images/` (the seller's drop directory, pre-filled only with `pinterest/pinterest_1..5` at `<=200000` bytes each plus `pins.brief.json`), and three reports |
-| **Tools** | `bin/prepare_font_package.py` (which runs `font_preflight_audit.py` and `font_package_audit.py` itself), `bin/render-pins --brief` (the five designed pins), `bin/validate_font_factory.py --strict` |
+| **Tools** | `bin/prepare_font_package.py` (which runs `font_preflight_audit.py` and `font_package_audit.py` itself), `bin/render-pins --brief` (the five designed pins), `bin/render-specimens --class` (the four specimen sheets), `bin/validate_font_factory.py --strict` |
 | **Ends with** | `READY FOR FINAL IMAGES` |
 
 **Process — one command plus one brief.** `prepare_font_package.py` performs the entire mechanical pass:
 discover inputs → pre-flight audit → name table → OS/2 flags → OTF/TTF/WOFF/WOFF2
-→ copy specimens → create the drop directory → write the reports → build both
+→ create the drop directory → write the reports → build both
 archives → run the technical audit. The agent's judgement work is
 `description.txt` and the pin brief: it authors `pins.brief.json` (five fresh
 headlines, one theme and tone offset per pin, from this font's own description
-facts) and renders the five pins with one `bin/render-pins --brief` command,
-which refuses self-repeating copy. This replaced 9 numbered steps and 13 command blocks.
+facts), renders the five pins with one `bin/render-pins --brief` command,
+which refuses self-repeating copy, and renders the specimen sheets with one
+`bin/render-specimens --class` command that refuses to guess the class. This
+replaced 9 numbered steps and 13 command blocks.
 
 **Two behaviours worth knowing**, both from bugs found while building it:
 
 - **Name ID 10 is deliberately preserved.** It carries the original founder's
   credit. Every other ID is overwritten with the studio's.
-- **Specimens are the only images copied from Agent 27.** The 23 drafts stay in
-  `font-factory/` forever; they must not reach `outputs/`. The pins are not
-  copied or composed from them — they are rendered from the font binary.
+- **Agent 13 copies nothing from Agent 27.** The 23 drafts stay in
+  `font-factory/` forever; they must not reach `outputs/`. Neither the pins nor
+  the sheets come from them: the pins are rendered from the font binary, the
+  specimen sheets from the same class templates on the landscape frames.
 
 ---
 
@@ -207,7 +210,7 @@ Measured end to end on a real 2-weight font.
 | Stage | Tool | Time |
 |---|---|---|
 | Agent 27 | `font_fact_sheet.py` | **0.31 s** |
-| Agent 27 | `generate_font_text_placeholders.py` (19 placeholders + 4 specimens = 23 PNGs, derived views, 2 validations) | **11.5–14.3 s** |
+| Agent 27 | `generate_font_text_placeholders.py` (19 placeholders, derived views, 2 validations) | **11.5–14.3 s** |
 | Agent 13 | `prepare_font_package.py` (pre-flight audit, metadata, 8 font files, archives, package audit) | **2.95 s** |
 | Agent 30 | `process_final_font_images.py` (5 raw → 3+2 JPEGs + manifest) | **1.92 s** |
 | validator | `validate_font_visual_handoff.py --strict` | 1.39 s |
@@ -235,7 +238,7 @@ Every tool the workflow's agents name, why it exists, and its measured cost.
 | Tool | Why | Timing |
 |---|---|---|
 | `font_fact_sheet.py` | Gives the art director verified facts — metrics, character coverage (including whether Japanese exists at all), the OpenType feature inventory, and the exact glyph sequence for proposed display copy — without it writing fontTools/uharfbuzz inline. On eQuity, shaping `ffi` returns **one glyph from three characters**, so it warns that a headline's glyph count changes; an agent with no vision cannot eyeball that. | 0.31 s |
-| `generate_font_text_placeholders.py` | The whole handoff in one command: renders the 19 placeholders, renders 4 specimens via `render_specimens.py`, derives the three documents from the plan, writes the manifest and marker, and runs the strict validator twice (pending, then PASS). Stages into a temp dir and swaps atomically; refuses a non-empty output. | 11.5–14.3 s |
+| `generate_font_text_placeholders.py` | The whole handoff in one command: renders the 19 placeholders, derives the three documents from the plan, writes the manifest and marker, and runs the strict validator twice (pending, then PASS). Stages into a temp dir and swaps atomically; refuses a non-empty output. | 11.5–14.3 s |
 | `validate_font_visual_handoff.py` | Deterministic machine QA — dimensions, promo counts, notes, contrast, handoff documents. The only evidence of record, since the agent cannot see. | 1.39 s |
 
 ### Agent 13
@@ -247,6 +250,7 @@ Every tool the workflow's agents name, why it exists, and its measured cost.
 | OpenType Sanitizer | Run by the packager over all eight delivered files as an **independent** parser. It parses every table where the audit above reads only fsType/name IDs/glyph count through fontTools, which loads some malformed fonts without complaint until a broken table is touched. Skipped with a note when `ots-sanitize` is absent. | ≈0.3 s |
 | `validate_font_factory.py --strict` | Staging hygiene — catches the pathologically space-joined slug and stray rasters in a font root. | ~0.1 s |
 | `bin/render-pins --brief` | The five Pinterest pins in one command: validates the brief (no repeated headline, no shipped phrase reused, distinct themes, ≥50% token overlap refused, the five keys must match the brief's optional `"class"`), renders that class's five templates — elegant hero/set/wall/phrase/full_stack, blackletter initials/knotband/scriptorium/folio/carol, sports crest/bib/lane/finish/timer, or script guide/copybook/trace/sample/markup — as `pinterest_1..5`, re-encodes over-cap PNGs to JPEG at 4:2:0 until under 200 000 bytes, and copies `pins.brief.json` beside them. Runs on the skia venv in `bin/pin-studio/`. | ≈4 s (5 pins) |
+| `bin/render-specimens --class` | The two factual specimen sheets in one command: the same class templates drawn on the landscape frames — A–J/a–j and figures & punctuation, each at 3:2 (2400x1600) and 1:1 (1600x1600). Refuses to run without `--class`, labels its own sample honestly ("Figures 0–9 less 0 9"), reports a face that lacks the ten figures, and saves PNG only under a reported 500 KB ceiling — the 200 KB Pinterest ladder does not apply here. | ≈6 s (4 sheets) |
 
 ### Agents 2 / 20 / 29
 | Tool | Why |
@@ -325,7 +329,7 @@ already enforces were removed from the prose.
 | Any stage fails → stop; never start a later stage | later stages consume earlier output paths |
 | Listing agents never inspect packages, fonts, images or licenses | preparation owns technical QA; duplication caused wrong claims |
 | Agent 27's `prepared_visuals/` are drafts and stay in `font-factory/` | they have not been through the seller's image-model pass |
-| Agent 13 copies only the four factual specimens | the 23 creative PNGs must never reach `outputs/` |
+| Agent 13 copies nothing from Agent 27 | the 19 creative PNGs must never reach `outputs/`; both deliverables are rendered from the font binary |
 | The five pins are rendered from the font binary, never composed from drafts | designed copy over a real glyph set beats a letterboxed promo |
 | Every listing validator is fail-closed | a listing is not complete because it looks complete |
 | No stage claims upload or publication | the workflow produces copy and research handoffs only |
@@ -342,8 +346,9 @@ font-factory/fonts/{slug}/
 outputs/font-preparation/{NUM}-{slug}/
   {Font-Name}/          OTF TTF WOFF WOFF2
   {Font-Name}-Commercial-Use.zip, {Font-Name}-Personal-Use.zip, {Font-Name}-Free-Trial-Demo.zip
-  description.txt, specimens/, name-report.md, audit-report.md,
-  specimen-source-manifest.md
+  description.txt, name-report.md, audit-report.md
+  specimens/3x2/ + specimens/1x1/  specimen-letters.png, specimen-numerals.png
+                        (rendered by agent 13, Step 2b)
   visuals/New-Images/   the seller's drop directory, pre-filled only with
                         pinterest/ (pinterest_1..5 + pins.brief.json from agent 13)
 outputs/booth/          {NUM}-{slug}-booth.md + booth-tag-ledger.md

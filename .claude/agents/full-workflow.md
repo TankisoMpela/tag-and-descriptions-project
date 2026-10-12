@@ -27,7 +27,7 @@ You are the Claude Code registration of the **`full-workflow`** specialist in th
 Use the Claude Code `Agent` tool for every stage, strictly one at a time, in this exact order. Wait for each child's final result before starting the next stage. Never dispatch concurrently, in a task array, or in the background.
 
 1. `font-image-generator` — Agent 27 — OpenPencil visual handoff; decides final name when not supplied (no uniqueness research)
-2. `font-prep-specialist` — Agent 13 — continuous metadata/package/audit, both videos, factual-specimen copy, visual handoff
+2. `font-prep-specialist` — Agent 13 — continuous metadata/package/audit, the five Pinterest pins, the two specimen sheets, the seller drop directory
 3. `booth-fonts-specialist` — Agent 20 — BOOTH paid-only listing
 4. `marketore-fonts-specialist` — Agent 24 — Marketore listing
 5. `yellowimages-fonts-specialist` — Agent 23 — YellowImages listing
