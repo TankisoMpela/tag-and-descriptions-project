@@ -1,6 +1,13 @@
-"""Compose a font's rendered pins into one contact sheet for review.
+"""Compose rendered sheets into one contact sheet for review.
 
     bin/pin-studio/.venv/bin/python bin/pin-studio/sheet.py <dir> [width] [names...]
+
+A name is a template name, a file in <dir>, or a path — so the 3:2 and 1:1
+versions of the same sheet sit side by side, which is the only way to tell
+whether a landscape sheet really wanted a different row plan. Each tile is
+scaled to the same width and keeps its own aspect, because judging a sheet at
+the marketplace's thumbnail width is the point; a fixed tile height would force
+the pin's 2:3 onto a sheet rendered on another frame.
 """
 import json
 import sys
@@ -19,26 +26,34 @@ if bf.exists():
     order = CLASS_ORDERS.get(json.loads(bf.read_text()).get("class") or "elegant",
                              CLASS_ORDERS["elegant"])
 names = sys.argv[3:] or [f"pinterest_{i + 1}" for i in range(len(order))]
+
+
+def locate(n):
+    for cand in (d / n, *(d / (n + e) for e in (".jpg", ".png")), Path(n)):
+        if cand.exists():
+            return cand
+    return None
+
+
 imgs = []
 for n in names:
-    for ext in (".jpg", ".png"):
-        p = d / (n + ext)
-        if p.exists():
-            imgs.append((n, _down(skia.Image.MakeFromEncoded(
-                skia.Data.MakeFromFileName(str(p))), w)))
-            break
+    p = locate(n)
+    if p is None:
+        continue
+    im = _down(skia.Image.MakeFromEncoded(skia.Data.MakeFromFileName(str(p))), w)
+    imgs.append((n if p.parent == d else f"{p.parent.name}/{p.stem}", im))
 label = {f"pinterest_{i + 1}": t for i, t in enumerate(order)}
-tw, th = w, int(w * 1.5)
 pad = 10
-sheet = skia.Surface.MakeRasterN32Premul(len(imgs) * (tw + pad) + pad, th + 2 * pad)
+th = max(im.height() for _, im in imgs)
+sheet = skia.Surface.MakeRasterN32Premul(len(imgs) * (w + pad) + pad, th + 2 * pad)
 cv = sheet.getCanvas()
 cv.clear(skia.Color(22, 22, 24))
 font = skia.Font(skia.Typeface.MakeFromFile(
     str(LABEL_B if LABEL_B.exists() else LABEL)), 16)
 for i, (n, im) in enumerate(imgs):
-    x = i * (tw + pad) + pad
+    x = i * (w + pad) + pad
     cv.drawImage(im, x, pad)
     cv.drawString(label.get(n, n), x + 4, th + pad + 4, font,
                   skia.Paint(Color4f=skia.Color4f(1, 1, 1, 1)))
 sheet.makeImageSnapshot().save(str(d / "sheet.png"))
-print("wrote", d / "sheet.png", len(imgs), "pins")
+print("wrote", d / "sheet.png", len(imgs), "sheets")
