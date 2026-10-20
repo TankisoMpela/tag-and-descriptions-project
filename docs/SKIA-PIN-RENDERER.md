@@ -1,5 +1,10 @@
 # The skia pin renderer — verified capability reference
 
+> **Legacy renderer reference.** The active font workflow generates Pinterest
+> template pins with HTML/CSS and Chromium under `font-factory/pin-html/`.
+> Agent 13 uses Skia only for the factual specimen sheets; it no longer calls
+> the five-pin `bin/render-pins` workflow described below.
+
 Ground truth for anyone generating Pinterest pin artwork with `skia-python`.
 **Read this before inventing a call.** Every form here was executed against the
 installed wheel and printed an `OK` line in one of `vendor/typography-labs/py/probe*.py`.
@@ -677,10 +682,16 @@ Drawing a finished raster into a smaller frame:
   `elegant` → `hero set wall phrase full_stack`, `blackletter` →
   `initials knotband scriptorium folio carol`, `sports` → `crest bib lane finish timer`
   and `script` → `guide copybook trace sample markup`; all four write `pinterest_1..5`,
-  so the registry, the blob uploader and the daily run never learn the word.
+  so the registry, the blob uploader and the daily run never learn the word. Ten
+  optional compositions live in `CLASS_TEMPLATE_POOLS`; a brief's `"templates"` list
+  can choose any five distinct names from the selected class and makes those names the
+  required keys under `"pins"`. Without it, `CLASS_ORDERS` remains the default. The
+  variants are elegant `studio_cover`, `specimen_mosaic`, `wordmark_atelier`;
+  blackletter `illuminated_broadside`, `reliquary_seal`, `scribe_gallery`; sports
+  `jersey_panel`, `scoreboard_split`; and script `letter_study`, `garden_note`.
   `check_brief()` refuses a brief
-  whose five keys do not match its `"class"` (default `elegant`) or an unknown class
-  outright, and `assign_themes()` filters the pool by each theme's own `cls`, so the
+  whose five keys do not match its `"class"` or selected template list, or an unknown
+  class outright, and `assign_themes()` filters the pool by each theme's own `cls`, so the
   class worlds (`vellum`, `gilded` for blackletter; `asphalt`, `chrome` for sports;
   `graphite`, `inkwell` for script) never surface in another class's rotation.
   `--class` runs a family with no brief; `--stress` sweeps every face through all four.
@@ -692,7 +703,7 @@ Drawing a finished raster into a smaller frame:
   `sh.scale` is `min(w,h)/1000` for **type** and `sh.vscale` is `h/1500` for **position**.
   At 1000x1500 those are 84, 1.0 and 1.0, so every pin keeps the exact integers it shipped
   with and a landscape sheet gets its own proportionally. Shared furniture (`bg`,
-  `device`, `eyebrow`, `footer`, `edge_type`) reads them off the sheet; the 20 pin
+  `device`, `eyebrow`, `footer`, `edge_type`) reads them off the sheet; the 30 pin
   template bodies still read the module-level `W H M GAPROW` globals, deliberately — a
   frame has to be data on the sheet rather than a rebinding of globals, or the literal
   `1242`-family anchors inside those bodies silently disagree with the page.

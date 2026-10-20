@@ -1,0 +1,124 @@
+<!doctype html>
+<!-- impeccable-disable low-contrast, cramped-padding: the lemon printer marks retain the source's 1.5:1 pink contrast, and its paper grain/title intentionally fill the printed slab -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>freakscene32 · source-led layout iteration</title>
+<style>
+@font-face{font-family:"Benchmark Display";src:url("../../benchmarks/T26074-12/assets/LilitaOne-Regular.ttf") format("truetype");font-display:block}
+:root{color-scheme:dark;font:14px/1.45 system-ui,sans-serif;background:#202126;color:#f0f0ee;accent-color:#e4d849;caret-color:#f2d953;scrollbar-color:#6c6251 #18191d}
+*{box-sizing:border-box}::selection{background:#f2d953;color:#18191d}
+body{margin:0;min-height:100vh;display:grid;grid-template-columns:300px minmax(0,1fr)}
+aside{background:#141519;border-right:1px solid #34363d;padding:22px 18px;display:flex;flex-direction:column;gap:16px}
+h1{font-size:16px;line-height:1.25;margin:0}p{margin:0;color:#c1c1bd}
+label{display:grid;gap:5px;color:#e4e3dc}
+input[type=text],textarea{width:100%;border:1px solid #555048;border-radius:3px;background:#202126;color:#f2f0e9;padding:8px;font:13px/1.3 system-ui,sans-serif}
+textarea{min-height:64px;resize:vertical}input[type=file]{width:100%;font-size:12px;color:#c1c1bd}
+input[type=color]{width:100%;height:35px;border:1px solid #555048;border-radius:3px;background:#202126;padding:3px}
+input[type=range]{width:100%}fieldset{display:grid;gap:10px;border:1px solid #48433b;border-radius:4px;padding:10px;margin:0}
+legend{font-size:12px;color:#b4afa4;padding:0 5px}:focus-visible{outline:2px solid #f2d953;outline-offset:2px}
+.palette{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{color:#f2d953;font-variant-numeric:tabular-nums}
+.note{font-size:12px;line-height:1.5;color:#bbb7ae}main{padding:22px;min-width:0}
+.topline{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}
+.topline h2{font-size:16px;margin:0}.topline a{color:#f2d953;text-underline-offset:3px}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+figure{margin:0;min-width:0}figcaption{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#c2beb5;margin:0 0 8px}
+.sample{width:100%;aspect-ratio:3/2;overflow:hidden;background:#efebcd;box-shadow:0 8px 24px #0006}
+.sample img{width:100%;height:100%;object-fit:contain;display:block}
+#artboard{position:relative;isolation:isolate;width:100%;aspect-ratio:3/2;overflow:hidden;background:var(--ground,#eee05b);container-type:inline-size;--ground:#eee05b;--slab:#fb8dbb;--ink:#191719;--accent:#e4d849;--display-font:"Benchmark Display";--label-font:Arial,sans-serif}
+#paper-slab{position:absolute;left:2.6%;top:4%;width:94.8%;height:92%;overflow:hidden;background:var(--slab);isolation:isolate}
+#paper-grain{position:absolute;inset:0;width:100%;height:100%;opacity:.22;mix-blend-mode:soft-light;pointer-events:none;z-index:0}
+.headline{position:absolute;z-index:1;left:15%;width:70%;height:34%;display:grid;place-items:center;overflow:visible;color:var(--ink);font-family:var(--display-font),sans-serif;font-weight:400;font-synthesis:none;line-height:1;letter-spacing:-.01em;white-space:nowrap}
+#headline-one{top:22%}#headline-two{top:44%}
+.side-note{position:absolute;z-index:1;display:grid;place-items:center;color:var(--ink);font-family:var(--label-font),Arial,sans-serif;font-weight:700;line-height:1.16;text-align:center;white-space:pre-line;overflow:hidden}
+#left-note{left:-5.5%;top:70%;width:22%;height:9.5%;transform:rotate(-90deg)}
+#right-note{left:81.6%;top:26.3%;width:28%;height:12%;transform:rotate(90deg)}
+.stamp{position:absolute;z-index:2;color:var(--accent);display:grid;place-items:center;text-align:center;isolation:isolate}
+.stamp svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.stamp path{fill:none;stroke:currentColor;stroke-width:2.3;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.stamp-left{left:4.7%;top:43%;width:16%;height:14%;transform:rotate(-6deg)}
+.stamp-left span{position:relative;font:700 2.5cqi/1 "Benchmark Display",sans-serif;letter-spacing:.01em}
+.stamp-right{left:89.5%;top:69.5%;width:10%;height:12.5%;font-size:2.2cqi;transform:rotate(5deg);grid-template-rows:1fr 1.25fr 1fr;align-content:center}
+.stamp-right small{font:700 .36em/1 system-ui,sans-serif;letter-spacing:.09em}
+.stamp-right strong{font:900 .95em/.8 "Benchmark Display",sans-serif}
+@media(max-width:1120px){body{grid-template-columns:260px minmax(0,1fr)}main{padding:16px}.compare{grid-template-columns:1fr}}
+@media(max-width:680px){body{display:block}aside{border-right:0;border-bottom:1px solid #34363d}main{padding:18px}.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside>
+  <h1>freakscene32 · paper poster study</h1>
+  <p>The reference pairs a vivid pink paper slab and lemon ground with oversized two-line lettering, vertical type notes, and hand-drawn oval printer marks.</p>
+  <fieldset><legend>Display copy</legend>
+    <label>Top line<input id="headline-top" type="text" value="Freak" maxlength="18"></label>
+    <label>Bottom line<input id="headline-bottom" type="text" value="Scene" maxlength="18"></label>
+  </fieldset>
+  <fieldset><legend>Source annotations</legend>
+    <label>Left note<textarea id="left-copy"></textarea></label>
+    <label>Right note<textarea id="right-copy"></textarea></label>
+  </fieldset>
+  <fieldset><legend>Print palette</legend>
+    <div class="palette">
+      <label>Ground<input id="ground-color" type="color" value="#eee05b"></label>
+      <label>Paper slab<input id="slab-color" type="color" value="#fb8dbb"></label>
+      <label>Headline ink<input id="ink-color" type="color" value="#191719"></label>
+      <label>Stamp ink<input id="accent-color" type="color" value="#e4d849"></label>
+    </div>
+    <label>Paper grain · <span id="grain-value">22%</span><input id="grain-strength" type="range" min="0" max="40" value="22"></label>
+  </fieldset>
+  <fieldset><legend>Typefaces</legend>
+    <label>Display face · load a local TTF/OTF<input id="font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+    <label>Annotation face · load a local TTF/OTF<input id="label-font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+  </fieldset>
+  <p id="status" class="note">Loading reference-style defaults…</p>
+  <p class="note">Edit → next painted frame: <span class="metric" id="paint-ms">—</span></p>
+</aside>
+<main>
+  <div class="topline"><h2>Source-led recreation</h2><a href="../../../support-references/T26074_03.jpg" target="_blank" rel="noreferrer">Open source image</a></div>
+  <section class="compare" aria-label="Reference and rebuild comparison">
+    <figure><figcaption>Original reference · T26074_03</figcaption><div class="sample"><img src="../../../support-references/T26074_03.jpg" alt="Pink and yellow Freak Scene type specimen with side notes and oval printer marks"></div></figure>
+    <figure><figcaption>HTML/CSS rebuild · editable</figcaption><div id="artboard" aria-label="Editable pink paper poster with two display lines, vertical annotations, and oval marks">
+      <div id="paper-slab">
+        <canvas id="paper-grain" aria-hidden="true"></canvas>
+        <div class="headline" id="headline-one">Freak</div><div class="headline" id="headline-two">Scene</div>
+        <div class="side-note" id="left-note"></div><div class="side-note" id="right-note"></div>
+        <div class="stamp stamp-left" id="stamp-left" aria-label="Nektar wordmark stamp"><svg viewBox="0 0 200 100" aria-hidden="true"><path d="M101 8 C151 7 191 19 194 47 C198 75 160 91 101 92 C45 93 7 80 7 51 C7 24 43 10 101 8 Z"/></svg><span>Nektar</span></div>
+        <div class="stamp stamp-right" id="stamp-right" aria-label="More Etcetera M Edition stamp"><svg viewBox="0 0 200 100" aria-hidden="true"><path d="M98 6 C150 8 191 23 194 51 C197 78 158 93 101 94 C45 95 8 80 6 51 C4 24 42 8 98 6 Z"/></svg><small>More Etc.</small><strong>M</strong><small>Edition</small></div>
+      </div>
+    </div></figure>
+  </section>
+</main>
+<script src="../../shared/copy-case.js"></script>
+<script>
+const board=document.querySelector('#artboard'),grain=document.querySelector('#paper-grain');
+const defaults={left:'A Soft Sans Serif\nWith Spirit, Personality\nAnd Distinction.',right:'This Bold And Semi-Condensed Typeface\nIs Lively And Eye-Catching, Ideal For Where And\nWhen You Want To Make A Lasting Impression.'};
+document.querySelector('#left-copy').value=defaults.left;document.querySelector('#right-copy').value=defaults.right;
+let displayFont='"Benchmark Display"',labelFont='Arial,sans-serif',pending=0;
+function makeGrain(){const ctx=grain.getContext('2d'),w=1200,h=800;grain.width=w;grain.height=h;const image=ctx.createImageData(w,h);let seed=2607403;for(let i=0;i<image.data.length;i+=4){seed^=seed<<13;seed^=seed>>>17;seed^=seed<<5;const value=(seed>>>0)&255;image.data[i]=value;image.data[i+1]=value;image.data[i+2]=value;image.data[i+3]=255}ctx.putImageData(image,0,0)}
+function fitHeadline(ctx,lines,family,width,height,maxSize,minSize,tracking){let lo=minSize,hi=maxSize;for(let i=0;i<22;i++){const size=(lo+hi)/2;ctx.font=`400 ${size}px ${family}`;const fits=lines.every(text=>{const m=ctx.measureText(text),w=(m.actualBoundingBoxLeft||0)+(m.actualBoundingBoxRight||m.width)+tracking*size*Math.max(0,text.length-1),h=(m.actualBoundingBoxAscent||size*.74)+(m.actualBoundingDescent||size*.16);return w<=width&&h<=height});if(fits)lo=size;else hi=size}return lo}
+function fitNote(ctx,lines,family,width,height,maxSize,minSize){let lo=minSize,hi=maxSize;for(let i=0;i<18;i++){const size=(lo+hi)/2;ctx.font=`700 ${size}px ${family}`;const fits=lines.every(text=>ctx.measureText(text).width<=width)&&size*1.16*lines.length<=height;if(fits)lo=size;else hi=size}return lo}
+function updateLayout(){const started=performance.now(),ctx=document.createElement('canvas').getContext('2d'),scale=board.clientWidth/1200;
+ const lines=[document.querySelector('#headline-top').value.trim()||'Type',document.querySelector('#headline-bottom').value.trim()||'Study'];
+ document.querySelector('#headline-one').textContent=lines[0];document.querySelector('#headline-two').textContent=lines[1];for(const id of ['headline-one','headline-two'])document.querySelector('#'+id).style.fontFamily=displayFont;
+ const oneEl=document.querySelector('#headline-one'),twoEl=document.querySelector('#headline-two'),one=oneEl.getBoundingClientRect(),two=twoEl.getBoundingClientRect(),baseCenterGap=(twoEl.offsetTop+twoEl.offsetHeight/2)-(oneEl.offsetTop+oneEl.offsetHeight/2),targetGap=Math.max(board.clientHeight*.018,12*scale),safeInkHeight=Math.min(Math.min(one.height,two.height)*.92,(baseCenterGap-targetGap)*.94),size=fitHeadline(ctx,lines,displayFont,Math.min(one.width,two.width)*.92,safeInkHeight,440*scale,72*scale,-.01);for(const id of ['headline-one','headline-two'])document.querySelector('#'+id).style.fontSize=size+'px';
+ const inkHeight=(text,element)=>{ctx.font=getComputedStyle(element).font;const metrics=ctx.measureText(text);return(metrics.actualBoundingBoxAscent||size*.74)+(metrics.actualBoundingBoxDescent||size*.16)};
+ const firstInk=inkHeight(lines[0],oneEl),secondInk=inkHeight(lines[1],twoEl),currentInkGap=baseCenterGap-(firstInk+secondInk)/2,targetInkGap=Math.max(board.clientHeight*.018,12*scale),closeBy=Math.max(0,Math.min(board.clientHeight*.13,currentInkGap-targetInkGap));twoEl.style.transform=`translateY(-${closeBy}px)`;
+ const left=document.querySelector('#left-note'),right=document.querySelector('#right-note');left.textContent=document.querySelector('#left-copy').value;right.textContent=document.querySelector('#right-copy').value;left.style.fontFamily=labelFont;right.style.fontFamily=labelFont;
+ const leftLines=left.textContent.split('\n'),rightLines=right.textContent.split('\n'),leftSize=fitNote(ctx,leftLines,labelFont,left.clientWidth*.94,left.clientHeight*.92,16*scale,9*scale),rightSize=fitNote(ctx,rightLines,labelFont,right.clientWidth*.94,right.clientHeight*.92,16*scale,9*scale);left.style.fontSize=leftSize+'px';right.style.fontSize=rightSize+'px';
+ for(const [id,key] of [['ground-color','--ground'],['slab-color','--slab'],['ink-color','--ink'],['accent-color','--accent']])board.style.setProperty(key,document.querySelector('#'+id).value);
+ const grainAmount=Number(document.querySelector('#grain-strength').value);document.querySelector('#grain-value').textContent=grainAmount+'%';grain.style.opacity=(grainAmount/100).toFixed(2);
+ cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelector('#paint-ms').textContent=(performance.now()-started).toFixed(1)+' ms'));return layoutReport()}
+function rgb(hex){return hex.trim().slice(1).match(/.{2}/g).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4)}
+function contrast(fg,bg){const lum=x=>.2126*x[0]+.7152*x[1]+.0722*x[2],a=lum(rgb(fg)),b=lum(rgb(bg));return(Math.max(a,b)+.05)/(Math.min(a,b)+.05)}
+function layoutReport(){const frame=board.getBoundingClientRect(),ids=['headline-one','headline-two','left-note','right-note','stamp-left','stamp-right'],slots=ids.map(id=>{const e=document.querySelector('#'+id),r=e.getBoundingClientRect();return{name:id,text:e.textContent.trim().replace(/\s+/g,' '),x:+(r.left-frame.left).toFixed(1),y:+(r.top-frame.top).toFixed(1),width:+r.width.toFixed(1),height:+r.height.toFixed(1),fontSize:parseFloat(getComputedStyle(e).fontSize)||0}});return{frame:{width:frame.width,height:frame.height},headlineFontSize:getComputedStyle(document.querySelector('#headline-one')).fontSize,inkOnPaperContrast:+contrast(getComputedStyle(board).getPropertyValue('--ink').trim(),getComputedStyle(board).getPropertyValue('--slab').trim()).toFixed(2),slots,outOfBounds:slots.filter(s=>s.x < -1||s.y < -1||s.x+s.width>frame.width+1||s.y+s.height>frame.height+1)}}
+function installFont(inputId,family,kind){document.querySelector('#'+inputId).addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;const url=URL.createObjectURL(file),face=new FontFace(family,'url('+url+')');await face.load();document.fonts.add(face);if(kind==='display')displayFont='"'+family+'"';else labelFont='"'+family+'"';document.querySelector('#status').textContent=file.name+' loaded as the live '+kind+' font.';updateLayout()})}
+for(const id of ['headline-top','headline-bottom','left-copy','right-copy','ground-color','slab-color','ink-color','accent-color','grain-strength'])document.querySelector('#'+id).addEventListener('input',updateLayout);
+installFont('font-file','Uploaded Freakscene Display','display');installFont('label-font-file','Uploaded Freakscene Label','label');
+const resizeObserver=new ResizeObserver(()=>requestAnimationFrame(updateLayout));resizeObserver.observe(board);window.addEventListener('resize',()=>requestAnimationFrame(updateLayout));makeGrain();
+document.fonts.ready.then(()=>{document.querySelector('#status').textContent='Reference palette and printable copy are ready · upload the target face for a live fit.';updateLayout()});
+window.updateLayout=updateLayout;window.getLayoutReport=layoutReport;
+window.configureTemplate=({headline,leftCaption,rightCaption,ground,slab,ink,accent,grain:grainAmount}={})=>{if(typeof headline==='string'){const lines=headline.split('\n');document.querySelector('#headline-top').value=window.supportTitleCase(lines[0]||'');document.querySelector('#headline-bottom').value=window.supportTitleCase(lines[1]||'')}if(typeof leftCaption==='string')document.querySelector('#left-copy').value=window.supportTitleCase(leftCaption);if(typeof rightCaption==='string')document.querySelector('#right-copy').value=window.supportTitleCase(rightCaption);for(const [value,id] of [[ground,'ground-color'],[slab,'slab-color'],[ink,'ink-color'],[accent,'accent-color']])if(typeof value==='string'&&/^#[0-9a-f]{6}$/i.test(value))document.querySelector('#'+id).value=value;if(Number.isFinite(grainAmount))document.querySelector('#grain-strength').value=Math.min(40,Math.max(0,grainAmount));return updateLayout()};
+</script>
+</body>
+</html>

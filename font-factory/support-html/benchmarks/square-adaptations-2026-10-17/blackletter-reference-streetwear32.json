@@ -1,0 +1,76 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "streetwear32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "streetwear32",
+    "headlineFontSize": "163.85px",
+    "smallestDisplayFontSize": "25.86px",
+    "contrast": 15.493987420216227,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "Streetwear",
+        "fontSize": "98px",
+        "x": 253.68038940429688,
+        "y": 195.69302368164062,
+        "width": 293.0269470214844,
+        "height": 75.658935546875
+      },
+      {
+        "name": "headline",
+        "text": "Blackletter",
+        "fontSize": "163.85px",
+        "x": 66.6875,
+        "y": 298.265625,
+        "width": 666.609375,
+        "height": 147.453125
+      },
+      {
+        "name": "line2",
+        "text": "Whispers Of The Night, Adorned In Metal And Magic",
+        "fontSize": "25.86px",
+        "x": 144.21875,
+        "y": 496.359375,
+        "width": 511.5625,
+        "height": 23.265625
+      },
+      {
+        "name": "descriptor",
+        "text": "Estd",
+        "fontSize": "22px",
+        "x": 281.90625,
+        "y": 612.09375,
+        "width": 36.1875,
+        "height": 19.796875
+      },
+      {
+        "name": "footer",
+        "text": "2025",
+        "fontSize": "22px",
+        "x": 487.6875,
+        "y": 612.09375,
+        "width": 40.609375,
+        "height": 19.796875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-streetwear32.png",
+  "outputBytes": 907911
+}

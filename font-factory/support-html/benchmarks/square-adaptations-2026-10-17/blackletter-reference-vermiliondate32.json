@@ -1,0 +1,76 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "vermiliondate32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "vermiliondate32",
+    "headlineFontSize": "268.15px",
+    "smallestDisplayFontSize": "206.11px",
+    "contrast": 4.578882794445195,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Keepsake",
+        "fontSize": "206.11px",
+        "x": 27.484375,
+        "y": 115.25,
+        "width": 745.03125,
+        "height": 185.484375
+      },
+      {
+        "name": "overline",
+        "text": "Estd",
+        "fontSize": "24.24px",
+        "x": 148.046875,
+        "y": 485.09375,
+        "width": 39.890625,
+        "height": 21.796875
+      },
+      {
+        "name": "line2",
+        "text": "1985",
+        "fontSize": "268.15px",
+        "x": 184.28125,
+        "y": 363.328125,
+        "width": 431.4375,
+        "height": 241.328125
+      },
+      {
+        "name": "descriptor",
+        "text": "A Year To Remember",
+        "fontSize": "16px",
+        "x": 323.6875,
+        "y": 674,
+        "width": 152.609375,
+        "height": 16
+      },
+      {
+        "name": "footer",
+        "text": "No. 03 · Spring",
+        "fontSize": "12px",
+        "x": 353.671875,
+        "y": 720,
+        "width": 92.640625,
+        "height": 12
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-vermiliondate32.png",
+  "outputBytes": 1325046
+}

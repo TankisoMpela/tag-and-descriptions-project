@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../../shared/editor-shell.css">
+  <link rel="stylesheet" href="./design.css">
+  <title>Amber Dawn — Support Layout Studio</title>
+</head>
+<body>
+  <header class="studio-header">
+    <div>
+      <h1>Amber Dawn</h1>
+      <p>A sunlit fashion portrait, two oversized lemon-yellow lines, and a delicate circular glyph seal.</p>
+    </div>
+    <span class="source-id">T24908_00 · slot 50</span>
+  </header>
+  <main class="studio-grid">
+    <figure class="reference-panel">
+      <figcaption class="panel-title">Source reference</figcaption>
+      <img src="../../../support-references/T24908_00.jpg" alt="Amber fashion portrait beneath two large yellow script words and a small circular glyph badge">
+      <p class="reference-note">The glass-block wall, portrait, and pale sunlit panel stay unobstructed where they matter. Main type, badge, veil, and footer remain separate layers.</p>
+    </figure>
+    <section class="stage-panel" aria-label="Live template preview">
+      <h2 class="panel-title">Live composition</h2>
+      <div class="artboard-frame"><div id="artboard" aria-label="Editable Amber Dawn photo composition"></div></div>
+    </section>
+    <aside class="controls-panel">
+      <h2 class="panel-title">Layout controls</h2>
+      <label class="font-picker" for="font-file">Display font
+        <input id="font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="font-status" class="font-status">Choose a local font to preview its actual letterforms.</span>
+      </label>
+      <div id="template-controls"></div>
+    </aside>
+  </main>
+  <script src="../../shared/layout.js"></script>
+  <script src="./design.js"></script>
+  <script src="../../shared/editor-shell.js"></script>
+  <script>window.SupportEditor.start(window.AmberDawn32);</script>
+</body>
+</html>

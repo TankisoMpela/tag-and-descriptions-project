@@ -1,0 +1,75 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "wildfall32",
+  "source": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-references/blackletter-references/T28036_00.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "wildfall32",
+    "headlineFontSize": "209.175px",
+    "smallestDisplayFontSize": "209.175px",
+    "contrast": 10.637841591737244,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "Marva Design Presents",
+        "fontSize": "16px",
+        "x": 512.609375,
+        "y": 98,
+        "width": 174.765625,
+        "height": 16
+      },
+      {
+        "name": "headline",
+        "text": "Mistfall",
+        "fontSize": "209.175px",
+        "x": 317.21875,
+        "y": 189.875,
+        "width": 565.5625,
+        "height": 188.25
+      },
+      {
+        "name": "line2",
+        "text": "Highlands",
+        "fontSize": "209.175px",
+        "x": 215.46875,
+        "y": 389.875,
+        "width": 769.0625,
+        "height": 188.25
+      },
+      {
+        "name": "descriptor",
+        "text": "A Classy Blackletter Typeface",
+        "fontSize": "16px",
+        "x": 486.546875,
+        "y": 634,
+        "width": 226.890625,
+        "height": 16
+      },
+      {
+        "name": "footer",
+        "text": "2026 · All Rights Reserved",
+        "fontSize": "14px",
+        "x": 505,
+        "y": 669,
+        "width": 190,
+        "height": 14
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/wildfall32.png",
+  "outputBytes": 4405366
+}

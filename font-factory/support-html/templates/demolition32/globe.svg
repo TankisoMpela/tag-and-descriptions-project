@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 100" fill="none">
+  <defs>
+    <clipPath id="left-globe"><circle cx="48" cy="50" r="34"/></clipPath>
+    <clipPath id="right-globe"><circle cx="112" cy="50" r="34"/></clipPath>
+  </defs>
+  <circle cx="48" cy="50" r="34" fill="#17151a"/>
+  <g clip-path="url(#left-globe)" fill="#d4df83">
+    <path d="M18 31 26 24l7-2 4-7 9-3 7 4 7-2 7 4-2 6-8 2-3 5-8 1-2 6-7 3-1 6-7 2-6-4-4-8-5-1z"/>
+    <path d="m46 49 8 2 5 6 7 2 3 7-5 6-2 9-6 9-5-2-3-11-5-6 1-9-5-6z"/>
+    <path d="m68 24 5 2 3 6-4 5-4-3 1-5-4-2z"/>
+  </g>
+  <circle cx="112" cy="50" r="34" fill="#d4df83"/>
+  <g clip-path="url(#right-globe)" fill="#17151a">
+    <path d="m79 29 7-5 8 1 5-5 9 2 4 5 8-1 10 7-1 6-9 2-3 6-8 2-5-4-8 2-4-6-8 1-7-6z"/>
+    <path d="m104 48 7 1 5 6 8 1 5 7-4 7-7 2-2 8-7 7-5-5-3-10-6-4 1-9-6-4z"/>
+    <path d="m91 64 4 2 2 5-4 4-5-4 1-5z"/>
+    <path d="m131 21 6 4-2 6-5-1-2-5z"/>
+  </g>
+  <g fill="#17151a" opacity=".2">
+    <circle cx="26" cy="54" r="1"/><circle cx="39" cy="78" r="1.1"/>
+    <circle cx="62" cy="35" r=".9"/><circle cx="85" cy="39" r="1"/>
+    <circle cx="119" cy="25" r=".9"/><circle cx="132" cy="56" r="1.1"/>
+    <circle cx="109" cy="78" r=".8"/>
+  </g>
+</svg>

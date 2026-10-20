@@ -1,0 +1,3 @@
+/* Editable geometry and copy slots are authored in shared/pin-studio.js. */
+.template--punk_manifesto [data-layout-item="line"] { letter-spacing:-.035em; }
+.template--punk_manifesto [data-layout-item="word"] { transform:rotate(-2deg); }

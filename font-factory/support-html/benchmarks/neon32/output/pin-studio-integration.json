@@ -1,0 +1,136 @@
+{
+  "ok": true,
+  "results": [
+    {
+      "template": "neon32",
+      "png": "/tmp/neon32-html/3x2/support-6_neon32.png",
+      "kb": 3288,
+      "renderer": "HTML/CSS",
+      "contentWarnings": [],
+      "slots": [
+        {
+          "slot": "centre-door-seam",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "photographic-wall-grain",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-gate-left",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-left-1",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-left-2",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-left-3",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-left-4",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-left-5",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-left-6",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-left-7",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-rail-left",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-gate-right",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-right-1",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-right-2",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-right-3",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-right-4",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-right-5",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-right-6",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-light-right-7",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "film-rail-right",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "lit-marquee-copy",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "marquee-line-1",
+          "size": 341.9,
+          "lines": 1
+        },
+        {
+          "slot": "marquee-line-2",
+          "size": 344.0,
+          "lines": 1
+        },
+        {
+          "slot": "coming-soon-line",
+          "size": 84.4,
+          "lines": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "notes": []
+}

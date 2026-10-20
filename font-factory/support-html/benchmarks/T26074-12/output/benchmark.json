@@ -1,0 +1,30 @@
+{
+  "url": "file:///home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/T26074-12/layout-editor.html",
+  "browser": "153.0.8010.36",
+  "frameCssPixels": {
+    "width": 1200,
+    "height": 800
+  },
+  "frameExportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "fontsReady": {
+    "lilita": true,
+    "noto": true
+  },
+  "pageLoadAndFontMs": 936.92,
+  "editPaintMs": {
+    "anglePaintMs": 11.7,
+    "copyPaintMs": 33,
+    "colorPaintMs": 32.9
+  },
+  "localFontUploadAndPaintMs": 82.21,
+  "fullSizeScreenshotMs": 2092.38,
+  "editedScreenshotMs": 1903.58,
+  "finalFiles": {
+    "browser-preview.png": 3279041,
+    "browser-edited.png": 3308983,
+    "editor.png": 3030642
+  }
+}

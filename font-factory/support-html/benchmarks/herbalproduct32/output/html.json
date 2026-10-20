@@ -1,0 +1,175 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "herbalproduct32",
+  "source": "T26223_05",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/assets/LilitaOne-Regular.ttf",
+  "labelFont": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/assets/NotoSans-CondensedLight.ttf",
+  "headline": "HERBALS",
+  "descriptor": "",
+  "body": "",
+  "badge": "NEW",
+  "layoutReport": {
+    "template": "herbalproduct32",
+    "headlineFontSize": "172px",
+    "contrast": 3.0087602378622034,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The source's large cream NEW label prints over a bright orange twelve-ray burst."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "herbal-outer-frame",
+        "text": "",
+        "fontSize": "16px",
+        "x": 85.1875,
+        "y": 78.390625,
+        "width": 1014,
+        "height": 638.390625
+      },
+      {
+        "name": "herbal-cream-label",
+        "text": "",
+        "fontSize": "16px",
+        "x": 96.59375,
+        "y": 92.390625,
+        "width": 985.1875,
+        "height": 592.796875
+      },
+      {
+        "name": "herbal-botanical-sprigs",
+        "text": "",
+        "fontSize": "16px",
+        "x": 228,
+        "y": 112.796875,
+        "width": 744,
+        "height": 126.390625
+      },
+      {
+        "name": "herbal-twelve-ray-burst",
+        "text": "",
+        "fontSize": "16px",
+        "x": 16.1875,
+        "y": 35.59375,
+        "width": 290.390625,
+        "height": 193.59375
+      },
+      {
+        "name": "herbal-stock-label",
+        "text": "NEW",
+        "fontSize": "75.2399px",
+        "x": 79.88616180419922,
+        "y": 80.8580093383789,
+        "width": 163.0089111328125,
+        "height": 56.658973693847656
+      },
+      {
+        "name": "herbal-batch-oval",
+        "text": "1969",
+        "fontSize": "16px",
+        "x": 476.390625,
+        "y": 122.390625,
+        "width": 247.1875,
+        "height": 137.59375
+      },
+      {
+        "name": "herbal-batch-word",
+        "text": "1969",
+        "fontSize": "79.9998px",
+        "x": 519.546875,
+        "y": 155.984375,
+        "width": 160.859375,
+        "height": 70.390625
+      },
+      {
+        "name": "herbal-product-headline",
+        "text": "HERBALS",
+        "fontSize": "172px",
+        "x": 235.75521850585938,
+        "y": 274.390625,
+        "width": 728.489501953125,
+        "height": 195.20001220703125
+      },
+      {
+        "name": "herbal-product-description",
+        "text": "Arabica Whole Beans Coffee",
+        "fontSize": "16px",
+        "x": 216,
+        "y": 464,
+        "width": 768,
+        "height": 121.59375
+      },
+      {
+        "name": "herbal-process-weight",
+        "text": "Process : NaturalNet Weight : 12 OZ",
+        "fontSize": "16px",
+        "x": 225.59375,
+        "y": 603.1875,
+        "width": 264,
+        "height": 73.59375
+      },
+      {
+        "name": "herbal-process-weight-1",
+        "text": "Process : Natural",
+        "fontSize": "20px",
+        "x": 225.59375,
+        "y": 618.796875,
+        "width": 124.609375,
+        "height": 21.1875
+      },
+      {
+        "name": "herbal-process-weight-2",
+        "text": "Net Weight : 12 OZ",
+        "fontSize": "20px",
+        "x": 225.59375,
+        "y": 639.984375,
+        "width": 139.828125,
+        "height": 21.1875
+      },
+      {
+        "name": "herbal-roast-level",
+        "text": "MEDIUM ROAST",
+        "fontSize": "48.94px",
+        "x": 432.640625,
+        "y": 613.59375,
+        "width": 334.71875,
+        "height": 73.59375
+      },
+      {
+        "name": "herbal-roast-date",
+        "text": "Roast Date27 June 2024",
+        "fontSize": "16px",
+        "x": 804,
+        "y": 603.1875,
+        "width": 198,
+        "height": 73.59375
+      },
+      {
+        "name": "herbal-roast-date-1",
+        "text": "Roast Date",
+        "fontSize": "20px",
+        "x": 922.25,
+        "y": 618.796875,
+        "width": 79.75,
+        "height": 21.1875
+      },
+      {
+        "name": "herbal-roast-date-2",
+        "text": "27 June 2024",
+        "fontSize": "20px",
+        "x": 904.90625,
+        "y": 639.984375,
+        "width": 97.09375,
+        "height": 21.1875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/herbalproduct32/output/html.png",
+  "outputBytes": 730920
+}

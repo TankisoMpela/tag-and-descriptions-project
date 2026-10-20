@@ -1,0 +1,31 @@
+#artboard {
+  color: #fff1dc;
+  background-color: #bd2028;
+  background-image: url("../../../support-references/materials/T21458_04_distressed-red-paper.png");
+  background-size: cover;
+  background-position: center;
+}
+.year-furniture, .year-run { position: absolute; }
+.year-furniture { color: #fff1dc; font: 600 1.6cqh/1 Arial, sans-serif; letter-spacing: .11em; }
+.year-top-left { left: 3%; top: 3.4%; }
+.year-top-right { right: 3%; top: 3.4%; text-align: right; }
+.year-bottom-left { left: 3%; bottom: 3.2%; }
+.year-bottom-right { right: 3%; bottom: 3.2%; text-align: right; }
+.year-license {
+  left: 48.7%; top: 39%; height: 34%; writing-mode: vertical-rl;
+  transform: rotate(180deg); font: 500 1.35cqh/1 Arial, sans-serif;
+  letter-spacing: .08em; color: #271717;
+}
+.year-run {
+  left: 2%; top: 12%; display: grid; width: 96%; height: 76%;
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 500;
+  color: #fff1dc;
+  -webkit-mask-image: url("../../../support-references/materials/T21458_04_ink-wear-mask.png");
+  mask-image: url("../../../support-references/materials/T21458_04_ink-wear-mask.png");
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
+}
+.year-digit { display: grid; min-width: 0; height: 100%; place-items: center; line-height: .82; white-space: nowrap; letter-spacing: -.06em; }
+.year-seal { position: absolute; left: 48.4%; top: 75%; width: 3.2%; aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; background: #211a18; color: #f7e9d8; }
+.year-seal span { font: 700 2.1cqh/1 Georgia, serif; }

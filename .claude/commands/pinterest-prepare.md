@@ -1,5 +1,5 @@
 ---
-description: "Register fonts for Pinterest: upload all five pin images to Vercel Blob, record both product-page URLs and the description."
+description: "Validate and upload the complete manifested Pinterest image set, record product URLs, and write all public links."
 argument-hint: "fonts with catalogue number/slug and their product URLs"
 ---
 
@@ -10,7 +10,7 @@ Delegate the task below to the **`pinterest-font-preparer`** subagent defined in
 Task:
 
 ```
-Please run the pinterest-font-preparer agent to register these fonts into the Pinterest registry: match each to its outputs/font-preparation folder, record both product-page URLs (bin/pinterest_registry.py set-url, --market cm and --market cf), decide a board suggestion (Handwritten / Display / Script / Decorative Fonts), upload all five images from visuals/New-Images/pinterest/ to Vercel Blob, record them in outputs/pinterest/registry.json, and write public-urls.md in the font folder. Report per font: board, live image count with URLs, which product URLs are set or missing. Make no Pinterest or publication claim. Fonts and URLs: $ARGUMENTS
+Please run the pinterest-font-preparer agent to register these fonts into the Pinterest registry: match each to its outputs/font-preparation folder, record supplied product-page URLs (bin/pinterest_registry.py set-url, --market cm and --market cf), choose a board suggestion, then validate and upload the complete manifested set from visuals/New-Images/pinterest/ to Vercel Blob. The set contains every Agent-27 template pin followed by ten Agent-30 composites; use the manifest-driven count, not a fixed image count. Write all public links to public-urls.md. Report per font: board, live image count with URLs, and which product URLs are set or missing. Make no Pinterest publication claim. Fonts and URLs: $ARGUMENTS
 ```
 
 After the subagent returns, report the registered fonts and any font it could not match.

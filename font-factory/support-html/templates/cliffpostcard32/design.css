@@ -1,0 +1,85 @@
+@font-face {
+  font-family: CliffPostcardLabel;
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+}
+
+#artboard {
+  --postcard-ink: #0c0f12;
+  --postcard-scale: 1;
+  --postcard-top: .195;
+  --postcard-gap: .14;
+  --postcard-tracking: -.02;
+  --label-face: CliffPostcardLabel, sans-serif;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #cbdce3;
+  color: var(--postcard-ink);
+}
+
+.postcard-plate,
+.postcard-row,
+.postcard-line,
+.postcard-caption {
+  position: absolute;
+}
+
+.postcard-plate {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.postcard-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 13%;
+}
+
+.postcard-line {
+  color: var(--postcard-ink);
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 29.375cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .9;
+  letter-spacing: -.02em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.postcard-caption {
+  display: flex;
+  align-items: center;
+  color: var(--postcard-ink);
+  font-family: var(--label-face);
+  font-size: 3cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: .10em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.postcard-caption-left {
+  left: 10%;
+  top: 65.5%;
+  width: 36%;
+  height: 6%;
+}
+
+.postcard-caption-right {
+  left: 55%;
+  top: 65.5%;
+  width: 35%;
+  height: 6%;
+  justify-content: flex-end;
+}

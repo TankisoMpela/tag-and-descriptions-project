@@ -1,0 +1,105 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/plakatart32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/plakatart32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Blazher-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 17.4,
+  "imageBytes": {
+    "html": 2821888,
+    "skia": 3497822
+  },
+  "desktopLayout": {
+    "template": "plakatart32",
+    "headlineFontSize": "83.2394px",
+    "contrast": 16.71583156198521,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "metaLeft",
+        "text": "Texture Study / 02",
+        "fontSize": "10.22px",
+        "x": 39,
+        "y": 37.8125,
+        "width": 198.53125,
+        "height": 18.90625
+      },
+      {
+        "name": "metaRight",
+        "text": "Display Specimen",
+        "fontSize": "11.75px",
+        "x": 460.90625,
+        "y": 37.8125,
+        "width": 205.625,
+        "height": 18.90625
+      },
+      {
+        "name": "headline",
+        "text": "Color",
+        "fontSize": "83.2394px",
+        "x": 24.8125,
+        "y": 288.34375,
+        "width": 439.625,
+        "height": 160.71875
+      },
+      {
+        "name": "footer",
+        "text": "A Study In Shape And Rhythm",
+        "fontSize": "12.771px",
+        "x": 42.53125,
+        "y": 430.171875,
+        "width": 553.078125,
+        "height": 21.265625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "plakatart32",
+    "headlineFontSize": "41.3298px",
+    "contrast": 16.71583156198521,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "metaLeft",
+        "text": "Texture Study / 02",
+        "fontSize": "9px",
+        "x": 19.359375,
+        "y": 18.765625,
+        "width": 98.546875,
+        "height": 9.375
+      },
+      {
+        "name": "metaRight",
+        "text": "Display Specimen",
+        "fontSize": "9px",
+        "x": 228.796875,
+        "y": 18.765625,
+        "width": 102.078125,
+        "height": 9.375
+      },
+      {
+        "name": "headline",
+        "text": "Color",
+        "fontSize": "41.3298px",
+        "x": 12.3125,
+        "y": 143.125,
+        "width": 218.234375,
+        "height": 79.78125
+      },
+      {
+        "name": "footer",
+        "text": "A Study In Shape And Rhythm",
+        "fontSize": "6.34501px",
+        "x": 21.109375,
+        "y": 213.53125,
+        "width": 274.546875,
+        "height": 10.546875
+      }
+    ],
+    "contentWarnings": []
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "ravencover32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "ravencover32",
+    "headlineFontSize": "109.77px",
+    "smallestDisplayFontSize": "109.77px",
+    "contrast": 9.765870985713226,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The cover type sits directly over a variable red-tailoring photograph under the source-matched veil."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "clean-tailoring-photo",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "photo-veil",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "top-cover-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 20,
+        "y": 24,
+        "width": 760,
+        "height": 1
+      },
+      {
+        "name": "bottom-cover-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 20,
+        "y": 748,
+        "width": 760,
+        "height": 1
+      },
+      {
+        "name": "oval-issue-mark",
+        "text": "",
+        "fontSize": "16px",
+        "x": 324,
+        "y": 46.390625,
+        "width": 152,
+        "height": 86.390625
+      },
+      {
+        "name": "cover-masthead-row",
+        "text": "Present By",
+        "fontSize": "16px",
+        "x": 337.671875,
+        "y": 68.875,
+        "width": 124.625,
+        "height": 21.59375
+      },
+      {
+        "name": "cover-masthead",
+        "text": "Present By",
+        "fontSize": "10px",
+        "x": 378.140625,
+        "y": 74.671875,
+        "width": 43.6875,
+        "height": 10
+      },
+      {
+        "name": "cover-issue-row",
+        "text": "Muksal Creative",
+        "fontSize": "16px",
+        "x": 337.671875,
+        "y": 92.15625,
+        "width": 124.625,
+        "height": 20.796875
+      },
+      {
+        "name": "cover-issue",
+        "text": "Muksal Creative",
+        "fontSize": "9px",
+        "x": 368.53125,
+        "y": 98.046875,
+        "width": 62.890625,
+        "height": 9
+      },
+      {
+        "name": "cover-subtitle-row",
+        "text": "Modern Serif Display Font",
+        "fontSize": "16px",
+        "x": 64,
+        "y": 580,
+        "width": 672,
+        "height": 48
+      },
+      {
+        "name": "cover-subtitle",
+        "text": "Modern Serif Display Font",
+        "fontSize": "18.5px",
+        "x": 284.34375,
+        "y": 594.75,
+        "width": 231.296875,
+        "height": 18.5
+      },
+      {
+        "name": "cover-details-row",
+        "text": "Regular & Italic Font",
+        "fontSize": "16px",
+        "x": 64,
+        "y": 648,
+        "width": 672,
+        "height": 44
+      },
+      {
+        "name": "cover-details",
+        "text": "Regular & Italic Font",
+        "fontSize": "14.5px",
+        "x": 325.265625,
+        "y": 662.75,
+        "width": 149.46875,
+        "height": 14.5
+      },
+      {
+        "name": "cover-headline-row",
+        "text": "Raven Court",
+        "fontSize": "16px",
+        "x": 60,
+        "y": 292,
+        "width": 680,
+        "height": 188
+      },
+      {
+        "name": "cover-headline",
+        "text": "Raven Court",
+        "fontSize": "109.77px",
+        "x": 73.484375,
+        "y": 336.609375,
+        "width": 653.015625,
+        "height": 98.78125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/ravencover32.png",
+  "outputBytes": 2834960
+}

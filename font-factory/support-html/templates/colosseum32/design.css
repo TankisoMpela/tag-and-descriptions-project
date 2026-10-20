@@ -1,0 +1,82 @@
+@font-face {
+  font-family: "ColosseumLabel";
+  src: url("../../assets/LilitaOne-Regular.ttf") format("truetype");
+  font-display: block;
+}
+@font-face {
+  font-family: "ColosseumSmall";
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-display: block;
+}
+#artboard {
+  --paper: #ded7c3;
+  --navy: #12387e;
+  --red: #ea0003;
+  color: var(--navy);
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse 18% 42% at 18% 48%, rgb(91 75 51 / 10%), transparent 88%),
+    radial-gradient(ellipse 74% 88% at 49% 44%, rgb(255 255 244 / 19%), transparent 76%),
+    radial-gradient(ellipse 82% 96% at 51% 48%, transparent 49%, rgb(119 101 68 / 8%) 100%);
+}
+#artboard::before {
+  content: ""; position: absolute; z-index: 0; inset: 0;
+  pointer-events: none; opacity: .47; mix-blend-mode: soft-light;
+  background: url("../../../support-references/materials/T26074_02_paper-grain.png") center / 100% auto repeat;
+}
+.specimen-word, .publisher-footer, .nektar-mark, .publisher-seal {
+  position: absolute;
+}
+.specimen-word {
+  z-index: 1; left: 50%; display: inline-block;
+  color: var(--navy); font-family: var(--display-face, Arial, sans-serif);
+  font-weight: 400; font-synthesis: none; line-height: .82;
+  letter-spacing: .01em; text-align: center; white-space: nowrap;
+  transform: translateX(-50%);
+}
+.specimen-word::after {
+  content: attr(data-copy-text); position: absolute; inset: 0; width: 100%;
+  overflow: visible; color: transparent; white-space: nowrap;
+  font: inherit; line-height: inherit; letter-spacing: inherit;
+  background: url("../../../support-references/materials/T26074_02_paper-grain.png") center / 100% auto repeat;
+  background-clip: text; -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; -webkit-text-stroke: 0 transparent;
+  mix-blend-mode: soft-light; opacity: .48; pointer-events: none;
+}
+.specimen-one { left: 50.2%; top: 12.93%; transform: translateX(-50%) scale(1.06, 1.21); transform-origin: center top; }
+.specimen-two { left: 50.15%; top: 35.9%; color: var(--red); transform: translateX(-50%) scale(.891, 1.32); transform-origin: center top; }
+.specimen-three { left: 49.875%; top: 61%; transform: translateX(-50%) scale(1.096, 1.115); transform-origin: center top; }
+.publisher-footer {
+  z-index: 1; left: 18%; top: 85.7%; width: 64%; height: 8.4%;
+  display: grid; grid-template-columns: 1fr; align-items: center;
+  color: var(--red); font-family: var(--label-face, "ColosseumLabel", Arial, sans-serif);
+}
+.publisher-footer > .nektar-mark, .publisher-footer > .publisher-seal { display: none; }
+.nektar-mark {
+  position: relative; display: grid; place-items: center;
+  width: 97%; height: 50%; border: .22cqw solid var(--red);
+  border-radius: 50%; transform: translateY(2px) rotate(-4deg);
+  color: var(--red); line-height: 1;
+}
+.nektar-mark span {
+  display: inline-block; font-weight: 700; font-synthesis: weight;
+  letter-spacing: -.02em;
+}
+.publisher-copy { position: relative; width: 100%; height: 100%; text-align: center; }
+.publisher-tagline, .publisher-url {
+  position: absolute; left: 0; width: 100%; display: inline-block;
+  white-space: nowrap; font-family: "ColosseumSmall", Arial, sans-serif;
+  font-weight: 700; font-synthesis: weight; line-height: 1;
+}
+.publisher-tagline { top: 12%; left: 50%; transform: translateX(-50%); }
+.publisher-url { top: 57%; left: 50%; transform: translateX(-50%); }
+.publisher-seal { position: relative; width: 85%; height: 67%; justify-self: end; transform: translateX(-6px); }
+.publisher-seal svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.publisher-seal ellipse, .publisher-seal path, .publisher-seal line {
+  fill: none; stroke: var(--red); stroke-width: 2.1; vector-effect: non-scaling-stroke;
+}
+.publisher-seal text { fill: var(--red); font-family: var(--label-face, "ColosseumLabel", Arial, sans-serif); }
+#artboard[data-ratio="1x1"] .specimen-one,
+#artboard[data-ratio="1x1"] .specimen-two,
+#artboard[data-ratio="1x1"] .specimen-three { transform: translateX(-50%); }
+#artboard[data-ratio="1x1"] .publisher-footer { top: 85%; height: 9%; }

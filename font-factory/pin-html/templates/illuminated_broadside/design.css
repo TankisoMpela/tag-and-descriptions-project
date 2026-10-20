@@ -1,0 +1,2 @@
+/* The broadside frame and alternating display lines echo the printed source. */
+.template--illuminated_broadside [data-layout-item^="line"] { letter-spacing:-.035em; }

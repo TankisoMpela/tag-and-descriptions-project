@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../../shared/editor-shell.css">
+  <link rel="stylesheet" href="./design.css">
+  <title>Signal Clock — Support Layout Studio</title>
+</head>
+<body>
+  <header class="studio-header">
+    <div>
+      <h1>Signal clock</h1>
+      <p>A stripped-back digital price lockup with oversized angular figures and a red cut-corner tag.</p>
+    </div>
+    <span class="source-id">T26392_08 · slot 49</span>
+  </header>
+  <main class="studio-grid">
+    <figure class="reference-panel">
+      <figcaption class="panel-title">Source reference</figcaption>
+      <img src="../../../support-references/T26392_08.jpg" alt="White angular dollar amount with an overlapping red DOLLAR plaque on black">
+      <p class="reference-note">The black field stays quiet; the price carries almost all the weight, and its chamfered red tab interrupts the numerals on the right.</p>
+    </figure>
+    <section class="stage-panel" aria-label="Live template preview">
+      <h2 class="panel-title">Live composition</h2>
+      <div class="artboard-frame"><div id="artboard" aria-label="Editable signal clock poster artboard"></div></div>
+    </section>
+    <aside class="controls-panel">
+      <h2 class="panel-title">Layout controls</h2>
+      <label class="font-picker" for="font-file">Display font
+        <input id="font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="font-status" class="font-status">Choose a local font to preview its actual letterforms. Unsupported price glyphs stay visible in a readable fallback.</span>
+      </label>
+      <label class="font-picker" for="label-font-file">Price-tag label font
+        <input id="label-font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="label-font-status" class="font-status">The source-style condensed light face is loaded by default.</span>
+      </label>
+      <div id="template-controls"></div>
+    </aside>
+  </main>
+  <script src="../../shared/layout.js"></script>
+  <script src="./design.js"></script>
+  <script src="../../shared/editor-shell.js"></script>
+  <script>
+    window.SupportEditor.start(window.SignalClock32);
+    const labelInput = document.getElementById("label-font-file");
+    const labelStatus = document.getElementById("label-font-status");
+    labelInput.addEventListener("change", async () => {
+      const file = labelInput.files?.[0];
+      if (!file) return;
+      labelStatus.textContent = "Loading label font…";
+      const url = URL.createObjectURL(file);
+      const face = new FontFace("UploadedSignalLabel", `url("${url}")`);
+      try {
+        await face.load();
+        document.fonts.add(face);
+        await document.fonts.ready;
+        window.SignalClock32.labelFace = "UploadedSignalLabel";
+        window.configureTemplate();
+        labelStatus.textContent = `loaded as the live label font: ${file.name}`;
+      } catch (error) {
+        labelStatus.textContent = `Could not load ${file.name}: ${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>

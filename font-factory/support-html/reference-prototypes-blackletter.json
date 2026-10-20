@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "fontSample": "Esviga Blackletter",
+  "frame": {
+    "width": 2400,
+    "height": 1600
+  },
+  "templates": [
+    {
+      "id": "roseposter32",
+      "title": "Rose Garden Broadside",
+      "source": "T23026_00",
+      "subtitle": "A two-line headline over a low floral engraving."
+    },
+    {
+      "id": "flowerpair32",
+      "title": "Flower And Monogram Pair",
+      "source": "T23026_02",
+      "subtitle": "Two rounded cards pair a floral word panel with a large initial."
+    },
+    {
+      "id": "threepanel32",
+      "title": "Botanical Three Panel",
+      "source": "T23026_03",
+      "subtitle": "A framed flower study is flanked by two vertical word strips."
+    },
+    {
+      "id": "checkerword32",
+      "title": "Six Tile Word Board",
+      "source": "T23026_04",
+      "subtitle": "A six-panel tile grid repeats three live display words."
+    },
+    {
+      "id": "wildfall32",
+      "title": "Wildfall Landscape Poster",
+      "source": "T28036_00",
+      "subtitle": "Gold display copy overlays a misty mountain waterfall scene."
+    },
+    {
+      "id": "silentstack32",
+      "title": "Silent Hour Type Stack",
+      "source": "T28036_01",
+      "subtitle": "Three broad display rows centered in generous dark space."
+    },
+    {
+      "id": "streetwear32",
+      "title": "Streetwear Specimen Lockup",
+      "source": "T28036_04",
+      "subtitle": "A single blackletter word sits beneath an arched streetwear label, with an orbit emblem footer."
+    },
+    {
+      "id": "bettersunday32",
+      "title": "Better Sunday Date Pair",
+      "source": "T28036_07",
+      "subtitle": "A monogram tile sits beside a three-line phrase in matching cards."
+    },
+    {
+      "id": "instrumentboard32",
+      "title": "Letterform Instrument Board",
+      "source": "T28798_00",
+      "subtitle": "A technical word specimen sits between paired circular measuring dials."
+    },
+    {
+      "id": "fairytalecrest32",
+      "title": "Fairytale Crest Display",
+      "source": "T32600_01",
+      "subtitle": "Oversized orange copy crosses a faint engraved botanical crest."
+    },
+    {
+      "id": "vermiliondate32",
+      "title": "Vermilion Date Poster",
+      "source": "T32600_02",
+      "subtitle": "Distressed scarlet ground, oversized ivory headline, and giant date."
+    },
+    {
+      "id": "moonlitbouquet32",
+      "title": "Moonlit Bouquet Poster",
+      "source": "T32600_03",
+      "subtitle": "Three large rows of display copy rise between etched floral edges."
+    },
+    {
+      "id": "wildsoulmark32",
+      "title": "Wild Soul Mark",
+      "source": "T32600_05",
+      "subtitle": "A single orange phrase rests on a low-contrast botanical engraving."
+    },
+    {
+      "id": "concertbill32",
+      "title": "Concert Bill Poster",
+      "source": "T32600_06",
+      "subtitle": "A framed event bill with an orange headline, dates, and compact line-up copy."
+    },
+    {
+      "id": "velvetritual32",
+      "title": "Beltino Blackletter Poster",
+      "source": "T32811_00",
+      "subtitle": "An orange blackletter word is framed by engraved skulls, flourishes, and compact specimen notes."
+    },
+    {
+      "id": "legacycrypt32",
+      "title": "Legacy And Crypt Display",
+      "source": "T32811_03",
+      "subtitle": "Two monumental rows sit over a faint winged ornamental engraving."
+    },
+    {
+      "id": "unleashed32",
+      "title": "Unleashed Infernal Poster",
+      "source": "T32811_07",
+      "subtitle": "A fiery beast engraving interrupts a two-line blackletter declaration."
+    },
+    {
+      "id": "thankyou32",
+      "title": "Thank You Skull Poster",
+      "source": "T32811_10",
+      "subtitle": "A two-part thank-you lockup is framed by diagonal skull ornaments."
+    }
+  ]
+}

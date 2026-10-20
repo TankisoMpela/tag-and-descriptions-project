@@ -1,0 +1,108 @@
+@font-face {
+  font-family: KinderSeaLabel;
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+}
+
+#artboard {
+  --label-face: KinderSeaLabel, sans-serif;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #706bd0;
+  color: #fff;
+}
+
+.kinder-plate,
+.kinder-art,
+.kinder-stars,
+.kinder-label,
+.kinder-row,
+.kinder-line {
+  position: absolute;
+}
+
+.kinder-plate {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  image-rendering: pixelated;
+}
+
+.kinder-art {
+  left: 9.4595%;
+  top: 12.1212%;
+  width: 81.25%;
+  height: 50%;
+  object-fit: fill;
+  image-rendering: pixelated;
+  transform: scale(var(--art-scale, 1));
+  transform-origin: center;
+}
+
+.kinder-stars {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.kinder-label {
+  color: #fff;
+  font-family: var(--label-face);
+  font-style: normal;
+  font-weight: 600;
+  font-synthesis: weight;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.kinder-label-top {
+  left: 9.5%;
+  top: 7.1%;
+  width: 30%;
+  height: 4.5%;
+  display: flex;
+  align-items: center;
+  letter-spacing: .08em;
+}
+
+.kinder-label-side {
+  left: 92.7%;
+  top: 56%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  transform-origin: center;
+  font-size: 1.25cqh;
+  letter-spacing: .1em;
+}
+
+.kinder-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 13%;
+}
+
+.kinder-line {
+  display: inline-block;
+  color: #fff;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 14.0625cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .9;
+  letter-spacing: -.012em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.kinder-row:first-of-type .kinder-line {
+  width: max-content;
+}

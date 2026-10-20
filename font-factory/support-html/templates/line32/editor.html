@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../../shared/editor-shell.css">
+  <link rel="stylesheet" href="./design.css">
+  <title>Letterpress Broadside — Support Layout Studio</title>
+</head>
+<body>
+  <header class="studio-header">
+    <div>
+      <h1>Letterpress Broadside</h1>
+      <p>Full-measure display lines over a textured, theme-colored paper field.</p>
+    </div>
+    <span class="source-id">No source supplied · slot 01</span>
+  </header>
+  <main class="studio-grid">
+    <figure class="reference-panel">
+      <figcaption class="panel-title">Current Skia Baseline</figcaption>
+      <img src="../../benchmarks/line32/output/skia.png" alt="Existing letterpress broadside rendered by Skia">
+      <p class="reference-note">The catalogue has no source image for this slot, so the current Skia composition is the visual reference. The HTML version preserves its lettering, paper, ghost initial, and edge furniture as separate browser layers.</p>
+    </figure>
+    <section class="stage-panel" aria-label="Live template preview">
+      <h2 class="panel-title">Live Composition</h2>
+      <div class="artboard-frame"><div id="artboard" aria-label="Editable letterpress broadside"></div></div>
+    </section>
+    <aside class="controls-panel">
+      <h2 class="panel-title">Design Controls</h2>
+      <label class="font-picker" for="font-file">Display Font
+        <input id="font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="font-status" class="font-status">Choose a local font to preview its actual letterforms.</span>
+      </label>
+      <label class="font-picker" for="label-font-file">Furniture Font
+        <input id="label-font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="label-font-status" class="font-status">A compact label face is ready for the small edge copy.</span>
+      </label>
+      <div id="template-controls"></div>
+    </aside>
+  </main>
+  <script src="../../shared/layout.js"></script>
+  <script src="./design.js"></script>
+  <script src="../../shared/editor-shell.js"></script>
+  <script>
+    window.SupportEditor.start(window.Line32);
+    const input = document.getElementById("label-font-file");
+    const status = document.getElementById("label-font-status");
+    input.addEventListener("change", async () => {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      status.textContent = "Loading furniture font…";
+      const face = new FontFace("UploadedLineLabel", 'url("' + URL.createObjectURL(file) + '")');
+      try {
+        await face.load();
+        document.fonts.add(face);
+        await document.fonts.ready;
+        window.Line32.labelFace = "UploadedLineLabel";
+        window.configureTemplate();
+        status.textContent = "loaded as the live label font: " + file.name;
+      } catch (error) {
+        status.textContent = "Could not load " + file.name + ": " + error.message;
+      }
+    });
+  </script>
+</body>
+</html>

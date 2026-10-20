@@ -1,0 +1,102 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "brutal32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "frame": {
+      "width": 800,
+      "height": 800
+    },
+    "headlineFontSize": "55.08",
+    "inkOnPaperContrast": "10.95",
+    "slots": [
+      {
+        "name": "line-1",
+        "text": "Brutalism",
+        "x": 196.8,
+        "y": 221.6,
+        "width": 406.4,
+        "height": 104,
+        "fontSize": 79.97
+      },
+      {
+        "name": "line-2",
+        "text": "A Play Between",
+        "x": 83.2,
+        "y": 311.2,
+        "width": 645.6,
+        "height": 104,
+        "fontSize": 81.28
+      },
+      {
+        "name": "line-3",
+        "text": "Crudity",
+        "x": 246.4,
+        "y": 402.4,
+        "width": 212,
+        "height": 104,
+        "fontSize": 55.08
+      },
+      {
+        "name": "line-4",
+        "text": "And Finesse",
+        "x": 154.4,
+        "y": 491.2,
+        "width": 498.4,
+        "height": 104,
+        "fontSize": 79.46
+      },
+      {
+        "name": "photo-northwest",
+        "text": "",
+        "x": 136.8,
+        "y": 130.4,
+        "width": 159.2,
+        "height": 116,
+        "fontSize": 14
+      },
+      {
+        "name": "photo-northeast",
+        "text": "",
+        "x": 512.8,
+        "y": 132.8,
+        "width": 159.2,
+        "height": 116,
+        "fontSize": 14
+      },
+      {
+        "name": "photo-southwest",
+        "text": "",
+        "x": 97.6,
+        "y": 411.2,
+        "width": 159.2,
+        "height": 116,
+        "fontSize": 14
+      },
+      {
+        "name": "photo-southeast",
+        "text": "",
+        "x": 422.4,
+        "y": 549.6,
+        "width": 159.2,
+        "height": 116,
+        "fontSize": 14
+      }
+    ],
+    "outOfBounds": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/brutal32.png",
+  "outputBytes": 1394272
+}

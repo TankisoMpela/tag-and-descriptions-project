@@ -1,0 +1,347 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/rio32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/rio32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Blazher-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 55.6,
+  "imageBytes": {
+    "html": 4210846,
+    "skia": 4658905
+  },
+  "desktopLayout": {
+    "template": "rio32",
+    "headlineFontSize": "73.2198px",
+    "contrast": 14.578807781351893,
+    "contrastException": {
+      "minimum": 4.5,
+      "rationale": "Cream lettering remains above the darkened panorama for clear reading."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "travel-mark",
+        "text": "RioTravel",
+        "fontSize": "23.6359px",
+        "x": 26.9375,
+        "y": 24.09375,
+        "width": 106.359375,
+        "height": 35.109375
+      },
+      {
+        "name": "brand-city",
+        "text": "Rio",
+        "fontSize": "23.6499px",
+        "x": 26.9375,
+        "y": 24.09375,
+        "width": 64.375,
+        "height": 22.46875
+      },
+      {
+        "name": "brand-type",
+        "text": "Travel",
+        "fontSize": "13.07px",
+        "x": 26.9375,
+        "y": 46.796875,
+        "width": 100.109375,
+        "height": 12.40625
+      },
+      {
+        "name": "navigation",
+        "text": "HomeCatalogContact",
+        "fontSize": "17.9633px",
+        "x": 365.171875,
+        "y": 26.46875,
+        "width": 317.671875,
+        "height": 24.578125
+      },
+      {
+        "name": "navigation-1",
+        "text": "Home",
+        "fontSize": "17.974px",
+        "x": 365.171875,
+        "y": 26.46875,
+        "width": 42.28125,
+        "height": 17.96875
+      },
+      {
+        "name": "navigation-2",
+        "text": "Catalog",
+        "fontSize": "17.974px",
+        "x": 490.671875,
+        "y": 26.46875,
+        "width": 54.53125,
+        "height": 17.96875
+      },
+      {
+        "name": "navigation-3",
+        "text": "Contact",
+        "fontSize": "17.974px",
+        "x": 628.40625,
+        "y": 26.46875,
+        "width": 54.4375,
+        "height": 17.96875
+      },
+      {
+        "name": "title-lead-row",
+        "text": "The",
+        "fontSize": "16px",
+        "x": 177.265625,
+        "y": 98.3125,
+        "width": 170.171875,
+        "height": 49.625
+      },
+      {
+        "name": "title-lead",
+        "text": "The",
+        "fontSize": "38.7859px",
+        "x": 177.265625,
+        "y": 105.671875,
+        "width": 122.734375,
+        "height": 34.890625
+      },
+      {
+        "name": "destination-row",
+        "text": "Janeiro",
+        "fontSize": "16px",
+        "x": 102.8125,
+        "y": 153.625,
+        "width": 510.546875,
+        "height": 103.046875
+      },
+      {
+        "name": "destination-title",
+        "text": "Janeiro",
+        "fontSize": "73.2198px",
+        "x": 104.5,
+        "y": 172.203125,
+        "width": 507.15625,
+        "height": 65.890625
+      },
+      {
+        "name": "destination-subtitle",
+        "text": "The Weekend Holiday Trip",
+        "fontSize": "28.8529px",
+        "x": 106.359375,
+        "y": 263.296875,
+        "width": 299.734375,
+        "height": 38.75
+      },
+      {
+        "name": "booking-button",
+        "text": "Book Now",
+        "fontSize": "20.339px",
+        "x": 303.484375,
+        "y": 340.828125,
+        "width": 80.296875,
+        "height": 29.296875
+      },
+      {
+        "name": "closing-copy",
+        "text": "Happiness Consists Of Living Each Day As If It Were The First DayOf Your Honeymoon And The Last Day Of Your VacationTrust Your Holiday Plans With Us",
+        "fontSize": "10.6362px",
+        "x": 56.71875,
+        "y": 394.234375,
+        "width": 595.625,
+        "height": 48.203125
+      },
+      {
+        "name": "closing-line-1",
+        "text": "Happiness Consists Of Living Each Day As If It Were The First Day",
+        "fontSize": "10.6425px",
+        "x": 224.296875,
+        "y": 399.421875,
+        "width": 260.46875,
+        "height": 11.484375
+      },
+      {
+        "name": "closing-line-2",
+        "text": "Of Your Honeymoon And The Last Day Of Your Vacation",
+        "fontSize": "10.6425px",
+        "x": 243.875,
+        "y": 412.59375,
+        "width": 221.296875,
+        "height": 11.484375
+      },
+      {
+        "name": "closing-line-3",
+        "text": "Trust Your Holiday Plans With Us",
+        "fontSize": "10.6425px",
+        "x": 289.1875,
+        "y": 425.765625,
+        "width": 130.671875,
+        "height": 11.484375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "rio32",
+    "headlineFontSize": "36.36px",
+    "contrast": 14.578807781351893,
+    "contrastException": {
+      "minimum": 4.5,
+      "rationale": "Cream lettering remains above the darkened panorama for clear reading."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "travel-mark",
+        "text": "RioTravel",
+        "fontSize": "11.7328px",
+        "x": 13.375,
+        "y": 11.953125,
+        "width": 52.796875,
+        "height": 18.859375
+      },
+      {
+        "name": "brand-city",
+        "text": "Rio",
+        "fontSize": "11.75px",
+        "x": 13.375,
+        "y": 11.953125,
+        "width": 31.96875,
+        "height": 11.15625
+      },
+      {
+        "name": "brand-type",
+        "text": "Travel",
+        "fontSize": "8px",
+        "x": 13.375,
+        "y": 23.21875,
+        "width": 61.390625,
+        "height": 7.59375
+      },
+      {
+        "name": "navigation",
+        "text": "HomeCatalogContact",
+        "fontSize": "8.91694px",
+        "x": 181.265625,
+        "y": 13.140625,
+        "width": 157.6875,
+        "height": 12.1875
+      },
+      {
+        "name": "navigation-1",
+        "text": "Home",
+        "fontSize": "8.93px",
+        "x": 181.265625,
+        "y": 13.140625,
+        "width": 20.96875,
+        "height": 8.9375
+      },
+      {
+        "name": "navigation-2",
+        "text": "Catalog",
+        "fontSize": "8.93px",
+        "x": 243.59375,
+        "y": 13.140625,
+        "width": 27.03125,
+        "height": 8.9375
+      },
+      {
+        "name": "navigation-3",
+        "text": "Contact",
+        "fontSize": "8.93px",
+        "x": 311.96875,
+        "y": 13.140625,
+        "width": 26.984375,
+        "height": 8.9375
+      },
+      {
+        "name": "title-lead-row",
+        "text": "The",
+        "fontSize": "16px",
+        "x": 88,
+        "y": 48.796875,
+        "width": 84.46875,
+        "height": 24.625
+      },
+      {
+        "name": "title-lead",
+        "text": "The",
+        "fontSize": "19.27px",
+        "x": 88,
+        "y": 52.4375,
+        "width": 60.953125,
+        "height": 17.328125
+      },
+      {
+        "name": "destination-row",
+        "text": "Janeiro",
+        "fontSize": "16px",
+        "x": 51.03125,
+        "y": 76.25,
+        "width": 253.4375,
+        "height": 51.140625
+      },
+      {
+        "name": "destination-title",
+        "text": "Janeiro",
+        "fontSize": "36.36px",
+        "x": 51.84375,
+        "y": 85.453125,
+        "width": 251.796875,
+        "height": 32.71875
+      },
+      {
+        "name": "destination-subtitle",
+        "text": "The Weekend Holiday Trip",
+        "fontSize": "14.335px",
+        "x": 52.796875,
+        "y": 130.703125,
+        "width": 148.890625,
+        "height": 19.234375
+      },
+      {
+        "name": "booking-button",
+        "text": "Book Now",
+        "fontSize": "10.105px",
+        "x": 150.640625,
+        "y": 169.171875,
+        "width": 40.875,
+        "height": 14.546875
+      },
+      {
+        "name": "closing-copy",
+        "text": "Happiness Consists Of Living Each Day As If It Were The First DayOf Your Honeymoon And The Last Day Of Your VacationTrust Your Holiday Plans With Us",
+        "fontSize": "5.27977px",
+        "x": 28.15625,
+        "y": 195.703125,
+        "width": 295.671875,
+        "height": 23.921875
+      },
+      {
+        "name": "closing-line-1",
+        "text": "Happiness Consists Of Living Each Day As If It Were The First Day",
+        "fontSize": "8px",
+        "x": 77.9375,
+        "y": 193.890625,
+        "width": 196.109375,
+        "height": 8.625
+      },
+      {
+        "name": "closing-line-2",
+        "text": "Of Your Honeymoon And The Last Day Of Your Vacation",
+        "fontSize": "8px",
+        "x": 92.6875,
+        "y": 203.359375,
+        "width": 166.609375,
+        "height": 8.625
+      },
+      {
+        "name": "closing-line-3",
+        "text": "Trust Your Holiday Plans With Us",
+        "fontSize": "8px",
+        "x": 126.796875,
+        "y": 212.828125,
+        "width": 98.375,
+        "height": 8.625
+      }
+    ],
+    "contentWarnings": []
+  }
+}

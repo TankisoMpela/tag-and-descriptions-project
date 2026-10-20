@@ -1,16 +1,29 @@
 ---
-description: "Run the FontFairy font image generator before font preparation. It creates a fast mechanical text-placeholder handoff, plans 3:2 and 1:1 outputs, and leaves a strict Agent-13 handoff. Final artwork replacement is a separate optional seller step."
-argument-hint: "product facts or workspace path"
+description: "Create Agent 27's clean font-name specimens, three bespoke thumbnail prompts, and validated visual handoff."
+argument-hint: "font workspace, product description, and optional verified facts"
 ---
 
 # /font-images
 
-Delegate the task below to the **`font-image-generator`** subagent defined in `.claude/agents/font-image-generator.md`. Use the Claude Code `Agent` tool, run it in the foreground, and wait for its final result before continuing. Do not delegate this to OpenCode, omp, or Codex, and do not attempt the specialist's work in the main session.
+Delegate the task to the `font-image-generator` subagent in the foreground and
+wait for its final result. Follow `agents/agent-27-font-image-generator.md` as
+the canonical specification.
 
-Task:
+Pass the exact workspace, supplied final name when available, product
+description, and verified facts. The handoff includes one white-background
+specimen for each thumbnail and a matching complete prompt for the 3:2 main,
+1:1 main, and 1:1 storefront outputs. It also includes the support layouts,
+specimen previews, and Pinterest renders listed in the canonical spec. No old
+marketplace thumbnail is required.
 
-```
-Please run the registered font-image-generator agent before font preparation. Use the exact font workspace, product description, and optional factual references supplied here. When the user supplies a final font name, use it exactly; when not, decide the best evocative name yourself under the agent's Naming policy and never run name-uniqueness research. Create the deterministic text-placeholder handoff with short, font-specific copy, canonical filenames, and mechanical validation. Do not use OpenPencil, image-generation tools, visual inspection, or OCR, and do not invoke font-prep automatically. Finish with READY FOR FONT PREP HANDOFF and the exact prepared_visuals path: $ARGUMENTS
-```
+When the user explicitly requests a prompt test or prototype, use the matching
+specimen and prompt with the built-in image-generation tool and inspect the
+result against the reference-structure audit: title hierarchy, physical surface
+integration when called for, model focus, crop, contrast and restraint. Keep only
+elements that explain the premise; open space can remain empty. Exclude glitter,
+sparkles, confetti, particles, needless effects and generic AI decoration.
 
-After the subagent returns, report its output paths, validator status, evidence, and any blocked facts. Never claim publication or an upload.
+Do not invoke font preparation automatically. Report the exact prepared visual
+path, validation result, and any blocker. Do not claim upload or publication.
+
+User request / input: $ARGUMENTS

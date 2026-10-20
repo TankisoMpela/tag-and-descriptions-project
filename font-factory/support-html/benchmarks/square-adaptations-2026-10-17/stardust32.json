@@ -1,0 +1,85 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "stardust32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "stardust32",
+    "headlineFontSize": "93.8999px",
+    "smallestDisplayFontSize": "91.9999px",
+    "contrast": 16.409110736136714,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "eyebrow",
+        "text": "Type Studio",
+        "fontSize": "25.52px",
+        "x": 528,
+        "y": 72,
+        "width": 208,
+        "height": 44
+      },
+      {
+        "name": "headline",
+        "text": "Dreams AndStories",
+        "fontSize": "16px",
+        "x": 112,
+        "y": 204,
+        "width": 576,
+        "height": 264
+      },
+      {
+        "name": "headline-line-1",
+        "text": "Dreams And",
+        "fontSize": "93.8999px",
+        "x": 112,
+        "y": 252.4375,
+        "width": 576,
+        "height": 83.5625
+      },
+      {
+        "name": "headline-line-2",
+        "text": "Stories",
+        "fontSize": "93.8999px",
+        "x": 112,
+        "y": 336,
+        "width": 576,
+        "height": 83.5625
+      },
+      {
+        "name": "lineTwo",
+        "text": "Studio",
+        "fontSize": "91.9999px",
+        "x": 144,
+        "y": 476,
+        "width": 512,
+        "height": 112
+      },
+      {
+        "name": "footer",
+        "text": "In Good Company",
+        "fontSize": "14.05px",
+        "x": 304,
+        "y": 656,
+        "width": 192,
+        "height": 44
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/stardust32.png",
+  "outputBytes": 2527166
+}

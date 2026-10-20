@@ -1,0 +1,157 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "pixelquote32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "pixelquote32",
+    "headlineFontSize": "100.04px",
+    "smallestDisplayFontSize": "71.41px",
+    "contrast": 6.210999183553991,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "pixel-stitches-top",
+        "text": "",
+        "fontSize": "16px",
+        "x": 600.671875,
+        "y": 49.484375,
+        "width": 158.78125,
+        "height": 26.25
+      },
+      {
+        "name": "pixel-stitches-bottom",
+        "text": "",
+        "fontSize": "16px",
+        "x": 45.265625,
+        "y": 727.265625,
+        "width": 158.09375,
+        "height": 26.25
+      },
+      {
+        "name": "pixel-heart",
+        "text": "",
+        "fontSize": "16px",
+        "x": 334.453125,
+        "y": 96.96875,
+        "width": 33.09375,
+        "height": 41.40625
+      },
+      {
+        "name": "pixel-mascot",
+        "text": "",
+        "fontSize": "16px",
+        "x": 230.390625,
+        "y": 695.953125,
+        "width": 42.5625,
+        "height": 57.5625
+      },
+      {
+        "name": "quote-row-1",
+        "text": "A Little",
+        "fontSize": "16px",
+        "x": 224,
+        "y": 135.1875,
+        "width": 352,
+        "height": 105.59375
+      },
+      {
+        "name": "quote-line-1",
+        "text": "A Little",
+        "fontSize": "100.04px",
+        "x": 229.171875,
+        "y": 143.96875,
+        "width": 341.65625,
+        "height": 88.03125
+      },
+      {
+        "name": "quote-row-2",
+        "text": "Nonsense",
+        "fontSize": "16px",
+        "x": 216,
+        "y": 241.59375,
+        "width": 368,
+        "height": 105.59375
+      },
+      {
+        "name": "quote-line-2",
+        "text": "Nonsense",
+        "fontSize": "71.41px",
+        "x": 221.40625,
+        "y": 262.96875,
+        "width": 357.171875,
+        "height": 62.828125
+      },
+      {
+        "name": "quote-row-3",
+        "text": "Now & Then",
+        "fontSize": "16px",
+        "x": 160,
+        "y": 348,
+        "width": 480,
+        "height": 105.59375
+      },
+      {
+        "name": "quote-line-3",
+        "text": "Now & Then",
+        "fontSize": "81.6399px",
+        "x": 167.078125,
+        "y": 364.875,
+        "width": 465.828125,
+        "height": 71.84375
+      },
+      {
+        "name": "quote-row-4",
+        "text": "Is Relished By",
+        "fontSize": "16px",
+        "x": 136,
+        "y": 456,
+        "width": 528,
+        "height": 105.59375
+      },
+      {
+        "name": "quote-line-4",
+        "text": "Is Relished By",
+        "fontSize": "73.28px",
+        "x": 143.84375,
+        "y": 476.546875,
+        "width": 512.3125,
+        "height": 64.484375
+      },
+      {
+        "name": "quote-row-5",
+        "text": "The Wisest Man",
+        "fontSize": "16px",
+        "x": 112,
+        "y": 576,
+        "width": 592,
+        "height": 105.59375
+      },
+      {
+        "name": "quote-line-5",
+        "text": "The Wisest Man",
+        "fontSize": "73.99px",
+        "x": 120.8125,
+        "y": 596.25,
+        "width": 574.375,
+        "height": 65.09375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/pixelquote32.png",
+  "outputBytes": 102199
+}

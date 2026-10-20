@@ -1,0 +1,2 @@
+/* Editable geometry and copy slots are authored in shared/pin-studio.js. */
+.template--phrase [data-layout-item="line"],.template--phrase [data-layout-item="word"] { font-style:italic; }

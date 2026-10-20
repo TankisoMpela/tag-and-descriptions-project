@@ -1,0 +1,303 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/confident32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/confident32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Blazher-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 36.8,
+  "imageBytes": {
+    "html": 1021568,
+    "skia": 1161876
+  },
+  "desktopLayout": {
+    "template": "confident32",
+    "headlineFontSize": "60.0399px",
+    "contrast": 4.864720544128564,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-eye-crop-frame",
+        "text": "",
+        "fontSize": "16px",
+        "x": 32.609375,
+        "y": 236.359375,
+        "width": 643.84375,
+        "height": 207.046875
+      },
+      {
+        "name": "poster-frame",
+        "text": "",
+        "fontSize": "16px",
+        "x": 31.90625,
+        "y": 25.984375,
+        "width": 645.265625,
+        "height": 420.71875
+      },
+      {
+        "name": "divider-rule-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 31.90625,
+        "y": 207.984375,
+        "width": 297.8125,
+        "height": 1
+      },
+      {
+        "name": "divider-rule-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 379.359375,
+        "y": 207.984375,
+        "width": 297.8125,
+        "height": 1
+      },
+      {
+        "name": "center-star-divider",
+        "text": "",
+        "fontSize": "16px",
+        "x": 329.71875,
+        "y": 193.8125,
+        "width": 49.625,
+        "height": 28.359375
+      },
+      {
+        "name": "poster-overline-row",
+        "text": "Keep Looking",
+        "fontSize": "16px",
+        "x": 42.53125,
+        "y": 40.171875,
+        "width": 397.078125,
+        "height": 23.625
+      },
+      {
+        "name": "poster-overline",
+        "text": "Keep Looking",
+        "fontSize": "7.09499px",
+        "x": 42.53125,
+        "y": 48.4375,
+        "width": 43.796875,
+        "height": 7.09375
+      },
+      {
+        "name": "poster-tag-row",
+        "text": "Type Study / 01",
+        "fontSize": "16px",
+        "x": 510.546875,
+        "y": 40.171875,
+        "width": 148.90625,
+        "height": 23.625
+      },
+      {
+        "name": "poster-tag",
+        "text": "Type Study / 01",
+        "fontSize": "5.32124px",
+        "x": 624.546875,
+        "y": 49.3125,
+        "width": 34.90625,
+        "height": 5.328125
+      },
+      {
+        "name": "headline-row",
+        "text": "Stand Tall",
+        "fontSize": "16px",
+        "x": 39,
+        "y": 73.265625,
+        "width": 631.078125,
+        "height": 92.171875
+      },
+      {
+        "name": "confidence-headline",
+        "text": "Stand Tall",
+        "fontSize": "60.0399px",
+        "x": 39,
+        "y": 92.921875,
+        "width": 615.875,
+        "height": 52.828125
+      },
+      {
+        "name": "tagline-left-row",
+        "text": "Even When",
+        "fontSize": "16px",
+        "x": 42.53125,
+        "y": 167.8125,
+        "width": 276.53125,
+        "height": 25.984375
+      },
+      {
+        "name": "tagline-left",
+        "text": "Even When",
+        "fontSize": "13.0075px",
+        "x": 42.53125,
+        "y": 174.625,
+        "width": 128.34375,
+        "height": 12.34375
+      },
+      {
+        "name": "tagline-right-row",
+        "text": "Doubt Looks Back",
+        "fontSize": "16px",
+        "x": 347.453125,
+        "y": 167.8125,
+        "width": 319.078125,
+        "height": 25.984375
+      },
+      {
+        "name": "tagline-right",
+        "text": "Doubt Looks Back",
+        "fontSize": "13.0075px",
+        "x": 455.34375,
+        "y": 174.625,
+        "width": 211.1875,
+        "height": 12.34375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "confident32",
+    "headlineFontSize": "29.82px",
+    "contrast": 4.864720544128564,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-eye-crop-frame",
+        "text": "",
+        "fontSize": "16px",
+        "x": 16.1875,
+        "y": 117.328125,
+        "width": 319.609375,
+        "height": 102.765625
+      },
+      {
+        "name": "poster-frame",
+        "text": "",
+        "fontSize": "16px",
+        "x": 15.828125,
+        "y": 12.890625,
+        "width": 320.3125,
+        "height": 208.84375
+      },
+      {
+        "name": "divider-rule-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 15.828125,
+        "y": 103.234375,
+        "width": 147.828125,
+        "height": 1
+      },
+      {
+        "name": "divider-rule-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 188.3125,
+        "y": 103.234375,
+        "width": 147.828125,
+        "height": 1
+      },
+      {
+        "name": "center-star-divider",
+        "text": "",
+        "fontSize": "16px",
+        "x": 163.671875,
+        "y": 96.203125,
+        "width": 24.625,
+        "height": 14.078125
+      },
+      {
+        "name": "poster-overline-row",
+        "text": "Keep Looking",
+        "fontSize": "16px",
+        "x": 21.109375,
+        "y": 19.9375,
+        "width": 197.109375,
+        "height": 11.71875
+      },
+      {
+        "name": "poster-overline",
+        "text": "Keep Looking",
+        "fontSize": "3.525px",
+        "x": 21.109375,
+        "y": 24.03125,
+        "width": 21.75,
+        "height": 3.53125
+      },
+      {
+        "name": "poster-tag-row",
+        "text": "Type Study / 01",
+        "fontSize": "16px",
+        "x": 253.4375,
+        "y": 19.9375,
+        "width": 73.90625,
+        "height": 11.71875
+      },
+      {
+        "name": "poster-tag",
+        "text": "Type Study / 01",
+        "fontSize": "2.64375px",
+        "x": 310.078125,
+        "y": 24.46875,
+        "width": 17.265625,
+        "height": 2.640625
+      },
+      {
+        "name": "headline-row",
+        "text": "Stand Tall",
+        "fontSize": "16px",
+        "x": 19.359375,
+        "y": 36.359375,
+        "width": 313.265625,
+        "height": 45.75
+      },
+      {
+        "name": "confidence-headline",
+        "text": "Stand Tall",
+        "fontSize": "29.82px",
+        "x": 19.359375,
+        "y": 46.109375,
+        "width": 305.765625,
+        "height": 26.234375
+      },
+      {
+        "name": "tagline-left-row",
+        "text": "Even When",
+        "fontSize": "16px",
+        "x": 21.109375,
+        "y": 83.296875,
+        "width": 137.265625,
+        "height": 12.890625
+      },
+      {
+        "name": "tagline-left",
+        "text": "Even When",
+        "fontSize": "6.46249px",
+        "x": 21.109375,
+        "y": 86.671875,
+        "width": 63.71875,
+        "height": 6.140625
+      },
+      {
+        "name": "tagline-right-row",
+        "text": "Doubt Looks Back",
+        "fontSize": "16px",
+        "x": 172.46875,
+        "y": 83.296875,
+        "width": 158.390625,
+        "height": 12.890625
+      },
+      {
+        "name": "tagline-right",
+        "text": "Doubt Looks Back",
+        "fontSize": "6.46249px",
+        "x": 226.03125,
+        "y": 86.671875,
+        "width": 104.828125,
+        "height": 6.140625
+      }
+    ],
+    "contentWarnings": []
+  }
+}

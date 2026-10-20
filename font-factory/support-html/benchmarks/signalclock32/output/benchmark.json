@@ -1,0 +1,82 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/signalclock32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/signalclock32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 17.3,
+  "desktopLayout": {
+    "template": "signalclock32",
+    "headlineFontSize": "268.948px",
+    "contrast": 19.601928171425822,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "signal-price",
+        "text": "$50.50",
+        "fontSize": "268.948px",
+        "x": 148.9368896484375,
+        "y": 126.09375,
+        "width": 411.219970703125,
+        "height": 220.53125
+      },
+      {
+        "name": "signal-currency-plaque",
+        "text": "DOLLAR",
+        "fontSize": "16px",
+        "x": 510.546875,
+        "y": 252.890625,
+        "width": 134.71875,
+        "height": 73.265625
+      },
+      {
+        "name": "signal-currency-label",
+        "text": "DOLLAR",
+        "fontSize": "40.2049px",
+        "x": 526.5037231445312,
+        "y": 271.828125,
+        "width": 102.80499267578125,
+        "height": 35.375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "signalclock32",
+    "headlineFontSize": "133.549px",
+    "contrast": 19.601928171425822,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "signal-price",
+        "text": "$50.50",
+        "fontSize": "133.549px",
+        "x": 73.92000579833984,
+        "y": 62.578125,
+        "width": 204.15997314453125,
+        "height": 109.5
+      },
+      {
+        "name": "signal-currency-plaque",
+        "text": "DOLLAR",
+        "fontSize": "16px",
+        "x": 253.4375,
+        "y": 125.53125,
+        "width": 66.875,
+        "height": 36.359375
+      },
+      {
+        "name": "signal-currency-label",
+        "text": "DOLLAR",
+        "fontSize": "19.975px",
+        "x": 261.3550109863281,
+        "y": 134.921875,
+        "width": 51.03997802734375,
+        "height": 17.5625
+      }
+    ],
+    "contentWarnings": []
+  }
+}

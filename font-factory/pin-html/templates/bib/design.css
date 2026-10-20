@@ -1,0 +1,3 @@
+/* The four race digits are the first read, held within the ruled card. */
+.template--bib [data-layout-item="number"] { font-weight:700; letter-spacing:-.035em; }
+.template--bib [data-layout-item^="line"] { letter-spacing:-.04em; }

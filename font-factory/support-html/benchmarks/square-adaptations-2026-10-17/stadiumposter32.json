@@ -1,0 +1,85 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "stadiumposter32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "stadiumposter32",
+    "headlineFontSize": "226.898px",
+    "smallestDisplayFontSize": "197.32px",
+    "contrast": 5.4000704066310625,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "stadium-top-left",
+        "text": "YWFT Becks",
+        "fontSize": "13.2px",
+        "x": 24,
+        "y": 27.59375,
+        "width": 84.5,
+        "height": 13.203125
+      },
+      {
+        "name": "stadium-top-right",
+        "text": "A Distressed OpenType SVG Font",
+        "fontSize": "13.2px",
+        "x": 551.09375,
+        "y": 27.59375,
+        "width": 224.90625,
+        "height": 13.203125
+      },
+      {
+        "name": "stadium-headline-one",
+        "text": "Real",
+        "fontSize": "226.898px",
+        "x": 64,
+        "y": 136,
+        "width": 672,
+        "height": 232
+      },
+      {
+        "name": "stadium-headline-two",
+        "text": "Madrid",
+        "fontSize": "197.32px",
+        "x": 64,
+        "y": 416,
+        "width": 672,
+        "height": 240
+      },
+      {
+        "name": "stadium-footer-left",
+        "text": "Designed By YouWorkForThem",
+        "fontSize": "11.6px",
+        "x": 24,
+        "y": 770.015625,
+        "width": 184.71875,
+        "height": 11.59375
+      },
+      {
+        "name": "stadium-footer-right",
+        "text": "Exclusive",
+        "fontSize": "11.6px",
+        "x": 718.3125,
+        "y": 770.015625,
+        "width": 57.6875,
+        "height": 11.59375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/stadiumposter32.png",
+  "outputBytes": 3292359
+}

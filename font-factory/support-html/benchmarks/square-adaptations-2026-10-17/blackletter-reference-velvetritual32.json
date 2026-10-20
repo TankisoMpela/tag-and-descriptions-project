@@ -1,0 +1,76 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "velvetritual32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "velvetritual32",
+    "headlineFontSize": "280.17px",
+    "smallestDisplayFontSize": "16px",
+    "contrast": 15.483402541094103,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "Artisan",
+        "fontSize": "24px",
+        "x": 365.328125,
+        "y": 41.59375,
+        "width": 69.34375,
+        "height": 21.59375
+      },
+      {
+        "name": "footer",
+        "text": "652 Glyphs",
+        "fontSize": "16px",
+        "x": 608,
+        "y": 28,
+        "width": 160,
+        "height": 72
+      },
+      {
+        "name": "headline",
+        "text": "Beltino",
+        "fontSize": "280.17px",
+        "x": 59.3125,
+        "y": 217.921875,
+        "width": 681.359375,
+        "height": 252.140625
+      },
+      {
+        "name": "line2",
+        "text": "Slashes Black Letter",
+        "fontSize": "49.07px",
+        "x": 223.484375,
+        "y": 653.921875,
+        "width": 353.015625,
+        "height": 44.15625
+      },
+      {
+        "name": "descriptor",
+        "text": "Combining Blackletter Influence And Vintage Character, Beltino Offers\nA Rough, Dramatic, And Unforgettable Typographic Style",
+        "fontSize": "11px",
+        "x": 225.921875,
+        "y": 741.453125,
+        "width": 348.15625,
+        "height": 21.09375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-velvetritual32.png",
+  "outputBytes": 1611005
+}

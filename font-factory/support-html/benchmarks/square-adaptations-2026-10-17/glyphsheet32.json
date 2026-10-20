@@ -1,0 +1,89 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "glyphsheet32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "glyphsheet32",
+    "headlineFontSize": "132px",
+    "smallestDisplayFontSize": "34.16px",
+    "contrast": 3.4476124077749097,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The cream and dark green source colors are reserved for the sheet’s oversized display rows."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "glyphsheet-digits",
+        "text": "0123456789",
+        "fontSize": "117.02px",
+        "x": 43.90625,
+        "y": 83.34375,
+        "width": 712.1875,
+        "height": 105.3125
+      },
+      {
+        "name": "glyphsheet-pangram",
+        "text": "Pack my box with five dozen liquor jugs!",
+        "fontSize": "34.16px",
+        "x": 55.921875,
+        "y": 280.625,
+        "width": 688.171875,
+        "height": 30.734375
+      },
+      {
+        "name": "glyphsheet-symbols",
+        "text": "$&%£€!?()",
+        "fontSize": "132px",
+        "x": 64.75,
+        "y": 436.59375,
+        "width": 670.484375,
+        "height": 118.796875
+      },
+      {
+        "name": "glyphsheet-footer",
+        "text": "Figures / Signs / Punctuation",
+        "fontSize": "22.8px",
+        "x": 128,
+        "y": 676.796875,
+        "width": 544,
+        "height": 25.53125
+      },
+      {
+        "name": "glyphsheet-footer-left",
+        "text": "Letterforms",
+        "fontSize": "16px",
+        "x": 48,
+        "y": 724.796875,
+        "width": 93.234375,
+        "height": 16
+      },
+      {
+        "name": "glyphsheet-footer-right",
+        "text": "Specimen 01",
+        "fontSize": "16px",
+        "x": 646.28125,
+        "y": 724.796875,
+        "width": 105.71875,
+        "height": 16
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/glyphsheet32.png",
+  "outputBytes": 1953175
+}

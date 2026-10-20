@@ -1,0 +1,58 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "wildsoulmark32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "wildsoulmark32",
+    "headlineFontSize": "180.57px",
+    "smallestDisplayFontSize": "180.57px",
+    "contrast": 14.607148674097958,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Wild Soul",
+        "fontSize": "180.57px",
+        "x": 78.4375,
+        "y": 310.75,
+        "width": 643.109375,
+        "height": 162.5
+      },
+      {
+        "name": "descriptor",
+        "text": "A Singular Word With Character",
+        "fontSize": "15px",
+        "x": 281.53125,
+        "y": 674.5,
+        "width": 236.921875,
+        "height": 15
+      },
+      {
+        "name": "footer",
+        "text": "Studio Edition · 05",
+        "fontSize": "12px",
+        "x": 345.0625,
+        "y": 736,
+        "width": 109.875,
+        "height": 12
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-wildsoulmark32.png",
+  "outputBytes": 1036038
+}

@@ -1,0 +1,2 @@
+/* Editable geometry and copy slots are authored in shared/pin-studio.js. */
+.template--knotband [data-layout-item="glyphs"] { letter-spacing:.012em; }

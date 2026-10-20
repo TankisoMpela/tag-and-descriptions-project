@@ -1,0 +1,37 @@
+@font-face {
+  font-family: "PastPresentLabel";
+  src: url("../../assets/LilitaOne-Regular.ttf") format("truetype");
+  font-display: block;
+}
+#artboard {
+  --gingham-base: #ec5b92;
+  --gingham-light: #fa8fb2;
+  --timeline-ink: #251f1d;
+  background-color: var(--gingham-base);
+  background-image: conic-gradient(var(--gingham-light) 25%, var(--gingham-base) 0 50%, var(--gingham-light) 0 75%, var(--gingham-base) 0);
+  background-size: 9.5238cqw 9.5238cqw;
+  color: var(--timeline-ink);
+}
+.timeline-art, .timeline-word, .timeline-credit {
+  position: absolute;
+}
+.timeline-art {
+  inset: 0; z-index: 1;
+  background: url("../../../support-references/materials/T26223_04_retro-hand-sign-blank-panels.png") center calc(50% - 3.3cqh) / 92% 103% no-repeat;
+}
+.timeline-word {
+  z-index: 2; left: 50%; display: inline-block; color: var(--timeline-ink);
+  font-family: var(--display-face, Arial, sans-serif);
+  font-weight: 400; font-synthesis: none;
+  line-height: .9; letter-spacing: 0; white-space: nowrap;
+  text-align: center; transform: translateX(-50%) scale(.86); transform-origin: center center;
+}
+.timeline-past { top: 15.5%; }
+.timeline-present { top: 41%; }
+.timeline-future { top: 66%; }
+.timeline-credit {
+  z-index: 3; left: 30%; top: 87.4%; width: 40%;
+  color: #261f1e; font-family: var(--label-face, "PastPresentLabel", Arial, sans-serif);
+  font-size: 2cqh; font-weight: 700; font-synthesis: weight;
+  letter-spacing: .035em; text-align: center; white-space: nowrap;
+}

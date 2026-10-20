@@ -1,0 +1,2 @@
+/* Editable geometry and copy slots are authored in shared/pin-studio.js. */
+.template--wall [data-layout-item="line2"] { -webkit-text-stroke:.3px currentColor; }

@@ -1,0 +1,4 @@
+/* A hand-painted green field, two starbursts, and a warm cream message. */
+.template--green_starburst [data-layout-item="line"] { color:#fff8e6; text-shadow:0 2px 0 rgb(10 40 26 / 22%); }
+.template--green_starburst [data-layout-item="footer"],.template--green_starburst [data-layout-item="footSub"] { color:#fff8e6; }
+.template--green_starburst [data-layout-item="secondary"] { color:#fff8e6; }

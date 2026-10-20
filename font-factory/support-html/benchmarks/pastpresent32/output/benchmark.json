@@ -1,0 +1,123 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/pastpresent32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/pastpresent32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Lilita One",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 23.9,
+  "imageBytes": {
+    "html": 1138160,
+    "skia": 1451590
+  },
+  "desktopLayout": {
+    "template": "pastpresent32",
+    "headlineFontSize": "98.7697px",
+    "contrast": 14.867827023736705,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-hand-sign-art",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "timeline-past",
+        "text": "PAST",
+        "fontSize": "92.8997px",
+        "x": 257.1171875,
+        "y": 73.265625,
+        "width": 194.859375,
+        "height": 79.890625
+      },
+      {
+        "name": "timeline-present",
+        "text": "PRESENT",
+        "fontSize": "98.7697px",
+        "x": 174.2265625,
+        "y": 193.8125,
+        "width": 360.640625,
+        "height": 84.9375
+      },
+      {
+        "name": "timeline-future",
+        "text": "FUTURE",
+        "fontSize": "97.8598px",
+        "x": 199.8046875,
+        "y": 311.984375,
+        "width": 309.484375,
+        "height": 84.15625
+      },
+      {
+        "name": "timeline-studio-credit",
+        "text": "Our SunKits © Rivari Studio 2024",
+        "fontSize": "9.45438px",
+        "x": 212.71875,
+        "y": 413.140625,
+        "width": 283.625,
+        "height": 11
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "pastpresent32",
+    "headlineFontSize": "49.75px",
+    "contrast": 14.867827023736705,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-hand-sign-art",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "timeline-past",
+        "text": "PAST",
+        "fontSize": "47.7898px",
+        "x": 125.890625,
+        "y": 36.359375,
+        "width": 100.21875,
+        "height": 41.09375
+      },
+      {
+        "name": "timeline-present",
+        "text": "PRESENT",
+        "fontSize": "49.75px",
+        "x": 85.1796875,
+        "y": 96.203125,
+        "width": 181.640625,
+        "height": 42.78125
+      },
+      {
+        "name": "timeline-future",
+        "text": "FUTURE",
+        "fontSize": "48.5999px",
+        "x": 99.171875,
+        "y": 154.859375,
+        "width": 153.65625,
+        "height": 41.78125
+      },
+      {
+        "name": "timeline-studio-credit",
+        "text": "Our SunKits © Rivari Studio 2024",
+        "fontSize": "4.69312px",
+        "x": 105.59375,
+        "y": 205.078125,
+        "width": 140.796875,
+        "height": 5
+      }
+    ],
+    "contentWarnings": []
+  }
+}

@@ -1,0 +1,136 @@
+@font-face {
+  font-family: PhoneGardenLabel;
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+}
+
+#artboard {
+  --ink: #0a0b0f;
+  --cream: #fdf5e5;
+  --label-face: PhoneGardenLabel, sans-serif;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #ffd700;
+  color: var(--ink);
+}
+
+.phone-scene {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  transform: translateY(-50%);
+  container-type: size;
+}
+
+.phone-plate,
+.phone-flower-patch,
+.phone-peony,
+.phone-star-patch,
+.phone-dot,
+.phone-label,
+.phone-row,
+.phone-type,
+.phone-star {
+  position: absolute;
+}
+
+.phone-plate {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.phone-flower-patch {
+  left: 9.2905%;
+  top: 58.3333%;
+  width: 15.625%;
+  height: 32.5758%;
+  background: var(--cream);
+}
+
+.phone-peony {
+  left: 10.1351%;
+  top: 58.7121%;
+  width: 14.3581%;
+  height: 18.9394%;
+  object-fit: fill;
+}
+
+.phone-star-patch {
+  border-radius: 50%;
+  background: var(--cream);
+  transform: translate(-50%, -50%);
+}
+
+.phone-label {
+  color: var(--ink);
+  font-family: var(--label-face);
+  font-size: 2cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: .07em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.phone-type {
+  color: var(--ink);
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 9.4cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .9;
+  letter-spacing: -.01em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.phone-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-vertical-type {
+  left: var(--center-x);
+  top: 50.5%;
+  transform: translate(-50%, -50%) rotate(-90deg) scaleY(.72);
+  transform-origin: center;
+}
+
+.phone-right-title {
+  font-size: 4.8cqh;
+  letter-spacing: -.01em;
+}
+
+.phone-right-copy {
+  font-size: 5.2cqh;
+  letter-spacing: -.01em;
+}
+
+.phone-label-vertical {
+  left: var(--label-x);
+  top: 50.5%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  transform-origin: center;
+}
+
+.phone-dot {
+  border: 1px solid #13334d;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.phone-star {
+  pointer-events: none;
+  overflow: visible;
+}

@@ -1,0 +1,44 @@
+#artboard {
+  --mirror-ground: #050607;
+  --mirror-ink: #f6f4ef;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--mirror-ink);
+  background: var(--mirror-ground);
+}
+.mirror-portrait, .mirror-copy-row {
+  position: absolute;
+}
+.mirror-portrait {
+  z-index: 1;
+  left: 4%;
+  top: 17%;
+  height: 66%;
+  width: auto;
+  max-width: 44%;
+  object-fit: contain;
+  object-position: left top;
+}
+.mirror-copy-row {
+  z-index: 2;
+  left: 38.5%;
+  width: 56.5%;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: visible;
+}
+.mirror-quote {
+  display: inline-block;
+  color: var(--mirror-ink);
+  font-family: var(--display-face, "MirrorPoster", "Bodoni MT", "Didot", Georgia, serif);
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 1;
+  letter-spacing: -.026em;
+  text-align: right;
+  white-space: nowrap;
+}

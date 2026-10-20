@@ -1,0 +1,159 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/cliffpostcard32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/cliffpostcard32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "CircuitSprint-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 30,
+  "imageBytes": {
+    "html": 1616703,
+    "skia": 1763520
+  },
+  "desktopLayout": {
+    "template": "cliffpostcard32",
+    "headlineFontSize": "70.5497px",
+    "contrast": 13.62298788776352,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-torn-paper-and-coastal-photo",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "postcard-headline-row-1",
+        "text": "Wander where",
+        "fontSize": "16px",
+        "x": 92.171875,
+        "y": 92.171875,
+        "width": 524.71875,
+        "height": 61.453125
+      },
+      {
+        "name": "postcard-headline-1",
+        "text": "Wander where",
+        "fontSize": "70.5497px",
+        "x": 182.140625,
+        "y": 91.15625,
+        "width": 344.765625,
+        "height": 63.484375
+      },
+      {
+        "name": "postcard-headline-row-2",
+        "text": "your soul feels wild.",
+        "fontSize": "16px",
+        "x": 53.171875,
+        "y": 158.359375,
+        "width": 602.71875,
+        "height": 61.453125
+      },
+      {
+        "name": "postcard-headline-2",
+        "text": "your soul feels wild.",
+        "fontSize": "70.5497px",
+        "x": 103.4375,
+        "y": 157.34375,
+        "width": 502.1875,
+        "height": 63.484375
+      },
+      {
+        "name": "left-postcard-caption",
+        "text": "OPEN AIR / STUDY 02",
+        "fontSize": "14.19px",
+        "x": 70.90625,
+        "y": 309.625,
+        "width": 137.75,
+        "height": 28.359375
+      },
+      {
+        "name": "right-postcard-caption",
+        "text": "LAND / SEA / SKY",
+        "fontSize": "14.19px",
+        "x": 390,
+        "y": 309.625,
+        "width": 111.125,
+        "height": 28.359375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "cliffpostcard32",
+    "headlineFontSize": "35.0399px",
+    "contrast": 13.62298788776352,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-torn-paper-and-coastal-photo",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "postcard-headline-row-1",
+        "text": "Wander where",
+        "fontSize": "16px",
+        "x": 45.75,
+        "y": 45.75,
+        "width": 260.46875,
+        "height": 30.5
+      },
+      {
+        "name": "postcard-headline-1",
+        "text": "Wander where",
+        "fontSize": "35.0399px",
+        "x": 90.40625,
+        "y": 45.234375,
+        "width": 171.15625,
+        "height": 31.53125
+      },
+      {
+        "name": "postcard-headline-row-2",
+        "text": "your soul feels wild.",
+        "fontSize": "16px",
+        "x": 26.390625,
+        "y": 78.609375,
+        "width": 299.1875,
+        "height": 30.5
+      },
+      {
+        "name": "postcard-headline-2",
+        "text": "your soul feels wild.",
+        "fontSize": "35.0399px",
+        "x": 51.328125,
+        "y": 78.09375,
+        "width": 249.3125,
+        "height": 31.53125
+      },
+      {
+        "name": "left-postcard-caption",
+        "text": "OPEN AIR / STUDY 02",
+        "fontSize": "7.04998px",
+        "x": 35.1875,
+        "y": 153.6875,
+        "width": 68.359375,
+        "height": 14.078125
+      },
+      {
+        "name": "right-postcard-caption",
+        "text": "LAND / SEA / SKY",
+        "fontSize": "7.04998px",
+        "x": 193.59375,
+        "y": 153.6875,
+        "width": 55.15625,
+        "height": 14.078125
+      }
+    ],
+    "contentWarnings": []
+  }
+}

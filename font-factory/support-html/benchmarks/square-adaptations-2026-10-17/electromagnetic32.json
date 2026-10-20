@@ -1,0 +1,112 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "electromagnetic32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "electromagnetic32",
+    "headlineFontSize": "98.1198px",
+    "smallestDisplayFontSize": "98.1198px",
+    "contrast": 15.804639172060506,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "kickerLeft",
+        "text": "Type Study / 03",
+        "fontSize": "24px",
+        "x": 120,
+        "y": 80,
+        "width": 272,
+        "height": 40
+      },
+      {
+        "name": "kickerRight",
+        "text": "Frequency / Field",
+        "fontSize": "19.11px",
+        "x": 456,
+        "y": 80,
+        "width": 200,
+        "height": 40
+      },
+      {
+        "name": "headline",
+        "text": "ElectroMagneticShady-01Course-",
+        "fontSize": "16px",
+        "x": 124,
+        "y": 184,
+        "width": 560,
+        "height": 424
+      },
+      {
+        "name": "headline-line-1",
+        "text": "Electro",
+        "fontSize": "98.1198px",
+        "x": 124,
+        "y": 184,
+        "width": 560,
+        "height": 89.28125
+      },
+      {
+        "name": "headline-line-2",
+        "text": "Magnetic",
+        "fontSize": "98.1198px",
+        "x": 124,
+        "y": 273.28125,
+        "width": 560,
+        "height": 89.28125
+      },
+      {
+        "name": "headline-line-3",
+        "text": "Shady-01",
+        "fontSize": "98.1198px",
+        "x": 124,
+        "y": 362.5625,
+        "width": 560,
+        "height": 89.28125
+      },
+      {
+        "name": "headline-line-4",
+        "text": "Course-",
+        "fontSize": "98.1198px",
+        "x": 124,
+        "y": 451.84375,
+        "width": 560,
+        "height": 89.28125
+      },
+      {
+        "name": "footerLeft",
+        "text": "Noise / Light / Motion",
+        "fontSize": "24.8px",
+        "x": 120,
+        "y": 664,
+        "width": 384,
+        "height": 40
+      },
+      {
+        "name": "footerRight",
+        "text": "Type / 03",
+        "fontSize": "21.66px",
+        "x": 568,
+        "y": 664,
+        "width": 120,
+        "height": 40
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/electromagnetic32.png",
+  "outputBytes": 2728760
+}

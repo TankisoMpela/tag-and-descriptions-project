@@ -1,0 +1,141 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/plakat32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/plakat32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Kaitten-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 47.1,
+  "imageBytes": {
+    "html": 974696,
+    "skia": 151824
+  },
+  "desktopLayout": {
+    "template": "plakat32",
+    "headlineFontSize": "62.0498px",
+    "contrast": 16.17951288737469,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Made To Be Seen",
+        "fontSize": "62.0498px",
+        "x": 39,
+        "y": 30.71875,
+        "width": 631.078125,
+        "height": 115.8125
+      },
+      {
+        "name": "glyphs",
+        "text": "A   O   2   &   ?",
+        "fontSize": "46.6899px",
+        "x": 60.265625,
+        "y": 134.71875,
+        "width": 588.546875,
+        "height": 56.71875
+      },
+      {
+        "name": "note",
+        "text": "501 Glyphs · 9 Weights · Italics",
+        "fontSize": "14.19px",
+        "x": 42.53125,
+        "y": 210.359375,
+        "width": 624,
+        "height": 33.078125
+      },
+      {
+        "name": "railOne",
+        "text": "Thin       Regular       Black",
+        "fontSize": "18.447px",
+        "x": 63.8125,
+        "y": 321.4375,
+        "width": 581.453125,
+        "height": 30.71875
+      },
+      {
+        "name": "railTwo",
+        "text": "Roman       Italic",
+        "fontSize": "17.501px",
+        "x": 63.8125,
+        "y": 368.71875,
+        "width": 581.453125,
+        "height": 28.359375
+      },
+      {
+        "name": "footer",
+        "text": "A Variable Typeface Study",
+        "fontSize": "9px",
+        "x": 262.359375,
+        "y": 434.890625,
+        "width": 184.359375,
+        "height": 21.265625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "plakat32",
+    "headlineFontSize": "30.82px",
+    "contrast": 16.17951288737469,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Made To Be Seen",
+        "fontSize": "30.82px",
+        "x": 19.359375,
+        "y": 15.25,
+        "width": 313.265625,
+        "height": 57.484375
+      },
+      {
+        "name": "glyphs",
+        "text": "A   O   2   &   ?",
+        "fontSize": "22.88px",
+        "x": 29.90625,
+        "y": 66.875,
+        "width": 292.15625,
+        "height": 28.15625
+      },
+      {
+        "name": "note",
+        "text": "501 Glyphs · 9 Weights · Italics",
+        "fontSize": "7.05001px",
+        "x": 21.109375,
+        "y": 104.421875,
+        "width": 309.75,
+        "height": 16.421875
+      },
+      {
+        "name": "railOne",
+        "text": "Thin       Regular       Black",
+        "fontSize": "12px",
+        "x": 31.671875,
+        "y": 159.5625,
+        "width": 288.625,
+        "height": 15.25
+      },
+      {
+        "name": "railTwo",
+        "text": "Roman       Italic",
+        "fontSize": "8.69501px",
+        "x": 31.671875,
+        "y": 183.03125,
+        "width": 288.625,
+        "height": 14.078125
+      },
+      {
+        "name": "footer",
+        "text": "A Variable Typeface Study",
+        "fontSize": "9px",
+        "x": 130.234375,
+        "y": 215.875,
+        "width": 91.515625,
+        "height": 10.546875
+      }
+    ],
+    "contentWarnings": []
+  }
+}

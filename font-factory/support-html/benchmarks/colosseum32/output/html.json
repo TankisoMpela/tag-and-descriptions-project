@@ -1,0 +1,111 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "colosseum32",
+  "source": "T26074_01",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/assets/LilitaOne-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "layoutReport": {
+    "template": "colosseum32",
+    "headlineFontSize": "188px",
+    "contrast": 3.247726782990028,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The source uses saturated scarlet ink for both oversized specimen lettering and small publisher marks."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "colosseum-first-specimen",
+        "text": "colosseum",
+        "fontSize": "164px",
+        "x": 208.6751708984375,
+        "y": 103.4375,
+        "width": 787.430908203125,
+        "height": 162.70721435546875
+      },
+      {
+        "name": "colosseum-second-specimen",
+        "text": "gröngöling",
+        "fontSize": "188px",
+        "x": 206.7567138671875,
+        "y": 287.1875,
+        "width": 790.080322265625,
+        "height": 203.48626708984375
+      },
+      {
+        "name": "colosseum-third-specimen",
+        "text": "antarctica",
+        "fontSize": "160px",
+        "x": 207.92156982421875,
+        "y": 488,
+        "width": 781.1568603515625,
+        "height": 146.2740478515625
+      },
+      {
+        "name": "colosseum-publisher-footer",
+        "text": "NektarA Typeface with Spirit, Personality & Distinctionwww.more-etc.com • @MoreEtcStudiosMORE ETCMSTUDIO",
+        "fontSize": "16px",
+        "x": 318,
+        "y": 685.59375,
+        "width": 564,
+        "height": 67.1875
+      },
+      {
+        "name": "colosseum-nektar-mark",
+        "text": "Nektar",
+        "fontSize": "16px",
+        "x": 316.90826416015625,
+        "y": 702.14208984375,
+        "width": 67.8240966796875,
+        "height": 38.0908203125
+      },
+      {
+        "name": "colosseum-publisher-copy",
+        "text": "A Typeface with Spirit, Personality & Distinctionwww.more-etc.com • @MoreEtcStudios",
+        "fontSize": "16px",
+        "x": 385.671875,
+        "y": 685.59375,
+        "width": 428.625,
+        "height": 67.1875
+      },
+      {
+        "name": "colosseum-publisher-tagline",
+        "text": "A Typeface with Spirit, Personality & Distinction",
+        "fontSize": "17.6px",
+        "x": 414.04876708984375,
+        "y": 703.0625,
+        "width": 371.8712158203125,
+        "height": 17.59375
+      },
+      {
+        "name": "colosseum-publisher-url",
+        "text": "www.more-etc.com • @MoreEtcStudios",
+        "fontSize": "11.2px",
+        "x": 496.59686279296875,
+        "y": 723.484375,
+        "width": 206.7750244140625,
+        "height": 11.203125
+      },
+      {
+        "name": "colosseum-publisher-seal",
+        "text": "MORE ETCMSTUDIO",
+        "fontSize": "16px",
+        "x": 818.453125,
+        "y": 696.671875,
+        "width": 57.515625,
+        "height": 45.015625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/colosseum32/output/html.png",
+  "outputBytes": 3358245
+}

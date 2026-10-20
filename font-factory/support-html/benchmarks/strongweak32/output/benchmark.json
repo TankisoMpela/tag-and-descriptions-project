@@ -1,0 +1,176 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/strongweak32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/strongweak32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 39.7,
+  "imageBytes": {
+    "html": 495170,
+    "skia": 495281
+  },
+  "desktopLayout": {
+    "template": "strongweak32",
+    "headlineFontSize": "132.069px",
+    "contrast": 8.0386071219659,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "scalloped-pink-mat",
+        "text": "",
+        "fontSize": "16px",
+        "x": 17.71875,
+        "y": 11.8125,
+        "width": 673.65625,
+        "height": 449.09375
+      },
+      {
+        "name": "cobalt-specimen-panel",
+        "text": "",
+        "fontSize": "16px",
+        "x": 39,
+        "y": 40.171875,
+        "width": 631.078125,
+        "height": 392.34375
+      },
+      {
+        "name": "strongweak-kicker",
+        "text": "YOUNGTYPE STUDIO",
+        "fontSize": "37.3516px",
+        "x": 159.9609375,
+        "y": 56.71875,
+        "width": 389.171875,
+        "height": 35.46875
+      },
+      {
+        "name": "strongweak-strongest",
+        "text": "STRONGEST",
+        "fontSize": "116.409px",
+        "x": 78.0625,
+        "y": 111.078125,
+        "width": 552.96875,
+        "height": 97.78125
+      },
+      {
+        "name": "strongweak-weakest",
+        "text": "WEAKEST",
+        "fontSize": "132.069px",
+        "x": 78.0390625,
+        "y": 241.078125,
+        "width": 553.015625,
+        "height": 110.921875
+      },
+      {
+        "name": "strongweak-left-sticker",
+        "text": "HAND\nDRAWN",
+        "fontSize": "12.527px",
+        "x": 64.30828857421875,
+        "y": 185.9730224609375,
+        "width": 80.5552978515625,
+        "height": 79.475830078125
+      },
+      {
+        "name": "strongweak-right-sticker",
+        "text": "STROKE\nREGULAR\nOUTLINE",
+        "fontSize": "12.527px",
+        "x": 599.6832885742188,
+        "y": 185.9730224609375,
+        "width": 80.55523681640625,
+        "height": 79.475830078125
+      },
+      {
+        "name": "strongweak-footer",
+        "text": "ORGANIC HAND DRAWN",
+        "fontSize": "39.08px",
+        "x": 108.3515625,
+        "y": 389.984375,
+        "width": 492.390625,
+        "height": 35.9375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "strongweak32",
+    "headlineFontSize": "65.5698px",
+    "contrast": 8.0386071219659,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "scalloped-pink-mat",
+        "text": "",
+        "fontSize": "16px",
+        "x": 8.796875,
+        "y": 5.859375,
+        "width": 334.40625,
+        "height": 222.9375
+      },
+      {
+        "name": "cobalt-specimen-panel",
+        "text": "",
+        "fontSize": "16px",
+        "x": 19.359375,
+        "y": 19.9375,
+        "width": 313.265625,
+        "height": 194.75
+      },
+      {
+        "name": "strongweak-kicker",
+        "text": "YOUNGTYPE STUDIO",
+        "fontSize": "18.5703px",
+        "x": 79.2734375,
+        "y": 28.15625,
+        "width": 193.453125,
+        "height": 17.625
+      },
+      {
+        "name": "strongweak-strongest",
+        "text": "STRONGEST",
+        "fontSize": "57.7998px",
+        "x": 38.7421875,
+        "y": 55.140625,
+        "width": 274.515625,
+        "height": 48.546875
+      },
+      {
+        "name": "strongweak-weakest",
+        "text": "WEAKEST",
+        "fontSize": "65.5698px",
+        "x": 38.7421875,
+        "y": 119.671875,
+        "width": 274.515625,
+        "height": 55.0625
+      },
+      {
+        "name": "strongweak-left-sticker",
+        "text": "HAND\nDRAWN",
+        "fontSize": "6.21839px",
+        "x": 31.92334747314453,
+        "y": 92.31820678710938,
+        "width": 39.98143005371094,
+        "height": 39.441680908203125
+      },
+      {
+        "name": "strongweak-right-sticker",
+        "text": "STROKE\nREGULAR\nOUTLINE",
+        "fontSize": "6.21839px",
+        "x": 297.70458984375,
+        "y": 92.31820678710938,
+        "width": 39.9814453125,
+        "height": 39.441680908203125
+      },
+      {
+        "name": "strongweak-footer",
+        "text": "ORGANIC HAND DRAWN",
+        "fontSize": "22px",
+        "x": 37.34375,
+        "y": 193.578125,
+        "width": 277.3125,
+        "height": 20.234375
+      }
+    ],
+    "contentWarnings": []
+  }
+}

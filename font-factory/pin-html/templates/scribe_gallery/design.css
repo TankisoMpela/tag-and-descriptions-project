@@ -1,0 +1,2 @@
+/* Keep the two phrase lines generous within the right manuscript column. */
+.template--scribe_gallery [data-layout-item^="line"] { letter-spacing:-.03em; }

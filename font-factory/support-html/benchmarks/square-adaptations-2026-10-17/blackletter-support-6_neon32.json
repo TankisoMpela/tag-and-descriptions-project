@@ -1,0 +1,247 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "neon32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "neon32",
+    "headlineFontSize": "172px",
+    "smallestDisplayFontSize": "51.2px",
+    "contrast": 15.77415930493257,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "centre-door-seam",
+        "text": "",
+        "fontSize": "16px",
+        "x": 405.59375,
+        "y": 0,
+        "width": 0.71875,
+        "height": 800
+      },
+      {
+        "name": "photographic-wall-grain",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "film-gate-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 58.796875,
+        "height": 800
+      },
+      {
+        "name": "film-light-left-1",
+        "text": "",
+        "fontSize": "16px",
+        "x": 3.21875,
+        "y": 6.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-left-2",
+        "text": "",
+        "fontSize": "16px",
+        "x": 3.21875,
+        "y": 126.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-left-3",
+        "text": "",
+        "fontSize": "16px",
+        "x": 3.21875,
+        "y": 246.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-left-4",
+        "text": "",
+        "fontSize": "16px",
+        "x": 3.21875,
+        "y": 366.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-left-5",
+        "text": "",
+        "fontSize": "16px",
+        "x": 3.21875,
+        "y": 486.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-left-6",
+        "text": "",
+        "fontSize": "16px",
+        "x": 3.21875,
+        "y": 606.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-left-7",
+        "text": "",
+        "fontSize": "16px",
+        "x": 3.21875,
+        "y": 726.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-rail-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 57.921875,
+        "y": 0,
+        "width": 0.875,
+        "height": 800
+      },
+      {
+        "name": "film-gate-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 741.203125,
+        "y": 0,
+        "width": 58.796875,
+        "height": 800
+      },
+      {
+        "name": "film-light-right-1",
+        "text": "",
+        "fontSize": "16px",
+        "x": 745.015625,
+        "y": 6.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-right-2",
+        "text": "",
+        "fontSize": "16px",
+        "x": 745.015625,
+        "y": 126.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-right-3",
+        "text": "",
+        "fontSize": "16px",
+        "x": 745.015625,
+        "y": 246.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-right-4",
+        "text": "",
+        "fontSize": "16px",
+        "x": 745.015625,
+        "y": 366.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-right-5",
+        "text": "",
+        "fontSize": "16px",
+        "x": 745.015625,
+        "y": 486.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-right-6",
+        "text": "",
+        "fontSize": "16px",
+        "x": 745.015625,
+        "y": 606.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-light-right-7",
+        "text": "",
+        "fontSize": "16px",
+        "x": 745.015625,
+        "y": 726.390625,
+        "width": 51.734375,
+        "height": 65.1875
+      },
+      {
+        "name": "film-rail-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 741.203125,
+        "y": 0,
+        "width": 0.875,
+        "height": 800
+      },
+      {
+        "name": "lit-marquee-copy",
+        "text": "La DolceMarea",
+        "fontSize": "16px",
+        "x": 116,
+        "y": 148,
+        "width": 568,
+        "height": 438.390625
+      },
+      {
+        "name": "marquee-line-1",
+        "text": "La Dolce",
+        "fontSize": "165.63px",
+        "x": 116,
+        "y": 179.46875,
+        "width": 568.21875,
+        "height": 149.0625
+      },
+      {
+        "name": "marquee-line-2",
+        "text": "Marea",
+        "fontSize": "172px",
+        "x": 166.8125,
+        "y": 402.984375,
+        "width": 466.59375,
+        "height": 154.796875
+      },
+      {
+        "name": "coming-soon-line",
+        "text": "Coming Soon",
+        "fontSize": "51.2px",
+        "x": 220,
+        "y": 616.796875,
+        "width": 360,
+        "height": 64
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-support-6_neon32.png",
+  "outputBytes": 2330684
+}

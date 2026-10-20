@@ -1,0 +1,57 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "silentstack32",
+  "source": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-references/blackletter-references/T28036_01.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "silentstack32",
+    "headlineFontSize": "200.807px",
+    "smallestDisplayFontSize": "200.807px",
+    "contrast": 14.390607790640034,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "In A Quiet",
+        "fontSize": "200.807px",
+        "x": 246.59375,
+        "y": 127.640625,
+        "width": 706.8125,
+        "height": 180.71875
+      },
+      {
+        "name": "line2",
+        "text": "Silent Hour",
+        "fontSize": "200.807px",
+        "x": 181.328125,
+        "y": 311.640625,
+        "width": 837.328125,
+        "height": 180.71875
+      },
+      {
+        "name": "descriptor",
+        "text": "New Poems",
+        "fontSize": "200.807px",
+        "x": 155.03125,
+        "y": 501.640625,
+        "width": 889.9375,
+        "height": 180.71875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/silentstack32.png",
+  "outputBytes": 844891
+}

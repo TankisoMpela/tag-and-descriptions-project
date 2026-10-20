@@ -1,0 +1,46 @@
+FONT THUMBNAIL — MAIN 1:1
+
+INPUTS
+- White-background font-name specimen: [ATTACH `prepared_visuals/1x1/thumbnail_main.png`]
+- Exact font name: [ENTER THE FINAL FONT NAME]
+- Approved style descriptor: [ENTER THE TITLE-CASE DESCRIPTOR]
+- Complete 1:1 prompt from `visual-direction/theme.txt`:
+  [PASTE the `thumbnail_main_1x1` section]
+- Output filename: `thumbnail_main.png`
+
+Create one finished square thumbnail. Use the white-background specimen as the
+letterform source: preserve the exact spelling, supplied capitalization,
+distinctive glyph shapes, and spacing. Remove its white field and build the
+image around the supplied lettering. Follow this square-specific prompt for the
+subject, composition, medium, color, texture, lighting, and effects. Recompose
+for a square canvas; do not stretch, pad, or mechanically crop the landscape
+image.
+
+Use the exact font name and approved descriptor as the only visible copy. Keep
+the name dominant, the descriptor secondary but readable, and both fully inside
+the frame. Make the lettering stand apart from the background through clear
+value contrast. Do not add generic props, unrelated effects, fake claims, or
+accidental extra text.
+
+Follow the font-specific composition in the prompt. Keep the name and descriptor
+as flat, front-facing overlays, separate from any photographed or rendered
+surface. Keep any person secondary with the face cropped out or soft in the
+background. Avoid generic glossy luxury still lifes and use only details that
+explain the one visual premise. Do not reuse the oversized initial with orbit
+rings, split blue/berry descriptor panel, or arch/portal title frame. Preserve
+useful negative space, but use a quiet, relevant paper/ink/print texture or
+faint illustration when a flat field would otherwise feel sterile.
+Do not default to warm, hazy photography with a large staged object or face on
+one side and open title space opposite it. Use that arrangement only when the
+subject is specific to this font and the overall composition feels balanced.
+No glitter, sparkles, starbursts, confetti, floating particles, fake lens flare,
+arbitrary badges, gratuitous glow, excessive texture, or generic AI decoration.
+
+Generate one image and inspect it at small preview size. Check the prompt,
+spelling, capitalization, letterform fidelity, crop, contrast, and readability.
+
+COMPLETE — save as `prepared_visuals/1x1/thumbnail_main.png`
+Font name: [EXACT FONT NAME]
+Prompt fidelity: [PASS / ISSUE]
+Lettering: [PASS / ISSUE]
+Visible problem: [SHORT NOTE]

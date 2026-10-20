@@ -1,0 +1,104 @@
+@font-face {
+  font-family: MountainLabel;
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+}
+
+#artboard {
+  --mountain-ground: #1b1b1b;
+  --mountain-paper: #f4efe0;
+  --mountain-rule: #e5decc;
+  --mountain-rule-opacity: .72;
+  --mountain-art-scale: 1;
+  --mountain-word-scale: 1;
+  --mountain-number-scale: 1;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--mountain-ground);
+  color: var(--mountain-paper);
+}
+
+.mountain-illustration,
+.mountain-row,
+.mountain-number,
+.mountain-word,
+.mountain-rule {
+  position: absolute;
+}
+
+.mountain-illustration {
+  left: 5.2%;
+  top: 8%;
+  width: 30%;
+  height: 81%;
+  display: grid;
+  place-items: center;
+  transform: scale(var(--mountain-art-scale));
+  transform-origin: center;
+}
+
+.mountain-illustration img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mountain-row {
+  left: 39%;
+  right: 4.4%;
+  height: 10.5%;
+}
+
+.mountain-number,
+.mountain-word {
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.mountain-number {
+  width: 4.2%;
+  color: var(--mountain-paper);
+  font-family: var(--label-face, MountainLabel, sans-serif);
+  font-size: 2.875cqh;
+  font-weight: 300;
+  letter-spacing: .03em;
+  line-height: 1;
+  transform: scale(var(--mountain-number-scale));
+  transform-origin: left center;
+}
+
+.mountain-word {
+  overflow: visible;
+  color: var(--mountain-paper);
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 15.5cqh;
+  font-weight: 400;
+  line-height: .88;
+  letter-spacing: -.015em;
+  transform: scaleX(var(--mountain-word-scale));
+  transform-origin: left center;
+}
+
+.mountain-rule {
+  left: 0;
+  right: 0;
+  bottom: -6.3%;
+  height: max(1px, .13cqw);
+  background: color-mix(in srgb, var(--mountain-rule) calc(var(--mountain-rule-opacity) * 100%), transparent);
+}
+
+@media (max-width: 680px) {
+  .mountain-illustration { left: 4.5%; width: 29%; }
+  .mountain-row { left: 36%; right: 3%; }
+  .mountain-number { width: 5%; }
+}

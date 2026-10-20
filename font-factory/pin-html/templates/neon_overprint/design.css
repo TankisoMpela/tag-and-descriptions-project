@@ -1,0 +1,2 @@
+/* Editable geometry and copy slots are authored in shared/pin-studio.js. */
+.template--neon_overprint [data-layout-item="word"] { transform:none; text-shadow:3px 3px 0 var(--accent),-2px -1px 0 var(--paper); }

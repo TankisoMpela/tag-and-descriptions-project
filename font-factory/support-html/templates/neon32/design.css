@@ -1,0 +1,131 @@
+#artboard {
+  --neon-wall: #25160f;
+  --neon-tube: #fff2d7;
+  --neon-glow: #ffae5e;
+  --neon-gate: #f6e8cf;
+  --neon-glow-strength: .78;
+  --neon-gate-strength: .82;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--neon-tube);
+  background-color: var(--neon-wall);
+  background-image:
+    radial-gradient(ellipse 41% 57% at 51% 43%, color-mix(in srgb, var(--neon-glow) 19%, transparent), transparent 100%),
+    radial-gradient(ellipse 60% 94% at 49% 52%, rgb(94 51 30 / 16%), transparent 77%),
+    linear-gradient(90deg, rgb(0 0 0 / 38%), transparent 13%, transparent 49.9%, rgb(0 0 0 / 9%) 50.4%, transparent 51%, transparent 87%, rgb(0 0 0 / 34%));
+  box-shadow: inset 0 0 8cqw 1.8cqw rgb(0 0 0 / 52%);
+}
+.wall-fold, .wall-grain, .film-strip, .film-slot, .film-rail, .marquee-stage,
+.marquee-line, .coming-soon {
+  position: absolute;
+}
+.wall-fold {
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 50.7%;
+  width: .09%;
+  background: linear-gradient(90deg, rgb(11 7 5 / 42%), rgb(255 221 179 / 11%), rgb(5 4 3 / 35%));
+  opacity: .48;
+}
+.wall-grain {
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .18;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+.wall-grain svg { display: block; width: 100%; height: 100%; }
+.film-strip {
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  width: 7.35%;
+  background: linear-gradient(90deg, #0b0807 0%, #21150f 12%, #100b08 27%, #180f0b 50%, #100b08 75%, #0a0706 100%);
+}
+.film-strip-left { left: 0; }
+.film-strip-right { right: 0; }
+.film-rail {
+  top: 0;
+  bottom: 0;
+  width: 1.5%;
+  background: linear-gradient(90deg, rgb(0 0 0 / 76%), rgb(112 75 51 / 28%), rgb(0 0 0 / 80%));
+  opacity: .8;
+}
+.film-strip-left .film-rail { right: 0; }
+.film-strip-right .film-rail { left: 0; }
+.film-slot {
+  left: 5.5%;
+  width: 88%;
+  height: 8.15%;
+  border: .32cqw solid rgb(28 18 13 / 75%);
+  border-radius: .6cqw;
+  background: var(--neon-gate);
+  opacity: var(--neon-gate-strength);
+  box-shadow:
+    inset 0 0 .55cqw rgb(255 250 234 / 92%),
+    0 0 .8cqw color-mix(in srgb, var(--neon-gate) 48%, transparent),
+    0 0 2.3cqw color-mix(in srgb, var(--neon-glow) 45%, transparent);
+}
+.film-strip-right .film-slot { left: 6.5%; }
+.marquee-stage {
+  z-index: 3;
+  left: 14.5%;
+  top: 18.5%;
+  width: 71%;
+  height: 54.8%;
+  display: grid;
+  align-content: stretch;
+  justify-items: stretch;
+  overflow: visible;
+}
+.marquee-line {
+  position: relative;
+  display: inline-block;
+  justify-self: center;
+  align-self: center;
+  width: max-content;
+  max-width: 100%;
+  overflow: visible;
+  color: var(--neon-tube);
+  font-family: var(--display-face, "URW Chancery L", "Brush Script MT", cursive);
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: .9;
+  white-space: nowrap;
+  text-align: center;
+  /* The source is a photographed lit tube: the no-offset bloom describes the
+     emitted light around the glass, not UI elevation or decorative shadow. */
+  text-shadow:
+    0 0 calc(.35cqw * var(--neon-glow-strength)) var(--neon-tube),
+    0 0 calc(1.05cqw * var(--neon-glow-strength)) color-mix(in srgb, var(--neon-tube) 85%, var(--neon-glow)),
+    0 0 calc(2.4cqw * var(--neon-glow-strength)) color-mix(in srgb, var(--neon-glow) 82%, transparent),
+    0 0 calc(5.7cqw * var(--neon-glow-strength)) color-mix(in srgb, var(--neon-glow) 40%, transparent);
+}
+.coming-soon {
+  z-index: 3;
+  left: 50%;
+  top: 77.1%;
+  width: 45%;
+  height: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  color: var(--neon-tube);
+  font-family: var(--display-face, "URW Chancery L", "Brush Script MT", cursive);
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: .95;
+  white-space: nowrap;
+  text-shadow:
+    0 0 calc(.25cqw * var(--neon-glow-strength)) var(--neon-tube),
+    0 0 calc(.8cqw * var(--neon-glow-strength)) color-mix(in srgb, var(--neon-tube) 80%, var(--neon-glow)),
+    0 0 calc(2.6cqw * var(--neon-glow-strength)) color-mix(in srgb, var(--neon-glow) 65%, transparent);
+  transform: translateX(-50%);
+}

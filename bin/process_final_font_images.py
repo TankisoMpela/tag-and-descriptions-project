@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -29,7 +30,7 @@ from typing import Iterable, NoReturn
 
 from PIL import Image
 
-from compose_pinterest import select_variant_images
+from compose_pinterest import select_thumbnail_panel_images
 
 
 IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp", ".avif", ".tif", ".tiff"}
@@ -41,9 +42,10 @@ SQUARE_THUMB_MARKERS = ("thumb", "square", "1x1", "1:1", "1-1", "1_1")
 PINTEREST_MAX_BYTES = 200_000
 PINTEREST_WIDTH = 1000
 PINTEREST_HEIGHT = 1500
-# letterbox-v2: every panel image is fitted whole onto white (equal margins),
-# replacing the v1 stack-and-centre-crop that sliced the top and bottom images.
-PINTEREST_COMPOSITOR_VERSION = "letterbox-v2"
+# letterbox-v3: every image is fitted whole on white, with the thumbnail first
+# or in the centre and two randomly selected 3:2 supports around it.
+PINTEREST_COMPOSITOR_VERSION = "letterbox-v3"
+PINTEREST_ADDITIONAL_COUNT = 10
 # Pinterest panels are photo composites. A full-colour JPEG at q95 is ~half the
 # size of the palette-quantised PNG the PNG cap forces, and looks far better, so
 # JPEG is the default deliverable and PNG stays available for flat art.
@@ -100,6 +102,52 @@ def direct_images(source_dir: Path) -> list[Path]:
         for path in source_dir.iterdir()
         if path.is_file() and path.suffix.lower() in IMAGE_SUFFIXES
     )
+
+
+def required_template_pins(pinterest_dir: Path) -> dict[int, Path]:
+    """Load and validate every font-specific template pin made by Agent 27."""
+    manifest_path = pinterest_dir / "pinterest-template-manifest.json"
+    if not manifest_path.is_file():
+        fail(f"missing HTML/CSS Pinterest template manifest: {manifest_path}; run Agent 27 and /font-prep first")
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        fail(f"invalid Pinterest template manifest {manifest_path}: {error}")
+    rows = manifest.get("images")
+    count = manifest.get("template_count")
+    if manifest.get("kind") != "font-template-pinterest-pins" or not isinstance(count, int) or count < 1 or not isinstance(rows, list) or len(rows) != count:
+        fail("Pinterest template manifest must describe a non-empty, contiguous set of generated pins")
+    found: dict[int, Path] = {}
+    for index, row in enumerate(rows, start=1):
+        if not isinstance(row, dict) or row.get("index") != index:
+            fail("Pinterest template manifest indexes must be contiguous starting at 1")
+        filename = row.get("file")
+        if not isinstance(filename, str) or Path(filename).name != filename or not re.fullmatch(r"pinterest_\d+\.(?:png|jpe?g)", filename, re.IGNORECASE):
+            fail(f"invalid Pinterest template filename at index {index}: {filename!r}")
+        path = pinterest_dir / filename
+        if not path.is_file():
+            fail(f"missing template Pinterest pin {path}")
+        if path.stat().st_size > PINTEREST_MAX_BYTES:
+            fail(f"template Pinterest pin {path.name} exceeds {PINTEREST_MAX_BYTES} bytes")
+        try:
+            with Image.open(path) as image:
+                image.load()
+                if image.size != (PINTEREST_WIDTH, PINTEREST_HEIGHT):
+                    fail(f"template Pinterest pin {path.name} is {image.width}x{image.height}, "
+                         f"expected {PINTEREST_WIDTH}x{PINTEREST_HEIGHT}")
+        except Exception as error:
+            fail(f"template Pinterest pin {path.name} cannot be decoded: {error}")
+        if row.get("width") != PINTEREST_WIDTH or row.get("height") != PINTEREST_HEIGHT:
+            fail(f"template Pinterest manifest dimensions are invalid for {path.name}")
+        if row.get("bytes") != path.stat().st_size or row.get("sha256") != sha256(path):
+            fail(f"template Pinterest pin does not match its manifest: {path.name}")
+        found[index] = path
+    actual = sorted(path.name for path in pinterest_dir.glob("pinterest_*")
+                    if path.is_file() and re.fullmatch(r"pinterest_\d+\.(?:png|jpe?g)", path.name, re.IGNORECASE))
+    expected = sorted(path.name for path in found.values())
+    if actual != expected:
+        fail(f"Pinterest folder must contain exactly the manifest's {count} template pins before composition")
+    return found
 
 
 def inspect_ratio(path: Path, label: str) -> tuple[int, int, float]:
@@ -314,22 +362,83 @@ def encode_pinterest_jpeg(png: Path) -> tuple[Path, int]:
     fail(f"could not encode {png.name} as JPEG within {PINTEREST_MAX_BYTES} bytes")
 
 
-def pinterest_output_paths(pinterest_dir: Path, variants: int) -> list[Path]:
+def pinterest_output_paths(pinterest_dir: Path, variants: int,
+                           start_index: int) -> list[Path]:
     """The compositor's working PNGs."""
-    return [pinterest_dir / f"pinterest_{index}.png" for index in range(1, variants + 1)]
+    return [pinterest_dir / f"pinterest_{index}.png"
+            for index in range(start_index, start_index + variants)]
 
 
-def pinterest_delivery_paths(pinterest_dir: Path, variants: int, fmt: str) -> list[Path]:
+def pinterest_delivery_paths(pinterest_dir: Path, variants: int, fmt: str,
+                             start_index: int) -> list[Path]:
     """The files a seller actually receives, in the requested format."""
     suffix = ".jpg" if fmt == "jpeg" else ".png"
-    return [pinterest_dir / f"pinterest_{index}{suffix}" for index in range(1, variants + 1)]
+    return [pinterest_dir / f"pinterest_{index}{suffix}"
+            for index in range(start_index, start_index + variants)]
 
 
-def pinterest_outputs_status(pinterest_dir: Path, variants: int, fmt: str = "jpeg") -> tuple[bool, str]:
+def write_pinterest_set_manifest(
+    pinterest_dir: Path,
+    template_pin_paths: dict[int, Path],
+    variants: int,
+    fmt: str,
+    start_index: int,
+) -> Path:
+    template_manifest = json.loads(
+        (pinterest_dir / "pinterest-template-manifest.json").read_text(encoding="utf-8"))
+    template_rows = {row["index"]: row for row in template_manifest["images"]}
+    rows: list[dict[str, object]] = []
+    for index, path in sorted(template_pin_paths.items()):
+        with Image.open(path) as image:
+            width, height = image.size
+        rows.append({
+            "index": index,
+            "kind": "template",
+            "template": template_rows[index]["template"],
+            "file": path.name,
+            "width": width,
+            "height": height,
+            "bytes": path.stat().st_size,
+            "sha256": sha256(path),
+        })
+    for path in pinterest_delivery_paths(pinterest_dir, variants, fmt, start_index):
+        match = re.fullmatch(r"pinterest_(\d+)\.(?:png|jpe?g)", path.name, re.IGNORECASE)
+        if not match:
+            fail(f"unexpected Pinterest composite filename: {path.name}")
+        with Image.open(path) as image:
+            width, height = image.size
+        rows.append({
+            "index": int(match.group(1)),
+            "kind": "composite",
+            "template": None,
+            "file": path.name,
+            "width": width,
+            "height": height,
+            "bytes": path.stat().st_size,
+            "sha256": sha256(path),
+        })
+    manifest = {
+        "schema": 1,
+        "kind": "font-pinterest-pin-set",
+        "font_name": template_manifest.get("font_name"),
+        "template_count": len(template_pin_paths),
+        "composite_count": variants,
+        "image_count": len(rows),
+        "first_composite_index": start_index,
+        "last_composite_index": start_index + variants - 1,
+        "images": rows,
+    }
+    path = pinterest_dir / "pinterest-set-manifest.json"
+    path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return path
+
+
+def pinterest_outputs_status(pinterest_dir: Path, variants: int, fmt: str = "jpeg",
+                             start_index: int = 1) -> tuple[bool, str]:
     """Check the exact Pinterest delivery contract without opening source files."""
 
     expected_format = "JPEG" if fmt == "jpeg" else "PNG"
-    for path in pinterest_delivery_paths(pinterest_dir, variants, fmt):
+    for path in pinterest_delivery_paths(pinterest_dir, variants, fmt, start_index):
         if not path.is_file():
             return False, f"missing {path.name}"
         if path.stat().st_size > PINTEREST_MAX_BYTES:
@@ -357,21 +466,24 @@ def pinterest_fingerprint(
     count: int,
     seed: int,
     jpeg_companions: bool,
+    start_index: int,
+    template_pin_hashes: dict[int, str],
 ) -> dict[str, object]:
     canonical_pool = [Path(canonical) for _, canonical in main_rows]
     selected_inputs: list[dict[str, object]] = []
-    seen: set[tuple[str, ...]] = set()
+    seen_pairs: set[frozenset[str]] = set()
     for variant in range(1, variants + 1):
-        selected = select_variant_images(canonical_pool, variant, count, seed, seen)
-        seen.add(tuple(image.name for image in selected))
+        selected, layout = select_thumbnail_panel_images(
+            canonical_pool, variant, seed, seen_pairs=seen_pairs)
         selected_inputs.append({
-            "variant": variant,
+            "output_index": start_index + variant - 1,
+            "layout": layout,
             "inputs": [image.name for image in selected],
         })
 
     return {
         "schema": 1,
-        "compositor": f"bin/compose_pinterest.py:{PINTEREST_COMPOSITOR_VERSION}",
+        "compositor": f"bin/compose_pinterest.py:{PINTEREST_COMPOSITOR_VERSION}+thumbnail-top-middle",
         "font_name": font_name,
         "mode": "normal",
         "source_pool": [
@@ -383,11 +495,15 @@ def pinterest_fingerprint(
             for source, canonical in main_rows
         ],
         "variants": variants,
+        "template_pin_count": len(template_pin_hashes),
+        "template_pin_sha256": {str(index): digest for index, digest in sorted(template_pin_hashes.items())},
         "panel_count": count,
+        "start_index": start_index,
         "seed": seed,
         "width": PINTEREST_WIDTH,
         "height": PINTEREST_HEIGHT,
-        "output_filenames": [f"pinterest_{index}.png" for index in range(1, variants + 1)],
+        "output_filenames": [f"pinterest_{index}.png"
+                              for index in range(start_index, start_index + variants)],
         "selected_inputs": selected_inputs,
         "jpeg_companions": jpeg_companions,
         "max_bytes": PINTEREST_MAX_BYTES,
@@ -413,8 +529,10 @@ def pinterest_cache_hit(
     fingerprint: dict[str, object],
     variants: int,
     fmt: str = "jpeg",
+    start_index: int = 1,
 ) -> tuple[bool, str]:
-    outputs_valid, output_reason = pinterest_outputs_status(pinterest_dir, variants, fmt)
+    outputs_valid, output_reason = pinterest_outputs_status(
+        pinterest_dir, variants, fmt, start_index)
     if not outputs_valid:
         return False, output_reason
     recorded = read_pinterest_fingerprint(manifest_path)
@@ -463,6 +581,8 @@ def write_manifest(
     pinterest_fingerprint_data: dict[str, object] | None,
     pinterest_compression: dict[str, str],
     pinterest_variants: int,
+    pinterest_start_index: int,
+    template_pin_paths: dict[int, Path],
     pinterest_jpeg_companions: bool,
     pinterest_format: str = "jpeg",
 ) -> None:
@@ -534,36 +654,62 @@ def write_manifest(
 
     lines.extend(["", "## Pinterest delivery", ""])
     if not pinterest_enabled:
-        lines.append("No panels composed: the five designed Pinterest pins come from "
-                     "`/font-prep` (Agent 13), not from this pass.")
+        lines.append("No image panels composed because Pinterest generation was explicitly skipped.")
     else:
+        template_count = len(template_pin_paths)
+        composite_end = pinterest_start_index + pinterest_variants - 1
         lines.extend([
             (
-                "Pinterest outputs were already valid; the composition cache was reused."
+                f"The {pinterest_variants} composite panels (pins {pinterest_start_index}–{composite_end}) "
+                f"were already valid; the composition cache was reused. All {template_count} template pins "
+                f"(pins 1–{template_count}) remain unchanged."
                 if pinterest_status == "already-valid"
                 else (
-                    f"{pinterest_variants} variants were composed with the letterbox compositor "
-                    f"from the canonical 3:2 source pool (every image fitted whole onto white; "
-                    f"panels never crop artwork) and delivered as "
+                    f"{pinterest_variants} additional variants (pins {pinterest_start_index}–"
+                    f"{pinterest_start_index + pinterest_variants - 1}) were composed from the "
+                    f"canonical 3:2 source pool. The first five put `thumbnail_main` at the top; "
+                    f"the next five put it in the middle. Supporting images are randomly selected "
+                    f"without replacement for each panel. Every image is fitted whole onto white; "
+                    f"panels never crop artwork. The {template_count} template pins at indexes "
+                    f"1–{template_count}, generated by Agent 27 and installed by `/font-prep`, were preserved. "
+                    f"The ten added panels were delivered as "
                     f"{pinterest_format.upper()} at 1000x1500 within the "
                     f"{PINTEREST_MAX_BYTES}-byte limit. No square image was used as a "
                     "Pinterest source."
                     if pinterest_format == "jpeg"
-                    else f"{pinterest_variants} variants were composed with the letterbox compositor "
-                         "from the canonical 3:2 source pool (every image fitted whole onto white; "
-                         "panels never crop artwork). Each PNG was checked "
+                    else f"{pinterest_variants} additional variants (pins {pinterest_start_index}–"
+                         f"{pinterest_start_index + pinterest_variants - 1}) were composed from the "
+                         "canonical 3:2 source pool with the thumbnail at the top in the first five "
+                         "and in the middle in the next five. Supporting images are randomly "
+                         "selected without replacement. Every image is fitted whole onto white; "
+                         f"template pins 1–{template_count} were preserved. Each PNG was checked "
                          f"against the {PINTEREST_MAX_BYTES}-byte limit; compression is lossless "
                          "first, with pngquant only if no lossless encoding fits."
                 )
             ),
             f"- **Pinterest status:** {pinterest_status or 'composed'}",
+            f"- **Pinterest set:** {template_count} preserved template pins plus "
+            f"{pinterest_variants} generated panels ({template_count + pinterest_variants} total)",
             f"- **Pinterest delivery format:** {pinterest_format.upper()}"
             + (" (full 24-bit colour; no palette quantisation)" if pinterest_format == "jpeg" else ""),
             "",
             "| Output | Dimensions | Format | Bytes | Method |",
             "|---|---:|---|---:|---|",
         ])
-        for delivery in pinterest_delivery_paths(output_dir / "pinterest", pinterest_variants, pinterest_format):
+        for index, source in sorted(template_pin_paths.items()):
+            with Image.open(source) as image:
+                dimensions = f"{image.width}×{image.height}"
+                image_format = image.format or source.suffix.lstrip(".").upper()
+            lines.append(markdown_table_row([
+                f"`pinterest/{source.name}` (preserved template pin {index})",
+                dimensions,
+                image_format,
+                str(source.stat().st_size),
+                f"preserved; SHA-256 {sha256(source)}",
+            ]).rstrip("\n"))
+        for delivery in pinterest_delivery_paths(
+                output_dir / "pinterest", pinterest_variants, pinterest_format,
+                pinterest_start_index):
             with Image.open(delivery) as image:
                 dimensions = f"{image.width}×{image.height}"
                 image_format = image.format or pinterest_format.upper()
@@ -597,9 +743,15 @@ def write_manifest(
         "",
         "- Use `main/` for 3:2 marketplace delivery JPEGs.",
         "- Use `squares/` for 1:1 marketplace delivery JPEGs (supplied files plus any white-padded derivatives).",
-        "- Use `pinterest/` for the 2:3 Pinterest panels (JPEG by default).",
-        "- This post-workflow processor does not package fonts, render videos, rewrite metadata, or alter the original raw images.",
     ])
+    if pinterest_enabled:
+        lines.extend([
+            f"- Use `pinterest/` for the {len(template_pin_paths)} template pins and {pinterest_variants} added 2:3 image panels (pins 1–{len(template_pin_paths) + pinterest_variants}).",
+            "- `pinterest/pinterest-set-manifest.json` lists every pin, index, size, and checksum for the Pinterest preparer.",
+        ])
+    else:
+        lines.append("- Pinterest composites were explicitly skipped.")
+    lines.append("- This post-workflow processor does not package fonts, render videos, rewrite metadata, or alter the original raw images.")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -628,8 +780,11 @@ def main() -> int:
                         help="Optional explicit 1:1 promo order; repeat once per raw file")
     parser.add_argument("--output-dir", type=Path, default=None,
                         help="Output root; defaults to source_dir, with main/squares/pinterest beneath it")
-    parser.add_argument("--pinterest-variants", type=int, default=4)
+    parser.add_argument("--pinterest-variants", type=int, default=PINTEREST_ADDITIONAL_COUNT,
+                        help="number of additional Pinterest panels (the contract is 10)")
     parser.add_argument("--pinterest-count", type=int, default=3)
+    parser.add_argument("--pinterest-start-index", type=int, default=None,
+                        help="optional explicit first composite index; by default follows every template pin in its manifest")
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument(
         "--pinterest-jpeg-companions",
@@ -637,9 +792,9 @@ def main() -> int:
         help="Explicitly ask the Pinterest compositor for JPEG companions; omitted by default",
     )
     parser.add_argument("--pinterest", action="store_true",
-                        help="Compose letterbox panels into <out>/pinterest/. Off by "
-                             "default: Agent 13 designs the five real pins into that "
-                             "folder and these would overwrite them")
+                        help="compatibility flag; Pinterest panels are now generated by default")
+    parser.add_argument("--skip-pinterest", action="store_true",
+                        help="skip the ten additional image-composite Pinterest panels")
     parser.add_argument("--pinterest-format", choices=("jpeg", "png"), default="jpeg",
                         help="Pinterest deliverable format; JPEG keeps full colour at "
                              "roughly half the bytes of a palette-quantised PNG")
@@ -648,6 +803,7 @@ def main() -> int:
     parser.add_argument("--max-dim", type=int, default=None,
                         help="Downscale images so longest edge matches this pixel count")
     args = parser.parse_args()
+    pinterest_enabled = not args.skip_pinterest
 
     source_dir = args.source_dir.expanduser().resolve()
     if not source_dir.is_dir():
@@ -668,6 +824,13 @@ def main() -> int:
     main_dir = output_dir / "main"
     square_dir = output_dir / "squares"
     pinterest_dir = output_dir / "pinterest"
+    template_pin_paths = required_template_pins(pinterest_dir) if pinterest_enabled else {}
+    expected_pinterest_start = len(template_pin_paths) + 1
+    if args.pinterest_start_index is not None and args.pinterest_start_index != expected_pinterest_start:
+        fail(f"the ten added panels must begin at pinterest_{expected_pinterest_start}, after all template pins described by pinterest-template-manifest.json")
+    args.pinterest_start_index = expected_pinterest_start
+    template_pin_hashes = {index: sha256(path)
+                           for index, path in template_pin_paths.items()}
     padded_from: dict[Path, Path] = {}
 
     if args.auto_order:
@@ -771,11 +934,11 @@ def main() -> int:
     pinterest_compression: dict[str, str] = {}
     compose_log: str | None = None
 
-    if args.pinterest:
-        if args.pinterest_variants < 1:
-            fail("--pinterest-variants must be at least 1")
-        if args.pinterest_count < 1:
-            fail("--pinterest-count must be at least 1")
+    if pinterest_enabled:
+        if args.pinterest_variants != PINTEREST_ADDITIONAL_COUNT:
+            fail(f"the Pinterest workflow creates exactly {PINTEREST_ADDITIONAL_COUNT} additional panels")
+        if args.pinterest_count != 3:
+            fail("the thumbnail-top-middle Pinterest layout requires exactly three images per panel")
         pinterest_fingerprint_data = pinterest_fingerprint(
             font_name=args.font_name,
             main_rows=main_rows,
@@ -783,6 +946,8 @@ def main() -> int:
             count=args.pinterest_count,
             seed=args.seed,
             jpeg_companions=args.pinterest_jpeg_companions,
+            start_index=args.pinterest_start_index,
+            template_pin_hashes=template_pin_hashes,
         )
         pinterest_cache_hit_flag, cache_reason = pinterest_cache_hit(
             pinterest_dir,
@@ -790,11 +955,13 @@ def main() -> int:
             pinterest_fingerprint_data,
             args.pinterest_variants,
             args.pinterest_format,
+            args.pinterest_start_index,
         )
         if pinterest_cache_hit_flag:
             pinterest_status = "already-valid"
             for delivery in pinterest_delivery_paths(
-                pinterest_dir, args.pinterest_variants, args.pinterest_format
+                pinterest_dir, args.pinterest_variants, args.pinterest_format,
+                args.pinterest_start_index,
             ):
                 pinterest_compression[delivery.name] = "already valid — not recompressed"
             print(f"Pinterest outputs already valid; skipping recomposition ({cache_reason}).")
@@ -804,9 +971,10 @@ def main() -> int:
         generated_paths.extend((source_32 / canonical, main_dir / Path(canonical).with_suffix(".jpg")))
     for _, canonical in square_rows:
         generated_paths.extend((source_11 / canonical, square_dir / Path(canonical).with_suffix(".jpg")))
-    if args.pinterest and not pinterest_cache_hit_flag:
+    if pinterest_enabled and not pinterest_cache_hit_flag:
         generated_paths.extend(
-            pinterest_delivery_paths(pinterest_dir, args.pinterest_variants, args.pinterest_format)
+            pinterest_delivery_paths(pinterest_dir, args.pinterest_variants,
+                                     args.pinterest_format, args.pinterest_start_index)
         )
     check_destinations([*generated_paths, manifest_path], overwrite=args.overwrite)
 
@@ -838,7 +1006,7 @@ def main() -> int:
 
         if pinterest_cache_hit_flag:
             compose_log = "Pinterest outputs already valid; recomposition was skipped."
-        if args.pinterest and not pinterest_cache_hit_flag:
+        if pinterest_enabled and not pinterest_cache_hit_flag:
             pinterest_status = "composed"
             compose_command = [
                 sys.executable,
@@ -848,12 +1016,15 @@ def main() -> int:
                 "--variants", str(args.pinterest_variants),
                 "--count", str(args.pinterest_count),
                 "--seed", str(args.seed),
+                "--start-index", str(args.pinterest_start_index),
+                "--panel-layout", "thumbnail-top-middle",
                 "--output-dir", str(pinterest_dir),
             ]
             if args.pinterest_jpeg_companions:
                 compose_command.append("--jpeg-companions")
             compose_log = run(compose_command, label="Pinterest composition")
-            for png in pinterest_output_paths(pinterest_dir, args.pinterest_variants):
+            for png in pinterest_output_paths(
+                    pinterest_dir, args.pinterest_variants, args.pinterest_start_index):
                 if not png.is_file():
                     fail(f"Pinterest compositor did not create {png}")
                 if args.pinterest_format == "jpeg":
@@ -888,23 +1059,37 @@ def main() -> int:
     for jpeg in list(main_dir.glob("*.jpg")) + list(square_dir.glob("*.jpg")):
         if jpeg.stat().st_size > JPEG_MAX_BYTES:
             fail(f"JPEG exceeds {JPEG_MAX_BYTES} bytes: {jpeg}")
-    if args.pinterest:
+    if pinterest_enabled:
         # A previous run may have delivered the other format. Leaving both would
-        # leave the seller unsure which file to upload, so drop the other one
-        # whether this run composed panels or reused the cache.
+        # leave the seller unsure which panel file to upload. Preserve indexes
+        # 1–5, which were made earlier by /font-prep.
         stale_suffix = ".png" if args.pinterest_format == "jpeg" else ".jpg"
-        for stale in sorted(pinterest_dir.glob(f"pinterest_*{stale_suffix}")):
-            if stale_suffix == ".jpg" and args.pinterest_jpeg_companions:
-                continue
-            print(f"removed stale {stale.name} (delivery format is {args.pinterest_format})")
-            stale.unlink()
+        for index in range(args.pinterest_start_index,
+                           args.pinterest_start_index + args.pinterest_variants):
+            stale = pinterest_dir / f"pinterest_{index}{stale_suffix}"
+            if stale.exists() and not (stale_suffix == ".jpg" and args.pinterest_jpeg_companions):
+                print(f"removed stale {stale.name} (delivery format is {args.pinterest_format})")
+                stale.unlink()
         pinterest_valid, pinterest_reason = pinterest_outputs_status(
             pinterest_dir,
             args.pinterest_variants,
             args.pinterest_format,
+            args.pinterest_start_index,
         )
         if not pinterest_valid:
             fail(f"Pinterest output validation failed: {pinterest_reason}")
+        for index, path in template_pin_paths.items():
+            if sha256(path) != template_pin_hashes[index]:
+                fail(f"template Pinterest pin was changed during final-image processing: {path}")
+        set_manifest_path = write_pinterest_set_manifest(
+            pinterest_dir,
+            template_pin_paths,
+            args.pinterest_variants,
+            args.pinterest_format,
+            args.pinterest_start_index,
+        )
+        if not set_manifest_path.is_file():
+            fail(f"Pinterest pin-set manifest was not written: {set_manifest_path}")
     write_manifest(
         manifest_path,
         font_name=args.font_name,
@@ -917,11 +1102,13 @@ def main() -> int:
         square_promos=square_promos,
         compose_log=compose_log,
         padded_from=padded_from,
-        pinterest_enabled=args.pinterest,
+        pinterest_enabled=pinterest_enabled,
         pinterest_status=pinterest_status,
         pinterest_fingerprint_data=pinterest_fingerprint_data,
         pinterest_compression=pinterest_compression,
         pinterest_variants=args.pinterest_variants,
+        pinterest_start_index=args.pinterest_start_index,
+        template_pin_paths=template_pin_paths,
         pinterest_format=args.pinterest_format,
         pinterest_jpeg_companions=args.pinterest_jpeg_companions,
     )

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T26074_12 · HTML/CSS layout iteration</title>
+<style>
+@font-face{font-family:"Lilita One";src:url("assets/LilitaOne-Regular.ttf") format("truetype");font-display:block}
+@font-face{font-family:"Noto Condensed";src:url("assets/NotoSans-CondensedExtraBold.ttf") format("truetype");font-display:block}
+:root{color-scheme:dark;font:14px/1.45 system-ui,sans-serif;background:#202126;color:#f0f0ee}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
+aside{background:#141519;border-right:1px solid #34363d;padding:22px 18px;display:flex;flex-direction:column;gap:17px}
+h1{font-size:16px;line-height:1.25;margin:0}
+p{margin:0;color:#b8bac1}
+label{display:grid;gap:6px;color:#e1e2e5}
+input[type=range]{width:100%;accent-color:#d7e814}
+input[type=color]{width:100%;height:34px;border:1px solid #454750;border-radius:5px;background:#202126;padding:3px}
+input[type=file]{width:100%;font-size:12px;color:#b8bac1}
+textarea{width:100%;min-height:66px;resize:vertical;border:1px solid #454750;border-radius:5px;background:#202126;color:#f0f0ee;padding:8px;font:12px/1.4 system-ui,sans-serif}
+fieldset{display:grid;gap:12px;border:1px solid #34363d;border-radius:6px;padding:10px;margin:0}
+legend{font-size:12px;color:#a9abb3;padding:0 5px}
+output,.metric{color:#d7e814;font-variant-numeric:tabular-nums}
+.note{font-size:12px;line-height:1.5;color:#9da0a8}
+main{padding:22px;min-width:0}
+.topline{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}
+.topline h2{font-size:16px;margin:0}
+.topline a{color:#c7d626}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+figure{margin:0;min-width:0}
+figcaption{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:#b7bac1;margin:0 0 8px}
+.sample{width:100%;aspect-ratio:3/2;overflow:hidden;background:#f68bb6;box-shadow:0 12px 35px #0007}
+.sample img{width:100%;height:100%;object-fit:contain;display:block}
+#artboard{position:relative;isolation:isolate;width:100%;aspect-ratio:3/2;overflow:hidden;container-type:inline-size;background:var(--pink,#f68bb6);--hero-size:160;--hero-angle:-7;--hero-y:0}
+.field{position:absolute;left:2.62%;top:4.04%;width:94.76%;height:91.92%;background:var(--lime,#d7e814)}
+.hero{position:absolute;inset:0;color:var(--ink,#302a31);font-family:var(--hero-font,"Lilita One"),sans-serif;font-size:calc(var(--hero-size)*.08446cqw);line-height:1;white-space:nowrap;transform:translateY(calc(var(--hero-y)*.08334cqw)) rotate(calc(var(--hero-angle)*1deg));transform-origin:50% 50%}
+.hero span{position:absolute;line-height:1}
+.hero .line1{left:10.90%;top:18.81%}
+.hero .line2{left:8.78%;top:41.67%}
+.hero .line3{left:17.82%;top:61.62%}
+.small{position:absolute;color:var(--ink,#302a31);font-family:var(--label-font,"Noto Condensed"),sans-serif;font-weight:800;letter-spacing:.013cqw}
+.descriptor{left:9.80%;top:14.27%;width:29%;font-size:1.351cqw;line-height:2.28cqw;white-space:pre-line;transform:rotate(-9deg);transform-origin:9.6cqw 2.28cqw}
+.topmark{position:absolute;left:87.84%;top:14.52%;width:9.63%;height:11.36%;color:var(--pink,#f68bb6)}
+.topmark ellipse{fill:none;stroke:currentColor;stroke-width:5}
+.topmark .arc{fill:none;stroke:currentColor;stroke-width:2}
+.topmark text{fill:currentColor;text-anchor:middle;font-family:"Noto Condensed";font-weight:800}
+.topmark .M{font-family:"Lilita One";font-size:34px}
+.nektar{position:absolute;left:6.93%;top:79.42%;width:15.71%;height:11.62%;border:.42cqw solid var(--pink,#f68bb6);border-radius:50%;color:var(--pink,#f68bb6);display:grid;place-items:center;font:3.29cqw "Lilita One",sans-serif}
+.bodycopy{left:41.30%;top:83.00%;width:51%;font-size:1.27cqw;line-height:2.19cqw;transform:rotate(-7deg);transform-origin:21.9cqw 1.5cqw;white-space:pre-line}
+.grain{position:absolute;z-index:5;inset:0;background:url("assets/grain.jpg") repeat;mix-blend-mode:soft-light;opacity:.90;pointer-events:none}
+@media(max-width:980px){body{grid-template-columns:220px minmax(0,1fr)}main{padding:14px}.compare{grid-template-columns:1fr}}
+@media(max-width:620px){body{display:block}aside{border-right:0;border-bottom:1px solid #34363d}.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside>
+  <h1>T26074_12 · CSS layout bench</h1>
+  <p>Reference and editable rebuild share a 3:2 frame. The lettering and artwork stay as separate HTML/CSS layers.</p>
+  <label>Headline angle <output id="angle-out">−7°</output><input id="angle" type="range" min="-12" max="-2" step="0.1" value="-7"></label>
+  <label>Headline size <output id="size-out">160 px</output><input id="size" type="range" min="140" max="180" step="1" value="160"></label>
+  <label>Headline vertical position <output id="y-out">0 px</output><input id="hy" type="range" min="-20" max="20" step="1" value="0"></label>
+  <fieldset><legend>Live design inputs</legend>
+    <label>Headline, one line per row<textarea id="copy">Got The Radio
+On, I'm Like The
+Roadrunner.</textarea></label>
+    <label>Descriptor<textarea id="descriptor-copy">A Soft Sans Serif With Spirit,
+Personality And Distinction.</textarea></label>
+    <label>Bottom copy<textarea id="body-copy">This Bold And Semi-Condensed Typeface Is Lively And Eye-Catching,
+Ideal For Where And When You Want To Make A Lasting Impression.</textarea></label>
+    <label>Badge copy<input id="badge-copy" value="Nektar"></label>
+    <label>Headline font · load a local TTF/OTF<input id="font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+    <label>Label font · load a local TTF/OTF<input id="label-font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+    <label>Field color<input id="lime" type="color" value="#d7e814"></label>
+    <label>Headline color<input id="ink" type="color" value="#302a31"></label>
+    <label>Accent color<input id="pink" type="color" value="#f68bb6"></label>
+  </fieldset>
+  <p id="status" class="note">Loading local font files…</p>
+  <p class="note">Edit → next painted frame: <span class="metric" id="paint-ms">—</span></p>
+  <p class="note">Move the controls to see the composition update immediately. Use the capture script to export a 2400 × 1600 PNG.</p>
+</aside>
+<main>
+  <div class="topline"><h2>Source-led recreation</h2><a href="../../../support-references/T26074_12.jpg" target="_blank" rel="noreferrer">Open source image</a></div>
+  <section class="compare" aria-label="Reference and rebuild comparison">
+    <figure><figcaption>Original reference</figcaption><div class="sample"><img src="../../../support-references/T26074_12.jpg" alt="Original T26074_12 reference"></div></figure>
+    <figure><figcaption>HTML/CSS rebuild · interactive</figcaption><div id="artboard" aria-label="Editable road-runner poster composition">
+      <div class="field"></div>
+      <div class="hero" id="hero"><span class="line1">Got The Radio</span><span class="line2">On, I'm Like The</span><span class="line3">Roadrunner.</span></div>
+      <div class="descriptor small">A Soft Sans Serif With Spirit,<br>Personality And Distinction.</div>
+      <svg class="topmark" viewBox="0 0 114 90" aria-hidden="true"><ellipse cx="57" cy="45" rx="54" ry="42"/><path class="arc" d="M12 25 Q57 2 102 25 M15 70 Q57 88 99 69"/><text x="57" y="23" font-size="10" letter-spacing="2">Type Study</text><text class="M" x="57" y="56">M</text><text x="57" y="76" font-size="10" letter-spacing="2">Studio</text></svg>
+      <div class="nektar" id="badge">Nektar</div>
+      <div class="bodycopy small">This Bold And Semi-Condensed Typeface Is Lively And Eye-Catching,<br>Ideal For Where And When You Want To Make A Lasting Impression.</div>
+      <div class="grain"></div>
+    </div></figure>
+  </section>
+</main>
+<script src="../../shared/copy-case.js"></script>
+<script>
+const angle=document.querySelector('#angle'),size=document.querySelector('#size'),y=document.querySelector('#hy'),hero=document.querySelector('#hero');
+const caseCopy=value=>typeof value==='string'?window.supportTitleCase(value):value;
+let lineNodes=[...hero.children];
+const defaultPositions=[[10.90,18.81],[8.78,41.67],[17.82,61.62]];
+let pending=0;
+function fitHeadline(){
+ const board=document.querySelector('#artboard'),width=board.clientWidth,requested=Number(size.value)*width/1200;
+ const family=getComputedStyle(hero).fontFamily,ctx=document.createElement('canvas').getContext('2d');
+ ctx.font=requested+'px '+family;
+ const lines=lineNodes.map((el,i)=>{
+  const left=parseFloat(el.style.left || (defaultPositions[i]?.[0] ?? 8.8))/100;
+  const available=width*(.94-left);
+  return available/Math.max(1,ctx.measureText(el.textContent).width);
+ });
+ const scale=Math.min(1,...lines);
+ const fitted=requested*scale;
+ hero.style.fontSize=fitted+'px';
+ document.querySelector('#size-out').textContent=Number(size.value)+' px → '+Math.round(fitted*1200/width)+' px fit';
+}
+function update(){
+ const started=performance.now();
+ hero.style.setProperty('--hero-angle',angle.value);
+ hero.style.setProperty('--hero-size',size.value);
+ hero.style.setProperty('--hero-y',y.value);
+ document.querySelector('#angle-out').textContent=Number(angle.value).toFixed(1)+'°';
+ document.querySelector('#size-out').textContent=size.value+' px';
+ document.querySelector('#y-out').textContent=y.value+' px';
+ const lines=document.querySelector('#copy').value.split(/\r?\n/).slice(0,4);
+ const spans=lineNodes;
+ while(spans.length<lines.length){const span=document.createElement('span');span.className='line'+(spans.length+1);hero.append(span);spans.push(span)}
+ while(spans.length>lines.length)spans.pop().remove();
+ const top0=lines.length===3?18.81:Math.max(12,58-lines.length*12),step=lines.length===3?21.4:Math.min(25,62/Math.max(1,lines.length-1));
+ lines.forEach((text,i)=>{spans[i].textContent=text;spans[i].style.left=(lines.length===3?defaultPositions[i][0]:8.8+(i%2)*3.2)+'%';spans[i].style.top=(lines.length===3?defaultPositions[i][1]:top0+i*step)+'%'});
+ fitHeadline();
+ cancelAnimationFrame(pending);
+ pending=requestAnimationFrame(()=>requestAnimationFrame(()=>{
+   document.querySelector('#paint-ms').textContent=(performance.now()-started).toFixed(1)+' ms';
+ }));
+}
+[angle,size,y,document.querySelector('#copy')].forEach(input=>input.addEventListener('input',update));
+for(const [input,selector] of [['#descriptor-copy','.descriptor'],['#body-copy','.bodycopy']])
+ document.querySelector(input).addEventListener('input',e=>document.querySelector(selector).textContent=e.target.value);
+document.querySelector('#badge-copy').addEventListener('input',e=>document.querySelector('#badge').textContent=e.target.value);
+for(const key of ['lime','ink','pink'])document.querySelector('#'+key).addEventListener('input',e=>document.querySelector('#artboard').style.setProperty('--'+key,e.target.value));
+document.querySelector('#font-file').addEventListener('change',async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ const url=URL.createObjectURL(file),face=new FontFace('Uploaded Headline','url('+url+')');
+ await face.load();document.fonts.add(face);
+ document.querySelector('#artboard').style.setProperty('--hero-font','"Uploaded Headline"');
+ fitHeadline();
+ document.querySelector('#status').textContent=file.name+' loaded as the live headline font.';
+});
+document.querySelector('#label-font-file').addEventListener('change',async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ const url=URL.createObjectURL(file),face=new FontFace('Uploaded Labels','url('+url+')');
+ await face.load();document.fonts.add(face);
+ document.querySelector('#artboard').style.setProperty('--label-font','"Uploaded Labels"');
+ document.querySelector('#status').textContent=file.name+' loaded as the live label font.';
+});
+window.addEventListener('resize',fitHeadline);
+document.fonts.ready.then(()=>{
+ fitHeadline();
+ if(!document.querySelector('#font-file').files.length&&!document.querySelector('#label-font-file').files.length)
+  document.querySelector('#status').textContent='Both local fonts are ready · CSS layers remain live and editable.';
+});
+window.updateLayout=update;
+window.configureTemplate=({headline,descriptor,body,badge,angle,size,y,lime,ink,pink}={})=>{
+ if(typeof headline==='string')document.querySelector('#copy').value=caseCopy(headline);
+ if(typeof descriptor==='string')document.querySelector('#descriptor-copy').value=caseCopy(descriptor);
+ if(typeof body==='string')document.querySelector('#body-copy').value=caseCopy(body);
+ if(typeof badge==='string')document.querySelector('#badge-copy').value=caseCopy(badge);
+ for(const [key,value,id] of [['angle',angle,'angle'],['size',size,'size'],['y',y,'hy'],['lime',lime,'lime'],['ink',ink,'ink'],['pink',pink,'pink']])
+  if(value!==undefined){const input=document.querySelector('#'+id);input.value=value;input.dispatchEvent(new Event('input',{bubbles:true}))}
+ for(const [key,selector] of [['descriptor','.descriptor'],['body','.bodycopy']])
+  if(typeof ({descriptor,body}[key])==='string')document.querySelector(selector).textContent=caseCopy({descriptor,body}[key]);
+ if(typeof badge==='string')document.querySelector('#badge').textContent=caseCopy(badge);
+ update();return window.getLayoutReport();
+};
+window.getLayoutReport=()=>{
+ const board=document.querySelector('#artboard'),frame=board.getBoundingClientRect();
+ const slots=['.hero span','.descriptor','.bodycopy','.topmark','.nektar'].flatMap(selector=>[...board.querySelectorAll(selector)].map(el=>{
+  const r=el.getBoundingClientRect();return {name:selector==='.hero span'?'headline_line':selector.slice(1),text:el.textContent.trim(),x:+(r.left-frame.left).toFixed(1),y:+(r.top-frame.top).toFixed(1),width:+r.width.toFixed(1),height:+r.height.toFixed(1)};
+ }));
+ const luminance=hex=>{const rgb=hex.trim().slice(1).match(/.{2}/g).map(pair=>parseInt(pair,16)/255);const linear=rgb.map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return .2126*linear[0]+.7152*linear[1]+.0722*linear[2]};
+ const ink=getComputedStyle(board).getPropertyValue('--ink').trim()||'#302a31',lime=getComputedStyle(board).getPropertyValue('--lime').trim()||'#d7e814',pair=[luminance(ink),luminance(lime)].sort((a,b)=>b-a);
+ return {frame:{width:frame.width,height:frame.height},headlineFontSize:getComputedStyle(document.querySelector('#hero')).fontSize,descriptorFontSize:getComputedStyle(document.querySelector('.descriptor')).fontSize,bodyFontSize:getComputedStyle(document.querySelector('.bodycopy')).fontSize,badgeFontSize:getComputedStyle(document.querySelector('.nektar')).fontSize,inkOnLimeContrast:+((pair[0]+.05)/(pair[1]+.05)).toFixed(2),slots,outOfBounds:slots.filter(s=>s.x < -1||s.y < -1||s.x+s.width>frame.width+1||s.y+s.height>frame.height+1)};
+};
+update();
+</script>
+</body>
+</html>

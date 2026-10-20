@@ -1,0 +1,75 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "flowerpair32",
+  "source": "font-factory/support-references/blackletter-references/T23026_02.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "flowerpair32",
+    "headlineFontSize": "520px",
+    "smallestDisplayFontSize": "105.884px",
+    "contrast": 15.099969515274957,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Flower\nBloom",
+        "fontSize": "105.884px",
+        "x": 191.84375,
+        "y": 134.359375,
+        "width": 288.296875,
+        "height": 203.28125
+      },
+      {
+        "name": "overline",
+        "text": "Botanical Pairings",
+        "fontSize": "12px",
+        "x": 281.515625,
+        "y": 104,
+        "width": 108.96875,
+        "height": 12
+      },
+      {
+        "name": "line2",
+        "text": "Collaboration With The Type Foundry",
+        "fontSize": "12px",
+        "x": 246.328125,
+        "y": 634,
+        "width": 179.34375,
+        "height": 12
+      },
+      {
+        "name": "headline",
+        "text": "F",
+        "fontSize": "520px",
+        "x": 672,
+        "y": 152,
+        "width": 384,
+        "height": 384
+      },
+      {
+        "name": "descriptor",
+        "text": "Blooming Season",
+        "fontSize": "16px",
+        "x": 806.765625,
+        "y": 660,
+        "width": 114.46875,
+        "height": 16
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/flowerpair32.png",
+  "outputBytes": 1018652
+}

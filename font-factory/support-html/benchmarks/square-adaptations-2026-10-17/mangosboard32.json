@@ -1,0 +1,103 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "mangosboard32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "mangosboard32",
+    "headlineFontSize": "152px",
+    "smallestDisplayFontSize": "32px",
+    "contrast": 16.61538462302415,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "familyThin",
+        "text": "Mangos Thin",
+        "fontSize": "40px",
+        "x": 48,
+        "y": 44,
+        "width": 264,
+        "height": 44
+      },
+      {
+        "name": "familyRegular",
+        "text": "Mangos Regular",
+        "fontSize": "32px",
+        "x": 48,
+        "y": 92,
+        "width": 264,
+        "height": 44
+      },
+      {
+        "name": "familyBlack",
+        "text": "Mangos Black",
+        "fontSize": "36.68px",
+        "x": 48,
+        "y": 140,
+        "width": 264,
+        "height": 44
+      },
+      {
+        "name": "variable",
+        "text": "Variable",
+        "fontSize": "75.96px",
+        "x": 428,
+        "y": 60,
+        "width": 320,
+        "height": 128
+      },
+      {
+        "name": "glyphs",
+        "text": "C€Ω½?†qTTD0123456789",
+        "fontSize": "55.77px",
+        "x": 40,
+        "y": 248,
+        "width": 720,
+        "height": 232
+      },
+      {
+        "name": "tileA",
+        "text": "Aa",
+        "fontSize": "115.52px",
+        "x": 40,
+        "y": 552,
+        "width": 152,
+        "height": 184
+      },
+      {
+        "name": "tileWord",
+        "text": "Mangos",
+        "fontSize": "85px",
+        "x": 216,
+        "y": 552,
+        "width": 336,
+        "height": 184
+      },
+      {
+        "name": "tileAt",
+        "text": "@",
+        "fontSize": "152px",
+        "x": 576,
+        "y": 552,
+        "width": 184,
+        "height": 184
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/mangosboard32.png",
+  "outputBytes": 199159
+}

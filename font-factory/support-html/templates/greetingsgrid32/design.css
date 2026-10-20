@@ -1,0 +1,29 @@
+#artboard { background: #d3a1aa; color: #302320; }
+.greeting-tile { position: absolute; z-index: 0; overflow: hidden; }
+.tile-zdravo { left: 0; top: 0; width: 33.3333%; height: 25%; background: #d3a1aa; }
+.tile-howdy { left: 0; top: 25%; width: 33.3333%; height: 25%; background: #00567e; }
+.tile-halla { left: 33.3333%; top: 0; width: 66.6667%; height: 50%; background: #ffca05; }
+.tile-bonjour { left: 0; top: 50%; width: 66.6667%; height: 50%; background: #e8265b; }
+.tile-privet { left: 66.6667%; top: 50%; width: 33.3333%; height: 25%; background: #00705b; }
+.tile-ola { left: 66.6667%; top: 75%; width: 33.3333%; height: 25%; background: #111a4d; }
+.greeting-grain { position: absolute; inset: 0; z-index: 3; pointer-events: none; background-image: url("../../../support-references/materials/T26074_06_paper-grain.png"); background-size: 100% auto; background-repeat: repeat; opacity: .48; mix-blend-mode: soft-light; }
+.greeting-copy {
+  position: absolute; z-index: 2; display: flex; align-items: center; justify-content: center;
+  overflow: hidden; padding: 3% 9%;
+  font-family: var(--display-face, Arial, sans-serif); line-height: .92;
+}
+.greeting-run { display: inline-block; width: max-content; white-space: nowrap; }
+.greet-zdravo { left: 0; top: 0; width: 33.3333%; height: 25%; color: #302320; }
+.greet-howdy { left: 0; top: 25%; width: 33.3333%; height: 25%; color: #dce253; }
+.greet-halla { left: 33.3333%; top: 0; width: 66.6667%; height: 50%; color: #e21a34; text-shadow: .035em .04em 0 #302320; }
+.greet-bonjour { left: 0; top: 50%; width: 66.6667%; height: 50%; color: #ffdf55; }
+.greet-privet { left: 66.6667%; top: 50%; width: 33.3333%; height: 25%; color: #ffebcd; }
+.greet-ola { left: 66.6667%; top: 75%; width: 33.3333%; height: 25%; color: #ffca05; }
+.greeting-seal { position: absolute; z-index: 4; display: grid; place-items: center; color: #11234f; pointer-events: none; }
+.greeting-seal::before { content: ""; position: absolute; inset: 0; border: 2px solid currentColor; border-radius: 50%; }
+.greeting-seal span { position: relative; font: 700 1.55cqh/1 Arial, sans-serif; letter-spacing: .11em; }
+.greeting-seal small { position: absolute; bottom: 12%; font: 600 .6cqh/1 Arial, sans-serif; letter-spacing: .12em; }
+.seal-press { width: 8.7%; aspect-ratio: 1; left: 72.5%; top: 40%; transform: rotate(-9deg); }
+.seal-press::after { content: ""; position: absolute; inset: 9%; border: 1px solid currentColor; border-radius: 50%; }
+.seal-studio { width: 16%; height: 8%; left: 2.5%; top: 85.5%; border-radius: 50%; transform: rotate(-4deg); }
+.seal-studio span { font-size: 1.85cqh; }

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>feature32 · HTML/CSS layout iteration</title>
+<style>
+@font-face{font-family:"Benchmark Default";src:url("../../benchmarks/T26074-12/assets/LilitaOne-Regular.ttf") format("truetype");font-display:block}
+:root{color-scheme:dark;font:14px/1.45 system-ui,sans-serif;background:#202126;color:#f0f0ee}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
+aside{background:#141519;border-right:1px solid #34363d;padding:22px 18px;display:flex;flex-direction:column;gap:17px}
+h1{font-size:16px;line-height:1.25;margin:0}
+p{margin:0;color:#b8bac1}
+label{display:grid;gap:6px;color:#e1e2e5}
+input[type=color]{width:100%;height:34px;border:1px solid #454750;border-radius:5px;background:#202126;padding:3px}
+input[type=file]{width:100%;font-size:12px;color:#b8bac1}
+input[type=text],textarea{width:100%;border:1px solid #454750;border-radius:5px;background:#202126;color:#f0f0ee;padding:8px;font:12px/1.4 system-ui,sans-serif}
+textarea{min-height:58px;resize:vertical}
+fieldset{display:grid;gap:12px;border:1px solid #34363d;border-radius:6px;padding:10px;margin:0}
+legend{font-size:12px;color:#a9abb3;padding:0 5px}
+.metric{color:#d7e814;font-variant-numeric:tabular-nums}
+.note{font-size:12px;line-height:1.5;color:#9da0a8}
+main{padding:22px;min-width:0}
+.topline{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}
+.topline h2{font-size:16px;margin:0}
+.topline a{color:#c7d626}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+figure{margin:0;min-width:0}
+figcaption{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:#b7bac1;margin:0 0 8px}
+.sample{width:100%;aspect-ratio:3/2;overflow:hidden;background:#e6dbc6;box-shadow:0 12px 35px #0007}
+.sample img{width:100%;height:100%;object-fit:contain;display:block}
+#artboard{position:relative;isolation:isolate;width:100%;aspect-ratio:3/2;overflow:hidden;background:var(--paper,#e6dbc6);container-type:inline-size;--paper:#e6dbc6;--ink:#9d1c25;--accent:#902016;--hero-font:"Benchmark Default";--label-font:"Benchmark Default"}
+.scallop{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.frame{fill:none;stroke:var(--ink);stroke-width:6.24;stroke-linejoin:round;stroke-linecap:round}
+.hero{position:absolute;left:8%;top:17%;width:84%;height:66%;display:grid;place-items:center;margin:0;color:var(--ink);white-space:nowrap;overflow:visible;text-align:center;font-family:var(--hero-font),serif;line-height:1}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.055;mix-blend-mode:multiply}
+@media(max-width:980px){body{grid-template-columns:220px minmax(0,1fr)}main{padding:14px}.compare{grid-template-columns:1fr}}
+@media(max-width:620px){body{display:block}aside{border-right:0;border-bottom:1px solid #34363d}.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside>
+  <h1>feature32 · CSS layout bench</h1>
+  <p>The display word fills the scalloped specimen card without OpenType callouts competing for space.</p>
+  <fieldset><legend>Live design inputs</legend>
+    <label>Specimen word<textarea id="headline">Crystal</textarea></label>
+    <label>Display font · load a local TTF/OTF<input id="font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+    <label>Paper color<input id="paper-color" type="color" value="#e6dbc6"></label>
+    <label>Ink color<input id="ink-color" type="color" value="#9d1c25"></label>
+  </fieldset>
+  <p id="status" class="note">Loading default font…</p>
+  <p class="note">Edit → next painted frame: <span class="metric" id="paint-ms">—</span></p>
+  <p class="note">Feature labels come from real GSUB data in the production renderer. This editor makes them directly editable for visual layout work.</p>
+</aside>
+<main>
+  <div class="topline"><h2>Source-led recreation</h2><a href="../../../support-references/T27485_07.jpg" target="_blank" rel="noreferrer">Open source image</a></div>
+  <section class="compare" aria-label="Reference and rebuild comparison">
+    <figure><figcaption>Original reference · T27485_07</figcaption><div class="sample"><img src="../../../support-references/T27485_07.jpg" alt="Original OpenType feature card reference"></div></figure>
+    <figure><figcaption>HTML/CSS rebuild · interactive</figcaption><div id="artboard" aria-label="Editable OpenType feature poster composition">
+      <svg class="scallop" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true"><path class="frame" d="M55.4 165.8 Q157 157 165.8 55.4 H1034.2 Q1043.7 157 1144.6 165.8 V634.2 Q1043.7 643 1034.2 744.6 H165.8 Q157 643 55.4 634.2 Z"/></svg>
+      <svg class="grain" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true"><filter id="paper-noise"><feTurbulence type="fractalNoise" baseFrequency=".82" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#paper-noise)" opacity=".24"/></svg>
+      <div id="hero" class="hero">Crystal</div>
+    </div></figure>
+  </section>
+</main>
+<script src="../../shared/copy-case.js"></script>
+<script>
+const board=document.querySelector('#artboard'),hero=document.querySelector('#hero');
+let displayFont='"Benchmark Default"',pending=0,currentContrast=0;
+function inkMetrics(ctx,text,size,family){ctx.font=`${size}px ${family}`;const m=ctx.measureText(text);return {width:(m.actualBoundingBoxLeft||0)+(m.actualBoundingBoxRight||m.width),height:(m.actualBoundingBoxAscent||size*.8)+(m.actualBoundingBoxDescent||size*.2)}}
+function fitSize(ctx,text,family,width,height,maxSize,minSize=1){let lo=minSize,hi=maxSize;for(let i=0;i<18;i++){const mid=(lo+hi)/2,m=inkMetrics(ctx,text,mid,family);if(m.width<=width&&m.height<=height)lo=mid;else hi=mid}return lo}
+function luminance(hex){const rgb=hex.trim().slice(1).match(/.{2}/g).map(x=>parseInt(x,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2]}
+function contrastRatio(fg,bg){const a=luminance(fg),b=luminance(bg);return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)}
+function updateLayout(){
+ const started=performance.now(),ctx=document.createElement('canvas').getContext('2d'),w=board.clientWidth,h=board.clientHeight;
+ hero.textContent=document.querySelector('#headline').value.trim();
+ hero.style.fontFamily=displayFont;
+ const heroText=hero.textContent||'Type',heroSize=fitSize(ctx,heroText,displayFont,w*.80,h*.63,920,32);hero.style.fontSize=heroSize+'px';
+ const ratio=contrastRatio(getComputedStyle(board).getPropertyValue('--ink').trim(),getComputedStyle(board).getPropertyValue('--paper').trim());currentContrast=ratio;
+ cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelector('#paint-ms').textContent=(performance.now()-started).toFixed(1)+' ms'));
+ return layoutReport();
+}
+function layoutReport(){
+ const rect=board.getBoundingClientRect(),selectors=['.hero','.scallop'];
+ const slots=selectors.flatMap(selector=>[...board.querySelectorAll(selector)].map(el=>{const r=el.getBoundingClientRect();return {name:el.id||selector.slice(1),text:el.textContent.trim(),x:+(r.left-rect.left).toFixed(1),y:+(r.top-rect.top).toFixed(1),width:+r.width.toFixed(1),height:+r.height.toFixed(1),fontSize:parseFloat(getComputedStyle(el).fontSize)||0}}));
+ return {frame:{width:rect.width,height:rect.height},headlineFontSize:getComputedStyle(hero).fontSize,inkOnPaperContrast:+currentContrast.toFixed(2),slots,outOfBounds:slots.filter(s=>s.x < -1||s.y < -1||s.x+s.width>rect.width+1||s.y+s.height>rect.height+1)};
+}
+function setColor(which,value,input){if(!value)return;board.style.setProperty('--'+which,value);document.querySelector(input).value=value}
+document.querySelector('#headline').addEventListener('input',updateLayout);
+document.querySelector('#paper-color').addEventListener('input',e=>{board.style.setProperty('--paper',e.target.value);updateLayout()});
+document.querySelector('#ink-color').addEventListener('input',e=>{board.style.setProperty('--ink',e.target.value);updateLayout()});
+document.querySelector('#font-file').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;const url=URL.createObjectURL(file),face=new FontFace('Uploaded Feature Display','url('+url+')');await face.load();document.fonts.add(face);displayFont='"Uploaded Feature Display"';board.style.setProperty('--hero-font',displayFont);document.querySelector('#status').textContent=file.name+' loaded as the live display font.';updateLayout()});
+document.fonts.ready.then(()=>{document.querySelector('#status').textContent='Default font is ready · load the target display face to preview its fit.';updateLayout()});
+window.updateLayout=updateLayout;window.getLayoutReport=layoutReport;
+window.configureTemplate=({headline,paper,ink}={})=>{if(typeof headline==='string')document.querySelector('#headline').value=window.supportTitleCase(headline);setColor('paper',paper,'#paper-color');setColor('ink',ink,'#ink-color');return updateLayout()};
+</script>
+</body>
+</html>

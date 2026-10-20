@@ -1,0 +1,76 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "roseposter32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "roseposter32",
+    "headlineFontSize": "101.29px",
+    "smallestDisplayFontSize": "73.0299px",
+    "contrast": 15.21614552493498,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "Night Garden",
+        "fontSize": "13px",
+        "x": 44,
+        "y": 41.5,
+        "width": 91.296875,
+        "height": 13
+      },
+      {
+        "name": "headline",
+        "text": "Rose Garden",
+        "fontSize": "101.29px",
+        "x": 156.859375,
+        "y": 118.421875,
+        "width": 486.28125,
+        "height": 91.15625
+      },
+      {
+        "name": "line2",
+        "text": "A Midnight Bloom",
+        "fontSize": "73.0299px",
+        "x": 149.03125,
+        "y": 287.140625,
+        "width": 501.9375,
+        "height": 65.71875
+      },
+      {
+        "name": "descriptor",
+        "text": "A Study In Ornamental Letterforms",
+        "fontSize": "17px",
+        "x": 269.03125,
+        "y": 413.5,
+        "width": 261.9375,
+        "height": 17
+      },
+      {
+        "name": "footer",
+        "text": "No. 01 · 2026",
+        "fontSize": "13px",
+        "x": 624,
+        "y": 41.5,
+        "width": 90.390625,
+        "height": 13
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-roseposter32.png",
+  "outputBytes": 1614979
+}

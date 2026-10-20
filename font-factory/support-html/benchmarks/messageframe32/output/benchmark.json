@@ -1,0 +1,239 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/messageframe32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/messageframe32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "CircuitSprint-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 16.6,
+  "imageBytes": {
+    "html": 3207819,
+    "skia": 1528992
+  },
+  "desktopLayout": {
+    "template": "messageframe32",
+    "headlineFontSize": "67.3999px",
+    "contrast": 3.623976255829269,
+    "contrastException": {
+      "minimum": 2.5,
+      "rationale": "The source keeps its small white labels on a textured lavender print band."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-message-card-and-print-plate",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "quote-row-1",
+        "text": "You Will Look Back",
+        "fontSize": "16px",
+        "x": 85.078125,
+        "y": 115.8125,
+        "width": 538.90625,
+        "height": 59.078125
+      },
+      {
+        "name": "quote-line-1",
+        "text": "You Will Look Back",
+        "fontSize": "67.3999px",
+        "x": 137.140625,
+        "y": 115.8125,
+        "width": 434.765625,
+        "height": 60.65625
+      },
+      {
+        "name": "quote-row-2",
+        "text": "On These Days And",
+        "fontSize": "16px",
+        "x": 85.078125,
+        "y": 177.265625,
+        "width": 538.90625,
+        "height": 59.078125
+      },
+      {
+        "name": "quote-line-2",
+        "text": "On These Days And",
+        "fontSize": "67.3999px",
+        "x": 150.21875,
+        "y": 177.265625,
+        "width": 408.625,
+        "height": 60.65625
+      },
+      {
+        "name": "quote-row-3",
+        "text": "Be So Grateful You",
+        "fontSize": "16px",
+        "x": 85.078125,
+        "y": 238.71875,
+        "width": 538.90625,
+        "height": 59.078125
+      },
+      {
+        "name": "quote-line-3",
+        "text": "Be So Grateful You",
+        "fontSize": "67.3999px",
+        "x": 140.234375,
+        "y": 238.71875,
+        "width": 428.578125,
+        "height": 60.65625
+      },
+      {
+        "name": "quote-row-4",
+        "text": "Made It Through",
+        "fontSize": "16px",
+        "x": 127.625,
+        "y": 300.171875,
+        "width": 453.8125,
+        "height": 59.078125
+      },
+      {
+        "name": "quote-line-4",
+        "text": "Made It Through",
+        "fontSize": "67.3999px",
+        "x": 171.296875,
+        "y": 300.171875,
+        "width": 366.453125,
+        "height": 60.65625
+      },
+      {
+        "name": "top-source-label",
+        "text": "FIELD NOTES",
+        "fontSize": "14.19px",
+        "x": 102.8125,
+        "y": 34.5,
+        "width": 80.03125,
+        "height": 23.625
+      },
+      {
+        "name": "bottom-source-label",
+        "text": "A NOTE TO KEEP",
+        "fontSize": "14.19px",
+        "x": 496.359375,
+        "y": 408.890625,
+        "width": 100.140625,
+        "height": 23.625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "messageframe32",
+    "headlineFontSize": "33.4599px",
+    "contrast": 3.623976255829269,
+    "contrastException": {
+      "minimum": 2.5,
+      "rationale": "The source keeps its small white labels on a textured lavender print band."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-message-card-and-print-plate",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "quote-row-1",
+        "text": "You Will Look Back",
+        "fontSize": "16px",
+        "x": 42.234375,
+        "y": 57.484375,
+        "width": 267.515625,
+        "height": 29.328125
+      },
+      {
+        "name": "quote-line-1",
+        "text": "You Will Look Back",
+        "fontSize": "33.4599px",
+        "x": 68.09375,
+        "y": 57.484375,
+        "width": 215.78125,
+        "height": 30.09375
+      },
+      {
+        "name": "quote-row-2",
+        "text": "On These Days And",
+        "fontSize": "16px",
+        "x": 42.234375,
+        "y": 87.984375,
+        "width": 267.515625,
+        "height": 29.328125
+      },
+      {
+        "name": "quote-line-2",
+        "text": "On These Days And",
+        "fontSize": "33.4599px",
+        "x": 74.578125,
+        "y": 87.984375,
+        "width": 202.796875,
+        "height": 30.09375
+      },
+      {
+        "name": "quote-row-3",
+        "text": "Be So Grateful You",
+        "fontSize": "16px",
+        "x": 42.234375,
+        "y": 118.5,
+        "width": 267.515625,
+        "height": 29.328125
+      },
+      {
+        "name": "quote-line-3",
+        "text": "Be So Grateful You",
+        "fontSize": "33.4599px",
+        "x": 69.625,
+        "y": 118.5,
+        "width": 212.703125,
+        "height": 30.09375
+      },
+      {
+        "name": "quote-row-4",
+        "text": "Made It Through",
+        "fontSize": "16px",
+        "x": 63.359375,
+        "y": 149,
+        "width": 225.265625,
+        "height": 29.328125
+      },
+      {
+        "name": "quote-line-4",
+        "text": "Made It Through",
+        "fontSize": "33.4599px",
+        "x": 85.046875,
+        "y": 149,
+        "width": 181.875,
+        "height": 30.09375
+      },
+      {
+        "name": "top-source-label",
+        "text": "FIELD NOTES",
+        "fontSize": "7.04999px",
+        "x": 51.03125,
+        "y": 17.125,
+        "width": 39.71875,
+        "height": 11.71875
+      },
+      {
+        "name": "bottom-source-label",
+        "text": "A NOTE TO KEEP",
+        "fontSize": "7.04999px",
+        "x": 246.390625,
+        "y": 202.96875,
+        "width": 49.703125,
+        "height": 11.71875
+      }
+    ],
+    "contentWarnings": []
+  }
+}

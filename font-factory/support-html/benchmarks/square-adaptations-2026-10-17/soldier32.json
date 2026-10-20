@@ -1,0 +1,103 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "soldier32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "soldier32",
+    "headlineFontSize": "116.242px",
+    "smallestDisplayFontSize": "40.2578px",
+    "contrast": 18.063758932569453,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "archival-photo",
+        "text": "",
+        "fontSize": "16px",
+        "x": 64.390625,
+        "y": 196,
+        "width": 283.1875,
+        "height": 191.015625
+      },
+      {
+        "name": "frame-and-rules",
+        "text": "",
+        "fontSize": "16px",
+        "x": 39.1875,
+        "y": 161.59375,
+        "width": 721.625,
+        "height": 476.015625
+      },
+      {
+        "name": "year",
+        "text": "1935",
+        "fontSize": "116.242px",
+        "x": 64.390625,
+        "y": 501.59375,
+        "width": 287.60064697265625,
+        "height": 116.234375
+      },
+      {
+        "name": "headline-1",
+        "text": "This",
+        "fontSize": "64.164px",
+        "x": 424,
+        "y": 212,
+        "width": 328,
+        "height": 68
+      },
+      {
+        "name": "headline-2",
+        "text": "War Is",
+        "fontSize": "64.164px",
+        "x": 424,
+        "y": 292,
+        "width": 328,
+        "height": 68
+      },
+      {
+        "name": "headline-3",
+        "text": "Useless",
+        "fontSize": "64.164px",
+        "x": 424,
+        "y": 372,
+        "width": 328,
+        "height": 68
+      },
+      {
+        "name": "digit-strip",
+        "text": "1234567890",
+        "fontSize": "40.2578px",
+        "x": 408.390625,
+        "y": 516,
+        "width": 320,
+        "height": 40.25
+      },
+      {
+        "name": "symbol-strip",
+        "text": "!?$¢€£&",
+        "fontSize": "40.2578px",
+        "x": 408.390625,
+        "y": 578.390625,
+        "width": 320,
+        "height": 40.25
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/soldier32.png",
+  "outputBytes": 311916
+}

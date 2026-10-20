@@ -1,0 +1,140 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/latestlook32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/latestlook32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 19.9,
+  "imageBytes": {
+    "html": 3881354,
+    "skia": 4338455
+  },
+  "desktopLayout": {
+    "template": "latestlook32",
+    "headlineFontSize": "90.4994px",
+    "contrast": 11.406246582658145,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "latest-line-one",
+        "text": "Get The",
+        "fontSize": "69.8197px",
+        "x": 187.90625,
+        "y": 61.453125,
+        "width": 193.0625,
+        "height": 60.03125
+      },
+      {
+        "name": "latest-line-two",
+        "text": "Latest",
+        "fontSize": "90.4994px",
+        "x": 187.90625,
+        "y": 165.4375,
+        "width": 207.84375,
+        "height": 77.828125
+      },
+      {
+        "name": "latest-line-three",
+        "text": "Style",
+        "fontSize": "62.9295px",
+        "x": 234,
+        "y": 269.4375,
+        "width": 118.890625,
+        "height": 54.109375
+      },
+      {
+        "name": "latest-footer-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 283.625,
+        "y": 418.34375,
+        "width": 134.71875,
+        "height": 1.5
+      },
+      {
+        "name": "latest-caption",
+        "text": "DISPLAY LETTERING",
+        "fontSize": "12.0543px",
+        "x": 191.453125,
+        "y": 413.625,
+        "width": 92.171875,
+        "height": 24.5625
+      },
+      {
+        "name": "latest-signature",
+        "text": "AUTUMN LOOKBOOK",
+        "fontSize": "12.0543px",
+        "x": 503.46875,
+        "y": 413.625,
+        "width": 92.171875,
+        "height": 24.5625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "latestlook32",
+    "headlineFontSize": "44.5393px",
+    "contrast": 11.406246582658145,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "latest-line-one",
+        "text": "Get The",
+        "fontSize": "38px",
+        "x": 93.265625,
+        "y": 30.5,
+        "width": 105.109375,
+        "height": 32.671875
+      },
+      {
+        "name": "latest-line-two",
+        "text": "Latest",
+        "fontSize": "44.5393px",
+        "x": 93.265625,
+        "y": 82.125,
+        "width": 102.25,
+        "height": 38.296875
+      },
+      {
+        "name": "latest-line-three",
+        "text": "Style",
+        "fontSize": "38px",
+        "x": 116.15625,
+        "y": 133.75,
+        "width": 71.828125,
+        "height": 32.671875
+      },
+      {
+        "name": "latest-footer-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 140.796875,
+        "y": 207.65625,
+        "width": 66.875,
+        "height": 1.5
+      },
+      {
+        "name": "latest-caption",
+        "text": "DISPLAY LETTERING",
+        "fontSize": "10px",
+        "x": 95.03125,
+        "y": 205.3125,
+        "width": 45.75,
+        "height": 20.375
+      },
+      {
+        "name": "latest-signature",
+        "text": "AUTUMN LOOKBOOK",
+        "fontSize": "10px",
+        "x": 249.9375,
+        "y": 205.3125,
+        "width": 45.75,
+        "height": 20.375
+      }
+    ],
+    "contentWarnings": []
+  }
+}

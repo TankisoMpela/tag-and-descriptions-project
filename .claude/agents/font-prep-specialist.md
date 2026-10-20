@@ -1,6 +1,6 @@
 ---
 name: font-prep-specialist
-description: "FontFairy Font Preparation & Metadata Specialist. Consumes prevalidated Agent-27 visual handoffs without inspecting image content, creates a font-named binary folder plus clean Commercial Use and Personal Use ZIPs and a demo-stamped Free-Trial-Demo ZIP, and designs plus renders the five Pinterest pins from the font binary with bin/render-pins. Input: font-factory/fonts/{slug}/ plus an explicit prepared_visuals instruction. Output: outputs/font-preparation/{NUM}-{slug}/."
+description: "Agent 13 packages and audits the font, installs Agent 27's 23 checksummed Pinterest template pins, and renders four factual specimen sheets without inspecting thumbnail or support-layout drafts."
 permissionMode: acceptEdits
 ---
 

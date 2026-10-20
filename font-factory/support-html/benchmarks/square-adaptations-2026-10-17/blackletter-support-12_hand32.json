@@ -1,0 +1,70 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "hand32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "labelFont": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/assets/NotoSans-CondensedLight.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "frame": {
+      "width": 800,
+      "height": 800
+    },
+    "headlineFontSize": "97.6198px",
+    "inkOnPaperContrast": 9.41,
+    "noteOnPaperContrast": 10.66,
+    "handOnPaperContrast": 10.66,
+    "slots": [
+      {
+        "name": "headline_top",
+        "text": "Nice",
+        "x": 256,
+        "y": 96,
+        "width": 528,
+        "height": 176,
+        "fontSize": 97.6198
+      },
+      {
+        "name": "headline_middle",
+        "text": "Big",
+        "x": 256,
+        "y": 288,
+        "width": 528,
+        "height": 176,
+        "fontSize": 97.6199
+      },
+      {
+        "name": "headline_bottom",
+        "text": "Font",
+        "x": 256,
+        "y": 480,
+        "width": 528,
+        "height": 176,
+        "fontSize": 97.6197
+      },
+      {
+        "name": "note",
+        "text": "Sometimes You\nJust Need A...",
+        "x": 40,
+        "y": 672,
+        "width": 720,
+        "height": 88,
+        "fontSize": 25.3333
+      }
+    ],
+    "fitFailures": [],
+    "outOfBounds": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-support-12_hand32.png",
+  "outputBytes": 112529
+}

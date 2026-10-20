@@ -1,0 +1,84 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "freakscene32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "frame": {
+      "width": 800,
+      "height": 800
+    },
+    "headlineFontSize": "151.28px",
+    "inkOnPaperContrast": 8.17,
+    "slots": [
+      {
+        "name": "headline-one",
+        "text": "Freak",
+        "x": 134.5,
+        "y": 193.9,
+        "width": 530.9,
+        "height": 250.2,
+        "fontSize": 151.28
+      },
+      {
+        "name": "headline-two",
+        "text": "Scene",
+        "x": 134.5,
+        "y": 319.2,
+        "width": 530.9,
+        "height": 250.2,
+        "fontSize": 151.28
+      },
+      {
+        "name": "left-note",
+        "text": "A Soft Sans Serif With Spirit, Personality And Distinction.",
+        "x": 27.6,
+        "y": 498.7,
+        "width": 69.9,
+        "height": 166.8,
+        "fontSize": 10.6666
+      },
+      {
+        "name": "right-note",
+        "text": "This Bold And Semi-Condensed Typeface Is Lively And Eye-Catching, Ideal For Where And When You Want To Make A Lasting Impression.",
+        "x": 701.7,
+        "y": 163.5,
+        "width": 88.3,
+        "height": 212.3,
+        "fontSize": 8.62998
+      },
+      {
+        "name": "stamp-left",
+        "text": "Nektar",
+        "x": 51.4,
+        "y": 342.4,
+        "width": 131.4,
+        "height": 115.1,
+        "fontSize": 14
+      },
+      {
+        "name": "stamp-right",
+        "text": "More Etc.MEdition",
+        "x": 695.7,
+        "y": 540.4,
+        "width": 83.6,
+        "height": 98.3,
+        "fontSize": 17.6
+      }
+    ],
+    "outOfBounds": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/freakscene32.png",
+  "outputBytes": 2191775
+}

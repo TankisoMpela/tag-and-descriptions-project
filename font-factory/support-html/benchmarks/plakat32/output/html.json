@@ -1,0 +1,80 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "plakat32",
+  "source": "",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/93-blazher/Blazher/Blazher-Regular.otf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "layoutReport": {
+    "template": "plakat32",
+    "headlineFontSize": "76.8697px",
+    "contrast": 16.17951288737469,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Made To Be Seen",
+        "fontSize": "69.8194px",
+        "x": 66,
+        "y": 52,
+        "width": 1028.03125,
+        "height": 196
+      },
+      {
+        "name": "glyphs",
+        "text": "A · O · 2 · & · ?",
+        "fontSize": "76.8697px",
+        "x": 102,
+        "y": 228,
+        "width": 966.21875,
+        "height": 120
+      },
+      {
+        "name": "note",
+        "text": "501 Glyphs · 9 Weights · Italics",
+        "fontSize": "34.3999px",
+        "x": 72,
+        "y": 380,
+        "width": 471.015625,
+        "height": 72
+      },
+      {
+        "name": "railOne",
+        "text": "Thin       Regular       Black",
+        "fontSize": "37.2099px",
+        "x": 108,
+        "y": 548,
+        "width": 768.828125,
+        "height": 72
+      },
+      {
+        "name": "railTwo",
+        "text": "Roman       Italic",
+        "fontSize": "55.9998px",
+        "x": 108,
+        "y": 632,
+        "width": 734.640625,
+        "height": 68
+      },
+      {
+        "name": "footer",
+        "text": "A Variable Typeface Study",
+        "fontSize": "18.19px",
+        "x": 444,
+        "y": 736,
+        "width": 306.40625,
+        "height": 36
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/plakat32/output/html.png",
+  "outputBytes": 1072365
+}

@@ -1,0 +1,175 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "mangos32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "frame": {
+      "width": 800,
+      "height": 800
+    },
+    "weight": 400,
+    "headlineFontSize": "88.91",
+    "inkOnPaperContrast": 17.42,
+    "cyanContrast": 9.67,
+    "accentOnPaperContrast": 6.67,
+    "slots": [
+      {
+        "name": "weight-ramp",
+        "x": 172,
+        "y": 196.8,
+        "width": 576,
+        "height": 68
+      },
+      {
+        "name": "axis-arrow",
+        "x": 353.6,
+        "y": 77.60000000000001,
+        "width": 91.2,
+        "height": 64
+      },
+      {
+        "name": "axis-loop",
+        "x": 52,
+        "y": 177.6,
+        "width": 104,
+        "height": 88
+      },
+      {
+        "name": "fruit-mark",
+        "x": 640,
+        "y": 408,
+        "width": 104,
+        "height": 120
+      }
+    ],
+    "textBounds": [
+      {
+        "name": "wordmark",
+        "text": "Mangos",
+        "x": 85,
+        "y": 68,
+        "width": 310.9,
+        "height": 76
+      },
+      {
+        "name": "foundry",
+        "text": "Mabütype",
+        "x": 732.8,
+        "y": 65,
+        "width": 385.2,
+        "height": 75
+      },
+      {
+        "name": "latin-name",
+        "text": "Mangifera Indica L.",
+        "x": 336,
+        "y": 305,
+        "width": 790,
+        "height": 88
+      },
+      {
+        "name": "energy-caption",
+        "text": "Energy Provided",
+        "x": 81,
+        "y": 535,
+        "width": 629.9,
+        "height": 80
+      },
+      {
+        "name": "trademark",
+        "text": "™",
+        "x": 401.9,
+        "y": 60,
+        "width": 21.7,
+        "height": 12
+      },
+      {
+        "name": "descriptor-1",
+        "text": "Variable",
+        "x": 79,
+        "y": 290,
+        "width": 114.1,
+        "height": 24.5
+      },
+      {
+        "name": "descriptor-2",
+        "text": "Geometric",
+        "x": 80,
+        "y": 319,
+        "width": 142.1,
+        "height": 24.5
+      },
+      {
+        "name": "descriptor-3",
+        "text": "Sans Serif",
+        "x": 80,
+        "y": 348,
+        "width": 139.4,
+        "height": 24.5
+      },
+      {
+        "name": "weight-value-copy",
+        "text": "100g",
+        "x": 80,
+        "y": 411,
+        "width": 208.4,
+        "height": 88
+      },
+      {
+        "name": "ounces-copy",
+        "text": "(3.53oz)",
+        "x": 467,
+        "y": 403,
+        "width": 376.1,
+        "height": 81
+      },
+      {
+        "name": "energy-value",
+        "text": "~ 272 kJ",
+        "x": 814.4,
+        "y": 533,
+        "width": 300.6,
+        "height": 63
+      },
+      {
+        "name": "tropical",
+        "text": "Tropical",
+        "x": 80,
+        "y": 652,
+        "width": 307.9,
+        "height": 76
+      },
+      {
+        "name": "fraction",
+        "text": "½",
+        "x": 574.3,
+        "y": 656,
+        "width": 51.3,
+        "height": 67.5
+      },
+      {
+        "name": "subtropical",
+        "text": "Subtropical",
+        "x": 678.4,
+        "y": 652,
+        "width": 441.6,
+        "height": 76
+      }
+    ],
+    "outOfBounds": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/mangos32.png",
+  "outputBytes": 218112
+}

@@ -1,0 +1,76 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "concertbill32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "concertbill32",
+    "headlineFontSize": "179.99px",
+    "smallestDisplayFontSize": "77.54px",
+    "contrast": 13.83089828633486,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "San Francisco",
+        "fontSize": "13px",
+        "x": 583.140625,
+        "y": 147.5,
+        "width": 81.71875,
+        "height": 13
+      },
+      {
+        "name": "headline",
+        "text": "Headliner",
+        "fontSize": "179.99px",
+        "x": 74.515625,
+        "y": 203,
+        "width": 650.953125,
+        "height": 161.984375
+      },
+      {
+        "name": "line2",
+        "text": "October 25",
+        "fontSize": "77.54px",
+        "x": 139.015625,
+        "y": 437.109375,
+        "width": 305.953125,
+        "height": 69.78125
+      },
+      {
+        "name": "descriptor",
+        "text": "Soon",
+        "fontSize": "86.48px",
+        "x": 500.75,
+        "y": 433.078125,
+        "width": 158.5,
+        "height": 77.828125
+      },
+      {
+        "name": "footer",
+        "text": "One Night Only · Morrison, Colorado",
+        "fontSize": "14px",
+        "x": 286.609375,
+        "y": 643,
+        "width": 226.78125,
+        "height": 14
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-concertbill32.png",
+  "outputBytes": 982741
+}

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mangos32 · botanical variable type</title>
+<style>
+:root{color-scheme:dark;font:14px/1.45 system-ui,sans-serif;background:#202126;color:#f0f0ee;accent-color:#21c8e4;scrollbar-color:#50565b #17191a}
+*{box-sizing:border-box}::selection{background:#21c8e4;color:#0d0f0f}
+body{margin:0;min-height:100vh;display:grid;grid-template-columns:300px minmax(0,1fr)}
+aside{background:#141618;border-right:1px solid #34383a;padding:22px 18px;display:flex;flex-direction:column;gap:16px}
+h1{font-size:20px;line-height:1.2;margin:0}p{margin:0;color:#c1c4c3}
+label{display:grid;gap:5px;color:#e4e6e5}input[type=text]{width:100%;border:1px solid #495256;border-radius:3px;background:#202426;color:#f5f5f1;padding:8px;font:13px/1.3 system-ui,sans-serif}input[type=file]{width:100%;font-size:12px;color:#c1c4c3}input[type=range]{width:100%}input[type=color]{width:100%;height:35px;border:1px solid #495256;border-radius:3px;background:#202426;padding:3px}
+fieldset{display:grid;gap:10px;border:1px solid #41494c;border-radius:4px;padding:10px;margin:0}legend{font-size:12px;color:#b6c0c2;padding:0 5px}:focus-visible{outline:2px solid #24cbe7;outline-offset:2px}
+.palette{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{color:#23c9e5;font-variant-numeric:tabular-nums}.note{font-size:12px;line-height:1.5;color:#bbbfc0}
+.range-control{display:grid;grid-template-columns:1fr auto;align-items:center;gap:5px}.range-control input{grid-column:1/-1}.range-control output{color:#23c9e5;font-variant-numeric:tabular-nums}
+main{padding:22px;min-width:0}.topline{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}.topline h2{font-size:16px;margin:0}.topline a{color:#23c9e5;text-underline-offset:3px}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}figure{margin:0;min-width:0}figcaption{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#c2c6c6;margin:0 0 8px}.sample{width:100%;aspect-ratio:3/2;overflow:hidden;background:#0d0f0f;box-shadow:0 8px 24px #0006}.sample img{width:100%;height:100%;object-fit:contain;display:block}
+/* The board is a printed, edge-to-edge specimen; controls and reference images keep their own breathing room. */
+#artboard{position:relative;isolation:isolate;width:100%;aspect-ratio:3/2;overflow:hidden;background:var(--ground,#0d0f0f);container-type:inline-size;--display-font:Arial,sans-serif;--ground:#0d0f0f;--paper:#f4f4ef;--cyan:#23c9e5;--orange:#f7701c;--axis-weight:400}
+#art{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.display{font-family:var(--display-font),Arial,sans-serif;font-weight:var(--axis-weight);font-variation-settings:'wght' var(--axis-weight);font-synthesis:weight;fill:var(--paper);text-rendering:geometricPrecision}
+.cyan{fill:var(--cyan)}.muted{fill:var(--paper)}
+#art .descriptor{fill:var(--paper)}
+#fraction{font-variant-numeric:lining-nums}
+#axis-arrow{position:absolute;left:44.2%;top:9.7%;width:11.4%;height:8%;overflow:visible}
+#weight-ramp{position:absolute;left:21.5%;top:24.6%;width:72%;height:8.5%;background:linear-gradient(90deg,var(--orange) 0%,#cf4e19 43%,#6b2f1d 69%,#231817 100%)}
+#axis-loop{position:absolute;left:6.5%;top:22.2%;width:13%;height:11%;color:var(--cyan)}
+#fruit-mark{position:absolute;left:80%;top:51%;width:13%;height:15%;overflow:visible;color:var(--cyan)}
+#fruit-mark path,#fruit-mark circle{fill:none;stroke:currentColor;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+#fruit-mark .leaf{fill:currentColor;stroke:none}
+@media(max-width:1120px){body{grid-template-columns:260px minmax(0,1fr)}main{padding:16px}.compare{grid-template-columns:1fr}}
+@media(max-width:680px){body{display:block}aside{border-right:0;border-bottom:1px solid #34383a}main{padding:18px}.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside>
+  <h1>mangos32 · botanical variable type</h1>
+  <p>A source-led label specimen: a variable-axis wordmark, a warm weight ramp, precise botanical naming, and measured nutrition-style facts.</p>
+  <fieldset><legend>Specimen copy</legend>
+    <label>Wordmark<input id="wordmark-copy" type="text" value="Mangos" maxlength="18"></label>
+    <label>Foundry<input id="foundry-copy" type="text" value="Mabütype" maxlength="22"></label>
+    <label>Botanical name<input id="latin-copy" type="text" value="Mangifera Indica L." maxlength="28"></label>
+    <label>Energy caption<input id="energy-copy" type="text" value="Energy Provided" maxlength="26"></label>
+  </fieldset>
+  <fieldset><legend>Ink and weight</legend>
+    <div class="palette">
+      <label>Night ground<input id="ground-color" type="color" value="#0d0f0f"></label>
+      <label>Paper white<input id="paper-color" type="color" value="#f4f4ef"></label>
+      <label>Electric cyan<input id="cyan-color" type="color" value="#23c9e5"></label>
+      <label>Mango orange<input id="orange-color" type="color" value="#f7701c"></label>
+    </div>
+    <label class="range-control"><span>Weight axis</span><output id="weight-value">400</output><input id="weight" type="range" min="100" max="900" value="400" step="10"></label>
+    <label class="range-control"><span>Tracking</span><output id="tracking-value">−0.045em</output><input id="tracking" type="range" min="-80" max="20" value="-45" step="1"></label>
+  </fieldset>
+  <fieldset><legend>Typeface</legend>
+    <label>Display face · load a local TTF/OTF<input id="font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+  </fieldset>
+  <p id="status" class="note">Preparing the specimen…</p>
+  <p class="note">Edit → next painted frame: <span class="metric" id="paint-ms">—</span></p>
+</aside>
+<main>
+  <div class="topline"><h2>Source proportions · live type fitting</h2><a href="../../../support-references/T30930_07.jpg" target="_blank" rel="noreferrer">Open source image</a></div>
+  <section class="compare" aria-label="Reference and editable typographic specimen">
+    <figure><figcaption>Original reference · T30930_07</figcaption><div class="sample"><img src="../../../support-references/T30930_07.jpg" alt="Black botanical typography specimen with a cyan variable-weight scale and mango data"></div></figure>
+    <figure><figcaption>HTML/CSS rebuild · live specimen layers</figcaption><div id="artboard" aria-label="Editable botanical typography specimen">
+      <div id="weight-ramp" aria-hidden="true"></div>
+      <svg id="axis-arrow" viewBox="0 0 140 64" aria-hidden="true"><path d="M18 32h104M18 32l18-18M18 32l18 18M122 32l-18-18M122 32l-18 18" fill="none" stroke="var(--cyan)" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter"/></svg>
+      <svg id="axis-loop" viewBox="0 0 150 100" aria-hidden="true"><path d="M20 16C5 16 5 84 20 84M130 16c15 0 15 68 0 68M75 50C48 18 27 26 27 50s21 32 48 0c27-32 48-24 48 0s-21 32-48 0Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg id="fruit-mark" viewBox="0 0 150 160" aria-hidden="true"><path d="M74 48c-7-17-4-29 8-40M78 48c18-21 37-24 54-12-9 18-27 24-54 12Z" class="leaf"/><path d="M73 47C44 32 20 53 22 88c2 35 24 56 53 56s52-21 53-56c2-35-23-56-55-41Z"/><path d="M46 121c14 8 38 8 54-1"/></svg>
+      <svg id="art" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
+        <text class="display cyan" id="wordmark"></text><text class="display cyan" id="trademark" text-anchor="start">™</text>
+        <text class="display" id="foundry" text-anchor="end"></text>
+        <text class="display descriptor" id="descriptor-1"></text><text class="display descriptor" id="descriptor-2"></text><text class="display descriptor" id="descriptor-3"></text>
+        <text class="display" id="latin-name" text-anchor="middle"></text>
+        <text class="display cyan" id="weight-value-copy"></text>
+        <text class="display cyan" id="ounces-copy" text-anchor="middle"></text>
+        <text class="display" id="energy-caption"></text>
+        <text class="display cyan" id="energy-value" text-anchor="end">~ 272 kJ</text>
+        <text class="display cyan" id="tropical"></text>
+        <text class="display cyan" id="fraction" text-anchor="middle">½</text>
+        <text class="display cyan" id="subtropical" text-anchor="end"></text>
+      </svg>
+    </div></figure>
+  </section>
+</main>
+<script src="../../shared/copy-case.js"></script>
+<script>
+const board=document.querySelector('#artboard'),ns='http://www.w3.org/2000/svg';let displayFont='Arial',pending=0,liveTextBounds=[];
+const fields=[['wordmark-copy','wordmark'],['foundry-copy','foundry'],['latin-copy','latin-name'],['energy-copy','energy-caption']];
+const positions={wordmark:{x:84,y:124,maxWidth:390,maxHeight:76,maxSize:128,minSize:28},trademark:{x:0,y:84,maxWidth:56,maxHeight:30,maxSize:34,minSize:12},foundry:{x:1118,y:123,maxWidth:420,maxHeight:77,maxSize:104,minSize:26},descriptor:{x:80,y:310,maxWidth:200,maxHeight:94,maxSize:28,minSize:14},'latin-name':{x:731,y:371,maxWidth:790,maxHeight:95,maxSize:125,minSize:32},'weight-value-copy':{x:80,y:476,maxWidth:300,maxHeight:88,maxSize:108,minSize:30},'ounces-copy':{x:655,y:476,maxWidth:410,maxHeight:88,maxSize:100,minSize:30},'energy-caption':{x:80,y:595,maxWidth:630,maxHeight:92,maxSize:82,minSize:26},'energy-value':{x:1115,y:595,maxWidth:370,maxHeight:92,maxSize:84,minSize:24},tropical:{x:80,y:711,maxWidth:420,maxHeight:82,maxSize:78,minSize:24},fraction:{x:600,y:711,maxWidth:150,maxHeight:82,maxSize:78,minSize:24},subtropical:{x:1120,y:711,maxWidth:460,maxHeight:82,maxSize:78,minSize:24}};
+function measure(ctx,text,size,weight,tracking){ctx.font=`${weight} ${size}px ${displayFont}, Arial, sans-serif`;const m=ctx.measureText(text),advance=m.width+tracking*size*Math.max(0,text.length-1);return{width:advance,ascent:m.actualBoundingBoxAscent||size*.72,descent:m.actualBoundingBoxDescent||size*.16,left:m.actualBoundingBoxLeft||0,right:m.actualBoundingBoxRight||m.width}}
+function fit(ctx,text,box,weight,tracking){let lo=box.minSize,hi=box.maxSize;for(let i=0;i<26;i++){const size=(lo+hi)/2,m=measure(ctx,text,size,weight,tracking);if(m.width<=box.maxWidth&&m.ascent+m.descent<=box.maxHeight)lo=size;else hi=size}return lo}
+function place(ctx,id,text,box,weight,tracking){const el=document.querySelector('#'+id);el.textContent=text;el.setAttribute('font-family',displayFont+', Arial, sans-serif');el.setAttribute('font-weight',String(weight));el.setAttribute('font-variation-settings',`'wght' ${weight}`);const size=fit(ctx,text,box,weight,tracking),m=measure(ctx,text,size,weight,tracking);el.setAttribute('font-size',size.toFixed(2));el.setAttribute('letter-spacing',(tracking*size).toFixed(2)+'px');if(id==='wordmark')document.querySelector('#trademark').setAttribute('x',(box.x+m.width+7).toFixed(2));const anchor=el.getAttribute('text-anchor')||'start';el.setAttribute('x',box.x);el.setAttribute('y',box.y);liveTextBounds.push({name:id,text,x:+(anchor==='middle'?box.x-m.width/2:anchor==='end'?box.x-m.width:box.x-m.left).toFixed(1),y:+(box.y-m.ascent).toFixed(1),width:+m.width.toFixed(1),height:+(m.ascent+m.descent).toFixed(1)});return size}
+function hexLum(hex){const a=hex.match(/[\da-f]{2}/gi).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return.2126*a[0]+.7152*a[1]+.0722*a[2]}
+function ratio(a,b){const x=hexLum(a),y=hexLum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
+function updateLayout(){const started=performance.now(),ctx=document.createElement('canvas').getContext('2d'),weight=Number(document.querySelector('#weight').value),tracking=Number(document.querySelector('#tracking').value)/1000;board.style.setProperty('--display-font',`"${displayFont}"`);board.style.setProperty('--axis-weight',weight);liveTextBounds=[];
+ for(const[inputId,id]of fields)place(ctx,id,document.querySelector('#'+inputId).value.trim()||'Type',positions[id],weight,tracking);
+ place(ctx,'trademark','™',{...positions.trademark,x:Number(document.querySelector('#trademark').getAttribute('x')||0)},weight,tracking);
+ for(const[id,text,y]of[['descriptor-1','Variable',310],['descriptor-2','Geometric',339],['descriptor-3','Sans Serif',368]])place(ctx,id,text,{...positions.descriptor,y},weight,tracking);
+ place(ctx,'weight-value-copy','100g',positions['weight-value-copy'],weight,tracking);
+ place(ctx,'ounces-copy','(3.53oz)',positions['ounces-copy'],weight,tracking);
+ place(ctx,'energy-value','~ 272 kJ',positions['energy-value'],weight,tracking);
+ place(ctx,'tropical','Tropical',positions.tropical,weight,tracking);
+ place(ctx,'fraction','½',positions.fraction,weight,tracking);
+ place(ctx,'subtropical','Subtropical',positions.subtropical,weight,tracking);
+ for(const[id,variable]of[['ground-color','--ground'],['paper-color','--paper'],['cyan-color','--cyan'],['orange-color','--orange']])board.style.setProperty(variable,document.querySelector('#'+id).value);
+ document.querySelector('#weight-value').textContent=weight;document.querySelector('#tracking-value').textContent=(tracking<0?'−':'')+Math.abs(tracking).toFixed(3)+'em';cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelector('#paint-ms').textContent=(performance.now()-started).toFixed(1)+' ms'));return layoutReport(weight)
+}
+function layoutReport(weight=Number(document.querySelector('#weight').value)){const frame=board.getBoundingClientRect(),ground=document.querySelector('#ground-color').value,paper=document.querySelector('#paper-color').value,cyan=document.querySelector('#cyan-color').value,orange=document.querySelector('#orange-color').value;return{frame:{width:frame.width,height:frame.height},weight,headlineFontSize:document.querySelector('#latin-name').getAttribute('font-size')||'0',inkOnPaperContrast:+ratio(paper,ground).toFixed(2),cyanContrast:+ratio(cyan,ground).toFixed(2),accentOnPaperContrast:+Math.min(ratio(cyan,ground),ratio(orange,ground)).toFixed(2),slots:[{name:'weight-ramp',x:frame.width*.215,y:frame.height*.246,width:frame.width*.72,height:frame.height*.085},{name:'axis-arrow',x:frame.width*.442,y:frame.height*.097,width:frame.width*.114,height:frame.height*.08},{name:'axis-loop',x:frame.width*.065,y:frame.height*.222,width:frame.width*.13,height:frame.height*.11},{name:'fruit-mark',x:frame.width*.80,y:frame.height*.51,width:frame.width*.13,height:frame.height*.15}],textBounds:liveTextBounds,outOfBounds:liveTextBounds.filter(s=>s.x < -1||s.y < -1||s.x+s.width>1201||s.y+s.height>801)}}
+for(const[id]of fields)document.querySelector('#'+id).addEventListener('input',updateLayout);for(const id of ['weight','tracking','ground-color','paper-color','cyan-color','orange-color'])document.querySelector('#'+id).addEventListener('input',updateLayout);
+document.querySelector('#font-file').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;const url=URL.createObjectURL(file),face=new FontFace('Uploaded Mangos Display','url('+url+')',{weight:'400'});await face.load();document.fonts.add(face);displayFont='Uploaded Mangos Display';document.querySelector('#status').textContent=file.name+' loaded as the live display font; variable axes respond where available.';updateLayout()});
+const resizeObserver=new ResizeObserver(()=>requestAnimationFrame(updateLayout));resizeObserver.observe(board);window.addEventListener('resize',()=>requestAnimationFrame(updateLayout));document.fonts.ready.then(()=>{document.querySelector('#status').textContent='Source grid and vector marks are ready · load the target face to fit every line.';updateLayout()});
+window.getLayoutReport=layoutReport;window.configureTemplate=({wordmark,foundry,latinName,energyCaption,trademark,weight,tracking,ground,paper,cyan,orange}={})=>{for(const[value,id]of[[wordmark,'wordmark-copy'],[foundry,'foundry-copy'],[latinName,'latin-copy'],[energyCaption,'energy-copy']])if(typeof value==='string')document.querySelector('#'+id).value=window.supportTitleCase(value);if(typeof trademark==='string')document.querySelector('#trademark').textContent=trademark;for(const[value,id]of[[ground,'ground-color'],[paper,'paper-color'],[cyan,'cyan-color'],[orange,'orange-color']])if(typeof value==='string'&&/^#[0-9a-f]{6}$/i.test(value))document.querySelector('#'+id).value=value;if(Number.isFinite(weight))document.querySelector('#weight').value=Math.max(100,Math.min(900,weight));if(Number.isFinite(tracking))document.querySelector('#tracking').value=Math.max(-80,Math.min(20,Math.round(tracking*1000)));return updateLayout()};
+makeInitial();
+function makeInitial(){updateLayout()}
+</script>
+</body>
+</html>

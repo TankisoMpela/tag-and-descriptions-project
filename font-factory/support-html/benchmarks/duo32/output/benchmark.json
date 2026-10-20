@@ -1,0 +1,170 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/duo32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/duo32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 26.4,
+  "desktopLayout": {
+    "frame": {
+      "width": 540,
+      "height": 360
+    },
+    "initial": "C",
+    "word": "alifornia",
+    "tagline": "knows how to party",
+    "headlineFontSize": "155.33",
+    "contrast": 2.72,
+    "contrastException": {
+      "minimum": 2.2,
+      "rationale": "The source poster intentionally carries ivory lettering across the coral sun and dark palm silhouettes."
+    },
+    "inkOnPaperContrast": 9.34,
+    "slots": [
+      {
+        "name": "sun",
+        "x": 332.1,
+        "y": 48.6,
+        "width": 172.8,
+        "height": 172.8
+      },
+      {
+        "name": "initial-layer",
+        "x": 0,
+        "y": 0,
+        "width": 540,
+        "height": 360
+      },
+      {
+        "name": "mound",
+        "x": 315.9,
+        "y": 327.6,
+        "width": 183.6,
+        "height": 32.4
+      },
+      {
+        "name": "palm-art",
+        "x": 270,
+        "y": 54,
+        "width": 248.4,
+        "height": 306
+      },
+      {
+        "name": "word-layer",
+        "x": 0,
+        "y": 0,
+        "width": 540,
+        "height": 360
+      }
+    ],
+    "textBounds": [
+      {
+        "name": "initial",
+        "text": "C",
+        "x": 109.2,
+        "y": 44,
+        "width": 576,
+        "height": 691.2
+      },
+      {
+        "name": "word",
+        "text": "alifornia",
+        "x": 255.4,
+        "y": 293.1,
+        "width": 723.5,
+        "height": 125.9
+      },
+      {
+        "name": "tagline",
+        "text": "knows how to party",
+        "x": 480.1,
+        "y": 457,
+        "width": 599.9,
+        "height": 58
+      }
+    ],
+    "outOfBounds": []
+  },
+  "mobileLayout": {
+    "frame": {
+      "width": 354,
+      "height": 236
+    },
+    "initial": "C",
+    "word": "alifornia",
+    "tagline": "knows how to party",
+    "headlineFontSize": "155.33",
+    "contrast": 2.72,
+    "contrastException": {
+      "minimum": 2.2,
+      "rationale": "The source poster intentionally carries ivory lettering across the coral sun and dark palm silhouettes."
+    },
+    "inkOnPaperContrast": 9.34,
+    "slots": [
+      {
+        "name": "sun",
+        "x": 217.7,
+        "y": 31.9,
+        "width": 113.3,
+        "height": 113.3
+      },
+      {
+        "name": "initial-layer",
+        "x": 0,
+        "y": 0,
+        "width": 354,
+        "height": 236
+      },
+      {
+        "name": "mound",
+        "x": 207.1,
+        "y": 214.8,
+        "width": 120.4,
+        "height": 21.2
+      },
+      {
+        "name": "palm-art",
+        "x": 177,
+        "y": 35.4,
+        "width": 162.8,
+        "height": 200.6
+      },
+      {
+        "name": "word-layer",
+        "x": 0,
+        "y": 0,
+        "width": 354,
+        "height": 236
+      }
+    ],
+    "textBounds": [
+      {
+        "name": "initial",
+        "text": "C",
+        "x": 109.2,
+        "y": 44,
+        "width": 576,
+        "height": 691.2
+      },
+      {
+        "name": "word",
+        "text": "alifornia",
+        "x": 255.4,
+        "y": 293.1,
+        "width": 723.5,
+        "height": 125.9
+      },
+      {
+        "name": "tagline",
+        "text": "knows how to party",
+        "x": 480.1,
+        "y": 457,
+        "width": 599.9,
+        "height": 58
+      }
+    ],
+    "outOfBounds": []
+  }
+}

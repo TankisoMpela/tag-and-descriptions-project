@@ -1,0 +1,213 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blossom32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/blossom32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Maidega-Regular.ttf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 26.3,
+  "imageBytes": {
+    "html": 1321176,
+    "skia": 1126399
+  },
+  "desktopLayout": {
+    "template": "blossom32",
+    "headlineFontSize": "64.3px",
+    "contrast": 5.79707602834315,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "kicker",
+        "text": "A Retreat For The Senses",
+        "fontSize": "14.663px",
+        "x": 46.078125,
+        "y": 49.625,
+        "width": 354.546875,
+        "height": 23.625
+      },
+      {
+        "name": "headline",
+        "text": "BloomInto Calm",
+        "fontSize": "16px",
+        "x": 39,
+        "y": 103.984375,
+        "width": 375.8125,
+        "height": 111.078125
+      },
+      {
+        "name": "headline-line-1",
+        "text": "Bloom",
+        "fontSize": "64.3px",
+        "x": 39,
+        "y": 103.984375,
+        "width": 375.8125,
+        "height": 57.859375
+      },
+      {
+        "name": "headline-line-2",
+        "text": "Into Calm",
+        "fontSize": "64.3px",
+        "x": 39,
+        "y": 161.84375,
+        "width": 375.8125,
+        "height": 57.859375
+      },
+      {
+        "name": "subhead",
+        "text": "Restore Your Natural Rhythm",
+        "fontSize": "24.1229px",
+        "x": 46.078125,
+        "y": 231.625,
+        "width": 347.453125,
+        "height": 37.8125
+      },
+      {
+        "name": "body",
+        "text": "A Place To Rest And Reconnect.Gentle Rituals Support Your Natural Rhythm.Time To Return To Yourself.",
+        "fontSize": "16px",
+        "x": 46.078125,
+        "y": 283.625,
+        "width": 347.453125,
+        "height": 68.53125
+      },
+      {
+        "name": "body-line-1",
+        "text": "A Place To Rest And Reconnect.",
+        "fontSize": "17.66px",
+        "x": 46.078125,
+        "y": 283.625,
+        "width": 347.453125,
+        "height": 23.828125
+      },
+      {
+        "name": "body-line-2",
+        "text": "Gentle Rituals Support Your Natural Rhythm.",
+        "fontSize": "17.66px",
+        "x": 46.078125,
+        "y": 307.453125,
+        "width": 347.453125,
+        "height": 23.828125
+      },
+      {
+        "name": "body-line-3",
+        "text": "Time To Return To Yourself.",
+        "fontSize": "17.66px",
+        "x": 46.078125,
+        "y": 331.28125,
+        "width": 347.453125,
+        "height": 23.828125
+      },
+      {
+        "name": "button",
+        "text": "Book A Visit",
+        "fontSize": "20.812px",
+        "x": 113.453125,
+        "y": 378.171875,
+        "width": 219.8125,
+        "height": 42.53125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "blossom32",
+    "headlineFontSize": "31.55px",
+    "contrast": 5.79707602834315,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "kicker",
+        "text": "A Retreat For The Senses",
+        "fontSize": "7.28501px",
+        "x": 22.875,
+        "y": 24.625,
+        "width": 176,
+        "height": 11.71875
+      },
+      {
+        "name": "headline",
+        "text": "BloomInto Calm",
+        "fontSize": "16px",
+        "x": 19.359375,
+        "y": 51.609375,
+        "width": 186.546875,
+        "height": 55.140625
+      },
+      {
+        "name": "headline-line-1",
+        "text": "Bloom",
+        "fontSize": "31.55px",
+        "x": 19.359375,
+        "y": 51.609375,
+        "width": 186.546875,
+        "height": 28.390625
+      },
+      {
+        "name": "headline-line-2",
+        "text": "Into Calm",
+        "fontSize": "31.55px",
+        "x": 19.359375,
+        "y": 80,
+        "width": 186.546875,
+        "height": 28.390625
+      },
+      {
+        "name": "subhead",
+        "text": "Restore Your Natural Rhythm",
+        "fontSize": "11.985px",
+        "x": 22.875,
+        "y": 114.96875,
+        "width": 172.46875,
+        "height": 18.765625
+      },
+      {
+        "name": "body",
+        "text": "A Place To Rest And Reconnect.Gentle Rituals Support Your Natural Rhythm.Time To Return To Yourself.",
+        "fontSize": "16px",
+        "x": 22.875,
+        "y": 140.78125,
+        "width": 172.46875,
+        "height": 34.015625
+      },
+      {
+        "name": "body-line-1",
+        "text": "A Place To Rest And Reconnect.",
+        "fontSize": "9px",
+        "x": 22.875,
+        "y": 140.78125,
+        "width": 172.46875,
+        "height": 12.140625
+      },
+      {
+        "name": "body-line-2",
+        "text": "Gentle Rituals Support Your Natural Rhythm.",
+        "fontSize": "9px",
+        "x": 22.875,
+        "y": 152.921875,
+        "width": 172.46875,
+        "height": 12.140625
+      },
+      {
+        "name": "body-line-3",
+        "text": "Time To Return To Yourself.",
+        "fontSize": "9px",
+        "x": 22.875,
+        "y": 165.0625,
+        "width": 172.46875,
+        "height": 12.140625
+      },
+      {
+        "name": "button",
+        "text": "Book A Visit",
+        "fontSize": "10.34px",
+        "x": 56.3125,
+        "y": 187.71875,
+        "width": 109.109375,
+        "height": 21.109375
+      }
+    ],
+    "contentWarnings": []
+  }
+}

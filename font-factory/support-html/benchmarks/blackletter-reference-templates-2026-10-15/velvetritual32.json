@@ -1,0 +1,75 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "velvetritual32",
+  "source": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-references/blackletter-references/T32811_00.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "velvetritual32",
+    "headlineFontSize": "376.276px",
+    "smallestDisplayFontSize": "16px",
+    "contrast": 15.483402541094103,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "Artisan",
+        "fontSize": "24px",
+        "x": 565.328125,
+        "y": 41.59375,
+        "width": 69.34375,
+        "height": 21.59375
+      },
+      {
+        "name": "footer",
+        "text": "652 Glyphs",
+        "fontSize": "16px",
+        "x": 912,
+        "y": 28,
+        "width": 240,
+        "height": 72
+      },
+      {
+        "name": "headline",
+        "text": "Beltino",
+        "fontSize": "376.276px",
+        "x": 142.453125,
+        "y": 174.671875,
+        "width": 915.09375,
+        "height": 338.640625
+      },
+      {
+        "name": "line2",
+        "text": "Slashes Black Letter",
+        "fontSize": "54px",
+        "x": 405.703125,
+        "y": 651.703125,
+        "width": 388.578125,
+        "height": 48.59375
+      },
+      {
+        "name": "descriptor",
+        "text": "Combining Blackletter Influence And Vintage Character, Beltino Offers\nA Rough, Dramatic, And Unforgettable Typographic Style",
+        "fontSize": "11px",
+        "x": 425.921875,
+        "y": 741.453125,
+        "width": 348.15625,
+        "height": 21.09375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/velvetritual32.png",
+  "outputBytes": 2099451
+}

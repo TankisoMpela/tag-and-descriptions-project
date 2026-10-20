@@ -1,90 +1,105 @@
 ---
 name: agent-pinterest-font-preparer
-description: Pinterest asset preparer. Registers a font from its outputs/font-preparation folder, uploads ALL FIVE of its pin images to Vercel Blob, records both product-page URLs (Creative Market + Creative Fabrica) and the description, and writes public-urls.md into the font folder. No Pinterest-side action.
+description: Pinterest asset preparer. Uploads every manifested template pin and ten final-image composites to Vercel Blob, records product-page URLs and the description, then writes all public links to public-urls.md. Does not publish Pins.
 user-invocable: true
 ---
 
-# Pinterest Font Preparer (asset preparer)
+# Pinterest Font Preparer
 
-You turn one finished font into a ready-to-pin registry record in
-`outputs/pinterest/registry.json`, so the daily run (`/pinterest-daily`) can
-work purely from public URLs and never has to open the font folder. Run from
-the project root. All mechanics live in `bin/` tools — never reimplement them.
+Prepare one finished font in `outputs/pinterest/registry.json` so the daily run
+can use its public image and product-page links without opening the font folder.
+Run from the project root. Use `bin/pinterest_registry.py` for all registry,
+Blob-upload, validation, and link-file operations.
 
-## Where the pin images come from
+## Where the images come from
 
-The five pins are designed and rendered by `/font-prep` (Agent 13, Step 2) from
-the font binary, with `bin/render-pins` and a per-font `pins.brief.json` — five
-fresh headlines in five colour worlds. The art direction behind them is
-`docs/PIN-ART-DIRECTION.md` and the renderer's capability reference is
-`docs/SKIA-PIN-RENDERER.md`.
+- Agent 27 renders every active HTML/CSS Pinterest template with the font and
+  writes the image files plus `pinterest-template-manifest.json` into its
+  `prepared_visuals/pinterest/` handoff.
+- Agent 13 copies those verified pins unchanged into
+  `visuals/New-Images/pinterest/`.
+- Agent 30 appends exactly ten final-image composites after the template pins
+  and writes `pinterest-set-manifest.json` with the full ordered set, dimensions,
+  byte sizes, and SHA-256 hashes.
 
-**You never design or render a pin.** Your job starts once
-`visuals/New-Images/pinterest/` already holds `pinterest_1..5`.
+This agent starts only after Agent 30 has completed. The registry tool verifies
+both manifests, every file hash, contiguous numbering, and the ten-composite
+count before uploading. Do not design, render, copy, rename, or substitute pins.
 
-## Inputs you expect
+## Inputs
 
-From the user: the font's `outputs/font-preparation/{NUM}-{slug}/` folder (or
-its catalogue number / slug / name), plus the product-page URLs it should point
-at — Creative Market and/or Creative Fabrica. Match each font to exactly one
-preparation folder (`ls` and match by slug or number). If a font cannot be
-matched to exactly one folder, ask; never guess across fonts.
+The user supplies a font's `outputs/font-preparation/{NUM}-{slug}/` folder (or
+its catalogue number / slug / name) and its Creative Market and/or Creative
+Fabrica product-page URLs. Match each font to exactly one preparation folder;
+if it cannot be matched unambiguously, ask rather than guessing.
 
-## Per-font procedure (repeat for each input font)
+## Per-font procedure
 
-1. `python3 bin/pinterest_registry.py add --slug <slug> --number <N> [--name "<Font Name>"]`
-   (add `--update` when re-registering; the tool verifies the prep folder and
-   finds `description.txt`, which is the description record).
-2. Record BOTH product pages, one command each — the daily run splits a day's
-   pins between them:
-   `python3 bin/pinterest_registry.py set-url --slug <slug> --url <cm-url>`
-   `python3 bin/pinterest_registry.py set-url --slug <slug> --url <cf-url> --market cf`
-   Aliases: `cm` (default) and `cf`. If the user gave only one, set that one and
-   say the other is missing. Record URLs exactly as supplied — a shop root is
-   not a product page; the tools flag it, you do not silently upgrade it.
-3. Board suggestion — read only the first ~30 lines of `description.txt` and
-   the font name; decide ONE of: `Handwritten Fonts`, `Display Fonts`,
-   `Script Fonts`, `Decorative Fonts`; then
-   `python3 bin/pinterest_registry.py set-board --slug <slug> --board "<Board>"`.
-   The daily run may override this per pin; it is a suggestion, not a lock.
-4. Upload the five pin images:
-   `python3 bin/pinterest_registry.py upload --slug <slug>`
-   If the tool warns that fewer than five images were found, the font has not
-   been pinned yet: report that and name the fix (`/font-prep` Step 2 for this
-   font). Do not design, copy, or substitute an image here.
-   The tool takes every `visuals/New-Images/pinterest/pinterest_N` image — one
-   per index (it prefers the lossless `.png` when a `.jpg` twin exists) — pushes
-   each to the `pinterest-pins-media` Vercel Blob store and records its public
-   URL under that index. Do NOT inspect image content. Already-uploaded indices
-   are skipped unless the user asked for `--force`.
-5. Write `public-urls.md` at the prep folder root from the registry record
-   (`show --slug <slug> --json`) — five image links, both product URLs, board:
+1. Register the preparation folder:
 
-   ```markdown
-   # Public Pinterest assets — <Font Name>
-   - Pin image 1: <public blob URL>
-   - Pin image 2: <public blob URL>
-   - Pin image 3: <public blob URL>
-   - Pin image 4: <public blob URL>
-   - Pin image 5: <public blob URL>
-   - Creative Market product URL: <url or MISSING>
-   - Creative Fabrica product URL: <url or MISSING>
-   - Board suggestion: <Board>
+   ```bash
+   python3 bin/pinterest_registry.py add --slug <slug> --number <N> --name "<Font Name>"
    ```
+
+   Use `--update` when updating an existing record. The tool finds the folder's
+   `description.txt`.
+
+2. Record the supplied product URLs exactly as given:
+
+   ```bash
+   python3 bin/pinterest_registry.py set-url --slug <slug> --url <cm-url>
+   python3 bin/pinterest_registry.py set-url --slug <slug> --url <cf-url> --market cf
+   ```
+
+   Omit the command for a URL the user did not provide, then report it as
+   missing. Do not silently replace a shop root with a product-page URL.
+
+3. Read only the first ~30 lines of `description.txt` and the font name. Choose
+   one board: `Handwritten Fonts`, `Display Fonts`, `Script Fonts`, or
+   `Decorative Fonts`, then record it:
+
+   ```bash
+   python3 bin/pinterest_registry.py set-board --slug <slug> --board "<Board>"
+   ```
+
+4. Upload the complete manifested set to the `pinterest-pins-media` Vercel
+   Blob store:
+
+   ```bash
+   python3 bin/pinterest_registry.py upload --slug <slug>
+   ```
+
+   The helper discovers the template count from the manifest, checks that the
+   set contains those template pins followed by exactly ten composites, then
+   uploads every numbered file. It skips URLs already recorded unless the user
+   explicitly requests `--force`. Use `--index N` only for a targeted retry.
+   If validation reports a missing file, hash, or manifest, stop and complete
+   the missing upstream stage; never fill a gap manually.
+
+5. Write the full set of public image links and the supplied product URLs to the
+   font folder:
+
+   ```bash
+   python3 bin/pinterest_registry.py write-urls --slug <slug>
+   ```
+
+   This creates `public-urls.md` with one row for every uploaded image link, so
+   it grows with the template count plus ten composites. Use
+   `show --slug <slug> --json` if you need the machine-readable registry
+   record.
 
 ## Report
 
-Per font: slug, board, how many of the five images are live (with URLs), which
-product URLs are recorded and which are missing — plus any font you could not
-register and why.
+For each font, report its slug, board, number of image links uploaded and the
+full `public-urls.md` path. State which product URLs were recorded or are
+missing. The Blob upload provides public image links for the daily publishing
+workflow; it does not create, schedule, or publish Pins on Pinterest.
 
 ## Hard rules
 
 - Never edit font binaries, raw images, or `description.txt`.
-- Blob auth comes from `~/.config/papermoon/blob.env`; never print the RW
-  token and never add it to any repo file.
-- `outputs/pinterest/registry.json` is the sole state store — edit it only via
-  the registry tool.
-- You do not create, schedule, or publish Pinterest pins. No upload claim to
-  Pinterest. Make no claims about live sales pages; record the URL exactly as
-  supplied.
+- Blob credentials come from `~/.config/papermoon/blob.env`; never print or
+  commit the write token.
+- `outputs/pinterest/registry.json` is the only registry state store; change it
+  only through `bin/pinterest_registry.py`.
+- Do not inspect image content or claim that Pins were published.

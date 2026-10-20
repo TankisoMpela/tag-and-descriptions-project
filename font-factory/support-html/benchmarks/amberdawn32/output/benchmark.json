@@ -1,0 +1,140 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/amberdawn32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/amberdawn32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 26.9,
+  "imageBytes": {
+    "html": 3836217,
+    "skia": 4376993
+  },
+  "desktopLayout": {
+    "template": "amberdawn32",
+    "headlineFontSize": "168.93px",
+    "contrast": 7.853541046462365,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "amber-headline-one",
+        "text": "Golden",
+        "fontSize": "168.93px",
+        "x": 134.375,
+        "y": 94.53125,
+        "width": 440.34375,
+        "height": 141.890625
+      },
+      {
+        "name": "amber-headline-two",
+        "text": "Hour",
+        "fontSize": "168.929px",
+        "x": 178.203125,
+        "y": 241.078125,
+        "width": 352.6875,
+        "height": 141.890625
+      },
+      {
+        "name": "amber-glyph-badge",
+        "text": "THREE FONTS INCLUDED\n      482GLYPHS",
+        "fontSize": "16px",
+        "x": 556.625,
+        "y": 16.0625,
+        "width": 134.71875,
+        "height": 138.71875
+      },
+      {
+        "name": "amber-footer-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 287.171875,
+        "y": 394.71875,
+        "width": 134.71875,
+        "height": 2
+      },
+      {
+        "name": "amber-caption",
+        "text": "DISPLAY LETTERING",
+        "fontSize": "15.127px",
+        "x": 97.84375,
+        "y": 403.21875,
+        "width": 168.140625,
+        "height": 15.125
+      },
+      {
+        "name": "amber-footer-right",
+        "text": "TYPE SPECIMEN",
+        "fontSize": "15.127px",
+        "x": 475.875,
+        "y": 403.21875,
+        "width": 135.375,
+        "height": 15.125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "amberdawn32",
+    "headlineFontSize": "83.9452px",
+    "contrast": 7.853541046462365,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "amber-headline-one",
+        "text": "Golden",
+        "fontSize": "83.9451px",
+        "x": 66.5859375,
+        "y": 46.921875,
+        "width": 218.828125,
+        "height": 70.5
+      },
+      {
+        "name": "amber-headline-two",
+        "text": "Hour",
+        "fontSize": "83.9452px",
+        "x": 88.3671875,
+        "y": 119.671875,
+        "width": 175.265625,
+        "height": 70.5
+      },
+      {
+        "name": "amber-glyph-badge",
+        "text": "THREE FONTS INCLUDED\n      482GLYPHS",
+        "fontSize": "16px",
+        "x": 276.3125,
+        "y": 7.96875,
+        "width": 66.875,
+        "height": 70.875
+      },
+      {
+        "name": "amber-footer-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 142.546875,
+        "y": 195.9375,
+        "width": 66.875,
+        "height": 2
+      },
+      {
+        "name": "amber-caption",
+        "text": "DISPLAY LETTERING",
+        "fontSize": "7.509px",
+        "x": 48.5625,
+        "y": 200.15625,
+        "width": 83.46875,
+        "height": 7.515625
+      },
+      {
+        "name": "amber-footer-right",
+        "text": "TYPE SPECIMEN",
+        "fontSize": "7.509px",
+        "x": 236.234375,
+        "y": 200.15625,
+        "width": 67.203125,
+        "height": 7.515625
+      }
+    ],
+    "contentWarnings": []
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/stadiumposter32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/stadiumposter32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 16.6,
+  "desktopLayout": {
+    "template": "stadiumposter32",
+    "headlineFontSize": "247.507px",
+    "contrast": 5.4000704066310625,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "stadium-top-left",
+        "text": "MATCHDAY / NORTH STAND",
+        "fontSize": "7.79986px",
+        "x": 21.265625,
+        "y": 16.296875,
+        "width": 111.640625,
+        "height": 7.796875
+      },
+      {
+        "name": "stadium-top-right",
+        "text": "FOOTBALL / SUPPORTER PRINT",
+        "fontSize": "7.79986px",
+        "x": 558.09375,
+        "y": 16.296875,
+        "width": 129.734375,
+        "height": 7.796875
+      },
+      {
+        "name": "stadium-headline-one",
+        "text": "NORTH",
+        "fontSize": "242.006px",
+        "x": 19.84375,
+        "y": 38.75,
+        "width": 411.219970703125,
+        "height": 208.109375
+      },
+      {
+        "name": "stadium-headline-two",
+        "text": "STAND",
+        "fontSize": "247.507px",
+        "x": 141.8125,
+        "y": 238.71875,
+        "width": 542.94189453125,
+        "height": 212.84375
+      },
+      {
+        "name": "stadium-footer-left",
+        "text": "ONE CITY / ONE VOICE",
+        "fontSize": "6.85442px",
+        "x": 21.265625,
+        "y": 455,
+        "width": 81.421875,
+        "height": 6.859375
+      },
+      {
+        "name": "stadium-footer-right",
+        "text": "MATCHDAY / 01",
+        "fontSize": "6.85442px",
+        "x": 633.046875,
+        "y": 455,
+        "width": 54.78125,
+        "height": 6.859375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "stadiumposter32",
+    "headlineFontSize": "122.975px",
+    "contrast": 5.4000704066310625,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "stadium-top-left",
+        "text": "MATCHDAY / NORTH STAND",
+        "fontSize": "3.63717px",
+        "x": 10.546875,
+        "y": 8.09375,
+        "width": 52.015625,
+        "height": 3.640625
+      },
+      {
+        "name": "stadium-top-right",
+        "text": "FOOTBALL / SUPPORTER PRINT",
+        "fontSize": "3.63717px",
+        "x": 281,
+        "y": 8.09375,
+        "width": 60.453125,
+        "height": 3.640625
+      },
+      {
+        "name": "stadium-headline-one",
+        "text": "NORTH",
+        "fontSize": "120.241px",
+        "x": 9.84375,
+        "y": 19.234375,
+        "width": 204.1599884033203,
+        "height": 103.390625
+      },
+      {
+        "name": "stadium-headline-two",
+        "text": "STAND",
+        "fontSize": "122.975px",
+        "x": 70.390625,
+        "y": 118.5,
+        "width": 269.75811767578125,
+        "height": 105.75
+      },
+      {
+        "name": "stadium-footer-left",
+        "text": "ONE CITY / ONE VOICE",
+        "fontSize": "3.40252px",
+        "x": 10.546875,
+        "y": 225.859375,
+        "width": 40.34375,
+        "height": 3.40625
+      },
+      {
+        "name": "stadium-footer-right",
+        "text": "MATCHDAY / 01",
+        "fontSize": "3.40252px",
+        "x": 314.296875,
+        "y": 225.859375,
+        "width": 27.15625,
+        "height": 3.40625
+      }
+    ],
+    "contentWarnings": []
+  }
+}

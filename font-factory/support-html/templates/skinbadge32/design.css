@@ -1,0 +1,48 @@
+#artboard {
+  background: #b08250 url("../../../support-references/materials/T24908_01_clean-photo-background.png") center / cover no-repeat;
+  color: #fffdf7;
+}
+.skin-badge, .skin-rim, .skin-word, .skin-pattern, .skin-stars, .skin-underline { position: absolute; }
+.skin-pattern {
+  left: 45.5%; top: 12.1%; z-index: 1; width: 46%; height: 75%;
+  overflow: hidden; border-radius: 50%; background: #602a18;
+}
+.skin-pattern-rows {
+  position: absolute; inset: -8% -10%; transform: rotate(-13deg);
+  -webkit-mask-image: radial-gradient(ellipse, #000 43%, rgb(0 0 0 / 82%) 61%, transparent 82%);
+  mask-image: radial-gradient(ellipse, #000 43%, rgb(0 0 0 / 82%) 61%, transparent 82%);
+}
+.skin-pattern-row {
+  position: absolute; left: 50%; transform: translateX(-50%); width: 120%; height: 18%;
+  color: #dabbff; font-family: var(--display-face, Arial, sans-serif);
+  font-weight: 500; line-height: 1; letter-spacing: -.01em;
+  text-align: center; white-space: nowrap;
+}
+.skin-pattern-row:nth-child(1) { top: 0%; }
+.skin-pattern-row:nth-child(2) { top: 20%; }
+.skin-pattern-row:nth-child(3) { top: 40%; }
+.skin-pattern-row:nth-child(4) { top: 60%; }
+.skin-pattern-row:nth-child(5) { top: 80%; }
+.skin-badge {
+  left: 8.2%; top: 12.5%; z-index: 2; width: 50.3%; height: 75%;
+  overflow: hidden; border-radius: 50%; background: #b89bf9;
+}
+.skin-rim { inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.skin-rim-text { fill: #f3f1eb; font: 400 22px Arial, sans-serif; letter-spacing: 2.1px; }
+.skin-word {
+  width: 82%; display: block; color: #fffdf7;
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 500;
+  line-height: 1; letter-spacing: -.015em; text-align: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+.skin-word-top { top: 21%; }
+.skin-word-bottom { top: 46%; }
+.skin-stars { inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.skin-stars path { fill: #f3f1eb; }
+.skin-underline { left: 24%; top: 73%; width: 53%; height: 7%; overflow: visible; }
+.skin-underline path { fill: #f3f1eb; }
+
+@media (max-width: 680px) {
+  .skin-rim-text { font-size: 19px; }
+}

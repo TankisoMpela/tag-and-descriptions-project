@@ -1,0 +1,89 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "roadrunner32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "frame": {
+      "width": 800,
+      "height": 800
+    },
+    "headlineFontSize": "106.667px",
+    "descriptorFontSize": "10.808px",
+    "bodyFontSize": "10.16px",
+    "badgeFontSize": "26.32px",
+    "inkOnLimeContrast": 10.29,
+    "slots": [
+      {
+        "name": "headline_line",
+        "text": "Got The Radio",
+        "x": 59.1,
+        "y": 117.5,
+        "width": 606.8,
+        "height": 178.8
+      },
+      {
+        "name": "headline_line",
+        "text": "On, I'm Like The",
+        "x": 64.6,
+        "y": 292.5,
+        "width": 677,
+        "height": 187.4
+      },
+      {
+        "name": "headline_line",
+        "text": "Roadrunner.",
+        "x": 155.8,
+        "y": 456.9,
+        "width": 556.2,
+        "height": 172.6
+      },
+      {
+        "name": "descriptor",
+        "text": "A Soft Sans Serif With Spirit,Personality And Distinction.",
+        "x": 76.5,
+        "y": 90.1,
+        "width": 234.8,
+        "height": 72.3
+      },
+      {
+        "name": "bodycopy",
+        "text": "This Bold And Semi-Condensed Typeface Is Lively And Eye-Catching,Ideal For Where And When You Want To Make A Lasting Impression.",
+        "x": 330.2,
+        "y": 635.7,
+        "width": 409.2,
+        "height": 84.5
+      },
+      {
+        "name": "topmark",
+        "text": "Type StudyMStudio",
+        "x": 702.7,
+        "y": 116.2,
+        "width": 77,
+        "height": 90.9
+      },
+      {
+        "name": "nektar",
+        "text": "Nektar",
+        "x": 55.4,
+        "y": 635.4,
+        "width": 125.7,
+        "height": 93
+      }
+    ],
+    "outOfBounds": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-support-70_roadrunner32.png",
+  "outputBytes": 2539095
+}

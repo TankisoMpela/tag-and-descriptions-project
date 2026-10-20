@@ -1,0 +1,116 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "kindersea32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "kindersea32",
+    "headlineFontSize": "82.52px",
+    "smallestDisplayFontSize": "82.52px",
+    "contrast": 4.406861100661014,
+    "contrastException": {
+      "minimum": 2.5,
+      "rationale": "Source white lettering on textured lavender intentionally follows the reference postcard treatment."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "source-lavender-stock",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "source-pixel-seascape",
+        "text": "",
+        "fontSize": "16px",
+        "x": 75.671875,
+        "y": 96.96875,
+        "width": 650,
+        "height": 400
+      },
+      {
+        "name": "source-corner-stars",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "top-postcard-caption",
+        "text": "Field Notes",
+        "fontSize": "22px",
+        "x": 76,
+        "y": 56.796875,
+        "width": 240,
+        "height": 36
+      },
+      {
+        "name": "vertical-postcard-caption",
+        "text": "Postcard",
+        "fontSize": "20px",
+        "x": 731.59375,
+        "y": 408.234375,
+        "width": 20,
+        "height": 79.53125
+      },
+      {
+        "name": "headline-row-1",
+        "text": "I Wish You",
+        "fontSize": "16px",
+        "x": 116,
+        "y": 518.390625,
+        "width": 568,
+        "height": 104
+      },
+      {
+        "name": "headline-1",
+        "text": "I Wish You",
+        "fontSize": "82.52px",
+        "x": 191.5625,
+        "y": 533.265625,
+        "width": 416.875,
+        "height": 74.25
+      },
+      {
+        "name": "headline-row-2",
+        "text": "A Kinder Sea.",
+        "fontSize": "16px",
+        "x": 76,
+        "y": 638.390625,
+        "width": 648,
+        "height": 104
+      },
+      {
+        "name": "headline-2",
+        "text": "A Kinder Sea.",
+        "fontSize": "82.52px",
+        "x": 127.25,
+        "y": 653.265625,
+        "width": 545.5,
+        "height": 74.25
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/kindersea32.png",
+  "outputBytes": 2016090
+}

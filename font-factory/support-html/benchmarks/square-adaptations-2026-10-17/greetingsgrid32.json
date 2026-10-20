@@ -1,0 +1,89 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "greetingsgrid32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "greetingsgrid32",
+    "headlineFontSize": "155.25px",
+    "smallestDisplayFontSize": "57.69px",
+    "contrast": 3.092329188567863,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The original saturated print palette is retained for large greeting headlines."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "greeting-zdravo",
+        "text": "Zdravo!",
+        "fontSize": "57.69px",
+        "x": 26.546875,
+        "y": 73.46875,
+        "width": 213.5625,
+        "height": 53.0625
+      },
+      {
+        "name": "greeting-howdy",
+        "text": "Howdy!",
+        "fontSize": "59.44px",
+        "x": 26.546875,
+        "y": 272.65625,
+        "width": 213.5625,
+        "height": 54.671875
+      },
+      {
+        "name": "greeting-halla",
+        "text": "Hallå!",
+        "fontSize": "155.25px",
+        "x": 319.875,
+        "y": 128.578125,
+        "width": 426.90625,
+        "height": 142.828125
+      },
+      {
+        "name": "greeting-bonjour",
+        "text": "Bonjour!",
+        "fontSize": "103.3px",
+        "x": 53.234375,
+        "y": 552.484375,
+        "width": 426.859375,
+        "height": 95.03125
+      },
+      {
+        "name": "greeting-privet",
+        "text": "Privet!",
+        "fontSize": "66.93px",
+        "x": 559.875,
+        "y": 469.203125,
+        "width": 213.5625,
+        "height": 61.578125
+      },
+      {
+        "name": "greeting-ola",
+        "text": "Olá!",
+        "fontSize": "102px",
+        "x": 570.796875,
+        "y": 653.078125,
+        "width": 191.734375,
+        "height": 93.828125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/greetingsgrid32.png",
+  "outputBytes": 2159279
+}

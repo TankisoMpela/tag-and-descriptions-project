@@ -24,6 +24,10 @@ outputs/*
 !outputs/research/
 outputs/research/*
 !outputs/research/booth-font-tag-bank.md
+# ...and the font-rights verdict ledger, which `font_rights.py sync` mirrors out of
+# the gitignored font-factory/input/ staging. It is the only tracked record of why a
+# font was judged shippable, and it dies with the staging if this is not committed.
+!outputs/research/font-rights-ledger.json
 # ...and the Pinterest daily-run registry: the authoritative font directory
 # (product URLs + public Blob image URLs) built by /pinterest-prepare; losing
 # it means re-uploading every image by hand.
@@ -60,11 +64,16 @@ codex-session-*.jsonl
 # Large font collections and working copies (too large for git)
 font-factory/Fonts/
 font-factory/input/
+font-factory/Saved/
 font-factory/visuals/
 # Per-font source workspaces (raw font binaries, visual references) and
 # generated preparation packages — binary-heavy, regenerable from sources.
 font-factory/fonts/
 font-factory/font-preparation/
+
+# Renderer logs are transient diagnostics; the saved HTML and image renders are
+# the reviewable output.
+font-factory/support-html/**/*.log
 
 # Procreate/Photoshop brush binary packs (source .abr/.brushset/.zip) —
 # the brush agent specs in brush-factory/ itself are still versioned.

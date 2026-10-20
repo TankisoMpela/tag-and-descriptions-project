@@ -1,0 +1,76 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "yearposter32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "yearposter32",
+    "headlineFontSize": "263.87px",
+    "smallestDisplayFontSize": "263.87px",
+    "contrast": 5.547642977924009,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "year-numerals",
+        "text": "1982",
+        "fontSize": "16px",
+        "x": 16,
+        "y": 96,
+        "width": 768,
+        "height": 608
+      },
+      {
+        "name": "year-digit-1",
+        "text": "1",
+        "fontSize": "263.87px",
+        "x": 16,
+        "y": 96,
+        "width": 183.9375,
+        "height": 608
+      },
+      {
+        "name": "year-digit-2",
+        "text": "9",
+        "fontSize": "263.87px",
+        "x": 210.6875,
+        "y": 96,
+        "width": 183.9375,
+        "height": 608
+      },
+      {
+        "name": "year-digit-3",
+        "text": "8",
+        "fontSize": "263.87px",
+        "x": 405.375,
+        "y": 96,
+        "width": 183.9375,
+        "height": 608
+      },
+      {
+        "name": "year-digit-4",
+        "text": "2",
+        "fontSize": "263.87px",
+        "x": 600.0625,
+        "y": 96,
+        "width": 183.9375,
+        "height": 608
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/yearposter32.png",
+  "outputBytes": 3381633
+}

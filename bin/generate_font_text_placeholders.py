@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Create a fast provisional white-background font visual handoff.
-
-The handoff deliberately contains only readable copy and factual specimen
-sheets. It is a temporary downstream-compatible stand-in for the user's later
-Custom GPT/image-model artwork and does not invoke OpenPencil.
-"""
+"""Build thumbnail placeholders, support images, and factual specimens."""
 
 from __future__ import annotations
 
@@ -517,24 +512,47 @@ def write_placeholder_png(svg: str, destination: Path) -> None:
 
 
 def plan_entries(plan: dict) -> list[tuple[str, dict]]:
-    """Ordered (name, entry) pairs, matching the rendered PNG names."""
-    entries: list[tuple[str, dict]] = [
+    """Thumbnail briefs only; programmatic supports have their own guide."""
+    return [
         ("thumbnail_main", plan.get("thumbnail") or {}),
         ("thumbnail_japanese", plan.get("japanese_thumbnail") or {}),
     ]
-    for index, promo in enumerate(plan.get("promos") or [], start=1):
-        key = str(promo.get("key") or "").strip() or f"promo_{index}"
-        entries.append((key, promo))
-    return entries
 
 
 def plan_brief(entry: dict) -> str:
-    """The creative brief for one image. One source, one place."""
-    for field in ("theme_variant", "brief"):
-        value = entry.get(field)
-        if isinstance(value, str) and value.strip():
-            return " ".join(value.split())
-    return ""
+    """The complete image-generation prompt stored on one plan entry."""
+    value = entry.get("image_prompt")
+    return " ".join(value.split()) if isinstance(value, str) and value.strip() else ""
+
+
+def plan_prompt_entries(plan: dict) -> list[tuple[str, str, str]]:
+    """Return complete prompts paired with their exact specimen and ratio."""
+    thumbnail = plan.get("thumbnail") or {}
+    japanese = plan.get("japanese_thumbnail") or {}
+    prompts: list[tuple[str, str, str]] = []
+    main = plan_brief(thumbnail)
+    if main:
+        prompts.append((
+            "thumbnail_main_3x2",
+            "prepared_visuals/3x2/thumbnail_main.png",
+            main,
+        ))
+    layouts = thumbnail.get("ratio_layouts") or {}
+    square = plan_brief(layouts.get("1x1") or {})
+    if square:
+        prompts.append((
+            "thumbnail_main_1x1",
+            "prepared_visuals/1x1/thumbnail_main.png",
+            square,
+        ))
+    storefront = plan_brief(japanese)
+    if storefront:
+        prompts.append((
+            "thumbnail_japanese_1x1",
+            "prepared_visuals/1x1/thumbnail_japanese.png",
+            storefront,
+        ))
+    return prompts
 
 
 def render_note(name: str, entry: dict, plan: dict) -> str:
@@ -674,10 +692,12 @@ def write_derived_views(direction: Path, plan: dict) -> list[Path]:
     entries = plan_entries(plan)
     written: list[Path] = []
 
-    briefs = [(name, plan_brief(entry)) for name, entry in entries]
-    briefs = [(name, brief) for name, brief in briefs if brief]
-    if briefs:
-        body = "\n".join(f"## {name}\n{brief}\n" for name, brief in briefs)
+    prompts = plan_prompt_entries(plan)
+    if prompts:
+        body = "\n".join(
+            f"## {name}\nSpecimen: `{specimen}`\n\n{prompt}\n"
+            for name, specimen, prompt in prompts
+        )
         theme = direction / "theme.txt"
         theme.write_text(body, encoding="utf-8")
         written.append(theme)
@@ -702,19 +722,34 @@ def write_manifest(root: Path, plan: dict) -> None:
         "",
         "- status: provisional",
         "- render_mode: text_placeholder",
-        "- manual_replacement_required: true",
+        "- manual_replacement_required: thumbnail placeholders only",
         "- source: bin/generate_font_text_placeholders.py",
-        "- note: white-background text placeholders are intentionally passed downstream until manually replaced.",
-        f"- supporting_image_theme: {str(plan.get('supporting_image_theme', '')).strip()}",
-        f"- theme_variants_file: {str(plan.get('theme_variants_file', '')).strip()}",
+        "- note: three white-background font-name specimens are raw material for final thumbnail generation; use the matching per-ratio prompts in visual-direction/theme.txt.",
+        f"- supporting_templates: {int(plan.get('support_count', 7))} reproducibly selected eligible layouts at 3:2 and 1:1",
+        f"- support_renderer_policy: {plan.get('support_renderer', 'html')}",
+        "- pinterest_template_renderer: HTML/CSS + Chromium; all active pin templates",
+        "- factual_specimen_renderer: Python Skia",
         "",
         "| Asset | Dimensions | Status |",
         "|---|---:|---|",
     ]
-    for path in sorted(root.rglob("*.png")):
+    image_paths = sorted([*root.rglob("*.png"), *root.rglob("*.jpg"), *root.rglob("*.jpeg")])
+    for path in image_paths:
         with Image.open(path) as image:
             dimensions = f"{image.width}x{image.height}"
-        rows.append(f"| {path.relative_to(root).as_posix()} | {dimensions} | provisional handoff |")
+        relative = path.relative_to(root).as_posix()
+        if relative.startswith("supporting/"):
+            template = path.stem.removeprefix("support-").split("_", 1)[-1]
+            renderer = (plan.get("_support_renderer_by_template") or {}).get(
+                template, "Python Skia")
+            status = f"{renderer} supporting template"
+        elif relative.startswith("specimens/"):
+            status = "factual font specimen"
+        elif relative.startswith("pinterest/"):
+            status = "HTML/CSS template Pinterest pin"
+        else:
+            status = "thumbnail placeholder — replace with image-model artwork"
+        rows.append(f"| {relative} | {dimensions} | {status} |")
     (root / "visual-handoff-manifest.md").write_text("\n".join(rows) + "\n", encoding="utf-8")
 
 
@@ -724,24 +759,20 @@ def write_marker(root: Path, status: str, prepared_path: Path | None = None) -> 
         "",
         f"validation: {status}",
         f"prepared visuals: {(prepared_path or root).resolve()}",
-        "Visual status: PROVISIONAL — MANUAL IMAGE REPLACEMENT REQUIRED",
-        "The default workflow may continue with these text placeholders. Replace the PNGs later with the user's Custom GPT/image-model artwork.",
+        "Visual status: three white-background font-name specimens are raw lettering material; supporting templates and factual specimens are renderer-generated.",
+        "Use the matching 3:2, 1:1, and storefront prompts in visual-direction/theme.txt to create final thumbnail artwork, then replace the three matching specimens.",
         "Validator: python bin/validate_font_visual_handoff.py --strict-art-direction",
     ]
     (root / "VISUAL-HANDOFF-READY.md").write_text("\n".join(marker) + "\n", encoding="utf-8")
 
 
-def validate(staging: Path, allow_pending: bool = False) -> None:
+def validate(staging: Path, allow_pending: bool = False, report_success: bool = True) -> None:
     validator = Path(__file__).resolve().parent / "validate_font_visual_handoff.py"
     command = [
         sys.executable,
         str(validator),
         str(staging),
         "--strict-art-direction",
-        "--min-promos",
-        "8",
-        "--max-promos",
-        "8",
     ]
     if allow_pending:
         command.append("--allow-pending-marker")
@@ -750,6 +781,82 @@ def validate(staging: Path, allow_pending: bool = False) -> None:
         sys.stdout.write(result.stdout)
         sys.stderr.write(result.stderr)
         raise SystemExit("placeholder visual handoff failed mechanical validation")
+    if report_success and result.stdout:
+        sys.stdout.write(result.stdout)
+
+
+def render_programmatic_assets(staging: Path, plan: dict, primary_font: Path) -> None:
+    """Render support layouts, factual sheets, and every active Pinterest template."""
+    renderer = Path(__file__).resolve().parent / "render-pins"
+    if not renderer.is_file():
+        raise SystemExit(f"support renderer is missing: {renderer}")
+    renderer_class = plan.get("renderer_class")
+    if renderer_class not in {"elegant", "blackletter", "sports", "script"}:
+        raise SystemExit("visual plan renderer_class must be elegant, blackletter, sports, or script")
+    profile = plan.get("font_profile") or {}
+    about = " ".join(
+        str(profile.get(key, "")).strip()
+        for key in ("construction", "personality", "buyer_fit")
+        if str(profile.get(key, "")).strip()
+    )[:240]
+    count = plan.get("support_count", 7)
+    if count != 7:
+        raise SystemExit("support_count is fixed at 7; omit it or set it to 7")
+    support_renderer = plan.get("support_renderer", "html")
+    if support_renderer not in {"skia", "hybrid", "html"}:
+        raise SystemExit("support_renderer must be skia, hybrid, or html")
+    common = ["--font", str(primary_font), "--name", str(plan["font_name"]),
+              "--class", renderer_class]
+    if about:
+        common += ["--about", about]
+    support_args = common + [
+        "--supports", "--support-count", "7",
+        "--support-renderer", support_renderer,
+        "--support-ratios", "both",
+        "--json",
+        "--out", str(staging / "supporting"),
+    ]
+    for label, args in (
+        ("supporting templates", support_args),
+        ("factual specimens", common + ["--specimens", "--out", str(staging / "specimens")]),
+    ):
+        result = subprocess.run([str(renderer), *args], text=True, capture_output=True,
+                                cwd=Path(__file__).resolve().parent.parent)
+        if result.returncode:
+            if result.stdout:
+                sys.stdout.write(result.stdout)
+            if result.stderr:
+                sys.stderr.write(result.stderr)
+            raise SystemExit(f"image renderer failed while creating {label}")
+        if label == "supporting templates":
+            try:
+                payload = json.loads(result.stdout)
+            except json.JSONDecodeError as error:
+                raise SystemExit(f"support renderer returned invalid JSON: {error}") from error
+            if not payload.get("ok"):
+                raise SystemExit("support renderer reported layout errors")
+            plan["_support_renderer_by_template"] = {
+                item["template"]: item["renderer"]
+                for item in payload.get("results", [])
+            }
+            renderers = ", ".join(sorted(set(plan["_support_renderer_by_template"].values())))
+            print(f"  supporting templates: {renderers or 'unknown renderer'}")
+        elif result.stdout:
+            sys.stdout.write(result.stdout)
+
+    pin_renderer = Path(__file__).resolve().parents[1] / "font-factory" / "pin-html" / "render_gallery.mjs"
+    if not pin_renderer.is_file():
+        raise SystemExit(f"HTML/CSS Pinterest renderer is missing: {pin_renderer}")
+    command = ["node", str(pin_renderer), "--mode", "pins", "--font", str(primary_font),
+               "--font-name", str(plan["font_name"]), "--out", str(staging / "pinterest")]
+    result = subprocess.run(command, text=True, capture_output=True,
+                            cwd=Path(__file__).resolve().parent.parent)
+    if result.returncode:
+        if result.stdout:
+            sys.stdout.write(result.stdout)
+        if result.stderr:
+            sys.stderr.write(result.stderr)
+        raise SystemExit("HTML/CSS Pinterest template generation failed")
     if result.stdout:
         sys.stdout.write(result.stdout)
 
@@ -758,21 +865,14 @@ def write_space_report(
     root: Path,
     layout: list[tuple[str, str, tuple[int, int], list[tuple[float, float, float, float]]]],
 ) -> Path:
-    """Report where the text sits and how much space it leaves, as text.
-
-    This agent has no vision, so it cannot look at the rendered placeholder --
-    which is why briefs were written blind and one of them described two thirds
-    of the frame as "empty amber-tinted field". The renderer knows the exact
-    geometry, so it states it: a 3x3 occupancy map plus the free margins. The
-    brief can then commit to what occupies the empty region instead of guessing.
-    """
+    """Report placeholder geometry without prescribing how to fill whitespace."""
     rows = [
         "# Placeholder Space Report",
         "",
-        "Derived from the rendered text placeholders. The brief for each image must",
-        "account for the free space named here: say what occupies it, not merely what",
-        "colour it is. An `empty` region described only as a colour field is a wasted",
-        "panel.",
+        "Derived from the raw text placeholders. This report measures text bounds;",
+        "it does not judge the finished thumbnail or prescribe added artwork.",
+        "Open areas may remain intentionally empty when that gives the title room.",
+        "Add a supporting element only when the font-specific concept needs it.",
         "",
     ]
     for name, ratio, (width, height), boxes in layout:
@@ -840,20 +940,21 @@ def main() -> int:
     font_name = str(plan.get("font_name", "")).strip()
     if not font_name:
         raise SystemExit("visual plan font_name is required")
-    supporting_image_theme = plan.get("supporting_image_theme")
-    if not isinstance(supporting_image_theme, str) or not supporting_image_theme.strip():
-        raise SystemExit("visual plan supporting_image_theme is required; paste the Font Renamer theme sentence verbatim")
-    if "\n" in supporting_image_theme or "\r" in supporting_image_theme:
-        raise SystemExit("visual plan supporting_image_theme must be exactly one line")
     primary_font = require_font(plan.get("primary_font"), workspace, "primary")
     japanese_font = resolve_path(plan.get("japanese_font"), workspace)
     if japanese_font is None or not japanese_font.is_file():
         japanese_font = fallback_font()
     primary_outline = OutlineFont(primary_font)
     japanese_outline = OutlineFont(japanese_font)
-    promos = plan.get("promos")
-    if not isinstance(promos, list) or len(promos) != 8:
-        raise SystemExit("visual plan promos must contain exactly 8 entries")
+    promos = plan.get("promos", [])
+    if promos not in (None, []):
+        raise SystemExit("visual plan promos are retired; supporting images come from the shared template catalogue")
+    if plan.get("support_count", 7) != 7:
+        raise SystemExit("visual plan support_count must remain 7")
+    if plan.get("support_renderer", "html") not in {"skia", "hybrid", "html"}:
+        raise SystemExit("visual plan support_renderer must be skia, hybrid, or html")
+    if plan.get("renderer_class") not in {"elegant", "blackletter", "sports", "script"}:
+        raise SystemExit("visual plan renderer_class must be elegant, blackletter, sports, or script")
 
     output.parent.mkdir(parents=True, exist_ok=True)
     # Sweep staging directories orphaned by a previous hard kill: SIGKILL gives the
@@ -873,16 +974,12 @@ def main() -> int:
             svg, boxes = render_placeholder(owner, size, ratio, name, primary_outline, japanese_outline if name == "thumbnail_japanese" else primary_outline)
             write_placeholder_png(svg, staging / ratio / f"{name}.png")
             layout.append((name, ratio, size, boxes))
-        for index, promo in enumerate(promos, start=1):
-            for ratio, size in (("3x2", RATIOS["3x2"]), ("1x1", RATIOS["1x1"])):
-                svg, boxes = render_placeholder(promo, size, ratio, f"promo_{index}", primary_outline, primary_outline)
-                write_placeholder_png(svg, staging / ratio / f"promo_{index}.png")
-                layout.append((f"promo_{index}", ratio, size, boxes))
+        render_programmatic_assets(staging, plan, primary_font)
         write_space_report(staging, layout)
         write_manifest(staging, plan)
         derived = write_derived_views(plan_path.parent, plan)
         write_marker(staging, "pending", output)
-        validate(staging, allow_pending=True)
+        validate(staging, allow_pending=True, report_success=False)
         write_marker(staging, "PASS", output)
         validate(staging)
         if output.exists():
@@ -894,7 +991,8 @@ def main() -> int:
 
     print(f"[PASS] provisional text visual handoff ready: {output}")
     print(f"[PASS] derived {len(derived)} view(s) from the plan in {plan_path.parent}")
-    print("[PASS] Visual status: PROVISIONAL — MANUAL IMAGE REPLACEMENT REQUIRED")
+    print("[PASS] Thumbnail placeholders are provisional; seven support templates were rendered at both 3:2 and 1:1.")
+    print("[PASS] All active HTML/CSS Pinterest templates were rendered with the primary font.")
     print("[PASS] READY FOR FONT PREP HANDOFF")
     return 0
 

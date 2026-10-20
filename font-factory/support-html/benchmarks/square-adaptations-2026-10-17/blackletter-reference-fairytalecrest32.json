@@ -1,0 +1,76 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "fairytalecrest32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "fairytalecrest32",
+    "headlineFontSize": "205.72px",
+    "smallestDisplayFontSize": "77.9px",
+    "contrast": 14.619383739315646,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "The",
+        "fontSize": "77.9px",
+        "x": 218.0625,
+        "y": 152.9375,
+        "width": 107.859375,
+        "height": 70.109375
+      },
+      {
+        "name": "headline",
+        "text": "Fairytale",
+        "fontSize": "205.72px",
+        "x": 69.015625,
+        "y": 287.421875,
+        "width": 661.953125,
+        "height": 185.140625
+      },
+      {
+        "name": "line2",
+        "text": "Multilingual Support",
+        "fontSize": "17px",
+        "x": 495.375,
+        "y": 567.5,
+        "width": 169.234375,
+        "height": 17
+      },
+      {
+        "name": "descriptor",
+        "text": "A Letterform Study",
+        "fontSize": "13px",
+        "x": 424,
+        "y": 609.5,
+        "width": 112.484375,
+        "height": 13
+      },
+      {
+        "name": "footer",
+        "text": "Chapter 01 · 2026",
+        "fontSize": "12px",
+        "x": 346.609375,
+        "y": 724,
+        "width": 106.765625,
+        "height": 12
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-fairytalecrest32.png",
+  "outputBytes": 966826
+}

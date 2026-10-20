@@ -1,0 +1,62 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "manualbrew32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "manualbrew32",
+    "headlineFontSize": "163.21px",
+    "smallestDisplayFontSize": "162.209px",
+    "contrast": 4.444405895992405,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The source uses large, brightly colored specimen letters against charcoal; the darkest source accent is orange."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "manualbrew-top-word",
+        "text": "Manual",
+        "fontSize": "163.21px",
+        "x": 72.0078125,
+        "y": 162.61874389648438,
+        "width": 655.984375,
+        "height": 160.57501220703125
+      },
+      {
+        "name": "manualbrew-bottom-word",
+        "text": "Brew",
+        "fontSize": "162.209px",
+        "x": 168.0078125,
+        "y": 414.70001220703125,
+        "width": 463.984375,
+        "height": 159.60003662109375
+      },
+      {
+        "name": "manualbrew-studio-credit",
+        "text": "Our SunKits © Rivari Studio 2024",
+        "fontSize": "19.2px",
+        "x": 120,
+        "y": 708,
+        "width": 560,
+        "height": 19.203125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/manualbrew32.png",
+  "outputBytes": 66162
+}

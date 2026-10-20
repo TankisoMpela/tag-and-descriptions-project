@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thumbnail Font Sweep</title>
+  <style>
+    :root { color-scheme: light; --ink: #211f1c; --muted: #68635d; --line: #ddd7ce; --paper: #f3f0ea; --card: #fffefa; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 system-ui, sans-serif; }
+    main { width: min(1560px, 100%); margin: 0 auto; padding: 42px 28px 72px; }
+    h1 { margin: 0; font-size: clamp(30px, 4vw, 48px); line-height: 1.08; letter-spacing: -.035em; }
+    .intro { max-width: 900px; margin: 12px 0 20px; color: var(--muted); }
+    nav { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 0 0 36px; }
+    a { color: #184d72; }
+    section { margin: 34px 0 44px; }
+    h2 { margin: 0 0 15px; font-size: 23px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 390px), 1fr)); gap: 20px; }
+    .card { overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+    .card img { display: block; width: 100%; height: auto; background: #e8e4dd; }
+    .copy { padding: 15px 17px 17px; }
+    h3 { margin: 0 0 4px; font-size: 19px; }
+    .copy p { margin: 0 0 10px; color: var(--muted); }
+    .subtitle { color: #4b4640; font-size: 14px; }
+    .file { font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; color: #777168; }
+    footer { margin: 26px 0 0; color: var(--muted); font-size: 14px; }
+    @media (max-width: 520px) { main { padding: 28px 16px 52px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Thumbnail font sweep</h1>
+    <p class="intro">Seventeen individual 3:2 renders across seventeen different fonts. Each thumbnail includes a short descriptor beneath the font name. Every render is a separate full-size image; open any card to inspect it. The new-font sweep is shown first, followed by refreshed versions of the earlier nine. All lettering remains a flat overlay, separate from photographed or illustrated surfaces.</p>
+    <nav aria-label="Research files">
+      <a href="../prompt-findings.md">Updated art rules</a>
+      <a href="../reference-structure-audit.md">33-reference composition audit</a>
+      <a href="../captions.json">Full captions for all 33 references</a>
+      <a href="../index.html">Reference image gallery</a>
+      <a href="prompts.md">Current prompts and design notes</a>
+      <a href="review.md">Render review</a>
+      <a href="iterations/README.md">Archived iterations</a>
+      <a href="next-workflow-pass/index.html">Next workflow pass: Evercourt + Vantrelle</a>
+    </nav>
+
+    <section>
+      <h2>New font sweep</h2>
+      <div class="grid">
+        <article class="card"><a href="cosette-marque-3x2.png" target="_blank" rel="noopener"><img src="cosette-marque-3x2.png" alt="Cosette Marque title on greige paper with a faint printing press illustration"></a><div class="copy"><h3>Cosette Marque</h3><p class="subtitle">A High Contrast Editorial Serif</p><p>Large navy title, subtle paper tooth, and a quiet press illustration at right.</p><div class="file">Cafespro Weekend · cosette-marque-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="ivory-jane-3x2.png" target="_blank" rel="noopener"><img src="ivory-jane-3x2.png" alt="Ivory Jane script over a coastal dusk photograph"></a><div class="copy"><h3>Ivory Jane</h3><p class="subtitle">A Flowing Calligraphy Script</p><p>Open twilight sky, one distant figure, and a wide script title.</p><div class="file">The Longlight · ivory-jane-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="velvet-oath-3x2.png" target="_blank" rel="noopener"><img src="velvet-oath-3x2.png" alt="Velvet Oath title over deep red velvet"></a><div class="copy"><h3>Velvet Oath</h3><p class="subtitle">A Bold Romantic Serif</p><p>Large ivory display lettering against a tactile red fabric field.</p><div class="file">Augallion · velvet-oath-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="fanfare-ink-3x2.png" target="_blank" rel="noopener"><img src="fanfare-ink-3x2.png" alt="Fanfare Ink script in a cobalt and vermilion gig-poster layout"></a><div class="copy"><h3>Fanfare Ink</h3><p class="subtitle">A Flourished Display Script</p><p>Large two-line script, descriptor band, and very subtle paper and ink texture.</p><div class="file">Losttimoh · fanfare-ink-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="copper-oval-3x2.png" target="_blank" rel="noopener"><img src="copper-oval-3x2.png" alt="Copper Oval script on teal with a coral oval and fine etched contours"></a><div class="copy"><h3>Copper Oval</h3><p class="subtitle">A Graceful Signature Script</p><p>Yellow script on teal is balanced by a cropped coral oval with faint contours.</p><div class="file">Gladista Script · copper-oval-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="hairline-cartouche-3x2.png" target="_blank" rel="noopener"><img src="hairline-cartouche-3x2.png" alt="Hairline Cartouche flat blue and ivory typographic poster"></a><div class="copy"><h3>Hairline Cartouche</h3><p class="subtitle">A Refined Hairline Serif</p><p>Flat geometric poster with cropped glyph scale, a clear title panel, and paper grain.</p><div class="file">Evolitta · hairline-cartouche-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="betrothed-hour-3x2.png" target="_blank" rel="noopener"><img src="betrothed-hour-3x2.png" alt="Betrothed Hour calligraphy on aubergine with a faint clock dial at right"></a><div class="copy"><h3>Betrothed Hour</h3><p class="subtitle">An Elegant Wedding Script</p><p>Ivory calligraphy, muted coral descriptor, and a partial low-contrast clock dial.</p><div class="file">Engagement Time · betrothed-hour-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="running-saffron-3x2.png" target="_blank" rel="noopener"><img src="running-saffron-3x2.png" alt="Running Saffron script over a warm track scene"></a><div class="copy"><h3>Running Saffron</h3><p class="subtitle">A Lively Handwritten Script</p><p>Sunset running scene with one small motion-blurred figure behind the title.</p><div class="file">Auranticaa · running-saffron-3x2.png · 1536 × 1024</div></div></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Earlier fonts, refreshed with descriptor lines</h2>
+      <div class="grid">
+        <article class="card"><a href="kuro-ripper-3x2.png" target="_blank" rel="noopener"><img src="kuro-ripper-3x2.png" alt="Kuro Ripper brush lettering over a noir street"></a><div class="copy"><h3>Kuro Ripper</h3><p class="subtitle">A Raw Brush Display Typeface</p><p>Rough brush-cut capitals lead over a quiet monochrome street scene.</p><div class="file">Dragon Striker · kuro-ripper-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="story-wisp-3x2.png" target="_blank" rel="noopener"><img src="story-wisp-3x2.png" alt="Story Wisp illustrated dusk forest cover"></a><div class="copy"><h3>Story Wisp</h3><p class="subtitle">A Curled Storybook Display Serif</p><p>Large storybook lettering over a simple illustrated dusk setting.</p><div class="file">Sisara · story-wisp-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="neon-parade-3x2.png" target="_blank" rel="noopener"><img src="neon-parade-3x2.png" alt="Neon Parade script over blue roller rink photography"></a><div class="copy"><h3>Neon Parade</h3><p class="subtitle">A Bold Retro Script</p><p>Title-case script and descriptor overlay a blue rink photo as flat type.</p><div class="file">Retrofest · neon-parade-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="silken-flourish-3x2.png" target="_blank" rel="noopener"><img src="silken-flourish-3x2.png" alt="Silken Flourish flat aubergine, coral and ivory poster"></a><div class="copy"><h3>Silken Flourish</h3><p class="subtitle">An Expressive Brush Script</p><p>New flat screen-printed direction with a broad ivory title panel.</p><div class="file">Andallan · silken-flourish-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="restrained-flourish-3x2.png" target="_blank" rel="noopener"><img src="restrained-flourish-3x2.png" alt="Restrained Flourish title over a softly blurred model"></a><div class="copy"><h3>Restrained Flourish</h3><p class="subtitle">A High Contrast Editorial Serif</p><p>Sharp, dominant lettering with a softly blurred background figure.</p><div class="file">Equity · restrained-flourish-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="ember-bracket-3x2.png" target="_blank" rel="noopener"><img src="ember-bracket-3x2.png" alt="Ember Bracket angular typographic poster"></a><div class="copy"><h3>Ember Bracket</h3><p class="subtitle">An Angular Tech Display Typeface</p><p>Angular glyphs and the full name build a bright, high-contrast poster.</p><div class="file">Blazher · ember-bracket-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="cameo-journal-3x2.png" target="_blank" rel="noopener"><img src="cameo-journal-3x2.png" alt="Cameo Journal script on sage paper with a small dip-pen illustration"></a><div class="copy"><h3>Cameo Journal</h3><p class="subtitle">A Handwritten Signature Script</p><p>Large plum script on textured sage, with a faded pen nib in the lower-right.</p><div class="file">Scottmid Blissful · cameo-journal-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="aureus-clare-3x2.png" target="_blank" rel="noopener"><img src="aureus-clare-3x2.png" alt="Aureus Clare split field typographic poster"></a><div class="copy"><h3>Aureus Clare</h3><p class="subtitle">A Hairline Display Serif</p><p>Fine geometric lettering and an oversized A anchor an ivory and vermilion poster.</p><div class="file">Qegor · aureus-clare-3x2.png · 1536 × 1024</div></div></article>
+        <article class="card"><a href="quill-crest-3x2.png" target="_blank" rel="noopener"><img src="quill-crest-3x2.png" alt="Quill Crest bold serif beside one contained feather illustration"></a><div class="copy"><h3>Quill Crest</h3><p class="subtitle">A Bold Ornamental Serif</p><p>Large display lettering balances one separate, flat feather illustration.</p><div class="file">Quowist · quill-crest-3x2.png · 1536 × 1024</div></div></article>
+      </div>
+    </section>
+
+    <footer>All 17 current PNGs are individual files in this folder; earlier renders are separated under <a href="iterations/README.md">iterations</a>.</footer>
+  </main>
+</body>
+</html>

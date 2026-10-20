@@ -1,0 +1,76 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "moonlitbouquet32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "moonlitbouquet32",
+    "headlineFontSize": "173.66px",
+    "smallestDisplayFontSize": "116.21px",
+    "contrast": 16.450730415031934,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "A Bohemian Letter Study",
+        "fontSize": "13px",
+        "x": 44,
+        "y": 71.5,
+        "width": 147.453125,
+        "height": 13
+      },
+      {
+        "name": "footer",
+        "text": "Edition · 03",
+        "fontSize": "13px",
+        "x": 682.96875,
+        "y": 71.5,
+        "width": 69.03125,
+        "height": 13
+      },
+      {
+        "name": "headline",
+        "text": "Moonlight",
+        "fontSize": "173.66px",
+        "x": 70.59375,
+        "y": 137.859375,
+        "width": 658.796875,
+        "height": 156.28125
+      },
+      {
+        "name": "line2",
+        "text": "Woven Dreams",
+        "fontSize": "116.21px",
+        "x": 51.03125,
+        "y": 355.703125,
+        "width": 697.9375,
+        "height": 104.578125
+      },
+      {
+        "name": "descriptor",
+        "text": "Evermore",
+        "fontSize": "166.18px",
+        "x": 86.296875,
+        "y": 545.21875,
+        "width": 627.40625,
+        "height": 149.5625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-moonlitbouquet32.png",
+  "outputBytes": 1164034
+}

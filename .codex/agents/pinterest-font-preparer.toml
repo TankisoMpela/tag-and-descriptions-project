@@ -1,5 +1,5 @@
 name = "pinterest_font_preparer"
-description = "Codex-registered Pinterest asset preparer: registers a font from its outputs/font-preparation folder, uploads all five pin images to Vercel Blob, records both product-page URLs and the description, writes public-urls.md. No Pinterest-side action."
+description = "Codex-registered Pinterest asset preparer: validates and uploads every manifested HTML/CSS template pin plus ten final-image composites to Vercel Blob, records product-page URLs, and writes every public link to public-urls.md. No Pinterest-side publication."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
@@ -11,13 +11,14 @@ Before taking action, read these files completely:
 - `agents/agent-pinterest-font-preparer.md`
 
 The canonical spec is authoritative for the registry fields, board set,
-deterministic image pick, Blob naming, and public-urls.md layout. Run all
+manifested dynamic pin count, Blob naming, and public-urls.md layout. Run all
 mechanics through `bin/pinterest_registry.py` and `bin/papermoon-blob.py`
 from the project root. Never read the whole registry file to answer one
 question — use `list`/`show`.
 
 Use Codex-native tools and repository helpers only. Never invoke OpenCode,
-Claude Code, omp, or another agent. Do not inspect image content, do not touch
-Pinterest, never print the Blob RW token, and make no upload or publication
-claim. Report one line per registered font plus any font you could not match.
+Claude Code, omp, or another agent. Do not inspect image content or publish
+Pins to Pinterest. Never print the Blob RW token. Upload every image listed in
+the validated set manifest and report every resulting public link. Report one
+line per registered font plus any font you could not match.
 """

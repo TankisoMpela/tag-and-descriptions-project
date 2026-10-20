@@ -1,0 +1,220 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "voguecover32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "voguecover32",
+    "headlineFontSize": "245.41px",
+    "smallestDisplayFontSize": "23.8616px",
+    "contrast": 17.616230271426456,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "illustrated-portrait",
+        "text": "",
+        "fontSize": "16px",
+        "x": 120,
+        "y": 20,
+        "width": 560,
+        "height": 752
+      },
+      {
+        "name": "cover-masthead",
+        "text": "Vogue",
+        "fontSize": "245.41px",
+        "x": 19.890625,
+        "y": 26.390625,
+        "width": 760.21875,
+        "height": 196.3125
+      },
+      {
+        "name": "cover-issue-1",
+        "text": "March",
+        "fontSize": "12.8px",
+        "x": 29.59375,
+        "y": 232.796875,
+        "width": 40.09375,
+        "height": 12.796875
+      },
+      {
+        "name": "cover-issue-2",
+        "text": "Issue",
+        "fontSize": "12.8px",
+        "x": 29.59375,
+        "y": 247.1875,
+        "width": 33.90625,
+        "height": 12.796875
+      },
+      {
+        "name": "cover-submast",
+        "text": "Japan",
+        "fontSize": "38.25px",
+        "x": 647.78125,
+        "y": 241.59375,
+        "width": 120.21875,
+        "height": 35.953125
+      },
+      {
+        "name": "left-kicker",
+        "text": "Discover",
+        "fontSize": "54.3px",
+        "x": 30.390625,
+        "y": 284,
+        "width": 232.21875,
+        "height": 46.6875
+      },
+      {
+        "name": "left-story-1",
+        "text": "The New",
+        "fontSize": "44px",
+        "x": 32,
+        "y": 348.796875,
+        "width": 180.25,
+        "height": 46.1875
+      },
+      {
+        "name": "left-story-2",
+        "text": "Street Fashion",
+        "fontSize": "38.96px",
+        "x": 32,
+        "y": 408.796875,
+        "width": 256.21875,
+        "height": 40.890625
+      },
+      {
+        "name": "left-story-3",
+        "text": "Trends From",
+        "fontSize": "42.68px",
+        "x": 32,
+        "y": 468.796875,
+        "width": 256.234375,
+        "height": 44.8125
+      },
+      {
+        "name": "accent-destination",
+        "text": "Tokyo",
+        "fontSize": "56.802px",
+        "x": 30.390625,
+        "y": 536,
+        "width": 200.671875,
+        "height": 52.25
+      },
+      {
+        "name": "lower-kicker",
+        "text": "Reina Sato",
+        "fontSize": "42.1602px",
+        "x": 30.390625,
+        "y": 600,
+        "width": 224.78125,
+        "height": 36.25
+      },
+      {
+        "name": "lower-story-1",
+        "text": "Shows You How",
+        "fontSize": "23.8616px",
+        "x": 32,
+        "y": 652.796875,
+        "width": 177.953125,
+        "height": 25.046875
+      },
+      {
+        "name": "lower-story-2",
+        "text": "To Take The",
+        "fontSize": "23.8616px",
+        "x": 32,
+        "y": 680,
+        "width": 133.125,
+        "height": 25.046875
+      },
+      {
+        "name": "lower-story-3",
+        "text": "Perfect Selfie",
+        "fontSize": "23.8616px",
+        "x": 32,
+        "y": 707.1875,
+        "width": 145.328125,
+        "height": 25.046875
+      },
+      {
+        "name": "feature-title-1",
+        "text": "Sakura",
+        "fontSize": "84px",
+        "x": 465.359375,
+        "y": 408,
+        "width": 300.25,
+        "height": 72.234375
+      },
+      {
+        "name": "feature-title-2",
+        "text": "Yamaguchi",
+        "fontSize": "73.1px",
+        "x": 365.359375,
+        "y": 512,
+        "width": 400.25,
+        "height": 62.859375
+      },
+      {
+        "name": "feature-note-1",
+        "text": "The Making Of",
+        "fontSize": "27.6711px",
+        "x": 565.703125,
+        "y": 608,
+        "width": 198.296875,
+        "height": 29.046875
+      },
+      {
+        "name": "feature-note-2",
+        "text": "Asia's Next",
+        "fontSize": "27.6711px",
+        "x": 616.5625,
+        "y": 642.390625,
+        "width": 147.4375,
+        "height": 29.046875
+      },
+      {
+        "name": "feature-note-3",
+        "text": "Top Model",
+        "fontSize": "27.6711px",
+        "x": 622.609375,
+        "y": 676.796875,
+        "width": 141.390625,
+        "height": 29.046875
+      },
+      {
+        "name": "cover-footer-lead",
+        "text": "Follow Us On Social Media",
+        "fontSize": "15.2px",
+        "x": 565.109375,
+        "y": 748.796875,
+        "width": 198.890625,
+        "height": 15.203125
+      },
+      {
+        "name": "cover-footer-note",
+        "text": "Facebook / Instagram / TikTok",
+        "fontSize": "13.6px",
+        "x": 558.703125,
+        "y": 776,
+        "width": 205.296875,
+        "height": 13.59375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/voguecover32.png",
+  "outputBytes": 866739
+}

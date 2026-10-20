@@ -1,0 +1,483 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/mountain32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/mountain32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Braewick-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 29.4,
+  "imageBytes": {
+    "html": 1081934,
+    "skia": 1268209
+  },
+  "desktopLayout": {
+    "template": "mountain32",
+    "headlineFontSize": "40.4098px",
+    "contrast": 14.984871719022003,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "original-mountain-engraving",
+        "text": "",
+        "fontSize": "16px",
+        "x": 36.859375,
+        "y": 37.8125,
+        "width": 212.71875,
+        "height": 382.890625
+      },
+      {
+        "name": "specimen-row-1",
+        "text": "01.Diabolically",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 30.71875,
+        "width": 401.375,
+        "height": 49.625
+      },
+      {
+        "name": "row-number-1",
+        "text": "01.",
+        "fontSize": "13.5988px",
+        "x": 287.15625,
+        "y": 30.71875,
+        "width": 16.84375,
+        "height": 49.625
+      },
+      {
+        "name": "specimen-word-1",
+        "text": "Diabolically",
+        "fontSize": "40.4098px",
+        "x": 322.625,
+        "y": 30.71875,
+        "width": 145.484375,
+        "height": 49.625
+      },
+      {
+        "name": "row-rule-1",
+        "text": "",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 82.46875,
+        "width": 401.375,
+        "height": 1
+      },
+      {
+        "name": "specimen-row-2",
+        "text": "02.Equalizing",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 99.265625,
+        "width": 401.375,
+        "height": 49.625
+      },
+      {
+        "name": "row-number-2",
+        "text": "02.",
+        "fontSize": "13.5988px",
+        "x": 287.15625,
+        "y": 99.265625,
+        "width": 16.84375,
+        "height": 49.625
+      },
+      {
+        "name": "specimen-word-2",
+        "text": "Equalizing",
+        "fontSize": "40.4098px",
+        "x": 322.625,
+        "y": 99.265625,
+        "width": 137.453125,
+        "height": 49.625
+      },
+      {
+        "name": "row-rule-2",
+        "text": "",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 151.015625,
+        "width": 401.375,
+        "height": 1
+      },
+      {
+        "name": "specimen-row-3",
+        "text": "03.Revaluation",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 167.8125,
+        "width": 401.375,
+        "height": 49.625
+      },
+      {
+        "name": "row-number-3",
+        "text": "03.",
+        "fontSize": "13.5988px",
+        "x": 287.15625,
+        "y": 167.8125,
+        "width": 16.84375,
+        "height": 49.625
+      },
+      {
+        "name": "specimen-word-3",
+        "text": "Revaluation",
+        "fontSize": "40.4098px",
+        "x": 322.625,
+        "y": 167.8125,
+        "width": 156.46875,
+        "height": 49.625
+      },
+      {
+        "name": "row-rule-3",
+        "text": "",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 219.5625,
+        "width": 401.375,
+        "height": 1
+      },
+      {
+        "name": "specimen-row-4",
+        "text": "04.Pandemic",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 236.359375,
+        "width": 401.375,
+        "height": 49.625
+      },
+      {
+        "name": "row-number-4",
+        "text": "04.",
+        "fontSize": "13.5988px",
+        "x": 287.15625,
+        "y": 236.359375,
+        "width": 16.84375,
+        "height": 49.625
+      },
+      {
+        "name": "specimen-word-4",
+        "text": "Pandemic",
+        "fontSize": "40.4098px",
+        "x": 322.625,
+        "y": 236.359375,
+        "width": 121.9375,
+        "height": 49.625
+      },
+      {
+        "name": "row-rule-4",
+        "text": "",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 288.109375,
+        "width": 401.375,
+        "height": 1
+      },
+      {
+        "name": "specimen-row-5",
+        "text": "05.Submachine",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 304.890625,
+        "width": 401.375,
+        "height": 49.625
+      },
+      {
+        "name": "row-number-5",
+        "text": "05.",
+        "fontSize": "13.5988px",
+        "x": 287.15625,
+        "y": 304.890625,
+        "width": 16.84375,
+        "height": 49.625
+      },
+      {
+        "name": "specimen-word-5",
+        "text": "Submachine",
+        "fontSize": "40.4098px",
+        "x": 322.625,
+        "y": 304.890625,
+        "width": 155.59375,
+        "height": 49.625
+      },
+      {
+        "name": "row-rule-5",
+        "text": "",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 356.640625,
+        "width": 401.375,
+        "height": 1
+      },
+      {
+        "name": "specimen-row-6",
+        "text": "06.Challenger",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 373.4375,
+        "width": 401.375,
+        "height": 49.625
+      },
+      {
+        "name": "row-number-6",
+        "text": "06.",
+        "fontSize": "13.5988px",
+        "x": 287.15625,
+        "y": 373.4375,
+        "width": 16.84375,
+        "height": 49.625
+      },
+      {
+        "name": "specimen-word-6",
+        "text": "Challenger",
+        "fontSize": "40.4098px",
+        "x": 322.625,
+        "y": 373.4375,
+        "width": 143.796875,
+        "height": 49.625
+      },
+      {
+        "name": "row-rule-6",
+        "text": "",
+        "fontSize": "16px",
+        "x": 276.53125,
+        "y": 425.1875,
+        "width": 401.375,
+        "height": 1
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "mountain32",
+    "headlineFontSize": "19.79px",
+    "contrast": 14.984871719022003,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "original-mountain-engraving",
+        "text": "",
+        "fontSize": "16px",
+        "x": 15.828125,
+        "y": 18.765625,
+        "width": 102.078125,
+        "height": 190.0625
+      },
+      {
+        "name": "specimen-row-1",
+        "text": "01.Diabolically",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 15.25,
+        "width": 214.734375,
+        "height": 24.625
+      },
+      {
+        "name": "row-number-1",
+        "text": "01.",
+        "fontSize": "6.75625px",
+        "x": 132.40625,
+        "y": 15.25,
+        "width": 10.734375,
+        "height": 24.625
+      },
+      {
+        "name": "specimen-word-1",
+        "text": "Diabolically",
+        "fontSize": "19.79px",
+        "x": 151.375,
+        "y": 15.25,
+        "width": 71.203125,
+        "height": 24.625
+      },
+      {
+        "name": "row-rule-1",
+        "text": "",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 40.421875,
+        "width": 214.734375,
+        "height": 1
+      },
+      {
+        "name": "specimen-row-2",
+        "text": "02.Equalizing",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 49.265625,
+        "width": 214.734375,
+        "height": 24.625
+      },
+      {
+        "name": "row-number-2",
+        "text": "02.",
+        "fontSize": "6.75625px",
+        "x": 132.40625,
+        "y": 49.265625,
+        "width": 10.734375,
+        "height": 24.625
+      },
+      {
+        "name": "specimen-word-2",
+        "text": "Equalizing",
+        "fontSize": "19.79px",
+        "x": 151.375,
+        "y": 49.265625,
+        "width": 67.265625,
+        "height": 24.625
+      },
+      {
+        "name": "row-rule-2",
+        "text": "",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 74.4375,
+        "width": 214.734375,
+        "height": 1
+      },
+      {
+        "name": "specimen-row-3",
+        "text": "03.Revaluation",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 83.296875,
+        "width": 214.734375,
+        "height": 24.625
+      },
+      {
+        "name": "row-number-3",
+        "text": "03.",
+        "fontSize": "6.75625px",
+        "x": 132.40625,
+        "y": 83.296875,
+        "width": 10.734375,
+        "height": 24.625
+      },
+      {
+        "name": "specimen-word-3",
+        "text": "Revaluation",
+        "fontSize": "19.79px",
+        "x": 151.375,
+        "y": 83.296875,
+        "width": 76.578125,
+        "height": 24.625
+      },
+      {
+        "name": "row-rule-3",
+        "text": "",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 108.46875,
+        "width": 214.734375,
+        "height": 1
+      },
+      {
+        "name": "specimen-row-4",
+        "text": "04.Pandemic",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 117.328125,
+        "width": 214.734375,
+        "height": 24.625
+      },
+      {
+        "name": "row-number-4",
+        "text": "04.",
+        "fontSize": "6.75625px",
+        "x": 132.40625,
+        "y": 117.328125,
+        "width": 10.734375,
+        "height": 24.625
+      },
+      {
+        "name": "specimen-word-4",
+        "text": "Pandemic",
+        "fontSize": "19.79px",
+        "x": 151.375,
+        "y": 117.328125,
+        "width": 59.671875,
+        "height": 24.625
+      },
+      {
+        "name": "row-rule-4",
+        "text": "",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 142.5,
+        "width": 214.734375,
+        "height": 1
+      },
+      {
+        "name": "specimen-row-5",
+        "text": "05.Submachine",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 151.34375,
+        "width": 214.734375,
+        "height": 24.625
+      },
+      {
+        "name": "row-number-5",
+        "text": "05.",
+        "fontSize": "6.75625px",
+        "x": 132.40625,
+        "y": 151.34375,
+        "width": 10.734375,
+        "height": 24.625
+      },
+      {
+        "name": "specimen-word-5",
+        "text": "Submachine",
+        "fontSize": "19.79px",
+        "x": 151.375,
+        "y": 151.34375,
+        "width": 76.140625,
+        "height": 24.625
+      },
+      {
+        "name": "row-rule-5",
+        "text": "",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 176.515625,
+        "width": 214.734375,
+        "height": 1
+      },
+      {
+        "name": "specimen-row-6",
+        "text": "06.Challenger",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 185.375,
+        "width": 214.734375,
+        "height": 24.625
+      },
+      {
+        "name": "row-number-6",
+        "text": "06.",
+        "fontSize": "6.75625px",
+        "x": 132.40625,
+        "y": 185.375,
+        "width": 10.734375,
+        "height": 24.625
+      },
+      {
+        "name": "specimen-word-6",
+        "text": "Challenger",
+        "fontSize": "19.79px",
+        "x": 151.375,
+        "y": 185.375,
+        "width": 70.359375,
+        "height": 24.625
+      },
+      {
+        "name": "row-rule-6",
+        "text": "",
+        "fontSize": "16px",
+        "x": 126.71875,
+        "y": 210.546875,
+        "width": 214.734375,
+        "height": 1
+      }
+    ],
+    "contentWarnings": []
+  }
+}

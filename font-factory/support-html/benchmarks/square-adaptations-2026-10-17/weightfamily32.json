@@ -1,0 +1,139 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "weightfamily32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "weightfamily32",
+    "headlineFontSize": "52.3505px",
+    "smallestDisplayFontSize": "52.3504px",
+    "contrast": 16.456727770288886,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "label1",
+        "text": "Thin · 100",
+        "fontSize": "30.94px",
+        "x": 36,
+        "y": 92,
+        "width": 152,
+        "height": 56
+      },
+      {
+        "name": "row1",
+        "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "fontSize": "16px",
+        "x": 196,
+        "y": 68,
+        "width": 572,
+        "height": 144
+      },
+      {
+        "name": "row1-line-1",
+        "text": "ABCDEFGHIJKLM",
+        "fontSize": "52.3505px",
+        "x": 196,
+        "y": 79.28125,
+        "width": 572,
+        "height": 60.71875
+      },
+      {
+        "name": "row1-line-2",
+        "text": "NOPQRSTUVWXYZ",
+        "fontSize": "52.3505px",
+        "x": 196,
+        "y": 140,
+        "width": 572,
+        "height": 60.71875
+      },
+      {
+        "name": "label2",
+        "text": "Regular · 400",
+        "fontSize": "21.24px",
+        "x": 36,
+        "y": 324,
+        "width": 152,
+        "height": 56
+      },
+      {
+        "name": "row2",
+        "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "fontSize": "16px",
+        "x": 196,
+        "y": 288,
+        "width": 572,
+        "height": 144
+      },
+      {
+        "name": "row2-line-1",
+        "text": "ABCDEFGHIJKLM",
+        "fontSize": "52.3504px",
+        "x": 196,
+        "y": 299.28125,
+        "width": 572,
+        "height": 60.71875
+      },
+      {
+        "name": "row2-line-2",
+        "text": "NOPQRSTUVWXYZ",
+        "fontSize": "52.3504px",
+        "x": 196,
+        "y": 360,
+        "width": 572,
+        "height": 60.71875
+      },
+      {
+        "name": "label3",
+        "text": "Bold · 700",
+        "fontSize": "29.08px",
+        "x": 36,
+        "y": 576,
+        "width": 152,
+        "height": 56
+      },
+      {
+        "name": "row3",
+        "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "fontSize": "16px",
+        "x": 196,
+        "y": 528,
+        "width": 572,
+        "height": 144
+      },
+      {
+        "name": "row3-line-1",
+        "text": "ABCDEFGHIJKLM",
+        "fontSize": "52.3505px",
+        "x": 196,
+        "y": 539.28125,
+        "width": 572,
+        "height": 60.71875
+      },
+      {
+        "name": "row3-line-2",
+        "text": "NOPQRSTUVWXYZ",
+        "fontSize": "52.3505px",
+        "x": 196,
+        "y": 600,
+        "width": 572,
+        "height": 60.71875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/weightfamily32.png",
+  "outputBytes": 114646
+}

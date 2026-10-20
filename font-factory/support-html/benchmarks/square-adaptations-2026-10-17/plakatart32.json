@@ -1,0 +1,103 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "plakatart32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "plakatart32",
+    "headlineFontSize": "152.57px",
+    "smallestDisplayFontSize": "152.57px",
+    "contrast": 16.71583156198521,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "metaStyles",
+        "text": "18 Styles",
+        "fontSize": "21.0871px",
+        "x": 60,
+        "y": 60,
+        "width": 160,
+        "height": 28
+      },
+      {
+        "name": "metaVariable",
+        "text": "Variable Font",
+        "fontSize": "20.8px",
+        "x": 60,
+        "y": 92,
+        "width": 160,
+        "height": 28
+      },
+      {
+        "name": "metaWeights",
+        "text": "Thin · Black",
+        "fontSize": "21.0871px",
+        "x": 60,
+        "y": 124,
+        "width": 160,
+        "height": 28
+      },
+      {
+        "name": "metaItalics",
+        "text": "Italics",
+        "fontSize": "21.0871px",
+        "x": 60,
+        "y": 156,
+        "width": 160,
+        "height": 28
+      },
+      {
+        "name": "metaDesigned",
+        "text": "Designed By",
+        "fontSize": "21.0871px",
+        "x": 60,
+        "y": 304,
+        "width": 160,
+        "height": 28
+      },
+      {
+        "name": "metaFoundry",
+        "text": "Mabütype",
+        "fontSize": "21.0871px",
+        "x": 60,
+        "y": 336,
+        "width": 160,
+        "height": 28
+      },
+      {
+        "name": "metaYear",
+        "text": "2025",
+        "fontSize": "21.0871px",
+        "x": 60,
+        "y": 368,
+        "width": 160,
+        "height": 28
+      },
+      {
+        "name": "headline",
+        "text": "Plakat",
+        "fontSize": "152.57px",
+        "x": 60,
+        "y": 452,
+        "width": 496,
+        "height": 324
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/plakatart32.png",
+  "outputBytes": 2045568
+}

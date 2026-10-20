@@ -1,0 +1,52 @@
+@font-face {
+  font-family: "StrongWeakLabel";
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-display: block;
+}
+#artboard { background: #ff5011; }
+.strong-mat, .strong-card, .strong-kicker, .strong-word, .strong-badge,
+.strong-footer { position: absolute; }
+.strong-mat {
+  inset: 2.5%; z-index: 1; overflow: visible; border-radius: 2.2%;
+  background: #ffb7cf;
+}
+.strong-edge-dot { position: absolute; z-index: 2; border-radius: 50%; background: #ffb7cf; }
+.strong-card {
+  left: 5.5%; top: 8.5%; z-index: 3; width: 89%; height: 83%;
+  overflow: hidden; border-radius: 5.8%; background: #11488f;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 8%);
+}
+.strong-kicker {
+  left: 50%; top: 12%; z-index: 4; transform: translateX(-50%);
+  display: inline-block; width: max-content; color: #ffbd25;
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 500;
+  line-height: .95; letter-spacing: .055em; white-space: nowrap;
+  text-align: center; text-shadow: 0 2px 0 rgb(14 55 111 / 35%);
+}
+.strong-word {
+  left: 50%; z-index: 4; display: inline-block; width: max-content;
+  transform: translateX(-50%); color: #fff0e7;
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 500;
+  line-height: .84; letter-spacing: -.04em; white-space: nowrap;
+  text-align: center; text-shadow: .038em .032em 0 #0b5a9b;
+}
+.strongest { top: 23.5%; }
+.weakest { top: 51%; }
+.strong-badge {
+  z-index: 6; display: grid; place-items: center;
+  width: 10.5%; height: 15.5%; padding: 1.1%;
+  clip-path: polygon(50% 0%,59% 14%,76% 4%,78% 23%,98% 25%,86% 42%,100% 52%,83% 63%,92% 82%,72% 82%,64% 100%,49% 86%,34% 99%,28% 80%,8% 85%,16% 66%,0% 54%,16% 42%,4% 23%,25% 25%,31% 6%,44% 17%);
+  color: #17345d; font-family: var(--label-face, "StrongWeakLabel", Arial, sans-serif);
+  font-weight: 700; font-size: 2.65cqh; line-height: .92; letter-spacing: .012em;
+  text-align: center;
+  filter: drop-shadow(0 5px 1px rgb(4 26 65 / 52%));
+}
+.strong-badge-left { left: 9.5%; top: 40%; background: #ffbe22; transform: rotate(-5deg); }
+.strong-badge-right { right: 4.5%; top: 40%; background: #df5cce; transform: rotate(5deg); }
+.strong-footer {
+  left: 50%; top: 82.5%; z-index: 5; transform: translateX(-50%);
+  display: inline-block; width: max-content; color: #ffbd25;
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 500;
+  line-height: .92; letter-spacing: .015em; white-space: nowrap;
+  text-shadow: 0 2px 0 rgb(9 49 106 / 28%);
+}

@@ -1,0 +1,100 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "duo32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "frame": {
+      "width": 800,
+      "height": 800
+    },
+    "initial": "C",
+    "word": "alifornia",
+    "tagline": "Knows How To Party",
+    "headlineFontSize": "154.19",
+    "contrast": 2.72,
+    "contrastException": {
+      "minimum": 2.2,
+      "rationale": "The source poster intentionally carries ivory lettering across the coral sun and dark palm silhouettes."
+    },
+    "inkOnPaperContrast": 9.34,
+    "slots": [
+      {
+        "name": "sun",
+        "x": 492,
+        "y": 108,
+        "width": 256,
+        "height": 256
+      },
+      {
+        "name": "initial-layer",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "mound",
+        "x": 468,
+        "y": 728,
+        "width": 272,
+        "height": 72
+      },
+      {
+        "name": "palm-art",
+        "x": 400,
+        "y": 120,
+        "width": 368,
+        "height": 680
+      },
+      {
+        "name": "word-layer",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "textBounds": [
+      {
+        "name": "initial",
+        "text": "C",
+        "x": 44,
+        "y": 44,
+        "width": 312.1,
+        "height": 568
+      },
+      {
+        "name": "word",
+        "text": "alifornia",
+        "x": 218.8,
+        "y": 291.1,
+        "width": 543.1,
+        "height": 144.9
+      },
+      {
+        "name": "tagline",
+        "text": "Knows How To Party",
+        "x": 208,
+        "y": 496,
+        "width": 544,
+        "height": 72
+      }
+    ],
+    "fitFailures": [],
+    "outOfBounds": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-support-2_duo32.png",
+  "outputBytes": 1923297
+}

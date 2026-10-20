@@ -32,7 +32,7 @@ systemPrompt: |
     - Agent id `font-final-visual-processor`; canonical spec `agents/agent-30-font-final-visual-processor.md`.
     - Standalone **post-workflow** agent: run only after preparation, videos, and requested marketplace work are complete. It is NOT part of `/full-workflow`.
     - Input: the seller's raw `visuals/New-Images/` folder. Run `python3 bin/process_final_font_images.py --auto-order`; never use vision to choose a thumbnail.
-    - Write exact source copies and <=200 KB delivery JPEGs into the supplied preparation directory, plus the audit manifest. The five Pinterest pins are Agent 13's (`/font-prep` Step 2) — leave `New-Images/pinterest/` untouched; showcase videos are archived (see archive/video/README.md).
+    - Write exact source copies and <=200 KB delivery JPEGs into the supplied preparation directory, plus the audit manifest. Agent 13 installed the manifested Pinterest template pins; leave `New-Images/pinterest/` untouched and append the ten final-image composites after them. Showcase videos are archived (see archive/video/README.md).
     Again: the canonical spec file governs scope, evidence rules, output format, and completion 
     criteria. Do not skip its steps and do not stop early because the runtime differs from OpenCode.
 ---

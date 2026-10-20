@@ -3,19 +3,19 @@
 
     "tavily": {
       "command": "python3",
-      "args": ["/home/tankisompela/Projects/gemini-proxy/tavily_mcp.py"]
+      "args": ["/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/tavily_mcp.py"]
     },
     "exa": {
       "command": "python3",
-      "args": ["/home/tankisompela/Projects/gemini-proxy/exa_mcp.py"]
+      "args": ["/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/exa_mcp.py"]
     },
     "serper": {
       "command": "python3",
-      "args": ["/home/tankisompela/Projects/gemini-proxy/serper_mcp.py"]
+      "args": ["/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/serper_mcp.py"]
     },
     "firecrawl": {
       "command": "python3",
-      "args": ["/home/tankisompela/Projects/gemini-proxy/firecrawl_mcp.py"]
+      "args": ["/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/firecrawl_mcp.py"]
     }
   }
 }

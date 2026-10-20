@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../../shared/editor-shell.css">
+  <link rel="stylesheet" href="../../shared/source-designs.css">
+  <title>Plakat Art — Support Layout Studio</title>
+</head>
+<body>
+  <header class="studio-header">
+    <div><h1>Plakat Art</h1><p>The cleaned red and cyan print anchors an edge-set metadata rail and the oversized wordmark. Family counts, variable support, weight range, and italics status follow the selected font.</p></div>
+    <span class="source-id">T27673_10 · slot 21</span>
+  </header>
+  <main class="studio-grid">
+    <figure class="reference-panel">
+      <figcaption class="panel-title">Source Reference</figcaption>
+      <img src="../../../support-references/T27673_10.jpg" alt="Plakat Art original source reference">
+      <p class="reference-note">The source texture, small cyan specifications, creator credit, and low-set Plakat wordmark remain separate browser layers; font facts update with the selected file.</p>
+    </figure>
+    <section class="stage-panel" aria-label="Live template preview">
+      <h2 class="panel-title">Live Composition</h2>
+      <div class="artboard-frame"><div id="artboard" aria-label="Editable Plakat Art design"></div></div>
+    </section>
+    <aside class="controls-panel">
+      <h2 class="panel-title">Layout Controls</h2>
+      <label class="font-picker" for="font-file">Display Font
+        <input id="font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="font-status" class="font-status">Choose a local font to preview its actual letterforms.</span>
+      </label>
+      <div id="template-controls"></div>
+    </aside>
+  </main>
+  <script src="../../shared/layout.js"></script>
+  <script src="../../shared/source-layout.js"></script>
+  <script src="../../shared/editor-shell.js"></script>
+  <script>window.SupportEditor.start(window.SourceLayoutDesign.build("plakatart32"));</script>
+</body>
+</html>

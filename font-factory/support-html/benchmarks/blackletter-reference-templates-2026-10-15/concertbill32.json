@@ -1,0 +1,75 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "concertbill32",
+  "source": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-references/blackletter-references/T32600_06.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "concertbill32",
+    "headlineFontSize": "262.057px",
+    "smallestDisplayFontSize": "98.6999px",
+    "contrast": 13.83089828633486,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "San Francisco",
+        "fontSize": "13px",
+        "x": 895.140625,
+        "y": 147.5,
+        "width": 81.71875,
+        "height": 13
+      },
+      {
+        "name": "headline",
+        "text": "Headliner",
+        "fontSize": "262.057px",
+        "x": 126.078125,
+        "y": 166.078125,
+        "width": 947.84375,
+        "height": 235.84375
+      },
+      {
+        "name": "line2",
+        "text": "October 25",
+        "fontSize": "98.6999px",
+        "x": 243.234375,
+        "y": 427.578125,
+        "width": 389.515625,
+        "height": 88.828125
+      },
+      {
+        "name": "descriptor",
+        "text": "Soon",
+        "fontSize": "86.48px",
+        "x": 790.75,
+        "y": 433.078125,
+        "width": 158.5,
+        "height": 77.828125
+      },
+      {
+        "name": "footer",
+        "text": "One Night Only · Morrison, Colorado",
+        "fontSize": "14px",
+        "x": 486.609375,
+        "y": 643,
+        "width": 226.78125,
+        "height": 14
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/concertbill32.png",
+  "outputBytes": 1293409
+}

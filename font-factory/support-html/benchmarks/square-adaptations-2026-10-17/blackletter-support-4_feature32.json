@@ -1,0 +1,48 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "feature32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "frame": {
+      "width": 800,
+      "height": 800
+    },
+    "headlineFontSize": "215.58px",
+    "inkOnPaperContrast": 5.83,
+    "slots": [
+      {
+        "name": "hero",
+        "text": "Crystal",
+        "x": 64,
+        "y": 136,
+        "width": 672,
+        "height": 528,
+        "fontSize": 215.58
+      },
+      {
+        "name": "scallop",
+        "text": "",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800,
+        "fontSize": 14
+      }
+    ],
+    "outOfBounds": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-support-4_feature32.png",
+  "outputBytes": 1032315
+}

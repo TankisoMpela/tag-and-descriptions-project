@@ -1,0 +1,275 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/line32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/line32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Blazher-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 32.9,
+  "imageBytes": {
+    "html": 877967,
+    "skia": 105548
+  },
+  "desktopLayout": {
+    "template": "line32",
+    "headlineFontSize": "91.9596px",
+    "contrast": 5.016592806131985,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The quiet echo keeps its theme ink over the softly textured field."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "paper-tooth",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "clipped-ghost-initial",
+        "text": "R",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "overline-row",
+        "text": "New Release",
+        "fontSize": "16px",
+        "x": 39,
+        "y": 36.390625,
+        "width": 631.078125,
+        "height": 17.015625
+      },
+      {
+        "name": "overline",
+        "text": "New Release",
+        "fontSize": "12.0615px",
+        "x": 39,
+        "y": 38.859375,
+        "width": 85.4375,
+        "height": 12.0625
+      },
+      {
+        "name": "headline-row-1",
+        "text": "Letters ThatLetters That",
+        "fontSize": "16px",
+        "x": 39,
+        "y": 134.71875,
+        "width": 631.078125,
+        "height": 89.8125
+      },
+      {
+        "name": "headline-line-1",
+        "text": "Letters That",
+        "fontSize": "50.7397px",
+        "x": 45.984375,
+        "y": 158.3125,
+        "width": 617.09375,
+        "height": 42.609375
+      },
+      {
+        "name": "wireframe-echo",
+        "text": "Letters That",
+        "fontSize": "50.7397px",
+        "x": 45.9375,
+        "y": 139.921875,
+        "width": 617.09375,
+        "height": 42.609375
+      },
+      {
+        "name": "headline-row-2",
+        "text": "Matter",
+        "fontSize": "16px",
+        "x": 39,
+        "y": 238.71875,
+        "width": 631.078125,
+        "height": 99.265625
+      },
+      {
+        "name": "headline-line-2",
+        "text": "Matter",
+        "fontSize": "91.9596px",
+        "x": 46.5,
+        "y": 249.734375,
+        "width": 616.078125,
+        "height": 77.234375
+      },
+      {
+        "name": "footer-row",
+        "text": "Display Specimen",
+        "fontSize": "16px",
+        "x": 39,
+        "y": 404.640625,
+        "width": 631.078125,
+        "height": 23.625
+      },
+      {
+        "name": "footer-label",
+        "text": "Display Specimen",
+        "fontSize": "15.8455px",
+        "x": 39,
+        "y": 404.640625,
+        "width": 142.734375,
+        "height": 15.84375
+      },
+      {
+        "name": "edge-copy-row",
+        "text": "101 Glyphs",
+        "fontSize": "16px",
+        "x": 696.796875,
+        "y": 269.921875,
+        "width": 10.390625,
+        "height": 85.078125
+      },
+      {
+        "name": "edge-copy",
+        "text": "101 Glyphs",
+        "fontSize": "9.90999px",
+        "x": 697.03125,
+        "y": 277.359375,
+        "width": 9.90625,
+        "height": 70.203125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "line32",
+    "headlineFontSize": "45.6599px",
+    "contrast": 5.016592806131985,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The quiet echo keeps its theme ink over the softly textured field."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "paper-tooth",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "clipped-ghost-initial",
+        "text": "R",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "overline-row",
+        "text": "New Release",
+        "fontSize": "16px",
+        "x": 19.359375,
+        "y": 18.0625,
+        "width": 313.265625,
+        "height": 8.4375
+      },
+      {
+        "name": "overline",
+        "text": "New Release",
+        "fontSize": "5.99252px",
+        "x": 19.359375,
+        "y": 19.28125,
+        "width": 42.453125,
+        "height": 6
+      },
+      {
+        "name": "headline-row-1",
+        "text": "Letters ThatLetters That",
+        "fontSize": "16px",
+        "x": 19.359375,
+        "y": 66.875,
+        "width": 313.265625,
+        "height": 44.578125
+      },
+      {
+        "name": "headline-line-1",
+        "text": "Letters That",
+        "fontSize": "25.1899px",
+        "x": 22.859375,
+        "y": 78.578125,
+        "width": 306.265625,
+        "height": 21.15625
+      },
+      {
+        "name": "wireframe-echo",
+        "text": "Letters That",
+        "fontSize": "25.1899px",
+        "x": 22.796875,
+        "y": 69.453125,
+        "width": 306.265625,
+        "height": 21.15625
+      },
+      {
+        "name": "headline-row-2",
+        "text": "Matter",
+        "fontSize": "16px",
+        "x": 19.359375,
+        "y": 118.5,
+        "width": 313.265625,
+        "height": 49.265625
+      },
+      {
+        "name": "headline-line-2",
+        "text": "Matter",
+        "fontSize": "45.6599px",
+        "x": 23.0625,
+        "y": 123.953125,
+        "width": 305.84375,
+        "height": 38.34375
+      },
+      {
+        "name": "footer-row",
+        "text": "Display Specimen",
+        "fontSize": "16px",
+        "x": 19.359375,
+        "y": 200.859375,
+        "width": 313.265625,
+        "height": 11.71875
+      },
+      {
+        "name": "footer-label",
+        "text": "Display Specimen",
+        "fontSize": "7.87251px",
+        "x": 19.359375,
+        "y": 200.859375,
+        "width": 70.890625,
+        "height": 7.875
+      },
+      {
+        "name": "edge-copy-row",
+        "text": "101 Glyphs",
+        "fontSize": "16px",
+        "x": 345.8984375,
+        "y": 133.9765625,
+        "width": 5.15625,
+        "height": 42.234375
+      },
+      {
+        "name": "edge-copy",
+        "text": "101 Glyphs",
+        "fontSize": "8px",
+        "x": 344.4765625,
+        "y": 126.6953125,
+        "width": 8,
+        "height": 56.78125
+      }
+    ],
+    "contentWarnings": []
+  }
+}

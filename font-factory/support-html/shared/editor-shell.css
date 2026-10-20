@@ -1,0 +1,145 @@
+* { box-sizing: border-box; }
+
+:root {
+  color-scheme: dark;
+  font-family: "Fira Sans", "Segoe UI", system-ui, sans-serif;
+  background: #101216;
+  color: #f2f0eb;
+  font-synthesis: none;
+  --display-face: Arial, sans-serif;
+}
+
+body { margin: 0; min-width: 320px; }
+
+.studio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  padding: 22px clamp(18px, 3vw, 44px) 17px;
+  border-bottom: 1px solid #34373d;
+}
+
+.studio-header h1 { margin: 0; font-size: clamp(18px, 2vw, 25px); font-weight: 630; }
+.studio-header p { margin: 6px 0 0; color: #aaaeb8; font-size: 13px; }
+.studio-header .source-id { color: #c4c0b6; font-variant-numeric: tabular-nums; }
+
+.studio-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(520px, 1.7fr) minmax(220px, 0.65fr);
+  gap: 18px;
+  align-items: start;
+  padding: 22px clamp(18px, 3vw, 44px) 40px;
+}
+
+.reference-panel, .controls-panel, .stage-panel {
+  border-top: 1px solid #34373d;
+  padding-top: 11px;
+}
+
+.panel-title {
+  margin: 0 0 12px;
+  color: #d2d0ca;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.reference-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #45484d;
+  background: #f5f2e8;
+}
+
+.reference-note { margin: 9px 0 0; color: #a7abb4; font-size: 12px; line-height: 1.45; }
+
+.artboard-frame {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #484b51;
+  background: #0a0b0e;
+  box-shadow: 0 18px 46px rgb(0 0 0 / 28%);
+}
+
+.frame-ratio-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0 0 10px;
+}
+
+.frame-ratio-controls button {
+  padding: 6px 10px;
+  border: 1px solid #454950;
+  border-radius: 999px;
+  color: #d8d4cc;
+  background: #1a1c20;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.frame-ratio-controls button:hover:not([aria-pressed="true"]) {
+  border-color: #72757c;
+  background: #25282d;
+}
+
+.frame-ratio-controls button:active { background: #30333a; }
+
+.frame-ratio-controls button[aria-pressed="true"] {
+  color: #151618;
+  border-color: #edd9bd;
+  background: #edd9bd;
+}
+
+.frame-ratio-controls button:disabled {
+  opacity: .52;
+  cursor: not-allowed;
+}
+
+.frame-ratio-controls button:focus-visible {
+  outline: 2px solid #ffb25e;
+  outline-offset: 2px;
+}
+
+#artboard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  container-type: size;
+  isolation: isolate;
+}
+
+.controls-panel { display: grid; gap: 15px; }
+.font-picker { display: grid; gap: 8px; color: #dad8d2; font-size: 13px; }
+.font-picker input { width: 100%; color: #c3c6ce; font: inherit; font-size: 12px; }
+.font-status { margin: 0; color: #a7abb4; font-size: 11px; line-height: 1.4; overflow-wrap: anywhere; }
+#template-controls { display: grid; gap: 16px; }
+.content-warnings:empty { display: none; }
+.content-warnings { padding: 10px 12px; border-left: 2px solid #efb46a; background: #1a1b1f; color: #e8cfae; font-size: 12px; line-height: 1.45; }
+.content-warnings p { margin: 0; }
+.content-warnings p + p { margin-top: 7px; }
+.editor-control { display: grid; grid-template-columns: 1fr; gap: 7px; color: #d2d0ca; font-size: 12px; }
+.editor-control input[type="range"] { width: 100%; accent-color: #ffb25e; }
+.editor-control input[type="color"] { width: 100%; height: 34px; padding: 2px; border: 1px solid #464a51; border-radius: 4px; background: #17191e; }
+.editor-control textarea { width: 100%; min-height: 68px; resize: vertical; padding: 9px 10px; border: 1px solid #464a51; border-radius: 4px; color: #eeeae2; background: #202227; font: 13px/1.45 "Fira Sans", sans-serif; }
+.editor-control textarea:focus-visible { outline: 2px solid #ffb25e; outline-offset: 2px; }
+
+@media (max-width: 1100px) {
+  .studio-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
+  .controls-panel { grid-column: 1 / -1; grid-template-columns: minmax(200px, .65fr) 1fr; align-items: start; }
+  .controls-panel > .panel-title { grid-column: 1 / -1; }
+}
+
+@media (max-width: 680px) {
+  .studio-header { align-items: start; }
+  .studio-header .source-id { display: none; }
+  .studio-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; padding-top: 16px; }
+  .stage-panel { order: -1; }
+  .controls-panel { grid-column: auto; grid-template-columns: minmax(0, 1fr); }
+}

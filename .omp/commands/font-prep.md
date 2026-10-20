@@ -1,12 +1,20 @@
 ---
-description: FontFairy font preparation — package, audit and lay out the font, then render the five pins and the specimen sheets.
+description: Package and audit the font, install Agent 27's 23 verified Pinterest template pins, and render four factual specimen sheets.
 ---
 
-Dispatch the registered FontFairy task agent `font-prep-specialist` for this request (the agent reads its canonical spec in `agents/` and executes it).
+Dispatch the registered `font-prep-specialist` agent and follow its canonical
+instructions in `agents/agent-13-font-prep-specialist.md` and `AGENTS.md`.
 
-If the completion confirms a saved output file with `[PASS]`/success status, report its path. 
-Otherwise report the blocker honestly; do not invent a completion.
+Pass the exact font workspace, final name, unified product number, and the
+Agent-27 `prepared_visuals/` path. Agent 13 packages and audits the font, writes
+the product description, installs the 23 checksummed Pinterest template pins
+with `bin/install_template_pinterest_pins.py`, and renders four factual
+specimen sheets. It does not inspect or copy the thumbnail or support-layout
+drafts, and it does not render a second Pinterest set.
 
-User request / input:
+Leave the final thumbnail artwork for the matching image-generation prompt
+and the separate `/font-final-images` stage. Report the output path, validation
+result, pins, specimen sheets, and any blocker. Do not claim upload or
+publication.
 
-Please run the font-prep-specialist agent with this exact instruction: $@. Finish the font metadata, package/archive copies, and technical audit. Treat Agent-27 `prepared_visuals` as deferred for creative artwork: do not copy, compress, rename, inspect, or compose any thumbnail, supporting promo, or video asset from them. Then run Step 2: write pins.brief.json with five fresh headlines in five colour worlds and render it with bin/render-pins. Add `"class": "blackletter"` to the brief only when the seller's own words say blackletter, celtic, uncial, gaelic or gothic, and `"class": "sports"` only when they say sport, athletic, esports, racing, gym, varsity, letterman or jersey, and `"class": "script"` only when they say handwritten, hand lettering, script, cursive, calligraphy, signature or wedding lettering. Then run Step 2b: `bin/render-specimens --class <the brief's class, or elegant>` renders the two factual specimen sheets at both ratios into the numbered output's `specimens/` folders; it refuses to guess the class, and you copy nothing from `prepared_visuals`. Leave `visuals/New-Images/` empty for the seller's own artwork, apart from the `pinterest/` pins you rendered. The separate `/font-final-images` command will process that folder after the workflow is finished.
+User request / input: $@

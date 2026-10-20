@@ -1,0 +1,58 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "crest32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "frame": {
+      "width": 800,
+      "height": 800
+    },
+    "headlineFontSize": "124.239px",
+    "inkOnPaperContrast": 6.02,
+    "slots": [
+      {
+        "name": "hero",
+        "text": "Ordinary",
+        "x": 104,
+        "y": 280,
+        "width": 592,
+        "height": 208,
+        "fontSize": 124.239
+      },
+      {
+        "name": "upper_arc",
+        "text": "Escape From",
+        "x": 227.1,
+        "y": 121.4,
+        "width": 345.4,
+        "height": 153,
+        "fontSize": 71.96
+      },
+      {
+        "name": "lower_arc",
+        "text": "Adventure",
+        "x": 244,
+        "y": 507.2,
+        "width": 311.9,
+        "height": 165.2,
+        "fontSize": 84.0696
+      }
+    ],
+    "outOfBounds": [],
+    "overlaps": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/crest32.png",
+  "outputBytes": 392998
+}

@@ -1,0 +1,44 @@
+FONT THUMBNAIL — STOREFRONT 1:1
+
+INPUTS
+- White-background font-name specimen: [ATTACH `prepared_visuals/1x1/thumbnail_japanese.png`]
+- Exact font name: [ENTER THE FINAL FONT NAME]
+- Complete storefront prompt from `visual-direction/theme.txt`:
+  [PASTE the `thumbnail_japanese_1x1` section]
+- Output filename: `thumbnail_japanese.png`
+
+Create one finished square storefront thumbnail. Use the white-background
+specimen as the letterform source: preserve the exact spelling, supplied
+capitalization, distinctive glyph shapes, and spacing. Remove its white field
+and build the image around the supplied lettering. Follow this font-specific
+prompt for the subject, crop, palette, medium, texture, lighting, and focus.
+Compose directly for the square frame; do not resize or crop another thumbnail.
+
+The exact font name is the only visible copy unless the user explicitly asks
+for more. A Japanese storefront does not call for invented Japanese copy,
+translations, or claims about Japanese glyph coverage. Keep the name dominant,
+legible at small size, and fully inside the frame with clear value contrast.
+
+Follow the font-specific composition in the prompt. Keep the name as a flat,
+front-facing overlay, separate from any photographed or rendered surface. Keep
+any person secondary with the face cropped out or soft in the background.
+Avoid generic glossy luxury still lifes and use only details that explain the
+one visual premise. Do not reuse the oversized initial with orbit rings, split
+blue/berry descriptor panel, or arch/portal title frame. Preserve useful
+negative space, but use a quiet, relevant paper/ink/print texture or faint
+illustration when a flat field would otherwise feel sterile.
+Do not default to warm, hazy photography with a large staged object or face on
+one side and open title space opposite it. Use that arrangement only when the
+subject is specific to this font and the overall composition feels balanced.
+No glitter, sparkles, starbursts, confetti, floating particles, fake lens flare,
+arbitrary badges, gratuitous glow, excessive texture, or generic AI decoration.
+
+Generate one image and inspect it at small preview size. Check prompt fidelity,
+exact spelling and capitalization, letterform fidelity, crop, contrast, and
+readability.
+
+COMPLETE — save as `prepared_visuals/1x1/thumbnail_japanese.png`
+Font name: [EXACT FONT NAME]
+Prompt fidelity: [PASS / ISSUE]
+Lettering: [PASS / ISSUE]
+Visible problem: [SHORT NOTE]

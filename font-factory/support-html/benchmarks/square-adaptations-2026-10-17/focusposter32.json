@@ -1,0 +1,485 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "focusposter32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "focusposter32",
+    "headlineFontSize": "176.71px",
+    "smallestDisplayFontSize": "176.71px",
+    "contrast": 4.296407655059233,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The oversized red headline and red quote columns preserve the source poster's ink over its lightened portrait."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "soft-focus-portrait",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "framed-eye-detail",
+        "text": "",
+        "fontSize": "16px",
+        "x": 180.390625,
+        "y": 140.796875,
+        "width": 242.390625,
+        "height": 121.59375
+      },
+      {
+        "name": "headline-row",
+        "text": "Focused",
+        "fontSize": "16px",
+        "x": 28,
+        "y": 338.390625,
+        "width": 744,
+        "height": 172
+      },
+      {
+        "name": "headline",
+        "text": "Focused",
+        "fontSize": "176.71px",
+        "x": 33.453125,
+        "y": 348.40625,
+        "width": 733.078125,
+        "height": 151.953125
+      },
+      {
+        "name": "leftQuote-1-row",
+        "text": "Staying",
+        "fontSize": "16px",
+        "x": 28,
+        "y": 520.796875,
+        "width": 156,
+        "height": 42.390625
+      },
+      {
+        "name": "leftQuote-1",
+        "text": "Staying",
+        "fontSize": "23.77px",
+        "x": 28,
+        "y": 531.0625,
+        "width": 93.671875,
+        "height": 21.859375
+      },
+      {
+        "name": "leftQuote-2-row",
+        "text": "Avoiding",
+        "fontSize": "16px",
+        "x": 28,
+        "y": 572,
+        "width": 156,
+        "height": 42.390625
+      },
+      {
+        "name": "leftQuote-2",
+        "text": "Avoiding",
+        "fontSize": "23.77px",
+        "x": 28,
+        "y": 582.265625,
+        "width": 105.140625,
+        "height": 21.859375
+      },
+      {
+        "name": "leftQuote-3-row",
+        "text": "About",
+        "fontSize": "16px",
+        "x": 28,
+        "y": 623.1875,
+        "width": 156,
+        "height": 42.390625
+      },
+      {
+        "name": "leftQuote-3",
+        "text": "About",
+        "fontSize": "23.77px",
+        "x": 28,
+        "y": 633.453125,
+        "width": 71.875,
+        "height": 21.859375
+      },
+      {
+        "name": "leftQuote-4-row",
+        "text": "That",
+        "fontSize": "16px",
+        "x": 28,
+        "y": 674.390625,
+        "width": 156,
+        "height": 42.390625
+      },
+      {
+        "name": "leftQuote-4",
+        "text": "That",
+        "fontSize": "23.77px",
+        "x": 28,
+        "y": 684.65625,
+        "width": 53.25,
+        "height": 21.859375
+      },
+      {
+        "name": "leftQuote-5-row",
+        "text": "Your",
+        "fontSize": "16px",
+        "x": 28,
+        "y": 725.59375,
+        "width": 156,
+        "height": 42.390625
+      },
+      {
+        "name": "leftQuote-5",
+        "text": "Your",
+        "fontSize": "23.77px",
+        "x": 28,
+        "y": 735.859375,
+        "width": 52.84375,
+        "height": 21.859375
+      },
+      {
+        "name": "innerQuote-1-row",
+        "text": "Focused",
+        "fontSize": "16px",
+        "x": 212,
+        "y": 535.1875,
+        "width": 220,
+        "height": 42.390625
+      },
+      {
+        "name": "innerQuote-1",
+        "text": "Focused",
+        "fontSize": "23.77px",
+        "x": 212,
+        "y": 545.453125,
+        "width": 101.375,
+        "height": 21.859375
+      },
+      {
+        "name": "innerQuote-2-row",
+        "text": "Distractions,",
+        "fontSize": "16px",
+        "x": 212,
+        "y": 586.390625,
+        "width": 220,
+        "height": 42.390625
+      },
+      {
+        "name": "innerQuote-2",
+        "text": "Distractions,",
+        "fontSize": "23.77px",
+        "x": 212,
+        "y": 596.65625,
+        "width": 152.5,
+        "height": 21.859375
+      },
+      {
+        "name": "innerQuote-3-row",
+        "text": "Embracing",
+        "fontSize": "16px",
+        "x": 212,
+        "y": 637.59375,
+        "width": 220,
+        "height": 42.390625
+      },
+      {
+        "name": "innerQuote-3",
+        "text": "Embracing",
+        "fontSize": "23.77px",
+        "x": 212,
+        "y": 647.859375,
+        "width": 129.234375,
+        "height": 21.859375
+      },
+      {
+        "name": "innerQuote-4-row",
+        "text": "Comes From",
+        "fontSize": "16px",
+        "x": 212,
+        "y": 688.796875,
+        "width": 220,
+        "height": 42.390625
+      },
+      {
+        "name": "innerQuote-4",
+        "text": "Comes From",
+        "fontSize": "23.77px",
+        "x": 212,
+        "y": 699.0625,
+        "width": 147.609375,
+        "height": 21.859375
+      },
+      {
+        "name": "innerQuote-5-row",
+        "text": "Truest",
+        "fontSize": "16px",
+        "x": 212,
+        "y": 740,
+        "width": 220,
+        "height": 42.390625
+      },
+      {
+        "name": "innerQuote-5",
+        "text": "Truest",
+        "fontSize": "23.77px",
+        "x": 212,
+        "y": 750.265625,
+        "width": 76.640625,
+        "height": 21.859375
+      },
+      {
+        "name": "isQuote-1-row",
+        "text": "Is",
+        "fontSize": "16px",
+        "x": 446.390625,
+        "y": 564.796875,
+        "width": 57.59375,
+        "height": 42.390625
+      },
+      {
+        "name": "isQuote-1",
+        "text": "Is",
+        "fontSize": "23.77px",
+        "x": 446.390625,
+        "y": 575.0625,
+        "width": 21.453125,
+        "height": 21.859375
+      },
+      {
+        "name": "notQuote-1-row",
+        "text": "Not",
+        "fontSize": "16px",
+        "x": 548.796875,
+        "y": 542.390625,
+        "width": 89.59375,
+        "height": 42.390625
+      },
+      {
+        "name": "notQuote-1",
+        "text": "Not",
+        "fontSize": "23.77px",
+        "x": 548.796875,
+        "y": 552.65625,
+        "width": 40.078125,
+        "height": 21.859375
+      },
+      {
+        "name": "notQuote-2-row",
+        "text": "But",
+        "fontSize": "16px",
+        "x": 548.796875,
+        "y": 593.59375,
+        "width": 89.59375,
+        "height": 42.390625
+      },
+      {
+        "name": "notQuote-2",
+        "text": "But",
+        "fontSize": "23.77px",
+        "x": 548.796875,
+        "y": 603.859375,
+        "width": 41.234375,
+        "height": 21.859375
+      },
+      {
+        "name": "notQuote-3-row",
+        "text": "The",
+        "fontSize": "16px",
+        "x": 548.796875,
+        "y": 644.796875,
+        "width": 89.59375,
+        "height": 42.390625
+      },
+      {
+        "name": "notQuote-3",
+        "text": "The",
+        "fontSize": "23.77px",
+        "x": 548.796875,
+        "y": 655.0625,
+        "width": 43.046875,
+        "height": 21.859375
+      },
+      {
+        "name": "outerQuote-1-row",
+        "text": "About",
+        "fontSize": "16px",
+        "x": 653.59375,
+        "y": 528.796875,
+        "width": 131.1875,
+        "height": 42.390625
+      },
+      {
+        "name": "outerQuote-1",
+        "text": "About",
+        "fontSize": "23.77px",
+        "x": 653.59375,
+        "y": 539.0625,
+        "width": 71.875,
+        "height": 21.859375
+      },
+      {
+        "name": "outerQuote-2-row",
+        "text": "Clarity",
+        "fontSize": "16px",
+        "x": 653.59375,
+        "y": 580,
+        "width": 131.1875,
+        "height": 42.390625
+      },
+      {
+        "name": "outerQuote-2",
+        "text": "Clarity",
+        "fontSize": "23.77px",
+        "x": 653.59375,
+        "y": 590.265625,
+        "width": 80.890625,
+        "height": 21.859375
+      },
+      {
+        "name": "outerQuote-3-row",
+        "text": "Pursuing",
+        "fontSize": "16px",
+        "x": 653.59375,
+        "y": 631.1875,
+        "width": 131.1875,
+        "height": 42.390625
+      },
+      {
+        "name": "outerQuote-3",
+        "text": "Pursuing",
+        "fontSize": "23.77px",
+        "x": 653.59375,
+        "y": 641.453125,
+        "width": 107.71875,
+        "height": 21.859375
+      },
+      {
+        "name": "outerQuote-4-row",
+        "text": "Intentions.",
+        "fontSize": "16px",
+        "x": 653.59375,
+        "y": 682.390625,
+        "width": 131.1875,
+        "height": 42.390625
+      },
+      {
+        "name": "outerQuote-4",
+        "text": "Intentions.",
+        "fontSize": "23.77px",
+        "x": 653.59375,
+        "y": 692.65625,
+        "width": 127.5,
+        "height": 21.859375
+      },
+      {
+        "name": "edge-note-keep",
+        "text": "Keep",
+        "fontSize": "16px",
+        "x": 35.9921875,
+        "y": 16.7890625,
+        "width": 17.59375,
+        "height": 46.390625
+      },
+      {
+        "name": "edge-note-forward",
+        "text": "Forward",
+        "fontSize": "16px",
+        "x": 24,
+        "y": 41.59375,
+        "width": 17.59375,
+        "height": 64
+      },
+      {
+        "name": "edge-note-moving",
+        "text": "Moving",
+        "fontSize": "16px",
+        "x": 36,
+        "y": 79.984375,
+        "width": 17.59375,
+        "height": 64
+      },
+      {
+        "name": "edge-note-stay",
+        "text": "Stay",
+        "fontSize": "16px",
+        "x": 24,
+        "y": 113.1875,
+        "width": 17.59375,
+        "height": 37.59375
+      },
+      {
+        "name": "edge-note-focused",
+        "text": "Focused",
+        "fontSize": "16px",
+        "x": 31.9921875,
+        "y": 187.9921875,
+        "width": 17.59375,
+        "height": 62.390625
+      },
+      {
+        "name": "edge-note-design",
+        "text": "Design",
+        "fontSize": "16px",
+        "x": 756,
+        "y": 26.796875,
+        "width": 17.59375,
+        "height": 44
+      },
+      {
+        "name": "edge-note-word",
+        "text": "Word",
+        "fontSize": "16px",
+        "x": 743.9921875,
+        "y": 53.5859375,
+        "width": 17.59375,
+        "height": 36.796875
+      },
+      {
+        "name": "edge-note-concept",
+        "text": "Concept",
+        "fontSize": "16px",
+        "x": 756.7890625,
+        "y": 87.9921875,
+        "width": 17.59375,
+        "height": 68.796875
+      },
+      {
+        "name": "edge-note-art",
+        "text": "Art",
+        "fontSize": "16px",
+        "x": 744,
+        "y": 131.59375,
+        "width": 17.59375,
+        "height": 28
+      },
+      {
+        "name": "edge-note-for",
+        "text": "For",
+        "fontSize": "16px",
+        "x": 752.796875,
+        "y": 209.203125,
+        "width": 17.59375,
+        "height": 23.1875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/focusposter32.png",
+  "outputBytes": 780204
+}

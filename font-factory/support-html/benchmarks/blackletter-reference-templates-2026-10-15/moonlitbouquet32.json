@@ -1,0 +1,75 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "moonlitbouquet32",
+  "source": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-references/blackletter-references/T32600_03.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "moonlitbouquet32",
+    "headlineFontSize": "202.943px",
+    "smallestDisplayFontSize": "174.29px",
+    "contrast": 16.450730415031934,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "A Bohemian Letter Study",
+        "fontSize": "13px",
+        "x": 66,
+        "y": 71.5,
+        "width": 147.453125,
+        "height": 13
+      },
+      {
+        "name": "footer",
+        "text": "Edition · 03",
+        "fontSize": "13px",
+        "x": 1058.96875,
+        "y": 71.5,
+        "width": 69.03125,
+        "height": 13
+      },
+      {
+        "name": "headline",
+        "text": "Moonlight",
+        "fontSize": "186.05px",
+        "x": 247.0625,
+        "y": 132.28125,
+        "width": 705.875,
+        "height": 167.4375
+      },
+      {
+        "name": "line2",
+        "text": "Woven Dreams",
+        "fontSize": "174.29px",
+        "x": 76.59375,
+        "y": 329.5625,
+        "width": 1046.8125,
+        "height": 156.859375
+      },
+      {
+        "name": "descriptor",
+        "text": "Evermore",
+        "fontSize": "202.943px",
+        "x": 216.84375,
+        "y": 528.671875,
+        "width": 766.296875,
+        "height": 182.640625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/moonlitbouquet32.png",
+  "outputBytes": 1694794
+}

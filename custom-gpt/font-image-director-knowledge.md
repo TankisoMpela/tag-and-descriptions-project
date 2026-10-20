@@ -1,60 +1,92 @@
-# FontFairy Font Image Director — Knowledge Base
+# FontFairy Font Image Director — Current Workflow
 
-This file is reference material for the Custom GPT instructions. The user's uploaded images in the conversation are always the source of truth for the actual font lettering and required copy.
+Use the uploaded white-background font-name specimen as the source for the
+lettering. Use the exact supplied font name and the matching complete
+font-specific prompt from `visual-direction/theme.txt`. The 3:2 main thumbnail
+and square main thumbnail carry the font name plus the same concise, accurate
+style descriptor in title case; keep the descriptor secondary but readable at
+small size. Ground it in visible font traits and do not turn it into a product
+claim. There is no old marketplace thumbnail in this workflow.
 
-## Asset contract
+## Thumbnail assets
 
-| Asset | User workflow | Target |
+| Output | Source specimen | Prompt in `theme.txt` |
 |---|---|---|
-| `thumbnail_main.png` | Seed + old thumbnail | 3:2, normally 1500x1000 or 1600x1067 |
-| `promo_N.png` | One old supporting image at a time | 3:2, normally 1500x1000 or 1600x1067 |
-| `thumbnail_pinterest.png` | Re-upload approved generated thumbnail | 2:3, normally 1000x1500 |
+| `thumbnail_main.png` | `prepared_visuals/3x2/thumbnail_main.png` | `thumbnail_main_3x2` |
+| square main thumbnail | `prepared_visuals/1x1/thumbnail_main.png` | `thumbnail_main_1x1` |
+| storefront square | `prepared_visuals/1x1/thumbnail_japanese.png` | `thumbnail_japanese_1x1` |
 
-The user saves approved files in `font-factory/fonts/{font-slug}/prepared_visuals/`. The filenames are case-sensitive and the promo sequence starts at `promo_1.png` with no gaps.
+Each prompt is written for its specific font and crop. Treat its art direction as
+the creative brief. Remove the specimen's white field when making the finished
+art, but preserve the name's spelling, supplied capitalization, distinctive
+glyph shapes, and spacing. Keep the same short style descriptor on the 3:2 main
+and square main thumbnails; do not add unrelated copy. Never force all-caps
+styling.
 
-## Visual direction
+## Image direction
 
-The work should feel authored, graphic, colourful, and deliberate while remaining a flat, straight-on composition. Do not provide a preset menu of media or motifs; those examples bias the next design. Derive the medium and visual subject from the supplied font identity, name, description, and buyer job. Use texture only when it strengthens that specific concept. Do not chase a generic premium/editorial look.
+Follow the per-font prompt and its composition choice. The 33 saved reference
+images and complete captions are distilled in
+`font-factory/Style-References/thumbnail-prompt-research-2026-10-20/reference-structure-audit.md`.
+Borrow their composition logic: huge type against a crop, a quiet title plane
+inside a photograph, a single meaningful illustration, atmospheric background
+imagery, strong color blocks, or two deliberate scales of the font's own
+letterforms. Before using a reference, open the saved image and read its full
+caption in `captions.json`; use the audit as an index, not as a substitute for
+that review. Record the structural choice being borrowed, and leave its subject,
+copy, palette, and secondary details behind unless they independently fit the
+font. Do not copy whole references or treat their captions as a prop list.
 
-Because the thumbnail has a name rather than a semantic headline, derive its concept from the supplied identity and name association. A name such as `Silken Flourish` must not trigger a desk, pen, ink bottle, stationery, marble, fabric, foil, or premium tabletop. Translate it into a flat illustrated subject or typographic event, and ask what is happening and what aspect of the supplied identity makes it necessary. If the answer is only a surface, object, material, palette, or atmosphere, reject the concept and restart. The surrounding graphic world must have a point of view.
+All thumbnail lettering remains a flat, front-facing graphic overlay. It may
+sit over photography, people, illustration, or color fields, but it must never
+be printed, painted, mounted, embossed, extruded, perspective-warped, or
+otherwise embedded into a photographed or rendered object, garment, page, wall,
+product, or 3D environment. Background scenes may be photographic or 3D; the
+title stays independent of their perspective, lighting, shadows, and materials.
 
-**The font lettering must never be rendered on or wrapped onto a 3D surface** or made dependent on object depth. **Abstract 3D concept art is forbidden.** Keep the artwork flat and straight-on, with the lettering interacting with a newly invented graphic construction or illustration. For the main thumbnail specifically, photographic or real-life backgrounds are forbidden. Supporting promos may use their own flat contextual art direction and are not required to repeat the thumbnail's motif or layout.
+Use the novelty decision in the per-font prompt. Do not add a generic luxury
+still-life treatment (glossy tabletop props, amber shallow focus, velvet/silk,
+gold, perfume or flowers) just to make the image feel finished. Photography
+must serve this font's specific idea, and the lettering remains the first read.
+Do not default to warm, hazy photography with a large staged object or face
+occupying one side and open title space opposite it. That arrangement is allowed
+when the subject genuinely fits the font and the overall balance is intentional.
+The seller likes concept-specific backgrounds as well as flat graphic work;
+their preferred examples are quality signals, not layouts or palettes to copy.
+Avoid the seller's rejected recent defaults: an oversized cropped initial with
+orbit rings, a blue/berry split descriptor panel, and an arch/portal title
+frame. Across a batch, vary the core visual idea or medium, not just the colors.
 
-Avoid 3D lettering, extruded type, perspective-heavy product mockups, floating objects, rooms, architecture, isometric scenes, folded or standing objects, cylinders, signage installations, acrylic panels, plinths, perspective-wrapped lettering, abstract 3D concept art, and any concept whose novelty depends on object depth. For thumbnails also hard-reject desks, pens, books, stationery, realistic paper or ink, marble, wood, fabric, leather, foil, plaster, concrete, glass, realistic product surfaces, cast shadows, reflections, lens blur, depth of field, and pseudo-real premium materials. Material words may describe a flat colour or drawn motif only.
+A type-led thumbnail still needs a finished composition. Do not submit a
+centered name on a nearly empty field. Use at least two intentional moves such
+as large/small type scale, tight cropping, asymmetry, a distinct color division,
+or one relevant illustration. A quiet, specific paper/ink/print texture or
+faint illustration can give a flat design a tactile finish; keep it secondary
+and do not substitute random specks or stacked effects for a concept. Do not
+add unrelated decoration to satisfy this rule. Keep faces secondary and the
+title clear at small size.
 
-## Source transformation rules
+Apply the seller's fixed restraint: one visual premise and only details that
+support it. No glitter, sparkles, starbursts, confetti, particles, fake lens
+flare, arbitrary badges, generic AI ornaments, gratuitous glow or excessive
+texture. Preserve the specimen's natural capitalization and filled-versus-
+outline construction. Do not add unapproved copy or make product claims.
 
-Old references provide content and purpose, not a layout template. A successful transformation changes several of: layout grid, text placement, scale relationships, crop, palette, negative space, motifs, surface treatment, and context. Never reuse the exact lettering color from the old reference image; select a distinct new lettering color that fits the new composition while maintaining high contrast. A different background or font name alone is not enough.
+## Quality review
 
-The supplied seed/reference lettering is the visual authority. Do not retype it in a generic font, distort distinctive glyphs, change spelling, or invent characters. The old thumbnail is also the authority for the font's legible product facts and claims: preserve every readable headline, slogan, feature label, weight, format, compatibility/language statement, glyph group, and buyer-useful message in the new image. If a detail is uncertain, inspect the uploaded source more carefully; do not drop a legible claim to simplify the layout.
+Check exact spelling/case and glyph shape, title scale, clipping, local contrast,
+small-size readability, and whether the composition reads as a designed
+thumbnail rather than a raw specimen. Check that every shape or subject has a
+clear purpose, the title remains flat and independent of scene surfaces, and
+any face stays secondary. Reject output that is empty, cluttered, face-led,
+low-contrast, generically AI-styled, surface-embedded, or merely follows the
+prompt without making a strong thumbnail. Correct the composition itself; do
+not “fix” weak design by adding decoration.
 
-Remove old creator, studio, and foundry names. FontFairy is the user's studio name (the new name replacing the old studio's branding) — the user includes it in the seed, and it may appear as a small attribution wordmark. Do not add URLs, social handles, fake claims, or unverified features.
+## Supporting images and Pinterest
 
-## Mode-specific notes
-
-### Main thumbnail
-The main image features only the font name, stacked as two lines. No subtexts, taglines, supporting phrases, or extra labels. The name is the only typographic element and remains large, legible, and centred as the thumbnail lockup. Personality comes from a newly invented contextual motif/world or typographic event; do not make a name-only reskin or borrow a motif from earlier examples. The background must be a flat, straight-on 2D graphic construction—never a photograph, room, tabletop, landscape, product scene, or real-life backdrop.
-
-### Supporting promo
-One source produces one output. Use a realistic use-case phrase as the main text — a headline, title, quote, masthead, tagline, or poster heading that demonstrates what the font could be used for. Do not use the font name. No subtexts or secondary copy blocks. Give it a distinct composition that belongs to the same product identity and quality bar, but do not force it into the thumbnail's setting, palette, layout, or illustration recipe. The phrase must generate the concept: meaning → intention → visual question → physical event → placement. Strategic off-centre placement is preferred when it makes room for contextual artwork. Invent the subject from the current phrase and supplied identity; do not select a motif named in the instructions or repeat a stock visual recipe. A palette swap plus an abstract shape is a failure.
-Keep the main phrase normally to 1–4 words, with at least five of eight promos at 1–3 words. Use 5 words only when the concept needs it, and use 6–8 words only once for a deliberate long-phrase legibility proof. Long slogans are not the default. Do not reuse generic workflow-example copy such as `Brand Identity`, `Create Beautifully`, `Your Story Matters`, `The Art of Elegant Lettering`, `Handcrafted with Care`, or `Forever Begins Here` unless the user explicitly supplied it; derive the visible phrase from the current font's name, construction, or visual action.
-
-### Pinterest
-The user re-uploads the already approved generated thumbnail. Preserve the same lettering and message while adapting the hierarchy for a vertical 2:3 frame. Use generous safe margins and a clear focal point. Do not use the old thumbnail as the Pinterest source.
-
-## Failure checklist
-
-Reject and regenerate the whole image if any of these occur:
-
-- wrong, substituted, misspelled, duplicated, or nonsense lettering;
-- clipped or unreadable required copy;
-- old studio branding remains;
-- the old composition was copied or only cosmetically reskinned;
-- a supporting image's purpose or required copy was dropped;
-- the result is 3D, perspective-staged, floating, folded, architectural, or object-mockup driven;
-- font lettering is rendered on or wrapped onto a 3D surface (cylinder, box, wall, sign, plinth, or any object with depth), or the lettering itself is extruded/inflated/sculpted as 3D type;
-- abstract 3D concept art or a photographic/real-life background is used for the main thumbnail;
-- the requested ratio or safe margins are wrong;
-- the image contains invented product claims.
-
-The font-prep agent does not creatively repair failures. It only validates the files the user approves, copies the approved 3:2 images into `outputs/font-preparation/{font-slug}/`, and pads centered square derivatives mechanically. Pinterest and any other vertical asset are handled separately; no long-scroll is created.
+Follow the supplied supporting-image brief and use the font specimen as the
+letterform source. Do not add the font name to supporting art unless requested.
+For a Pinterest adaptation, use the approved thumbnail and exact font specimen
+as references, preserve the approved copy, and compose specifically for the
+requested ratio. Do not use an old listing thumbnail as an input.

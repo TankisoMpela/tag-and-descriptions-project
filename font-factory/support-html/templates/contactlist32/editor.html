@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../../shared/editor-shell.css">
+  <link rel="stylesheet" href="./design.css">
+  <title>Pastel index board — Support Layout Studio</title>
+</head>
+<body>
+  <header class="studio-header">
+    <div>
+      <h1>Pastel index board</h1>
+      <p>A clean source plate with a numbered track list and a split final title.</p>
+    </div>
+    <span class="source-id">T30332_06 · slot 32</span>
+  </header>
+  <main class="studio-grid">
+    <figure class="reference-panel">
+      <figcaption class="panel-title">Source reference</figcaption>
+      <img src="../../../support-references/T30332_06.jpg" alt="Pastel index board with navy frame, pink nodes, three colored tabs and an eight-line track list">
+      <p class="reference-note">The exact frame and pastel plate stay as source art. Seven numbered entries lead into the unnumbered “the Westhill” continuation, with the two compact labels held in the lower-right tabs.</p>
+    </figure>
+    <section class="stage-panel" aria-label="Live template preview">
+      <h2 class="panel-title">Live composition</h2>
+      <div class="artboard-frame"><div id="artboard" aria-label="Editable pastel index board"></div></div>
+    </section>
+    <aside class="controls-panel">
+      <h2 class="panel-title">Layout controls</h2>
+      <label class="font-picker" for="font-file">Display font
+        <input id="font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="font-status" class="font-status">Choose a local font to preview its actual letterforms.</span>
+      </label>
+      <label class="font-picker" for="label-font-file">Small label font
+        <input id="label-font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="label-font-status" class="font-status">A compact face is ready for the two tab labels.</span>
+      </label>
+      <div id="template-controls"></div>
+    </aside>
+  </main>
+  <script src="../../shared/layout.js"></script>
+  <script src="./design.js"></script>
+  <script src="../../shared/editor-shell.js"></script>
+  <script>
+    window.SupportEditor.start(window.ContactList32);
+    const input = document.getElementById("label-font-file");
+    const status = document.getElementById("label-font-status");
+    input.addEventListener("change", async () => {
+      const file = input.files && input.files[0];
+      if (!file) return;
+      status.textContent = "Loading label font…";
+      const face = new FontFace("UploadedContactListLabel", 'url("' + URL.createObjectURL(file) + '")');
+      try {
+        await face.load();
+        document.fonts.add(face);
+        await document.fonts.ready;
+        window.ContactList32.labelFace = "UploadedContactListLabel";
+        window.configureTemplate();
+        status.textContent = "loaded as the live label font: " + file.name;
+      } catch (error) {
+        status.textContent = "Could not load " + file.name + ": " + error.message;
+      }
+    });
+  </script>
+</body>
+</html>

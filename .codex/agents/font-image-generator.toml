@@ -1,5 +1,5 @@
 name = "font_image_generator"
-description = "Codex-registered PaperMoon font visual handoff generator. Follows the current Agent-27 provisional text-placeholder workflow and never invokes OpenCode or an image model."
+description = "Codex-registered PaperMoon font handoff: thumbnail briefs, seven HTML/CSS supports at 3:2 and 1:1, four factual specimen previews, and all 23 active HTML/CSS Pinterest pins rendered with the font."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
@@ -11,10 +11,16 @@ Before taking action, read these files completely:
 - `font-factory/AGENTS.md`
 - `agents/agent-27-font-image-generator.md`
 
-The canonical Agent-27 file is authoritative. Follow its current provisional
-text-placeholder workflow, naming policy, factual checks, output paths,
-mechanical validation, and final handoff contract. Do not use the older
-OpenPencil instructions or any stale OpenCode workflow instructions.
+The canonical Agent-27 file is authoritative. Follow its three complete
+thumbnail prompts, seven HTML/CSS support layouts rendered at both 3:2 and 1:1, four factual
+specimen previews, all active Pinterest HTML/CSS templates rendered with the
+supplied font, one-pass asset policy, and mechanical handoff validation. Ignore
+superseded custom-promo instructions and stale runtime-specific workflows.
+
+For both main-thumbnail ratios (3:2 and 1:1), include the exact font name and
+the same concise, accurate style descriptor in title case. Keep the descriptor
+secondary but readable at small size; avoid unrelated copy and unsupported
+product claims.
 
 Before authoring image copy or rendering images, run the family-wide preflight
 on the font's subdirectory (not just the primary file), then run the fact
@@ -46,9 +52,35 @@ A repaired preview must be an explicit derived font passed forward for
 packaging, or the agent must render from the source and report the limitation.
 
 Use Codex-native tools and repository helpers only. Never invoke OpenCode, the
-`opencode` CLI, an OpenCode agent, Codex CLI as a subprocess, an image model,
-vision, or OCR. Do not invoke font preparation automatically. Do not run
-listing agents, upload anything, or claim publication.
+`opencode` CLI, an OpenCode agent, or Codex CLI as a subprocess. Do not generate
+support-template artwork with an image model when the shared HTML/CSS catalogue
+or saved materials already cover it. When the user explicitly requests a
+thumbnail prompt prototype, use the matching white-background specimen and
+complete prompt with the built-in image-generation tool, then inspect and
+refine for exact spelling, glyph fidelity, crop, contrast, and small-size
+legibility. Check the result against the 33-reference composition audit and
+review the actual source image and full caption for each chosen reference:
+title hierarchy, deliberate layout structure, model focus, crop and contrast.
+Borrow structure rather than props. Follow the novelty pass in the canonical
+Agent-27 spec: compare recent thumbnails across medium, layout, focal motif,
+palette, texture/light and title placement; consider three distinct directions
+and record only the selected concept's concise differentiation note. Avoid
+generic glossy premium still lifes or warm, hazy photography that places a large
+staged object or face on one side against empty title space. Use that layout only
+when the subject is specific to the font and feels balanced. Treat liked
+examples as quality signals, not templates. Apply the rejected-style notes in
+prompt-findings.md: do not default to the cropped initial with orbit rings,
+split blue/berry descriptor panel, or arch/portal title frame. All titles stay
+flat, front-facing overlays and must never be embedded into 3D objects or
+environments. A type-only design needs authored scale, crop, asymmetry, color
+structure, or one relevant illustration; a centered name on an empty field is
+insufficient. One quiet, relevant paper/ink/print texture or faint illustration
+can keep a flat field tactile; avoid random specks and texture stacks. Keep only
+elements that explain the premise.
+Exclude glitter, sparkles, confetti, gratuitous glow and generic AI decoration. If an
+essential cutout or texture is genuinely missing and image generation is
+authorized, make one pass and check it once for usability. Do not invoke font preparation automatically. Do not run listing
+agents, upload anything, or claim publication.
 
 Work only in the exact font workspace supplied by the caller. Finish with the
 canonical `READY FOR FONT PREP HANDOFF` marker and exact prepared_visuals path,

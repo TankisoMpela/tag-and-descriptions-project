@@ -1,0 +1,96 @@
+@font-face {
+  font-family: ContactListLabel;
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+}
+
+#artboard {
+  --index-ink: #1a293c;
+  --index-scale: 1;
+  --index-row-step: .091;
+  --index-top: .12;
+  --index-left: .12;
+  --index-width: .76;
+  --label-face: ContactListLabel, sans-serif;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #fff;
+  color: var(--index-ink);
+}
+
+.index-plate,
+.index-row,
+.index-line,
+.index-tab-label {
+  position: absolute;
+}
+
+.index-plate {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.index-row {
+  left: var(--index-left);
+  width: var(--index-width);
+  height: 7%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.index-line {
+  display: inline-block;
+  color: var(--index-ink);
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 7.2cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: .91;
+  letter-spacing: -.012em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.index-tab-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  color: var(--index-ink);
+  font-family: var(--label-face);
+  font-size: 2.25cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: .025em;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.index-tab-label-track {
+  left: 80.5%;
+  top: 84.9%;
+  width: 11.4%;
+  height: 3.5%;
+}
+
+.index-tab-label-number {
+  left: 82.5%;
+  top: 92.2%;
+  width: 7.4%;
+  height: 2.6%;
+}
+
+@media (max-width: 680px) {
+  #artboard { --index-left: .105; --index-width: .79; }
+}

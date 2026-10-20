@@ -1,0 +1,177 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/weightfamily32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/weightfamily32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Kaitten Family",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 20.5,
+  "imageBytes": {
+    "html": 189735,
+    "skia": 202722
+  },
+  "desktopLayout": {
+    "template": "weightfamily32",
+    "headlineFontSize": "39.6099px",
+    "contrast": 16.456727770288886,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "label1",
+        "text": "Kaitten Regular",
+        "fontSize": "13.88px",
+        "x": 31.90625,
+        "y": 111.078125,
+        "width": 134.71875,
+        "height": 33.078125
+      },
+      {
+        "name": "row1",
+        "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "fontSize": "16px",
+        "x": 173.71875,
+        "y": 47.265625,
+        "width": 507,
+        "height": 160.71875
+      },
+      {
+        "name": "row1-line-1",
+        "text": "ABCDEFGHIJKLM",
+        "fontSize": "39.6099px",
+        "x": 173.71875,
+        "y": 81.6875,
+        "width": 507,
+        "height": 45.9375
+      },
+      {
+        "name": "row1-line-2",
+        "text": "NOPQRSTUVWXYZ",
+        "fontSize": "39.6099px",
+        "x": 173.71875,
+        "y": 127.625,
+        "width": 507,
+        "height": 45.9375
+      },
+      {
+        "name": "label2",
+        "text": "Kaitten Italic",
+        "fontSize": "17.12px",
+        "x": 31.90625,
+        "y": 323.796875,
+        "width": 134.71875,
+        "height": 33.078125
+      },
+      {
+        "name": "row2",
+        "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "fontSize": "16px",
+        "x": 173.71875,
+        "y": 259.984375,
+        "width": 507,
+        "height": 160.71875
+      },
+      {
+        "name": "row2-line-1",
+        "text": "ABCDEFGHIJKLM",
+        "fontSize": "39.22px",
+        "x": 173.71875,
+        "y": 294.859375,
+        "width": 507,
+        "height": 45.484375
+      },
+      {
+        "name": "row2-line-2",
+        "text": "NOPQRSTUVWXYZ",
+        "fontSize": "39.22px",
+        "x": 173.71875,
+        "y": 340.34375,
+        "width": 507,
+        "height": 45.484375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "weightfamily32",
+    "headlineFontSize": "19.6799px",
+    "contrast": 16.456727770288886,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "label1",
+        "text": "Kaitten Regular",
+        "fontSize": "9px",
+        "x": 15.828125,
+        "y": 55.140625,
+        "width": 66.875,
+        "height": 16.421875
+      },
+      {
+        "name": "row1",
+        "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "fontSize": "16px",
+        "x": 86.234375,
+        "y": 23.453125,
+        "width": 251.671875,
+        "height": 79.78125
+      },
+      {
+        "name": "row1-line-1",
+        "text": "ABCDEFGHIJKLM",
+        "fontSize": "19.6799px",
+        "x": 86.234375,
+        "y": 40.515625,
+        "width": 251.671875,
+        "height": 22.828125
+      },
+      {
+        "name": "row1-line-2",
+        "text": "NOPQRSTUVWXYZ",
+        "fontSize": "19.6799px",
+        "x": 86.234375,
+        "y": 63.34375,
+        "width": 251.671875,
+        "height": 22.828125
+      },
+      {
+        "name": "label2",
+        "text": "Kaitten Italic",
+        "fontSize": "9px",
+        "x": 15.828125,
+        "y": 160.734375,
+        "width": 66.875,
+        "height": 16.421875
+      },
+      {
+        "name": "row2",
+        "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "fontSize": "16px",
+        "x": 86.234375,
+        "y": 129.046875,
+        "width": 251.671875,
+        "height": 79.78125
+      },
+      {
+        "name": "row2-line-1",
+        "text": "ABCDEFGHIJKLM",
+        "fontSize": "19.43px",
+        "x": 86.234375,
+        "y": 146.390625,
+        "width": 251.671875,
+        "height": 22.546875
+      },
+      {
+        "name": "row2-line-2",
+        "text": "NOPQRSTUVWXYZ",
+        "fontSize": "19.43px",
+        "x": 86.234375,
+        "y": 168.9375,
+        "width": 251.671875,
+        "height": 22.546875
+      }
+    ],
+    "contentWarnings": []
+  }
+}

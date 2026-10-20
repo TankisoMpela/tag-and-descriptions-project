@@ -1,0 +1,58 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "thankyou32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "thankyou32",
+    "headlineFontSize": "247.47px",
+    "smallestDisplayFontSize": "236px",
+    "contrast": 15.25106068802101,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Thank",
+        "fontSize": "236px",
+        "x": 77.640625,
+        "y": 89.796875,
+        "width": 564.71875,
+        "height": 212.390625
+      },
+      {
+        "name": "line2",
+        "text": "You",
+        "fontSize": "247.47px",
+        "x": 363.390625,
+        "y": 340.640625,
+        "width": 345.203125,
+        "height": 222.71875
+      },
+      {
+        "name": "descriptor",
+        "text": "Combining Blackletter Influence And Vintage Character\nWith Thanks For Your Support",
+        "fontSize": "11px",
+        "x": 265.921875,
+        "y": 745.453125,
+        "width": 268.140625,
+        "height": 21.09375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-thankyou32.png",
+  "outputBytes": 1397476
+}

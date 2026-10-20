@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../../shared/editor-shell.css">
+  <link rel="stylesheet" href="./design.css">
+  <title>Fashion editorial cover — Support Layout Studio</title>
+</head>
+<body>
+  <header class="studio-header">
+    <div>
+      <h1>Fashion editorial cover</h1>
+      <p>The red masthead overlaps the portrait; a narrow three-row story column balances the right-hand feature.</p>
+    </div>
+    <span class="source-id">T28576_03 · slot 37</span>
+  </header>
+  <main class="studio-grid">
+    <figure class="reference-panel">
+      <figcaption class="panel-title">Source reference</figcaption>
+      <img src="../../../support-references/T28576_03.jpg" alt="Editorial magazine cover with an oversized red masthead, a full-height illustrated portrait, a tall left text column, lower-right feature lines, and compact footer copy">
+      <p class="reference-note">The cover keeps its paper-white ground, overlapping red masthead, stacked issue mark, three-line editorial blocks, and compact lower-right deck.</p>
+    </figure>
+    <section class="stage-panel" aria-label="Live template preview">
+      <h2 class="panel-title">Live composition</h2>
+      <div class="artboard-frame"><div id="artboard" aria-label="Editable fashion magazine cover"></div></div>
+    </section>
+    <aside class="controls-panel">
+      <h2 class="panel-title">Layout controls</h2>
+      <label class="font-picker" for="font-file">Cover lettering
+        <input id="font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="font-status" class="font-status">Choose a local font to preview its actual letterforms. Missing characters stay visible in a system fallback.</span>
+      </label>
+      <div id="template-controls"></div>
+    </aside>
+  </main>
+  <script src="../../shared/layout.js"></script>
+  <script src="./design.js"></script>
+  <script src="../../shared/editor-shell.js"></script>
+  <script>window.SupportEditor.start(window.VogueCover32);</script>
+</body>
+</html>

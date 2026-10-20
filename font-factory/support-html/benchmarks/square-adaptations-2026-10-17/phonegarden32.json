@@ -1,0 +1,320 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "phonegarden32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "labelFont": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/assets/NotoSans-CondensedLight.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "phonegarden32",
+    "headlineFontSize": "69.29px",
+    "smallestDisplayFontSize": "25.584px",
+    "contrast": 18.14125281838159,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "source-three-phone-plate",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 133.3359375,
+        "width": 800,
+        "height": 533.328125
+      },
+      {
+        "name": "cleaned-left-screen-area",
+        "text": "",
+        "fontSize": "16px",
+        "x": 74.3125,
+        "y": 444.4296875,
+        "width": 125,
+        "height": 173.734375
+      },
+      {
+        "name": "source-left-peony",
+        "text": "",
+        "fontSize": "16px",
+        "x": 81.078125,
+        "y": 446.4609375,
+        "width": 114.859375,
+        "height": 101
+      },
+      {
+        "name": "center-screen-star-cleanup",
+        "text": "",
+        "fontSize": "16px",
+        "x": 412.03125,
+        "y": 194.6953125,
+        "width": 79.9375,
+        "height": 79.9375
+      },
+      {
+        "name": "left-screen-star-cleanup",
+        "text": "",
+        "fontSize": "16px",
+        "x": 111.75,
+        "y": 231.4765625,
+        "width": 40.5,
+        "height": 40.5
+      },
+      {
+        "name": "left-screen-outline-dot",
+        "text": "",
+        "fontSize": "16px",
+        "x": 128.828125,
+        "y": 533.5390625,
+        "width": 4.46875,
+        "height": 4.46875
+      },
+      {
+        "name": "left-neutral-side-caption",
+        "text": "Field Notes",
+        "fontSize": "10.66px",
+        "x": 263.46875,
+        "y": 376.703125,
+        "width": 10.65625,
+        "height": 51.921875
+      },
+      {
+        "name": "right-neutral-side-caption",
+        "text": "Flora / 08",
+        "fontSize": "10.127px",
+        "x": 526.9375,
+        "y": 381.8984375,
+        "width": 10.125,
+        "height": 41.53125
+      },
+      {
+        "name": "left-lockup-row-1",
+        "text": "Covent",
+        "fontSize": "16px",
+        "x": 48,
+        "y": 287.9921875,
+        "width": 180,
+        "height": 53.328125
+      },
+      {
+        "name": "left-lockup-line-1",
+        "text": "Covent",
+        "fontSize": "46.1197px",
+        "x": 55.390625,
+        "y": 293.8984375,
+        "width": 165.21875,
+        "height": 41.5
+      },
+      {
+        "name": "left-lockup-row-2",
+        "text": "Garden",
+        "fontSize": "16px",
+        "x": 48,
+        "y": 362.6640625,
+        "width": 180,
+        "height": 53.328125
+      },
+      {
+        "name": "left-lockup-line-2",
+        "text": "Garden",
+        "fontSize": "46.1197px",
+        "x": 52.296875,
+        "y": 368.5703125,
+        "width": 171.390625,
+        "height": 41.5
+      },
+      {
+        "name": "left-footer-row-1",
+        "text": "Covent",
+        "fontSize": "16px",
+        "x": 44,
+        "y": 543.9921875,
+        "width": 184,
+        "height": 29.328125
+      },
+      {
+        "name": "left-footer-line-1",
+        "text": "Covent",
+        "fontSize": "28.9496px",
+        "x": 84.15625,
+        "y": 545.6171875,
+        "width": 103.6875,
+        "height": 26.046875
+      },
+      {
+        "name": "left-footer-row-2",
+        "text": "Garden",
+        "fontSize": "16px",
+        "x": 44,
+        "y": 586.6640625,
+        "width": 184,
+        "height": 29.328125
+      },
+      {
+        "name": "left-footer-line-2",
+        "text": "Garden",
+        "fontSize": "28.9496px",
+        "x": 82.21875,
+        "y": 588.2890625,
+        "width": 107.5625,
+        "height": 26.046875
+      },
+      {
+        "name": "center-lockup-line-1",
+        "text": "Covent",
+        "fontSize": "69.29px",
+        "x": 309.5506286621094,
+        "y": 278.5703125,
+        "width": 44.89874267578125,
+        "height": 248.1875
+      },
+      {
+        "name": "center-lockup-line-2",
+        "text": "Garden",
+        "fontSize": "69.29px",
+        "x": 445.5506286621094,
+        "y": 273.9296875,
+        "width": 44.89874267578125,
+        "height": 257.46875
+      },
+      {
+        "name": "right-heading-row-1",
+        "text": "Covent",
+        "fontSize": "25.5998px",
+        "x": 572,
+        "y": 213.3203125,
+        "width": 204,
+        "height": 27.71875
+      },
+      {
+        "name": "right-heading-line-1",
+        "text": "Covent",
+        "fontSize": "25.584px",
+        "x": 630.3125,
+        "y": 215.6640625,
+        "width": 87.359375,
+        "height": 23.015625
+      },
+      {
+        "name": "right-heading-row-2",
+        "text": "Garden",
+        "fontSize": "25.5998px",
+        "x": 572,
+        "y": 253.3203125,
+        "width": 204,
+        "height": 27.71875
+      },
+      {
+        "name": "right-heading-line-2",
+        "text": "Garden",
+        "fontSize": "25.584px",
+        "x": 628.609375,
+        "y": 255.6640625,
+        "width": 90.78125,
+        "height": 23.015625
+      },
+      {
+        "name": "right-message-row-1",
+        "text": "Timeless",
+        "fontSize": "27.7331px",
+        "x": 572,
+        "y": 453.3203125,
+        "width": 204,
+        "height": 35.1875
+      },
+      {
+        "name": "right-message-line-1",
+        "text": "Timeless",
+        "fontSize": "27.716px",
+        "x": 611.828125,
+        "y": 458.4453125,
+        "width": 124.34375,
+        "height": 24.9375
+      },
+      {
+        "name": "right-message-row-2",
+        "text": "Charm,",
+        "fontSize": "27.7331px",
+        "x": 572,
+        "y": 492.2578125,
+        "width": 204,
+        "height": 35.1875
+      },
+      {
+        "name": "right-message-line-2",
+        "text": "Charm,",
+        "fontSize": "27.716px",
+        "x": 625.03125,
+        "y": 497.3828125,
+        "width": 97.9375,
+        "height": 24.9375
+      },
+      {
+        "name": "right-message-row-3",
+        "text": "Rooted In",
+        "fontSize": "27.7331px",
+        "x": 572,
+        "y": 531.1953125,
+        "width": 204,
+        "height": 35.1875
+      },
+      {
+        "name": "right-message-line-3",
+        "text": "Rooted In",
+        "fontSize": "27.716px",
+        "x": 610.0625,
+        "y": 536.3203125,
+        "width": 127.859375,
+        "height": 24.9375
+      },
+      {
+        "name": "right-message-row-4",
+        "text": "Grace.",
+        "fontSize": "27.7331px",
+        "x": 572,
+        "y": 570.1171875,
+        "width": 204,
+        "height": 35.1875
+      },
+      {
+        "name": "right-message-line-4",
+        "text": "Grace.",
+        "fontSize": "27.716px",
+        "x": 629.828125,
+        "y": 575.2421875,
+        "width": 88.34375,
+        "height": 24.9375
+      },
+      {
+        "name": "left-lockup-star",
+        "text": "",
+        "fontSize": "16px",
+        "x": 118.671875,
+        "y": 238.3359375,
+        "width": 26.640625,
+        "height": 26.640625
+      },
+      {
+        "name": "center-lockup-star",
+        "text": "",
+        "fontSize": "16px",
+        "x": 418.953125,
+        "y": 201.5546875,
+        "width": 66.078125,
+        "height": 66.078125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/phonegarden32.png",
+  "outputBytes": 854409
+}

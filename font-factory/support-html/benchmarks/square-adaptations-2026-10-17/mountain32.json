@@ -1,0 +1,256 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "mountain32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "mountain32",
+    "headlineFontSize": "58.79px",
+    "smallestDisplayFontSize": "58.79px",
+    "contrast": 14.984871719022003,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "original-mountain-engraving",
+        "text": "",
+        "fontSize": "16px",
+        "x": 41.59375,
+        "y": 64,
+        "width": 240,
+        "height": 648
+      },
+      {
+        "name": "specimen-row-1",
+        "text": "01.Diabolically",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 52,
+        "width": 452.8125,
+        "height": 84
+      },
+      {
+        "name": "row-number-1",
+        "text": "01.",
+        "fontSize": "23px",
+        "x": 324,
+        "y": 52,
+        "width": 19.015625,
+        "height": 84
+      },
+      {
+        "name": "specimen-word-1",
+        "text": "Diabolically",
+        "fontSize": "58.79px",
+        "x": 364,
+        "y": 52,
+        "width": 400.796875,
+        "height": 84
+      },
+      {
+        "name": "row-rule-1",
+        "text": "",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 140.25,
+        "width": 452.8125,
+        "height": 1.03125
+      },
+      {
+        "name": "specimen-row-2",
+        "text": "02.Equalizing",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 168,
+        "width": 452.8125,
+        "height": 84
+      },
+      {
+        "name": "row-number-2",
+        "text": "02.",
+        "fontSize": "23px",
+        "x": 324,
+        "y": 168,
+        "width": 19.015625,
+        "height": 84
+      },
+      {
+        "name": "specimen-word-2",
+        "text": "Equalizing",
+        "fontSize": "58.79px",
+        "x": 364,
+        "y": 168,
+        "width": 400.796875,
+        "height": 84
+      },
+      {
+        "name": "row-rule-2",
+        "text": "",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 256.25,
+        "width": 452.8125,
+        "height": 1.03125
+      },
+      {
+        "name": "specimen-row-3",
+        "text": "03.Revaluation",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 284,
+        "width": 452.8125,
+        "height": 84
+      },
+      {
+        "name": "row-number-3",
+        "text": "03.",
+        "fontSize": "23px",
+        "x": 324,
+        "y": 284,
+        "width": 19.015625,
+        "height": 84
+      },
+      {
+        "name": "specimen-word-3",
+        "text": "Revaluation",
+        "fontSize": "58.79px",
+        "x": 364,
+        "y": 284,
+        "width": 400.796875,
+        "height": 84
+      },
+      {
+        "name": "row-rule-3",
+        "text": "",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 372.25,
+        "width": 452.8125,
+        "height": 1.03125
+      },
+      {
+        "name": "specimen-row-4",
+        "text": "04.Pandemic",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 400,
+        "width": 452.8125,
+        "height": 84
+      },
+      {
+        "name": "row-number-4",
+        "text": "04.",
+        "fontSize": "23px",
+        "x": 324,
+        "y": 400,
+        "width": 19.015625,
+        "height": 84
+      },
+      {
+        "name": "specimen-word-4",
+        "text": "Pandemic",
+        "fontSize": "58.79px",
+        "x": 364,
+        "y": 400,
+        "width": 400.796875,
+        "height": 84
+      },
+      {
+        "name": "row-rule-4",
+        "text": "",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 488.25,
+        "width": 452.8125,
+        "height": 1.03125
+      },
+      {
+        "name": "specimen-row-5",
+        "text": "05.Submachine",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 516,
+        "width": 452.8125,
+        "height": 84
+      },
+      {
+        "name": "row-number-5",
+        "text": "05.",
+        "fontSize": "23px",
+        "x": 324,
+        "y": 516,
+        "width": 19.015625,
+        "height": 84
+      },
+      {
+        "name": "specimen-word-5",
+        "text": "Submachine",
+        "fontSize": "58.79px",
+        "x": 364,
+        "y": 516,
+        "width": 400.796875,
+        "height": 84
+      },
+      {
+        "name": "row-rule-5",
+        "text": "",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 604.25,
+        "width": 452.8125,
+        "height": 1.03125
+      },
+      {
+        "name": "specimen-row-6",
+        "text": "06.Challenger",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 632,
+        "width": 452.8125,
+        "height": 84
+      },
+      {
+        "name": "row-number-6",
+        "text": "06.",
+        "fontSize": "23px",
+        "x": 324,
+        "y": 632,
+        "width": 19.015625,
+        "height": 84
+      },
+      {
+        "name": "specimen-word-6",
+        "text": "Challenger",
+        "fontSize": "58.79px",
+        "x": 364,
+        "y": 632,
+        "width": 400.796875,
+        "height": 84
+      },
+      {
+        "name": "row-rule-6",
+        "text": "",
+        "fontSize": "16px",
+        "x": 312,
+        "y": 720.25,
+        "width": 452.8125,
+        "height": 1.03125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/mountain32.png",
+  "outputBytes": 596570
+}

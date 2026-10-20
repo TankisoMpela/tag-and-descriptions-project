@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Next Thumbnail Workflow Pass</title>
+  <style>
+    :root { color-scheme: light; --ink: #24221f; --muted: #68635d; --line: #ddd7ce; --paper: #f3f0ea; --card: #fffefa; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 system-ui, sans-serif; }
+    main { width: min(1400px, 100%); margin: 0 auto; padding: 42px 28px 70px; }
+    h1 { margin: 0; font-size: clamp(30px, 4vw, 46px); line-height: 1.08; letter-spacing: -.035em; }
+    .intro { color: var(--muted); max-width: 900px; margin: 12px 0 24px; }
+    nav { display: flex; gap: 16px 24px; flex-wrap: wrap; margin-bottom: 28px; }
+    a { color: #184d72; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr)); gap: 22px; }
+    article { overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+    article img { display: block; width: 100%; height: auto; background: #e8e4dd; }
+    .copy { padding: 16px 18px 18px; }
+    h2 { margin: 0 0 2px; font-size: 21px; }
+    .sub { margin: 0 0 9px; color: #4b4640; }
+    .desc { margin: 0; color: var(--muted); }
+    footer { margin-top: 28px; color: var(--muted); font-size: 14px; }
+    @media (max-width: 520px) { main { padding: 28px 16px 52px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Next Thumbnail Workflow Pass</h1>
+    <p class="intro">Three 3:2 thumbnail options using fresh title-case specimens from the actual font files: two distinct Evercourt directions and one Vantrelle direction. Each card links to its full-size render.</p>
+    <nav aria-label="Workflow notes">
+      <a href="prompts.md">Prompts</a>
+      <a href="review.md">Concept and review notes</a>
+      <a href="../index.html">Previous 17-font gallery</a>
+    </nav>
+    <div class="grid">
+      <article>
+        <a href="evercourt-3x2.png"><img src="evercourt-3x2.png" alt="Evercourt calligraphy over an illustrated neighborhood tennis court"></a>
+        <div class="copy"><h2>Evercourt</h2><p class="sub">A Flowing Calligraphy Script</p><p class="desc">Hand-printed court scene, restrained paper texture, and a clear title over the tree line.</p></div>
+      </article>
+      <article>
+        <a href="evercourt-photo-3x2.png"><img src="evercourt-photo-3x2.png" alt="Evercourt calligraphy over a quiet tennis-court photograph"></a>
+        <div class="copy"><h2>Evercourt — Photo Direction</h2><p class="sub">A Flowing Calligraphy Script</p><p class="desc">A quiet court photograph with the calligraphy as a crisp, high-contrast overlay.</p></div>
+      </article>
+      <article>
+        <a href="vantrelle-3x2.png"><img src="vantrelle-3x2.png" alt="Vantrelle display serif above a hand-printed letterpress illustration"></a>
+        <div class="copy"><h2>Vantrelle</h2><p class="sub">A High Contrast Display Serif</p><p class="desc">A two-color printshop illustration supports the type; the title stays the first read.</p></div>
+      </article>
+    </div>
+    <footer>White-background source specimens are saved in <a href="specimens/">specimens/</a>. No collage is used.</footer>
+  </main>
+</body>
+</html>

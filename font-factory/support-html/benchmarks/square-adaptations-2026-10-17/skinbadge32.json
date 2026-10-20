@@ -1,0 +1,71 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "skinbadge32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "skinbadge32",
+    "headlineFontSize": "112.74px",
+    "smallestDisplayFontSize": "112.74px",
+    "contrast": 2.2700699492368557,
+    "contrastException": {
+      "minimum": 1.8,
+      "rationale": "Cream lettering keeps the source skincare seal’s intentionally soft contrast on lavender."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "skin-repeat-seal",
+        "text": "Skin TribeSkin TribeSkin TribeSkin TribeSkin Tribe",
+        "fontSize": "16px",
+        "x": 364,
+        "y": 96.796875,
+        "width": 368,
+        "height": 600
+      },
+      {
+        "name": "skin-front-seal",
+        "text": "Skin Care  •  Self Love  •  Skin Care\n        Self Love     Skin Care  •  Self Love\n      SkinTribe",
+        "fontSize": "16px",
+        "x": 65.59375,
+        "y": 100,
+        "width": 402.390625,
+        "height": 600
+      },
+      {
+        "name": "skin-headline-top",
+        "text": "Skin",
+        "fontSize": "112.74px",
+        "x": 117.890625,
+        "y": 196,
+        "width": 297.765625,
+        "height": 158
+      },
+      {
+        "name": "skin-headline-bottom",
+        "text": "Tribe",
+        "fontSize": "112.74px",
+        "x": 117.890625,
+        "y": 414,
+        "width": 297.765625,
+        "height": 158
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/skinbadge32.png",
+  "outputBytes": 1144869
+}

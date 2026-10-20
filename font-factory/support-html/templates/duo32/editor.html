@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>duo32 · California summer poster</title>
+<style>
+@font-face{font-family:"Benchmark Display";src:url("../../benchmarks/T26074-12/assets/LilitaOne-Regular.ttf") format("truetype");font-display:block}
+:root{color-scheme:dark;font:14px/1.45 system-ui,sans-serif;background:#202126;color:#f0f0ee;accent-color:#f1e8ce;scrollbar-color:#5959a0 #17181b}
+*{box-sizing:border-box}::selection{background:#f5e7c2;color:#211741}
+body{margin:0;min-height:100vh;display:grid;grid-template-columns:300px minmax(0,1fr)}
+aside{background:#141519;border-right:1px solid #34363d;padding:22px 18px;display:flex;flex-direction:column;gap:16px}
+h1{font-size:20px;line-height:1.2;margin:0}p{margin:0;color:#c1c1bd}
+label{display:grid;gap:5px;color:#e4e3dc}
+input[type=text]{width:100%;border:1px solid #514f62;border-radius:3px;background:#202126;color:#f2f0e9;padding:8px;font:13px/1.3 system-ui,sans-serif}
+input[type=file]{width:100%;font-size:12px;color:#c1c1bd}
+input[type=range]{width:100%}input[type=color]{width:100%;height:35px;border:1px solid #514f62;border-radius:3px;background:#202126;padding:3px}
+fieldset{display:grid;gap:10px;border:1px solid #444257;border-radius:4px;padding:10px;margin:0}
+legend{font-size:12px;color:#b7b5c4;padding:0 5px}:focus-visible{outline:2px solid #f1e8ce;outline-offset:2px}
+.palette{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{color:#f1e8ce;font-variant-numeric:tabular-nums}
+.note{font-size:12px;line-height:1.5;color:#bbb9c6}main{padding:22px;min-width:0}
+.topline{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}
+.topline h2{font-size:16px;margin:0}.topline a{color:#f1e8ce;text-underline-offset:3px}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+figure{margin:0;min-width:0}figcaption{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#c2c0cc;margin:0 0 8px}
+.sample{width:100%;aspect-ratio:3/2;overflow:hidden;background:#32349a;box-shadow:0 8px 24px #0006}
+.sample img{width:100%;height:100%;object-fit:contain;display:block}
+/* impeccable-disable cramped-padding: the source is an edge-to-edge screenprint poster; the surrounding editor controls remain inset. */
+#artboard{position:relative;isolation:isolate;width:100%;aspect-ratio:3/2;overflow:hidden;background:linear-gradient(145deg,var(--ground-light,#393ba6),var(--ground,#32349a) 55%,var(--ground-deep,#32349a));container-type:inline-size;--display-font:"Benchmark Display";--ground:#32349a;--ground-light:#393ba6;--ground-deep:#32349a;--sun:#fc6659;--ink:#fff6e3;--silhouette:#271021;--grain-strength:.31;--outline-size:5px}
+#print-grain{position:absolute;inset:0;width:100%;height:100%;opacity:var(--grain-strength);mix-blend-mode:soft-light;pointer-events:none;z-index:5}
+#sun{position:absolute;z-index:1;left:61.5%;top:13.5%;width:32%;aspect-ratio:1;border-radius:50%;background:var(--sun)}
+#initial-layer,#word-layer{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+#initial-layer{z-index:2}#word-layer{z-index:4}
+#mound{position:absolute;z-index:3;left:58.5%;bottom:0;width:34%;height:9%;border-radius:50% 50% 0 0/100% 100% 0 0;background:var(--silhouette);pointer-events:none}
+#palm-art{position:absolute;z-index:3;left:50%;top:15%;width:46%;height:85%;pointer-events:none;background:var(--silhouette);-webkit-mask:url("../../../support-references/materials/T30173_08_palm-cutout.png") center/100% 100% no-repeat;mask:url("../../../support-references/materials/T30173_08_palm-cutout.png") center/100% 100% no-repeat}
+.display-svg text{font-family:var(--display-font),"Times New Roman",serif;font-weight:900;fill:var(--ink)}
+#word{text-rendering:geometricPrecision;stroke:var(--silhouette);stroke-width:var(--outline-size);stroke-linejoin:round;paint-order:stroke fill}
+#tagline{text-rendering:geometricPrecision;text-anchor:end;font-style:italic;font-weight:700}
+@media(max-width:1120px){body{grid-template-columns:260px minmax(0,1fr)}main{padding:16px}.compare{grid-template-columns:1fr}}
+@media(max-width:680px){body{display:block}aside{border-right:0;border-bottom:1px solid #34363d}main{padding:18px}.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside>
+  <h1>duo32 · California after dark</h1>
+  <p>A one-letter poster: the oversized initial holds the left edge, while its crossing word runs through the sunlit palms. The source keeps the blue print, coral disc, and ivory type simple and bold.</p>
+  <fieldset><legend>Crossing word</legend>
+    <label>Display word<input id="display-word" type="text" value="California" maxlength="18"></label>
+    <label>Tagline<input id="tagline-copy" type="text" value="Knows How To Party" maxlength="32"></label>
+  </fieldset>
+  <fieldset><legend>Screenprint palette</legend>
+    <div class="palette">
+      <label>Deep cobalt<input id="ground-color" type="color" value="#32349a"></label>
+      <label>Light cobalt<input id="ground-light-color" type="color" value="#3a3ca6"></label>
+      <label>Coral sun<input id="sun-color" type="color" value="#fc6659"></label>
+      <label>Ivory type<input id="ink-color" type="color" value="#fff6e3"></label>
+      <label>Palm ink<input id="palm-color" type="color" value="#271021"></label>
+    </div>
+    <label>Print grain · <span id="grain-value">31%</span><input id="grain" type="range" min="0" max="40" value="31"></label>
+  </fieldset>
+  <fieldset><legend>Typeface</legend>
+    <label>Display face · load a local TTF/OTF<input id="font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+  </fieldset>
+  <p id="status" class="note">Preparing the screenprint…</p>
+  <p class="note">Edit → next painted frame: <span class="metric" id="paint-ms">—</span></p>
+</aside>
+<main>
+  <div class="topline"><h2>Source composition · live font fitting</h2><a href="../../../support-references/T30173_08.jpg" target="_blank" rel="noreferrer">Open source image</a></div>
+  <section class="compare" aria-label="Reference and editable recreation">
+    <figure><figcaption>Original reference · T30173_08</figcaption><div class="sample"><img src="../../../support-references/T30173_08.jpg" alt="Cobalt California poster with a coral sun, dark palm trees, and ivory lettering"></div></figure>
+    <figure><figcaption>HTML/CSS rebuild · editable vector layers</figcaption><div id="artboard" aria-label="Editable cobalt and coral California poster">
+      <canvas id="print-grain" aria-hidden="true"></canvas><div id="sun" aria-hidden="true"></div>
+      <svg class="display-svg" id="initial-layer" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true"><text id="initial"></text></svg>
+      <div id="mound" aria-hidden="true"></div><div id="palm-art" role="img" aria-label="Overlapping pair of dark, drooping palm silhouettes"></div>
+      <svg class="display-svg" id="word-layer" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true"><text id="word"></text><text id="tagline"></text></svg>
+    </div></figure>
+  </section>
+</main>
+<script src="../../shared/copy-case.js"></script>
+<script>
+const board=document.querySelector('#artboard'),grain=document.querySelector('#print-grain'),ns='http://www.w3.org/2000/svg';let displayFont='"Benchmark Display"',pending=0,layoutWidth=1200,layoutHeight=800;
+const line1=document.querySelector('#initial'),wordEl=document.querySelector('#word'),tagEl=document.querySelector('#tagline');let liveTextBounds=[];
+function makeGrain(){const ctx=grain.getContext('2d'),w=600,h=400;grain.width=w;grain.height=h;const img=ctx.createImageData(w,h);let seed=0x3017308;for(let i=0;i<img.data.length;i+=4){seed^=seed<<13;seed^=seed>>>17;seed^=seed<<5;const n=seed>>>0,v=n&255;img.data[i]=v;img.data[i+1]=v;img.data[i+2]=v;img.data[i+3]=34+(n>>>8&47)}ctx.putImageData(img,0,0)}
+function setText(el,text,x,baseline,size,stroke=''){el.textContent=text;el.setAttribute('x',x.toFixed(2));el.setAttribute('y',baseline.toFixed(2));el.setAttribute('font-size',size.toFixed(2));el.setAttribute('font-family',displayFont);if(stroke)el.setAttribute('stroke-width',stroke.toFixed(2));else el.removeAttribute('stroke-width')}
+function metrics(ctx,text,size,style='normal',weight=900){ctx.font=`${style} ${weight} ${size}px ${displayFont}, "Times New Roman", serif`;const m=ctx.measureText(text);return{left:m.actualBoundingBoxLeft||0,right:m.actualBoundingBoxRight||m.width,width:(m.actualBoundingBoxLeft||0)+(m.actualBoundingBoxRight||m.width),ascent:m.actualBoundingBoxAscent||size*.74,descent:m.actualBoundingBoxDescent||size*.16}}
+function fit(ctx,text,maxWidth,maxHeight,maxSize,minSize,style='normal',weight=900){let lo=minSize,hi=maxSize;for(let i=0;i<25;i++){const size=(lo+hi)/2,m=metrics(ctx,text,size,style,weight);if(m.width<=maxWidth&&m.ascent+m.descent<=maxHeight)lo=size;else hi=size}return lo}
+function updateLayout(){
+ const started=performance.now(),ctx=document.createElement('canvas').getContext('2d');
+ const square=board.dataset.ratio==='1x1',W=square?800:1200,H=800;layoutWidth=W;layoutHeight=H;
+ for(const id of ['initial-layer','word-layer'])document.querySelector('#'+id).setAttribute('viewBox',`0 0 ${W} ${H}`);
+ const raw=document.querySelector('#display-word').value.trim()||'Type';
+ const tagText=document.querySelector('#tagline-copy').value.trim(),initial=raw[0]?.toUpperCase()||'T',tail=raw.slice(1)||'ype';
+ board.style.setProperty('--display-font',displayFont);
+ const initialMaxWidth=W*(square?.46:.46),initialMaxHeight=H*.71;
+  const tailSize=fit(ctx,tail,W*(square?.88:.71),H*(square?.28:.34),H*(square?.62:.625),38),
+  initialSize=fit(ctx,initial,initialMaxWidth,initialMaxHeight,H*(square?1.05:1.075),38),
+  im=metrics(ctx,initial,initialSize);
+ const ix=W*.055,baseY=H*(square?.51:.52),iy=H*.055+im.ascent;
+ setText(line1,initial,ix,iy,initialSize);
+ const tailX=ix+im.width*.56,available=W*(square?.95:.92)-tailX;
+ const fittedTailSize=fit(ctx,tail,available,H*(square?.23:.34),tailSize,38),tm=metrics(ctx,tail,fittedTailSize),stroke=fittedTailSize*.012;
+ setText(wordEl,tail,tailX,baseY,fittedTailSize,stroke);
+ const tagX=W*(square?.94:.9),tagMax=W*(square?.68:.5);
+ const tagSize=fit(ctx,tagText,tagMax,H*(square?.11:.18),H*(square?.15:.1975),18,'italic',700),tagMetrics=metrics(ctx,tagText,tagSize,'italic',700);
+ const tagY=square?H*.68:baseY+tm.descent+76;
+ setText(tagEl,tagText,tagX,tagY,tagSize);tagEl.setAttribute('font-style','italic');tagEl.setAttribute('font-weight','700');wordEl.setAttribute('stroke',document.querySelector('#palm-color').value);
+ liveTextBounds=[
+  {name:'initial',text:initial,x:+(ix-im.left).toFixed(1),y:+(iy-im.ascent).toFixed(1),width:+im.width.toFixed(1),height:+(im.ascent+im.descent).toFixed(1)},
+  {name:'word',text:tail,x:+(tailX-tm.left-stroke/2).toFixed(1),y:+(baseY-tm.ascent-stroke/2).toFixed(1),width:+(tm.width+stroke).toFixed(1),height:+(tm.ascent+tm.descent+stroke).toFixed(1)},
+  {name:'tagline',text:tagText,x:+(tagX-tagMetrics.width).toFixed(1),y:+(tagY-tagMetrics.ascent).toFixed(1),width:+tagMetrics.width.toFixed(1),height:+(tagMetrics.ascent+tagMetrics.descent).toFixed(1)},
+ ];
+ for(const[id,varName]of[['ground-color','--ground'],['ground-light-color','--ground-light'],['sun-color','--sun'],['ink-color','--ink'],['palm-color','--silhouette']])board.style.setProperty(varName,document.querySelector('#'+id).value);
+ board.style.setProperty('--outline-size',stroke.toFixed(2)+'px');const amount=Number(document.querySelector('#grain').value);board.style.setProperty('--grain-strength',(amount/100).toFixed(2));document.querySelector('#grain-value').textContent=amount+'%';
+ cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelector('#paint-ms').textContent=(performance.now()-started).toFixed(1)+' ms'));return layoutReport()
+}
+function luminance(color){const a=color.match(/[\da-f]{2}/gi).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return.2126*a[0]+.7152*a[1]+.0722*a[2]}
+function contrast(a,b){const x=luminance(a),y=luminance(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
+function layoutReport(){const frame=board.getBoundingClientRect(),elNames=['sun','initial-layer','mound','palm-art','word-layer'],slots=elNames.map(id=>{const e=document.querySelector('#'+id),r=e.getBoundingClientRect();return{name:id,x:+(r.left-frame.left).toFixed(1),y:+(r.top-frame.top).toFixed(1),width:+r.width.toFixed(1),height:+r.height.toFixed(1)}}),ground=document.querySelector('#ground-color').value,ink=document.querySelector('#ink-color').value,sun=document.querySelector('#sun-color').value;const textFailures=liveTextBounds.filter(s=>s.x < -1||s.y < -1||s.x+s.width>layoutWidth+1||s.y+s.height>layoutHeight+1);return{frame:{width:frame.width,height:frame.height},initial:line1.textContent,word:wordEl.textContent,tagline:tagEl.textContent,headlineFontSize:parseFloat(wordEl.getAttribute('font-size')||'0').toFixed(2),contrast:+contrast(ink,sun).toFixed(2),contrastException:{minimum:2.2,rationale:'The source poster intentionally carries ivory lettering across the coral sun and dark palm silhouettes.'},inkOnPaperContrast:+contrast(ink,ground).toFixed(2),slots,textBounds:liveTextBounds,fitFailures:textFailures,outOfBounds:[...slots.filter(s=>s.x < -1||s.y < -1||s.x+s.width>frame.width+1||s.y+s.height>frame.height+1),...textFailures]}}
+for(const id of ['display-word','tagline-copy','ground-color','ground-light-color','sun-color','ink-color','palm-color','grain'])document.querySelector('#'+id).addEventListener('input',updateLayout);
+document.querySelector('#font-file').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;const url=URL.createObjectURL(file),face=new FontFace('Uploaded Duo Display','url('+url+')',{weight:'100 900'});await face.load();document.fonts.add(face);displayFont='"Uploaded Duo Display"';document.querySelector('#status').textContent=file.name+' loaded as the live display font.';updateLayout()});
+makeGrain();const resizeObserver=new ResizeObserver(()=>requestAnimationFrame(updateLayout));resizeObserver.observe(board);window.addEventListener('resize',()=>requestAnimationFrame(updateLayout));
+document.fonts.ready.then(()=>{document.querySelector('#status').textContent='The source palm silhouettes and screenprint texture are ready · upload the target face to fit the lettering.';updateLayout()});
+window.getLayoutReport=layoutReport;window.configureTemplate=({word,tagline,ground,groundLight,sun,ink,silhouette,grain:grainAmount}={})=>{if(typeof word==='string')document.querySelector('#display-word').value=window.supportTitleCase(word);if(typeof tagline==='string')document.querySelector('#tagline-copy').value=window.supportTitleCase(tagline);for(const[value,id]of[[ground,'ground-color'],[groundLight,'ground-light-color'],[sun,'sun-color'],[ink,'ink-color'],[silhouette,'palm-color']])if(typeof value==='string'&&/^#[0-9a-f]{6}$/i.test(value))document.querySelector('#'+id).value=value;if(Number.isFinite(grainAmount))document.querySelector('#grain').value=Math.max(0,Math.min(40,grainAmount));return updateLayout()};
+</script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "confident32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "confident32",
+    "headlineFontSize": "146.19px",
+    "smallestDisplayFontSize": "146.19px",
+    "contrast": 4.864720544128564,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "source-eye-crop-frame",
+        "text": "",
+        "fontSize": "16px",
+        "x": 36.796875,
+        "y": 400,
+        "width": 726.390625,
+        "height": 350.390625
+      },
+      {
+        "name": "poster-frame",
+        "text": "",
+        "fontSize": "16px",
+        "x": 36,
+        "y": 44,
+        "width": 728,
+        "height": 712
+      },
+      {
+        "name": "divider-rule-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 36,
+        "y": 352,
+        "width": 336,
+        "height": 1
+      },
+      {
+        "name": "divider-rule-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 428,
+        "y": 352,
+        "width": 336,
+        "height": 1
+      },
+      {
+        "name": "center-star-divider",
+        "text": "",
+        "fontSize": "16px",
+        "x": 372,
+        "y": 328,
+        "width": 56,
+        "height": 48
+      },
+      {
+        "name": "poster-overline-row",
+        "text": "Keep Looking",
+        "fontSize": "16px",
+        "x": 48,
+        "y": 56,
+        "width": 448,
+        "height": 60
+      },
+      {
+        "name": "poster-overline",
+        "text": "Keep Looking",
+        "fontSize": "44.8px",
+        "x": 48,
+        "y": 63.59375,
+        "width": 266.15625,
+        "height": 44.796875
+      },
+      {
+        "name": "poster-tag-row",
+        "text": "Elthia Typeface",
+        "fontSize": "16px",
+        "x": 576,
+        "y": 56,
+        "width": 168,
+        "height": 60
+      },
+      {
+        "name": "poster-tag",
+        "text": "Elthia Typeface",
+        "fontSize": "20px",
+        "x": 622.890625,
+        "y": 76,
+        "width": 121.109375,
+        "height": 20
+      },
+      {
+        "name": "headline-row",
+        "text": "Confident",
+        "fontSize": "16px",
+        "x": 44,
+        "y": 124,
+        "width": 712,
+        "height": 156
+      },
+      {
+        "name": "confidence-headline",
+        "text": "Confident",
+        "fontSize": "146.19px",
+        "x": 44,
+        "y": 137.671875,
+        "width": 697.96875,
+        "height": 128.640625
+      },
+      {
+        "name": "tagline-left-row",
+        "text": "Even When",
+        "fontSize": "16px",
+        "x": 48,
+        "y": 284,
+        "width": 312,
+        "height": 52
+      },
+      {
+        "name": "tagline-left",
+        "text": "Even When",
+        "fontSize": "30.4px",
+        "x": 48,
+        "y": 295.5625,
+        "width": 167.25,
+        "height": 28.875
+      },
+      {
+        "name": "tagline-right-row",
+        "text": "Doubt Looks Back",
+        "fontSize": "16px",
+        "x": 392,
+        "y": 284,
+        "width": 360,
+        "height": 52
+      },
+      {
+        "name": "tagline-right",
+        "text": "Doubt Looks Back",
+        "fontSize": "30.4px",
+        "x": 480.203125,
+        "y": 295.5625,
+        "width": 271.796875,
+        "height": 28.875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/confident32.png",
+  "outputBytes": 801026
+}

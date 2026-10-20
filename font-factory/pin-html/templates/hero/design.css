@@ -1,0 +1,3 @@
+/* Editable geometry and copy slots are authored in shared/pin-studio.js. */
+.template--hero [data-layout-item="monogram"] { letter-spacing:.035em; }
+.template--hero [data-layout-item="name"] { letter-spacing:-.035em; }

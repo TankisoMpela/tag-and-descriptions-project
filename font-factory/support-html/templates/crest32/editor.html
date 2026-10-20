@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>crest32 · HTML/CSS layout iteration</title>
+<style>
+@font-face{font-family:"Benchmark Default";src:url("../../benchmarks/T26074-12/assets/LilitaOne-Regular.ttf") format("truetype");font-display:block}
+:root{color-scheme:dark;font:14px/1.45 system-ui,sans-serif;background:#202126;color:#f0f0ee}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
+aside{background:#141519;border-right:1px solid #34363d;padding:22px 18px;display:flex;flex-direction:column;gap:17px}
+h1{font-size:16px;line-height:1.25;margin:0}
+p{margin:0;color:#b8bac1}
+label{display:grid;gap:6px;color:#e1e2e5}
+input[type=color]{width:100%;height:34px;border:1px solid #454750;border-radius:5px;background:#202126;padding:3px}
+input[type=file],select{width:100%;font-size:12px;color:#b8bac1}
+select{border:1px solid #454750;border-radius:5px;background:#202126;padding:8px}
+textarea{width:100%;min-height:56px;resize:vertical;border:1px solid #454750;border-radius:5px;background:#202126;color:#f0f0ee;padding:8px;font:12px/1.4 system-ui,sans-serif}
+fieldset{display:grid;gap:12px;border:1px solid #34363d;border-radius:6px;padding:10px;margin:0}
+legend{font-size:12px;color:#a9abb3;padding:0 5px}
+.metric{color:#d7e814;font-variant-numeric:tabular-nums}
+.note{font-size:12px;line-height:1.5;color:#9da0a8}
+main{padding:22px;min-width:0}
+.topline{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}
+.topline h2{font-size:16px;margin:0}
+.topline a{color:#c7d626}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+figure{margin:0;min-width:0}
+figcaption{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:#b7bac1;margin:0 0 8px}
+.sample{width:100%;aspect-ratio:3/2;overflow:hidden;background:#b81825;box-shadow:0 12px 35px #0007}
+.sample img{width:100%;height:100%;object-fit:contain;display:block}
+#artboard{position:relative;isolation:isolate;width:100%;aspect-ratio:3/2;overflow:hidden;background:linear-gradient(145deg,var(--paper,#b81825),color-mix(in srgb,var(--paper,#b81825),black 8%));container-type:inline-size;--paper:#b81825;--ink:#fff4dc;--display-font:"Benchmark Default";--arc-font:"Benchmark Default"}
+.art{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.frame-lines{fill:none;stroke:var(--ink);stroke-width:10.8;stroke-linecap:butt;stroke-linejoin:miter;filter:drop-shadow(0 0 1.5px #fff4dc33)}
+.arc-text{fill:var(--ink);font-family:var(--arc-font),sans-serif;font-weight:400;letter-spacing:.13em}
+.hero{position:absolute;left:13%;top:35%;width:74%;height:26%;display:grid;place-items:center;color:var(--ink);font-family:var(--display-font),serif;font-weight:400;line-height:1;text-align:center;white-space:nowrap}
+@media(max-width:980px){body{grid-template-columns:220px minmax(0,1fr)}main{padding:14px}.compare{grid-template-columns:1fr}}
+@media(max-width:620px){body{display:block}aside{border-right:0;border-bottom:1px solid #34363d}.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside>
+  <h1>crest32 · CSS layout bench</h1>
+  <p>Upper and lower copy follow SVG paths around a live display word; the open corner brackets stay separate vector layers.</p>
+  <fieldset><legend>Live design inputs</legend>
+    <label>Central word<textarea id="headline">Ordinary</textarea></label>
+    <label>Upper arch<textarea id="top-copy">Escape From</textarea></label>
+    <label>Lower arch<textarea id="bottom-copy">Adventure</textarea></label>
+    <label>Display font · load a local TTF/OTF<input id="font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+    <label>Companion label font · load a local TTF/OTF<input id="label-font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+    <label>Arc font<select id="arc-font-choice"><option value="label">Companion label font</option><option value="display">Display font</option></select></label>
+  </fieldset>
+  <p id="status" class="note">Loading default font…</p>
+  <p class="note">Edit → next painted frame: <span class="metric" id="paint-ms">—</span></p>
+  <p class="note">The production renderer selects the arc face from the font family so slanted scripts do not collide along the curve.</p>
+</aside>
+<main>
+  <div class="topline"><h2>Source-led recreation</h2><a href="../../../support-references/T27485_08.jpg" target="_blank" rel="noreferrer">Open source image</a></div>
+  <section class="compare" aria-label="Reference and rebuild comparison">
+    <figure><figcaption>Original reference · T27485_08</figcaption><div class="sample"><img src="../../../support-references/T27485_08.jpg" alt="Original Escape from Ordinary crest reference"></div></figure>
+    <figure><figcaption>HTML/CSS rebuild · interactive</figcaption><div id="artboard" aria-label="Editable arched type crest composition">
+      <svg class="art" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
+        <path class="frame-lines" d="M42 48h90M42 48v180M66 28h246M66 28v72 M1158 48h-90M1158 48v180M1134 28h-246M1134 28v72 M42 752h90M42 752V572M66 772h246M66 772v-72 M1158 752h-90M1158 752V572M1134 772h-246M1134 772v-72"/>
+        <defs><path id="upper-arc" d="M342 285 Q600 90 858 285"/><path id="lower-arc" d="M342 545 Q600 760 858 545"/></defs>
+        <text id="top-arc" class="arc-text" text-anchor="middle"><textPath id="top-text-path" href="#upper-arc" startOffset="50%">Escape From</textPath></text>
+        <text id="bottom-arc" class="arc-text" text-anchor="middle"><textPath id="bottom-text-path" href="#lower-arc" startOffset="50%">Adventure</textPath></text>
+      </svg>
+      <div id="hero" class="hero">Ordinary</div>
+    </div></figure>
+  </section>
+</main>
+<script src="../../shared/copy-case.js"></script>
+<script>
+const board=document.querySelector('#artboard'),hero=document.querySelector('#hero'),topText=document.querySelector('#top-text-path'),bottomText=document.querySelector('#bottom-text-path'),arcChoice=document.querySelector('#arc-font-choice');
+let displayFont='"Benchmark Default"',labelFont='"Benchmark Default"',currentArcFont=labelFont,pending=0;
+function inkMetrics(ctx,text,size,family,tracking=0){ctx.font=`${size}px ${family}`;const m=ctx.measureText(text);return {advance:m.width+tracking*Math.max(0,text.length-1),width:(m.actualBoundingBoxLeft||0)+(m.actualBoundingBoxRight||m.width),height:(m.actualBoundingBoxAscent||size*.8)+(m.actualBoundingBoxDescent||size*.2)}}
+function fitSize(ctx,text,family,width,height,maxSize,minSize=1,tracking=0){let lo=minSize,hi=maxSize;for(let i=0;i<18;i++){const mid=(lo+hi)/2,m=inkMetrics(ctx,text,mid,family,tracking*mid);if(m.advance<=width&&m.height<=height)lo=mid;else hi=mid}return lo}
+function luminance(hex){const rgb=hex.trim().slice(1).match(/.{2}/g).map(x=>parseInt(x,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2]}
+function contrastRatio(fg,bg){const a=luminance(fg),b=luminance(bg);return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)}
+function updateLayout(){
+ const started=performance.now(),ctx=document.createElement('canvas').getContext('2d');
+ const word=document.querySelector('#headline').value.trim(),top=document.querySelector('#top-copy').value.trim(),bottom=document.querySelector('#bottom-copy').value.trim();
+ hero.textContent=word;topText.textContent=top;bottomText.textContent=bottom;
+ hero.style.fontFamily=displayFont;currentArcFont=arcChoice.value==='label'?labelFont:displayFont;
+ document.querySelectorAll('.arc-text').forEach(el=>el.style.fontFamily=currentArcFont);
+ const mainSize=fitSize(ctx,word||'Type',displayFont,board.clientWidth*.74*.96,board.clientHeight*.26*.90,board.clientWidth*.76,32);hero.style.fontSize=mainSize+'px';
+ const arcLength=document.querySelector('#upper-arc').getTotalLength()*.84;
+ const upperSize=fitSize(ctx,top||'Type',currentArcFont,arcLength,158,158,24,.13);document.querySelector('#top-arc').style.fontSize=upperSize+'px';
+ const lowerSize=fitSize(ctx,bottom||'Type',currentArcFont,arcLength,158,158,24,.13);document.querySelector('#bottom-arc').style.fontSize=lowerSize+'px';
+ cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelector('#paint-ms').textContent=(performance.now()-started).toFixed(1)+' ms'));
+ return layoutReport();
+}
+function layoutReport(){
+ const frame=board.getBoundingClientRect(),slots=[];
+ for(const [id,name] of [['hero','hero'],['top-arc','upper_arc'],['bottom-arc','lower_arc']]){
+  const el=document.querySelector('#'+id);let x,y,width,height;
+  if(id==='hero'){const r=el.getBoundingClientRect();x=r.left-frame.left;y=r.top-frame.top;width=r.width;height=r.height}
+  else{const b=el.getBBox(),r=el.ownerSVGElement.getBoundingClientRect();x=b.x*r.width/1200;y=b.y*r.height/800;width=b.width*r.width/1200;height=b.height*r.height/800}
+  slots.push({name,text:el.textContent.trim(),x:+x.toFixed(1),y:+y.toFixed(1),width:+width.toFixed(1),height:+height.toFixed(1),fontSize:parseFloat(getComputedStyle(el).fontSize)||0});
+ }
+ const ink=getComputedStyle(board).getPropertyValue('--ink').trim(),paper=getComputedStyle(board).getPropertyValue('--paper').trim();
+ const heroSlot=slots.find(s=>s.name==='hero'),arcs=slots.filter(s=>s.name!=='hero'),overlaps=arcs.filter(s=>s.y<heroSlot.y+heroSlot.height&&s.y+s.height>heroSlot.y).map(s=>s.name);
+ return {frame:{width:frame.width,height:frame.height},headlineFontSize:getComputedStyle(hero).fontSize,inkOnPaperContrast:+contrastRatio(ink,paper).toFixed(2),slots,outOfBounds:slots.filter(s=>s.x < -1||s.y < -1||s.x+s.width>frame.width+1||s.y+s.height>frame.height+1),overlaps};
+}
+for(const input of ['#headline','#top-copy','#bottom-copy'])document.querySelector(input).addEventListener('input',updateLayout);
+arcChoice.addEventListener('change',updateLayout);
+for(const [id,name] of [['#font-file','Uploaded Crest Display'],['#label-font-file','Uploaded Crest Label']])document.querySelector(id).addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;const url=URL.createObjectURL(file),face=new FontFace(name,'url('+url+')');await face.load();document.fonts.add(face);if(id==='#font-file'){displayFont='"Uploaded Crest Display"';board.style.setProperty('--display-font',displayFont)}else{labelFont='"Uploaded Crest Label"';board.style.setProperty('--arc-font',labelFont)}document.querySelector('#status').textContent=file.name+' loaded as the live '+(id==='#font-file'?'display':'label')+' font.';updateLayout()});
+document.fonts.ready.then(()=>{document.querySelector('#status').textContent='Default font is ready · load the display and companion label fonts to preview the target face.';updateLayout()});
+window.updateLayout=updateLayout;window.getLayoutReport=layoutReport;
+window.configureTemplate=({headline,top,bottom,arcFont='label',paper,ink}={})=>{if(typeof headline==='string')document.querySelector('#headline').value=window.supportTitleCase(headline);if(typeof top==='string')document.querySelector('#top-copy').value=window.supportTitleCase(top);if(typeof bottom==='string')document.querySelector('#bottom-copy').value=window.supportTitleCase(bottom);if(paper)board.style.setProperty('--paper',paper);if(ink)board.style.setProperty('--ink',ink);arcChoice.value=arcFont;return updateLayout()};
+</script>
+</body>
+</html>

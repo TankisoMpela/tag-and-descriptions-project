@@ -1,0 +1,112 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/skinbadge32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/skinbadge32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 40.3,
+  "imageBytes": {
+    "html": 1452264,
+    "skia": 1717042
+  },
+  "desktopLayout": {
+    "template": "skinbadge32",
+    "headlineFontSize": "96.7574px",
+    "contrast": 2.2700699492368557,
+    "contrastException": {
+      "minimum": 1.8,
+      "rationale": "Cream lettering keeps the source skincare seal’s intentionally soft contrast on lavender."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "skin-repeat-seal",
+        "text": "TRIBE  TRIBETRIBE  TRIBETRIBE  TRIBETRIBE  TRIBETRIBE  TRIBE",
+        "fontSize": "16px",
+        "x": 322.625,
+        "y": 57.1875,
+        "width": 326.171875,
+        "height": 354.53125
+      },
+      {
+        "name": "skin-front-seal",
+        "text": "SKIN CARE  •  SELF LOVE  •  SKIN CARE\n        SELF LOVE     SKIN CARE  •  SELF LOVE\n      SkinTribe",
+        "fontSize": "16px",
+        "x": 58.140625,
+        "y": 59.078125,
+        "width": 356.671875,
+        "height": 354.53125
+      },
+      {
+        "name": "skin-headline-top",
+        "text": "Skin",
+        "fontSize": "96.7574px",
+        "x": 156.9375,
+        "y": 129.984375,
+        "width": 159.0625,
+        "height": 85.125
+      },
+      {
+        "name": "skin-headline-bottom",
+        "text": "Tribe",
+        "fontSize": "96.7574px",
+        "x": 150.796875,
+        "y": 218.609375,
+        "width": 171.34375,
+        "height": 85.125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "skinbadge32",
+    "headlineFontSize": "66px",
+    "contrast": 2.2700699492368557,
+    "contrastException": {
+      "minimum": 1.8,
+      "rationale": "Cream lettering keeps the source skincare seal’s intentionally soft contrast on lavender."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "skin-repeat-seal",
+        "text": "TRIBE  TRIBETRIBE  TRIBETRIBE  TRIBETRIBE  TRIBETRIBE  TRIBE",
+        "fontSize": "16px",
+        "x": 160.15625,
+        "y": 28.390625,
+        "width": 161.90625,
+        "height": 175.984375
+      },
+      {
+        "name": "skin-front-seal",
+        "text": "SKIN CARE  •  SELF LOVE  •  SKIN CARE\n        SELF LOVE     SKIN CARE  •  SELF LOVE\n      SkinTribe",
+        "fontSize": "16px",
+        "x": 28.859375,
+        "y": 29.328125,
+        "width": 177.046875,
+        "height": 175.984375
+      },
+      {
+        "name": "skin-headline-top",
+        "text": "Skin",
+        "fontSize": "66px",
+        "x": 63.1171875,
+        "y": 64.515625,
+        "width": 108.515625,
+        "height": 58.078125
+      },
+      {
+        "name": "skin-headline-bottom",
+        "text": "Tribe",
+        "fontSize": "66px",
+        "x": 58.9296875,
+        "y": 108.515625,
+        "width": 116.890625,
+        "height": 58.078125
+      }
+    ],
+    "contentWarnings": []
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "source": "T26074_12",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Maidega/Maidega-Regular.otf",
+  "labelFont": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/T26074-12/assets/NotoSans-CondensedExtraBold.ttf",
+  "headline": "Got The Radio\nOn, I'm Like The\nRoadrunner.",
+  "descriptor": "Distinctive Letterforms With Spirit,\nPersonality And Motion.",
+  "body": "A Lively Typeface Can Make A Message Stand Out,\nAnd Leave A Lasting Impression.",
+  "badge": "Nektar",
+  "layout": {
+    "angle": "-7",
+    "size": "160",
+    "y": "0"
+  },
+  "colors": {
+    "lime": "#d7e814",
+    "ink": "#302a31",
+    "pink": "#f68bb6"
+  },
+  "layoutReport": {
+    "frame": {
+      "width": 1200,
+      "height": 800
+    },
+    "headlineFontSize": "155.511px",
+    "descriptorFontSize": "16.212px",
+    "bodyFontSize": "15.24px",
+    "badgeFontSize": "39.48px",
+    "inkOnLimeContrast": 10.29,
+    "slots": [
+      {
+        "name": "headline_line",
+        "text": "Got The Radio",
+        "x": 103.9,
+        "y": 102.9,
+        "width": 887.4,
+        "height": 261
+      },
+      {
+        "name": "headline_line",
+        "text": "On, I'm Like The",
+        "x": 100.9,
+        "y": 269.5,
+        "width": 1033.9,
+        "height": 279
+      },
+      {
+        "name": "headline_line",
+        "text": "Roadrunner.",
+        "x": 228,
+        "y": 440.1,
+        "width": 826.9,
+        "height": 253.6
+      },
+      {
+        "name": "descriptor",
+        "text": "Distinctive Letterforms With Spirit,\nPersonality And Motion.",
+        "x": 114.7,
+        "y": 78.1,
+        "width": 352.3,
+        "height": 108.5
+      },
+      {
+        "name": "bodycopy",
+        "text": "A Lively Typeface Can Make A Message Stand Out,\nAnd Leave A Lasting Impression.",
+        "x": 495.4,
+        "y": 621.6,
+        "width": 613.8,
+        "height": 126.8
+      },
+      {
+        "name": "topmark",
+        "text": "Type StudyMStudio",
+        "x": 1054.1,
+        "y": 116.2,
+        "width": 115.5,
+        "height": 90.9
+      },
+      {
+        "name": "nektar",
+        "text": "Nektar",
+        "x": 83.2,
+        "y": 635.4,
+        "width": 188.5,
+        "height": 93
+      }
+    ],
+    "outOfBounds": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/maidega-rerender-2026-10-15/support-70_roadrunner32.png",
+  "outputBytes": 3240592
+}

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>zebra32 · HTML/CSS layout iteration</title>
+<style>
+:root{color-scheme:dark;font:14px/1.45 system-ui,sans-serif;background:#202126;color:#f0f0ee}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;grid-template-columns:280px minmax(0,1fr)}
+aside{background:#141519;border-right:1px solid #34363d;padding:22px 18px;display:flex;flex-direction:column;gap:16px}
+h1{font-size:16px;line-height:1.25;margin:0}
+p{margin:0;color:#b8bac1}
+label{display:grid;gap:5px;color:#e1e2e5}
+input[type=text]{width:100%;border:1px solid #454750;border-radius:5px;background:#202126;color:#f0f0ee;padding:8px;font:13px/1.25 system-ui,sans-serif}
+input[type=file]{width:100%;font-size:12px;color:#b8bac1}
+input[type=range]{width:100%;accent-color:#edeadd}
+fieldset{display:grid;gap:10px;border:1px solid #34363d;border-radius:7px;padding:10px;margin:0}
+legend{font-size:12px;color:#a9abb3;padding:0 5px}
+.poem-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.metric{color:#d7e814;font-variant-numeric:tabular-nums}
+.note{font-size:12px;line-height:1.5;color:#9da0a8}
+main{padding:22px;min-width:0}
+.topline{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}
+.topline h2{font-size:16px;margin:0}
+.topline a{color:#c7d626}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+figure{margin:0;min-width:0}
+figcaption{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#b7bac1;margin:0 0 8px}
+.sample{width:100%;aspect-ratio:3/2;overflow:hidden;background:#efefed;box-shadow:0 12px 35px #0007}
+.sample img{width:100%;height:100%;object-fit:contain;display:block}
+#artboard{position:relative;isolation:isolate;width:100%;aspect-ratio:3/2;overflow:hidden;background:#efefed;container-type:inline-size;--paper:#efefed;--card:#090a0b;--ink:#f6f3ec;--film:.20;--display-font:Georgia,"Times New Roman",serif}
+.card{position:absolute;top:16.4%;width:45.2%;height:67.4%;overflow:hidden;background:#090a0b;isolation:isolate}
+#left-card{left:4.2%}#right-card{left:50.6%}
+.card::before,.card::after{content:"";position:absolute;inset:0;pointer-events:none}
+.card::before{z-index:0;background-image:url("../../../support-references/materials/T13692_black-plastic-texture.png");background-size:150% 100%;background-repeat:no-repeat}
+#left-card::before{background-position:left center}#right-card::before{background-position:right center}
+.card::after{z-index:0;background:linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)),rgba(9,10,11,var(--film))}
+.material{position:absolute;z-index:1;display:block;object-fit:fill}
+#zebra-photo{left:6.5%;top:10.5%;width:87%;aspect-ratio:1.5}
+#love{position:absolute;z-index:2;left:7%;top:62.5%;width:86%;height:28%;display:grid;place-items:center;overflow:hidden;color:var(--ink);font-family:var(--display-font),serif;font-weight:900;line-height:1;letter-spacing:-.035em;white-space:nowrap}
+.poem-line{position:absolute;z-index:2;left:5.5%;width:89%;display:flex;align-items:center;justify-content:flex-end;overflow:hidden;color:var(--ink);font-family:var(--display-font),serif;font-weight:900;line-height:1;letter-spacing:-.018em;text-align:right;white-space:nowrap}
+#rose-photo{left:3.5%;top:66.5%;width:93%;aspect-ratio:3/1}
+@media(max-width:1050px){body{grid-template-columns:235px minmax(0,1fr)}main{padding:15px}.compare{grid-template-columns:1fr}}
+@media(max-width:640px){body{display:block}aside{border-right:0;border-bottom:1px solid #34363d}main{padding:18px}.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside>
+  <h1>zebra32 · CSS layout bench</h1>
+  <p>Two square specimens on the original pale sheet: crinkled film, an arched zebra photograph, a single display word, and the compact rose-poem panel.</p>
+  <fieldset><legend>Live copy</legend>
+    <label>Left specimen<input id="copy-love" type="text" value="Love" maxlength="10"></label>
+    <div class="poem-grid" id="poem-controls"></div>
+  </fieldset>
+  <fieldset><legend>Material and type</legend>
+    <label>Film darkness · <span id="film-value">20%</span><input id="film-strength" type="range" min="5" max="45" value="20"></label>
+    <label>Display font · load a local TTF/OTF<input id="font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+  </fieldset>
+  <p id="status" class="note">Loading default font…</p>
+  <p class="note">Edit → next painted frame: <span class="metric" id="paint-ms">—</span></p>
+  <p class="note">Photos and the crinkled-film texture stay separate local assets. Copy fits each source box without distorting the uploaded face.</p>
+</aside>
+<main>
+  <div class="topline"><h2>Source-led recreation</h2><a href="../../../support-references/T13692_01.jpg" target="_blank" rel="noreferrer">Open source image</a></div>
+  <section class="compare" aria-label="Reference and rebuild comparison">
+    <figure><figcaption>Original reference · T13692_01</figcaption><div class="sample"><img src="../../../support-references/T13692_01.jpg" alt="Original two-panel Love and Roses Are Red typography artwork"></div></figure>
+    <figure><figcaption>HTML/CSS rebuild · interactive</figcaption><div id="artboard" aria-label="Two editable typography cards with zebra and rose photographs">
+      <section class="card" id="left-card" aria-label="Zebra and Love specimen">
+        <img class="material" id="zebra-photo" src="../../../support-references/materials/T13692_zebra-arched.png" alt="Two zebras inside an arched photograph">
+        <div id="love">Love</div>
+      </section>
+      <section class="card" id="right-card" aria-label="Poem and rose specimen">
+        <div id="poem-lines"></div>
+        <img class="material" id="rose-photo" src="../../../support-references/materials/T13692_rose-strip.png" alt="A red rose resting across printed pages">
+      </section>
+    </div></figure>
+  </section>
+</main>
+<script src="../../shared/copy-case.js"></script>
+<script>
+const board=document.querySelector('#artboard'),poem=['Roses','Are Red','Chocolates','Are Brown','Valentine','Is Bored','If You Are','Alone'];
+let displayFont='Georgia,"Times New Roman",serif',pending=0;
+const poemY=[.018,.096,.180,.262,.350,.430,.512,.588];
+const controlRoot=document.querySelector('#poem-controls'),poemRoot=document.querySelector('#poem-lines');
+for(let i=0;i<poem.length;i++){
+ const label=document.createElement('label'),input=document.createElement('input'),row=document.createElement('div');
+ label.textContent='Line '+(i+1);input.type='text';input.maxLength=20;input.value=poem[i];input.dataset.poem=i;label.append(input);controlRoot.append(label);
+ row.className='poem-line';row.dataset.poem=i;row.style.top=(poemY[i]*100)+'%';row.style.height='7.3%';row.textContent=poem[i];poemRoot.append(row);
+}
+function fitSize(ctx,text,family,width,height,maxSize,minSize,tracking,weight=900){let lo=minSize,hi=maxSize;for(let i=0;i<20;i++){const mid=(lo+hi)/2;ctx.font=`${weight} ${mid}px ${family}`;const m=ctx.measureText(text),inkWidth=(m.actualBoundingBoxLeft||0)+(m.actualBoundingBoxRight||m.width)+tracking*mid*Math.max(0,text.length-1),inkHeight=(m.actualBoundingBoxAscent||mid*.8)+(m.actualBoundingBoxDescent||mid*.2);if(inkWidth<=width&&inkHeight<=height)lo=mid;else hi=mid}return lo}
+function updateLayout(){
+ const started=performance.now(),ctx=document.createElement('canvas').getContext('2d'),scale=board.clientWidth/1200;
+ const left=document.querySelector('#left-card'),right=document.querySelector('#right-card'),love=document.querySelector('#copy-love').value.trim()||'Love';
+ document.querySelector('#love').textContent=love;
+ const lh=left.getBoundingClientRect(),rh=right.getBoundingClientRect(),bh=board.getBoundingClientRect();
+ const loveEl=document.querySelector('#love'),lr=loveEl.getBoundingClientRect();
+ loveEl.style.fontFamily=displayFont;loveEl.style.fontSize=fitSize(ctx,love,displayFont,lr.width*.96,lr.height*.88,275*scale,82*scale,-.035)+'px';
+ document.querySelectorAll('input[data-poem]').forEach(input=>{
+  const row=document.querySelector(`.poem-line[data-poem="${input.dataset.poem}"]`),text=input.value.trim()||'Type';
+  row.textContent=text;row.style.fontFamily=displayFont;
+  const rr=row.getBoundingClientRect();row.style.fontSize=fitSize(ctx,text,displayFont,rr.width*.98,rr.height*.98,76*scale,23*scale,-.018)+'px';
+ });
+ const film=Number(document.querySelector('#film-strength').value);document.querySelector('#film-value').textContent=film+'%';board.style.setProperty('--film',(film/100).toFixed(2));
+ cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelector('#paint-ms').textContent=(performance.now()-started).toFixed(1)+' ms'));
+ return layoutReport();
+}
+function layoutReport(){
+ const frame=board.getBoundingClientRect(),slots=[];
+ for(const [id,name] of [['left-card','left_card'],['right-card','right_card'],['zebra-photo','zebra_photo'],['love','love'],['rose-photo','rose_photo'],...Array.from({length:8},(_,i)=>[`poem-${i}`,'poem_'+(i+1)])]){
+  const el=id.startsWith('poem-')?document.querySelector(`.poem-line[data-poem="${id.slice(5)}"]`):document.querySelector('#'+id),r=el.getBoundingClientRect();
+  slots.push({name,text:el.alt||el.textContent.trim(),x:+(r.left-frame.left).toFixed(1),y:+(r.top-frame.top).toFixed(1),width:+r.width.toFixed(1),height:+r.height.toFixed(1),fontSize:parseFloat(getComputedStyle(el).fontSize)||0});
+ }
+ const ink=getComputedStyle(board).getPropertyValue('--ink').trim(),card=getComputedStyle(board).getPropertyValue('--card').trim();
+ return {frame:{width:frame.width,height:frame.height},headlineFontSize:getComputedStyle(document.querySelector('#love')).fontSize,inkOnPaperContrast:+contrast(ink,card).toFixed(2),slots,outOfBounds:slots.filter(s=>s.x < -1||s.y < -1||s.x+s.width>frame.width+1||s.y+s.height>frame.height+1)};
+}
+function luminance(hex){const rgb=hex.trim().slice(1).match(/.{2}/g).map(x=>parseInt(x,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2]}
+function contrast(fg,bg){const a=luminance(fg),b=luminance(bg);return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)}
+document.querySelector('#copy-love').addEventListener('input',updateLayout);
+document.querySelectorAll('input[data-poem]').forEach(input=>input.addEventListener('input',updateLayout));
+document.querySelector('#film-strength').addEventListener('input',updateLayout);
+document.querySelector('#font-file').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;const url=URL.createObjectURL(file),face=new FontFace('Uploaded Zebra Display','url('+url+')');await face.load();document.fonts.add(face);displayFont='"Uploaded Zebra Display"';document.querySelector('#status').textContent=file.name+' loaded as the live display font.';updateLayout()});
+const boardResizeObserver=new ResizeObserver(()=>requestAnimationFrame(updateLayout));boardResizeObserver.observe(board);window.addEventListener('resize',()=>requestAnimationFrame(updateLayout));
+document.fonts.ready.then(()=>{document.querySelector('#status').textContent='Default font is ready · upload the target display face for a font-fit preview.';updateLayout()});
+window.updateLayout=updateLayout;window.getLayoutReport=layoutReport;
+window.configureTemplate=({love,poemLines,film}={})=>{if(typeof love==='string')document.querySelector('#copy-love').value=window.supportTitleCase(love);if(Array.isArray(poemLines))poemLines.forEach((line,i)=>{const input=document.querySelector(`input[data-poem="${i}"]`);if(input&&typeof line==='string')input.value=window.supportTitleCase(line)});if(Number.isFinite(film))document.querySelector('#film-strength').value=Math.min(45,Math.max(5,film));return updateLayout()};
+</script>
+</body>
+</html>

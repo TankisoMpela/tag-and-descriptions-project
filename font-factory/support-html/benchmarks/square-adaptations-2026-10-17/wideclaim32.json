@@ -1,0 +1,107 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "wideclaim32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "wideclaim32",
+    "headlineFontSize": "248.286px",
+    "smallestDisplayFontSize": "104px",
+    "contrast": 4.296407655059233,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The red specimen letters preserve the source poster's oversized red-on-white type treatment."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "opening-statement-row",
+        "text": "A Typeface Is",
+        "fontSize": "16px",
+        "x": 27.1875,
+        "y": 28.796875,
+        "width": 745.59375,
+        "height": 137.59375
+      },
+      {
+        "name": "opening-statement",
+        "text": "A Typeface Is",
+        "fontSize": "114.27px",
+        "x": 34.546875,
+        "y": 47.3125,
+        "width": 730.859375,
+        "height": 100.546875
+      },
+      {
+        "name": "second-statement-row",
+        "text": "A Visual Voice",
+        "fontSize": "16px",
+        "x": 27.1875,
+        "y": 173.59375,
+        "width": 745.59375,
+        "height": 110.390625
+      },
+      {
+        "name": "second-statement",
+        "text": "A Visual Voice",
+        "fontSize": "104px",
+        "x": 46.671875,
+        "y": 183.03125,
+        "width": 706.609375,
+        "height": 91.515625
+      },
+      {
+        "name": "display-word-one-row",
+        "text": "Wide",
+        "fontSize": "16px",
+        "x": 28,
+        "y": 284,
+        "width": 744,
+        "height": 248
+      },
+      {
+        "name": "display-word-one",
+        "text": "Wide",
+        "fontSize": "248.286px",
+        "x": 99.328125,
+        "y": 298.75,
+        "width": 601.328125,
+        "height": 218.484375
+      },
+      {
+        "name": "display-word-two-row",
+        "text": "Serif",
+        "fontSize": "16px",
+        "x": 30.390625,
+        "y": 548,
+        "width": 739.1875,
+        "height": 232
+      },
+      {
+        "name": "display-word-two",
+        "text": "Serif",
+        "fontSize": "232.289px",
+        "x": 133.671875,
+        "y": 561.796875,
+        "width": 532.625,
+        "height": 204.40625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/wideclaim32.png",
+  "outputBytes": 98239
+}

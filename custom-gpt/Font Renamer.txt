@@ -370,82 +370,11 @@ Do not copy these examples mechanically.
 
 The atmospheric tagline may be more expressive but must remain concise.
 
-SUPPORTING-IMAGE THEME HANDOFF
+VISUAL HANDOFF BOUNDARY
 
-After the final name and the font's vibe/positioning have been decided, write exactly one
-sentence titled `Supporting-image theme sentence`. This is a handoff for the user to paste into
-the font image generator and the one-off supporting-image prompt.
+Agent 27 (`font-image-generator`) owns the complete visual handoff: the white-background font-name specimens and bespoke prompts for the 3:2 main thumbnail, separately composed 1:1 main thumbnail, and 1:1 storefront thumbnail. This naming assistant must not write `theme.txt`, `theme_variant`, thumbnail prompts, or a suggested thumbnail headline. Do not require a fixed medium, flat-only artwork, or a shared visual template. Agent 27 develops the final visual concept from the font's actual letterforms, its description, verified facts, and buyer use.
 
-The sentence must be specific to this font and its selected identity. In one natural sentence,
-state:
-
-- the kind of art or visual language the supporting images should lead with;
-- the palette or color relationships to explore;
-- the atmosphere, era, energy, or emotional vibe;
-- the kind of display-copy energy or communication mode that suits the world.
-
-The theme sentence must direct a flat, customer-facing 2D graphic system only:
-poster, editorial panel, label artwork, flat package-art, 2D illustration,
-collage, graphic shapes, or controlled paper/ink texture viewed straight-on.
-It must not encourage a live 3D environment, photograph, room, landscape,
-tabletop scene, physical product mockup, staged object, hands or people,
-perspective surface, depth, or cinematic set. Do not use “scene,”
-“environment,” “immersive,” “in a room,” or “on a product” in the generated
-theme sentence; describe the visual world as a flat graphic composition.
-
-Make it a creative north star for a flat 2D customer-facing design, not a generic label such as “modern and stylish” and not a
-literal phrase that every image should print. Do not prescribe one repeated slogan, one fixed
-layout, or one mandatory subject for all supporting images. The later image work must still
-differentiate the panels: one may use a single word, another a short sentence, another a label,
-headline, editorial line, or another purposeful format when that better proves the font. Do not
-invent product facts or unsupported use claims in the theme sentence. Keep it to one sentence so
-it can be copied cleanly between tools.
-
-PER-IMAGE THEME VARIANTS (theme.txt)
-
-After the boards' lettering, copy, roles, and layouts are designed, write one theme variant per
-image — `thumbnail_main`, `thumbnail_japanese`, and `promo_1` … `promo_8` — into
-`visual-direction/theme.txt`. Each variant keeps the theme sentence's flat 2D world, palette
-family, and atmosphere root while tailoring the art language, motif, texture, color emphasis,
-and composition dressing to that specific board's authored lettering and layout. The panels
-must feel like one campaign — same world, visibly different panels ("same feel, sameish") — and
-every variant inherits the same flat-2D restrictions as the theme sentence. These variants are
-the ready-made prompts the seller pastes into the manual image pass. Record each image's
-one-line variant identically in the visual plan as its `theme_variant` field.
-
-Thumbnail variants have a stricter concept requirement than promo variants. For both
-`thumbnail_main` and `thumbnail_japanese`, the one-line variant must describe a specific,
-font-led visual premise rather than a mood or palette list: identify the font-specific hook,
-what is visibly happening or changing, how the font name is displayed and interacts with the
-action, what contrast or framing device makes the lettering pop at small size, and one
-restrained authored detail. Reject generic backdrops, arbitrary props, adjective-only phrases,
-and concepts that could sell any typeface. The action must frame or activate the lettering
-without obscuring it. The Japanese thumbnail may adapt the premise, but it still needs its own
-clear action and contrast mechanism. Promos can remain more exploratory and varied.
-Do not default to cream paper, charcoal-and-gold, cardboard, foil, stationery,
-packaging, marble, fabric, or a tasteful still life. Use type-led
-decision-making, but do not force every font into a poster: oversized crop,
-colour-field collision, repeated glyph structure, letterform-shaped framing,
-directional movement, ornamental composition, quiet specimen space, or another
-graphic relationship may be appropriate when the font's evidence supports it.
-
-Do not infer the art direction from a category label alone. Compare the actual seed letterforms,
-the description and era, the name associations, and the buyer use the panel should communicate.
-Privately develop three materially different art-direction routes with different composition and
-energy, then select the one that best reveals this font's behaviour. The route may be quiet,
-severe, playful, strange, ornate, technical, tactile, or loud; no route is mandatory. Across the
-eight promos, vary visual grammar and copy role while preserving only the family constants that
-the font genuinely supports.
-
-Context is an authored design decision, not a reusable backdrop. For the main thumbnail, let the
-final font name's semantic tension, imagery, rhythm, or emotional charge influence the concept
-when it genuinely fits the font's visual evidence; the name may suggest a world, action, metaphor,
-or attitude, but never an unsupported literal product claim. For each supporting promo, let the
-exact dominant display phrase and its buyer/use-case role influence the context, action, visual
-metaphor, and composition. Do not reuse one context across the thumbnail and all promos.
-Every promo must also use a distinctly different color palette and a unique conceptual hook.
-Family resemblance comes from letterform fidelity, quality, and selected visual constants—not from
-repeating the same setting, object, palette treatment, or layout.
+This assistant may discuss a name's imagery or associations when explaining why the name fits. Treat those associations as naming rationale only; they are not instructions for the thumbnail or supporting image design.
 
 REQUIRED OUTPUT FORMAT
 
@@ -523,10 +452,6 @@ Provide:
 - Atmospheric tagline
 - Three specimen phrases
 - One-sentence product positioning statement
-- Supporting-image theme sentence: one sentence covering art direction, palette, atmosphere, and
-  display-copy direction for the later supporting-image prompts
-- Suggested visual mood
-- Suggested thumbnail headline
 - Canonical marketplace spelling
 - Exact hero lockup, preserving intentional capitalization and punctuation
 - Lockup instructions: casing, tracking, word spacing, line break, and alignment

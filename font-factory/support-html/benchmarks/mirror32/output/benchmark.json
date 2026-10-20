@@ -1,0 +1,267 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/mirror32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/mirror32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Maidega",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 22.5,
+  "imageBytes": {
+    "html": 1100498,
+    "skia": 1254297
+  },
+  "desktopLayout": {
+    "template": "mirror32",
+    "headlineFontSize": "66.2198px",
+    "contrast": 18.448990673279965,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "mirror-portrait",
+        "text": "",
+        "fontSize": "16px",
+        "x": 35.453125,
+        "y": 78.46875,
+        "width": 253.453125,
+        "height": 316.71875
+      },
+      {
+        "name": "mirror-row-1",
+        "text": "PEOPLE HASTEN",
+        "fontSize": "16px",
+        "x": 102.8125,
+        "y": 74.6875,
+        "width": 570.8125,
+        "height": 52.9375
+      },
+      {
+        "name": "mirror-quote-1",
+        "text": "PEOPLE HASTEN",
+        "fontSize": "66.2198px",
+        "x": 102.8800048828125,
+        "y": 75.328125,
+        "width": 570.7449951171875,
+        "height": 51.640625
+      },
+      {
+        "name": "mirror-row-2",
+        "text": "TO JUDGE",
+        "fontSize": "16px",
+        "x": 102.8125,
+        "y": 129.515625,
+        "width": 570.8125,
+        "height": 52.9375
+      },
+      {
+        "name": "mirror-quote-2",
+        "text": "TO JUDGE",
+        "fontSize": "66.2198px",
+        "x": 320.4808349609375,
+        "y": 130.15625,
+        "width": 353.1441650390625,
+        "height": 51.640625
+      },
+      {
+        "name": "mirror-row-3",
+        "text": "IN ORDER",
+        "fontSize": "16px",
+        "x": 102.8125,
+        "y": 184.359375,
+        "width": 570.8125,
+        "height": 52.9375
+      },
+      {
+        "name": "mirror-quote-3",
+        "text": "IN ORDER",
+        "fontSize": "66.2198px",
+        "x": 330.69024658203125,
+        "y": 185,
+        "width": 342.93475341796875,
+        "height": 51.640625
+      },
+      {
+        "name": "mirror-row-4",
+        "text": "NOT TO BE",
+        "fontSize": "16px",
+        "x": 102.8125,
+        "y": 239.1875,
+        "width": 570.8125,
+        "height": 52.9375
+      },
+      {
+        "name": "mirror-quote-4",
+        "text": "NOT TO BE",
+        "fontSize": "66.2198px",
+        "x": 288.6572265625,
+        "y": 239.828125,
+        "width": 384.9677734375,
+        "height": 51.640625
+      },
+      {
+        "name": "mirror-row-5",
+        "text": "JUDGED",
+        "fontSize": "16px",
+        "x": 102.8125,
+        "y": 294.015625,
+        "width": 570.8125,
+        "height": 52.9375
+      },
+      {
+        "name": "mirror-quote-5",
+        "text": "JUDGED",
+        "fontSize": "66.2198px",
+        "x": 392.687744140625,
+        "y": 294.65625,
+        "width": 280.937255859375,
+        "height": 51.640625
+      },
+      {
+        "name": "mirror-row-6",
+        "text": "THEMSELVES",
+        "fontSize": "16px",
+        "x": 102.8125,
+        "y": 348.859375,
+        "width": 570.8125,
+        "height": 52.9375
+      },
+      {
+        "name": "mirror-quote-6",
+        "text": "THEMSELVES",
+        "fontSize": "66.2198px",
+        "x": 209.63616943359375,
+        "y": 349.5,
+        "width": 463.98883056640625,
+        "height": 51.640625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "mirror32",
+    "headlineFontSize": "33.4699px",
+    "contrast": 18.448990673279965,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "mirror-portrait",
+        "text": "",
+        "fontSize": "16px",
+        "x": 17.59375,
+        "y": 38.9375,
+        "width": 125.8125,
+        "height": 157.21875
+      },
+      {
+        "name": "mirror-row-1",
+        "text": "PEOPLE HASTEN",
+        "fontSize": "16px",
+        "x": 51.03125,
+        "y": 37.0625,
+        "width": 283.359375,
+        "height": 26.28125
+      },
+      {
+        "name": "mirror-quote-1",
+        "text": "PEOPLE HASTEN",
+        "fontSize": "33.4699px",
+        "x": 51.030609130859375,
+        "y": 37.15625,
+        "width": 283.3600158691406,
+        "height": 26.09375
+      },
+      {
+        "name": "mirror-row-2",
+        "text": "TO JUDGE",
+        "fontSize": "16px",
+        "x": 51.03125,
+        "y": 64.28125,
+        "width": 283.359375,
+        "height": 26.28125
+      },
+      {
+        "name": "mirror-quote-2",
+        "text": "TO JUDGE",
+        "fontSize": "33.4699px",
+        "x": 159.06117248535156,
+        "y": 64.375,
+        "width": 175.32945251464844,
+        "height": 26.09375
+      },
+      {
+        "name": "mirror-row-3",
+        "text": "IN ORDER",
+        "fontSize": "16px",
+        "x": 51.03125,
+        "y": 91.515625,
+        "width": 283.359375,
+        "height": 26.28125
+      },
+      {
+        "name": "mirror-quote-3",
+        "text": "IN ORDER",
+        "fontSize": "33.4699px",
+        "x": 164.13502502441406,
+        "y": 91.609375,
+        "width": 170.25559997558594,
+        "height": 26.09375
+      },
+      {
+        "name": "mirror-row-4",
+        "text": "NOT TO BE",
+        "fontSize": "16px",
+        "x": 51.03125,
+        "y": 118.734375,
+        "width": 283.359375,
+        "height": 26.28125
+      },
+      {
+        "name": "mirror-quote-4",
+        "text": "NOT TO BE",
+        "fontSize": "33.4699px",
+        "x": 143.27589416503906,
+        "y": 118.828125,
+        "width": 191.11473083496094,
+        "height": 26.09375
+      },
+      {
+        "name": "mirror-row-5",
+        "text": "JUDGED",
+        "fontSize": "16px",
+        "x": 51.03125,
+        "y": 145.953125,
+        "width": 283.359375,
+        "height": 26.28125
+      },
+      {
+        "name": "mirror-quote-5",
+        "text": "JUDGED",
+        "fontSize": "33.4699px",
+        "x": 194.930419921875,
+        "y": 146.046875,
+        "width": 139.460205078125,
+        "height": 26.09375
+      },
+      {
+        "name": "mirror-row-6",
+        "text": "THEMSELVES",
+        "fontSize": "16px",
+        "x": 51.03125,
+        "y": 173.171875,
+        "width": 283.359375,
+        "height": 26.28125
+      },
+      {
+        "name": "mirror-quote-6",
+        "text": "THEMSELVES",
+        "fontSize": "33.4699px",
+        "x": 104.04757690429688,
+        "y": 173.265625,
+        "width": 230.34304809570312,
+        "height": 26.09375
+      }
+    ],
+    "contentWarnings": []
+  }
+}

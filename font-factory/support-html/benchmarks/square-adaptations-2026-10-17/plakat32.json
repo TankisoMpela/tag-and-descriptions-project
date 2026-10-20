@@ -1,0 +1,130 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "plakat32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "plakat32",
+    "headlineFontSize": "207.16px",
+    "smallestDisplayFontSize": "28.8px",
+    "contrast": 16.17951288737469,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "plakat-symbol-strip",
+        "text": "",
+        "fontSize": "16px",
+        "x": 380,
+        "y": 416,
+        "width": 149.59375,
+        "height": 96
+      },
+      {
+        "name": "headline",
+        "text": "Plakat",
+        "fontSize": "207.16px",
+        "x": 60,
+        "y": 120,
+        "width": 680,
+        "height": 272
+      },
+      {
+        "name": "note",
+        "text": "Glyph CountAvailable Styles",
+        "fontSize": "16px",
+        "x": 92,
+        "y": 416,
+        "width": 288,
+        "height": 96
+      },
+      {
+        "name": "note-line-1",
+        "text": "Glyph Count",
+        "fontSize": "29.6px",
+        "x": 100,
+        "y": 416,
+        "width": 272,
+        "height": 34.90625
+      },
+      {
+        "name": "note-line-2",
+        "text": "Available Styles",
+        "fontSize": "29.6px",
+        "x": 100,
+        "y": 450.90625,
+        "width": 272,
+        "height": 34.90625
+      },
+      {
+        "name": "variable",
+        "text": "Family",
+        "fontSize": "50.57px",
+        "x": 532,
+        "y": 416,
+        "width": 176,
+        "height": 96
+      },
+      {
+        "name": "railOne",
+        "text": "Thin",
+        "fontSize": "28.8px",
+        "x": 92,
+        "y": 520,
+        "width": 616,
+        "height": 40
+      },
+      {
+        "name": "railRightOne",
+        "text": "Black",
+        "fontSize": "28.8px",
+        "x": 92,
+        "y": 520,
+        "width": 616,
+        "height": 40
+      },
+      {
+        "name": "railTwo",
+        "text": "Roman",
+        "fontSize": "28.8px",
+        "x": 92,
+        "y": 572,
+        "width": 616,
+        "height": 40
+      },
+      {
+        "name": "railRightTwo",
+        "text": "Italic",
+        "fontSize": "28.8px",
+        "x": 92,
+        "y": 572,
+        "width": 616,
+        "height": 40
+      },
+      {
+        "name": "footer",
+        "text": "A Typeface Family Study",
+        "fontSize": "17.36px",
+        "x": 240,
+        "y": 684,
+        "width": 320,
+        "height": 44
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/plakat32.png",
+  "outputBytes": 771840
+}

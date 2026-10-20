@@ -1,0 +1,203 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/colosseum32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/colosseum32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Lilita One",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 40.9,
+  "imageBytes": {
+    "html": 3358245,
+    "skia": 283274
+  },
+  "desktopLayout": {
+    "template": "colosseum32",
+    "headlineFontSize": "111.155px",
+    "contrast": 3.982259686508682,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The source uses saturated scarlet ink for both oversized specimen lettering and small publisher marks."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "colosseum-first-specimen",
+        "text": "colosseum",
+        "fontSize": "96.9648px",
+        "x": 123.17547607421875,
+        "y": 61.109375,
+        "width": 465.5552978515625,
+        "height": 96.19500732421875
+      },
+      {
+        "name": "colosseum-second-specimen",
+        "text": "gröngöling",
+        "fontSize": "111.155px",
+        "x": 122.049072265625,
+        "y": 169.703125,
+        "width": 467.12060546875,
+        "height": 120.30563354492188
+      },
+      {
+        "name": "colosseum-third-specimen",
+        "text": "antarctica",
+        "fontSize": "94.5998px",
+        "x": 122.7513427734375,
+        "y": 288.34375,
+        "width": 461.809814453125,
+        "height": 86.482177734375
+      },
+      {
+        "name": "colosseum-publisher-footer",
+        "text": "NektarA Typeface with Spirit, Personality & Distinctionwww.more-etc.com • @MoreEtcStudiosMORE ETCMSTUDIO",
+        "fontSize": "16px",
+        "x": 187.90625,
+        "y": 405.109375,
+        "width": 333.265625,
+        "height": 39.703125
+      },
+      {
+        "name": "colosseum-nektar-mark",
+        "text": "Nektar",
+        "fontSize": "16px",
+        "x": 187.2613525390625,
+        "y": 415.70281982421875,
+        "width": 40.071044921875,
+        "height": 22.5006103515625
+      },
+      {
+        "name": "colosseum-publisher-copy",
+        "text": "A Typeface with Spirit, Personality & Distinctionwww.more-etc.com • @MoreEtcStudios",
+        "fontSize": "16px",
+        "x": 227.890625,
+        "y": 405.109375,
+        "width": 253.28125,
+        "height": 39.703125
+      },
+      {
+        "name": "colosseum-publisher-tagline",
+        "text": "A Typeface with Spirit, Personality & Distinction",
+        "fontSize": "9.90998px",
+        "x": 249.90673828125,
+        "y": 415.421875,
+        "width": 209.2490234375,
+        "height": 9.90625
+      },
+      {
+        "name": "colosseum-publisher-url",
+        "text": "www.more-etc.com • @MoreEtcStudios",
+        "fontSize": "6.62199px",
+        "x": 293.4437255859375,
+        "y": 427.5,
+        "width": 122.175048828125,
+        "height": 6.625
+      },
+      {
+        "name": "colosseum-publisher-seal",
+        "text": "MORE ETCMSTUDIO",
+        "fontSize": "16px",
+        "x": 481.171875,
+        "y": 411.65625,
+        "width": 33.984375,
+        "height": 26.59375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "colosseum32",
+    "headlineFontSize": "55.2249px",
+    "contrast": 3.982259686508682,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The source uses saturated scarlet ink for both oversized specimen lettering and small publisher marks."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "colosseum-first-specimen",
+        "text": "colosseum",
+        "fontSize": "48.1749px",
+        "x": 61.080322265625,
+        "y": 30.328125,
+        "width": 231.24560546875,
+        "height": 47.79499816894531
+      },
+      {
+        "name": "colosseum-second-specimen",
+        "text": "gröngöling",
+        "fontSize": "55.2249px",
+        "x": 60.47679901123047,
+        "y": 84.234375,
+        "width": 232.07763671875,
+        "height": 59.7506103515625
+      },
+      {
+        "name": "colosseum-third-specimen",
+        "text": "antarctica",
+        "fontSize": "46.9999px",
+        "x": 60.83506774902344,
+        "y": 143.125,
+        "width": 229.42359924316406,
+        "height": 42.96234130859375
+      },
+      {
+        "name": "colosseum-publisher-footer",
+        "text": "NektarA Typeface with Spirit, Personality & Distinctionwww.more-etc.com • @MoreEtcStudiosMORE ETCMSTUDIO",
+        "fontSize": "16px",
+        "x": 93.265625,
+        "y": 201.09375,
+        "width": 165.4375,
+        "height": 19.703125
+      },
+      {
+        "name": "colosseum-nektar-mark",
+        "text": "Nektar",
+        "fontSize": "16px",
+        "x": 92.94571685791016,
+        "y": 207.35675048828125,
+        "width": 19.874183654785156,
+        "height": 11.1614990234375
+      },
+      {
+        "name": "colosseum-publisher-copy",
+        "text": "A Typeface with Spirit, Personality & Distinctionwww.more-etc.com • @MoreEtcStudios",
+        "fontSize": "16px",
+        "x": 113.109375,
+        "y": 201.09375,
+        "width": 125.71875,
+        "height": 19.703125
+      },
+      {
+        "name": "colosseum-publisher-tagline",
+        "text": "A Typeface with Spirit, Personality & Distinction",
+        "fontSize": "4.37999px",
+        "x": 129.84703063964844,
+        "y": 206.203125,
+        "width": 92.24343872070312,
+        "height": 4.375
+      },
+      {
+        "name": "colosseum-publisher-url",
+        "text": "www.more-etc.com • @MoreEtcStudios",
+        "fontSize": "2.54px",
+        "x": 152.6999969482422,
+        "y": 212.203125,
+        "width": 46.537506103515625,
+        "height": 2.546875
+      },
+      {
+        "name": "colosseum-publisher-seal",
+        "text": "MORE ETCMSTUDIO",
+        "fontSize": "16px",
+        "x": 235.8125,
+        "y": 204.34375,
+        "width": 16.859375,
+        "height": 13.1875
+      }
+    ],
+    "contentWarnings": []
+  }
+}

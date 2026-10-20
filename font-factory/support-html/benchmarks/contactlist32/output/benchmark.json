@@ -1,0 +1,375 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/contactlist32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/contactlist32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "CircuitSprint-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 26.8,
+  "imageBytes": {
+    "html": 992609,
+    "skia": 1080468
+  },
+  "desktopLayout": {
+    "template": "contactlist32",
+    "headlineFontSize": "34.0559px",
+    "contrast": 8.44915703003283,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "clean-source-index-plate",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "index-row-1",
+        "text": "01.Misread",
+        "fontSize": "16px",
+        "x": 85.078125,
+        "y": 56.71875,
+        "width": 538.90625,
+        "height": 33.078125
+      },
+      {
+        "name": "index-copy-1",
+        "text": "01.Misread",
+        "fontSize": "34.0559px",
+        "x": 294.1875,
+        "y": 57.75,
+        "width": 120.671875,
+        "height": 30.984375
+      },
+      {
+        "name": "index-row-2",
+        "text": "02.Cayman Island",
+        "fontSize": "16px",
+        "x": 85.078125,
+        "y": 99.734375,
+        "width": 538.90625,
+        "height": 33.078125
+      },
+      {
+        "name": "index-copy-2",
+        "text": "02.Cayman Island",
+        "fontSize": "34.0559px",
+        "x": 254.703125,
+        "y": 100.765625,
+        "width": 199.65625,
+        "height": 30.984375
+      },
+      {
+        "name": "index-row-3",
+        "text": "03.Homesick",
+        "fontSize": "16px",
+        "x": 85.078125,
+        "y": 142.75,
+        "width": 538.90625,
+        "height": 33.078125
+      },
+      {
+        "name": "index-copy-3",
+        "text": "03.Homesick",
+        "fontSize": "34.0559px",
+        "x": 285.1875,
+        "y": 143.78125,
+        "width": 138.6875,
+        "height": 30.984375
+      },
+      {
+        "name": "index-row-4",
+        "text": "04.Boat Behind",
+        "fontSize": "16px",
+        "x": 85.078125,
+        "y": 185.765625,
+        "width": 538.90625,
+        "height": 33.078125
+      },
+      {
+        "name": "index-copy-4",
+        "text": "04.Boat Behind",
+        "fontSize": "34.0559px",
+        "x": 272.828125,
+        "y": 186.796875,
+        "width": 163.390625,
+        "height": 30.984375
+      },
+      {
+        "name": "index-row-5",
+        "text": "05.Rumours",
+        "fontSize": "16px",
+        "x": 85.078125,
+        "y": 228.78125,
+        "width": 538.90625,
+        "height": 33.078125
+      },
+      {
+        "name": "index-copy-5",
+        "text": "05.Rumours",
+        "fontSize": "34.0559px",
+        "x": 287.671875,
+        "y": 229.8125,
+        "width": 133.703125,
+        "height": 30.984375
+      },
+      {
+        "name": "index-row-6",
+        "text": "06.Renegade",
+        "fontSize": "16px",
+        "x": 85.078125,
+        "y": 271.8125,
+        "width": 538.90625,
+        "height": 33.078125
+      },
+      {
+        "name": "index-copy-6",
+        "text": "06.Renegade",
+        "fontSize": "34.0559px",
+        "x": 285.640625,
+        "y": 272.84375,
+        "width": 137.765625,
+        "height": 30.984375
+      },
+      {
+        "name": "index-row-7",
+        "text": "07.Summer on",
+        "fontSize": "16px",
+        "x": 85.078125,
+        "y": 314.828125,
+        "width": 538.90625,
+        "height": 33.078125
+      },
+      {
+        "name": "index-copy-7",
+        "text": "07.Summer on",
+        "fontSize": "34.0559px",
+        "x": 274.6875,
+        "y": 315.859375,
+        "width": 159.6875,
+        "height": 30.984375
+      },
+      {
+        "name": "index-row-8",
+        "text": "the Westhill",
+        "fontSize": "16px",
+        "x": 85.078125,
+        "y": 357.84375,
+        "width": 538.90625,
+        "height": 33.078125
+      },
+      {
+        "name": "index-copy-8",
+        "text": "the Westhill",
+        "fontSize": "34.0559px",
+        "x": 280.84375,
+        "y": 358.875,
+        "width": 147.359375,
+        "height": 30.984375
+      },
+      {
+        "name": "track-list-tab-label",
+        "text": "TRACK LIST",
+        "fontSize": "10.6425px",
+        "x": 570.8125,
+        "y": 401.328125,
+        "width": 45.6875,
+        "height": 16.53125
+      },
+      {
+        "name": "catalogue-number-tab-label",
+        "text": "NO. 07",
+        "fontSize": "9.93298px",
+        "x": 585,
+        "y": 435.84375,
+        "width": 26.390625,
+        "height": 12.28125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "contactlist32",
+    "headlineFontSize": "16.92px",
+    "contrast": 8.44915703003283,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "clean-source-index-plate",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "index-row-1",
+        "text": "01.Misread",
+        "fontSize": "16px",
+        "x": 42.234375,
+        "y": 28.15625,
+        "width": 267.515625,
+        "height": 16.421875
+      },
+      {
+        "name": "index-copy-1",
+        "text": "01.Misread",
+        "fontSize": "16.92px",
+        "x": 146.015625,
+        "y": 28.65625,
+        "width": 59.921875,
+        "height": 15.390625
+      },
+      {
+        "name": "index-row-2",
+        "text": "02.Cayman Island",
+        "fontSize": "16px",
+        "x": 42.234375,
+        "y": 49.5,
+        "width": 267.515625,
+        "height": 16.421875
+      },
+      {
+        "name": "index-copy-2",
+        "text": "02.Cayman Island",
+        "fontSize": "16.92px",
+        "x": 126.40625,
+        "y": 50,
+        "width": 99.140625,
+        "height": 15.390625
+      },
+      {
+        "name": "index-row-3",
+        "text": "03.Homesick",
+        "fontSize": "16px",
+        "x": 42.234375,
+        "y": 70.859375,
+        "width": 267.515625,
+        "height": 16.421875
+      },
+      {
+        "name": "index-copy-3",
+        "text": "03.Homesick",
+        "fontSize": "16.92px",
+        "x": 141.546875,
+        "y": 71.359375,
+        "width": 68.859375,
+        "height": 15.390625
+      },
+      {
+        "name": "index-row-4",
+        "text": "04.Boat Behind",
+        "fontSize": "16px",
+        "x": 42.234375,
+        "y": 92.21875,
+        "width": 267.515625,
+        "height": 16.421875
+      },
+      {
+        "name": "index-copy-4",
+        "text": "04.Boat Behind",
+        "fontSize": "16.92px",
+        "x": 135.40625,
+        "y": 92.71875,
+        "width": 81.140625,
+        "height": 15.390625
+      },
+      {
+        "name": "index-row-5",
+        "text": "05.Rumours",
+        "fontSize": "16px",
+        "x": 42.234375,
+        "y": 113.5625,
+        "width": 267.515625,
+        "height": 16.421875
+      },
+      {
+        "name": "index-copy-5",
+        "text": "05.Rumours",
+        "fontSize": "16.92px",
+        "x": 142.78125,
+        "y": 114.0625,
+        "width": 66.390625,
+        "height": 15.390625
+      },
+      {
+        "name": "index-row-6",
+        "text": "06.Renegade",
+        "fontSize": "16px",
+        "x": 42.234375,
+        "y": 134.921875,
+        "width": 267.515625,
+        "height": 16.421875
+      },
+      {
+        "name": "index-copy-6",
+        "text": "06.Renegade",
+        "fontSize": "16.92px",
+        "x": 141.78125,
+        "y": 135.421875,
+        "width": 68.40625,
+        "height": 15.390625
+      },
+      {
+        "name": "index-row-7",
+        "text": "07.Summer on",
+        "fontSize": "16px",
+        "x": 42.234375,
+        "y": 156.265625,
+        "width": 267.515625,
+        "height": 16.421875
+      },
+      {
+        "name": "index-copy-7",
+        "text": "07.Summer on",
+        "fontSize": "16.92px",
+        "x": 136.328125,
+        "y": 156.765625,
+        "width": 79.296875,
+        "height": 15.390625
+      },
+      {
+        "name": "index-row-8",
+        "text": "the Westhill",
+        "fontSize": "16px",
+        "x": 42.234375,
+        "y": 177.625,
+        "width": 267.515625,
+        "height": 16.421875
+      },
+      {
+        "name": "index-copy-8",
+        "text": "the Westhill",
+        "fontSize": "16.92px",
+        "x": 139.390625,
+        "y": 178.125,
+        "width": 73.171875,
+        "height": 15.390625
+      },
+      {
+        "name": "track-list-tab-label",
+        "text": "TRACK LIST",
+        "fontSize": "5.28749px",
+        "x": 283.359375,
+        "y": 199.21875,
+        "width": 22.65625,
+        "height": 8.203125
+      },
+      {
+        "name": "catalogue-number-tab-label",
+        "text": "NO. 07",
+        "fontSize": "4.93499px",
+        "x": 290.390625,
+        "y": 216.34375,
+        "width": 13.0625,
+        "height": 6.09375
+      }
+    ],
+    "contentWarnings": []
+  }
+}

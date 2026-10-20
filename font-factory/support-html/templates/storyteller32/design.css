@@ -1,0 +1,21 @@
+#artboard { background: #fffefa; color: #151515; }
+.story-line, .story-hands, .story-portrait, .story-burst, .story-furniture { position: absolute; }
+.story-line {
+  display: block; width: max-content; max-width: 61%; overflow: visible;
+  font-family: var(--display-face, Arial, sans-serif); line-height: 1;
+  white-space: nowrap; color: #151515;
+}
+.story-line .red { color: #ed1c2e; }
+.story-title-1 { left: 3.7%; top: 2.5%; }
+.story-title-2 { left: 3.7%; top: 13.4%; }
+.story-title-3 { left: 3.7%; top: 24.3%; }
+.story-title-4 { left: 3.7%; top: 35.2%; }
+.story-hands { left: 3.7%; top: 50.3%; width: 59.5%; height: 10.2%; object-fit: cover; border: 1px solid #151515; }
+.story-copy { font-style: italic; }
+.story-copy-1 { left: 3.7%; top: 62.5%; }
+.story-copy-2 { left: 3.7%; top: 70.3%; }
+.story-copy-3 { left: 3.7%; top: 78.1%; }
+.story-copy-4 { left: 3.7%; top: 85.9%; }
+.story-portrait { left: 64.3%; top: 4.3%; width: 31.9%; height: 90.6%; object-fit: cover; border: 2px solid #151515; background: #fff; }
+.story-burst { left: 55.5%; top: 80%; width: 9.5%; height: 14%; overflow: visible; }
+.story-furniture { left: 3.7%; top: 96%; color: #64615b; font: 500 1.45cqh/1 Arial, sans-serif; letter-spacing: .13em; }

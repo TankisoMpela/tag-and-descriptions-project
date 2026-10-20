@@ -1,0 +1,76 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "legacycrypt32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "legacycrypt32",
+    "headlineFontSize": "253.62px",
+    "smallestDisplayFontSize": "16px",
+    "contrast": 15.36851798050077,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Legacy",
+        "fontSize": "228.273px",
+        "x": 104.28125,
+        "y": 89.28125,
+        "width": 591.4375,
+        "height": 205.4375
+      },
+      {
+        "name": "overline",
+        "text": "Regular",
+        "fontSize": "30px",
+        "x": 354.875,
+        "y": 24.5,
+        "width": 90.25,
+        "height": 27
+      },
+      {
+        "name": "line2",
+        "text": "Crypt",
+        "fontSize": "253.62px",
+        "x": 143.84375,
+        "y": 381.875,
+        "width": 512.296875,
+        "height": 228.25
+      },
+      {
+        "name": "footer",
+        "text": "No. 03",
+        "fontSize": "16px",
+        "x": 44,
+        "y": 692,
+        "width": 120,
+        "height": 44
+      },
+      {
+        "name": "descriptor",
+        "text": "Slant",
+        "fontSize": "28px",
+        "x": 672.875,
+        "y": 629.40625,
+        "width": 54.234375,
+        "height": 25.1875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-legacycrypt32.png",
+  "outputBytes": 1725257
+}

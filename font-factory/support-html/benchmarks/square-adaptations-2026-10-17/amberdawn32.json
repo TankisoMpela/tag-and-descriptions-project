@@ -1,0 +1,85 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "amberdawn32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "amberdawn32",
+    "headlineFontSize": "218.29px",
+    "smallestDisplayFontSize": "182.96px",
+    "contrast": 7.853541046462365,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "amber-headline-one",
+        "text": "Amber",
+        "fontSize": "182.96px",
+        "x": 99.890625,
+        "y": 160,
+        "width": 600.21875,
+        "height": 153.671875
+      },
+      {
+        "name": "amber-headline-two",
+        "text": "Dawn",
+        "fontSize": "218.29px",
+        "x": 99.8828125,
+        "y": 408,
+        "width": 600.234375,
+        "height": 183.359375
+      },
+      {
+        "name": "amber-glyph-badge",
+        "text": "Three Fonts Included\n      482Glyphs",
+        "fontSize": "16px",
+        "x": 628,
+        "y": 27.1875,
+        "width": 152,
+        "height": 157
+      },
+      {
+        "name": "amber-footer-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 324,
+        "y": 668,
+        "width": 152,
+        "height": 2
+      },
+      {
+        "name": "amber-caption",
+        "text": "Lively Brush Font",
+        "fontSize": "25.6px",
+        "x": 110.390625,
+        "y": 682.390625,
+        "width": 192,
+        "height": 25.59375
+      },
+      {
+        "name": "amber-footer-right",
+        "text": "By Set Sail Studios",
+        "fontSize": "25.6px",
+        "x": 497.609375,
+        "y": 682.390625,
+        "width": 192,
+        "height": 25.59375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/amberdawn32.png",
+  "outputBytes": 2589607
+}

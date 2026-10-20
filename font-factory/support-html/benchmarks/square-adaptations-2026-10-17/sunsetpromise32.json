@@ -1,0 +1,143 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "sunsetpromise32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "sunsetpromise32",
+    "headlineFontSize": "81.2199px",
+    "smallestDisplayFontSize": "81.2199px",
+    "contrast": 4.275683176694313,
+    "contrastException": {
+      "minimum": 2.5,
+      "rationale": "The source overlays white outlined display lettering on its lavender textured stock."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "source-lavender-floral-stock",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "source-pixel-sunset",
+        "text": "",
+        "fontSize": "16px",
+        "x": 36.484375,
+        "y": 52.515625,
+        "width": 294.59375,
+        "height": 240.390625
+      },
+      {
+        "name": "left-poster-caption",
+        "text": "Field Notes",
+        "fontSize": "14.4px",
+        "x": 468,
+        "y": 84.796875,
+        "width": 128,
+        "height": 46.390625
+      },
+      {
+        "name": "right-poster-caption",
+        "text": "Dusk / 07",
+        "fontSize": "13.6px",
+        "x": 616,
+        "y": 84.796875,
+        "width": 96,
+        "height": 46.390625
+      },
+      {
+        "name": "sunset-headline-row-1",
+        "text": "Every",
+        "fontSize": "16px",
+        "x": 120,
+        "y": 244,
+        "width": 640,
+        "height": 105.59375
+      },
+      {
+        "name": "sunset-headline-1",
+        "text": "Every",
+        "fontSize": "81.2199px",
+        "x": 323.75,
+        "y": 260.25,
+        "width": 232.484375,
+        "height": 73.09375
+      },
+      {
+        "name": "sunset-headline-row-2",
+        "text": "Sunset Brings",
+        "fontSize": "16px",
+        "x": 120,
+        "y": 350.390625,
+        "width": 640,
+        "height": 124
+      },
+      {
+        "name": "sunset-headline-2",
+        "text": "Sunset Brings",
+        "fontSize": "81.2199px",
+        "x": 151.03125,
+        "y": 375.84375,
+        "width": 577.921875,
+        "height": 73.09375
+      },
+      {
+        "name": "sunset-headline-row-3",
+        "text": "The Promise Of",
+        "fontSize": "16px",
+        "x": 120,
+        "y": 470.390625,
+        "width": 640,
+        "height": 124
+      },
+      {
+        "name": "sunset-headline-3",
+        "text": "The Promise Of",
+        "fontSize": "81.2199px",
+        "x": 132.6875,
+        "y": 495.84375,
+        "width": 614.625,
+        "height": 73.09375
+      },
+      {
+        "name": "sunset-headline-row-4",
+        "text": "A New Day",
+        "fontSize": "16px",
+        "x": 120,
+        "y": 580,
+        "width": 640,
+        "height": 120
+      },
+      {
+        "name": "sunset-headline-4",
+        "text": "A New Day",
+        "fontSize": "81.2199px",
+        "x": 227.84375,
+        "y": 603.453125,
+        "width": 424.296875,
+        "height": 73.09375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/sunsetpromise32.png",
+  "outputBytes": 2691938
+}

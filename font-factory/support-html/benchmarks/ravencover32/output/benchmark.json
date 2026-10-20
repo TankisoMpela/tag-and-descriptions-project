@@ -1,0 +1,311 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/ravencover32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/ravencover32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Blazher-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 39.9,
+  "imageBytes": {
+    "html": 4004112,
+    "skia": 4480994
+  },
+  "desktopLayout": {
+    "template": "ravencover32",
+    "headlineFontSize": "50.2699px",
+    "contrast": 9.765870985713226,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The cover type sits directly over a variable red-tailoring photograph under the source-matched veil."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "clean-tailoring-photo",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "photo-veil",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "top-cover-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 17.71875,
+        "y": 14.171875,
+        "width": 673.625,
+        "height": 1
+      },
+      {
+        "name": "bottom-cover-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 17.71875,
+        "y": 441.984375,
+        "width": 673.625,
+        "height": 1
+      },
+      {
+        "name": "oval-issue-mark",
+        "text": "",
+        "fontSize": "16px",
+        "x": 287.171875,
+        "y": 27.40625,
+        "width": 134.71875,
+        "height": 51.046875
+      },
+      {
+        "name": "cover-masthead-row",
+        "text": "City Edition",
+        "fontSize": "16px",
+        "x": 299.296875,
+        "y": 40.6875,
+        "width": 110.46875,
+        "height": 12.75
+      },
+      {
+        "name": "cover-masthead",
+        "text": "City Edition",
+        "fontSize": "5.9125px",
+        "x": 340.609375,
+        "y": 44.109375,
+        "width": 27.84375,
+        "height": 5.90625
+      },
+      {
+        "name": "cover-issue-row",
+        "text": "No. 06",
+        "fontSize": "16px",
+        "x": 299.296875,
+        "y": 54.453125,
+        "width": 110.46875,
+        "height": 12.28125
+      },
+      {
+        "name": "cover-issue",
+        "text": "No. 06",
+        "fontSize": "5.32126px",
+        "x": 346.84375,
+        "y": 57.921875,
+        "width": 15.359375,
+        "height": 5.328125
+      },
+      {
+        "name": "cover-subtitle-row",
+        "text": "Modern Form / Timeless Detail",
+        "fontSize": "16px",
+        "x": 56.71875,
+        "y": 342.71875,
+        "width": 595.625,
+        "height": 28.359375
+      },
+      {
+        "name": "cover-subtitle",
+        "text": "Modern Form / Timeless Detail",
+        "fontSize": "10.9381px",
+        "x": 273.640625,
+        "y": 351.421875,
+        "width": 161.78125,
+        "height": 10.9375
+      },
+      {
+        "name": "cover-details-row",
+        "text": "Tailoring / Texture / Night",
+        "fontSize": "16px",
+        "x": 56.71875,
+        "y": 382.890625,
+        "width": 595.625,
+        "height": 25.984375
+      },
+      {
+        "name": "cover-details",
+        "text": "Tailoring / Texture / Night",
+        "fontSize": "8.57312px",
+        "x": 298.046875,
+        "y": 391.578125,
+        "width": 112.96875,
+        "height": 8.578125
+      },
+      {
+        "name": "cover-headline-row",
+        "text": "After Hours",
+        "fontSize": "16px",
+        "x": 53.171875,
+        "y": 172.53125,
+        "width": 602.71875,
+        "height": 111.078125
+      },
+      {
+        "name": "cover-headline",
+        "text": "After Hours",
+        "fontSize": "50.2699px",
+        "x": 66.21875,
+        "y": 205.4375,
+        "width": 576.625,
+        "height": 45.234375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "ravencover32",
+    "headlineFontSize": "24.97px",
+    "contrast": 9.765870985713226,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The cover type sits directly over a variable red-tailoring photograph under the source-matched veil."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "clean-tailoring-photo",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "photo-veil",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "top-cover-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 8.796875,
+        "y": 7.03125,
+        "width": 334.390625,
+        "height": 1
+      },
+      {
+        "name": "bottom-cover-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 8.796875,
+        "y": 219.390625,
+        "width": 334.390625,
+        "height": 1
+      },
+      {
+        "name": "oval-issue-mark",
+        "text": "",
+        "fontSize": "16px",
+        "x": 142.546875,
+        "y": 13.609375,
+        "width": 66.875,
+        "height": 25.328125
+      },
+      {
+        "name": "cover-masthead-row",
+        "text": "City Edition",
+        "fontSize": "16px",
+        "x": 148.578125,
+        "y": 20.203125,
+        "width": 54.828125,
+        "height": 6.328125
+      },
+      {
+        "name": "cover-masthead",
+        "text": "City Edition",
+        "fontSize": "2.93752px",
+        "x": 169.09375,
+        "y": 21.890625,
+        "width": 13.78125,
+        "height": 2.9375
+      },
+      {
+        "name": "cover-issue-row",
+        "text": "No. 06",
+        "fontSize": "16px",
+        "x": 148.578125,
+        "y": 27.03125,
+        "width": 54.828125,
+        "height": 6.09375
+      },
+      {
+        "name": "cover-issue",
+        "text": "No. 06",
+        "fontSize": "2.64377px",
+        "x": 172.171875,
+        "y": 28.75,
+        "width": 7.609375,
+        "height": 2.640625
+      },
+      {
+        "name": "cover-subtitle-row",
+        "text": "Modern Form / Timeless Detail",
+        "fontSize": "16px",
+        "x": 28.15625,
+        "y": 170.125,
+        "width": 295.671875,
+        "height": 14.078125
+      },
+      {
+        "name": "cover-subtitle",
+        "text": "Modern Form / Timeless Detail",
+        "fontSize": "5.43438px",
+        "x": 135.8125,
+        "y": 174.4375,
+        "width": 80.328125,
+        "height": 5.4375
+      },
+      {
+        "name": "cover-details-row",
+        "text": "Tailoring / Texture / Night",
+        "fontSize": "16px",
+        "x": 28.15625,
+        "y": 190.0625,
+        "width": 295.671875,
+        "height": 12.890625
+      },
+      {
+        "name": "cover-details",
+        "text": "Tailoring / Texture / Night",
+        "fontSize": "4.25939px",
+        "x": 147.9375,
+        "y": 194.359375,
+        "width": 56.09375,
+        "height": 4.265625
+      },
+      {
+        "name": "cover-headline-row",
+        "text": "After Hours",
+        "fontSize": "16px",
+        "x": 26.390625,
+        "y": 85.640625,
+        "width": 299.1875,
+        "height": 55.140625
+      },
+      {
+        "name": "cover-headline",
+        "text": "After Hours",
+        "fontSize": "24.97px",
+        "x": 32.8125,
+        "y": 101.96875,
+        "width": 286.34375,
+        "height": 22.46875
+      }
+    ],
+    "contentWarnings": []
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "boots32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "boots32",
+    "headlineFontSize": "79.91px",
+    "smallestDisplayFontSize": "45.75px",
+    "contrast": 6.572928520404548,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "portrait-panel",
+        "text": "",
+        "fontSize": "16px",
+        "x": 49.59375,
+        "y": 100,
+        "width": 320,
+        "height": 600
+      },
+      {
+        "name": "engraved-boot",
+        "text": "",
+        "fontSize": "16px",
+        "x": 628,
+        "y": 505.59375,
+        "width": 149.796875,
+        "height": 181.65625
+      },
+      {
+        "name": "main-lettering",
+        "text": "Wild Boots",
+        "fontSize": "79.91px",
+        "x": 407.875,
+        "y": 316,
+        "width": 352.25,
+        "height": 71.90625
+      },
+      {
+        "name": "poster-subline",
+        "text": "Photography",
+        "fontSize": "45.75px",
+        "x": 463.8984375,
+        "y": 437.59375,
+        "width": 240.203125,
+        "height": 41.171875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-support-19_boots32.png",
+  "outputBytes": 1310395
+}

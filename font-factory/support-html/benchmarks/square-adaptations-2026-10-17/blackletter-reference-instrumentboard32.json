@@ -1,0 +1,85 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "instrumentboard32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "instrumentboard32",
+    "headlineFontSize": "108.21px",
+    "smallestDisplayFontSize": "86.8199px",
+    "contrast": 16.56636421591786,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "Specimen Instrument",
+        "fontSize": "14px",
+        "x": 56,
+        "y": 83,
+        "width": 126.546875,
+        "height": 14
+      },
+      {
+        "name": "footer",
+        "text": "Variable Type Study",
+        "fontSize": "14px",
+        "x": 627.84375,
+        "y": 83,
+        "width": 116.15625,
+        "height": 14
+      },
+      {
+        "name": "headline",
+        "text": "Letterforms",
+        "fontSize": "108.21px",
+        "x": 146.453125,
+        "y": 215.3125,
+        "width": 507.078125,
+        "height": 97.375
+      },
+      {
+        "name": "line2",
+        "text": "Type Specimen",
+        "fontSize": "86.8199px",
+        "x": 146.46875,
+        "y": 408.9375,
+        "width": 507.0625,
+        "height": 78.125
+      },
+      {
+        "name": "descriptor",
+        "text": "Weights · Width · Rhythm",
+        "fontSize": "16px",
+        "x": 299.125,
+        "y": 614,
+        "width": 201.75,
+        "height": 16
+      },
+      {
+        "name": "footer",
+        "text": "OpenType & Variable Support",
+        "fontSize": "13px",
+        "x": 560.609375,
+        "y": 701.5,
+        "width": 175.390625,
+        "height": 13
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-instrumentboard32.png",
+  "outputBytes": 947654
+}

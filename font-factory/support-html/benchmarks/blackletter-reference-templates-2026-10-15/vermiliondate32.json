@@ -1,0 +1,75 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "vermiliondate32",
+  "source": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-references/blackletter-references/T32600_02.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "vermiliondate32",
+    "headlineFontSize": "287.387px",
+    "smallestDisplayFontSize": "270.495px",
+    "contrast": 4.578882794445195,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Keepsake",
+        "fontSize": "270.495px",
+        "x": 111.078125,
+        "y": 86.28125,
+        "width": 977.828125,
+        "height": 243.4375
+      },
+      {
+        "name": "overline",
+        "text": "Estd",
+        "fontSize": "24.24px",
+        "x": 232.046875,
+        "y": 485.09375,
+        "width": 39.890625,
+        "height": 21.796875
+      },
+      {
+        "name": "line2",
+        "text": "1985",
+        "fontSize": "287.387px",
+        "x": 368.796875,
+        "y": 354.671875,
+        "width": 462.40625,
+        "height": 258.640625
+      },
+      {
+        "name": "descriptor",
+        "text": "A Year To Remember",
+        "fontSize": "16px",
+        "x": 523.6875,
+        "y": 674,
+        "width": 152.609375,
+        "height": 16
+      },
+      {
+        "name": "footer",
+        "text": "No. 03 · Spring",
+        "fontSize": "12px",
+        "x": 553.671875,
+        "y": 720,
+        "width": 92.640625,
+        "height": 12
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/vermiliondate32.png",
+  "outputBytes": 1505711
+}

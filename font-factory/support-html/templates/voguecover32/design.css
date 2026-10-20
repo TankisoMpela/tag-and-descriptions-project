@@ -1,0 +1,90 @@
+#artboard {
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--cover-ink, #111112);
+  background: var(--cover-paper, #f9f7f1);
+}
+.cover-portrait {
+  position: absolute;
+  z-index: 2;
+  left: 15%;
+  top: 2.5%;
+  display: block;
+  width: 70%;
+  height: 94%;
+  object-fit: contain;
+  object-position: center;
+  transform-origin: center center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.cover-text {
+  position: absolute;
+  z-index: 4;
+  display: inline-block;
+  width: max-content;
+  color: var(--cover-ink, #111112);
+  font-family: var(--display-face, SupportDisplay, "Noto Serif Display", Georgia, serif);
+  font-weight: 500;
+  line-height: .86;
+  white-space: nowrap;
+  text-rendering: geometricPrecision;
+  font-kerning: normal;
+  font-synthesis: weight style;
+}
+.masthead {
+  z-index: 5;
+  color: var(--cover-red, #de091c);
+  font-weight: 600;
+  line-height: .80;
+  letter-spacing: -.035em;
+  transform-origin: center center;
+}
+.small-meta {
+  z-index: 6;
+  color: var(--cover-ink, #111112);
+  font-family: "Noto Sans", sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .055em;
+}
+.issue { font-weight: 500; }
+.submast {
+  color: var(--cover-red, #de091c);
+  font-style: italic;
+  line-height: .94;
+  transform-origin: right center;
+}
+.left-kicker,
+.lower-kicker,
+.feature-title {
+  font-weight: 700;
+}
+.left-story,
+.lower-story {
+  font-family: "Noto Serif", Georgia, "Times New Roman", serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+.feature-note {
+  color: var(--cover-ink, #111112);
+  font-family: "Noto Serif", Georgia, "Times New Roman", serif;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.accent-destination {
+  color: var(--cover-red, #de091c);
+  font-weight: 600;
+  line-height: .92;
+}
+.feature-title { z-index: 6; }
+.feature-note,
+.footer-lead,
+.footer-note { font-weight: 500; }

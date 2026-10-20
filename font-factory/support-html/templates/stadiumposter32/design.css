@@ -1,0 +1,44 @@
+#artboard {
+  background: #b82229 url("../../../support-references/materials/T21458_11_stadium-red-print.png") center / cover no-repeat;
+  color: #f6ebda;
+}
+.stadium-meta, .stadium-line, .stadium-footer { position: absolute; }
+.stadium-meta, .stadium-footer {
+  color: #fff0dc;
+  font: 550 1.65cqh/1 Arial, sans-serif;
+  letter-spacing: .035em;
+  text-shadow: 0 1px 5px rgb(81 8 11 / 20%);
+  white-space: nowrap;
+}
+.stadium-top-left { left: 3%; top: 3.45%; }
+.stadium-top-right { right: 3%; top: 3.45%; text-align: right; }
+.stadium-line {
+  display: inline-block;
+  width: max-content;
+  color: #f6ebda;
+  font-family: var(--display-face, Arial, sans-serif);
+  font-weight: 500;
+  line-height: .86;
+  white-space: nowrap;
+  letter-spacing: -.045em;
+  text-shadow: 0 1px 0 rgb(255 252 240 / 18%);
+  -webkit-mask-image: url("../../../support-references/materials/T21458_11_ink-wear-mask.png");
+  mask-image: url("../../../support-references/materials/T21458_11_ink-wear-mask.png");
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  -webkit-mask-size: 280px 190px;
+  mask-size: 280px 190px;
+}
+.stadium-line-one { left: 8%; top: 17%; }
+.stadium-line-two { left: 8%; top: 52%; }
+.stadium-footer {
+  bottom: 2.3%;
+  font-size: 1.45cqh;
+  letter-spacing: .04em;
+}
+.stadium-foot-left { left: 3%; }
+.stadium-foot-right { right: 3%; text-align: right; }
+
+@media (max-width: 680px) {
+  .stadium-meta { font-size: 1.55cqh; }
+}

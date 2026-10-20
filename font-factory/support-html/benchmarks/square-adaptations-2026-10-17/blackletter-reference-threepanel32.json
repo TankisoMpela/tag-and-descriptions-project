@@ -1,0 +1,76 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "threepanel32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "threepanel32",
+    "headlineFontSize": "119.4px",
+    "smallestDisplayFontSize": "93.8299px",
+    "contrast": 14.806428579101427,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Thinker",
+        "fontSize": "107.49px",
+        "x": 239.171875,
+        "y": 107.625,
+        "width": 321.65625,
+        "height": 96.734375
+      },
+      {
+        "name": "line2",
+        "text": "History",
+        "fontSize": "115.44px",
+        "x": 239.15625,
+        "y": 536.046875,
+        "width": 321.6875,
+        "height": 103.890625
+      },
+      {
+        "name": "overline",
+        "text": "Garden Notes",
+        "fontSize": "119.4px",
+        "x": 58.28125,
+        "y": 100.359375,
+        "width": 107.453125,
+        "height": 599.265625
+      },
+      {
+        "name": "footer",
+        "text": "Blooming Season",
+        "fontSize": "93.8299px",
+        "x": 645.78125,
+        "y": 100.359375,
+        "width": 84.4375,
+        "height": 599.265625
+      },
+      {
+        "name": "descriptor",
+        "text": "A Floral Letter Study",
+        "fontSize": "13px",
+        "x": 340.140625,
+        "y": 711.5,
+        "width": 119.71875,
+        "height": 13
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-threepanel32.png",
+  "outputBytes": 1421913
+}

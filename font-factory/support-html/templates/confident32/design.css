@@ -1,0 +1,141 @@
+@font-face {
+  font-family: ConfidenceLabel;
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+}
+
+#artboard {
+  --confidence-red: #e20d24;
+  --confidence-ink: #111112;
+  --label-face: ConfidenceLabel, sans-serif;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #fff;
+  color: var(--confidence-ink);
+}
+
+.confidence-frame,
+.confidence-eye-window,
+.confidence-divider-line,
+.confidence-star-cluster,
+.confidence-row,
+.confidence-copy,
+.confidence-hero {
+  position: absolute;
+}
+
+.confidence-frame {
+  z-index: 8;
+  left: 4.5%;
+  top: 5.5%;
+  width: 91%;
+  height: 89%;
+  border: 1px solid rgb(17 17 18 / 92%);
+  pointer-events: none;
+}
+
+.confidence-eye-window {
+  left: 4.6%;
+  top: 50%;
+  width: 90.8%;
+  height: 43.8%;
+  overflow: hidden;
+  background: #fff;
+}
+
+.confidence-eye-art {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  transform: scale(var(--eye-scale, 1));
+  transform-origin: center;
+}
+
+.confidence-divider-line {
+  z-index: 3;
+  top: 44%;
+  height: 1px;
+  background: #171719;
+}
+
+.confidence-divider-left { left: 4.5%; width: 42%; }
+.confidence-divider-right { left: 53.5%; width: 42%; }
+
+.confidence-star-cluster {
+  z-index: 4;
+  left: 46.5%;
+  top: 41%;
+  width: 7%;
+  height: 6%;
+  overflow: visible;
+}
+
+.confidence-overline-row,
+.confidence-tag-row,
+.confidence-hero-row,
+.confidence-tagline-row,
+.confidence-row {
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+.confidence-overline-row,
+.confidence-tag-row,
+.confidence-tagline-row {
+  z-index: 5;
+}
+
+.confidence-label {
+  color: var(--confidence-ink);
+  font-family: var(--label-face);
+  font-size: 1.5cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.confidence-overline-label {
+  letter-spacing: .10em;
+}
+
+.confidence-tag-label {
+  letter-spacing: .06em;
+  text-align: right;
+}
+
+.confidence-tag {
+  justify-content: flex-end;
+}
+
+.confidence-hero {
+  color: var(--confidence-red);
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 35cqh;
+  font-style: italic;
+  font-weight: 400;
+  font-synthesis: style;
+  font-kerning: normal;
+  line-height: .88;
+  letter-spacing: -.04em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.confidence-tagline-label {
+  color: var(--confidence-ink);
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 5.5cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .95;
+  letter-spacing: -.015em;
+  white-space: nowrap;
+}

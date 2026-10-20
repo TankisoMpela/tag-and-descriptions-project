@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "LatestLabel";
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-display: block;
+}
+#artboard {
+  background: #26272a url("../../../support-references/materials/T24908_02_clean-photo-background.png") center / cover no-repeat;
+  color: #fffaf4;
+}
+#artboard[data-ratio="1x1"] { background-position: 0% center; }
+.latest-line, .latest-rule, .latest-footer { position: absolute; }
+.latest-line {
+  left: 26.5%; display: inline-block; width: max-content;
+  color: #fffaf4; font-family: var(--display-face, Arial, sans-serif);
+  font-weight: 500; line-height: .86; letter-spacing: -.025em;
+  white-space: nowrap; text-shadow: 0 1px 2px rgb(13 17 20 / 10%);
+}
+.latest-intro { top: 13%; }
+.latest-headline { top: 35%; }
+.latest-lastline { left: 33%; top: 57%; }
+.latest-rule { left: 40%; top: 88.5%; width: 19%; height: 1.5px; background: #fffaf4; }
+.latest-footer {
+  top: 87.5%; z-index: 2; width: 13%; color: #fffaf4;
+  font: 400 clamp(10px, 2.55cqh, 36px)/1.02 var(--label-face, "LatestLabel", Arial, sans-serif);
+  letter-spacing: .055em; white-space: normal;
+}
+.latest-footer-left { left: 27%; }
+.latest-footer-right { right: 16%; text-align: right; }

@@ -1,0 +1,7222 @@
+{
+  "date": "2026-10-15",
+  "font": "Maidega Regular",
+  "fontFile": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Maidega/Maidega-Regular.otf",
+  "renderer": "HTML/CSS + headless Chromium",
+  "exportPixels": [
+    2400,
+    1600
+  ],
+  "copyCase": "Title Case, preserving literal alphabet and glyph specimens",
+  "renderCount": 61,
+  "scope": "One full-size PNG for each of the 61 active support templates. Blackletter font variant duplicates omitted; this is one complete active-template set for the alternate font.",
+  "collages": false,
+  "errors": [],
+  "renders": [
+    {
+      "template": "line32",
+      "png": "support-1_line32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1038959,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "line32",
+        "headlineFontSize": "218.3px",
+        "smallestDisplayFontSize": "218.3px",
+        "contrast": 5.016592806131985,
+        "contrastException": {
+          "minimum": 3,
+          "rationale": "The quiet echo keeps its theme ink over the softly textured field."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "theme-device",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "paper-tooth",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "clipped-ghost-initial",
+            "text": "R",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "overline-row",
+            "text": "New Release",
+            "fontSize": "16px",
+            "x": 66,
+            "y": 61.59375,
+            "width": 1068,
+            "height": 28.796875
+          },
+          {
+            "name": "overline",
+            "text": "New Release",
+            "fontSize": "20.4px",
+            "x": 66,
+            "y": 65.78125,
+            "width": 144.5,
+            "height": 20.40625
+          },
+          {
+            "name": "headline-row-1",
+            "text": "Letters ThatLetters That",
+            "fontSize": "16px",
+            "x": 66,
+            "y": 160,
+            "width": 1068,
+            "height": 220
+          },
+          {
+            "name": "headline-line-1",
+            "text": "Letters That",
+            "fontSize": "218.3px",
+            "x": 81.90625,
+            "y": 173.953125,
+            "width": 1036.1875,
+            "height": 192.09375
+          },
+          {
+            "name": "wireframe-echo",
+            "text": "Letters That",
+            "fontSize": "218.3px",
+            "x": 77.734375,
+            "y": 172.75,
+            "width": 1036.1875,
+            "height": 192.09375
+          },
+          {
+            "name": "headline-row-2",
+            "text": "Matter",
+            "fontSize": "16px",
+            "x": 66,
+            "y": 392,
+            "width": 1068,
+            "height": 220
+          },
+          {
+            "name": "headline-line-2",
+            "text": "Matter",
+            "fontSize": "218.3px",
+            "x": 308.15625,
+            "y": 405.953125,
+            "width": 583.6875,
+            "height": 192.09375
+          },
+          {
+            "name": "footer-row",
+            "text": "Display Specimen",
+            "fontSize": "16px",
+            "x": 66,
+            "y": 684.796875,
+            "width": 1068,
+            "height": 40
+          },
+          {
+            "name": "footer-label",
+            "text": "Display Specimen",
+            "fontSize": "26.8px",
+            "x": 66,
+            "y": 684.796875,
+            "width": 241.46875,
+            "height": 26.796875
+          },
+          {
+            "name": "edge-copy-row",
+            "text": "101 Glyphs",
+            "fontSize": "16px",
+            "x": 1179.203125,
+            "y": 456.796875,
+            "width": 17.59375,
+            "height": 144
+          },
+          {
+            "name": "edge-copy",
+            "text": "101 Glyphs",
+            "fontSize": "16.2578px",
+            "x": 1179.875,
+            "y": 471.125,
+            "width": 16.25,
+            "height": 115.359375
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "duo32",
+      "png": "support-2_duo32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2614167,
+      "contentWarnings": [],
+      "layoutReport": {
+        "frame": {
+          "width": 1200,
+          "height": 800
+        },
+        "initial": "C",
+        "word": "alifornia",
+        "tagline": "Knows How To Party",
+        "headlineFontSize": "239.65",
+        "contrast": 2.72,
+        "contrastException": {
+          "minimum": 2.2,
+          "rationale": "The source poster intentionally carries ivory lettering across the coral sun and dark palm silhouettes."
+        },
+        "inkOnPaperContrast": 9.34,
+        "slots": [
+          {
+            "name": "sun",
+            "x": 738,
+            "y": 108,
+            "width": 384,
+            "height": 384
+          },
+          {
+            "name": "initial-layer",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "mound",
+            "x": 702,
+            "y": 728,
+            "width": 408,
+            "height": 72
+          },
+          {
+            "name": "palm-art",
+            "x": 600,
+            "y": 120,
+            "width": 552,
+            "height": 680
+          },
+          {
+            "name": "word-layer",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          }
+        ],
+        "textBounds": [
+          {
+            "name": "initial",
+            "text": "C",
+            "x": 85.8,
+            "y": 44,
+            "width": 258,
+            "height": 568
+          },
+          {
+            "name": "word",
+            "text": "alifornia",
+            "x": 215,
+            "y": 237.6,
+            "width": 854.8,
+            "height": 218.2
+          },
+          {
+            "name": "tagline",
+            "text": "Knows How To Party",
+            "x": 480.1,
+            "y": 477.3,
+            "width": 599.9,
+            "height": 72
+          }
+        ],
+        "outOfBounds": []
+      }
+    },
+    {
+      "template": "card32",
+      "png": "support-3_card32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1038507,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "card32",
+        "headlineFontSize": "256px",
+        "smallestDisplayFontSize": "75.7545px",
+        "contrast": 11.682650423633548,
+        "contrastException": {
+          "minimum": 3,
+          "rationale": "The cream specimen word stays clear over the tinted paper bench."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "bench-device",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "bench-caption",
+            "text": "In Hand",
+            "fontSize": "20.4px",
+            "x": 66,
+            "y": 61.59375,
+            "width": 1068,
+            "height": 28.796875
+          },
+          {
+            "name": "header-rule",
+            "text": "",
+            "fontSize": "16px",
+            "x": 66,
+            "y": 88.796875,
+            "width": 1068,
+            "height": 1
+          },
+          {
+            "name": "specimen-word-column",
+            "text": "ByHeart",
+            "fontSize": "16px",
+            "x": 54,
+            "y": 232,
+            "width": 408,
+            "height": 496
+          },
+          {
+            "name": "specimen-word-1",
+            "text": "By",
+            "fontSize": "256px",
+            "x": 54,
+            "y": 232,
+            "width": 408,
+            "height": 220.15625
+          },
+          {
+            "name": "specimen-word-2",
+            "text": "Heart",
+            "fontSize": "177.02px",
+            "x": 54,
+            "y": 509.75,
+            "width": 408,
+            "height": 152.21875
+          },
+          {
+            "name": "under-sheet",
+            "text": "",
+            "fontSize": "16px",
+            "x": 598.8862915039062,
+            "y": 188.7490692138672,
+            "width": 524.2273559570312,
+            "height": 450.5018310546875
+          },
+          {
+            "name": "lettered-card",
+            "text": "In HandCut ForThe LongRunBanners And Tickets",
+            "fontSize": "16px",
+            "x": 476.7009582519531,
+            "y": 128.6664581298828,
+            "width": 618.59814453125,
+            "height": 518.6671142578125
+          },
+          {
+            "name": "left-tape",
+            "text": "",
+            "fontSize": "16px",
+            "x": 450.3134460449219,
+            "y": 115.12488555908203,
+            "width": 76.75735473632812,
+            "height": 72.2271957397461
+          },
+          {
+            "name": "right-tape",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1025.207275390625,
+            "y": 94.39459991455078,
+            "width": 78.12060546875,
+            "height": 69.46501922607422
+          },
+          {
+            "name": "inner-frame",
+            "text": "",
+            "fontSize": "16px",
+            "x": 515.0414428710938,
+            "y": 160.8213348388672,
+            "width": 541.9170532226562,
+            "height": 454.3572998046875
+          },
+          {
+            "name": "card-corner-tl",
+            "text": "",
+            "fontSize": "16px",
+            "x": 511.94830322265625,
+            "y": 178.37843322753906,
+            "width": 6.842041015625,
+            "height": 6.842010498046875
+          },
+          {
+            "name": "card-corner-tr",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1036.592529296875,
+            "y": 158.2236328125,
+            "width": 6.842041015625,
+            "height": 6.842010498046875
+          },
+          {
+            "name": "card-corner-bl",
+            "text": "",
+            "fontSize": "16px",
+            "x": 528.5654296875,
+            "y": 610.9343872070312,
+            "width": 6.84197998046875,
+            "height": 6.84197998046875
+          },
+          {
+            "name": "card-corner-br",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1053.209716796875,
+            "y": 590.779541015625,
+            "width": 6.8419189453125,
+            "height": 6.842041015625
+          },
+          {
+            "name": "card-caption-text",
+            "text": "In Hand",
+            "fontSize": "22px",
+            "x": 569.3949584960938,
+            "y": 203.974609375,
+            "width": 420.534912109375,
+            "height": 38.106658935546875
+          },
+          {
+            "name": "card-phrase-block",
+            "text": "Cut ForThe LongRun",
+            "fontSize": "16px",
+            "x": 571.3947143554688,
+            "y": 256.02996826171875,
+            "width": 429.01983642578125,
+            "height": 258.9749755859375
+          },
+          {
+            "name": "card-phrase-1",
+            "text": "Cut For",
+            "fontSize": "75.7545px",
+            "x": 677.3475952148438,
+            "y": 277.9513244628906,
+            "width": 211.71697998046875,
+            "height": 74.64215087890625
+          },
+          {
+            "name": "card-phrase-2",
+            "text": "The Long",
+            "fontSize": "75.7545px",
+            "x": 650.1775512695312,
+            "y": 347.0495300292969,
+            "width": 271.43853759765625,
+            "height": 76.93643188476562
+          },
+          {
+            "name": "card-phrase-3",
+            "text": "Run",
+            "fontSize": "75.7545px",
+            "x": 729.9442138671875,
+            "y": 420.2546691894531,
+            "width": 117.31793212890625,
+            "height": 71.01571655273438
+          },
+          {
+            "name": "card-divider",
+            "text": "",
+            "fontSize": "16px",
+            "x": 581.1050415039062,
+            "y": 508.796630859375,
+            "width": 419.728759765625,
+            "height": 17.12213134765625
+          },
+          {
+            "name": "card-foot-text",
+            "text": "Banners And Tickets",
+            "fontSize": "22.4px",
+            "x": 581.8667602539062,
+            "y": 528.625732421875,
+            "width": 420.550537109375,
+            "height": 38.51263427734375
+          },
+          {
+            "name": "specimen-footer",
+            "text": "Display Specimen",
+            "fontSize": "26.8px",
+            "x": 66,
+            "y": 672,
+            "width": 504,
+            "height": 56
+          },
+          {
+            "name": "footer-tick",
+            "text": "",
+            "fontSize": "26.8px",
+            "x": 66,
+            "y": 672,
+            "width": 57.953125,
+            "height": 2
+          },
+          {
+            "name": "footer-label",
+            "text": "Display Specimen",
+            "fontSize": "26.8px",
+            "x": 66,
+            "y": 680.390625,
+            "width": 241.46875,
+            "height": 26.796875
+          },
+          {
+            "name": "edge-label",
+            "text": "101 Glyphs",
+            "fontSize": "16.2578px",
+            "x": 1149.203125,
+            "y": 328.796875,
+            "width": 17.59375,
+            "height": 144
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "feature32",
+      "png": "support-4_feature32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2133841,
+      "contentWarnings": [],
+      "layoutReport": {
+        "frame": {
+          "width": 1200,
+          "height": 800
+        },
+        "headlineFontSize": "341.959px",
+        "inkOnPaperContrast": 5.83,
+        "slots": [
+          {
+            "name": "hero",
+            "text": "Crystal",
+            "x": 96,
+            "y": 136,
+            "width": 1008,
+            "height": 528,
+            "fontSize": 341.959
+          },
+          {
+            "name": "scallop",
+            "text": "",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800,
+            "fontSize": 14
+          }
+        ],
+        "outOfBounds": []
+      }
+    },
+    {
+      "template": "neon32",
+      "png": "support-6_neon32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 3331602,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "neon32",
+        "headlineFontSize": "172px",
+        "smallestDisplayFontSize": "51.2px",
+        "contrast": 15.77415930493257,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "centre-door-seam",
+            "text": "",
+            "fontSize": "16px",
+            "x": 608.390625,
+            "y": 0,
+            "width": 1.078125,
+            "height": 800
+          },
+          {
+            "name": "photographic-wall-grain",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "film-gate-left",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 88.1875,
+            "height": 800
+          },
+          {
+            "name": "film-light-left-1",
+            "text": "",
+            "fontSize": "16px",
+            "x": 4.84375,
+            "y": 6.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-left-2",
+            "text": "",
+            "fontSize": "16px",
+            "x": 4.84375,
+            "y": 126.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-left-3",
+            "text": "",
+            "fontSize": "16px",
+            "x": 4.84375,
+            "y": 246.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-left-4",
+            "text": "",
+            "fontSize": "16px",
+            "x": 4.84375,
+            "y": 366.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-left-5",
+            "text": "",
+            "fontSize": "16px",
+            "x": 4.84375,
+            "y": 486.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-left-6",
+            "text": "",
+            "fontSize": "16px",
+            "x": 4.84375,
+            "y": 606.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-left-7",
+            "text": "",
+            "fontSize": "16px",
+            "x": 4.84375,
+            "y": 726.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-rail-left",
+            "text": "",
+            "fontSize": "16px",
+            "x": 86.875,
+            "y": 0,
+            "width": 1.3125,
+            "height": 800
+          },
+          {
+            "name": "film-gate-right",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1111.8125,
+            "y": 0,
+            "width": 88.1875,
+            "height": 800
+          },
+          {
+            "name": "film-light-right-1",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1117.53125,
+            "y": 6.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-right-2",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1117.53125,
+            "y": 126.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-right-3",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1117.53125,
+            "y": 246.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-right-4",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1117.53125,
+            "y": 366.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-right-5",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1117.53125,
+            "y": 486.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-right-6",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1117.53125,
+            "y": 606.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-light-right-7",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1117.53125,
+            "y": 726.390625,
+            "width": 77.59375,
+            "height": 65.1875
+          },
+          {
+            "name": "film-rail-right",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1111.8125,
+            "y": 0,
+            "width": 1.3125,
+            "height": 800
+          },
+          {
+            "name": "lit-marquee-copy",
+            "text": "La DolceMarea",
+            "fontSize": "16px",
+            "x": 174,
+            "y": 148,
+            "width": 852,
+            "height": 438.390625
+          },
+          {
+            "name": "marquee-line-1",
+            "text": "La Dolce",
+            "fontSize": "172px",
+            "x": 302.203125,
+            "y": 176.59375,
+            "width": 595.59375,
+            "height": 154.796875
+          },
+          {
+            "name": "marquee-line-2",
+            "text": "Marea",
+            "fontSize": "172px",
+            "x": 361.625,
+            "y": 402.984375,
+            "width": 476.75,
+            "height": 154.796875
+          },
+          {
+            "name": "coming-soon-line",
+            "text": "Coming Soon",
+            "fontSize": "51.2px",
+            "x": 330,
+            "y": 616.796875,
+            "width": 540,
+            "height": 64
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "quote32",
+      "png": "support-7_quote32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2231507,
+      "contentWarnings": [],
+      "layoutReport": {
+        "frame": {
+          "width": 1200,
+          "height": 800
+        },
+        "headlineFontSize": "255.856px",
+        "inkOnPaperContrast": 7.27,
+        "slots": [
+          {
+            "name": "quote_line",
+            "text": "Just Like",
+            "x": 96,
+            "y": 78.7,
+            "width": 944.4,
+            "height": 240.2,
+            "fontSize": 255.9
+          },
+          {
+            "name": "quote_line",
+            "text": "Sweet",
+            "x": 374.1,
+            "y": 322.6,
+            "width": 451.8,
+            "height": 181,
+            "fontSize": 195.2
+          },
+          {
+            "name": "quote_line",
+            "text": "Chocolate",
+            "x": 96,
+            "y": 511.8,
+            "width": 1008,
+            "height": 242.2,
+            "fontSize": 259.2
+          },
+          {
+            "name": "quote_mark",
+            "text": "\"",
+            "x": 42.2,
+            "y": 76.5,
+            "width": 48,
+            "height": 45,
+            "fontSize": 152.1
+          },
+          {
+            "name": "quote_mark",
+            "text": "\"",
+            "x": 1077.6,
+            "y": 508.3,
+            "width": 48,
+            "height": 45,
+            "fontSize": 152.1
+          }
+        ],
+        "outOfBounds": []
+      }
+    },
+    {
+      "template": "crest32",
+      "png": "support-8_crest32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 514637,
+      "contentWarnings": [],
+      "layoutReport": {
+        "frame": {
+          "width": 1200,
+          "height": 800
+        },
+        "headlineFontSize": "207.709px",
+        "inkOnPaperContrast": 6.02,
+        "slots": [
+          {
+            "name": "hero",
+            "text": "Ordinary",
+            "x": 156,
+            "y": 280,
+            "width": 888,
+            "height": 208,
+            "fontSize": 207.709
+          },
+          {
+            "name": "upper_arc",
+            "text": "Escape From",
+            "x": 340.6,
+            "y": 121.3,
+            "width": 518.1,
+            "height": 153.7,
+            "fontSize": 71.96
+          },
+          {
+            "name": "lower_arc",
+            "text": "Adventure",
+            "x": 366.5,
+            "y": 506.9,
+            "width": 466.8,
+            "height": 164.7,
+            "fontSize": 84.0696
+          }
+        ],
+        "outOfBounds": [],
+        "overlaps": []
+      }
+    },
+    {
+      "template": "contour32",
+      "png": "support-10_contour32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 122104,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "contour32",
+        "headlineFontSize": "179.2px",
+        "smallestDisplayFontSize": "32.8px",
+        "contrast": 17.68423324024098,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "source-frame",
+            "text": "",
+            "fontSize": "16px",
+            "x": 42.59375,
+            "y": 39.1875,
+            "width": 1114.8125,
+            "height": 720.8125
+          },
+          {
+            "name": "ligature-caption",
+            "text": "9 Ligatures",
+            "fontSize": "32.8px",
+            "x": 528.421875,
+            "y": 256.796875,
+            "width": 143.15625,
+            "height": 41.59375
+          },
+          {
+            "name": "upper-glyph-row",
+            "text": "ADCAQO",
+            "fontSize": "179.2px",
+            "x": 269.2176513671875,
+            "y": 312,
+            "width": 661.564697265625,
+            "height": 196
+          },
+          {
+            "name": "lower-glyph-row",
+            "text": "STSZTTZS",
+            "fontSize": "172.8px",
+            "x": 181.55487060546875,
+            "y": 540.796875,
+            "width": 836.8902587890625,
+            "height": 188
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "mountain32",
+      "png": "support-11_mountain32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1018780,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "mountain32",
+        "headlineFontSize": "91.9122px",
+        "smallestDisplayFontSize": "91.9122px",
+        "contrast": 14.984871719022003,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "original-mountain-engraving",
+            "text": "",
+            "fontSize": "16px",
+            "x": 62.390625,
+            "y": 64,
+            "width": 360,
+            "height": 648
+          },
+          {
+            "name": "specimen-row-1",
+            "text": "01.Diabolically",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 52,
+            "width": 679.203125,
+            "height": 84
+          },
+          {
+            "name": "row-number-1",
+            "text": "01.",
+            "fontSize": "23px",
+            "x": 486,
+            "y": 52,
+            "width": 28.515625,
+            "height": 84
+          },
+          {
+            "name": "specimen-word-1",
+            "text": "Diabolically",
+            "fontSize": "91.9122px",
+            "x": 546,
+            "y": 52,
+            "width": 601.1875,
+            "height": 84
+          },
+          {
+            "name": "row-rule-1",
+            "text": "",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 139.734375,
+            "width": 679.203125,
+            "height": 1.546875
+          },
+          {
+            "name": "specimen-row-2",
+            "text": "02.Equalizing",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 168,
+            "width": 679.203125,
+            "height": 84
+          },
+          {
+            "name": "row-number-2",
+            "text": "02.",
+            "fontSize": "23px",
+            "x": 486,
+            "y": 168,
+            "width": 28.515625,
+            "height": 84
+          },
+          {
+            "name": "specimen-word-2",
+            "text": "Equalizing",
+            "fontSize": "91.9122px",
+            "x": 546,
+            "y": 168,
+            "width": 601.1875,
+            "height": 84
+          },
+          {
+            "name": "row-rule-2",
+            "text": "",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 255.734375,
+            "width": 679.203125,
+            "height": 1.546875
+          },
+          {
+            "name": "specimen-row-3",
+            "text": "03.Revaluation",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 284,
+            "width": 679.203125,
+            "height": 84
+          },
+          {
+            "name": "row-number-3",
+            "text": "03.",
+            "fontSize": "23px",
+            "x": 486,
+            "y": 284,
+            "width": 28.515625,
+            "height": 84
+          },
+          {
+            "name": "specimen-word-3",
+            "text": "Revaluation",
+            "fontSize": "91.9122px",
+            "x": 546,
+            "y": 284,
+            "width": 601.1875,
+            "height": 84
+          },
+          {
+            "name": "row-rule-3",
+            "text": "",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 371.734375,
+            "width": 679.203125,
+            "height": 1.546875
+          },
+          {
+            "name": "specimen-row-4",
+            "text": "04.Pandemic",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 400,
+            "width": 679.203125,
+            "height": 84
+          },
+          {
+            "name": "row-number-4",
+            "text": "04.",
+            "fontSize": "23px",
+            "x": 486,
+            "y": 400,
+            "width": 28.515625,
+            "height": 84
+          },
+          {
+            "name": "specimen-word-4",
+            "text": "Pandemic",
+            "fontSize": "91.9122px",
+            "x": 546,
+            "y": 400,
+            "width": 601.1875,
+            "height": 84
+          },
+          {
+            "name": "row-rule-4",
+            "text": "",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 487.734375,
+            "width": 679.203125,
+            "height": 1.546875
+          },
+          {
+            "name": "specimen-row-5",
+            "text": "05.Submachine",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 516,
+            "width": 679.203125,
+            "height": 84
+          },
+          {
+            "name": "row-number-5",
+            "text": "05.",
+            "fontSize": "23px",
+            "x": 486,
+            "y": 516,
+            "width": 28.515625,
+            "height": 84
+          },
+          {
+            "name": "specimen-word-5",
+            "text": "Submachine",
+            "fontSize": "91.9122px",
+            "x": 546,
+            "y": 516,
+            "width": 601.1875,
+            "height": 84
+          },
+          {
+            "name": "row-rule-5",
+            "text": "",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 603.734375,
+            "width": 679.203125,
+            "height": 1.546875
+          },
+          {
+            "name": "specimen-row-6",
+            "text": "06.Challenger",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 632,
+            "width": 679.203125,
+            "height": 84
+          },
+          {
+            "name": "row-number-6",
+            "text": "06.",
+            "fontSize": "23px",
+            "x": 486,
+            "y": 632,
+            "width": 28.515625,
+            "height": 84
+          },
+          {
+            "name": "specimen-word-6",
+            "text": "Challenger",
+            "fontSize": "91.9122px",
+            "x": 546,
+            "y": 632,
+            "width": 601.1875,
+            "height": 84
+          },
+          {
+            "name": "row-rule-6",
+            "text": "",
+            "fontSize": "16px",
+            "x": 468,
+            "y": 719.734375,
+            "width": 679.203125,
+            "height": 1.546875
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "hand32",
+      "png": "support-12_hand32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 165135,
+      "contentWarnings": [],
+      "layoutReport": {
+        "frame": {
+          "width": 1200,
+          "height": 800
+        },
+        "headlineFontSize": "317.189px",
+        "inkOnPaperContrast": 1.59,
+        "noteOnPaperContrast": 10.66,
+        "handOnPaperContrast": 10.66,
+        "contrastException": {
+          "minimum": 1.5,
+          "rationale": "The reference artwork uses warm ivory type on pink at low contrast; this exception preserves that printed-art direction. Editor controls remain high contrast."
+        },
+        "slots": [
+          {
+            "name": "headline_top",
+            "text": "Nice",
+            "x": 292.8,
+            "y": 27.2,
+            "width": 885.6,
+            "height": 236,
+            "fontSize": 317.189
+          },
+          {
+            "name": "headline_middle",
+            "text": "Big",
+            "x": 530.4,
+            "y": 282.4,
+            "width": 645.6,
+            "height": 236,
+            "fontSize": 239.43
+          },
+          {
+            "name": "headline_bottom",
+            "text": "Font",
+            "x": 199.2,
+            "y": 536.8,
+            "width": 980.4,
+            "height": 236,
+            "fontSize": 323.659
+          },
+          {
+            "name": "note",
+            "text": "Sometimes You\nJust Need A...",
+            "x": 308.4,
+            "y": 355.2,
+            "width": 182.4,
+            "height": 65.6,
+            "fontSize": 28.21
+          }
+        ],
+        "outOfBounds": []
+      }
+    },
+    {
+      "template": "zebra32",
+      "png": "support-13_zebra32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2541122,
+      "contentWarnings": [],
+      "layoutReport": {
+        "frame": {
+          "width": 1200,
+          "height": 800
+        },
+        "headlineFontSize": "173.74px",
+        "inkOnPaperContrast": 17.88,
+        "slots": [
+          {
+            "name": "left_card",
+            "text": "Love",
+            "x": 50.4,
+            "y": 131.2,
+            "width": 542.4,
+            "height": 539.2,
+            "fontSize": 14
+          },
+          {
+            "name": "right_card",
+            "text": "RosesAre RedChocolatesAre BrownValentineIs BoredIf You AreAlone",
+            "x": 607.2,
+            "y": 131.2,
+            "width": 542.4,
+            "height": 539.2,
+            "fontSize": 14
+          },
+          {
+            "name": "zebra_photo",
+            "text": "Two zebras inside an arched photograph",
+            "x": 85.6,
+            "y": 187.8,
+            "width": 471.9,
+            "height": 314.6,
+            "fontSize": 14
+          },
+          {
+            "name": "love",
+            "text": "Love",
+            "x": 88.3,
+            "y": 468.2,
+            "width": 466.5,
+            "height": 151,
+            "fontSize": 173.74
+          },
+          {
+            "name": "rose_photo",
+            "text": "A red rose resting across printed pages",
+            "x": 626.2,
+            "y": 489.7,
+            "width": 504.4,
+            "height": 168.1,
+            "fontSize": 14
+          },
+          {
+            "name": "poem_1",
+            "text": "Roses",
+            "x": 637,
+            "y": 140.9,
+            "width": 482.7,
+            "height": 39.4,
+            "fontSize": 49.85
+          },
+          {
+            "name": "poem_2",
+            "text": "Are Red",
+            "x": 637,
+            "y": 182.9,
+            "width": 482.7,
+            "height": 39.4,
+            "fontSize": 49.85
+          },
+          {
+            "name": "poem_3",
+            "text": "Chocolates",
+            "x": 637,
+            "y": 228.2,
+            "width": 482.7,
+            "height": 39.4,
+            "fontSize": 49.85
+          },
+          {
+            "name": "poem_4",
+            "text": "Are Brown",
+            "x": 637,
+            "y": 272.5,
+            "width": 482.7,
+            "height": 39.4,
+            "fontSize": 49.85
+          },
+          {
+            "name": "poem_5",
+            "text": "Valentine",
+            "x": 637,
+            "y": 319.9,
+            "width": 482.7,
+            "height": 39.4,
+            "fontSize": 49.18
+          },
+          {
+            "name": "poem_6",
+            "text": "Is Bored",
+            "x": 637,
+            "y": 363,
+            "width": 482.7,
+            "height": 39.4,
+            "fontSize": 49.85
+          },
+          {
+            "name": "poem_7",
+            "text": "If You Are",
+            "x": 637,
+            "y": 407.3,
+            "width": 482.7,
+            "height": 39.4,
+            "fontSize": 49.85
+          },
+          {
+            "name": "poem_8",
+            "text": "Alone",
+            "x": 637,
+            "y": 448.2,
+            "width": 482.7,
+            "height": 39.4,
+            "fontSize": 49.85
+          }
+        ],
+        "outOfBounds": []
+      }
+    },
+    {
+      "template": "soldier32",
+      "png": "support-14_soldier32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 495235,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "soldier32",
+        "headlineFontSize": "116.242px",
+        "smallestDisplayFontSize": "40.2578px",
+        "contrast": 18.063758932569453,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "archival-photo",
+            "text": "",
+            "fontSize": "16px",
+            "x": 96.59375,
+            "y": 196,
+            "width": 424.796875,
+            "height": 286.53125
+          },
+          {
+            "name": "frame-and-rules",
+            "text": "",
+            "fontSize": "16px",
+            "x": 58.796875,
+            "y": 161.59375,
+            "width": 1082.40625,
+            "height": 476.015625
+          },
+          {
+            "name": "year",
+            "text": "1935",
+            "fontSize": "116.242px",
+            "x": 96.59375,
+            "y": 501.59375,
+            "width": 191.70001220703125,
+            "height": 116.234375
+          },
+          {
+            "name": "headline-1",
+            "text": "This",
+            "fontSize": "64.164px",
+            "x": 636,
+            "y": 212,
+            "width": 492,
+            "height": 68
+          },
+          {
+            "name": "headline-2",
+            "text": "War Is",
+            "fontSize": "64.164px",
+            "x": 636,
+            "y": 292,
+            "width": 492,
+            "height": 68
+          },
+          {
+            "name": "headline-3",
+            "text": "Useless",
+            "fontSize": "64.164px",
+            "x": 636,
+            "y": 372,
+            "width": 492,
+            "height": 68
+          },
+          {
+            "name": "digit-strip",
+            "text": "1234567890",
+            "fontSize": "40.2578px",
+            "x": 612.59375,
+            "y": 516,
+            "width": 480,
+            "height": 40.25
+          },
+          {
+            "name": "symbol-strip",
+            "text": "!?$\u00a2\u20ac\u00a3&",
+            "fontSize": "40.2578px",
+            "x": 612.59375,
+            "y": 578.390625,
+            "width": 480,
+            "height": 40.25
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "mirror32",
+      "png": "support-15_mirror32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1077017,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "mirror32",
+        "headlineFontSize": "82.3359px",
+        "smallestDisplayFontSize": "82.3359px",
+        "contrast": 18.448990673279965,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "mirror-portrait",
+            "text": "",
+            "fontSize": "16px",
+            "x": 60,
+            "y": 136,
+            "width": 428.9375,
+            "height": 536
+          },
+          {
+            "name": "mirror-row-1",
+            "text": "People Hasten",
+            "fontSize": "16px",
+            "x": 462,
+            "y": 116,
+            "width": 678,
+            "height": 87.328125
+          },
+          {
+            "name": "mirror-quote-1",
+            "text": "People Hasten",
+            "fontSize": "82.3359px",
+            "x": 694.109375,
+            "y": 118.5,
+            "width": 445.890625,
+            "height": 82.328125
+          },
+          {
+            "name": "mirror-row-2",
+            "text": "To Judge",
+            "fontSize": "16px",
+            "x": 462,
+            "y": 212.921875,
+            "width": 678,
+            "height": 87.328125
+          },
+          {
+            "name": "mirror-quote-2",
+            "text": "To Judge",
+            "fontSize": "82.3359px",
+            "x": 857.4375,
+            "y": 215.421875,
+            "width": 282.5625,
+            "height": 82.328125
+          },
+          {
+            "name": "mirror-row-3",
+            "text": "In Order",
+            "fontSize": "16px",
+            "x": 462,
+            "y": 309.859375,
+            "width": 678,
+            "height": 87.328125
+          },
+          {
+            "name": "mirror-quote-3",
+            "text": "In Order",
+            "fontSize": "82.3359px",
+            "x": 865.015625,
+            "y": 312.359375,
+            "width": 274.984375,
+            "height": 82.328125
+          },
+          {
+            "name": "mirror-row-4",
+            "text": "Not To Be",
+            "fontSize": "16px",
+            "x": 462,
+            "y": 406.796875,
+            "width": 678,
+            "height": 87.328125
+          },
+          {
+            "name": "mirror-quote-4",
+            "text": "Not To Be",
+            "fontSize": "82.3359px",
+            "x": 845.34375,
+            "y": 409.296875,
+            "width": 294.65625,
+            "height": 82.328125
+          },
+          {
+            "name": "mirror-row-5",
+            "text": "Judged",
+            "fontSize": "16px",
+            "x": 462,
+            "y": 503.71875,
+            "width": 678,
+            "height": 87.328125
+          },
+          {
+            "name": "mirror-quote-5",
+            "text": "Judged",
+            "fontSize": "82.3359px",
+            "x": 911.609375,
+            "y": 506.21875,
+            "width": 228.390625,
+            "height": 82.328125
+          },
+          {
+            "name": "mirror-row-6",
+            "text": "Themselves",
+            "fontSize": "16px",
+            "x": 462,
+            "y": 600.65625,
+            "width": 678,
+            "height": 87.328125
+          },
+          {
+            "name": "mirror-quote-6",
+            "text": "Themselves",
+            "fontSize": "82.3359px",
+            "x": 761.703125,
+            "y": 603.15625,
+            "width": 378.296875,
+            "height": 82.328125
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "brutal32",
+      "png": "support-16_brutal32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2054994,
+      "contentWarnings": [],
+      "layoutReport": {
+        "frame": {
+          "width": 1200,
+          "height": 800
+        },
+        "headlineFontSize": "91.71",
+        "inkOnPaperContrast": "10.95",
+        "slots": [
+          {
+            "name": "line-1",
+            "text": "Brutalism",
+            "x": 295.2,
+            "y": 221.6,
+            "width": 609.6,
+            "height": 104,
+            "fontSize": 123.58
+          },
+          {
+            "name": "line-2",
+            "text": "A Play Between",
+            "x": 124.8,
+            "y": 311.2,
+            "width": 968.4,
+            "height": 104,
+            "fontSize": 92.94
+          },
+          {
+            "name": "line-3",
+            "text": "Crudity",
+            "x": 369.6,
+            "y": 402.4,
+            "width": 318,
+            "height": 104,
+            "fontSize": 91.71
+          },
+          {
+            "name": "line-4",
+            "text": "And Finesse",
+            "x": 231.6,
+            "y": 491.2,
+            "width": 747.6,
+            "height": 104,
+            "fontSize": 123.58
+          },
+          {
+            "name": "photo-northwest",
+            "text": "",
+            "x": 205.2,
+            "y": 130.4,
+            "width": 238.8,
+            "height": 116,
+            "fontSize": 14
+          },
+          {
+            "name": "photo-northeast",
+            "text": "",
+            "x": 769.2,
+            "y": 132.8,
+            "width": 238.8,
+            "height": 116,
+            "fontSize": 14
+          },
+          {
+            "name": "photo-southwest",
+            "text": "",
+            "x": 146.4,
+            "y": 411.2,
+            "width": 238.8,
+            "height": 116,
+            "fontSize": 14
+          },
+          {
+            "name": "photo-southeast",
+            "text": "",
+            "x": 633.6,
+            "y": 549.6,
+            "width": 238.8,
+            "height": 116,
+            "fontSize": 14
+          }
+        ],
+        "outOfBounds": []
+      }
+    },
+    {
+      "template": "rio32",
+      "png": "support-18_rio32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 4450768,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "rio32",
+        "headlineFontSize": "144px",
+        "smallestDisplayFontSize": "65.6px",
+        "contrast": 14.578807781351893,
+        "contrastException": {
+          "minimum": 4.5,
+          "rationale": "Cream lettering remains above the darkened panorama for clear reading."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "travel-mark",
+            "text": "RioTravel",
+            "fontSize": "40px",
+            "x": 45.59375,
+            "y": 40.796875,
+            "width": 180,
+            "height": 76.390625
+          },
+          {
+            "name": "brand-city",
+            "text": "Rio",
+            "fontSize": "40px",
+            "x": 45.59375,
+            "y": 40.796875,
+            "width": 180,
+            "height": 38
+          },
+          {
+            "name": "brand-type",
+            "text": "Travel",
+            "fontSize": "40px",
+            "x": 45.59375,
+            "y": 79.1875,
+            "width": 180,
+            "height": 38
+          },
+          {
+            "name": "navigation",
+            "text": "HomeCatalogContact",
+            "fontSize": "30.4px",
+            "x": 618,
+            "y": 44.796875,
+            "width": 537.59375,
+            "height": 41.59375
+          },
+          {
+            "name": "navigation-1",
+            "text": "Home",
+            "fontSize": "30.4px",
+            "x": 618,
+            "y": 44.796875,
+            "width": 71.484375,
+            "height": 30.40625
+          },
+          {
+            "name": "navigation-2",
+            "text": "Catalog",
+            "fontSize": "30.4px",
+            "x": 830.453125,
+            "y": 44.796875,
+            "width": 92.171875,
+            "height": 30.40625
+          },
+          {
+            "name": "navigation-3",
+            "text": "Contact",
+            "fontSize": "30.4px",
+            "x": 1063.578125,
+            "y": 44.796875,
+            "width": 92.015625,
+            "height": 30.40625
+          },
+          {
+            "name": "title-lead-row",
+            "text": "The",
+            "fontSize": "16px",
+            "x": 300,
+            "y": 166.390625,
+            "width": 288,
+            "height": 84
+          },
+          {
+            "name": "title-lead",
+            "text": "The",
+            "fontSize": "65.6px",
+            "x": 300,
+            "y": 178.875,
+            "width": 94.3125,
+            "height": 59.03125
+          },
+          {
+            "name": "destination-row",
+            "text": "Janeiro",
+            "fontSize": "16px",
+            "x": 174,
+            "y": 260,
+            "width": 864,
+            "height": 174.390625
+          },
+          {
+            "name": "destination-title",
+            "text": "Janeiro",
+            "fontSize": "144px",
+            "x": 398.734375,
+            "y": 282.390625,
+            "width": 414.53125,
+            "height": 129.59375
+          },
+          {
+            "name": "destination-subtitle",
+            "text": "The Weekend Holiday Trip",
+            "fontSize": "48.8px",
+            "x": 180,
+            "y": 445.59375,
+            "width": 840,
+            "height": 65.59375
+          },
+          {
+            "name": "booking-button",
+            "text": "Book Now",
+            "fontSize": "34.4px",
+            "x": 513.59375,
+            "y": 576.796875,
+            "width": 172.796875,
+            "height": 49.59375
+          },
+          {
+            "name": "closing-copy",
+            "text": "Happiness Consists Of Living Each Day As If It Were The First DayOf Your Honeymoon And The Last Day Of Your VacationTrust Your Holiday Plans With Us",
+            "fontSize": "18px",
+            "x": 96,
+            "y": 667.1875,
+            "width": 1008,
+            "height": 81.59375
+          },
+          {
+            "name": "closing-line-1",
+            "text": "Happiness Consists Of Living Each Day As If It Were The First Day",
+            "fontSize": "18px",
+            "x": 379.5625,
+            "y": 675.953125,
+            "width": 440.875,
+            "height": 19.4375
+          },
+          {
+            "name": "closing-line-2",
+            "text": "Of Your Honeymoon And The Last Day Of Your Vacation",
+            "fontSize": "18px",
+            "x": 412.71875,
+            "y": 698.265625,
+            "width": 374.5625,
+            "height": 19.4375
+          },
+          {
+            "name": "closing-line-3",
+            "text": "Trust Your Holiday Plans With Us",
+            "fontSize": "18px",
+            "x": 489.40625,
+            "y": 720.578125,
+            "width": 221.171875,
+            "height": 19.4375
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "boots32",
+      "png": "support-19_boots32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1936172,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "boots32",
+        "headlineFontSize": "110.4px",
+        "smallestDisplayFontSize": "48.8px",
+        "contrast": 6.572928520404548,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "portrait-panel",
+            "text": "",
+            "fontSize": "16px",
+            "x": 74.390625,
+            "y": 100,
+            "width": 480,
+            "height": 600
+          },
+          {
+            "name": "engraved-boot",
+            "text": "",
+            "fontSize": "16px",
+            "x": 942,
+            "y": 505.59375,
+            "width": 224.6875,
+            "height": 272.484375
+          },
+          {
+            "name": "main-lettering",
+            "text": "Wild Boots",
+            "fontSize": "110.4px",
+            "x": 644.984375,
+            "y": 316,
+            "width": 462.03125,
+            "height": 99.359375
+          },
+          {
+            "name": "poster-subline",
+            "text": "Photography",
+            "fontSize": "48.8px",
+            "x": 753.1171875,
+            "y": 437.59375,
+            "width": 245.765625,
+            "height": 43.90625
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "plakat32",
+      "png": "support-20_plakat32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1097001,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "plakat32",
+        "headlineFontSize": "248px",
+        "smallestDisplayFontSize": "28.8px",
+        "contrast": 16.17951288737469,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "plakat-symbol-strip",
+            "text": "",
+            "fontSize": "16px",
+            "x": 570,
+            "y": 416,
+            "width": 224.390625,
+            "height": 96
+          },
+          {
+            "name": "headline",
+            "text": "Plakat",
+            "fontSize": "248px",
+            "x": 90,
+            "y": 120,
+            "width": 1020,
+            "height": 272
+          },
+          {
+            "name": "note",
+            "text": "Glyph CountAvailable Styles",
+            "fontSize": "16px",
+            "x": 138,
+            "y": 416,
+            "width": 432,
+            "height": 96
+          },
+          {
+            "name": "note-line-1",
+            "text": "Glyph Count",
+            "fontSize": "29.6px",
+            "x": 150,
+            "y": 416,
+            "width": 408,
+            "height": 34.90625
+          },
+          {
+            "name": "note-line-2",
+            "text": "Available Styles",
+            "fontSize": "29.6px",
+            "x": 150,
+            "y": 450.90625,
+            "width": 408,
+            "height": 34.90625
+          },
+          {
+            "name": "variable",
+            "text": "Family",
+            "fontSize": "87.9999px",
+            "x": 798,
+            "y": 416,
+            "width": 264,
+            "height": 96
+          },
+          {
+            "name": "railOne",
+            "text": "Thin",
+            "fontSize": "28.8px",
+            "x": 138,
+            "y": 520,
+            "width": 924,
+            "height": 40
+          },
+          {
+            "name": "railRightOne",
+            "text": "Black",
+            "fontSize": "28.8px",
+            "x": 138,
+            "y": 520,
+            "width": 924,
+            "height": 40
+          },
+          {
+            "name": "railTwo",
+            "text": "Roman",
+            "fontSize": "28.8px",
+            "x": 138,
+            "y": 572,
+            "width": 924,
+            "height": 40
+          },
+          {
+            "name": "railRightTwo",
+            "text": "Italic",
+            "fontSize": "28.8px",
+            "x": 138,
+            "y": 572,
+            "width": 924,
+            "height": 40
+          },
+          {
+            "name": "footer",
+            "text": "A Typeface Family Study",
+            "fontSize": "20px",
+            "x": 360,
+            "y": 684,
+            "width": 480,
+            "height": 44
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "plakatart32",
+      "png": "support-21_plakatart32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2954414,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "plakatart32",
+        "headlineFontSize": "280px",
+        "smallestDisplayFontSize": "280px",
+        "contrast": 16.71583156198521,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "metaStyles",
+            "text": "18 Styles",
+            "fontSize": "21.0871px",
+            "x": 90,
+            "y": 60,
+            "width": 240,
+            "height": 28
+          },
+          {
+            "name": "metaVariable",
+            "text": "Variable Font",
+            "fontSize": "21.0871px",
+            "x": 90,
+            "y": 92,
+            "width": 240,
+            "height": 28
+          },
+          {
+            "name": "metaWeights",
+            "text": "Thin \u00b7 Black",
+            "fontSize": "21.0871px",
+            "x": 90,
+            "y": 124,
+            "width": 240,
+            "height": 28
+          },
+          {
+            "name": "metaItalics",
+            "text": "Italics",
+            "fontSize": "21.0871px",
+            "x": 90,
+            "y": 156,
+            "width": 240,
+            "height": 28
+          },
+          {
+            "name": "metaDesigned",
+            "text": "Designed By",
+            "fontSize": "21.0871px",
+            "x": 90,
+            "y": 304,
+            "width": 240,
+            "height": 28
+          },
+          {
+            "name": "metaFoundry",
+            "text": "Mab\u00fctype",
+            "fontSize": "21.0871px",
+            "x": 90,
+            "y": 336,
+            "width": 240,
+            "height": 28
+          },
+          {
+            "name": "metaYear",
+            "text": "2025",
+            "fontSize": "21.0871px",
+            "x": 90,
+            "y": 368,
+            "width": 240,
+            "height": 28
+          },
+          {
+            "name": "headline",
+            "text": "Plakat",
+            "fontSize": "280px",
+            "x": 90,
+            "y": 452,
+            "width": 744,
+            "height": 324
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "mangos32",
+      "png": "support-22_mangos32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 256857,
+      "contentWarnings": [],
+      "layoutReport": {
+        "frame": {
+          "width": 1200,
+          "height": 800
+        },
+        "weight": 400,
+        "headlineFontSize": "95.00",
+        "inkOnPaperContrast": 17.42,
+        "cyanContrast": 9.67,
+        "accentOnPaperContrast": 6.67,
+        "slots": [
+          {
+            "name": "weight-ramp",
+            "x": 258,
+            "y": 196.8,
+            "width": 864,
+            "height": 68
+          },
+          {
+            "name": "axis-arrow",
+            "x": 530.4,
+            "y": 77.60000000000001,
+            "width": 136.8,
+            "height": 64
+          },
+          {
+            "name": "axis-loop",
+            "x": 78,
+            "y": 177.6,
+            "width": 156,
+            "height": 88
+          },
+          {
+            "name": "fruit-mark",
+            "x": 960,
+            "y": 408,
+            "width": 156,
+            "height": 120
+          }
+        ],
+        "textBounds": [
+          {
+            "name": "wordmark",
+            "text": "Mangos",
+            "x": 85,
+            "y": 68,
+            "width": 233.6,
+            "height": 76
+          },
+          {
+            "name": "foundry",
+            "text": "Mab\u00fctype",
+            "x": 833.1,
+            "y": 67,
+            "width": 284.9,
+            "height": 77
+          },
+          {
+            "name": "latin-name",
+            "text": "Mangifera Indica L.",
+            "x": 383.3,
+            "y": 301,
+            "width": 695.4,
+            "height": 95
+          },
+          {
+            "name": "energy-caption",
+            "text": "Energy Provided",
+            "x": 81,
+            "y": 534,
+            "width": 495.6,
+            "height": 83
+          },
+          {
+            "name": "trademark",
+            "text": "\u2122",
+            "x": 326.6,
+            "y": 59,
+            "width": 27.8,
+            "height": 15
+          },
+          {
+            "name": "descriptor-1",
+            "text": "Variable",
+            "x": 79,
+            "y": 289,
+            "width": 86.9,
+            "height": 25.5
+          },
+          {
+            "name": "descriptor-2",
+            "text": "Geometric",
+            "x": 80,
+            "y": 318,
+            "width": 108.9,
+            "height": 25.5
+          },
+          {
+            "name": "descriptor-3",
+            "text": "Sans Serif",
+            "x": 80,
+            "y": 347,
+            "width": 106.6,
+            "height": 25.5
+          },
+          {
+            "name": "weight-value-copy",
+            "text": "100g",
+            "x": 82,
+            "y": 411,
+            "width": 144.5,
+            "height": 88
+          },
+          {
+            "name": "ounces-copy",
+            "text": "(3.53oz)",
+            "x": 539.8,
+            "y": 410,
+            "width": 230.5,
+            "height": 88
+          },
+          {
+            "name": "energy-value",
+            "text": "~ 272 kJ",
+            "x": 819.7,
+            "y": 533,
+            "width": 295.3,
+            "height": 75.4
+          },
+          {
+            "name": "tropical",
+            "text": "Tropical",
+            "x": 80,
+            "y": 653,
+            "width": 247.3,
+            "height": 79
+          },
+          {
+            "name": "fraction",
+            "text": "\u00bd",
+            "x": 580.1,
+            "y": 654,
+            "width": 39.7,
+            "height": 58
+          },
+          {
+            "name": "subtropical",
+            "text": "Subtropical",
+            "x": 784.4,
+            "y": 653,
+            "width": 335.6,
+            "height": 79
+          }
+        ],
+        "outOfBounds": []
+      }
+    },
+    {
+      "template": "alphabet32",
+      "png": "support-23_alphabet32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 149313,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "alphabet32",
+        "headlineFontSize": "109.384px",
+        "smallestDisplayFontSize": "90.9999px",
+        "contrast": 17.42374548267842,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "alphabet-descriptor",
+            "text": "Variable\nGeometric\nSans Serif",
+            "fontSize": "16.8px",
+            "x": 84,
+            "y": 352,
+            "width": 252,
+            "height": 54.421875
+          },
+          {
+            "name": "alphabet-uppercase-0",
+            "text": "ABCDEFGHIJKLM",
+            "fontSize": "109.384px",
+            "x": 282.703125,
+            "y": 27.875,
+            "width": 634.59375,
+            "height": 96.25
+          },
+          {
+            "name": "alphabet-uppercase-1",
+            "text": "NOPQRSTUVWXYZ",
+            "fontSize": "109.384px",
+            "x": 268.703125,
+            "y": 135.875,
+            "width": 662.59375,
+            "height": 96.25
+          },
+          {
+            "name": "alphabet-lowercase-0",
+            "text": "abcdefghijklm",
+            "fontSize": "90.9999px",
+            "x": 402,
+            "y": 341.953125,
+            "width": 498.046875,
+            "height": 80.078125
+          },
+          {
+            "name": "alphabet-lowercase-1",
+            "text": "nopqrstuvwxyz",
+            "fontSize": "90.9999px",
+            "x": 402,
+            "y": 457.953125,
+            "width": 523.1875,
+            "height": 80.078125
+          },
+          {
+            "name": "alphabet-figures",
+            "text": "#0123456789",
+            "fontSize": "104px",
+            "x": 78,
+            "y": 622.234375,
+            "width": 511.15625,
+            "height": 91.515625
+          },
+          {
+            "name": "alphabet-metadata-primary",
+            "text": "Letterform Study",
+            "fontSize": "21.6px",
+            "x": 846,
+            "y": 672,
+            "width": 276,
+            "height": 29
+          },
+          {
+            "name": "alphabet-metadata-secondary",
+            "text": "Glyph Specimen",
+            "fontSize": "14.4px",
+            "x": 846,
+            "y": 720,
+            "width": 276,
+            "height": 19
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "birvase32",
+      "png": "support-24_birvase32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 6434412,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "birvase32",
+        "headlineFontSize": "304px",
+        "smallestDisplayFontSize": "304px",
+        "contrast": 11.343786523258515,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "headline",
+            "text": "Birvase",
+            "fontSize": "304px",
+            "x": 96,
+            "y": 248,
+            "width": 1008,
+            "height": 312
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "weightfamily32",
+      "png": "support-25_weightfamily32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 107891,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "weightfamily32",
+        "headlineFontSize": "52.3505px",
+        "smallestDisplayFontSize": "52.3504px",
+        "contrast": 16.456727770288886,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "label1",
+            "text": "Thin \u00b7 100",
+            "fontSize": "32px",
+            "x": 54,
+            "y": 92,
+            "width": 228,
+            "height": 56
+          },
+          {
+            "name": "row1",
+            "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            "fontSize": "16px",
+            "x": 294,
+            "y": 68,
+            "width": 858,
+            "height": 144
+          },
+          {
+            "name": "row1-line-1",
+            "text": "ABCDEFGHIJKLM",
+            "fontSize": "52.3505px",
+            "x": 294,
+            "y": 79.28125,
+            "width": 858,
+            "height": 60.71875
+          },
+          {
+            "name": "row1-line-2",
+            "text": "NOPQRSTUVWXYZ",
+            "fontSize": "52.3505px",
+            "x": 294,
+            "y": 140,
+            "width": 858,
+            "height": 60.71875
+          },
+          {
+            "name": "label2",
+            "text": "Regular \u00b7 400",
+            "fontSize": "32px",
+            "x": 54,
+            "y": 324,
+            "width": 228,
+            "height": 56
+          },
+          {
+            "name": "row2",
+            "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            "fontSize": "16px",
+            "x": 294,
+            "y": 288,
+            "width": 858,
+            "height": 144
+          },
+          {
+            "name": "row2-line-1",
+            "text": "ABCDEFGHIJKLM",
+            "fontSize": "52.3504px",
+            "x": 294,
+            "y": 299.28125,
+            "width": 858,
+            "height": 60.71875
+          },
+          {
+            "name": "row2-line-2",
+            "text": "NOPQRSTUVWXYZ",
+            "fontSize": "52.3504px",
+            "x": 294,
+            "y": 360,
+            "width": 858,
+            "height": 60.71875
+          },
+          {
+            "name": "label3",
+            "text": "Bold \u00b7 700",
+            "fontSize": "32px",
+            "x": 54,
+            "y": 576,
+            "width": 228,
+            "height": 56
+          },
+          {
+            "name": "row3",
+            "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            "fontSize": "16px",
+            "x": 294,
+            "y": 528,
+            "width": 858,
+            "height": 144
+          },
+          {
+            "name": "row3-line-1",
+            "text": "ABCDEFGHIJKLM",
+            "fontSize": "52.3505px",
+            "x": 294,
+            "y": 539.28125,
+            "width": 858,
+            "height": 60.71875
+          },
+          {
+            "name": "row3-line-2",
+            "text": "NOPQRSTUVWXYZ",
+            "fontSize": "52.3505px",
+            "x": 294,
+            "y": 600,
+            "width": 858,
+            "height": 60.71875
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "mangosboard32",
+      "png": "support-26_mangosboard32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 272475,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "mangosboard32",
+        "headlineFontSize": "152px",
+        "smallestDisplayFontSize": "40px",
+        "contrast": 16.61538462302415,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "familyThin",
+            "text": "Mangos Thin",
+            "fontSize": "40px",
+            "x": 72,
+            "y": 44,
+            "width": 396,
+            "height": 44
+          },
+          {
+            "name": "familyRegular",
+            "text": "Mangos Regular",
+            "fontSize": "40px",
+            "x": 72,
+            "y": 92,
+            "width": 396,
+            "height": 44
+          },
+          {
+            "name": "familyBlack",
+            "text": "Mangos Black",
+            "fontSize": "40px",
+            "x": 72,
+            "y": 140,
+            "width": 396,
+            "height": 44
+          },
+          {
+            "name": "variable",
+            "text": "Variable",
+            "fontSize": "112px",
+            "x": 642,
+            "y": 60,
+            "width": 480,
+            "height": 128
+          },
+          {
+            "name": "glyphs",
+            "text": "C\u20ac\u03a9\u00bd?\u2020qTTD0123456789",
+            "fontSize": "109.18px",
+            "x": 60,
+            "y": 248,
+            "width": 1080,
+            "height": 232
+          },
+          {
+            "name": "tileA",
+            "text": "Aa",
+            "fontSize": "148px",
+            "x": 60,
+            "y": 552,
+            "width": 228,
+            "height": 184
+          },
+          {
+            "name": "tileWord",
+            "text": "Mangos",
+            "fontSize": "144px",
+            "x": 324,
+            "y": 552,
+            "width": 504,
+            "height": 184
+          },
+          {
+            "name": "tileAt",
+            "text": "@",
+            "fontSize": "152px",
+            "x": 864,
+            "y": 552,
+            "width": 276,
+            "height": 184
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "ovalword32",
+      "png": "support-27_ovalword32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1344063,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "ovalword32",
+        "headlineFontSize": "224px",
+        "smallestDisplayFontSize": "38.4px",
+        "contrast": 18.629428822346707,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "kicker",
+            "text": "T&N Type Co.",
+            "fontSize": "41.6px",
+            "x": 192,
+            "y": 104,
+            "width": 816,
+            "height": 60
+          },
+          {
+            "name": "headline",
+            "text": "Sadie",
+            "fontSize": "224px",
+            "x": 66,
+            "y": 209.59375,
+            "width": 1068,
+            "height": 344
+          },
+          {
+            "name": "sub",
+            "text": "Display Sans",
+            "fontSize": "38.4px",
+            "x": 216,
+            "y": 576,
+            "width": 768,
+            "height": 60
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "stardust32",
+      "png": "support-28_stardust32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 4031681,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "stardust32",
+        "headlineFontSize": "124.868px",
+        "smallestDisplayFontSize": "91.9999px",
+        "contrast": 16.409110736136714,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "eyebrow",
+            "text": "Type Studio",
+            "fontSize": "27.2px",
+            "x": 792,
+            "y": 72,
+            "width": 312,
+            "height": 44
+          },
+          {
+            "name": "headline",
+            "text": "Dreams AndStories",
+            "fontSize": "16px",
+            "x": 168,
+            "y": 204,
+            "width": 864,
+            "height": 264
+          },
+          {
+            "name": "headline-line-1",
+            "text": "Dreams And",
+            "fontSize": "124.868px",
+            "x": 168,
+            "y": 224.875,
+            "width": 864,
+            "height": 111.125
+          },
+          {
+            "name": "headline-line-2",
+            "text": "Stories",
+            "fontSize": "124.868px",
+            "x": 168,
+            "y": 336,
+            "width": 864,
+            "height": 111.125
+          },
+          {
+            "name": "lineTwo",
+            "text": "Studio",
+            "fontSize": "91.9999px",
+            "x": 216,
+            "y": 476,
+            "width": 768,
+            "height": 112
+          },
+          {
+            "name": "footer",
+            "text": "In Good Company",
+            "fontSize": "24.96px",
+            "x": 456,
+            "y": 656,
+            "width": 288,
+            "height": 44
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "cliffpostcard32",
+      "png": "support-29_cliffpostcard32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1705008,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "cliffpostcard32",
+        "headlineFontSize": "104.88px",
+        "smallestDisplayFontSize": "104.88px",
+        "contrast": 13.62298788776352,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "source-torn-paper-and-coastal-photo",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "postcard-headline-row-1",
+            "text": "Wander Where",
+            "fontSize": "16px",
+            "x": 156,
+            "y": 156,
+            "width": 888,
+            "height": 104
+          },
+          {
+            "name": "postcard-headline-1",
+            "text": "Wander Where",
+            "fontSize": "104.88px",
+            "x": 295.015625,
+            "y": 160.8125,
+            "width": 609.96875,
+            "height": 94.375
+          },
+          {
+            "name": "postcard-headline-row-2",
+            "text": "Your Soul Feels Wild.",
+            "fontSize": "16px",
+            "x": 90,
+            "y": 268,
+            "width": 1020,
+            "height": 104
+          },
+          {
+            "name": "postcard-headline-2",
+            "text": "Your Soul Feels Wild.",
+            "fontSize": "104.88px",
+            "x": 173.640625,
+            "y": 272.8125,
+            "width": 852.71875,
+            "height": 94.375
+          },
+          {
+            "name": "left-postcard-caption",
+            "text": "Open Air / Study 02",
+            "fontSize": "24px",
+            "x": 120,
+            "y": 524,
+            "width": 432,
+            "height": 48
+          },
+          {
+            "name": "right-postcard-caption",
+            "text": "Land / Sea / Sky",
+            "fontSize": "24px",
+            "x": 660,
+            "y": 524,
+            "width": 420,
+            "height": 48
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "kindersea32",
+      "png": "support-30_kindersea32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2320619,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "kindersea32",
+        "headlineFontSize": "104.279px",
+        "smallestDisplayFontSize": "104.279px",
+        "contrast": 4.406861100661014,
+        "contrastException": {
+          "minimum": 2.5,
+          "rationale": "Source white lettering on textured lavender intentionally follows the reference postcard treatment."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "source-lavender-stock",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "source-pixel-seascape",
+            "text": "",
+            "fontSize": "16px",
+            "x": 113.5,
+            "y": 96.96875,
+            "width": 975,
+            "height": 400
+          },
+          {
+            "name": "source-corner-stars",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "top-postcard-caption",
+            "text": "Field Notes",
+            "fontSize": "22px",
+            "x": 114,
+            "y": 56.796875,
+            "width": 360,
+            "height": 36
+          },
+          {
+            "name": "vertical-postcard-caption",
+            "text": "Postcard",
+            "fontSize": "20px",
+            "x": 1102.390625,
+            "y": 408.234375,
+            "width": 20,
+            "height": 79.53125
+          },
+          {
+            "name": "headline-row-1",
+            "text": "I Wish You",
+            "fontSize": "16px",
+            "x": 174,
+            "y": 518.390625,
+            "width": 852,
+            "height": 104
+          },
+          {
+            "name": "headline-1",
+            "text": "I Wish You",
+            "fontSize": "104.279px",
+            "x": 385.9375,
+            "y": 523.46875,
+            "width": 428.125,
+            "height": 93.84375
+          },
+          {
+            "name": "headline-row-2",
+            "text": "A Kinder Sea.",
+            "fontSize": "16px",
+            "x": 114,
+            "y": 638.390625,
+            "width": 972,
+            "height": 104
+          },
+          {
+            "name": "headline-2",
+            "text": "A Kinder Sea.",
+            "fontSize": "104.279px",
+            "x": 324,
+            "y": 643.46875,
+            "width": 551.984375,
+            "height": 93.84375
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "messageframe32",
+      "png": "support-31_messageframe32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 3214431,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "messageframe32",
+        "headlineFontSize": "97.91px",
+        "smallestDisplayFontSize": "97.91px",
+        "contrast": 3.623976255829269,
+        "contrastException": {
+          "minimum": 2.5,
+          "rationale": "The source keeps its small white labels on a textured lavender print band."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "source-message-card-and-print-plate",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "quote-row-1",
+            "text": "You Will Look Back",
+            "fontSize": "16px",
+            "x": 144,
+            "y": 196,
+            "width": 912,
+            "height": 100
+          },
+          {
+            "name": "quote-line-1",
+            "text": "You Will Look Back",
+            "fontSize": "97.91px",
+            "x": 233.09375,
+            "y": 196,
+            "width": 733.796875,
+            "height": 88.109375
+          },
+          {
+            "name": "quote-row-2",
+            "text": "On These Days And",
+            "fontSize": "16px",
+            "x": 144,
+            "y": 300,
+            "width": 912,
+            "height": 100
+          },
+          {
+            "name": "quote-line-2",
+            "text": "On These Days And",
+            "fontSize": "97.91px",
+            "x": 231.234375,
+            "y": 300,
+            "width": 737.515625,
+            "height": 88.109375
+          },
+          {
+            "name": "quote-row-3",
+            "text": "Be So Grateful You",
+            "fontSize": "16px",
+            "x": 144,
+            "y": 404,
+            "width": 912,
+            "height": 100
+          },
+          {
+            "name": "quote-line-3",
+            "text": "Be So Grateful You",
+            "fontSize": "97.91px",
+            "x": 241.28125,
+            "y": 404,
+            "width": 717.4375,
+            "height": 88.109375
+          },
+          {
+            "name": "quote-row-4",
+            "text": "Made It Through",
+            "fontSize": "16px",
+            "x": 216,
+            "y": 508,
+            "width": 768,
+            "height": 100
+          },
+          {
+            "name": "quote-line-4",
+            "text": "Made It Through",
+            "fontSize": "97.91px",
+            "x": 269.03125,
+            "y": 508,
+            "width": 661.9375,
+            "height": 88.109375
+          },
+          {
+            "name": "top-source-label",
+            "text": "Field Notes",
+            "fontSize": "24px",
+            "x": 174,
+            "y": 58.390625,
+            "width": 312,
+            "height": 40
+          },
+          {
+            "name": "bottom-source-label",
+            "text": "A Note To Keep",
+            "fontSize": "24px",
+            "x": 840,
+            "y": 692,
+            "width": 240,
+            "height": 40
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "contactlist32",
+      "png": "support-32_contactlist32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1101044,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "contactlist32",
+        "headlineFontSize": "57.6px",
+        "smallestDisplayFontSize": "57.6px",
+        "contrast": 8.44915703003283,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "clean-source-index-plate",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "index-row-1",
+            "text": "01.Misread",
+            "fontSize": "16px",
+            "x": 144,
+            "y": 96,
+            "width": 912,
+            "height": 56
+          },
+          {
+            "name": "index-copy-1",
+            "text": "01.Misread",
+            "fontSize": "57.6px",
+            "x": 473.15625,
+            "y": 97.796875,
+            "width": 253.6875,
+            "height": 52.40625
+          },
+          {
+            "name": "index-row-2",
+            "text": "02.Cayman Island",
+            "fontSize": "16px",
+            "x": 144,
+            "y": 168.796875,
+            "width": 912,
+            "height": 56
+          },
+          {
+            "name": "index-copy-2",
+            "text": "02.Cayman Island",
+            "fontSize": "57.6px",
+            "x": 399.421875,
+            "y": 170.59375,
+            "width": 401.15625,
+            "height": 52.40625
+          },
+          {
+            "name": "index-row-3",
+            "text": "03.Homesick",
+            "fontSize": "16px",
+            "x": 144,
+            "y": 241.59375,
+            "width": 912,
+            "height": 56
+          },
+          {
+            "name": "index-copy-3",
+            "text": "03.Homesick",
+            "fontSize": "57.6px",
+            "x": 455.09375,
+            "y": 243.390625,
+            "width": 289.796875,
+            "height": 52.40625
+          },
+          {
+            "name": "index-row-4",
+            "text": "04.Boat Behind",
+            "fontSize": "16px",
+            "x": 144,
+            "y": 314.390625,
+            "width": 912,
+            "height": 56
+          },
+          {
+            "name": "index-copy-4",
+            "text": "04.Boat Behind",
+            "fontSize": "57.6px",
+            "x": 426.390625,
+            "y": 316.1875,
+            "width": 347.203125,
+            "height": 52.40625
+          },
+          {
+            "name": "index-row-5",
+            "text": "05.Rumours",
+            "fontSize": "16px",
+            "x": 144,
+            "y": 387.1875,
+            "width": 912,
+            "height": 56
+          },
+          {
+            "name": "index-copy-5",
+            "text": "05.Rumours",
+            "fontSize": "57.6px",
+            "x": 459.703125,
+            "y": 388.984375,
+            "width": 280.578125,
+            "height": 52.40625
+          },
+          {
+            "name": "index-row-6",
+            "text": "06.Renegade",
+            "fontSize": "16px",
+            "x": 144,
+            "y": 460,
+            "width": 912,
+            "height": 56
+          },
+          {
+            "name": "index-copy-6",
+            "text": "06.Renegade",
+            "fontSize": "57.6px",
+            "x": 453.859375,
+            "y": 461.796875,
+            "width": 292.265625,
+            "height": 52.40625
+          },
+          {
+            "name": "index-row-7",
+            "text": "07.Summer on",
+            "fontSize": "16px",
+            "x": 144,
+            "y": 532.796875,
+            "width": 912,
+            "height": 56
+          },
+          {
+            "name": "index-copy-7",
+            "text": "07.Summer on",
+            "fontSize": "57.6px",
+            "x": 431.234375,
+            "y": 534.59375,
+            "width": 337.53125,
+            "height": 52.40625
+          },
+          {
+            "name": "index-row-8",
+            "text": "The Westhill",
+            "fontSize": "16px",
+            "x": 144,
+            "y": 605.59375,
+            "width": 912,
+            "height": 56
+          },
+          {
+            "name": "index-copy-8",
+            "text": "The Westhill",
+            "fontSize": "57.6px",
+            "x": 459.265625,
+            "y": 607.390625,
+            "width": 281.453125,
+            "height": 52.40625
+          },
+          {
+            "name": "track-list-tab-label",
+            "text": "Track List",
+            "fontSize": "18px",
+            "x": 966,
+            "y": 679.1875,
+            "width": 136.796875,
+            "height": 28
+          },
+          {
+            "name": "catalogue-number-tab-label",
+            "text": "No. 07",
+            "fontSize": "16.8px",
+            "x": 990,
+            "y": 737.59375,
+            "width": 88.796875,
+            "height": 20.796875
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "sunsetpromise32",
+      "png": "support-33_sunsetpromise32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 3966296,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "sunsetpromise32",
+        "headlineFontSize": "105.877px",
+        "smallestDisplayFontSize": "105.877px",
+        "contrast": 4.275683176694313,
+        "contrastException": {
+          "minimum": 2.5,
+          "rationale": "The source overlays white outlined display lettering on its lavender textured stock."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "source-lavender-floral-stock",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "source-pixel-sunset",
+            "text": "",
+            "fontSize": "16px",
+            "x": 54.71875,
+            "y": 52.515625,
+            "width": 441.890625,
+            "height": 240.390625
+          },
+          {
+            "name": "left-poster-caption",
+            "text": "Field Notes",
+            "fontSize": "14.4px",
+            "x": 702,
+            "y": 84.796875,
+            "width": 192,
+            "height": 46.390625
+          },
+          {
+            "name": "right-poster-caption",
+            "text": "Dusk / 07",
+            "fontSize": "13.6px",
+            "x": 924,
+            "y": 84.796875,
+            "width": 144,
+            "height": 46.390625
+          },
+          {
+            "name": "sunset-headline-row-1",
+            "text": "Every",
+            "fontSize": "16px",
+            "x": 180,
+            "y": 244,
+            "width": 960,
+            "height": 105.59375
+          },
+          {
+            "name": "sunset-headline-1",
+            "text": "Every",
+            "fontSize": "105.877px",
+            "x": 546.515625,
+            "y": 249.15625,
+            "width": 226.96875,
+            "height": 95.28125
+          },
+          {
+            "name": "sunset-headline-row-2",
+            "text": "Sunset Brings",
+            "fontSize": "16px",
+            "x": 180,
+            "y": 350.390625,
+            "width": 960,
+            "height": 124
+          },
+          {
+            "name": "sunset-headline-2",
+            "text": "Sunset Brings",
+            "fontSize": "105.877px",
+            "x": 362.53125,
+            "y": 364.75,
+            "width": 594.9375,
+            "height": 95.28125
+          },
+          {
+            "name": "sunset-headline-row-3",
+            "text": "The Promise Of",
+            "fontSize": "16px",
+            "x": 180,
+            "y": 470.390625,
+            "width": 960,
+            "height": 124
+          },
+          {
+            "name": "sunset-headline-3",
+            "text": "The Promise Of",
+            "fontSize": "105.877px",
+            "x": 332.625,
+            "y": 484.75,
+            "width": 654.75,
+            "height": 95.28125
+          },
+          {
+            "name": "sunset-headline-row-4",
+            "text": "A New Day",
+            "fontSize": "16px",
+            "x": 180,
+            "y": 580,
+            "width": 960,
+            "height": 120
+          },
+          {
+            "name": "sunset-headline-4",
+            "text": "A New Day",
+            "fontSize": "105.877px",
+            "x": 450.875,
+            "y": 592.359375,
+            "width": 418.25,
+            "height": 95.28125
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "phonegarden32",
+      "png": "support-34_phonegarden32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1250016,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "phonegarden32",
+        "headlineFontSize": "120px",
+        "smallestDisplayFontSize": "38.4px",
+        "contrast": 18.14125281838159,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "source-three-phone-plate",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "cleaned-left-screen-area",
+            "text": "",
+            "fontSize": "16px",
+            "x": 111.484375,
+            "y": 466.65625,
+            "width": 187.5,
+            "height": 260.59375
+          },
+          {
+            "name": "source-left-peony",
+            "text": "",
+            "fontSize": "16px",
+            "x": 121.609375,
+            "y": 469.6875,
+            "width": 172.296875,
+            "height": 151.5
+          },
+          {
+            "name": "center-screen-star-cleanup",
+            "text": "",
+            "fontSize": "16px",
+            "x": 618,
+            "y": 92,
+            "width": 120,
+            "height": 120
+          },
+          {
+            "name": "left-screen-star-cleanup",
+            "text": "",
+            "fontSize": "16px",
+            "x": 167.6015625,
+            "y": 147.1953125,
+            "width": 60.796875,
+            "height": 60.796875
+          },
+          {
+            "name": "left-screen-outline-dot",
+            "text": "",
+            "fontSize": "16px",
+            "x": 193.25,
+            "y": 600.671875,
+            "width": 6.71875,
+            "height": 6.71875
+          },
+          {
+            "name": "left-neutral-side-caption",
+            "text": "Field Notes",
+            "fontSize": "16px",
+            "x": 395.1875,
+            "y": 365.015625,
+            "width": 16,
+            "height": 77.96875
+          },
+          {
+            "name": "right-neutral-side-caption",
+            "text": "Flora / 08",
+            "fontSize": "15.2px",
+            "x": 790.3984375,
+            "y": 372.8125,
+            "width": 15.203125,
+            "height": 62.375
+          },
+          {
+            "name": "left-lockup-row-1",
+            "text": "Covent",
+            "fontSize": "16px",
+            "x": 72,
+            "y": 232,
+            "width": 270,
+            "height": 80
+          },
+          {
+            "name": "left-lockup-line-1",
+            "text": "Covent",
+            "fontSize": "69.0712px",
+            "x": 125.078125,
+            "y": 240.921875,
+            "width": 163.828125,
+            "height": 62.15625
+          },
+          {
+            "name": "left-lockup-row-2",
+            "text": "Garden",
+            "fontSize": "16px",
+            "x": 72,
+            "y": 344,
+            "width": 270,
+            "height": 80
+          },
+          {
+            "name": "left-lockup-line-2",
+            "text": "Garden",
+            "fontSize": "69.0712px",
+            "x": 111.140625,
+            "y": 352.921875,
+            "width": 191.71875,
+            "height": 62.15625
+          },
+          {
+            "name": "left-footer-row-1",
+            "text": "Covent",
+            "fontSize": "16px",
+            "x": 66,
+            "y": 616,
+            "width": 276,
+            "height": 44
+          },
+          {
+            "name": "left-footer-line-1",
+            "text": "Covent",
+            "fontSize": "43.3073px",
+            "x": 152.640625,
+            "y": 618.515625,
+            "width": 102.703125,
+            "height": 38.96875
+          },
+          {
+            "name": "left-footer-row-2",
+            "text": "Garden",
+            "fontSize": "16px",
+            "x": 66,
+            "y": 680,
+            "width": 276,
+            "height": 44
+          },
+          {
+            "name": "left-footer-line-2",
+            "text": "Garden",
+            "fontSize": "43.3073px",
+            "x": 143.890625,
+            "y": 682.515625,
+            "width": 120.203125,
+            "height": 38.96875
+          },
+          {
+            "name": "center-lockup-line-1",
+            "text": "Covent",
+            "fontSize": "120px",
+            "x": 444,
+            "y": 261.6953125,
+            "width": 108,
+            "height": 284.609375
+          },
+          {
+            "name": "center-lockup-line-2",
+            "text": "Garden",
+            "fontSize": "120px",
+            "x": 627.59375,
+            "y": 237.4609375,
+            "width": 108,
+            "height": 333.078125
+          },
+          {
+            "name": "right-heading-row-1",
+            "text": "Covent",
+            "fontSize": "38.4px",
+            "x": 858,
+            "y": 120,
+            "width": 306,
+            "height": 41.59375
+          },
+          {
+            "name": "right-heading-line-1",
+            "text": "Covent",
+            "fontSize": "38.4px",
+            "x": 966.0625,
+            "y": 123.515625,
+            "width": 89.875,
+            "height": 34.5625
+          },
+          {
+            "name": "right-heading-row-2",
+            "text": "Garden",
+            "fontSize": "38.4px",
+            "x": 858,
+            "y": 180,
+            "width": 306,
+            "height": 41.59375
+          },
+          {
+            "name": "right-heading-line-2",
+            "text": "Garden",
+            "fontSize": "38.4px",
+            "x": 958.3125,
+            "y": 183.515625,
+            "width": 105.375,
+            "height": 34.5625
+          },
+          {
+            "name": "right-message-row-1",
+            "text": "Timeless",
+            "fontSize": "41.6px",
+            "x": 858,
+            "y": 480,
+            "width": 306,
+            "height": 52.796875
+          },
+          {
+            "name": "right-message-line-1",
+            "text": "Timeless",
+            "fontSize": "41.6px",
+            "x": 937.6875,
+            "y": 487.671875,
+            "width": 146.609375,
+            "height": 37.421875
+          },
+          {
+            "name": "right-message-row-2",
+            "text": "Charm,",
+            "fontSize": "41.6px",
+            "x": 858,
+            "y": 538.390625,
+            "width": 306,
+            "height": 52.796875
+          },
+          {
+            "name": "right-message-line-2",
+            "text": "Charm,",
+            "fontSize": "41.6px",
+            "x": 952.25,
+            "y": 546.0625,
+            "width": 117.5,
+            "height": 37.421875
+          },
+          {
+            "name": "right-message-row-3",
+            "text": "Rooted In",
+            "fontSize": "41.6px",
+            "x": 858,
+            "y": 596.796875,
+            "width": 306,
+            "height": 52.796875
+          },
+          {
+            "name": "right-message-line-3",
+            "text": "Rooted In",
+            "fontSize": "41.6px",
+            "x": 935.640625,
+            "y": 604.46875,
+            "width": 150.71875,
+            "height": 37.421875
+          },
+          {
+            "name": "right-message-row-4",
+            "text": "Grace.",
+            "fontSize": "41.6px",
+            "x": 858,
+            "y": 655.1875,
+            "width": 306,
+            "height": 52.796875
+          },
+          {
+            "name": "right-message-line-4",
+            "text": "Grace.",
+            "fontSize": "41.6px",
+            "x": 958.5,
+            "y": 662.859375,
+            "width": 104.984375,
+            "height": 37.421875
+          },
+          {
+            "name": "left-lockup-star",
+            "text": "",
+            "fontSize": "16px",
+            "x": 178,
+            "y": 157.59375,
+            "width": 40,
+            "height": 40
+          },
+          {
+            "name": "center-lockup-star",
+            "text": "",
+            "fontSize": "16px",
+            "x": 628.390625,
+            "y": 102.390625,
+            "width": 99.1875,
+            "height": 99.1875
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "pixelquote32",
+      "png": "support-35_pixelquote32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 115126,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "pixelquote32",
+        "headlineFontSize": "105.886px",
+        "smallestDisplayFontSize": "105.886px",
+        "contrast": 6.210999183553991,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "pixel-stitches-top",
+            "text": "",
+            "fontSize": "16px",
+            "x": 901,
+            "y": 49.484375,
+            "width": 238.171875,
+            "height": 26.25
+          },
+          {
+            "name": "pixel-stitches-bottom",
+            "text": "",
+            "fontSize": "16px",
+            "x": 67.890625,
+            "y": 727.265625,
+            "width": 237.15625,
+            "height": 26.25
+          },
+          {
+            "name": "pixel-heart",
+            "text": "",
+            "fontSize": "16px",
+            "x": 501.6875,
+            "y": 96.96875,
+            "width": 49.65625,
+            "height": 41.40625
+          },
+          {
+            "name": "pixel-mascot",
+            "text": "",
+            "fontSize": "16px",
+            "x": 345.59375,
+            "y": 695.953125,
+            "width": 63.84375,
+            "height": 57.5625
+          },
+          {
+            "name": "quote-row-1",
+            "text": "A Little",
+            "fontSize": "16px",
+            "x": 336,
+            "y": 135.1875,
+            "width": 528,
+            "height": 105.59375
+          },
+          {
+            "name": "quote-line-1",
+            "text": "A Little",
+            "fontSize": "105.886px",
+            "x": 459.765625,
+            "y": 141.390625,
+            "width": 280.46875,
+            "height": 93.171875
+          },
+          {
+            "name": "quote-row-2",
+            "text": "Nonsense",
+            "fontSize": "16px",
+            "x": 324,
+            "y": 241.59375,
+            "width": 552,
+            "height": 105.59375
+          },
+          {
+            "name": "quote-line-2",
+            "text": "Nonsense",
+            "fontSize": "105.886px",
+            "x": 397.875,
+            "y": 247.796875,
+            "width": 404.234375,
+            "height": 93.171875
+          },
+          {
+            "name": "quote-row-3",
+            "text": "Now & Then",
+            "fontSize": "16px",
+            "x": 240,
+            "y": 348,
+            "width": 720,
+            "height": 105.59375
+          },
+          {
+            "name": "quote-line-3",
+            "text": "Now & Then",
+            "fontSize": "105.886px",
+            "x": 345.953125,
+            "y": 354.203125,
+            "width": 508.09375,
+            "height": 93.171875
+          },
+          {
+            "name": "quote-row-4",
+            "text": "Is Relished By",
+            "fontSize": "16px",
+            "x": 204,
+            "y": 456,
+            "width": 792,
+            "height": 105.59375
+          },
+          {
+            "name": "quote-line-4",
+            "text": "Is Relished By",
+            "fontSize": "105.886px",
+            "x": 308.78125,
+            "y": 462.203125,
+            "width": 582.421875,
+            "height": 93.171875
+          },
+          {
+            "name": "quote-row-5",
+            "text": "The Wisest Man",
+            "fontSize": "16px",
+            "x": 168,
+            "y": 576,
+            "width": 888,
+            "height": 105.59375
+          },
+          {
+            "name": "quote-line-5",
+            "text": "The Wisest Man",
+            "fontSize": "105.886px",
+            "x": 277.859375,
+            "y": 582.203125,
+            "width": 668.28125,
+            "height": 93.171875
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "ravencover32",
+      "png": "support-36_ravencover32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 4142519,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "ravencover32",
+        "headlineFontSize": "165px",
+        "smallestDisplayFontSize": "165px",
+        "contrast": 9.765870985713226,
+        "contrastException": {
+          "minimum": 3,
+          "rationale": "The cover type sits directly over a variable red-tailoring photograph under the source-matched veil."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "clean-tailoring-photo",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "photo-veil",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "top-cover-rule",
+            "text": "",
+            "fontSize": "16px",
+            "x": 30,
+            "y": 24,
+            "width": 1140,
+            "height": 1
+          },
+          {
+            "name": "bottom-cover-rule",
+            "text": "",
+            "fontSize": "16px",
+            "x": 30,
+            "y": 748,
+            "width": 1140,
+            "height": 1
+          },
+          {
+            "name": "oval-issue-mark",
+            "text": "",
+            "fontSize": "16px",
+            "x": 486,
+            "y": 46.390625,
+            "width": 228,
+            "height": 86.390625
+          },
+          {
+            "name": "cover-masthead-row",
+            "text": "Present By",
+            "fontSize": "16px",
+            "x": 506.515625,
+            "y": 68.875,
+            "width": 186.953125,
+            "height": 21.59375
+          },
+          {
+            "name": "cover-masthead",
+            "text": "Present By",
+            "fontSize": "10px",
+            "x": 578.140625,
+            "y": 74.671875,
+            "width": 43.6875,
+            "height": 10
+          },
+          {
+            "name": "cover-issue-row",
+            "text": "Muksal Creative",
+            "fontSize": "16px",
+            "x": 506.515625,
+            "y": 92.15625,
+            "width": 186.953125,
+            "height": 20.796875
+          },
+          {
+            "name": "cover-issue",
+            "text": "Muksal Creative",
+            "fontSize": "9px",
+            "x": 568.53125,
+            "y": 98.046875,
+            "width": 62.890625,
+            "height": 9
+          },
+          {
+            "name": "cover-subtitle-row",
+            "text": "Modern Serif Display Font",
+            "fontSize": "16px",
+            "x": 96,
+            "y": 580,
+            "width": 1008,
+            "height": 48
+          },
+          {
+            "name": "cover-subtitle",
+            "text": "Modern Serif Display Font",
+            "fontSize": "18.5px",
+            "x": 484.34375,
+            "y": 594.75,
+            "width": 231.296875,
+            "height": 18.5
+          },
+          {
+            "name": "cover-details-row",
+            "text": "Regular & Italic Font",
+            "fontSize": "16px",
+            "x": 96,
+            "y": 648,
+            "width": 1008,
+            "height": 44
+          },
+          {
+            "name": "cover-details",
+            "text": "Regular & Italic Font",
+            "fontSize": "14.5px",
+            "x": 525.265625,
+            "y": 662.75,
+            "width": 149.46875,
+            "height": 14.5
+          },
+          {
+            "name": "cover-headline-row",
+            "text": "Raven Court",
+            "fontSize": "16px",
+            "x": 90,
+            "y": 292,
+            "width": 1020,
+            "height": 188
+          },
+          {
+            "name": "cover-headline",
+            "text": "Raven Court",
+            "fontSize": "165px",
+            "x": 222.59375,
+            "y": 311.75,
+            "width": 754.8125,
+            "height": 148.5
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "voguecover32",
+      "png": "support-37_voguecover32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 979099,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "voguecover32",
+        "headlineFontSize": "248px",
+        "smallestDisplayFontSize": "23.8616px",
+        "contrast": 17.616230271426456,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "illustrated-portrait",
+            "text": "",
+            "fontSize": "16px",
+            "x": 180,
+            "y": 20,
+            "width": 840,
+            "height": 752
+          },
+          {
+            "name": "cover-masthead",
+            "text": "Vogue",
+            "fontSize": "248px",
+            "x": 329.078125,
+            "y": 26.390625,
+            "width": 541.84375,
+            "height": 198.390625
+          },
+          {
+            "name": "cover-issue-1",
+            "text": "March",
+            "fontSize": "12.8px",
+            "x": 44.390625,
+            "y": 232.796875,
+            "width": 40.09375,
+            "height": 12.796875
+          },
+          {
+            "name": "cover-issue-2",
+            "text": "Issue",
+            "fontSize": "12.8px",
+            "x": 44.390625,
+            "y": 247.1875,
+            "width": 33.90625,
+            "height": 12.796875
+          },
+          {
+            "name": "cover-submast",
+            "text": "Japan",
+            "fontSize": "44.8px",
+            "x": 1038.6875,
+            "y": 241.59375,
+            "width": 113.3125,
+            "height": 42.09375
+          },
+          {
+            "name": "left-kicker",
+            "text": "Discover",
+            "fontSize": "67.2692px",
+            "x": 45.59375,
+            "y": 284,
+            "width": 220.84375,
+            "height": 57.84375
+          },
+          {
+            "name": "left-story-1",
+            "text": "The New",
+            "fontSize": "44px",
+            "x": 48,
+            "y": 348.796875,
+            "width": 180.25,
+            "height": 46.1875
+          },
+          {
+            "name": "left-story-2",
+            "text": "Street Fashion",
+            "fontSize": "44px",
+            "x": 48,
+            "y": 408.796875,
+            "width": 289.421875,
+            "height": 46.1875
+          },
+          {
+            "name": "left-story-3",
+            "text": "Trends From",
+            "fontSize": "44px",
+            "x": 48,
+            "y": 468.796875,
+            "width": 264.21875,
+            "height": 46.1875
+          },
+          {
+            "name": "accent-destination",
+            "text": "Tokyo",
+            "fontSize": "56.802px",
+            "x": 45.59375,
+            "y": 536,
+            "width": 152.28125,
+            "height": 52.25
+          },
+          {
+            "name": "lower-kicker",
+            "text": "Reina Sato",
+            "fontSize": "42.1602px",
+            "x": 45.59375,
+            "y": 600,
+            "width": 170.109375,
+            "height": 36.25
+          },
+          {
+            "name": "lower-story-1",
+            "text": "Shows You How",
+            "fontSize": "23.8616px",
+            "x": 48,
+            "y": 652.796875,
+            "width": 177.953125,
+            "height": 25.046875
+          },
+          {
+            "name": "lower-story-2",
+            "text": "To Take The",
+            "fontSize": "23.8616px",
+            "x": 48,
+            "y": 680,
+            "width": 133.125,
+            "height": 25.046875
+          },
+          {
+            "name": "lower-story-3",
+            "text": "Perfect Selfie",
+            "fontSize": "23.8616px",
+            "x": 48,
+            "y": 707.1875,
+            "width": 145.328125,
+            "height": 25.046875
+          },
+          {
+            "name": "feature-title-1",
+            "text": "Sakura",
+            "fontSize": "84px",
+            "x": 917.953125,
+            "y": 408,
+            "width": 230.453125,
+            "height": 72.234375
+          },
+          {
+            "name": "feature-title-2",
+            "text": "Yamaguchi",
+            "fontSize": "84px",
+            "x": 798.4375,
+            "y": 512,
+            "width": 349.96875,
+            "height": 72.234375
+          },
+          {
+            "name": "feature-note-1",
+            "text": "The Making Of",
+            "fontSize": "27.6711px",
+            "x": 947.703125,
+            "y": 608,
+            "width": 198.296875,
+            "height": 29.046875
+          },
+          {
+            "name": "feature-note-2",
+            "text": "Asia's Next",
+            "fontSize": "27.6711px",
+            "x": 998.5625,
+            "y": 642.390625,
+            "width": 147.4375,
+            "height": 29.046875
+          },
+          {
+            "name": "feature-note-3",
+            "text": "Top Model",
+            "fontSize": "27.6711px",
+            "x": 1004.609375,
+            "y": 676.796875,
+            "width": 141.390625,
+            "height": 29.046875
+          },
+          {
+            "name": "cover-footer-lead",
+            "text": "Follow Us On Social Media",
+            "fontSize": "15.2px",
+            "x": 947.109375,
+            "y": 748.796875,
+            "width": 198.890625,
+            "height": 15.203125
+          },
+          {
+            "name": "cover-footer-note",
+            "text": "Facebook / Instagram / TikTok",
+            "fontSize": "13.6px",
+            "x": 940.703125,
+            "y": 776,
+            "width": 205.296875,
+            "height": 13.59375
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "confident32",
+      "png": "support-38_confident32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1063280,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "confident32",
+        "headlineFontSize": "164px",
+        "smallestDisplayFontSize": "164px",
+        "contrast": 4.864720544128564,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "source-eye-crop-frame",
+            "text": "",
+            "fontSize": "16px",
+            "x": 55.1875,
+            "y": 400,
+            "width": 1089.59375,
+            "height": 350.390625
+          },
+          {
+            "name": "poster-frame",
+            "text": "",
+            "fontSize": "16px",
+            "x": 54,
+            "y": 44,
+            "width": 1092,
+            "height": 712
+          },
+          {
+            "name": "divider-rule-left",
+            "text": "",
+            "fontSize": "16px",
+            "x": 54,
+            "y": 352,
+            "width": 504,
+            "height": 1
+          },
+          {
+            "name": "divider-rule-right",
+            "text": "",
+            "fontSize": "16px",
+            "x": 642,
+            "y": 352,
+            "width": 504,
+            "height": 1
+          },
+          {
+            "name": "center-star-divider",
+            "text": "",
+            "fontSize": "16px",
+            "x": 558,
+            "y": 328,
+            "width": 84,
+            "height": 48
+          },
+          {
+            "name": "poster-overline-row",
+            "text": "Keep Looking",
+            "fontSize": "16px",
+            "x": 72,
+            "y": 56,
+            "width": 672,
+            "height": 60
+          },
+          {
+            "name": "poster-overline",
+            "text": "Keep Looking",
+            "fontSize": "44.8px",
+            "x": 72,
+            "y": 63.59375,
+            "width": 266.15625,
+            "height": 44.796875
+          },
+          {
+            "name": "poster-tag-row",
+            "text": "Elthia Typeface",
+            "fontSize": "16px",
+            "x": 864,
+            "y": 56,
+            "width": 252,
+            "height": 60
+          },
+          {
+            "name": "poster-tag",
+            "text": "Elthia Typeface",
+            "fontSize": "20px",
+            "x": 994.890625,
+            "y": 76,
+            "width": 121.109375,
+            "height": 20
+          },
+          {
+            "name": "headline-row",
+            "text": "Confident",
+            "fontSize": "16px",
+            "x": 66,
+            "y": 124,
+            "width": 1068,
+            "height": 156
+          },
+          {
+            "name": "confidence-headline",
+            "text": "Confident",
+            "fontSize": "164px",
+            "x": 66,
+            "y": 129.84375,
+            "width": 564.265625,
+            "height": 144.3125
+          },
+          {
+            "name": "tagline-left-row",
+            "text": "Even When",
+            "fontSize": "16px",
+            "x": 72,
+            "y": 284,
+            "width": 468,
+            "height": 52
+          },
+          {
+            "name": "tagline-left",
+            "text": "Even When",
+            "fontSize": "30.4px",
+            "x": 72,
+            "y": 295.5625,
+            "width": 127.546875,
+            "height": 28.875
+          },
+          {
+            "name": "tagline-right-row",
+            "text": "Doubt Looks Back",
+            "fontSize": "16px",
+            "x": 588,
+            "y": 284,
+            "width": 540,
+            "height": 52
+          },
+          {
+            "name": "tagline-right",
+            "text": "Doubt Looks Back",
+            "fontSize": "30.4px",
+            "x": 913.953125,
+            "y": 295.5625,
+            "width": 214.046875,
+            "height": 28.875
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "storyteller32",
+      "png": "support-39_storyteller32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1069715,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "storyteller32",
+        "headlineFontSize": "68.4922px",
+        "smallestDisplayFontSize": "47.0547px",
+        "contrast": 18.095217588675624,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "story-title-1",
+            "text": "Typography",
+            "fontSize": "68.4922px",
+            "x": 44.390625,
+            "y": 20,
+            "width": 726,
+            "height": 72.59375
+          },
+          {
+            "name": "story-title-2",
+            "text": "Is The Silent",
+            "fontSize": "68.4922px",
+            "x": 44.390625,
+            "y": 111.796875,
+            "width": 726,
+            "height": 72.59375
+          },
+          {
+            "name": "story-title-3",
+            "text": "Story Teller",
+            "fontSize": "68.4922px",
+            "x": 44.390625,
+            "y": 203.59375,
+            "width": 726,
+            "height": 72.59375
+          },
+          {
+            "name": "story-title-4",
+            "text": "Of Design.",
+            "fontSize": "68.4922px",
+            "x": 44.390625,
+            "y": 295.390625,
+            "width": 726,
+            "height": 72.59375
+          },
+          {
+            "name": "story-hands-strip",
+            "text": "",
+            "fontSize": "16px",
+            "x": 44.390625,
+            "y": 402.390625,
+            "width": 714,
+            "height": 81.59375
+          },
+          {
+            "name": "story-copy-1",
+            "text": "Its Curves And Lines",
+            "fontSize": "47.0547px",
+            "x": 44.390625,
+            "y": 500,
+            "width": 726,
+            "height": 49.796875
+          },
+          {
+            "name": "story-copy-2",
+            "text": "Shape Meaning",
+            "fontSize": "47.0547px",
+            "x": 44.390625,
+            "y": 567.390625,
+            "width": 726,
+            "height": 49.796875
+          },
+          {
+            "name": "story-copy-3",
+            "text": "Before Words",
+            "fontSize": "47.0547px",
+            "x": 44.390625,
+            "y": 634.796875,
+            "width": 726,
+            "height": 49.796875
+          },
+          {
+            "name": "story-copy-4",
+            "text": "Are Read.",
+            "fontSize": "47.0547px",
+            "x": 44.390625,
+            "y": 702.1875,
+            "width": 726,
+            "height": 49.796875
+          },
+          {
+            "name": "story-artist-illustration",
+            "text": "",
+            "fontSize": "16px",
+            "x": 771.59375,
+            "y": 34.390625,
+            "width": 382.796875,
+            "height": 724.796875
+          },
+          {
+            "name": "story-edition-mark",
+            "text": "Editorial Study  /  05",
+            "fontSize": "11.6px",
+            "x": 44.390625,
+            "y": 768,
+            "width": 127.484375,
+            "height": 11.59375
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "focusposter32",
+      "png": "support-40_focusposter32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1086229,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "focusposter32",
+        "headlineFontSize": "180px",
+        "smallestDisplayFontSize": "180px",
+        "contrast": 4.296407655059233,
+        "contrastException": {
+          "minimum": 3,
+          "rationale": "The oversized red headline and red quote columns preserve the source poster's ink over its lightened portrait."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "soft-focus-portrait",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "framed-eye-detail",
+            "text": "",
+            "fontSize": "16px",
+            "x": 270.59375,
+            "y": 140.796875,
+            "width": 363.59375,
+            "height": 121.59375
+          },
+          {
+            "name": "headline-row",
+            "text": "Focused",
+            "fontSize": "16px",
+            "x": 42,
+            "y": 338.390625,
+            "width": 1116,
+            "height": 172
+          },
+          {
+            "name": "headline",
+            "text": "Focused",
+            "fontSize": "180px",
+            "x": 321.109375,
+            "y": 346.984375,
+            "width": 557.78125,
+            "height": 154.796875
+          },
+          {
+            "name": "leftQuote-1-row",
+            "text": "Staying",
+            "fontSize": "16px",
+            "x": 42,
+            "y": 520.796875,
+            "width": 234,
+            "height": 42.390625
+          },
+          {
+            "name": "leftQuote-1",
+            "text": "Staying",
+            "fontSize": "38.4086px",
+            "x": 42,
+            "y": 524.328125,
+            "width": 106.1875,
+            "height": 35.328125
+          },
+          {
+            "name": "leftQuote-2-row",
+            "text": "Avoiding",
+            "fontSize": "16px",
+            "x": 42,
+            "y": 572,
+            "width": 234,
+            "height": 42.390625
+          },
+          {
+            "name": "leftQuote-2",
+            "text": "Avoiding",
+            "fontSize": "38.4086px",
+            "x": 42,
+            "y": 575.53125,
+            "width": 121.390625,
+            "height": 35.328125
+          },
+          {
+            "name": "leftQuote-3-row",
+            "text": "About",
+            "fontSize": "16px",
+            "x": 42,
+            "y": 623.1875,
+            "width": 234,
+            "height": 42.390625
+          },
+          {
+            "name": "leftQuote-3",
+            "text": "About",
+            "fontSize": "38.4086px",
+            "x": 42,
+            "y": 626.71875,
+            "width": 83.359375,
+            "height": 35.328125
+          },
+          {
+            "name": "leftQuote-4-row",
+            "text": "That",
+            "fontSize": "16px",
+            "x": 42,
+            "y": 674.390625,
+            "width": 234,
+            "height": 42.390625
+          },
+          {
+            "name": "leftQuote-4",
+            "text": "That",
+            "fontSize": "38.4086px",
+            "x": 42,
+            "y": 677.921875,
+            "width": 67,
+            "height": 35.328125
+          },
+          {
+            "name": "leftQuote-5-row",
+            "text": "Your",
+            "fontSize": "16px",
+            "x": 42,
+            "y": 725.59375,
+            "width": 234,
+            "height": 42.390625
+          },
+          {
+            "name": "leftQuote-5",
+            "text": "Your",
+            "fontSize": "38.4086px",
+            "x": 42,
+            "y": 729.125,
+            "width": 71.375,
+            "height": 35.328125
+          },
+          {
+            "name": "innerQuote-1-row",
+            "text": "Focused",
+            "fontSize": "16px",
+            "x": 318,
+            "y": 535.1875,
+            "width": 330,
+            "height": 42.390625
+          },
+          {
+            "name": "innerQuote-1",
+            "text": "Focused",
+            "fontSize": "38.4086px",
+            "x": 318,
+            "y": 538.71875,
+            "width": 123.546875,
+            "height": 35.328125
+          },
+          {
+            "name": "innerQuote-2-row",
+            "text": "Distractions,",
+            "fontSize": "16px",
+            "x": 318,
+            "y": 586.390625,
+            "width": 330,
+            "height": 42.390625
+          },
+          {
+            "name": "innerQuote-2",
+            "text": "Distractions,",
+            "fontSize": "38.4086px",
+            "x": 318,
+            "y": 589.921875,
+            "width": 194.90625,
+            "height": 35.328125
+          },
+          {
+            "name": "innerQuote-3-row",
+            "text": "Embracing",
+            "fontSize": "16px",
+            "x": 318,
+            "y": 637.59375,
+            "width": 330,
+            "height": 42.390625
+          },
+          {
+            "name": "innerQuote-3",
+            "text": "Embracing",
+            "fontSize": "38.4086px",
+            "x": 318,
+            "y": 641.125,
+            "width": 165.8125,
+            "height": 35.328125
+          },
+          {
+            "name": "innerQuote-4-row",
+            "text": "Comes From",
+            "fontSize": "16px",
+            "x": 318,
+            "y": 688.796875,
+            "width": 330,
+            "height": 42.390625
+          },
+          {
+            "name": "innerQuote-4",
+            "text": "Comes From",
+            "fontSize": "38.4086px",
+            "x": 318,
+            "y": 692.328125,
+            "width": 190.15625,
+            "height": 35.328125
+          },
+          {
+            "name": "innerQuote-5-row",
+            "text": "Truest",
+            "fontSize": "16px",
+            "x": 318,
+            "y": 740,
+            "width": 330,
+            "height": 42.390625
+          },
+          {
+            "name": "innerQuote-5",
+            "text": "Truest",
+            "fontSize": "38.4086px",
+            "x": 318,
+            "y": 743.53125,
+            "width": 101.46875,
+            "height": 35.328125
+          },
+          {
+            "name": "isQuote-1-row",
+            "text": "Is",
+            "fontSize": "16px",
+            "x": 669.59375,
+            "y": 564.796875,
+            "width": 86.390625,
+            "height": 42.390625
+          },
+          {
+            "name": "isQuote-1",
+            "text": "Is",
+            "fontSize": "38.4086px",
+            "x": 669.59375,
+            "y": 568.328125,
+            "width": 27.265625,
+            "height": 35.328125
+          },
+          {
+            "name": "notQuote-1-row",
+            "text": "Not",
+            "fontSize": "16px",
+            "x": 823.1875,
+            "y": 542.390625,
+            "width": 134.390625,
+            "height": 42.390625
+          },
+          {
+            "name": "notQuote-1",
+            "text": "Not",
+            "fontSize": "38.4086px",
+            "x": 823.1875,
+            "y": 545.921875,
+            "width": 48.15625,
+            "height": 35.328125
+          },
+          {
+            "name": "notQuote-2-row",
+            "text": "But",
+            "fontSize": "16px",
+            "x": 823.1875,
+            "y": 593.59375,
+            "width": 134.390625,
+            "height": 42.390625
+          },
+          {
+            "name": "notQuote-2",
+            "text": "But",
+            "fontSize": "38.4086px",
+            "x": 823.1875,
+            "y": 597.125,
+            "width": 48.921875,
+            "height": 35.328125
+          },
+          {
+            "name": "notQuote-3-row",
+            "text": "The",
+            "fontSize": "16px",
+            "x": 823.1875,
+            "y": 644.796875,
+            "width": 134.390625,
+            "height": 42.390625
+          },
+          {
+            "name": "notQuote-3",
+            "text": "The",
+            "fontSize": "38.4086px",
+            "x": 823.1875,
+            "y": 648.328125,
+            "width": 55.4375,
+            "height": 35.328125
+          },
+          {
+            "name": "outerQuote-1-row",
+            "text": "About",
+            "fontSize": "16px",
+            "x": 980.390625,
+            "y": 528.796875,
+            "width": 196.796875,
+            "height": 42.390625
+          },
+          {
+            "name": "outerQuote-1",
+            "text": "About",
+            "fontSize": "38.4086px",
+            "x": 980.390625,
+            "y": 532.328125,
+            "width": 83.359375,
+            "height": 35.328125
+          },
+          {
+            "name": "outerQuote-2-row",
+            "text": "Clarity",
+            "fontSize": "16px",
+            "x": 980.390625,
+            "y": 580,
+            "width": 196.796875,
+            "height": 42.390625
+          },
+          {
+            "name": "outerQuote-2",
+            "text": "Clarity",
+            "fontSize": "38.4086px",
+            "x": 980.390625,
+            "y": 583.53125,
+            "width": 97.671875,
+            "height": 35.328125
+          },
+          {
+            "name": "outerQuote-3-row",
+            "text": "Pursuing",
+            "fontSize": "16px",
+            "x": 980.390625,
+            "y": 631.1875,
+            "width": 196.796875,
+            "height": 42.390625
+          },
+          {
+            "name": "outerQuote-3",
+            "text": "Pursuing",
+            "fontSize": "38.4086px",
+            "x": 980.390625,
+            "y": 634.71875,
+            "width": 139.484375,
+            "height": 35.328125
+          },
+          {
+            "name": "outerQuote-4-row",
+            "text": "Intentions.",
+            "fontSize": "16px",
+            "x": 980.390625,
+            "y": 682.390625,
+            "width": 196.796875,
+            "height": 42.390625
+          },
+          {
+            "name": "outerQuote-4",
+            "text": "Intentions.",
+            "fontSize": "38.4086px",
+            "x": 980.390625,
+            "y": 685.921875,
+            "width": 158.21875,
+            "height": 35.328125
+          },
+          {
+            "name": "edge-note-keep",
+            "text": "Keep",
+            "fontSize": "16px",
+            "x": 58.390625,
+            "y": 5.1875,
+            "width": 17.59375,
+            "height": 69.59375
+          },
+          {
+            "name": "edge-note-forward",
+            "text": "Forward",
+            "fontSize": "16px",
+            "x": 40.390625,
+            "y": 25.59375,
+            "width": 17.59375,
+            "height": 96
+          },
+          {
+            "name": "edge-note-moving",
+            "text": "Moving",
+            "fontSize": "16px",
+            "x": 58.390625,
+            "y": 63.984375,
+            "width": 17.59375,
+            "height": 96
+          },
+          {
+            "name": "edge-note-stay",
+            "text": "Stay",
+            "fontSize": "16px",
+            "x": 40.3984375,
+            "y": 103.7890625,
+            "width": 17.59375,
+            "height": 56.390625
+          },
+          {
+            "name": "edge-note-focused",
+            "text": "Focused",
+            "fontSize": "16px",
+            "x": 52.390625,
+            "y": 172.390625,
+            "width": 17.59375,
+            "height": 93.59375
+          },
+          {
+            "name": "edge-note-design",
+            "text": "Design",
+            "fontSize": "16px",
+            "x": 1138.390625,
+            "y": 15.796875,
+            "width": 17.59375,
+            "height": 66
+          },
+          {
+            "name": "edge-note-word",
+            "text": "Word",
+            "fontSize": "16px",
+            "x": 1120.390625,
+            "y": 44.390625,
+            "width": 17.59375,
+            "height": 55.1875
+          },
+          {
+            "name": "edge-note-concept",
+            "text": "Concept",
+            "fontSize": "16px",
+            "x": 1139.59375,
+            "y": 70.796875,
+            "width": 17.59375,
+            "height": 103.1875
+          },
+          {
+            "name": "edge-note-art",
+            "text": "Art",
+            "fontSize": "16px",
+            "x": 1120.390625,
+            "y": 124.59375,
+            "width": 17.59375,
+            "height": 42
+          },
+          {
+            "name": "edge-note-for",
+            "text": "For",
+            "fontSize": "16px",
+            "x": 1133.6015625,
+            "y": 203.3984375,
+            "width": 17.59375,
+            "height": 34.796875
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "wideclaim32",
+      "png": "support-41_wideclaim32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 100985,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "wideclaim32",
+        "headlineFontSize": "248.286px",
+        "smallestDisplayFontSize": "104px",
+        "contrast": 4.296407655059233,
+        "contrastException": {
+          "minimum": 3,
+          "rationale": "The red specimen letters preserve the source poster's oversized red-on-white type treatment."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "opening-statement-row",
+            "text": "A Typeface Is",
+            "fontSize": "16px",
+            "x": 40.796875,
+            "y": 28.796875,
+            "width": 1118.390625,
+            "height": 137.59375
+          },
+          {
+            "name": "opening-statement",
+            "text": "A Typeface Is",
+            "fontSize": "124px",
+            "x": 299.3125,
+            "y": 43.03125,
+            "width": 601.359375,
+            "height": 109.109375
+          },
+          {
+            "name": "second-statement-row",
+            "text": "A Visual Voice",
+            "fontSize": "16px",
+            "x": 40.796875,
+            "y": 173.59375,
+            "width": 1118.390625,
+            "height": 110.390625
+          },
+          {
+            "name": "second-statement",
+            "text": "A Visual Voice",
+            "fontSize": "104px",
+            "x": 337.875,
+            "y": 183.03125,
+            "width": 524.21875,
+            "height": 91.515625
+          },
+          {
+            "name": "display-word-one-row",
+            "text": "Wide",
+            "fontSize": "16px",
+            "x": 42,
+            "y": 284,
+            "width": 1116,
+            "height": 248
+          },
+          {
+            "name": "display-word-one",
+            "text": "Wide",
+            "fontSize": "248.286px",
+            "x": 387.59375,
+            "y": 298.75,
+            "width": 424.796875,
+            "height": 218.484375
+          },
+          {
+            "name": "display-word-two-row",
+            "text": "Serif",
+            "fontSize": "16px",
+            "x": 45.59375,
+            "y": 548,
+            "width": 1108.796875,
+            "height": 232
+          },
+          {
+            "name": "display-word-two",
+            "text": "Serif",
+            "fontSize": "232.289px",
+            "x": 398.9375,
+            "y": 561.796875,
+            "width": 402.09375,
+            "height": 204.40625
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "blossom32",
+      "png": "support-42_blossom32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1295912,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "blossom32",
+        "headlineFontSize": "88.012px",
+        "smallestDisplayFontSize": "88.012px",
+        "contrast": 5.79707602834315,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "kicker",
+            "text": "A Retreat For The Senses",
+            "fontSize": "24.8px",
+            "x": 78,
+            "y": 84,
+            "width": 600,
+            "height": 40
+          },
+          {
+            "name": "headline",
+            "text": "BloomInto Calm",
+            "fontSize": "16px",
+            "x": 66,
+            "y": 176,
+            "width": 636,
+            "height": 188
+          },
+          {
+            "name": "headline-line-1",
+            "text": "Bloom",
+            "fontSize": "88.012px",
+            "x": 66,
+            "y": 176,
+            "width": 636,
+            "height": 79.203125
+          },
+          {
+            "name": "headline-line-2",
+            "text": "Into Calm",
+            "fontSize": "88.012px",
+            "x": 66,
+            "y": 255.203125,
+            "width": 636,
+            "height": 79.203125
+          },
+          {
+            "name": "subhead",
+            "text": "Restore Your Natural Rhythm",
+            "fontSize": "40.8px",
+            "x": 78,
+            "y": 392,
+            "width": 588,
+            "height": 64
+          },
+          {
+            "name": "body",
+            "text": "A Place To Rest And Reconnect.Gentle Rituals Support Your Natural Rhythm.Time To Return To Yourself.",
+            "fontSize": "16px",
+            "x": 78,
+            "y": 480,
+            "width": 588,
+            "height": 116
+          },
+          {
+            "name": "body-line-1",
+            "text": "A Place To Rest And Reconnect.",
+            "fontSize": "24.2419px",
+            "x": 78,
+            "y": 480,
+            "width": 588,
+            "height": 32.703125
+          },
+          {
+            "name": "body-line-2",
+            "text": "Gentle Rituals Support Your Natural Rhythm.",
+            "fontSize": "24.2419px",
+            "x": 78,
+            "y": 512.703125,
+            "width": 588,
+            "height": 32.703125
+          },
+          {
+            "name": "body-line-3",
+            "text": "Time To Return To Yourself.",
+            "fontSize": "24.2419px",
+            "x": 78,
+            "y": 545.40625,
+            "width": 588,
+            "height": 32.703125
+          },
+          {
+            "name": "button",
+            "text": "Book A Visit",
+            "fontSize": "35.2px",
+            "x": 192,
+            "y": 640,
+            "width": 372,
+            "height": 72
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "neue32",
+      "png": "support-44_neue32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 110242,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "neue32",
+        "headlineFontSize": "156px",
+        "smallestDisplayFontSize": "156px",
+        "contrast": 11.158274907062891,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "metaLeft",
+            "text": "Type Study / 01",
+            "fontSize": "20px",
+            "x": 72,
+            "y": 56,
+            "width": 420,
+            "height": 32
+          },
+          {
+            "name": "metaRight",
+            "text": "Display Sans Design",
+            "fontSize": "19.2px",
+            "x": 816,
+            "y": 56,
+            "width": 312,
+            "height": 32
+          },
+          {
+            "name": "word1",
+            "text": "Neue!",
+            "fontSize": "156px",
+            "x": 54,
+            "y": 128,
+            "width": 624,
+            "height": 168
+          },
+          {
+            "name": "word2",
+            "text": "Neue!",
+            "fontSize": "156px",
+            "x": 312,
+            "y": 320,
+            "width": 696,
+            "height": 168
+          },
+          {
+            "name": "word3",
+            "text": "Neue!",
+            "fontSize": "156px",
+            "x": 480,
+            "y": 512,
+            "width": 684,
+            "height": 168
+          },
+          {
+            "name": "pillTop",
+            "text": "Instant",
+            "fontSize": "44px",
+            "x": 642.4835815429688,
+            "y": 55.97848129272461,
+            "width": 479.03289794921875,
+            "height": 176.04302978515625
+          },
+          {
+            "name": "pillMid",
+            "text": "Type",
+            "fontSize": "37.6px",
+            "x": 873.6934204101562,
+            "y": 340.21539306640625,
+            "width": 304.61309814453125,
+            "height": 111.5692138671875
+          },
+          {
+            "name": "pillBottom",
+            "text": "Form",
+            "fontSize": "40px",
+            "x": 17.027624130249023,
+            "y": 517.4569091796875,
+            "width": 421.94476318359375,
+            "height": 185.086181640625
+          },
+          {
+            "name": "footer",
+            "text": "A Study In Geometric Form",
+            "fontSize": "19.2px",
+            "x": 72,
+            "y": 736,
+            "width": 516,
+            "height": 28
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "electromagnetic32",
+      "png": "support-45_electromagnetic32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 4255980,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "electromagnetic32",
+        "headlineFontSize": "98.1198px",
+        "smallestDisplayFontSize": "98.1198px",
+        "contrast": 15.804639172060506,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "kickerLeft",
+            "text": "Type Study / 03",
+            "fontSize": "24px",
+            "x": 180,
+            "y": 80,
+            "width": 408,
+            "height": 40
+          },
+          {
+            "name": "kickerRight",
+            "text": "Frequency / Field",
+            "fontSize": "22.4px",
+            "x": 684,
+            "y": 80,
+            "width": 300,
+            "height": 40
+          },
+          {
+            "name": "headline",
+            "text": "ElectroMagneticShady-01Course-",
+            "fontSize": "16px",
+            "x": 186,
+            "y": 184,
+            "width": 840,
+            "height": 424
+          },
+          {
+            "name": "headline-line-1",
+            "text": "Electro",
+            "fontSize": "98.1198px",
+            "x": 186,
+            "y": 184,
+            "width": 840,
+            "height": 89.28125
+          },
+          {
+            "name": "headline-line-2",
+            "text": "Magnetic",
+            "fontSize": "98.1198px",
+            "x": 186,
+            "y": 273.28125,
+            "width": 840,
+            "height": 89.28125
+          },
+          {
+            "name": "headline-line-3",
+            "text": "Shady-01",
+            "fontSize": "98.1198px",
+            "x": 186,
+            "y": 362.5625,
+            "width": 840,
+            "height": 89.28125
+          },
+          {
+            "name": "headline-line-4",
+            "text": "Course-",
+            "fontSize": "98.1198px",
+            "x": 186,
+            "y": 451.84375,
+            "width": 840,
+            "height": 89.28125
+          },
+          {
+            "name": "footerLeft",
+            "text": "Noise / Light / Motion",
+            "fontSize": "24.8px",
+            "x": 180,
+            "y": 664,
+            "width": 576,
+            "height": 40
+          },
+          {
+            "name": "footerRight",
+            "text": "Type / 03",
+            "fontSize": "24px",
+            "x": 852,
+            "y": 664,
+            "width": 180,
+            "height": 40
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "demolition32",
+      "png": "support-46_demolition32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 4188607,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "demolition32",
+        "headlineFontSize": "67.9297px",
+        "smallestDisplayFontSize": "67.9297px",
+        "contrast": 2.85,
+        "contrastException": {
+          "minimum": 2.8,
+          "rationale": "The source prints charcoal over an active color field; the supplied texture measures 2.85:1 at the title area's fifth-percentile contrast."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "prismatic-field",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "display-row-1",
+            "text": "Beh-Ago",
+            "fontSize": "67.9297px",
+            "x": 204,
+            "y": 188,
+            "width": 840,
+            "height": 72
+          },
+          {
+            "name": "display-row-2",
+            "text": "Demolition",
+            "fontSize": "67.9297px",
+            "x": 204,
+            "y": 276,
+            "width": 840,
+            "height": 72
+          },
+          {
+            "name": "display-row-3",
+            "text": "Abnormal(Ey)",
+            "fontSize": "67.9297px",
+            "x": 204,
+            "y": 364,
+            "width": 840,
+            "height": 72
+          },
+          {
+            "name": "display-row-4",
+            "text": "Mal-Out",
+            "fontSize": "67.9297px",
+            "x": 204,
+            "y": 452,
+            "width": 840,
+            "height": 72
+          },
+          {
+            "name": "archive-caption",
+            "text": "Normal Area (000-0385)",
+            "fontSize": "14.4px",
+            "x": 204,
+            "y": 592,
+            "width": 168.921875,
+            "height": 14.40625
+          },
+          {
+            "name": "twin-globe-mark",
+            "text": "",
+            "fontSize": "16px",
+            "x": 420,
+            "y": 584,
+            "width": 162,
+            "height": 104
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "yearposter32",
+      "png": "support-47_yearposter32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 5366575,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "yearposter32",
+        "headlineFontSize": "588.93px",
+        "smallestDisplayFontSize": "588.93px",
+        "contrast": 5.547642977924009,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "year-numerals",
+            "text": "1982",
+            "fontSize": "16px",
+            "x": 24,
+            "y": 96,
+            "width": 1152,
+            "height": 608
+          },
+          {
+            "name": "year-digit-1",
+            "text": "1",
+            "fontSize": "588.93px",
+            "x": 24,
+            "y": 96,
+            "width": 275.90625,
+            "height": 608
+          },
+          {
+            "name": "year-digit-2",
+            "text": "9",
+            "fontSize": "588.93px",
+            "x": 316.03125,
+            "y": 96,
+            "width": 275.90625,
+            "height": 608
+          },
+          {
+            "name": "year-digit-3",
+            "text": "8",
+            "fontSize": "588.93px",
+            "x": 608.0625,
+            "y": 96,
+            "width": 275.90625,
+            "height": 608
+          },
+          {
+            "name": "year-digit-4",
+            "text": "2",
+            "fontSize": "588.93px",
+            "x": 900.09375,
+            "y": 96,
+            "width": 275.90625,
+            "height": 608
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "stadiumposter32",
+      "png": "support-48_stadiumposter32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 4921899,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "stadiumposter32",
+        "headlineFontSize": "234.711px",
+        "smallestDisplayFontSize": "226.898px",
+        "contrast": 5.4000704066310625,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "stadium-top-left",
+            "text": "YWFT Becks",
+            "fontSize": "13.2px",
+            "x": 36,
+            "y": 27.59375,
+            "width": 84.5,
+            "height": 13.203125
+          },
+          {
+            "name": "stadium-top-right",
+            "text": "A Distressed OpenType SVG Font",
+            "fontSize": "13.2px",
+            "x": 939.09375,
+            "y": 27.59375,
+            "width": 224.90625,
+            "height": 13.203125
+          },
+          {
+            "name": "stadium-headline-one",
+            "text": "Real",
+            "fontSize": "226.898px",
+            "x": 96,
+            "y": 136,
+            "width": 1008,
+            "height": 232
+          },
+          {
+            "name": "stadium-headline-two",
+            "text": "Madrid",
+            "fontSize": "234.711px",
+            "x": 96,
+            "y": 416,
+            "width": 1008,
+            "height": 240
+          },
+          {
+            "name": "stadium-footer-left",
+            "text": "Designed By YouWorkForThem",
+            "fontSize": "11.6px",
+            "x": 36,
+            "y": 770.015625,
+            "width": 184.71875,
+            "height": 11.59375
+          },
+          {
+            "name": "stadium-footer-right",
+            "text": "Exclusive",
+            "fontSize": "11.6px",
+            "x": 1106.3125,
+            "y": 770.015625,
+            "width": 57.6875,
+            "height": 11.59375
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "signalclock32",
+      "png": "support-49_signalclock32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 67730,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "signalclock32",
+        "headlineFontSize": "500.56px",
+        "smallestDisplayFontSize": "68px",
+        "contrast": 19.601928171425822,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "signal-price",
+            "text": "$50.50",
+            "fontSize": "500.56px",
+            "x": 252,
+            "y": 194.7734375,
+            "width": 696,
+            "height": 410.453125
+          },
+          {
+            "name": "signal-currency-plaque",
+            "text": "Dollar",
+            "fontSize": "16px",
+            "x": 864,
+            "y": 428,
+            "width": 228,
+            "height": 124
+          },
+          {
+            "name": "signal-currency-label",
+            "text": "Dollar",
+            "fontSize": "68px",
+            "x": 911.78125,
+            "y": 460.0859375,
+            "width": 132.4375,
+            "height": 59.828125
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "amberdawn32",
+      "png": "support-50_amberdawn32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 3780847,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "amberdawn32",
+        "headlineFontSize": "286.021px",
+        "smallestDisplayFontSize": "286.021px",
+        "contrast": 7.853541046462365,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "amber-headline-one",
+            "text": "Amber",
+            "fontSize": "286.021px",
+            "x": 237.3359375,
+            "y": 160,
+            "width": 725.328125,
+            "height": 240.25
+          },
+          {
+            "name": "amber-headline-two",
+            "text": "Dawn",
+            "fontSize": "286.021px",
+            "x": 307.5546875,
+            "y": 408,
+            "width": 584.890625,
+            "height": 240.25
+          },
+          {
+            "name": "amber-glyph-badge",
+            "text": "Three Fonts Included\n      482Glyphs",
+            "fontSize": "16px",
+            "x": 942,
+            "y": 27.1875,
+            "width": 228,
+            "height": 233
+          },
+          {
+            "name": "amber-footer-rule",
+            "text": "",
+            "fontSize": "16px",
+            "x": 486,
+            "y": 668,
+            "width": 228,
+            "height": 2
+          },
+          {
+            "name": "amber-caption",
+            "text": "Lively Brush Font",
+            "fontSize": "25.6px",
+            "x": 165.59375,
+            "y": 682.390625,
+            "width": 226.015625,
+            "height": 25.59375
+          },
+          {
+            "name": "amber-footer-right",
+            "text": "By Set Sail Studios",
+            "fontSize": "25.6px",
+            "x": 785.125,
+            "y": 682.390625,
+            "width": 249.28125,
+            "height": 25.59375
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "skinbadge32",
+      "png": "support-51_skinbadge32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1512553,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "skinbadge32",
+        "headlineFontSize": "148.773px",
+        "smallestDisplayFontSize": "148.773px",
+        "contrast": 2.2700699492368557,
+        "contrastException": {
+          "minimum": 1.8,
+          "rationale": "Cream lettering keeps the source skincare seal\u2019s intentionally soft contrast on lavender."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "skin-repeat-seal",
+            "text": "Skin Tribe  Skin TribeSkin Tribe  Skin TribeSkin Tribe  Skin TribeSkin Tribe  Skin TribeSkin Tribe  Skin Tribe",
+            "fontSize": "16px",
+            "x": 546,
+            "y": 96.796875,
+            "width": 552,
+            "height": 600
+          },
+          {
+            "name": "skin-front-seal",
+            "text": "Skin Care  \u2022  Self Love  \u2022  Skin Care\n        Self Love     Skin Care  \u2022  Self Love\n      SkinTribe",
+            "fontSize": "16px",
+            "x": 98.390625,
+            "y": 100,
+            "width": 603.59375,
+            "height": 600
+          },
+          {
+            "name": "skin-headline-top",
+            "text": "Skin",
+            "fontSize": "148.773px",
+            "x": 152.703125,
+            "y": 184,
+            "width": 494.9375,
+            "height": 158
+          },
+          {
+            "name": "skin-headline-bottom",
+            "text": "Tribe",
+            "fontSize": "148.773px",
+            "x": 152.703125,
+            "y": 374,
+            "width": 494.9375,
+            "height": 158
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "latestlook32",
+      "png": "support-52_latestlook32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 3835886,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "latestlook32",
+        "headlineFontSize": "186.346px",
+        "smallestDisplayFontSize": "186.346px",
+        "contrast": 11.406246582658145,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "latest-line-one",
+            "text": "Get The",
+            "fontSize": "186.346px",
+            "x": 318,
+            "y": 104,
+            "width": 536.4375,
+            "height": 160.25
+          },
+          {
+            "name": "latest-line-two",
+            "text": "Latest",
+            "fontSize": "186.346px",
+            "x": 318,
+            "y": 280,
+            "width": 432.46875,
+            "height": 160.25
+          },
+          {
+            "name": "latest-line-three",
+            "text": "Style",
+            "fontSize": "186.346px",
+            "x": 396,
+            "y": 456,
+            "width": 327.578125,
+            "height": 160.25
+          },
+          {
+            "name": "latest-footer-rule",
+            "text": "",
+            "fontSize": "16px",
+            "x": 480,
+            "y": 708,
+            "width": 228,
+            "height": 1.5
+          },
+          {
+            "name": "latest-caption",
+            "text": "Display Lettering",
+            "fontSize": "20.4px",
+            "x": 324,
+            "y": 700,
+            "width": 156,
+            "height": 20.8125
+          },
+          {
+            "name": "latest-signature",
+            "text": "Autumn Lookbook",
+            "fontSize": "20.4px",
+            "x": 852,
+            "y": 700,
+            "width": 156,
+            "height": 20.8125
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "gelatocards32",
+      "png": "support-53_gelatocards32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2339197,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "gelatocards32",
+        "headlineFontSize": "125.612px",
+        "smallestDisplayFontSize": "87.9999px",
+        "contrast": 4.594226999445272,
+        "contrastException": {
+          "minimum": 4.5,
+          "rationale": "The source card uses cobalt display ink over its pale pink print panel."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "gelato-blue-card",
+            "text": "Scoop  /  ShopSweetScoops",
+            "fontSize": "16px",
+            "x": 570,
+            "y": 140,
+            "width": 522,
+            "height": 528
+          },
+          {
+            "name": "gelato-blue-label",
+            "text": "Scoop  /  Shop",
+            "fontSize": "27.2px",
+            "x": 606.546875,
+            "y": 179.59375,
+            "width": 448.90625,
+            "height": 27.203125
+          },
+          {
+            "name": "gelato-blue-headline-one",
+            "text": "Sweet",
+            "fontSize": "87.9999px",
+            "x": 601.3203125,
+            "y": 324.796875,
+            "width": 459.359375,
+            "height": 73.90625
+          },
+          {
+            "name": "gelato-blue-headline-two",
+            "text": "Scoops",
+            "fontSize": "87.9999px",
+            "x": 601.3203125,
+            "y": 430.390625,
+            "width": 459.359375,
+            "height": 73.90625
+          },
+          {
+            "name": "gelato-pink-card",
+            "text": "Pastel  /  FrozenSweetScoopsA Little Joy In Every Scoop",
+            "fontSize": "16px",
+            "x": 162,
+            "y": 104,
+            "width": 612,
+            "height": 560
+          },
+          {
+            "name": "gelato-pink-label",
+            "text": "Pastel  /  Frozen",
+            "fontSize": "25.6px",
+            "x": 210.953125,
+            "y": 154.390625,
+            "width": 155.34375,
+            "height": 25.59375
+          },
+          {
+            "name": "gelato-pink-rule",
+            "text": "",
+            "fontSize": "16px",
+            "x": 210.953125,
+            "y": 227.1875,
+            "width": 514.078125,
+            "height": 1.5
+          },
+          {
+            "name": "gelato-pink-headline-one",
+            "text": "Sweet",
+            "fontSize": "125.612px",
+            "x": 333.78125,
+            "y": 260.796875,
+            "width": 268.4375,
+            "height": 104.25
+          },
+          {
+            "name": "gelato-pink-headline-two",
+            "text": "Scoops",
+            "fontSize": "125.612px",
+            "x": 302.6953125,
+            "y": 406.390625,
+            "width": 330.609375,
+            "height": 104.25
+          },
+          {
+            "name": "gelato-pink-footer",
+            "text": "A Little Joy In Every Scoop",
+            "fontSize": "23.2px",
+            "x": 210.953125,
+            "y": 568.796875,
+            "width": 514.078125,
+            "height": 23.203125
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "meditation32",
+      "png": "support-54_meditation32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2871213,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "meditation32",
+        "headlineFontSize": "249.46px",
+        "smallestDisplayFontSize": "249.46px",
+        "contrast": 2.0966622266240766,
+        "contrastException": {
+          "minimum": 1.55,
+          "rationale": "The source keeps large white display lettering over a deliberately soft pastel gradient."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "meditation-woven-paper",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "meditation-bubble-art",
+            "text": "",
+            "fontSize": "16px",
+            "x": 66,
+            "y": 0,
+            "width": 1068,
+            "height": 460
+          },
+          {
+            "name": "meditation-sparkle-top-left",
+            "text": "",
+            "fontSize": "16px",
+            "x": 24,
+            "y": 32,
+            "width": 84,
+            "height": 84
+          },
+          {
+            "name": "meditation-sparkle-right",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1051.203125,
+            "y": 280,
+            "width": 76.796875,
+            "height": 76.796875
+          },
+          {
+            "name": "meditation-sparkle-small",
+            "text": "",
+            "fontSize": "16px",
+            "x": 1138.8125,
+            "y": 208,
+            "width": 43.1875,
+            "height": 43.1875
+          },
+          {
+            "name": "meditation-headline",
+            "text": "Meditation",
+            "fontSize": "249.46px",
+            "x": 95.890625,
+            "y": 60,
+            "width": 1008.21875,
+            "height": 214.515625
+          },
+          {
+            "name": "meditation-workshop-pill",
+            "text": "Workshop",
+            "fontSize": "22.4px",
+            "x": 444,
+            "y": 332,
+            "width": 312,
+            "height": 52
+          },
+          {
+            "name": "meditation-sea-photo",
+            "text": "",
+            "fontSize": "16px",
+            "x": 120,
+            "y": 440,
+            "width": 960,
+            "height": 232
+          },
+          {
+            "name": "meditation-reset-burst",
+            "text": "Disc\n30%",
+            "fontSize": "24px",
+            "x": 0,
+            "y": 288,
+            "width": 324,
+            "height": 232
+          },
+          {
+            "name": "meditation-footer-left",
+            "text": "September 30",
+            "fontSize": "18px",
+            "x": 120,
+            "y": 693.59375,
+            "width": 102.03125,
+            "height": 18
+          },
+          {
+            "name": "meditation-year",
+            "text": "2025",
+            "fontSize": "43.2px",
+            "x": 120,
+            "y": 715.1875,
+            "width": 80.171875,
+            "height": 38.015625
+          },
+          {
+            "name": "meditation-footer-right",
+            "text": "Sign Up Here\nwww.meditatewithdelaine.com",
+            "fontSize": "18.4px",
+            "x": 648,
+            "y": 692.796875,
+            "width": 432,
+            "height": 44.15625
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "strongweak32",
+      "png": "support-55_strongweak32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 214188,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "strongweak32",
+        "headlineFontSize": "262.212px",
+        "smallestDisplayFontSize": "43px",
+        "contrast": 8.0386071219659,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "scalloped-pink-mat",
+            "text": "",
+            "fontSize": "16px",
+            "x": 30,
+            "y": 20,
+            "width": 1140,
+            "height": 760
+          },
+          {
+            "name": "cobalt-specimen-panel",
+            "text": "",
+            "fontSize": "16px",
+            "x": 66,
+            "y": 68,
+            "width": 1068,
+            "height": 664
+          },
+          {
+            "name": "strongweak-kicker",
+            "text": "Youngtype Studio",
+            "fontSize": "43px",
+            "x": 431.7890625,
+            "y": 96,
+            "width": 336.421875,
+            "height": 40.84375
+          },
+          {
+            "name": "strongweak-strongest",
+            "text": "Strongest",
+            "fontSize": "243.164px",
+            "x": 159.765625,
+            "y": 188,
+            "width": 880.46875,
+            "height": 204.25
+          },
+          {
+            "name": "strongweak-weakest",
+            "text": "Weakest",
+            "fontSize": "262.212px",
+            "x": 192.390625,
+            "y": 408,
+            "width": 815.21875,
+            "height": 220.25
+          },
+          {
+            "name": "strongweak-left-sticker",
+            "text": "Hand\nDrawn",
+            "fontSize": "21.2px",
+            "x": 108.83607482910156,
+            "y": 314.7451171875,
+            "width": 136.32785034179688,
+            "height": 134.509765625
+          },
+          {
+            "name": "strongweak-right-sticker",
+            "text": "Stroke\nRegular\nOutline",
+            "fontSize": "21.2px",
+            "x": 1014.8360595703125,
+            "y": 314.7451171875,
+            "width": 136.327880859375,
+            "height": 134.509765625
+          },
+          {
+            "name": "strongweak-footer",
+            "text": "Organic Hand Drawn",
+            "fontSize": "68px",
+            "x": 299.296875,
+            "y": 660,
+            "width": 601.40625,
+            "height": 62.546875
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "funkyfashion32",
+      "png": "support-56_funkyfashion32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1438344,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "funkyfashion32",
+        "headlineFontSize": "177.38px",
+        "smallestDisplayFontSize": "175.924px",
+        "contrast": 2.8711515797584877,
+        "contrastException": {
+          "minimum": 2.5,
+          "rationale": "The reference uses warm cream type over punch-pink paper, supported by offset dark printer shadows."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "funky-orange-portrait-disc",
+            "text": "",
+            "fontSize": "16px",
+            "x": 318,
+            "y": 118.390625,
+            "width": 564,
+            "height": 564
+          },
+          {
+            "name": "funky-circular-fashion-portrait",
+            "text": "",
+            "fontSize": "16px",
+            "x": 318,
+            "y": 118.390625,
+            "width": 564,
+            "height": 564
+          },
+          {
+            "name": "funky-headline-first-line",
+            "text": "Funky",
+            "fontSize": "175.924px",
+            "x": 55.1875,
+            "y": 59.1875,
+            "width": 380.484375,
+            "height": 144.25
+          },
+          {
+            "name": "funky-headline-second-line",
+            "text": "Fashion",
+            "fontSize": "177.38px",
+            "x": 56.390625,
+            "y": 194.390625,
+            "width": 504.234375,
+            "height": 145.4375
+          },
+          {
+            "name": "funky-fashion-week-line-1",
+            "text": "Fashion",
+            "fontSize": "66.4px",
+            "x": 841.1875,
+            "y": 57.59375,
+            "width": 228,
+            "height": 64
+          },
+          {
+            "name": "funky-fashion-week-line-2",
+            "text": "Week",
+            "fontSize": "66.4px",
+            "x": 841.1875,
+            "y": 110.390625,
+            "width": 228,
+            "height": 64
+          },
+          {
+            "name": "funky-dotted-annotation",
+            "text": "",
+            "fontSize": "16px",
+            "x": 52.796875,
+            "y": 409.59375,
+            "width": 98.390625,
+            "height": 120
+          },
+          {
+            "name": "funky-pointing-arrow",
+            "text": "",
+            "fontSize": "16px",
+            "x": 229.1875,
+            "y": 422.390625,
+            "width": 80.390625,
+            "height": 40
+          },
+          {
+            "name": "funky-lightning-sticker",
+            "text": "",
+            "fontSize": "16px",
+            "x": 342,
+            "y": 536.796875,
+            "width": 128.390625,
+            "height": 165.59375
+          },
+          {
+            "name": "funky-lightning-spark-top",
+            "text": "",
+            "fontSize": "16px",
+            "x": 338.390625,
+            "y": 552.796875,
+            "width": 31.1875,
+            "height": 33.59375
+          },
+          {
+            "name": "funky-lightning-spark-bottom",
+            "text": "",
+            "fontSize": "16px",
+            "x": 462,
+            "y": 607.1875,
+            "width": 33.59375,
+            "height": 34.390625
+          },
+          {
+            "name": "funky-smiley-sticker",
+            "text": "",
+            "fontSize": "16px",
+            "x": 896.390625,
+            "y": 174.390625,
+            "width": 267.59375,
+            "height": 288
+          },
+          {
+            "name": "funky-fashion-description",
+            "text": "To Be Fashionable Is To Rub Elbows With Every New Clothing And Accessory Item That Hits The Market. It Can Be Daunting Trying To Do Such A Thing. Not To Mention It Is So Dull And Time-Consuming A Thing To Keep Up With All The Latest Styles.",
+            "fontSize": "23.6px",
+            "x": 787.1875,
+            "y": 473.59375,
+            "width": 355.1875,
+            "height": 180
+          },
+          {
+            "name": "funky-designer-signature",
+            "text": "Sarah\nSchwartz",
+            "fontSize": "57.6px",
+            "x": 52.796875,
+            "y": 636.796875,
+            "width": 324,
+            "height": 137.59375
+          },
+          {
+            "name": "funky-web-address",
+            "text": "www.funkyfashion.com",
+            "fontSize": "25.6px",
+            "x": 770.40625,
+            "y": 715.1875,
+            "width": 360,
+            "height": 25.59375
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "typewall32",
+      "png": "support-62_typewall32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 512629,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "typewall32",
+        "headlineFontSize": "158.47px",
+        "smallestDisplayFontSize": "158.47px",
+        "contrast": 13.576932067214473,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "typewall-composition-viewport",
+            "text": "Classic CultureClassic CultureClassic CultureClassic CultureMusical SynchronyMusical SynchronyMusical SynchronyMusical SynchronyCargo ManualCargo ManualCargo ManualCargo ManualMagical UnicornsMagical UnicornsMagical UnicornsMagical UnicornsPractical PonyPractical PonyPractical PonyPractical PonyBright ZenithBright ZenithBright ZenithBright ZenithCulture In MotionCulture In MotionCulture In MotionCulture In MotionLovely PeopleLovely PeopleLovely PeopleLovely People",
+            "fontSize": "158.47px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "manualbrew32",
+      "png": "support-63_manualbrew32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 63987,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "manualbrew32",
+        "headlineFontSize": "247.999px",
+        "smallestDisplayFontSize": "239.999px",
+        "contrast": 4.444405895992405,
+        "contrastException": {
+          "minimum": 3,
+          "rationale": "The source uses large, brightly colored specimen letters against charcoal; the darkest source accent is orange."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "manualbrew-top-word",
+            "text": "Manual",
+            "fontSize": "247.999px",
+            "x": 183.40625,
+            "y": 155.6640625,
+            "width": 833.1875,
+            "height": 244.03125
+          },
+          {
+            "name": "manualbrew-bottom-word",
+            "text": "Brew",
+            "fontSize": "239.999px",
+            "x": 326.8984375,
+            "y": 408.3203125,
+            "width": 546.203125,
+            "height": 236.15625
+          },
+          {
+            "name": "manualbrew-studio-credit",
+            "text": "Our SunKits \u00a9 Rivari Studio 2024",
+            "fontSize": "19.2px",
+            "x": 180,
+            "y": 708,
+            "width": 840,
+            "height": 19.203125
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "pastpresent32",
+      "png": "support-64_pastpresent32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 1243302,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "pastpresent32",
+        "headlineFontSize": "149.137px",
+        "smallestDisplayFontSize": "139.835px",
+        "contrast": 14.867827023736705,
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "source-hand-sign-art",
+            "text": "",
+            "fontSize": "16px",
+            "x": 0,
+            "y": 0,
+            "width": 1200,
+            "height": 800
+          },
+          {
+            "name": "timeline-past",
+            "text": "Past",
+            "fontSize": "139.835px",
+            "x": 484.5703125,
+            "y": 124,
+            "width": 230.859375,
+            "height": 120.25
+          },
+          {
+            "name": "timeline-present",
+            "text": "Present",
+            "fontSize": "149.137px",
+            "x": 372.2109375,
+            "y": 328,
+            "width": 455.578125,
+            "height": 128.25
+          },
+          {
+            "name": "timeline-future",
+            "text": "Future",
+            "fontSize": "149.137px",
+            "x": 405.609375,
+            "y": 528,
+            "width": 388.78125,
+            "height": 128.25
+          },
+          {
+            "name": "timeline-studio-credit",
+            "text": "Our SunKits \u00a9 Rivari Studio 2024",
+            "fontSize": "16px",
+            "x": 360,
+            "y": 699.1875,
+            "width": 480,
+            "height": 19
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "herbalproduct32",
+      "png": "support-65_herbalproduct32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 762643,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "herbalproduct32",
+        "headlineFontSize": "172px",
+        "smallestDisplayFontSize": "56px",
+        "contrast": 3.0087602378622034,
+        "contrastException": {
+          "minimum": 3,
+          "rationale": "The source's large cream NEW label prints over a bright orange twelve-ray burst."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "herbal-outer-frame",
+            "text": "",
+            "fontSize": "16px",
+            "x": 85.1875,
+            "y": 78.390625,
+            "width": 1014,
+            "height": 638.390625
+          },
+          {
+            "name": "herbal-cream-label",
+            "text": "",
+            "fontSize": "16px",
+            "x": 96.59375,
+            "y": 92.390625,
+            "width": 985.1875,
+            "height": 592.796875
+          },
+          {
+            "name": "herbal-botanical-sprigs",
+            "text": "",
+            "fontSize": "16px",
+            "x": 228,
+            "y": 112.796875,
+            "width": 744,
+            "height": 126.390625
+          },
+          {
+            "name": "herbal-twelve-ray-burst",
+            "text": "",
+            "fontSize": "16px",
+            "x": 16.1875,
+            "y": 35.59375,
+            "width": 290.390625,
+            "height": 193.59375
+          },
+          {
+            "name": "herbal-stock-label",
+            "text": "New",
+            "fontSize": "58.0642px",
+            "x": 76.00501251220703,
+            "y": 80.58661651611328,
+            "width": 170.77120971679688,
+            "height": 57.20177459716797
+          },
+          {
+            "name": "herbal-batch-oval",
+            "text": "1969",
+            "fontSize": "16px",
+            "x": 476.390625,
+            "y": 122.390625,
+            "width": 247.1875,
+            "height": 137.59375
+          },
+          {
+            "name": "herbal-batch-word",
+            "text": "1969",
+            "fontSize": "80px",
+            "x": 533.796875,
+            "y": 155.984375,
+            "width": 132.375,
+            "height": 70.390625
+          },
+          {
+            "name": "herbal-product-headline",
+            "text": "Herbals",
+            "fontSize": "172px",
+            "x": 107.16000366210938,
+            "y": 274.390625,
+            "width": 985.679931640625,
+            "height": 195.20001220703125
+          },
+          {
+            "name": "herbal-product-description",
+            "text": "Arabica Whole Beans Coffee",
+            "fontSize": "16px",
+            "x": 216,
+            "y": 497.59375,
+            "width": 768,
+            "height": 94.390625
+          },
+          {
+            "name": "herbal-process-weight",
+            "text": "Process : NaturalNet Weight : 12 Oz",
+            "fontSize": "16px",
+            "x": 225.59375,
+            "y": 603.1875,
+            "width": 264,
+            "height": 73.59375
+          },
+          {
+            "name": "herbal-process-weight-1",
+            "text": "Process : Natural",
+            "fontSize": "20px",
+            "x": 225.59375,
+            "y": 618.796875,
+            "width": 124.609375,
+            "height": 21.1875
+          },
+          {
+            "name": "herbal-process-weight-2",
+            "text": "Net Weight : 12 Oz",
+            "fontSize": "20px",
+            "x": 225.59375,
+            "y": 639.984375,
+            "width": 138.359375,
+            "height": 21.1875
+          },
+          {
+            "name": "herbal-roast-level",
+            "text": "Medium Roast",
+            "fontSize": "56px",
+            "x": 432,
+            "y": 613.59375,
+            "width": 336,
+            "height": 73.59375
+          },
+          {
+            "name": "herbal-roast-date",
+            "text": "Roast Date27 June 2024",
+            "fontSize": "16px",
+            "x": 804,
+            "y": 603.1875,
+            "width": 198,
+            "height": 73.59375
+          },
+          {
+            "name": "herbal-roast-date-1",
+            "text": "Roast Date",
+            "fontSize": "20px",
+            "x": 922.25,
+            "y": 618.796875,
+            "width": 79.75,
+            "height": 21.1875
+          },
+          {
+            "name": "herbal-roast-date-2",
+            "text": "27 June 2024",
+            "fontSize": "20px",
+            "x": 904.90625,
+            "y": 639.984375,
+            "width": 97.09375,
+            "height": 21.1875
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "colosseum32",
+      "png": "support-66_colosseum32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2969467,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "colosseum32",
+        "headlineFontSize": "188px",
+        "smallestDisplayFontSize": "160px",
+        "contrast": 3.982259686508682,
+        "contrastException": {
+          "minimum": 3,
+          "rationale": "The source uses saturated scarlet ink for both oversized specimen lettering and small publisher marks."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "colosseum-first-specimen",
+            "text": "Colosseum",
+            "fontSize": "164px",
+            "x": 210.84487915039062,
+            "y": 103.4375,
+            "width": 783.091552734375,
+            "height": 162.70721435546875
+          },
+          {
+            "name": "colosseum-second-specimen",
+            "text": "Gr\u00f6ng\u00f6ling",
+            "fontSize": "188px",
+            "x": 215.7154541015625,
+            "y": 287.1875,
+            "width": 772.162841796875,
+            "height": 203.48626708984375
+          },
+          {
+            "name": "colosseum-third-specimen",
+            "text": "Antarctica",
+            "fontSize": "160px",
+            "x": 215.19970703125,
+            "y": 488,
+            "width": 766.6005859375,
+            "height": 146.2740478515625
+          },
+          {
+            "name": "colosseum-publisher-footer",
+            "text": "NektarA Typeface With Spirit, Personality & Distinctionwww.more-etc.com \u2022 @MoreEtcStudiosMore EtcMStudio",
+            "fontSize": "16px",
+            "x": 318,
+            "y": 685.59375,
+            "width": 564,
+            "height": 67.1875
+          },
+          {
+            "name": "colosseum-nektar-mark",
+            "text": "Nektar",
+            "fontSize": "16px",
+            "x": 316.90826416015625,
+            "y": 702.14208984375,
+            "width": 67.8240966796875,
+            "height": 38.0908203125
+          },
+          {
+            "name": "colosseum-publisher-copy",
+            "text": "A Typeface With Spirit, Personality & Distinctionwww.more-etc.com \u2022 @MoreEtcStudios",
+            "fontSize": "16px",
+            "x": 385.671875,
+            "y": 685.59375,
+            "width": 428.625,
+            "height": 67.1875
+          },
+          {
+            "name": "colosseum-publisher-tagline",
+            "text": "A Typeface With Spirit, Personality & Distinction",
+            "fontSize": "17.6px",
+            "x": 338.52313232421875,
+            "y": 703.0625,
+            "width": 522.9224853515625,
+            "height": 17.59375
+          },
+          {
+            "name": "colosseum-publisher-url",
+            "text": "www.more-etc.com \u2022 @MoreEtcStudios",
+            "fontSize": "11.2px",
+            "x": 342.8093566894531,
+            "y": 723.484375,
+            "width": 514.35009765625,
+            "height": 11.203125
+          },
+          {
+            "name": "colosseum-publisher-seal",
+            "text": "More EtcMStudio",
+            "fontSize": "16px",
+            "x": 818.453125,
+            "y": 696.671875,
+            "width": 57.515625,
+            "height": 45.015625
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "glyphsheet32",
+      "png": "support-67_glyphsheet32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2557122,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "glyphsheet32",
+        "headlineFontSize": "132px",
+        "smallestDisplayFontSize": "45px",
+        "contrast": 3.4476124077749097,
+        "contrastException": {
+          "minimum": 3,
+          "rationale": "The cream and dark green source colors are reserved for the sheet\u2019s oversized display rows."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "glyphsheet-digits",
+            "text": "0123456789",
+            "fontSize": "126px",
+            "x": 324.84375,
+            "y": 79.296875,
+            "width": 550.296875,
+            "height": 113.390625
+          },
+          {
+            "name": "glyphsheet-pangram",
+            "text": "Pack my box with five dozen liquor jugs!",
+            "fontSize": "45px",
+            "x": 231.890625,
+            "y": 275.75,
+            "width": 736.21875,
+            "height": 40.5
+          },
+          {
+            "name": "glyphsheet-symbols",
+            "text": "$&%\u00a3\u20ac!?()",
+            "fontSize": "132px",
+            "x": 351.140625,
+            "y": 436.59375,
+            "width": 497.71875,
+            "height": 118.796875
+          },
+          {
+            "name": "glyphsheet-footer",
+            "text": "Figures / Signs / Punctuation",
+            "fontSize": "22.8px",
+            "x": 192,
+            "y": 676.796875,
+            "width": 816,
+            "height": 25.53125
+          },
+          {
+            "name": "glyphsheet-footer-left",
+            "text": "Letterforms",
+            "fontSize": "16px",
+            "x": 72,
+            "y": 724.796875,
+            "width": 93.234375,
+            "height": 16
+          },
+          {
+            "name": "glyphsheet-footer-right",
+            "text": "Specimen 01",
+            "fontSize": "16px",
+            "x": 1022.28125,
+            "y": 724.796875,
+            "width": 105.71875,
+            "height": 16
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "freakscene32",
+      "png": "support-68_freakscene32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2794393,
+      "contentWarnings": [],
+      "layoutReport": {
+        "frame": {
+          "width": 1200,
+          "height": 800
+        },
+        "headlineFontSize": "302.81px",
+        "inkOnPaperContrast": 8.17,
+        "slots": [
+          {
+            "name": "headline-one",
+            "text": "Freak",
+            "x": 201.8,
+            "y": 101.9,
+            "width": 796.3,
+            "height": 287,
+            "fontSize": 302.81
+          },
+          {
+            "name": "headline-two",
+            "text": "Scene",
+            "x": 201.8,
+            "y": 433.1,
+            "width": 796.3,
+            "height": 287,
+            "fontSize": 302.81
+          },
+          {
+            "name": "left-note",
+            "text": "A Soft Sans Serif With Spirit, Personality And Distinction.",
+            "x": 58.8,
+            "y": 457,
+            "width": 69.9,
+            "height": 250.3,
+            "fontSize": 16
+          },
+          {
+            "name": "right-note",
+            "text": "This Bold And Semi-Condensed Typeface Is Lively And Eye-Catching, Ideal For Where And When You Want To Make A Lasting Impression.",
+            "x": 1074.6,
+            "y": 110.5,
+            "width": 88.3,
+            "height": 318.5,
+            "fontSize": 12.99
+          },
+          {
+            "name": "stamp-left",
+            "text": "Nektar",
+            "x": 79.8,
+            "y": 339.2,
+            "width": 191.8,
+            "height": 121.5,
+            "fontSize": 14
+          },
+          {
+            "name": "stamp-right",
+            "text": "More Etc.MEdition",
+            "x": 1045.5,
+            "y": 538.7,
+            "width": 121.3,
+            "height": 101.6,
+            "fontSize": 26.4
+          }
+        ],
+        "outOfBounds": []
+      }
+    },
+    {
+      "template": "greetingsgrid32",
+      "png": "support-69_greetingsgrid32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 2656788,
+      "contentWarnings": [],
+      "layoutReport": {
+        "template": "greetingsgrid32",
+        "headlineFontSize": "238px",
+        "smallestDisplayFontSize": "72px",
+        "contrast": 3.092329188567863,
+        "contrastException": {
+          "minimum": 3,
+          "rationale": "The original saturated print palette is retained for large greeting headlines."
+        },
+        "outOfBounds": [],
+        "fitFailures": [],
+        "stackOverlaps": [],
+        "slots": [
+          {
+            "name": "greeting-zdravo",
+            "text": "Zdravo!",
+            "fontSize": "72px",
+            "x": 95.609375,
+            "y": 66.875,
+            "width": 208.765625,
+            "height": 66.234375
+          },
+          {
+            "name": "greeting-howdy",
+            "text": "Howdy!",
+            "fontSize": "93.9999px",
+            "x": 78.375,
+            "y": 256.765625,
+            "width": 243.234375,
+            "height": 86.46875
+          },
+          {
+            "name": "greeting-halla",
+            "text": "Hall\u00e5!",
+            "fontSize": "238px",
+            "x": 541.53125,
+            "y": 90.515625,
+            "width": 516.90625,
+            "height": 218.953125
+          },
+          {
+            "name": "greeting-bonjour",
+            "text": "Bonjour!",
+            "fontSize": "196.22px",
+            "x": 79.890625,
+            "y": 509.734375,
+            "width": 640.21875,
+            "height": 180.515625
+          },
+          {
+            "name": "greeting-privet",
+            "text": "Privet!",
+            "fontSize": "95.9999px",
+            "x": 880.4375,
+            "y": 455.84375,
+            "width": 239.109375,
+            "height": 88.3125
+          },
+          {
+            "name": "greeting-ola",
+            "text": "Ol\u00e1!",
+            "fontSize": "102px",
+            "x": 927.9375,
+            "y": 653.078125,
+            "width": 144.109375,
+            "height": 93.828125
+          }
+        ],
+        "contentWarnings": []
+      }
+    },
+    {
+      "template": "roadrunner32",
+      "png": "support-70_roadrunner32.png",
+      "pixels": [
+        2400,
+        1600
+      ],
+      "bytes": 3240592,
+      "contentWarnings": [],
+      "layoutReport": {
+        "frame": {
+          "width": 1200,
+          "height": 800
+        },
+        "headlineFontSize": "155.511px",
+        "descriptorFontSize": "16.212px",
+        "bodyFontSize": "15.24px",
+        "badgeFontSize": "39.48px",
+        "inkOnLimeContrast": 10.29,
+        "slots": [
+          {
+            "name": "headline_line",
+            "text": "Got The Radio",
+            "x": 103.9,
+            "y": 102.9,
+            "width": 887.4,
+            "height": 261
+          },
+          {
+            "name": "headline_line",
+            "text": "On, I'm Like The",
+            "x": 100.9,
+            "y": 269.5,
+            "width": 1033.9,
+            "height": 279
+          },
+          {
+            "name": "headline_line",
+            "text": "Roadrunner.",
+            "x": 228,
+            "y": 440.1,
+            "width": 826.9,
+            "height": 253.6
+          },
+          {
+            "name": "descriptor",
+            "text": "Distinctive Letterforms With Spirit,\nPersonality And Motion.",
+            "x": 114.7,
+            "y": 78.1,
+            "width": 352.3,
+            "height": 108.5
+          },
+          {
+            "name": "bodycopy",
+            "text": "A Lively Typeface Can Make A Message Stand Out,\nAnd Leave A Lasting Impression.",
+            "x": 495.4,
+            "y": 621.6,
+            "width": 613.8,
+            "height": 126.8
+          },
+          {
+            "name": "topmark",
+            "text": "Type StudyMStudio",
+            "x": 1054.1,
+            "y": 116.2,
+            "width": 115.5,
+            "height": 90.9
+          },
+          {
+            "name": "nektar",
+            "text": "Nektar",
+            "x": 83.2,
+            "y": 635.4,
+            "width": 188.5,
+            "height": 93
+          }
+        ],
+        "outOfBounds": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/birvase32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/birvase32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "OldNorse-Regular.ttf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 15.9,
+  "imageBytes": {
+    "html": 6394189,
+    "skia": 6942862
+  },
+  "desktopLayout": {
+    "template": "birvase32",
+    "headlineFontSize": "179.739px",
+    "contrast": 11.343786523258515,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Bloom",
+        "fontSize": "179.739px",
+        "x": 56.71875,
+        "y": 146.53125,
+        "width": 595.625,
+        "height": 184.359375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "birvase32",
+    "headlineFontSize": "89.2997px",
+    "contrast": 11.343786523258515,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Bloom",
+        "fontSize": "89.2997px",
+        "x": 28.15625,
+        "y": 72.734375,
+        "width": 295.671875,
+        "height": 91.515625
+      }
+    ],
+    "contentWarnings": []
+  }
+}

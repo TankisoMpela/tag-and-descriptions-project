@@ -1,0 +1,81 @@
+{
+  "ok": true,
+  "results": [
+    {
+      "template": "mirror32",
+      "png": "/tmp/mirror32-html/3x2/support-15_mirror32.png",
+      "kb": 1075,
+      "renderer": "HTML/CSS",
+      "contentWarnings": [],
+      "slots": [
+        {
+          "slot": "mirror-portrait",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-row-1",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-quote-1",
+          "size": 224.9,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-row-2",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-quote-2",
+          "size": 224.9,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-row-3",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-quote-3",
+          "size": 224.9,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-row-4",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-quote-4",
+          "size": 224.9,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-row-5",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-quote-5",
+          "size": 224.9,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-row-6",
+          "size": 32.0,
+          "lines": 1
+        },
+        {
+          "slot": "mirror-quote-6",
+          "size": 224.9,
+          "lines": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "notes": []
+}

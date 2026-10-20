@@ -1,0 +1,188 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "rio32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "rio32",
+    "headlineFontSize": "144px",
+    "smallestDisplayFontSize": "65.6px",
+    "contrast": 14.578807781351893,
+    "contrastException": {
+      "minimum": 4.5,
+      "rationale": "Cream lettering remains above the darkened panorama for clear reading."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "travel-mark",
+        "text": "RioTravel",
+        "fontSize": "40px",
+        "x": 30.390625,
+        "y": 40.796875,
+        "width": 120,
+        "height": 66.984375
+      },
+      {
+        "name": "brand-city",
+        "text": "Rio",
+        "fontSize": "40px",
+        "x": 30.390625,
+        "y": 40.796875,
+        "width": 120,
+        "height": 38
+      },
+      {
+        "name": "brand-type",
+        "text": "Travel",
+        "fontSize": "30.11px",
+        "x": 30.390625,
+        "y": 79.1875,
+        "width": 120,
+        "height": 28.59375
+      },
+      {
+        "name": "navigation",
+        "text": "HomeCatalogContact",
+        "fontSize": "30.4px",
+        "x": 412,
+        "y": 44.796875,
+        "width": 358.390625,
+        "height": 41.59375
+      },
+      {
+        "name": "navigation-1",
+        "text": "Home",
+        "fontSize": "30.4px",
+        "x": 412,
+        "y": 44.796875,
+        "width": 71.484375,
+        "height": 30.40625
+      },
+      {
+        "name": "navigation-2",
+        "text": "Catalog",
+        "fontSize": "30.4px",
+        "x": 534.84375,
+        "y": 44.796875,
+        "width": 92.171875,
+        "height": 30.40625
+      },
+      {
+        "name": "navigation-3",
+        "text": "Contact",
+        "fontSize": "30.4px",
+        "x": 678.375,
+        "y": 44.796875,
+        "width": 92.015625,
+        "height": 30.40625
+      },
+      {
+        "name": "title-lead-row",
+        "text": "The",
+        "fontSize": "16px",
+        "x": 200,
+        "y": 166.390625,
+        "width": 192,
+        "height": 84
+      },
+      {
+        "name": "title-lead",
+        "text": "The",
+        "fontSize": "65.6px",
+        "x": 200,
+        "y": 178.875,
+        "width": 118.4375,
+        "height": 59.03125
+      },
+      {
+        "name": "destination-row",
+        "text": "Janeiro",
+        "fontSize": "16px",
+        "x": 116,
+        "y": 260,
+        "width": 576,
+        "height": 174.390625
+      },
+      {
+        "name": "destination-title",
+        "text": "Janeiro",
+        "fontSize": "144px",
+        "x": 152.671875,
+        "y": 282.390625,
+        "width": 502.65625,
+        "height": 129.59375
+      },
+      {
+        "name": "destination-subtitle",
+        "text": "The Weekend Holiday Trip",
+        "fontSize": "48.8px",
+        "x": 120,
+        "y": 445.59375,
+        "width": 560,
+        "height": 65.59375
+      },
+      {
+        "name": "booking-button",
+        "text": "Book Now",
+        "fontSize": "27.4963px",
+        "x": 342.390625,
+        "y": 576.796875,
+        "width": 115.1875,
+        "height": 49.59375
+      },
+      {
+        "name": "closing-copy",
+        "text": "Happiness Consists Of Living Each Day As If It Were The First DayOf Your Honeymoon And The Last Day Of Your VacationTrust Your Holiday Plans With Us",
+        "fontSize": "18px",
+        "x": 64,
+        "y": 667.1875,
+        "width": 672,
+        "height": 81.59375
+      },
+      {
+        "name": "closing-line-1",
+        "text": "Happiness Consists Of Living Each Day As If It Were The First Day",
+        "fontSize": "18px",
+        "x": 179.5625,
+        "y": 675.953125,
+        "width": 440.875,
+        "height": 19.4375
+      },
+      {
+        "name": "closing-line-2",
+        "text": "Of Your Honeymoon And The Last Day Of Your Vacation",
+        "fontSize": "18px",
+        "x": 212.71875,
+        "y": 698.265625,
+        "width": 374.5625,
+        "height": 19.4375
+      },
+      {
+        "name": "closing-line-3",
+        "text": "Trust Your Holiday Plans With Us",
+        "fontSize": "18px",
+        "x": 289.40625,
+        "y": 720.578125,
+        "width": 221.171875,
+        "height": 19.4375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/rio32.png",
+  "outputBytes": 2193447
+}

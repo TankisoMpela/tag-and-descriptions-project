@@ -1,0 +1,1754 @@
+{
+  "title": "Support Template Square Adaptation Review",
+  "date": "2026-10-18",
+  "render_count": 89,
+  "standard_template_count": 61,
+  "blackletter_variant_count": 10,
+  "blackletter_reference_template_count": 18,
+  "canvas": [
+    1600,
+    1600
+  ],
+  "font_used": "BigRiff-Regular.ttf, Esviga.ttf",
+  "base": "The review contains 61 standard square templates, 10 blackletter font swaps on standard templates, and 18 separate blackletter reference templates. Every image is rendered from its matching HTML/CSS template; no 3:2 render is padded or cropped.",
+  "review_rule": "PASS requires matching template and ratio, exact 1600x1600 output, no off-canvas elements or declared stack overlaps, text fit except documented decorative pattern crops, and contrast at or above the documented source exception floor (4.5:1 otherwise).",
+  "images": [
+    {
+      "template": "alphabet32",
+      "image": "alphabet32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 123878,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/alphabet32/editor.html",
+      "source_id": "T30930_05",
+      "source_kind": "source",
+      "report": "alphabet32.json"
+    },
+    {
+      "template": "amberdawn32",
+      "image": "amberdawn32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2589607,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/amberdawn32/editor.html",
+      "source_id": "T24908_00",
+      "source_kind": "source",
+      "report": "amberdawn32.json"
+    },
+    {
+      "template": "birvase32",
+      "image": "birvase32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 4287047,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/birvase32/editor.html",
+      "source_id": "T33110_08",
+      "source_kind": "source",
+      "report": "birvase32.json"
+    },
+    {
+      "template": "blossom32",
+      "image": "blossom32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 882656,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/blossom32/editor.html",
+      "source_id": "T28576_08",
+      "source_kind": "source",
+      "report": "blossom32.json"
+    },
+    {
+      "template": "boots32",
+      "image": "boots32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1291615,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/boots32/editor.html",
+      "source_id": "T24507_04",
+      "source_kind": "source",
+      "report": "boots32.json"
+    },
+    {
+      "template": "brutal32",
+      "image": "brutal32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1394272,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/brutal32/editor.html",
+      "source_id": "T13692_06",
+      "source_kind": "source",
+      "report": "brutal32.json"
+    },
+    {
+      "template": "card32",
+      "image": "card32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 767894,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/card32/editor.html",
+      "source_id": null,
+      "source_kind": "none",
+      "report": "card32.json"
+    },
+    {
+      "template": "cliffpostcard32",
+      "image": "cliffpostcard32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1318844,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/cliffpostcard32/editor.html",
+      "source_id": "T30332_02",
+      "source_kind": "source",
+      "report": "cliffpostcard32.json"
+    },
+    {
+      "template": "colosseum32",
+      "image": "colosseum32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2154881,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/colosseum32/editor.html",
+      "source_id": "T26074_01",
+      "source_kind": "source",
+      "report": "colosseum32.json"
+    },
+    {
+      "template": "confident32",
+      "image": "confident32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 801026,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/confident32/editor.html",
+      "source_id": "T28576_04",
+      "source_kind": "source",
+      "report": "confident32.json"
+    },
+    {
+      "template": "contactlist32",
+      "image": "contactlist32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 858284,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/contactlist32/editor.html",
+      "source_id": "T30332_06",
+      "source_kind": "source",
+      "report": "contactlist32.json"
+    },
+    {
+      "template": "contour32",
+      "image": "contour32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 90201,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/contour32/editor.html",
+      "source_id": "T30930_03",
+      "source_kind": "source",
+      "report": "contour32.json"
+    },
+    {
+      "template": "crest32",
+      "image": "crest32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 392998,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/crest32/editor.html",
+      "source_id": "T27485_08",
+      "source_kind": "source",
+      "report": "crest32.json"
+    },
+    {
+      "template": "demolition32",
+      "image": "demolition32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2678836,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/demolition32/editor.html",
+      "source_id": "T19827_06",
+      "source_kind": "source",
+      "report": "demolition32.json"
+    },
+    {
+      "template": "duo32",
+      "image": "duo32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1776953,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/duo32/editor.html",
+      "source_id": "T30173_08",
+      "source_kind": "source",
+      "report": "duo32.json"
+    },
+    {
+      "template": "electromagnetic32",
+      "image": "electromagnetic32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2728760,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/electromagnetic32/editor.html",
+      "source_id": "T19827_01",
+      "source_kind": "source",
+      "report": "electromagnetic32.json"
+    },
+    {
+      "template": "feature32",
+      "image": "feature32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 983188,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/feature32/editor.html",
+      "source_id": "T27485_07",
+      "source_kind": "source",
+      "report": "feature32.json"
+    },
+    {
+      "template": "focusposter32",
+      "image": "focusposter32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 780204,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/focusposter32/editor.html",
+      "source_id": "T28576_06",
+      "source_kind": "source",
+      "report": "focusposter32.json"
+    },
+    {
+      "template": "freakscene32",
+      "image": "freakscene32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2191775,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/freakscene32/editor.html",
+      "source_id": "T26074_03",
+      "source_kind": "source",
+      "report": "freakscene32.json"
+    },
+    {
+      "template": "funkyfashion32",
+      "image": "funkyfashion32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 758000,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/funkyfashion32/editor.html",
+      "source_id": "T26289_01",
+      "source_kind": "source",
+      "report": "funkyfashion32.json"
+    },
+    {
+      "template": "gelatocards32",
+      "image": "gelatocards32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1573313,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/gelatocards32/editor.html",
+      "source_id": "T24908_03",
+      "source_kind": "source",
+      "report": "gelatocards32.json"
+    },
+    {
+      "template": "glyphsheet32",
+      "image": "glyphsheet32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1953175,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/glyphsheet32/editor.html",
+      "source_id": "T26074_02",
+      "source_kind": "source",
+      "report": "glyphsheet32.json"
+    },
+    {
+      "template": "greetingsgrid32",
+      "image": "greetingsgrid32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2159279,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/greetingsgrid32/editor.html",
+      "source_id": "T26074_06",
+      "source_kind": "source",
+      "report": "greetingsgrid32.json"
+    },
+    {
+      "template": "hand32",
+      "image": "hand32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 106550,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/hand32/editor.html",
+      "source_id": "T33144_02",
+      "source_kind": "source",
+      "report": "hand32.json"
+    },
+    {
+      "template": "herbalproduct32",
+      "image": "herbalproduct32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 801633,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/herbalproduct32/editor.html",
+      "source_id": "T26223_05",
+      "source_kind": "source",
+      "report": "herbalproduct32.json"
+    },
+    {
+      "template": "kindersea32",
+      "image": "kindersea32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2016090,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/kindersea32/editor.html",
+      "source_id": "T30332_04",
+      "source_kind": "source",
+      "report": "kindersea32.json"
+    },
+    {
+      "template": "latestlook32",
+      "image": "latestlook32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2554512,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/latestlook32/editor.html",
+      "source_id": "T24908_02",
+      "source_kind": "source",
+      "report": "latestlook32.json"
+    },
+    {
+      "template": "line32",
+      "image": "line32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 754868,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/line32/editor.html",
+      "source_id": null,
+      "source_kind": "none",
+      "report": "line32.json"
+    },
+    {
+      "template": "mangos32",
+      "image": "mangos32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 218112,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/mangos32/editor.html",
+      "source_id": "T30930_07",
+      "source_kind": "source",
+      "report": "mangos32.json"
+    },
+    {
+      "template": "mangosboard32",
+      "image": "mangosboard32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 199159,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/mangosboard32/editor.html",
+      "source_id": "T30930_04",
+      "source_kind": "source",
+      "report": "mangosboard32.json"
+    },
+    {
+      "template": "manualbrew32",
+      "image": "manualbrew32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 66162,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/manualbrew32/editor.html",
+      "source_id": "T26223_03",
+      "source_kind": "source",
+      "report": "manualbrew32.json"
+    },
+    {
+      "template": "meditation32",
+      "image": "meditation32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2099749,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/meditation32/editor.html",
+      "source_id": "T25990_02",
+      "source_kind": "source",
+      "report": "meditation32.json"
+    },
+    {
+      "template": "messageframe32",
+      "image": "messageframe32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2308783,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/messageframe32/editor.html",
+      "source_id": "T30332_05",
+      "source_kind": "source",
+      "report": "messageframe32.json"
+    },
+    {
+      "template": "mirror32",
+      "image": "mirror32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 775337,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/mirror32/editor.html",
+      "source_id": "T13692_12",
+      "source_kind": "source",
+      "report": "mirror32.json"
+    },
+    {
+      "template": "mountain32",
+      "image": "mountain32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 596570,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/mountain32/editor.html",
+      "source_id": "T33631_05",
+      "source_kind": "source",
+      "report": "mountain32.json"
+    },
+    {
+      "template": "neon32",
+      "image": "neon32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2139354,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/neon32/editor.html",
+      "source_id": "T30173_07",
+      "source_kind": "source",
+      "report": "neon32.json"
+    },
+    {
+      "template": "neue32",
+      "image": "neue32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 110122,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/neue32/editor.html",
+      "source_id": "T25441_04",
+      "source_kind": "source",
+      "report": "neue32.json"
+    },
+    {
+      "template": "ovalword32",
+      "image": "ovalword32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1047426,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/ovalword32/editor.html",
+      "source_id": "T30332_00",
+      "source_kind": "source",
+      "report": "ovalword32.json"
+    },
+    {
+      "template": "pastpresent32",
+      "image": "pastpresent32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 966581,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/pastpresent32/editor.html",
+      "source_id": "T26223_04",
+      "source_kind": "source",
+      "report": "pastpresent32.json"
+    },
+    {
+      "template": "phonegarden32",
+      "image": "phonegarden32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 854409,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/phonegarden32/editor.html",
+      "source_id": "T30332_08",
+      "source_kind": "source",
+      "report": "phonegarden32.json"
+    },
+    {
+      "template": "pixelquote32",
+      "image": "pixelquote32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 102199,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/pixelquote32/editor.html",
+      "source_id": "T30332_09",
+      "source_kind": "source",
+      "report": "pixelquote32.json"
+    },
+    {
+      "template": "plakat32",
+      "image": "plakat32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 771840,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/plakat32/editor.html",
+      "source_id": "T27673_00",
+      "source_kind": "source",
+      "report": "plakat32.json"
+    },
+    {
+      "template": "plakatart32",
+      "image": "plakatart32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2045568,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/plakatart32/editor.html",
+      "source_id": "T27673_10",
+      "source_kind": "source",
+      "report": "plakatart32.json"
+    },
+    {
+      "template": "quote32",
+      "image": "quote32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1066829,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/quote32/editor.html",
+      "source_id": "T24954_05",
+      "source_kind": "source",
+      "report": "quote32.json"
+    },
+    {
+      "template": "ravencover32",
+      "image": "ravencover32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2834960,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/ravencover32/editor.html",
+      "source_id": "T28660_00",
+      "source_kind": "source",
+      "report": "ravencover32.json"
+    },
+    {
+      "template": "rio32",
+      "image": "rio32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2193447,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/rio32/editor.html",
+      "source_id": "T24250_04",
+      "source_kind": "source",
+      "report": "rio32.json"
+    },
+    {
+      "template": "roadrunner32",
+      "image": "roadrunner32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2561855,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../T26074-12/layout-editor.html",
+      "source_id": "T26074_12",
+      "source_kind": "source",
+      "report": "roadrunner32.json"
+    },
+    {
+      "template": "signalclock32",
+      "image": "signalclock32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 47475,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/signalclock32/editor.html",
+      "source_id": "T26392_08",
+      "source_kind": "source",
+      "report": "signalclock32.json"
+    },
+    {
+      "template": "skinbadge32",
+      "image": "skinbadge32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1144869,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/skinbadge32/editor.html",
+      "source_id": "T24908_01",
+      "source_kind": "source",
+      "report": "skinbadge32.json"
+    },
+    {
+      "template": "soldier32",
+      "image": "soldier32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 311916,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/soldier32/editor.html",
+      "source_id": "T13692_03",
+      "source_kind": "source",
+      "report": "soldier32.json"
+    },
+    {
+      "template": "stadiumposter32",
+      "image": "stadiumposter32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 3292359,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/stadiumposter32/editor.html",
+      "source_id": "T21458_11",
+      "source_kind": "source",
+      "report": "stadiumposter32.json"
+    },
+    {
+      "template": "stardust32",
+      "image": "stardust32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2527166,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/stardust32/editor.html",
+      "source_id": "T30332_01",
+      "source_kind": "source",
+      "report": "stardust32.json"
+    },
+    {
+      "template": "storyteller32",
+      "image": "storyteller32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 757603,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/storyteller32/editor.html",
+      "source_id": "T28576_05",
+      "source_kind": "source",
+      "report": "storyteller32.json"
+    },
+    {
+      "template": "strongweak32",
+      "image": "strongweak32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 160843,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/strongweak32/editor.html",
+      "source_id": "T26289_00",
+      "source_kind": "source",
+      "report": "strongweak32.json"
+    },
+    {
+      "template": "sunsetpromise32",
+      "image": "sunsetpromise32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2691938,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/sunsetpromise32/editor.html",
+      "source_id": "T30332_07",
+      "source_kind": "source",
+      "report": "sunsetpromise32.json"
+    },
+    {
+      "template": "typewall32",
+      "image": "typewall32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 278640,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": "Repeated typewall lettering intentionally runs beyond the square edges.",
+      "editor": "../../templates/typewall32/editor.html",
+      "source_id": "T26223_02",
+      "source_kind": "source",
+      "report": "typewall32.json"
+    },
+    {
+      "template": "voguecover32",
+      "image": "voguecover32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 866739,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/voguecover32/editor.html",
+      "source_id": "T28576_03",
+      "source_kind": "source",
+      "report": "voguecover32.json"
+    },
+    {
+      "template": "weightfamily32",
+      "image": "weightfamily32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 114646,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/weightfamily32/editor.html",
+      "source_id": "T30930_01",
+      "source_kind": "source",
+      "report": "weightfamily32.json"
+    },
+    {
+      "template": "wideclaim32",
+      "image": "wideclaim32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 98239,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/wideclaim32/editor.html",
+      "source_id": "T28576_07",
+      "source_kind": "source",
+      "report": "wideclaim32.json"
+    },
+    {
+      "template": "yearposter32",
+      "image": "yearposter32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 3381633,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/yearposter32/editor.html",
+      "source_id": "T21458_04",
+      "source_kind": "source",
+      "report": "yearposter32.json"
+    },
+    {
+      "template": "zebra32",
+      "image": "zebra32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1544908,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "BigRiff-Regular.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/zebra32/editor.html",
+      "source_id": "T13692_01",
+      "source_kind": "source",
+      "report": "zebra32.json"
+    },
+    {
+      "template": "line32",
+      "variant": "Blackletter",
+      "image": "blackletter-support-1_line32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 852487,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/line32/editor.html",
+      "source_id": null,
+      "source_kind": "none",
+      "report": "blackletter-support-1_line32.json"
+    },
+    {
+      "template": "duo32",
+      "variant": "Blackletter",
+      "image": "blackletter-support-2_duo32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1923297,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/duo32/editor.html",
+      "source_id": "T30173_08",
+      "source_kind": "source",
+      "report": "blackletter-support-2_duo32.json"
+    },
+    {
+      "template": "card32",
+      "variant": "Blackletter",
+      "image": "blackletter-support-3_card32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 823742,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/card32/editor.html",
+      "source_id": null,
+      "source_kind": "none",
+      "report": "blackletter-support-3_card32.json"
+    },
+    {
+      "template": "feature32",
+      "variant": "Blackletter",
+      "image": "blackletter-support-4_feature32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1032315,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/feature32/editor.html",
+      "source_id": "T27485_07",
+      "source_kind": "source",
+      "report": "blackletter-support-4_feature32.json"
+    },
+    {
+      "template": "neon32",
+      "variant": "Blackletter",
+      "image": "blackletter-support-6_neon32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2330684,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/neon32/editor.html",
+      "source_id": "T30173_07",
+      "source_kind": "source",
+      "report": "blackletter-support-6_neon32.json"
+    },
+    {
+      "template": "quote32",
+      "variant": "Blackletter",
+      "image": "blackletter-support-7_quote32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1196398,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/quote32/editor.html",
+      "source_id": "T24954_05",
+      "source_kind": "source",
+      "report": "blackletter-support-7_quote32.json"
+    },
+    {
+      "template": "crest32",
+      "variant": "Blackletter",
+      "image": "blackletter-support-8_crest32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 415580,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/crest32/editor.html",
+      "source_id": "T27485_08",
+      "source_kind": "source",
+      "report": "blackletter-support-8_crest32.json"
+    },
+    {
+      "template": "hand32",
+      "variant": "Blackletter",
+      "image": "blackletter-support-12_hand32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 112529,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/hand32/editor.html",
+      "source_id": "T33144_02",
+      "source_kind": "source",
+      "report": "blackletter-support-12_hand32.json"
+    },
+    {
+      "template": "boots32",
+      "variant": "Blackletter",
+      "image": "blackletter-support-19_boots32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1310395,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/boots32/editor.html",
+      "source_id": "T24507_04",
+      "source_kind": "source",
+      "report": "blackletter-support-19_boots32.json"
+    },
+    {
+      "template": "roadrunner32",
+      "variant": "Blackletter",
+      "image": "blackletter-support-70_roadrunner32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2539095,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../T26074-12/layout-editor.html",
+      "source_id": "T26074_12",
+      "source_kind": "source",
+      "report": "blackletter-support-70_roadrunner32.json"
+    },
+    {
+      "template": "roseposter32",
+      "title": "Rose Garden Broadside",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-roseposter32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1614979,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/roseposter32/editor.html",
+      "source_id": "T23026_00",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-roseposter32.json"
+    },
+    {
+      "template": "flowerpair32",
+      "title": "Flower And Monogram Pair",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-flowerpair32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 809366,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/flowerpair32/editor.html",
+      "source_id": "T23026_02",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-flowerpair32.json"
+    },
+    {
+      "template": "threepanel32",
+      "title": "Botanical Three Panel",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-threepanel32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1421913,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/threepanel32/editor.html",
+      "source_id": "T23026_03",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-threepanel32.json"
+    },
+    {
+      "template": "checkerword32",
+      "title": "Six Tile Word Board",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-checkerword32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 655885,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/checkerword32/editor.html",
+      "source_id": "T23026_04",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-checkerword32.json"
+    },
+    {
+      "template": "wildfall32",
+      "title": "Wildfall Landscape Poster",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-wildfall32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2451830,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/wildfall32/editor.html",
+      "source_id": "T28036_00",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-wildfall32.json"
+    },
+    {
+      "template": "silentstack32",
+      "title": "Silent Hour Type Stack",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-silentstack32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 668505,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/silentstack32/editor.html",
+      "source_id": "T28036_01",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-silentstack32.json"
+    },
+    {
+      "template": "streetwear32",
+      "title": "Streetwear Specimen Lockup",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-streetwear32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 907911,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/streetwear32/editor.html",
+      "source_id": "T28036_04",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-streetwear32.json"
+    },
+    {
+      "template": "bettersunday32",
+      "title": "Better Sunday Date Pair",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-bettersunday32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 579503,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/bettersunday32/editor.html",
+      "source_id": "T28036_07",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-bettersunday32.json"
+    },
+    {
+      "template": "instrumentboard32",
+      "title": "Letterform Instrument Board",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-instrumentboard32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 947654,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/instrumentboard32/editor.html",
+      "source_id": "T28798_00",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-instrumentboard32.json"
+    },
+    {
+      "template": "fairytalecrest32",
+      "title": "Fairytale Crest Display",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-fairytalecrest32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 966826,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/fairytalecrest32/editor.html",
+      "source_id": "T32600_01",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-fairytalecrest32.json"
+    },
+    {
+      "template": "vermiliondate32",
+      "title": "Vermilion Date Poster",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-vermiliondate32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1325046,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/vermiliondate32/editor.html",
+      "source_id": "T32600_02",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-vermiliondate32.json"
+    },
+    {
+      "template": "moonlitbouquet32",
+      "title": "Moonlit Bouquet Poster",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-moonlitbouquet32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1164034,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/moonlitbouquet32/editor.html",
+      "source_id": "T32600_03",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-moonlitbouquet32.json"
+    },
+    {
+      "template": "wildsoulmark32",
+      "title": "Wild Soul Mark",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-wildsoulmark32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1036038,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/wildsoulmark32/editor.html",
+      "source_id": "T32600_05",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-wildsoulmark32.json"
+    },
+    {
+      "template": "concertbill32",
+      "title": "Concert Bill Poster",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-concertbill32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 982741,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/concertbill32/editor.html",
+      "source_id": "T32600_06",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-concertbill32.json"
+    },
+    {
+      "template": "velvetritual32",
+      "title": "Beltino Blackletter Poster",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-velvetritual32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1611005,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/velvetritual32/editor.html",
+      "source_id": "T32811_00",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-velvetritual32.json"
+    },
+    {
+      "template": "legacycrypt32",
+      "title": "Legacy And Crypt Display",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-legacycrypt32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1725257,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/legacycrypt32/editor.html",
+      "source_id": "T32811_03",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-legacycrypt32.json"
+    },
+    {
+      "template": "unleashed32",
+      "title": "Unleashed Infernal Poster",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-unleashed32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 2139234,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/unleashed32/editor.html",
+      "source_id": "T32811_07",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-unleashed32.json"
+    },
+    {
+      "template": "thankyou32",
+      "title": "Thank You Skull Poster",
+      "variant": "Blackletter Reference",
+      "image": "blackletter-reference-thankyou32.png",
+      "dimensions": [
+        1600,
+        1600
+      ],
+      "bytes": 1397476,
+      "ratio": "1x1",
+      "renderer": "HTML/CSS + headless Chromium",
+      "font": "Esviga.ttf",
+      "status": "PASS",
+      "issues": [],
+      "intentional_pattern_crop": null,
+      "editor": "../../templates/thankyou32/editor.html",
+      "source_id": "T32811_10",
+      "source_kind": "blackletter-reference",
+      "report": "blackletter-reference-thankyou32.json"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "contour32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "contour32",
+    "headlineFontSize": "124.02px",
+    "smallestDisplayFontSize": "32.8px",
+    "contrast": 17.68423324024098,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "source-frame",
+        "text": "",
+        "fontSize": "16px",
+        "x": 28.390625,
+        "y": 39.1875,
+        "width": 743.21875,
+        "height": 720.8125
+      },
+      {
+        "name": "ligature-caption",
+        "text": "9 Ligatures",
+        "fontSize": "32.8px",
+        "x": 310.3125,
+        "y": 256.796875,
+        "width": 179.375,
+        "height": 41.59375
+      },
+      {
+        "name": "upper-glyph-row",
+        "text": "ADCAQO",
+        "fontSize": "124.02px",
+        "x": 47.839996337890625,
+        "y": 312,
+        "width": 704.320068359375,
+        "height": 196
+      },
+      {
+        "name": "lower-glyph-row",
+        "text": "STSZTTZS",
+        "fontSize": "106.21px",
+        "x": 47.839996337890625,
+        "y": 540.796875,
+        "width": 704.320068359375,
+        "height": 188
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/contour32.png",
+  "outputBytes": 90201
+}

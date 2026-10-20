@@ -1,0 +1,3 @@
+/* The script retains its natural slant; each line uses the specimen's color rhythm. */
+.template--letter_study [data-layout-item^="line"] { font-style:italic; }
+.template--letter_study [data-layout-item="word"] { font-style:italic; }

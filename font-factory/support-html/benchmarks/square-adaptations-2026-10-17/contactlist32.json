@@ -1,0 +1,202 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "contactlist32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "contactlist32",
+    "headlineFontSize": "57.6px",
+    "smallestDisplayFontSize": "57.6px",
+    "contrast": 8.44915703003283,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "clean-source-index-plate",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "index-row-1",
+        "text": "01.Misread",
+        "fontSize": "16px",
+        "x": 96,
+        "y": 96,
+        "width": 608,
+        "height": 56
+      },
+      {
+        "name": "index-copy-1",
+        "text": "01.Misread",
+        "fontSize": "57.6px",
+        "x": 246.40625,
+        "y": 97.796875,
+        "width": 307.1875,
+        "height": 52.40625
+      },
+      {
+        "name": "index-row-2",
+        "text": "02.Cayman Island",
+        "fontSize": "16px",
+        "x": 96,
+        "y": 168.796875,
+        "width": 608,
+        "height": 56
+      },
+      {
+        "name": "index-copy-2",
+        "text": "02.Cayman Island",
+        "fontSize": "57.6px",
+        "x": 137.234375,
+        "y": 170.59375,
+        "width": 525.515625,
+        "height": 52.40625
+      },
+      {
+        "name": "index-row-3",
+        "text": "03.Homesick",
+        "fontSize": "16px",
+        "x": 96,
+        "y": 241.59375,
+        "width": 608,
+        "height": 56
+      },
+      {
+        "name": "index-copy-3",
+        "text": "03.Homesick",
+        "fontSize": "57.6px",
+        "x": 208.640625,
+        "y": 243.390625,
+        "width": 382.71875,
+        "height": 52.40625
+      },
+      {
+        "name": "index-row-4",
+        "text": "04.Boat Behind",
+        "fontSize": "16px",
+        "x": 96,
+        "y": 314.390625,
+        "width": 608,
+        "height": 56
+      },
+      {
+        "name": "index-copy-4",
+        "text": "04.Boat Behind",
+        "fontSize": "57.6px",
+        "x": 179.671875,
+        "y": 316.1875,
+        "width": 440.65625,
+        "height": 52.40625
+      },
+      {
+        "name": "index-row-5",
+        "text": "05.Rumours",
+        "fontSize": "16px",
+        "x": 96,
+        "y": 387.1875,
+        "width": 608,
+        "height": 56
+      },
+      {
+        "name": "index-copy-5",
+        "text": "05.Rumours",
+        "fontSize": "57.6px",
+        "x": 223.953125,
+        "y": 388.984375,
+        "width": 352.09375,
+        "height": 52.40625
+      },
+      {
+        "name": "index-row-6",
+        "text": "06.Renegade",
+        "fontSize": "16px",
+        "x": 96,
+        "y": 460,
+        "width": 608,
+        "height": 56
+      },
+      {
+        "name": "index-copy-6",
+        "text": "06.Renegade",
+        "fontSize": "57.6px",
+        "x": 206.625,
+        "y": 461.796875,
+        "width": 386.75,
+        "height": 52.40625
+      },
+      {
+        "name": "index-row-7",
+        "text": "07.Summer on",
+        "fontSize": "16px",
+        "x": 96,
+        "y": 532.796875,
+        "width": 608,
+        "height": 56
+      },
+      {
+        "name": "index-copy-7",
+        "text": "07.Summer on",
+        "fontSize": "57.6px",
+        "x": 190.921875,
+        "y": 534.59375,
+        "width": 418.140625,
+        "height": 52.40625
+      },
+      {
+        "name": "index-row-8",
+        "text": "The Westhill",
+        "fontSize": "16px",
+        "x": 96,
+        "y": 605.59375,
+        "width": 608,
+        "height": 56
+      },
+      {
+        "name": "index-copy-8",
+        "text": "The Westhill",
+        "fontSize": "57.6px",
+        "x": 222.453125,
+        "y": 607.390625,
+        "width": 355.09375,
+        "height": 52.40625
+      },
+      {
+        "name": "track-list-tab-label",
+        "text": "Track List",
+        "fontSize": "18px",
+        "x": 644,
+        "y": 679.1875,
+        "width": 91.1875,
+        "height": 28
+      },
+      {
+        "name": "catalogue-number-tab-label",
+        "text": "No. 07",
+        "fontSize": "16.8px",
+        "x": 660,
+        "y": 737.59375,
+        "width": 59.1875,
+        "height": 20.796875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/contactlist32.png",
+  "outputBytes": 858284
+}

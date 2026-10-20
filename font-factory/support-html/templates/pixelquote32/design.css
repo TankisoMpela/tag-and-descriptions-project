@@ -1,0 +1,41 @@
+#artboard {
+  --quote-pink: #f44c9d;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #040406;
+  color: var(--quote-pink);
+}
+
+.pixel-ornament,
+.quote-row,
+.quote-line {
+  position: absolute;
+}
+
+.pixel-ornament {
+  object-fit: fill;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.quote-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.quote-line {
+  display: inline-block;
+  color: var(--quote-pink);
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 15.8cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .88;
+  text-align: center;
+  white-space: nowrap;
+}

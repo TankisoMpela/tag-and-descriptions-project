@@ -1,0 +1,176 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/brutal32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/brutal32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 17.8,
+  "desktopLayout": {
+    "frame": {
+      "width": 540,
+      "height": 360
+    },
+    "headlineFontSize": "33.57",
+    "inkOnPaperContrast": "10.95",
+    "slots": [
+      {
+        "name": "line-1",
+        "text": "BRUTALISM",
+        "x": 132.8,
+        "y": 99.7,
+        "width": 274.3,
+        "height": 46.8,
+        "fontSize": 47.96
+      },
+      {
+        "name": "line-2",
+        "text": "A PLAY BETWEEN",
+        "x": 56.2,
+        "y": 140,
+        "width": 435.8,
+        "height": 46.8,
+        "fontSize": 49.77
+      },
+      {
+        "name": "line-3",
+        "text": "CRUDITY",
+        "x": 166.3,
+        "y": 181.1,
+        "width": 143.1,
+        "height": 46.8,
+        "fontSize": 33.57
+      },
+      {
+        "name": "line-4",
+        "text": "AND FINESSE",
+        "x": 104.2,
+        "y": 221,
+        "width": 336.4,
+        "height": 46.8,
+        "fontSize": 47.96
+      },
+      {
+        "name": "photo-northwest",
+        "text": "",
+        "x": 92.3,
+        "y": 58.7,
+        "width": 107.5,
+        "height": 52.2,
+        "fontSize": 14
+      },
+      {
+        "name": "photo-northeast",
+        "text": "",
+        "x": 346.1,
+        "y": 59.8,
+        "width": 107.5,
+        "height": 52.2,
+        "fontSize": 14
+      },
+      {
+        "name": "photo-southwest",
+        "text": "",
+        "x": 65.9,
+        "y": 185,
+        "width": 107.5,
+        "height": 52.2,
+        "fontSize": 14
+      },
+      {
+        "name": "photo-southeast",
+        "text": "",
+        "x": 285.1,
+        "y": 247.3,
+        "width": 107.5,
+        "height": 52.2,
+        "fontSize": 14
+      }
+    ],
+    "outOfBounds": []
+  },
+  "mobileLayout": {
+    "frame": {
+      "width": 354,
+      "height": 236
+    },
+    "headlineFontSize": "22.07",
+    "inkOnPaperContrast": "10.95",
+    "slots": [
+      {
+        "name": "line-1",
+        "text": "BRUTALISM",
+        "x": 87.1,
+        "y": 65.4,
+        "width": 179.8,
+        "height": 30.7,
+        "fontSize": 32.47
+      },
+      {
+        "name": "line-2",
+        "text": "A PLAY BETWEEN",
+        "x": 36.8,
+        "y": 91.8,
+        "width": 285.7,
+        "height": 30.7,
+        "fontSize": 33.41
+      },
+      {
+        "name": "line-3",
+        "text": "CRUDITY",
+        "x": 109,
+        "y": 118.7,
+        "width": 93.8,
+        "height": 30.7,
+        "fontSize": 22.07
+      },
+      {
+        "name": "line-4",
+        "text": "AND FINESSE",
+        "x": 68.3,
+        "y": 144.9,
+        "width": 220.5,
+        "height": 30.7,
+        "fontSize": 33.41
+      },
+      {
+        "name": "photo-northwest",
+        "text": "",
+        "x": 60.5,
+        "y": 38.5,
+        "width": 70.4,
+        "height": 34.2,
+        "fontSize": 14
+      },
+      {
+        "name": "photo-northeast",
+        "text": "",
+        "x": 226.9,
+        "y": 39.2,
+        "width": 70.4,
+        "height": 34.2,
+        "fontSize": 14
+      },
+      {
+        "name": "photo-southwest",
+        "text": "",
+        "x": 43.2,
+        "y": 121.3,
+        "width": 70.4,
+        "height": 34.2,
+        "fontSize": 14
+      },
+      {
+        "name": "photo-southeast",
+        "text": "",
+        "x": 186.9,
+        "y": 162.1,
+        "width": 70.4,
+        "height": 34.2,
+        "fontSize": 14
+      }
+    ],
+    "outOfBounds": []
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/meditation32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/meditation32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 23.7,
+  "imageBytes": {
+    "html": 3026432,
+    "skia": 1929952
+  },
+  "desktopLayout": {
+    "template": "meditation32",
+    "headlineFontSize": "102.829px",
+    "contrast": 2.0966622266240766,
+    "contrastException": {
+      "minimum": 1.55,
+      "rationale": "The source keeps large white display lettering over a deliberately soft pastel gradient."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "meditation-woven-paper",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "meditation-bubble-art",
+        "text": "",
+        "fontSize": "16px",
+        "x": 39,
+        "y": 0,
+        "width": 631.078125,
+        "height": 271.8125
+      },
+      {
+        "name": "meditation-sparkle-top-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 14.171875,
+        "y": 18.90625,
+        "width": 49.625,
+        "height": 49.625
+      },
+      {
+        "name": "meditation-sparkle-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 621.1875,
+        "y": 165.4375,
+        "width": 45.375,
+        "height": 45.375
+      },
+      {
+        "name": "meditation-sparkle-small",
+        "text": "",
+        "fontSize": "16px",
+        "x": 672.953125,
+        "y": 122.90625,
+        "width": 25.515625,
+        "height": 25.515625
+      },
+      {
+        "name": "meditation-headline",
+        "text": "MEDITATION",
+        "fontSize": "102.829px",
+        "x": 56.8046875,
+        "y": 35.453125,
+        "width": 595.484375,
+        "height": 88.421875
+      },
+      {
+        "name": "meditation-workshop-pill",
+        "text": "WORKSHOP",
+        "fontSize": "13.2361px",
+        "x": 262.359375,
+        "y": 196.171875,
+        "width": 184.359375,
+        "height": 30.71875
+      },
+      {
+        "name": "meditation-sea-photo",
+        "text": "",
+        "fontSize": "16px",
+        "x": 70.90625,
+        "y": 259.984375,
+        "width": 567.265625,
+        "height": 137.078125
+      },
+      {
+        "name": "meditation-reset-burst",
+        "text": "DISC\n30%",
+        "fontSize": "14.1816px",
+        "x": 0,
+        "y": 170.171875,
+        "width": 191.453125,
+        "height": 137.078125
+      },
+      {
+        "name": "meditation-footer-left",
+        "text": "SEPTEMBER 30",
+        "fontSize": "10.6362px",
+        "x": 70.90625,
+        "y": 409.84375,
+        "width": 63.578125,
+        "height": 10.640625
+      },
+      {
+        "name": "meditation-year",
+        "text": "2025",
+        "fontSize": "25.5268px",
+        "x": 70.90625,
+        "y": 422.609375,
+        "width": 47.359375,
+        "height": 22.453125
+      },
+      {
+        "name": "meditation-footer-right",
+        "text": "SIGN UP HERE\nWWW.MEDITATEWITHDELAINE.COM",
+        "fontSize": "10.8725px",
+        "x": 382.921875,
+        "y": 409.359375,
+        "width": 255.265625,
+        "height": 26.09375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "meditation32",
+    "headlineFontSize": "58px",
+    "contrast": 2.0966622266240766,
+    "contrastException": {
+      "minimum": 1.55,
+      "rationale": "The source keeps large white display lettering over a deliberately soft pastel gradient."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "meditation-woven-paper",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "meditation-bubble-art",
+        "text": "",
+        "fontSize": "16px",
+        "x": 19.359375,
+        "y": 0,
+        "width": 313.265625,
+        "height": 134.921875
+      },
+      {
+        "name": "meditation-sparkle-top-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 7.03125,
+        "y": 9.375,
+        "width": 24.625,
+        "height": 24.625
+      },
+      {
+        "name": "meditation-sparkle-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 308.375,
+        "y": 82.125,
+        "width": 22.515625,
+        "height": 22.515625
+      },
+      {
+        "name": "meditation-sparkle-small",
+        "text": "",
+        "fontSize": "16px",
+        "x": 334.0625,
+        "y": 61,
+        "width": 12.671875,
+        "height": 12.671875
+      },
+      {
+        "name": "meditation-headline",
+        "text": "MEDITATION",
+        "fontSize": "58px",
+        "x": 8.03125,
+        "y": 17.59375,
+        "width": 335.9375,
+        "height": 49.875
+      },
+      {
+        "name": "meditation-workshop-pill",
+        "text": "WORKSHOP",
+        "fontSize": "6.57037px",
+        "x": 130.234375,
+        "y": 97.375,
+        "width": 91.515625,
+        "height": 15.25
+      },
+      {
+        "name": "meditation-sea-photo",
+        "text": "",
+        "fontSize": "16px",
+        "x": 35.1875,
+        "y": 129.046875,
+        "width": 281.59375,
+        "height": 68.046875
+      },
+      {
+        "name": "meditation-reset-burst",
+        "text": "DISC\n30%",
+        "fontSize": "7.03969px",
+        "x": 0,
+        "y": 84.46875,
+        "width": 95.03125,
+        "height": 68.046875
+      },
+      {
+        "name": "meditation-footer-left",
+        "text": "SEPTEMBER 30",
+        "fontSize": "5.27977px",
+        "x": 35.1875,
+        "y": 203.4375,
+        "width": 31.515625,
+        "height": 5.28125
+      },
+      {
+        "name": "meditation-year",
+        "text": "2025",
+        "fontSize": "12.6714px",
+        "x": 35.1875,
+        "y": 209.78125,
+        "width": 23.5,
+        "height": 11.140625
+      },
+      {
+        "name": "meditation-footer-right",
+        "text": "SIGN UP HERE\nWWW.MEDITATEWITHDELAINE.COM",
+        "fontSize": "5.39709px",
+        "x": 190.09375,
+        "y": 203.203125,
+        "width": 126.71875,
+        "height": 12.9375
+      }
+    ],
+    "contentWarnings": []
+  }
+}

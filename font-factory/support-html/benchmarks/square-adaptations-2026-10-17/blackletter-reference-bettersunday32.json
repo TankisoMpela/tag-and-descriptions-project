@@ -1,0 +1,67 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "bettersunday32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "bettersunday32",
+    "headlineFontSize": "500px",
+    "smallestDisplayFontSize": "86.7699px",
+    "contrast": 15.493987420216227,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "B",
+        "fontSize": "500px",
+        "x": 76,
+        "y": 104,
+        "width": 288,
+        "height": 560
+      },
+      {
+        "name": "headline",
+        "text": "Better",
+        "fontSize": "108.6px",
+        "x": 456.03125,
+        "y": 135.125,
+        "width": 255.921875,
+        "height": 97.734375
+      },
+      {
+        "name": "line2",
+        "text": "Sunday",
+        "fontSize": "86.7699px",
+        "x": 456.03125,
+        "y": 344.953125,
+        "width": 255.921875,
+        "height": 78.078125
+      },
+      {
+        "name": "descriptor",
+        "text": "Date",
+        "fontSize": "146.85px",
+        "x": 456.03125,
+        "y": 517.921875,
+        "width": 255.921875,
+        "height": 132.15625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-reference-bettersunday32.png",
+  "outputBytes": 579503
+}

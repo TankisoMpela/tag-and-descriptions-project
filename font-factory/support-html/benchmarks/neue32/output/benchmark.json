@@ -1,0 +1,195 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/neue32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/neue32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Kaitten-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 31.7,
+  "imageBytes": {
+    "html": 149824,
+    "skia": 195575
+  },
+  "desktopLayout": {
+    "template": "neue32",
+    "headlineFontSize": "82.8998px",
+    "contrast": 11.158274907062891,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "metaLeft",
+        "text": "Type Study / 01",
+        "fontSize": "11.44px",
+        "x": 42.53125,
+        "y": 33.078125,
+        "width": 248.171875,
+        "height": 18.90625
+      },
+      {
+        "name": "metaRight",
+        "text": "Display Sans Design",
+        "fontSize": "11.352px",
+        "x": 482.171875,
+        "y": 33.078125,
+        "width": 184.359375,
+        "height": 18.90625
+      },
+      {
+        "name": "word1",
+        "text": "Neue!",
+        "fontSize": "82.8998px",
+        "x": 31.90625,
+        "y": 75.625,
+        "width": 368.71875,
+        "height": 99.265625
+      },
+      {
+        "name": "word2",
+        "text": "Neue!",
+        "fontSize": "82.8998px",
+        "x": 184.359375,
+        "y": 189.078125,
+        "width": 411.265625,
+        "height": 99.265625
+      },
+      {
+        "name": "word3",
+        "text": "Neue!",
+        "fontSize": "82.8998px",
+        "x": 283.625,
+        "y": 302.53125,
+        "width": 404.171875,
+        "height": 99.265625
+      },
+      {
+        "name": "pillTop",
+        "text": "Instant",
+        "fontSize": "26.0149px",
+        "x": 379.64715576171875,
+        "y": 33.063507080078125,
+        "width": 283.04937744140625,
+        "height": 104.01361083984375
+      },
+      {
+        "name": "pillMid",
+        "text": "Type",
+        "fontSize": "22.2309px",
+        "x": 516.2622680664062,
+        "y": 201.02517700195312,
+        "width": 179.99114990234375,
+        "height": 65.91839599609375
+      },
+      {
+        "name": "pillBottom",
+        "text": "Form",
+        "fontSize": "23.6499px",
+        "x": 10.052978515625,
+        "y": 305.76104736328125,
+        "width": 249.31591796875,
+        "height": 109.3529052734375
+      },
+      {
+        "name": "footer",
+        "text": "A Study In Geometric Form",
+        "fontSize": "9.72px",
+        "x": 42.53125,
+        "y": 434.890625,
+        "width": 304.90625,
+        "height": 16.53125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "neue32",
+    "headlineFontSize": "40.9699px",
+    "contrast": 11.158274907062891,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "metaLeft",
+        "text": "Type Study / 01",
+        "fontSize": "9px",
+        "x": 21.109375,
+        "y": 16.421875,
+        "width": 123.1875,
+        "height": 9.375
+      },
+      {
+        "name": "metaRight",
+        "text": "Display Sans Design",
+        "fontSize": "9px",
+        "x": 239.359375,
+        "y": 16.421875,
+        "width": 91.515625,
+        "height": 9.375
+      },
+      {
+        "name": "word1",
+        "text": "Neue!",
+        "fontSize": "40.9699px",
+        "x": 15.828125,
+        "y": 37.53125,
+        "width": 183.03125,
+        "height": 49.265625
+      },
+      {
+        "name": "word2",
+        "text": "Neue!",
+        "fontSize": "40.9699px",
+        "x": 91.515625,
+        "y": 93.859375,
+        "width": 204.15625,
+        "height": 49.265625
+      },
+      {
+        "name": "word3",
+        "text": "Neue!",
+        "fontSize": "40.9699px",
+        "x": 140.796875,
+        "y": 150.171875,
+        "width": 200.625,
+        "height": 49.265625
+      },
+      {
+        "name": "pillTop",
+        "text": "Instant",
+        "fontSize": "12.925px",
+        "x": 188.4605712890625,
+        "y": 16.40484619140625,
+        "width": 140.500732421875,
+        "height": 51.6278076171875
+      },
+      {
+        "name": "pillMid",
+        "text": "Type",
+        "fontSize": "11.045px",
+        "x": 256.2766418457031,
+        "y": 99.77902221679688,
+        "width": 89.35296630859375,
+        "height": 32.723236083984375
+      },
+      {
+        "name": "pillBottom",
+        "text": "Form",
+        "fontSize": "11.75px",
+        "x": 4.986915588378906,
+        "y": 151.77423095703125,
+        "width": 123.76053619384766,
+        "height": 54.2796630859375
+      },
+      {
+        "name": "footer",
+        "text": "A Study In Geometric Form",
+        "fontSize": "9px",
+        "x": 21.109375,
+        "y": 215.875,
+        "width": 151.359375,
+        "height": 8.203125
+      }
+    ],
+    "contentWarnings": []
+  }
+}

@@ -1,0 +1,3 @@
+/* The title anchors the specimen sheet; rows keep their own clear baselines. */
+.template--carol [data-layout-item="name"] { letter-spacing:-.035em; }
+.template--carol [data-layout-item^="glyphs"] { line-height:1 !important; }

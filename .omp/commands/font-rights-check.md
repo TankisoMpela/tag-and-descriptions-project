@@ -1,0 +1,11 @@
+---
+description: Research the rights status of the staged families in font-factory/input, one web pass per folder, and fan red/amber/green verdicts into each folder's rights-verdicts.json.
+---
+
+Dispatch the registered FontFairy task agent `font-rights-researcher` for this request (the agent reads its canonical spec in `agents/` and executes it).
+
+If the completion lists verdicts per state with evidence, report it and tell the user to press ↻ Refresh in the Input Inspector. Otherwise report the blocker honestly; do not invent a completion.
+
+User request / input:
+
+Please run the font-rights-researcher agent on the staged fonts under font-factory/input. Take the queue from `python3 bin/font_rights.py status --unmarked` — it lists FOLDERS, and the staged folder is the unit of research: one family per folder, one web pass per folder, never one per weight. Per folder run `python3 bin/font_rights.py plan --folder <N>` for the representative (its Regular/normal cut) and the family/holder/fsType/licence it claims, do ONE search (serper, with `'<family>' (myfonts OR fonts.com OR creativefabrica OR dafont OR fontspace)` as the single sweep query), and write with `bin/font_rights.py write … --fanout` so the verdict covers the whole folder. Fetch a page only when the verdict would be clear: a grant has to be read, while red and amber both mean do not ship. States: claimed (still sold by an active holder, needs a live evidence URL on a shop, the holder's own domain, or a type-rights reference — the tool refuses a name-table scraper), orphan (no holder and no licence found — unlicensed, not safe, needs 2 searched avenues, never high confidence), clear (a grant quote the tool verifies verbatim in each binary, or an author reached this run; it never inherits across holders). Drain every folder in natural order unless a folder is named, then run `python3 bin/font_rights.py sync` so the verdicts survive the gitignored staging in the tracked ledger under `outputs/research/`. Never edit a font, manifest, `in-use.txt`, or a listing; sync is the only thing you may write under `outputs/`; never delete duplicates. Make no shipment, licence, or publication claim. Fonts, folders, or constraints: $@

@@ -1,0 +1,103 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "strongweak32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "strongweak32",
+    "headlineFontSize": "145.42px",
+    "smallestDisplayFontSize": "43px",
+    "contrast": 8.0386071219659,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "scalloped-pink-mat",
+        "text": "",
+        "fontSize": "16px",
+        "x": 20,
+        "y": 20,
+        "width": 760,
+        "height": 760
+      },
+      {
+        "name": "cobalt-specimen-panel",
+        "text": "",
+        "fontSize": "16px",
+        "x": 44,
+        "y": 68,
+        "width": 712,
+        "height": 664
+      },
+      {
+        "name": "strongweak-kicker",
+        "text": "Youngtype Studio",
+        "fontSize": "43px",
+        "x": 184.484375,
+        "y": 96,
+        "width": 431.03125,
+        "height": 40.84375
+      },
+      {
+        "name": "strongweak-strongest",
+        "text": "Strongest",
+        "fontSize": "128.96px",
+        "x": 87.90625,
+        "y": 188,
+        "width": 624.1875,
+        "height": 108.3125
+      },
+      {
+        "name": "strongweak-weakest",
+        "text": "Weakest",
+        "fontSize": "145.42px",
+        "x": 87.8828125,
+        "y": 408,
+        "width": 624.234375,
+        "height": 122.140625
+      },
+      {
+        "name": "strongweak-left-sticker",
+        "text": "Hand\nDrawn",
+        "fontSize": "21.2px",
+        "x": 70.75616455078125,
+        "y": 316.57537841796875,
+        "width": 94.4876708984375,
+        "height": 130.8492431640625
+      },
+      {
+        "name": "strongweak-right-sticker",
+        "text": "Stroke\nRegular\nOutline",
+        "fontSize": "21.2px",
+        "x": 674.7561645507812,
+        "y": 316.57537841796875,
+        "width": 94.4876708984375,
+        "height": 130.8492431640625
+      },
+      {
+        "name": "strongweak-footer",
+        "text": "Organic Hand Drawn",
+        "fontSize": "52.36px",
+        "x": 118.015625,
+        "y": 660,
+        "width": 563.96875,
+        "height": 48.15625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/strongweak32.png",
+  "outputBytes": 160843
+}

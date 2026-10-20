@@ -1,0 +1,185 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/wideclaim32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/wideclaim32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Blazher-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 40.7,
+  "imageBytes": {
+    "html": 71529,
+    "skia": 118037
+  },
+  "desktopLayout": {
+    "template": "wideclaim32",
+    "headlineFontSize": "179.16px",
+    "contrast": 4.296407655059233,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The red specimen letters preserve the source poster's oversized red-on-white type treatment."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "opening-statement-row",
+        "text": "A Typeface Is",
+        "fontSize": "16px",
+        "x": 24.09375,
+        "y": 17.015625,
+        "width": 660.875,
+        "height": 81.296875
+      },
+      {
+        "name": "opening-statement",
+        "text": "A Typeface Is",
+        "fontSize": "52px",
+        "x": 31.828125,
+        "y": 34.78125,
+        "width": 645.390625,
+        "height": 45.75
+      },
+      {
+        "name": "second-statement-row",
+        "text": "A Visual Voice",
+        "fontSize": "16px",
+        "x": 24.09375,
+        "y": 102.578125,
+        "width": 660.875,
+        "height": 65.234375
+      },
+      {
+        "name": "second-statement",
+        "text": "A Visual Voice",
+        "fontSize": "47.33px",
+        "x": 31.6875,
+        "y": 114.375,
+        "width": 645.671875,
+        "height": 41.640625
+      },
+      {
+        "name": "display-word-one-row",
+        "text": "Wide",
+        "fontSize": "16px",
+        "x": 24.8125,
+        "y": 167.8125,
+        "width": 659.453125,
+        "height": 146.53125
+      },
+      {
+        "name": "display-word-one",
+        "text": "Wide",
+        "fontSize": "179.16px",
+        "x": 35.90625,
+        "y": 162.25,
+        "width": 637.25,
+        "height": 157.65625
+      },
+      {
+        "name": "display-word-two-row",
+        "text": "Serif",
+        "fontSize": "16px",
+        "x": 26.9375,
+        "y": 323.796875,
+        "width": 655.1875,
+        "height": 137.078125
+      },
+      {
+        "name": "display-word-two",
+        "text": "Serif",
+        "fontSize": "144.659px",
+        "x": 37.140625,
+        "y": 328.6875,
+        "width": 634.78125,
+        "height": 127.296875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "wideclaim32",
+    "headlineFontSize": "88.9598px",
+    "contrast": 4.296407655059233,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The red specimen letters preserve the source poster's oversized red-on-white type treatment."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "opening-statement-row",
+        "text": "A Typeface Is",
+        "fontSize": "16px",
+        "x": 11.953125,
+        "y": 8.4375,
+        "width": 328.0625,
+        "height": 40.359375
+      },
+      {
+        "name": "opening-statement",
+        "text": "A Typeface Is",
+        "fontSize": "25.83px",
+        "x": 15.75,
+        "y": 17.25,
+        "width": 320.46875,
+        "height": 22.71875
+      },
+      {
+        "name": "second-statement-row",
+        "text": "A Visual Voice",
+        "fontSize": "16px",
+        "x": 11.953125,
+        "y": 50.90625,
+        "width": 328.0625,
+        "height": 32.375
+      },
+      {
+        "name": "second-statement",
+        "text": "A Visual Voice",
+        "fontSize": "23.5px",
+        "x": 15.734375,
+        "y": 56.75,
+        "width": 320.5,
+        "height": 20.671875
+      },
+      {
+        "name": "display-word-one-row",
+        "text": "Wide",
+        "fontSize": "16px",
+        "x": 12.3125,
+        "y": 83.296875,
+        "width": 327.359375,
+        "height": 72.734375
+      },
+      {
+        "name": "display-word-one",
+        "text": "Wide",
+        "fontSize": "88.9598px",
+        "x": 17.8125,
+        "y": 80.53125,
+        "width": 316.359375,
+        "height": 78.265625
+      },
+      {
+        "name": "display-word-two-row",
+        "text": "Serif",
+        "fontSize": "16px",
+        "x": 13.375,
+        "y": 160.734375,
+        "width": 325.234375,
+        "height": 68.046875
+      },
+      {
+        "name": "display-word-two",
+        "text": "Serif",
+        "fontSize": "71.8199px",
+        "x": 18.40625,
+        "y": 163.15625,
+        "width": 315.15625,
+        "height": 63.1875
+      }
+    ],
+    "contentWarnings": []
+  }
+}

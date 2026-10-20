@@ -1,0 +1,2 @@
+/* Editable geometry and copy slots are authored in shared/pin-studio.js. */
+.template--set [data-layout-item^="glyph"] { text-shadow:0 2px 0 color-mix(in srgb,var(--darkInk) 10%,transparent); }

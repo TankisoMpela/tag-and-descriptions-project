@@ -4,14 +4,15 @@
 outputs/pinterest/registry.json is the single directory the daily run works
 from: one record per font with its preparation folder, description path,
 TWO product-page URLs (Creative Market + Creative Fabrica), a suggested
-board, and the public Blob URLs of ALL FIVE pin images.
+board, and the public Blob URLs for every manifested template and composite pin.
 
 Usage:
   python3 bin/pinterest_registry.py add --slug quiet-acre --number 90 [--name "Quiet Acre"]
   python3 bin/pinterest_registry.py set-url --slug quiet-acre --url https://creativemarket.com/... [--market creative_market]
   python3 bin/pinterest_registry.py set-url --slug quiet-acre --url https://creativefabrica.com/... --market creative_fabrica
   python3 bin/pinterest_registry.py set-board --slug quiet-acre --board "Script Fonts"
-  python3 bin/pinterest_registry.py upload --slug quiet-acre [--index 3] [--force]   (default: all five images)
+  python3 bin/pinterest_registry.py upload --slug quiet-acre [--index 3] [--force]   (default: complete manifested set)
+  python3 bin/pinterest_registry.py write-urls --slug quiet-acre
   python3 bin/pinterest_registry.py list [--ready]
   python3 bin/pinterest_registry.py show --slug quiet-acre
   Add --json to any command for machine-readable output.
@@ -20,6 +21,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -31,9 +33,8 @@ REGISTRY_PATH = Path("outputs/pinterest/registry.json")
 BOARDS = ["Handwritten Fonts", "Display Fonts", "Script Fonts", "Decorative Fonts"]
 MARKETS = ["creative_market", "creative_fabrica"]
 IMAGE_GLOBS = ("*.png", "*.jpg", "*.jpeg")
-# Each font ships five designed pins (hero, set, wall, phrase, full_stack);
-# the daily run picks one per pin.
-EXPECTED_IMAGES = 5
+PINSET_MANIFEST = "pinterest-set-manifest.json"
+TEMPLATE_MANIFEST = "pinterest-template-manifest.json"
 
 
 def migrate(rec: dict) -> dict:
@@ -87,29 +88,74 @@ def normalize_market(market: str) -> str:
 
 
 def font_dir(prep_path: Path) -> list[Path]:
-    """The folder's pin images — exactly one file per pinterest_N index.
-
-    Sellers' folders routinely hold both pinterest_1.png and pinterest_1.jpg.
-    Images are keyed by index, so returning both would make the second upload a
-    silent no-op; IMAGE_GLOBS order makes the lossless .png the one that wins.
-    A file with no pinterest_N index is kept under its own name rather than
-    dropped, so nothing in the folder is silently ignored.
-    """
+    """Return every numbered pin and reject duplicate formats or unnumbered files."""
     vis = prep_path / "visuals" / "New-Images" / "pinterest"
     if not vis.is_dir():
         return []
+    paths = sorted({path for pattern in IMAGE_GLOBS for path in vis.glob(pattern) if path.is_file()})
     numbered: dict[int, Path] = {}
-    others: list[Path] = []
-    for pattern in IMAGE_GLOBS:
-        for path in sorted(vis.glob(pattern)):
-            if not path.is_file():
-                continue
-            m = re.search(r"pinterest_(\d+)", path.stem)
-            if m:
-                numbered.setdefault(int(m.group(1)), path)
-            else:
-                others.append(path)
-    return [numbered[i] for i in sorted(numbered)] + others
+    for path in paths:
+        match = re.fullmatch(r"pinterest_(\d+)", path.stem, re.IGNORECASE)
+        if not match:
+            sys.exit(f"error: unnumbered Pinterest image must be handled before upload: {path}")
+        index = int(match.group(1))
+        if index in numbered:
+            sys.exit(f"error: multiple files claim Pinterest index {index}: {numbered[index].name}, {path.name}")
+        numbered[index] = path
+    return [numbered[index] for index in sorted(numbered)]
+
+
+def validate_pin_set(prep_path: Path, files: list[Path]) -> tuple[dict, int]:
+    """Validate the final dynamic pin set against its hash manifest."""
+    vis = prep_path / "visuals" / "New-Images" / "pinterest"
+    manifest_path = vis / PINSET_MANIFEST
+    if not manifest_path.is_file():
+        sys.exit(f"error: missing {manifest_path}; run /font-final-images before Pinterest preparation")
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        sys.exit(f"error: invalid Pinterest set manifest: {error}")
+    rows = manifest.get("images")
+    template_count = manifest.get("template_count")
+    composite_count = manifest.get("composite_count")
+    image_count = manifest.get("image_count")
+    if (manifest.get("kind") != "font-pinterest-pin-set" or not isinstance(template_count, int)
+            or template_count < 1 or composite_count != 10 or image_count != template_count + composite_count
+            or not isinstance(rows, list) or len(rows) != image_count):
+        sys.exit("error: Pinterest set manifest must list all template pins plus exactly ten composite pins")
+    template_path = vis / TEMPLATE_MANIFEST
+    if not template_path.is_file():
+        sys.exit(f"error: missing template source manifest: {template_path}")
+    try:
+        template_manifest = json.loads(template_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        sys.exit(f"error: invalid Pinterest template manifest: {error}")
+    template_rows = template_manifest.get("images")
+    if template_manifest.get("template_count") != template_count or not isinstance(template_rows, list) or len(template_rows) != template_count:
+        sys.exit("error: final set and template manifests disagree on the number of template pins")
+    file_by_index = {int(path.stem.rsplit("_", 1)[1]): path for path in files}
+    if sorted(file_by_index) != list(range(1, image_count + 1)):
+        sys.exit(f"error: expected contiguous Pinterest image indexes 1..{image_count}; found {sorted(file_by_index)}")
+    if len(files) != image_count:
+        sys.exit(f"error: expected exactly {image_count} Pinterest image files; found {len(files)}")
+    for index, row in enumerate(rows, start=1):
+        if not isinstance(row, dict) or row.get("index") != index:
+            sys.exit("error: Pinterest set manifest indexes must be contiguous from 1")
+        path = vis / str(row.get("file", ""))
+        if path.name != row.get("file") or path != file_by_index[index]:
+            sys.exit(f"error: Pinterest set manifest file does not match index {index}")
+        if path.stat().st_size != row.get("bytes") or hashlib.sha256(path.read_bytes()).hexdigest() != row.get("sha256"):
+            sys.exit(f"error: Pinterest image differs from its set manifest: {path.name}")
+        expected_kind = "template" if index <= template_count else "composite"
+        if row.get("kind") != expected_kind:
+            sys.exit(f"error: Pinterest image {index} has the wrong kind in the set manifest")
+        if row.get("width") != 1000 or row.get("height") != 1500:
+            sys.exit(f"error: Pinterest image {index} has invalid dimensions in the set manifest")
+        if index <= template_count:
+            source_row = template_rows[index - 1]
+            if row.get("template") != source_row.get("template") or row.get("sha256") != source_row.get("sha256"):
+                sys.exit(f"error: template pin {index} differs from Agent 27's template manifest")
+    return manifest, image_count
 
 
 def get_font(reg: dict, slug: str) -> dict:
@@ -121,8 +167,16 @@ def get_font(reg: dict, slug: str) -> dict:
 
 def is_ready(rec: dict) -> bool:
     urls = rec.get("urls") or {}
+    images = rec.get("images") or {}
+    image_set = rec.get("image_set") or {}
+    expected = image_set.get("image_count")
+    if isinstance(expected, int):
+        image_indexes = {int(key) for key in images if str(key).isdigit()}
+        images_complete = image_indexes == set(range(1, expected + 1))
+    else:
+        images_complete = bool(images)  # legacy registry records remain readable
     return bool((urls.get("creative_market") or urls.get("creative_fabrica"))
-                and rec.get("images"))
+                and images_complete)
 
 
 def primary_url(rec: dict) -> str | None:
@@ -182,7 +236,8 @@ def _upload_one(slug: str, chosen: Path, force: bool, rec: dict) -> dict:
     # An unnumbered file must not claim slot "1" from pinterest_1.png.
     key = index.group(1) if index else chosen.stem.casefold()
     images = rec.setdefault("images", {})
-    if key in images and not force:
+    source_hash = hashlib.sha256(chosen.read_bytes()).hexdigest()
+    if key in images and not force and images[key].get("sha256") == source_hash:
         print(f"  skip {chosen.name} (already uploaded — pass --force to replace)")
         return images[key]
     pathname = f"fonts/{slug}/{chosen.stem.lower()}{chosen.suffix.lower()}"
@@ -196,6 +251,7 @@ def _upload_one(slug: str, chosen: Path, force: bool, rec: dict) -> dict:
     blob = json.loads(proc.stdout)
     images[key] = {
         "source": str(chosen),
+        "sha256": source_hash,
         "pathname": blob["pathname"],
         "url": blob["url"],
         "uploaded_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -206,24 +262,55 @@ def _upload_one(slug: str, chosen: Path, force: bool, rec: dict) -> dict:
 
 def cmd_upload(args, reg: dict) -> int:
     rec = get_font(reg, args.slug)
-    files = font_dir(Path(rec["prep_path"]))
+    prep = Path(rec["prep_path"])
+    files = font_dir(prep)
     if not files:
         sys.exit(f"error: no pin images under {rec['prep_path']}/visuals/New-Images/pinterest/")
+    pin_manifest, expected_count = validate_pin_set(prep, files)
+    set_manifest_path = prep / "visuals" / "New-Images" / "pinterest" / PINSET_MANIFEST
+    rec["image_set"] = {
+        "template_count": pin_manifest["template_count"],
+        "composite_count": pin_manifest["composite_count"],
+        "image_count": expected_count,
+        "manifest_sha256": hashlib.sha256(set_manifest_path.read_bytes()).hexdigest(),
+    }
     if args.index is not None:
         matches = [f for f in files if f.stem == f"pinterest_{args.index}"]
         if not matches:
             sys.exit(f"error: no pinterest_{args.index} image among {[f.name for f in files]}")
         files = matches
-    elif len(files) < EXPECTED_IMAGES:
-        print(f"warning: only {len(files)} pin image(s) found, expected "
-              f"{EXPECTED_IMAGES} — the daily run rotates over whatever exists",
-              file=sys.stderr)
+    else:
+        valid_keys = {str(index) for index in range(1, expected_count + 1)}
+        rec["images"] = {key: value for key, value in (rec.get("images") or {}).items()
+                         if key in valid_keys}
     for chosen in files:
         _upload_one(args.slug, chosen, args.force, rec)
-    save_registry(reg)
+        save_registry(reg)
     images = rec.get("images", {})
-    print(f"{args.slug}: {len(images)}/{EXPECTED_IMAGES} pin images on the Blob store")
+    print(f"{args.slug}: {len(images)}/{expected_count} pin images on the Blob store")
     print(json.dumps({"slug": args.slug, "images": images}, indent=2))
+    return 0
+
+
+def cmd_write_urls(args, reg: dict) -> int:
+    rec = get_font(reg, args.slug)
+    prep = Path(rec["prep_path"])
+    images = rec.get("images") or {}
+    if not images:
+        sys.exit(f"error: {args.slug} has no uploaded Pinterest image links")
+    urls = rec.get("urls") or {}
+    rows = [f"# Public Pinterest assets — {rec.get('name') or args.slug}", ""]
+    for key in sorted(images, key=lambda value: int(value) if value.isdigit() else 10**9):
+        value = images[key]
+        rows.append(f"- Pin image {key}: {value.get('url') or 'MISSING'}")
+    rows.extend([
+        f"- Creative Market product URL: {urls.get('creative_market') or 'MISSING'}",
+        f"- Creative Fabrica product URL: {urls.get('creative_fabrica') or 'MISSING'}",
+        f"- Board suggestion: {rec.get('board') or 'MISSING'}",
+    ])
+    destination = prep / "public-urls.md"
+    destination.write_text("\n".join(rows) + "\n", encoding="utf-8")
+    print(f"[PASS] wrote {len(images)} Pinterest links: {destination}")
     return 0
 
 
@@ -251,7 +338,7 @@ def cmd_list(args, reg: dict) -> int:
             n_urls = sum(1 for v in r["urls"].values() if v)
             print(f"{str(r['number'] or '-'):>4}  {r['slug']:<28} {state:<10} "
                   f"board={r['board'] or '-':<18} urls={n_urls}/{len(MARKETS)} "
-                  f"imgs={r['image_count']}/{EXPECTED_IMAGES}")
+                  f"imgs={r['image_count']}")
         print(f"{len(rows)} font(s)")
     return 0
 
@@ -306,6 +393,10 @@ def main(argv=None) -> int:
     sh = sub.add_parser("show", parents=[common])
     sh.add_argument("--slug", required=True)
     sh.set_defaults(func=cmd_show)
+
+    urls = sub.add_parser("write-urls", parents=[common])
+    urls.add_argument("--slug", required=True)
+    urls.set_defaults(func=cmd_write_urls)
 
     args = ap.parse_args(argv)
     return args.func(args, load_registry())

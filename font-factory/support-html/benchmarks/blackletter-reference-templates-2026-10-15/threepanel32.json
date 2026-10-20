@@ -1,0 +1,75 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "threepanel32",
+  "source": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-references/blackletter-references/T23026_03.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "threepanel32",
+    "headlineFontSize": "139.297px",
+    "smallestDisplayFontSize": "93.8299px",
+    "contrast": 14.806428579101427,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Thinker",
+        "fontSize": "139.297px",
+        "x": 391.5625,
+        "y": 93.3125,
+        "width": 416.875,
+        "height": 125.359375
+      },
+      {
+        "name": "line2",
+        "text": "History",
+        "fontSize": "139.297px",
+        "x": 405.90625,
+        "y": 525.3125,
+        "width": 388.1875,
+        "height": 125.359375
+      },
+      {
+        "name": "overline",
+        "text": "Garden Notes",
+        "fontSize": "119.4px",
+        "x": 114.28125,
+        "y": 100.359375,
+        "width": 107.453125,
+        "height": 599.265625
+      },
+      {
+        "name": "footer",
+        "text": "Blooming Season",
+        "fontSize": "93.8299px",
+        "x": 989.78125,
+        "y": 100.359375,
+        "width": 84.4375,
+        "height": 599.265625
+      },
+      {
+        "name": "descriptor",
+        "text": "A Floral Letter Study",
+        "fontSize": "13px",
+        "x": 540.140625,
+        "y": 711.5,
+        "width": 119.71875,
+        "height": 13
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/threepanel32.png",
+  "outputBytes": 2075396
+}

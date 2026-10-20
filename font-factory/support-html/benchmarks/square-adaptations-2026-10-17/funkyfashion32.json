@@ -1,0 +1,170 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "funkyfashion32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "funkyfashion32",
+    "headlineFontSize": "109.33px",
+    "smallestDisplayFontSize": "80.4899px",
+    "contrast": 2.8711515797584877,
+    "contrastException": {
+      "minimum": 2.5,
+      "rationale": "The reference uses warm cream type over punch-pink paper, supported by offset dark printer shadows."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "funky-orange-portrait-disc",
+        "text": "",
+        "fontSize": "16px",
+        "x": 224,
+        "y": 272,
+        "width": 352,
+        "height": 304
+      },
+      {
+        "name": "funky-circular-fashion-portrait",
+        "text": "",
+        "fontSize": "16px",
+        "x": 224,
+        "y": 272,
+        "width": 352,
+        "height": 304
+      },
+      {
+        "name": "funky-headline-first-line",
+        "text": "Funky",
+        "fontSize": "109.33px",
+        "x": 36.796875,
+        "y": 52,
+        "width": 352.21875,
+        "height": 89.640625
+      },
+      {
+        "name": "funky-headline-second-line",
+        "text": "Fashion",
+        "fontSize": "80.4899px",
+        "x": 37.59375,
+        "y": 180,
+        "width": 336.203125,
+        "height": 65.984375
+      },
+      {
+        "name": "funky-fashion-week-line-1",
+        "text": "Fashion",
+        "fontSize": "35.49px",
+        "x": 560.796875,
+        "y": 57.59375,
+        "width": 152,
+        "height": 64
+      },
+      {
+        "name": "funky-fashion-week-line-2",
+        "text": "Week",
+        "fontSize": "50.41px",
+        "x": 560.796875,
+        "y": 110.390625,
+        "width": 152,
+        "height": 64
+      },
+      {
+        "name": "funky-dotted-annotation",
+        "text": "",
+        "fontSize": "16px",
+        "x": 32,
+        "y": 392,
+        "width": 64,
+        "height": 120
+      },
+      {
+        "name": "funky-pointing-arrow",
+        "text": "",
+        "fontSize": "16px",
+        "x": 152,
+        "y": 440,
+        "width": 64,
+        "height": 40
+      },
+      {
+        "name": "funky-lightning-sticker",
+        "text": "",
+        "fontSize": "16px",
+        "x": 72,
+        "y": 392,
+        "width": 80,
+        "height": 160
+      },
+      {
+        "name": "funky-lightning-spark-top",
+        "text": "",
+        "fontSize": "16px",
+        "x": 225.59375,
+        "y": 552.796875,
+        "width": 20.796875,
+        "height": 33.59375
+      },
+      {
+        "name": "funky-lightning-spark-bottom",
+        "text": "",
+        "fontSize": "16px",
+        "x": 308,
+        "y": 607.1875,
+        "width": 22.390625,
+        "height": 34.390625
+      },
+      {
+        "name": "funky-smiley-sticker",
+        "text": "",
+        "fontSize": "16px",
+        "x": 584,
+        "y": 232,
+        "width": 176,
+        "height": 232
+      },
+      {
+        "name": "funky-fashion-description",
+        "text": "To Be Fashionable Is To Rub Elbows With Every New Clothing And Accessory Item That Hits The Market. It Can Be Daunting Trying To Do Such A Thing. Not To Mention It Is So Dull And Time-Consuming A Thing To Keep Up With All The Latest Styles.",
+        "fontSize": "22.83px",
+        "x": 40,
+        "y": 592,
+        "width": 720,
+        "height": 112
+      },
+      {
+        "name": "funky-designer-signature",
+        "text": "Sarah\nSchwartz",
+        "fontSize": "35.7031px",
+        "x": 40,
+        "y": 716,
+        "width": 272,
+        "height": 64
+      },
+      {
+        "name": "funky-web-address",
+        "text": "www.funkyfashion.com",
+        "fontSize": "21.6px",
+        "x": 440,
+        "y": 740,
+        "width": 320,
+        "height": 21.59375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/tmp/square-adaptation-review/funkyfashion32.png",
+  "outputBytes": 758000
+}

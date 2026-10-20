@@ -1,0 +1,58 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "ovalword32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "ovalword32",
+    "headlineFontSize": "196px",
+    "smallestDisplayFontSize": "38.4px",
+    "contrast": 18.629428822346707,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "kicker",
+        "text": "T&N Type Co.",
+        "fontSize": "41.6px",
+        "x": 128,
+        "y": 104,
+        "width": 544,
+        "height": 60
+      },
+      {
+        "name": "headline",
+        "text": "Sadie",
+        "fontSize": "196px",
+        "x": 44,
+        "y": 209.59375,
+        "width": 712,
+        "height": 344
+      },
+      {
+        "name": "sub",
+        "text": "Display Sans",
+        "fontSize": "38.4px",
+        "x": 144,
+        "y": 576,
+        "width": 512,
+        "height": 60
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/ovalword32.png",
+  "outputBytes": 1047426
+}

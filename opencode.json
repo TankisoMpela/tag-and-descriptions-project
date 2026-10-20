@@ -35,14 +35,22 @@
     "font-image-generator": {
       "mode": "subagent",
       "prompt": "{file:./agents/agent-27-font-image-generator.md}",
-      "description": "FontFairy font text-placeholder handoff agent. Runs before font-prep, decides a new evocative name only when none is supplied, and creates deterministic canonical 3:2 and 1:1 placeholders. It does not use OpenPencil, image-generation tools, visual inspection, or OCR; final artwork replacement is a separate optional seller step.",
+      "description": "Agent 27 creates clean white-background font-name specimens, three complete font-specific thumbnail prompts, HTML/CSS support layouts, factual specimens, and Pinterest template renders; it validates the handoff before font preparation.",
       "permission": {
         "task": "allow"
       }
     },
     "font-prep-specialist": {
       "prompt": "{file:./agents/agent-13-font-prep-specialist.md}",
-      "description": "FontFairy Font Preparation & Metadata Specialist. Runs a metadata/package pass without inspecting image content, creates a font-named binary folder plus clean Commercial Use and Personal Use ZIPs and a demo-stamped Free-Trial-Demo ZIP, then designs and renders the five Pinterest pins with bin/render-pins and the two factual specimen sheets with bin/render-specimens, all from the font binary. Derivative and showcase-video work is archived; do none of it. It copies nothing from Agent-27 prepared_visuals. Input: font-factory/fonts/{slug}/. Output: outputs/font-preparation/{NUM}-{slug}/.",
+      "description": "Agent 13 packages and audits the font, writes the description, installs Agent 27's 23 checksummed Pinterest template pins, and renders four factual specimen sheets without inspecting thumbnail or support-layout drafts.",
+      "permission": {
+        "task": "allow"
+      }
+    },
+    "font-rights-researcher": {
+      "mode": "subagent",
+      "prompt": "{file:./agents/agent-31-font-rights-researcher.md}",
+      "description": "Standalone rights researcher for fonts staged in font-factory/input. Takes one research pass per staged folder (one family per folder), plans its Regular representative, and fans a red/amber/green verdict over the folder's files in rights-verdicts.json for the Input Inspector. Enforces evidence-domain and cross-holder rules through the tool, and publishes the tracked rights ledger with sync. Never edits fonts, manifests, listings, or the launch pipeline.",
       "permission": {
         "task": "allow"
       }
@@ -66,7 +74,7 @@
     "pinterest-font-preparer": {
       "mode": "subagent",
       "prompt": "{file:./agents/agent-pinterest-font-preparer.md}",
-      "description": "Pinterest asset preparer for the Daily-Pinterest-Run pipeline: registers a font from its outputs/font-preparation folder, uploads all five pin images to Vercel Blob, records both product-page URLs and the description, writes public-urls.md; no Pinterest-side action.",
+      "description": "Pinterest asset preparer. Validates and uploads every manifested Agent-27 template pin and ten Agent-30 composites to Vercel Blob, records product URLs and the description, and writes public-urls.md; does not publish Pins.",
       "permission": {
         "task": "allow"
       }
@@ -103,13 +111,18 @@
     },
     "font-images": {
       "description": "Run the FontFairy font image generator before font preparation. It creates a fast mechanical text-placeholder handoff, plans 3:2 and 1:1 outputs, and leaves a strict Agent-13 handoff. Final artwork replacement is a separate optional seller step.",
-      "template": "Please run the registered font-image-generator agent before font preparation. Use the exact font workspace, product description, and optional factual references supplied here. When the user supplies a final font name, use it exactly; when not, decide the best evocative name yourself under the agent's Naming policy and never run name-uniqueness research. Create the deterministic text-placeholder handoff with short, font-specific copy, canonical filenames, and mechanical validation. Do not use OpenPencil, image-generation tools, visual inspection, or OCR, and do not invoke font-prep automatically. Finish with READY FOR FONT PREP HANDOFF and the exact prepared_visuals path: {input}",
+      "template": "Run the registered font-image-generator agent using the exact font workspace, supplied name when present, product description, and verified facts. Follow agents/agent-27-font-image-generator.md: create white-background name specimens, matching complete prompts for 3:2 main, 1:1 main, and storefront square, the documented HTML/CSS support layouts, factual specimens, and Pinterest template renders. Do not request or use an old marketplace thumbnail. If the user explicitly asks for a prompt prototype, use the 33-reference composition audit with the matching specimen and prompt; review title hierarchy, physical surface integration, model focus, crop, contrast and small-size readability. Remove unrelated details, glitter, gratuitous glow and generic AI decoration; open space can remain empty. Do not invoke font preparation automatically. Finish with READY FOR FONT PREP HANDOFF and the exact prepared_visuals path: {input}",
       "agent": "font-image-generator"
     },
     "font-prep": {
-      "description": "FontFairy font preparation — package, audit and lay out the font, then render the five pins and the specimen sheets.",
-      "template": "Please run the font-prep-specialist agent with this exact instruction: {input}. Finish the font metadata, package/archive copies, and technical audit. Treat Agent-27 prepared_visuals as deferred for creative artwork: do not copy, compress, rename, inspect, or compose any thumbnail, supporting promo, or video asset from them. Then run Step 2: write pins.brief.json with five fresh headlines in five colour worlds and render it with bin/render-pins. Add \"class\": \"blackletter\" to the brief only when the seller's own words say blackletter, celtic, uncial, gaelic or gothic, and \"class\": \"sports\" only when they say sport, athletic, esports, racing, gym, varsity, letterman or jersey, and \"class\": \"script\" only when they say handwritten, hand lettering, script, cursive, calligraphy, signature or wedding lettering. Then run Step 2b: render the two factual specimen sheets at both ratios into the numbered output's specimens/ folder with bin/render-specimens --class (the brief's class, or elegant), which refuses to guess the class. Copy nothing from prepared_visuals. Leave visuals/New-Images/ empty for the seller's own artwork, apart from the pinterest/ pins you rendered.",
+      "description": "Package and audit the font, install 23 verified Pinterest templates from Agent 27, and render four factual specimen sheets.",
+      "template": "Run the registered font-prep-specialist agent with the exact font workspace, final name, unified product number, and Agent-27 prepared_visuals path. Follow agents/agent-13-font-prep-specialist.md. Package and audit the font, write the description, install the 23 checksummed Pinterest templates with bin/install_template_pinterest_pins.py, and render four factual specimen sheets. Do not inspect or copy the thumbnail or support-layout drafts, and do not render a second Pinterest set. Leave final thumbnail generation to the matching specimen and image prompt and process those images later with /font-final-images. Report the preparation output path and validation result; do not claim upload or publication: {input}",
       "agent": "font-prep-specialist"
+    },
+    "font-rights-check": {
+      "description": "Run the standalone font rights researcher over the unmarked fonts staged in font-factory/input.",
+      "template": "Please run the font-rights-researcher agent on the staged fonts under font-factory/input. Take the queue from `python3 bin/font_rights.py status --unmarked` — it lists FOLDERS, and the staged folder is the unit of research: one family per folder, one web pass per folder, never one per weight. Per folder run `python3 bin/font_rights.py plan --folder <N>` to get the representative (its Regular/normal cut) and the family/holder/fsType/licence it claims, do ONE search (serper, with `'<family>' (myfonts OR fonts.com OR creativefabrica OR dafont OR fontspace)` as the single sweep query), and write the verdict with `bin/font_rights.py write … --fanout` so it covers the whole folder. Fetch a page only when the verdict would be clear, because a grant has to be read while red and amber both mean do not ship. States: claimed (still sold by an active holder, needs a live evidence URL on a shop, the holder's own domain, or a type-rights reference — the tool refuses a name-table scraper or an unrelated page), orphan (no holder and no licence found — unlicensed, not safe, needs 2 searched avenues, never high confidence), clear (a grant quote the tool verifies verbatim in each binary, or an author reached this run). Drain every folder in natural order unless the user names one. Finish the run with `python3 bin/font_rights.py sync` so the verdicts survive the gitignored staging in outputs/research/font-rights-ledger.json. Never edit a font, a manifest, in-use.txt, or a listing; sync is the only thing you may write under outputs/. Never delete duplicates. Report the counts per state, every clear with its evidence, and tell the user to press Refresh in the Input Inspector. Request: {input}",
+      "agent": "font-rights-researcher"
     },
     "full-workflow": {
       "description": "Run the full-workflow agent through the complete sequential font launch from visual generation through preparation, BOOTH, Pixiv, and Creative Fabrica. X, DLsite, YellowImages, and other marketplace stages are paused.",
@@ -122,8 +135,8 @@
       "agent": "booth-pdf-maker"
     },
     "pinterest-prepare": {
-      "description": "Register fonts for Pinterest: upload all five pin images to Vercel Blob, record both product-page URLs and the description.",
-      "template": "Please run the pinterest-font-preparer agent to register these fonts into the Pinterest registry (match each to its outputs/font-preparation folder, record both product-page URLs --market cm/cf and a board suggestion, upload all five pinterest images, write public-urls.md): {input}",
+      "description": "Validate and upload the complete manifested Pinterest image set, record product URLs, and write all public links.",
+      "template": "Run the pinterest-font-preparer agent on the supplied fonts. Match each to its outputs/font-preparation folder, record supplied product URLs, choose a board, then validate and upload every manifested template pin and ten final-image composites from visuals/New-Images/pinterest/ to Blob. Use manifest-driven counts, write all links to public-urls.md, and report image URLs and missing product URLs. Do not claim Pins were published: {input}",
       "agent": "pinterest-font-preparer"
     },
     "pinterest-daily": {

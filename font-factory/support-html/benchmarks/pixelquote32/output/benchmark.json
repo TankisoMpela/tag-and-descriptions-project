@@ -1,0 +1,285 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/pixelquote32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/pixelquote32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Blazher-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 36.6,
+  "imageBytes": {
+    "html": 77664,
+    "skia": 103844
+  },
+  "desktopLayout": {
+    "template": "pixelquote32",
+    "headlineFontSize": "41.3598px",
+    "contrast": 6.210999183553991,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "pixel-stitches-top",
+        "text": "",
+        "fontSize": "16px",
+        "x": 532.40625,
+        "y": 29.234375,
+        "width": 140.734375,
+        "height": 15.515625
+      },
+      {
+        "name": "pixel-stitches-bottom",
+        "text": "",
+        "fontSize": "16px",
+        "x": 40.125,
+        "y": 429.734375,
+        "width": 140.140625,
+        "height": 15.515625
+      },
+      {
+        "name": "pixel-heart",
+        "text": "",
+        "fontSize": "16px",
+        "x": 296.453125,
+        "y": 57.296875,
+        "width": 29.34375,
+        "height": 24.46875
+      },
+      {
+        "name": "pixel-mascot",
+        "text": "",
+        "fontSize": "16px",
+        "x": 204.21875,
+        "y": 411.234375,
+        "width": 37.71875,
+        "height": 34.015625
+      },
+      {
+        "name": "quote-row-1",
+        "text": "A Little",
+        "fontSize": "16px",
+        "x": 198.53125,
+        "y": 79.875,
+        "width": 312,
+        "height": 62.390625
+      },
+      {
+        "name": "quote-line-1",
+        "text": "A Little",
+        "fontSize": "40.4599px",
+        "x": 203.625,
+        "y": 93.265625,
+        "width": 301.796875,
+        "height": 35.59375
+      },
+      {
+        "name": "quote-row-2",
+        "text": "Nonsense",
+        "fontSize": "16px",
+        "x": 191.453125,
+        "y": 142.75,
+        "width": 326.171875,
+        "height": 62.390625
+      },
+      {
+        "name": "quote-line-2",
+        "text": "Nonsense",
+        "fontSize": "36.61px",
+        "x": 196.6875,
+        "y": 157.828125,
+        "width": 315.671875,
+        "height": 32.203125
+      },
+      {
+        "name": "quote-row-3",
+        "text": "Now & Then",
+        "fontSize": "16px",
+        "x": 141.8125,
+        "y": 205.625,
+        "width": 425.453125,
+        "height": 62.390625
+      },
+      {
+        "name": "quote-line-3",
+        "text": "Now & Then",
+        "fontSize": "41.3598px",
+        "x": 148.59375,
+        "y": 218.609375,
+        "width": 411.875,
+        "height": 36.390625
+      },
+      {
+        "name": "quote-row-4",
+        "text": "Is Relished By",
+        "fontSize": "16px",
+        "x": 120.53125,
+        "y": 269.4375,
+        "width": 468,
+        "height": 62.390625
+      },
+      {
+        "name": "quote-line-4",
+        "text": "Is Relished By",
+        "fontSize": "36.3998px",
+        "x": 127.984375,
+        "y": 284.609375,
+        "width": 453.09375,
+        "height": 32.03125
+      },
+      {
+        "name": "quote-row-5",
+        "text": "The Wisest Man",
+        "fontSize": "16px",
+        "x": 99.265625,
+        "y": 340.34375,
+        "width": 524.71875,
+        "height": 62.390625
+      },
+      {
+        "name": "quote-line-5",
+        "text": "The Wisest Man",
+        "fontSize": "37.0199px",
+        "x": 107.578125,
+        "y": 355.25,
+        "width": 508.09375,
+        "height": 32.5625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "pixelquote32",
+    "headlineFontSize": "20.5399px",
+    "contrast": 6.210999183553991,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "pixel-stitches-top",
+        "text": "",
+        "fontSize": "16px",
+        "x": 264.296875,
+        "y": 14.515625,
+        "width": 69.859375,
+        "height": 7.703125
+      },
+      {
+        "name": "pixel-stitches-bottom",
+        "text": "",
+        "fontSize": "16px",
+        "x": 19.90625,
+        "y": 213.3125,
+        "width": 69.5625,
+        "height": 7.703125
+      },
+      {
+        "name": "pixel-heart",
+        "text": "",
+        "fontSize": "16px",
+        "x": 147.15625,
+        "y": 28.4375,
+        "width": 14.5625,
+        "height": 12.140625
+      },
+      {
+        "name": "pixel-mascot",
+        "text": "",
+        "fontSize": "16px",
+        "x": 101.375,
+        "y": 204.125,
+        "width": 18.71875,
+        "height": 16.875
+      },
+      {
+        "name": "quote-row-1",
+        "text": "A Little",
+        "fontSize": "16px",
+        "x": 98.546875,
+        "y": 39.65625,
+        "width": 154.875,
+        "height": 30.96875
+      },
+      {
+        "name": "quote-line-1",
+        "text": "A Little",
+        "fontSize": "20.07px",
+        "x": 101.171875,
+        "y": 46.3125,
+        "width": 149.609375,
+        "height": 17.640625
+      },
+      {
+        "name": "quote-row-2",
+        "text": "Nonsense",
+        "fontSize": "16px",
+        "x": 95.03125,
+        "y": 70.859375,
+        "width": 161.90625,
+        "height": 30.96875
+      },
+      {
+        "name": "quote-line-2",
+        "text": "Nonsense",
+        "fontSize": "18.1799px",
+        "x": 97.640625,
+        "y": 78.34375,
+        "width": 156.6875,
+        "height": 16
+      },
+      {
+        "name": "quote-row-3",
+        "text": "Now & Then",
+        "fontSize": "16px",
+        "x": 70.390625,
+        "y": 102.0625,
+        "width": 211.1875,
+        "height": 30.96875
+      },
+      {
+        "name": "quote-line-3",
+        "text": "Now & Then",
+        "fontSize": "20.5399px",
+        "x": 73.796875,
+        "y": 108.5,
+        "width": 204.375,
+        "height": 18.078125
+      },
+      {
+        "name": "quote-row-4",
+        "text": "Is Relished By",
+        "fontSize": "16px",
+        "x": 59.828125,
+        "y": 133.75,
+        "width": 232.3125,
+        "height": 30.96875
+      },
+      {
+        "name": "quote-line-4",
+        "text": "Is Relished By",
+        "fontSize": "18.0799px",
+        "x": 63.484375,
+        "y": 141.28125,
+        "width": 224.984375,
+        "height": 15.90625
+      },
+      {
+        "name": "quote-row-5",
+        "text": "The Wisest Man",
+        "fontSize": "16px",
+        "x": 49.265625,
+        "y": 168.9375,
+        "width": 260.46875,
+        "height": 30.96875
+      },
+      {
+        "name": "quote-line-5",
+        "text": "The Wisest Man",
+        "fontSize": "18.3999px",
+        "x": 53.328125,
+        "y": 176.328125,
+        "width": 252.328125,
+        "height": 16.1875
+      }
+    ],
+    "contentWarnings": []
+  }
+}

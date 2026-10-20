@@ -1,0 +1,130 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "storyteller32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "storyteller32",
+    "headlineFontSize": "68.4922px",
+    "smallestDisplayFontSize": "47.0547px",
+    "contrast": 18.095217588675624,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "story-title-1",
+        "text": "Typography",
+        "fontSize": "68.4922px",
+        "x": 29.59375,
+        "y": 20,
+        "width": 484,
+        "height": 72.59375
+      },
+      {
+        "name": "story-title-2",
+        "text": "Is The Silent",
+        "fontSize": "68.4922px",
+        "x": 29.59375,
+        "y": 111.796875,
+        "width": 484,
+        "height": 72.59375
+      },
+      {
+        "name": "story-title-3",
+        "text": "Story Teller",
+        "fontSize": "68.4922px",
+        "x": 29.59375,
+        "y": 203.59375,
+        "width": 484,
+        "height": 72.59375
+      },
+      {
+        "name": "story-title-4",
+        "text": "Of Design.",
+        "fontSize": "68.4922px",
+        "x": 29.59375,
+        "y": 295.390625,
+        "width": 484,
+        "height": 72.59375
+      },
+      {
+        "name": "story-hands-strip",
+        "text": "",
+        "fontSize": "16px",
+        "x": 29.59375,
+        "y": 402.390625,
+        "width": 476,
+        "height": 81.59375
+      },
+      {
+        "name": "story-copy-1",
+        "text": "Its Curves And Lines",
+        "fontSize": "47.0547px",
+        "x": 29.59375,
+        "y": 500,
+        "width": 484,
+        "height": 49.796875
+      },
+      {
+        "name": "story-copy-2",
+        "text": "Shape Meaning",
+        "fontSize": "47.0547px",
+        "x": 29.59375,
+        "y": 567.390625,
+        "width": 484,
+        "height": 49.796875
+      },
+      {
+        "name": "story-copy-3",
+        "text": "Before Words",
+        "fontSize": "47.0547px",
+        "x": 29.59375,
+        "y": 634.796875,
+        "width": 484,
+        "height": 49.796875
+      },
+      {
+        "name": "story-copy-4",
+        "text": "Are Read.",
+        "fontSize": "47.0547px",
+        "x": 29.59375,
+        "y": 702.1875,
+        "width": 484,
+        "height": 49.796875
+      },
+      {
+        "name": "story-artist-illustration",
+        "text": "",
+        "fontSize": "16px",
+        "x": 514.390625,
+        "y": 34.390625,
+        "width": 255.1875,
+        "height": 724.796875
+      },
+      {
+        "name": "story-edition-mark",
+        "text": "Editorial Study  /  05",
+        "fontSize": "11.6px",
+        "x": 29.59375,
+        "y": 768,
+        "width": 127.484375,
+        "height": 11.59375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/storyteller32.png",
+  "outputBytes": 757603
+}

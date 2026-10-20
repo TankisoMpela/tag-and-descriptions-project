@@ -1,0 +1,94 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "cliffpostcard32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "cliffpostcard32",
+    "headlineFontSize": "56.36px",
+    "smallestDisplayFontSize": "56.36px",
+    "contrast": 13.62298788776352,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "source-torn-paper-and-coastal-photo",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "postcard-headline-row-1",
+        "text": "Wander Where",
+        "fontSize": "16px",
+        "x": 104,
+        "y": 156,
+        "width": 592,
+        "height": 104
+      },
+      {
+        "name": "postcard-headline-1",
+        "text": "Wander Where",
+        "fontSize": "56.36px",
+        "x": 192.703125,
+        "y": 182.640625,
+        "width": 414.578125,
+        "height": 50.71875
+      },
+      {
+        "name": "postcard-headline-row-2",
+        "text": "Your Soul Feels Wild.",
+        "fontSize": "16px",
+        "x": 60,
+        "y": 268,
+        "width": 680,
+        "height": 104
+      },
+      {
+        "name": "postcard-headline-2",
+        "text": "Your Soul Feels Wild.",
+        "fontSize": "56.36px",
+        "x": 115.71875,
+        "y": 294.640625,
+        "width": 568.5625,
+        "height": 50.71875
+      },
+      {
+        "name": "left-postcard-caption",
+        "text": "Open Air / Study 02",
+        "fontSize": "24px",
+        "x": 80,
+        "y": 524,
+        "width": 288,
+        "height": 48
+      },
+      {
+        "name": "right-postcard-caption",
+        "text": "Land / Sea / Sky",
+        "fontSize": "24px",
+        "x": 440,
+        "y": 524,
+        "width": 280,
+        "height": 48
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/cliffpostcard32.png",
+  "outputBytes": 1318844
+}

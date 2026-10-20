@@ -1,0 +1,465 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/neon32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/neon32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Gladista Script",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 45.1,
+  "imageBytes": {
+    "html": 3366691,
+    "skia": 1121291
+  },
+  "desktopLayout": {
+    "template": "neon32",
+    "headlineFontSize": "101.695px",
+    "contrast": 15.77415930493257,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "centre-door-seam",
+        "text": "",
+        "fontSize": "16px",
+        "x": 359.5,
+        "y": 0,
+        "width": 0.625,
+        "height": 472.71875
+      },
+      {
+        "name": "photographic-wall-grain",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "film-gate-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 52.109375,
+        "height": 472.71875
+      },
+      {
+        "name": "film-light-left-1",
+        "text": "",
+        "fontSize": "16px",
+        "x": 2.859375,
+        "y": 3.78125,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-left-2",
+        "text": "",
+        "fontSize": "16px",
+        "x": 2.859375,
+        "y": 74.6875,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-left-3",
+        "text": "",
+        "fontSize": "16px",
+        "x": 2.859375,
+        "y": 145.59375,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-left-4",
+        "text": "",
+        "fontSize": "16px",
+        "x": 2.859375,
+        "y": 216.5,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-left-5",
+        "text": "",
+        "fontSize": "16px",
+        "x": 2.859375,
+        "y": 287.40625,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-left-6",
+        "text": "",
+        "fontSize": "16px",
+        "x": 2.859375,
+        "y": 358.3125,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-left-7",
+        "text": "",
+        "fontSize": "16px",
+        "x": 2.859375,
+        "y": 429.21875,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-rail-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 51.328125,
+        "y": 0,
+        "width": 0.78125,
+        "height": 472.71875
+      },
+      {
+        "name": "film-gate-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 656.984375,
+        "y": 0,
+        "width": 52.109375,
+        "height": 472.71875
+      },
+      {
+        "name": "film-light-right-1",
+        "text": "",
+        "fontSize": "16px",
+        "x": 660.359375,
+        "y": 3.78125,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-right-2",
+        "text": "",
+        "fontSize": "16px",
+        "x": 660.359375,
+        "y": 74.6875,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-right-3",
+        "text": "",
+        "fontSize": "16px",
+        "x": 660.359375,
+        "y": 145.59375,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-right-4",
+        "text": "",
+        "fontSize": "16px",
+        "x": 660.359375,
+        "y": 216.5,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-right-5",
+        "text": "",
+        "fontSize": "16px",
+        "x": 660.359375,
+        "y": 287.40625,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-right-6",
+        "text": "",
+        "fontSize": "16px",
+        "x": 660.359375,
+        "y": 358.3125,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-light-right-7",
+        "text": "",
+        "fontSize": "16px",
+        "x": 660.359375,
+        "y": 429.21875,
+        "width": 45.84375,
+        "height": 38.515625
+      },
+      {
+        "name": "film-rail-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 656.984375,
+        "y": 0,
+        "width": 0.78125,
+        "height": 472.71875
+      },
+      {
+        "name": "lit-marquee-copy",
+        "text": "La DolceMarea",
+        "fontSize": "16px",
+        "x": 102.8125,
+        "y": 87.4375,
+        "width": 503.453125,
+        "height": 259.046875
+      },
+      {
+        "name": "marquee-line-1",
+        "text": "La Dolce",
+        "fontSize": "99.7099px",
+        "x": 168.359375,
+        "y": 105.203125,
+        "width": 372.34375,
+        "height": 89.71875
+      },
+      {
+        "name": "marquee-line-2",
+        "text": "Marea",
+        "fontSize": "101.695px",
+        "x": 210.6875,
+        "y": 238.078125,
+        "width": 287.6875,
+        "height": 91.515625
+      },
+      {
+        "name": "coming-soon-line",
+        "text": "Coming Soon",
+        "fontSize": "23.85px",
+        "x": 291.765625,
+        "y": 364.453125,
+        "width": 125.5625,
+        "height": 37.8125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "neon32",
+    "headlineFontSize": "50.5248px",
+    "contrast": 15.77415930493257,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "centre-door-seam",
+        "text": "",
+        "fontSize": "16px",
+        "x": 178.453125,
+        "y": 0,
+        "width": 0.3125,
+        "height": 234.65625
+      },
+      {
+        "name": "photographic-wall-grain",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "film-gate-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 25.859375,
+        "height": 234.65625
+      },
+      {
+        "name": "film-light-left-1",
+        "text": "",
+        "fontSize": "16px",
+        "x": 1.421875,
+        "y": 1.875,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-left-2",
+        "text": "",
+        "fontSize": "16px",
+        "x": 1.421875,
+        "y": 37.0625,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-left-3",
+        "text": "",
+        "fontSize": "16px",
+        "x": 1.421875,
+        "y": 72.265625,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-left-4",
+        "text": "",
+        "fontSize": "16px",
+        "x": 1.421875,
+        "y": 107.46875,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-left-5",
+        "text": "",
+        "fontSize": "16px",
+        "x": 1.421875,
+        "y": 142.65625,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-left-6",
+        "text": "",
+        "fontSize": "16px",
+        "x": 1.421875,
+        "y": 177.859375,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-left-7",
+        "text": "",
+        "fontSize": "16px",
+        "x": 1.421875,
+        "y": 213.0625,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-rail-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 25.484375,
+        "y": 0,
+        "width": 0.375,
+        "height": 234.65625
+      },
+      {
+        "name": "film-gate-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 326.140625,
+        "y": 0,
+        "width": 25.859375,
+        "height": 234.65625
+      },
+      {
+        "name": "film-light-right-1",
+        "text": "",
+        "fontSize": "16px",
+        "x": 327.8125,
+        "y": 1.875,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-right-2",
+        "text": "",
+        "fontSize": "16px",
+        "x": 327.8125,
+        "y": 37.0625,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-right-3",
+        "text": "",
+        "fontSize": "16px",
+        "x": 327.8125,
+        "y": 72.265625,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-right-4",
+        "text": "",
+        "fontSize": "16px",
+        "x": 327.8125,
+        "y": 107.46875,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-right-5",
+        "text": "",
+        "fontSize": "16px",
+        "x": 327.8125,
+        "y": 142.65625,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-right-6",
+        "text": "",
+        "fontSize": "16px",
+        "x": 327.8125,
+        "y": 177.859375,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-light-right-7",
+        "text": "",
+        "fontSize": "16px",
+        "x": 327.8125,
+        "y": 213.0625,
+        "width": 22.75,
+        "height": 19.109375
+      },
+      {
+        "name": "film-rail-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 326.140625,
+        "y": 0,
+        "width": 0.375,
+        "height": 234.65625
+      },
+      {
+        "name": "lit-marquee-copy",
+        "text": "La DolceMarea",
+        "fontSize": "16px",
+        "x": 51.03125,
+        "y": 43.40625,
+        "width": 249.90625,
+        "height": 128.578125
+      },
+      {
+        "name": "marquee-line-1",
+        "text": "La Dolce",
+        "fontSize": "49.1299px",
+        "x": 84.265625,
+        "y": 52.390625,
+        "width": 183.4375,
+        "height": 44.203125
+      },
+      {
+        "name": "marquee-line-2",
+        "text": "Marea",
+        "fontSize": "50.5248px",
+        "x": 104.515625,
+        "y": 118.15625,
+        "width": 142.921875,
+        "height": 45.46875
+      },
+      {
+        "name": "coming-soon-line",
+        "text": "Coming Soon",
+        "fontSize": "12.35px",
+        "x": 143.515625,
+        "y": 180.90625,
+        "width": 64.96875,
+        "height": 18.765625
+      }
+    ],
+    "contentWarnings": []
+  }
+}

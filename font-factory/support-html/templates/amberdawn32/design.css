@@ -1,0 +1,24 @@
+#artboard {
+  background: #3d3425 url("../../../support-references/materials/T24908_00_amber-dawn-photo.png") center / cover no-repeat;
+  color: #ffe51c;
+}
+.amber-veil, .amber-headline, .amber-badge, .amber-rule, .amber-footer { position: absolute; }
+.amber-veil { inset: 0; z-index: 0; background: rgb(8 13 15 / 4.5%); pointer-events: none; }
+.amber-headline {
+  left: 50%; transform: translateX(-50%); z-index: 1; display: inline-block; width: max-content;
+  color: #ffe51c; font-family: var(--display-face, Arial, sans-serif);
+  font-weight: 500; line-height: .84; letter-spacing: -.035em;
+  white-space: nowrap; text-shadow: 0 1px 1px rgb(42 27 6 / 8%);
+}
+.amber-line-one { top: 20%; }
+.amber-line-two { top: 51%; }
+.amber-badge { left: 78.5%; top: 3.4%; width: 19%; aspect-ratio: 1; z-index: 2; overflow: visible; }
+.amber-badge svg { width: 100%; height: 100%; overflow: visible; }
+.amber-ring { fill: none; stroke: #ffe51c; stroke-width: 2.5; stroke-linecap: round; }
+.amber-arc-type { fill: #ffe51c; font: 600 13px Arial, sans-serif; letter-spacing: 2px; }
+.amber-count { position: absolute; left: 26%; top: 37%; width: 48%; color: #ffe51c; font: 500 3.3cqh/.95 Arial, sans-serif; text-align: center; }
+.amber-glyph-label { position: absolute; left: 20%; top: 53%; width: 60%; color: #ffe51c; font: 600 2.4cqh/1 Arial, sans-serif; letter-spacing: .12em; text-align: center; }
+.amber-rule { left: 40.5%; top: 83.5%; width: 19%; height: 2px; background: #ffe51c; z-index: 2; }
+.amber-footer { top: 85.3%; z-index: 2; max-width: 24%; color: #fff3c2; font: 500 3.2cqh/1 Arial, sans-serif; letter-spacing: .065em; white-space: nowrap; }
+.amber-footer-left { left: 13.8%; text-align: left; }
+.amber-footer-right { right: 13.8%; text-align: right; }

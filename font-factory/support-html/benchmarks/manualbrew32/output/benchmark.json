@@ -1,0 +1,95 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/manualbrew32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/manualbrew32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Lilita One",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 26.7,
+  "imageBytes": {
+    "html": 116960,
+    "skia": 96847
+  },
+  "desktopLayout": {
+    "template": "manualbrew32",
+    "headlineFontSize": "141.9px",
+    "contrast": 4.444405895992405,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The source uses large, brightly colored specimen letters against charcoal; the darkest source accent is orange."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "manualbrew-top-word",
+        "text": "MANUAL",
+        "fontSize": "139.71px",
+        "x": 63.859375,
+        "y": 92.52969360351562,
+        "width": 581.375,
+        "height": 137.45623779296875
+      },
+      {
+        "name": "manualbrew-bottom-word",
+        "text": "BREW",
+        "fontSize": "141.9px",
+        "x": 156.9609375,
+        "y": 241.25469970703125,
+        "width": 395.171875,
+        "height": 139.6312255859375
+      },
+      {
+        "name": "manualbrew-studio-credit",
+        "text": "Our SunKits © Rivari Studio 2024",
+        "fontSize": "11.3453px",
+        "x": 106.3671875,
+        "y": 418.34375,
+        "width": 496.359375,
+        "height": 11.34375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "manualbrew32",
+    "headlineFontSize": "70.4998px",
+    "contrast": 4.444405895992405,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The source uses large, brightly colored specimen letters against charcoal; the darkest source accent is orange."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "manualbrew-top-word",
+        "text": "MANUAL",
+        "fontSize": "69.3598px",
+        "x": 31.6953125,
+        "y": 45.923431396484375,
+        "width": 288.609375,
+        "height": 68.23126220703125
+      },
+      {
+        "name": "manualbrew-bottom-word",
+        "text": "BREW",
+        "fontSize": "70.4998px",
+        "x": 77.8046875,
+        "y": 119.75155639648438,
+        "width": 196.390625,
+        "height": 69.35626220703125
+      },
+      {
+        "name": "manualbrew-studio-credit",
+        "text": "Our SunKits © Rivari Studio 2024",
+        "fontSize": "5.63175px",
+        "x": 52.8046875,
+        "y": 207.65625,
+        "width": 246.390625,
+        "height": 5.625
+      }
+    ],
+    "contentWarnings": []
+  }
+}

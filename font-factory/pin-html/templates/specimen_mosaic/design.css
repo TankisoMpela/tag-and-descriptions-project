@@ -1,0 +1,3 @@
+/* Six paired glyph panels use the page's dark green ink and generous spacing. */
+.template--specimen_mosaic .has-box { border-radius:10px; }
+.template--specimen_mosaic [data-layout-item^="cap"] { letter-spacing:.08em; }

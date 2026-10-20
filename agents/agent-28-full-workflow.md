@@ -44,8 +44,8 @@ Cubebrush, Etsy, Behance, Pinterest, and all other marketplace stages.
 Do not repeatedly paste the entire old description, workspace tree, or prior
 research into every child prompt. Pass the exact source paths, the final name,
 the unified number, and only the factual constraints needed by that child. Agent 13
-needs no path into `prepared_visuals/`: it renders the pins and the factual specimen
-sheets from the font binary. Each specialist reads its own standing instructions and
+needs the exact font workspace path to copy Agent 27's verified Pinterest pin
+set; it renders only the factual specimen sheets from the font binary. Each specialist reads its own standing instructions and
 its product-specific source once. Do not ask the parent to summarize or
 duplicate a child's research report in the final response.
 
@@ -76,13 +76,21 @@ policy and forbid uniqueness research), the old description, and facts. Require:
 ```text
 READY FOR FONT PREP HANDOFF
 Font: [new name]
-Draft visuals (provisional; stay in font-factory, never copied into outputs/): [exact absolute prepared_visuals path]
+Agent-27 prepared visuals: [exact absolute prepared_visuals path]
 ```
 
 Verify that the returned path is the workspace's `prepared_visuals/` directory
 and that the child reports a successful visual validator. Do not invoke Agent
-13 without this result. These visuals are drafts for the user's own image-model
-step: Agent 13 copies nothing from them.
+13 without this result. The handoff includes clean white-background name
+specimens, complete matching prompts for the 3:2 main thumbnail, square main,
+and storefront square, seven HTML/CSS support layouts at each ratio, four
+factual specimen previews, and all 23 active Pinterest template renders. No
+old marketplace thumbnail is required. If the user explicitly requests a
+prototype during this stage, use the matching specimen and prompt with the
+built-in image-generation tool and review it against the 33-reference composition
+audit: title hierarchy, physical surface integration when called for, model
+focus, crop, contrast and restraint. Keep only elements that explain the premise;
+open space can remain empty. Exclude glitter and generic AI decoration.
 
 ### 2. Agent 13
 
@@ -95,11 +103,11 @@ final name: [new name]
 description: [old description]
 unified product number: [UNIFIED_PRODUCT_NUMBER]
 Run the complete preparation in one pass and stop at its completion summary.
-Copy nothing from prepared_visuals/. Design and render the five Pinterest pins yourself in
-visuals/New-Images/pinterest/ per your STEP 2 (bin/render-pins --brief), render the two
-factual specimen sheets at both ratios per your STEP 2b (bin/render-specimens --class,
-same class as the brief), and leave the
-rest of visuals/New-Images/ as the user's empty drop directory.
+Install all 23 checked Pinterest pins from the Agent-27 `prepared_visuals/pinterest/`
+folder with `bin/install_template_pinterest_pins.py`; do not create a new Skia pin
+set. Render the two factual specimen sheets at both ratios per STEP 2b, using the
+class from the visual plan, and leave the rest of `visuals/New-Images/` for the
+user's final artwork.
 Showcase video rendering is archived and is not part of this workflow; see
 `archive/video/README.md` to reinstate it.
 ```
@@ -134,9 +142,9 @@ child after a failed earlier stage.
 
 After Creative Fabrica returns successfully, report the five active stage
 statuses and output paths. Report the paused stages explicitly as
-`PAUSED — not delegated`. Agent 13's report must confirm the five Pinterest pins
+`PAUSED — not delegated`. Agent 13's report must confirm the 23 Agent-27 Pinterest template pins
 in `visuals/New-Images/pinterest/`. Tell the user that the remaining final images
 are theirs to generate: they drop the raw files into
 `outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/` and then run
-`/font-final-images`, which leaves `pinterest/` untouched. Do not claim that any
+`/font-final-images`, which preserves the 23 template pins and appends ten image composites. Do not claim that any
 marketplace listing was uploaded or published.

@@ -1,0 +1,681 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/phonegarden32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/phonegarden32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Blazher-Regular.otf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 28.8,
+  "imageBytes": {
+    "html": 1163285,
+    "skia": 1295333
+  },
+  "desktopLayout": {
+    "template": "phonegarden32",
+    "headlineFontSize": "40.38px",
+    "contrast": 18.14125281838159,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-three-phone-plate",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "cleaned-left-screen-area",
+        "text": "",
+        "fontSize": "16px",
+        "x": 65.875,
+        "y": 275.75,
+        "width": 110.78125,
+        "height": 153.984375
+      },
+      {
+        "name": "source-left-peony",
+        "text": "",
+        "fontSize": "16px",
+        "x": 71.859375,
+        "y": 277.53125,
+        "width": 101.796875,
+        "height": 89.515625
+      },
+      {
+        "name": "center-screen-star-cleanup",
+        "text": "",
+        "fontSize": "16px",
+        "x": 365.15625,
+        "y": 54.34375,
+        "width": 70.9375,
+        "height": 70.9375
+      },
+      {
+        "name": "left-screen-star-cleanup",
+        "text": "",
+        "fontSize": "16px",
+        "x": 99.03125,
+        "y": 86.96875,
+        "width": 35.9375,
+        "height": 35.9375
+      },
+      {
+        "name": "left-screen-outline-dot",
+        "text": "",
+        "fontSize": "16px",
+        "x": 114.171875,
+        "y": 355.140625,
+        "width": 3.96875,
+        "height": 3.96875
+      },
+      {
+        "name": "left-neutral-side-caption",
+        "text": "FIELD NOTES",
+        "fontSize": "9.45998px",
+        "x": 233.5234375,
+        "y": 212.5859375,
+        "width": 9.453125,
+        "height": 52.265625
+      },
+      {
+        "name": "right-neutral-side-caption",
+        "text": "FLORA / 08",
+        "fontSize": "8.98698px",
+        "x": 467.0546875,
+        "y": 217.8984375,
+        "width": 8.984375,
+        "height": 41.640625
+      },
+      {
+        "name": "left-lockup-row-1",
+        "text": "CON",
+        "fontSize": "16px",
+        "x": 42.53125,
+        "y": 79.40625,
+        "width": 159.53125,
+        "height": 42.53125
+      },
+      {
+        "name": "left-lockup-line-1",
+        "text": "CON",
+        "fontSize": "32.27px",
+        "x": 71.953125,
+        "y": 86.15625,
+        "width": 100.6875,
+        "height": 29.03125
+      },
+      {
+        "name": "left-lockup-row-2",
+        "text": "VENT",
+        "fontSize": "16px",
+        "x": 42.53125,
+        "y": 127.625,
+        "width": 159.53125,
+        "height": 42.53125
+      },
+      {
+        "name": "left-lockup-line-2",
+        "text": "VENT",
+        "fontSize": "32.27px",
+        "x": 48.015625,
+        "y": 134.375,
+        "width": 148.546875,
+        "height": 29.03125
+      },
+      {
+        "name": "left-lockup-row-3",
+        "text": "GARD",
+        "fontSize": "16px",
+        "x": 42.53125,
+        "y": 175.84375,
+        "width": 159.53125,
+        "height": 42.53125
+      },
+      {
+        "name": "left-lockup-line-3",
+        "text": "GARD",
+        "fontSize": "32.27px",
+        "x": 46.3125,
+        "y": 182.59375,
+        "width": 151.96875,
+        "height": 29.03125
+      },
+      {
+        "name": "left-lockup-row-4",
+        "text": "EN",
+        "fontSize": "16px",
+        "x": 42.53125,
+        "y": 224.0625,
+        "width": 159.53125,
+        "height": 42.53125
+      },
+      {
+        "name": "left-lockup-line-4",
+        "text": "EN",
+        "fontSize": "32.27px",
+        "x": 87.734375,
+        "y": 230.8125,
+        "width": 69.125,
+        "height": 29.03125
+      },
+      {
+        "name": "left-footer-row-1",
+        "text": "CONVENT",
+        "fontSize": "16px",
+        "x": 39,
+        "y": 363.984375,
+        "width": 163.078125,
+        "height": 25.984375
+      },
+      {
+        "name": "left-footer-line-1",
+        "text": "CONVENT",
+        "fontSize": "20.18px",
+        "x": 42.640625,
+        "y": 367.890625,
+        "width": 155.765625,
+        "height": 18.15625
+      },
+      {
+        "name": "left-footer-row-2",
+        "text": "GARDEN",
+        "fontSize": "16px",
+        "x": 39,
+        "y": 401.796875,
+        "width": 163.078125,
+        "height": 25.984375
+      },
+      {
+        "name": "left-footer-line-2",
+        "text": "GARDEN",
+        "fontSize": "20.18px",
+        "x": 51.4375,
+        "y": 405.703125,
+        "width": 138.171875,
+        "height": 18.15625
+      },
+      {
+        "name": "center-lockup-line-1",
+        "text": "CONVENT",
+        "fontSize": "40.38px",
+        "x": 276.1015625,
+        "y": 82.765625,
+        "width": 36.328125,
+        "height": 311.90625
+      },
+      {
+        "name": "center-lockup-line-2",
+        "text": "GARDEN",
+        "fontSize": "40.38px",
+        "x": 384.5859375,
+        "y": 100.3828125,
+        "width": 36.328125,
+        "height": 276.671875
+      },
+      {
+        "name": "right-heading-row-1",
+        "text": "CONVENT",
+        "fontSize": "22.6905px",
+        "x": 507,
+        "y": 70.90625,
+        "width": 180.8125,
+        "height": 24.578125
+      },
+      {
+        "name": "right-heading-line-1",
+        "text": "CONVENT",
+        "fontSize": "21.99px",
+        "x": 512.890625,
+        "y": 73.296875,
+        "width": 169.015625,
+        "height": 19.78125
+      },
+      {
+        "name": "right-heading-row-2",
+        "text": "GARDEN",
+        "fontSize": "22.6905px",
+        "x": 507,
+        "y": 106.359375,
+        "width": 180.8125,
+        "height": 24.578125
+      },
+      {
+        "name": "right-heading-line-2",
+        "text": "GARDEN",
+        "fontSize": "21.99px",
+        "x": 522.4375,
+        "y": 108.75,
+        "width": 149.9375,
+        "height": 19.78125
+      },
+      {
+        "name": "right-message-row-1",
+        "text": "Timeless",
+        "fontSize": "24.5814px",
+        "x": 507,
+        "y": 283.625,
+        "width": 180.8125,
+        "height": 31.1875
+      },
+      {
+        "name": "right-message-line-1",
+        "text": "Timeless",
+        "fontSize": "20.69px",
+        "x": 517.59375,
+        "y": 289.90625,
+        "width": 159.609375,
+        "height": 18.609375
+      },
+      {
+        "name": "right-message-row-2",
+        "text": "Charm,",
+        "fontSize": "24.5814px",
+        "x": 507,
+        "y": 318.125,
+        "width": 180.8125,
+        "height": 31.1875
+      },
+      {
+        "name": "right-message-line-2",
+        "text": "Charm,",
+        "fontSize": "20.69px",
+        "x": 533.375,
+        "y": 324.40625,
+        "width": 128.0625,
+        "height": 18.609375
+      },
+      {
+        "name": "right-message-row-3",
+        "text": "Rooted in",
+        "fontSize": "24.5814px",
+        "x": 507,
+        "y": 352.640625,
+        "width": 180.8125,
+        "height": 31.1875
+      },
+      {
+        "name": "right-message-line-3",
+        "text": "Rooted in",
+        "fontSize": "20.69px",
+        "x": 512.6875,
+        "y": 358.921875,
+        "width": 169.4375,
+        "height": 18.609375
+      },
+      {
+        "name": "right-message-row-4",
+        "text": "Grace.",
+        "fontSize": "24.5814px",
+        "x": 507,
+        "y": 387.15625,
+        "width": 180.8125,
+        "height": 31.1875
+      },
+      {
+        "name": "right-message-line-4",
+        "text": "Grace.",
+        "fontSize": "20.69px",
+        "x": 536.46875,
+        "y": 393.4375,
+        "width": 121.859375,
+        "height": 18.609375
+      },
+      {
+        "name": "left-lockup-star",
+        "text": "",
+        "fontSize": "16px",
+        "x": 105.15625,
+        "y": 93.171875,
+        "width": 23.640625,
+        "height": 23.640625
+      },
+      {
+        "name": "center-lockup-star",
+        "text": "",
+        "fontSize": "16px",
+        "x": 371.25,
+        "y": 60.53125,
+        "width": 58.640625,
+        "height": 58.640625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "phonegarden32",
+    "headlineFontSize": "20.07px",
+    "contrast": 18.14125281838159,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-three-phone-plate",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "cleaned-left-screen-area",
+        "text": "",
+        "fontSize": "16px",
+        "x": 32.6875,
+        "y": 136.875,
+        "width": 55,
+        "height": 76.4375
+      },
+      {
+        "name": "source-left-peony",
+        "text": "",
+        "fontSize": "16px",
+        "x": 35.671875,
+        "y": 137.765625,
+        "width": 50.53125,
+        "height": 44.4375
+      },
+      {
+        "name": "center-screen-star-cleanup",
+        "text": "",
+        "fontSize": "16px",
+        "x": 181.25,
+        "y": 26.953125,
+        "width": 35.25,
+        "height": 35.25
+      },
+      {
+        "name": "left-screen-star-cleanup",
+        "text": "",
+        "fontSize": "16px",
+        "x": 49.1484375,
+        "y": 43.1484375,
+        "width": 17.859375,
+        "height": 17.859375
+      },
+      {
+        "name": "left-screen-outline-dot",
+        "text": "",
+        "fontSize": "16px",
+        "x": 56.6875,
+        "y": 176.4375,
+        "width": 2,
+        "height": 2
+      },
+      {
+        "name": "left-neutral-side-caption",
+        "text": "FIELD NOTES",
+        "fontSize": "4.69999px",
+        "x": 115.9140625,
+        "y": 105.515625,
+        "width": 4.703125,
+        "height": 25.96875
+      },
+      {
+        "name": "right-neutral-side-caption",
+        "text": "FLORA / 08",
+        "fontSize": "4.46499px",
+        "x": 231.84375,
+        "y": 108.1640625,
+        "width": 4.46875,
+        "height": 20.671875
+      },
+      {
+        "name": "left-lockup-row-1",
+        "text": "CON",
+        "fontSize": "16px",
+        "x": 21.109375,
+        "y": 39.421875,
+        "width": 79.1875,
+        "height": 21.109375
+      },
+      {
+        "name": "left-lockup-line-1",
+        "text": "CON",
+        "fontSize": "16.04px",
+        "x": 35.703125,
+        "y": 42.75,
+        "width": 50,
+        "height": 14.4375
+      },
+      {
+        "name": "left-lockup-row-2",
+        "text": "VENT",
+        "fontSize": "16px",
+        "x": 21.109375,
+        "y": 63.34375,
+        "width": 79.1875,
+        "height": 21.109375
+      },
+      {
+        "name": "left-lockup-line-2",
+        "text": "VENT",
+        "fontSize": "16.04px",
+        "x": 23.8125,
+        "y": 66.671875,
+        "width": 73.765625,
+        "height": 14.4375
+      },
+      {
+        "name": "left-lockup-row-3",
+        "text": "GARD",
+        "fontSize": "16px",
+        "x": 21.109375,
+        "y": 87.28125,
+        "width": 79.1875,
+        "height": 21.109375
+      },
+      {
+        "name": "left-lockup-line-3",
+        "text": "GARD",
+        "fontSize": "16.04px",
+        "x": 22.96875,
+        "y": 90.609375,
+        "width": 75.46875,
+        "height": 14.4375
+      },
+      {
+        "name": "left-lockup-row-4",
+        "text": "EN",
+        "fontSize": "16px",
+        "x": 21.109375,
+        "y": 111.21875,
+        "width": 79.1875,
+        "height": 21.109375
+      },
+      {
+        "name": "left-lockup-line-4",
+        "text": "EN",
+        "fontSize": "16.04px",
+        "x": 43.53125,
+        "y": 114.546875,
+        "width": 34.328125,
+        "height": 14.4375
+      },
+      {
+        "name": "left-footer-row-1",
+        "text": "CONVENT",
+        "fontSize": "16px",
+        "x": 19.359375,
+        "y": 180.671875,
+        "width": 80.953125,
+        "height": 12.890625
+      },
+      {
+        "name": "left-footer-line-1",
+        "text": "CONVENT",
+        "fontSize": "10.02px",
+        "x": 21.1875,
+        "y": 182.609375,
+        "width": 77.28125,
+        "height": 9
+      },
+      {
+        "name": "left-footer-row-2",
+        "text": "GARDEN",
+        "fontSize": "16px",
+        "x": 19.359375,
+        "y": 199.453125,
+        "width": 80.953125,
+        "height": 12.890625
+      },
+      {
+        "name": "left-footer-line-2",
+        "text": "GARDEN",
+        "fontSize": "10.02px",
+        "x": 25.546875,
+        "y": 201.390625,
+        "width": 68.546875,
+        "height": 9
+      },
+      {
+        "name": "center-lockup-line-1",
+        "text": "CONVENT",
+        "fontSize": "20.07px",
+        "x": 137.0546875,
+        "y": 41.0390625,
+        "width": 18.046875,
+        "height": 154.921875
+      },
+      {
+        "name": "center-lockup-line-2",
+        "text": "GARDEN",
+        "fontSize": "20.07px",
+        "x": 190.8984375,
+        "y": 49.7890625,
+        "width": 18.046875,
+        "height": 137.421875
+      },
+      {
+        "name": "right-heading-row-1",
+        "text": "CONVENT",
+        "fontSize": "11.2635px",
+        "x": 251.671875,
+        "y": 35.1875,
+        "width": 89.75,
+        "height": 12.1875
+      },
+      {
+        "name": "right-heading-line-1",
+        "text": "CONVENT",
+        "fontSize": "10.91px",
+        "x": 254.65625,
+        "y": 36.375,
+        "width": 83.78125,
+        "height": 9.8125
+      },
+      {
+        "name": "right-heading-row-2",
+        "text": "GARDEN",
+        "fontSize": "11.2635px",
+        "x": 251.671875,
+        "y": 52.796875,
+        "width": 89.75,
+        "height": 12.1875
+      },
+      {
+        "name": "right-heading-line-2",
+        "text": "GARDEN",
+        "fontSize": "10.91px",
+        "x": 259.375,
+        "y": 53.984375,
+        "width": 74.328125,
+        "height": 9.8125
+      },
+      {
+        "name": "right-message-row-1",
+        "text": "Timeless",
+        "fontSize": "12.2021px",
+        "x": 251.671875,
+        "y": 140.78125,
+        "width": 89.75,
+        "height": 15.484375
+      },
+      {
+        "name": "right-message-line-1",
+        "text": "Timeless",
+        "fontSize": "10.27px",
+        "x": 256.96875,
+        "y": 143.890625,
+        "width": 79.140625,
+        "height": 9.234375
+      },
+      {
+        "name": "right-message-row-2",
+        "text": "Charm,",
+        "fontSize": "12.2021px",
+        "x": 251.671875,
+        "y": 157.921875,
+        "width": 89.75,
+        "height": 15.484375
+      },
+      {
+        "name": "right-message-line-2",
+        "text": "Charm,",
+        "fontSize": "10.27px",
+        "x": 264.796875,
+        "y": 161.03125,
+        "width": 63.5,
+        "height": 9.234375
+      },
+      {
+        "name": "right-message-row-3",
+        "text": "Rooted in",
+        "fontSize": "12.2021px",
+        "x": 251.671875,
+        "y": 175.046875,
+        "width": 89.75,
+        "height": 15.484375
+      },
+      {
+        "name": "right-message-line-3",
+        "text": "Rooted in",
+        "fontSize": "10.27px",
+        "x": 254.53125,
+        "y": 178.15625,
+        "width": 84.015625,
+        "height": 9.234375
+      },
+      {
+        "name": "right-message-row-4",
+        "text": "Grace.",
+        "fontSize": "12.2021px",
+        "x": 251.671875,
+        "y": 192.171875,
+        "width": 89.75,
+        "height": 15.484375
+      },
+      {
+        "name": "right-message-line-4",
+        "text": "Grace.",
+        "fontSize": "10.27px",
+        "x": 266.328125,
+        "y": 195.28125,
+        "width": 60.421875,
+        "height": 9.234375
+      },
+      {
+        "name": "left-lockup-star",
+        "text": "",
+        "fontSize": "16px",
+        "x": 52.203125,
+        "y": 46.28125,
+        "width": 11.75,
+        "height": 11.75
+      },
+      {
+        "name": "center-lockup-star",
+        "text": "",
+        "fontSize": "16px",
+        "x": 184.296875,
+        "y": 30.078125,
+        "width": 29.125,
+        "height": 29.125
+      }
+    ],
+    "contentWarnings": []
+  }
+}

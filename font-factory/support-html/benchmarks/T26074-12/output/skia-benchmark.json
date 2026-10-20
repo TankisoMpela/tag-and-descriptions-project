@@ -1,0 +1,83 @@
+{
+  "frame": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "LilitaOne-Regular.ttf",
+  "labelFont": "NotoSans-CondensedExtraBold.ttf",
+  "contextBuildMs": 184.93,
+  "runs": [
+    {
+      "run": 1,
+      "layoutAndDrawMs": 1629.31,
+      "pngOptimizeAndWriteMs": 1065.93,
+      "outputBytes": 157965,
+      "verificationMessages": [],
+      "textSlots": [
+        {
+          "name": "road_kicker",
+          "fontSize": 35.2,
+          "lines": 1
+        },
+        {
+          "name": "road_quote",
+          "fontSize": 304.0,
+          "lines": 3
+        },
+        {
+          "name": "road_stamp_copy",
+          "fontSize": 38.4,
+          "lines": 1
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "layoutAndDrawMs": 990.33,
+      "pngOptimizeAndWriteMs": 971.88,
+      "outputBytes": 157965,
+      "verificationMessages": [],
+      "textSlots": [
+        {
+          "name": "road_kicker",
+          "fontSize": 35.2,
+          "lines": 1
+        },
+        {
+          "name": "road_quote",
+          "fontSize": 304.0,
+          "lines": 3
+        },
+        {
+          "name": "road_stamp_copy",
+          "fontSize": 38.4,
+          "lines": 1
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "layoutAndDrawMs": 750.27,
+      "pngOptimizeAndWriteMs": 976.32,
+      "outputBytes": 157965,
+      "verificationMessages": [],
+      "textSlots": [
+        {
+          "name": "road_kicker",
+          "fontSize": 35.2,
+          "lines": 1
+        },
+        {
+          "name": "road_quote",
+          "fontSize": 304.0,
+          "lines": 3
+        },
+        {
+          "name": "road_stamp_copy",
+          "fontSize": 38.4,
+          "lines": 1
+        }
+      ]
+    }
+  ]
+}

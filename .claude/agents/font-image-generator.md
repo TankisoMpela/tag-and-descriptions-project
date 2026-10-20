@@ -1,6 +1,6 @@
 ---
 name: font-image-generator
-description: "FontFairy font text-placeholder handoff agent. Runs before font-prep, decides a new evocative name only when none is supplied, and creates deterministic canonical 3:2 and 1:1 placeholders. It does not use OpenPencil, image-generation tools, visual inspection, or OCR; final artwork replacement is a separate optional seller step."
+description: "Agent 27 creates white-background font-name specimens, three font-specific thumbnail prompts, HTML/CSS support layouts, factual specimens, Pinterest templates, and a validated visual handoff."
 permissionMode: acceptEdits
 ---
 

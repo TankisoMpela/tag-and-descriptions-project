@@ -1,0 +1,98 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "demolition32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "demolition32",
+    "headlineFontSize": "67.9297px",
+    "smallestDisplayFontSize": "67.9297px",
+    "contrast": 2.85,
+    "contrastException": {
+      "minimum": 2.8,
+      "rationale": "The source prints charcoal over an active color field; the supplied texture measures 2.85:1 at the title area's fifth-percentile contrast."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "prismatic-field",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "display-row-1",
+        "text": "Beh-Ago",
+        "fontSize": "67.9297px",
+        "x": 136,
+        "y": 188,
+        "width": 560,
+        "height": 72
+      },
+      {
+        "name": "display-row-2",
+        "text": "Demolition",
+        "fontSize": "67.9297px",
+        "x": 136,
+        "y": 276,
+        "width": 560,
+        "height": 72
+      },
+      {
+        "name": "display-row-3",
+        "text": "Abnormal(Ey)",
+        "fontSize": "67.9297px",
+        "x": 136,
+        "y": 364,
+        "width": 560,
+        "height": 72
+      },
+      {
+        "name": "display-row-4",
+        "text": "Mal-Out",
+        "fontSize": "67.9297px",
+        "x": 136,
+        "y": 452,
+        "width": 560,
+        "height": 72
+      },
+      {
+        "name": "archive-caption",
+        "text": "Normal Area (000-0385)",
+        "fontSize": "10.93px",
+        "x": 136,
+        "y": 592,
+        "width": 128.15625,
+        "height": 10.9375
+      },
+      {
+        "name": "twin-globe-mark",
+        "text": "",
+        "fontSize": "16px",
+        "x": 280,
+        "y": 584,
+        "width": 108,
+        "height": 104
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/demolition32.png",
+  "outputBytes": 2678836
+}

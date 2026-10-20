@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>brutal32 · source-led spread study</title>
+<style>
+@font-face{font-family:"Benchmark Display";src:url("../../benchmarks/T26074-12/assets/LilitaOne-Regular.ttf") format("truetype");font-display:block}
+:root{color-scheme:dark;font:14px/1.45 system-ui,sans-serif;background:#202126;color:#f0f0ee;accent-color:#ddd9ce;scrollbar-color:#65645e #17181b}
+*{box-sizing:border-box}::selection{background:#e6e3dc;color:#161719}
+body{margin:0;min-height:100vh;display:grid;grid-template-columns:300px minmax(0,1fr)}
+aside{background:#141519;border-right:1px solid #34363d;padding:22px 18px;display:flex;flex-direction:column;gap:16px}
+h1{font-size:20px;line-height:1.2;margin:0}p{margin:0;color:#c1c1bd}
+label{display:grid;gap:5px;color:#e4e3dc}
+input[type=text]{width:100%;border:1px solid #55544f;border-radius:3px;background:#202126;color:#f2f0e9;padding:8px;font:13px/1.3 system-ui,sans-serif}
+input[type=file]{width:100%;font-size:12px;color:#c1c1bd}
+input[type=range]{width:100%}input[type=color]{width:100%;height:35px;border:1px solid #55544f;border-radius:3px;background:#202126;padding:3px}
+fieldset{display:grid;gap:10px;border:1px solid #484740;border-radius:4px;padding:10px;margin:0}
+legend{font-size:12px;color:#b8b6af;padding:0 5px}:focus-visible{outline:2px solid #e8e5dc;outline-offset:2px}
+.palette{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{color:#f2f0e9;font-variant-numeric:tabular-nums}
+.note{font-size:12px;line-height:1.5;color:#bbb9b2}main{padding:22px;min-width:0}
+.topline{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}
+.topline h2{font-size:16px;margin:0}.topline a{color:#e9e6de;text-underline-offset:3px}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+figure{margin:0;min-width:0}figcaption{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#c2c0b9;margin:0 0 8px}
+.sample{width:100%;aspect-ratio:3/2;overflow:hidden;background:#151516;box-shadow:0 8px 24px #0006}
+.sample img{width:100%;height:100%;object-fit:contain;display:block}
+#artboard{position:relative;isolation:isolate;width:100%;aspect-ratio:3/2;overflow:hidden;background:#08090a;container-type:inline-size;--display-font:"Benchmark Display";--paper:#f0efea;--page-left:#333435;--page-right:#1c1d1f;--ink:#f1f0ed;--headline-scale:1;--tracking:-.025em}
+/* The camera frame is kept square to the page; its warm edge is visible around both leaves. */
+#book{position:absolute;left:8.05%;top:9.95%;width:85.5%;height:80.2%;background:var(--paper);border:clamp(3px,.52cqi,7px) solid var(--paper);box-shadow:0 9px 24px #0009,0 1px 0 #fff4;}
+#spread{position:absolute;inset:clamp(3px,.48cqi,6px);overflow:hidden;background:#292a2b;isolation:isolate}
+.page{position:absolute;top:0;bottom:0}.page-left{left:0;width:50.3%;background:linear-gradient(94deg,#2e2f30 0%,var(--page-left) 76%,#2c2d2e 100%)}.page-right{right:0;width:49.7%;background:linear-gradient(88deg,#242526 0%,var(--page-right) 17%,#1b1c1e 100%)}
+.page::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.14;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.24'/%3E%3C/svg%3E");mix-blend-mode:screen}
+#gutter{position:absolute;z-index:2;top:0;bottom:0;left:49.75%;width:1%;transform:translateX(-50%);background:linear-gradient(90deg,#090a0b00,#090a0b88 37%,#090a0bcc 52%,#a8a8a21c 76%,#090a0b00);pointer-events:none}
+.photo{position:absolute;z-index:1;overflow:hidden;background-image:url("../../../support-references/materials/T13692_06_brutalist-photo-plate.png");background-repeat:no-repeat;background-size:206.5% auto;box-shadow:0 1px 3px #05060755;outline:1px solid #eeede832;outline-offset:-1px}
+#photo-northwest{left:17.1%;top:16.3%;width:19.9%;height:14.5%;background-position:1.1% 10.1%}
+#photo-northeast{left:64.1%;top:16.6%;width:19.9%;height:14.5%;background-position:98.6% 10.1%}
+#photo-southwest{left:12.2%;top:51.4%;width:19.9%;height:14.5%;background-position:1.1% 89.3%}
+#photo-southeast{left:52.8%;top:68.7%;width:19.9%;height:14.5%;background-position:98.6% 89.3%}
+.headline{position:absolute;z-index:3;display:grid;justify-items:center;align-items:start;overflow:visible;margin:0;color:var(--ink);font-family:var(--display-font),"Times New Roman",serif;font-weight:900;line-height:.88;letter-spacing:var(--tracking);white-space:nowrap;text-align:center;text-shadow:0 0 .35px currentColor;transform:scale(var(--headline-scale));transform-origin:center center}
+/* Text boxes follow the photographed board's line starts and widths; tall fit boxes let
+   condensed live fonts grow enough to keep the same typographic dominance. */
+#line-1{left:24.6%;top:27.7%;width:50.8%;height:13%}
+#line-2{left:10.4%;top:38.9%;width:80.7%;height:13%}
+#line-3{left:30.8%;top:50.3%;width:26.5%;height:13%}
+#line-4{left:19.3%;top:61.4%;width:62.3%;height:13%}
+@media(max-width:1120px){body{grid-template-columns:260px minmax(0,1fr)}main{padding:16px}.compare{grid-template-columns:1fr}}
+@media(max-width:680px){body{display:block}aside{border-right:0;border-bottom:1px solid #34363d}main{padding:18px}.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside>
+  <h1>brutal32 · concrete and type</h1>
+  <p>A two-page architectural editorial spread rebuilt from the reference: offset monochrome photographs, a central binding shadow, and four oversized lines crossing the fold.</p>
+  <fieldset><legend>Four-line specimen</legend>
+    <label>Line 1<input id="copy-1" type="text" value="Brutalism" maxlength="24"></label>
+    <label>Line 2<input id="copy-2" type="text" value="A Play Between" maxlength="28"></label>
+    <label>Line 3<input id="copy-3" type="text" value="Crudity" maxlength="24"></label>
+    <label>Line 4<input id="copy-4" type="text" value="And Finesse" maxlength="26"></label>
+  </fieldset>
+  <fieldset><legend>Page tones</legend>
+    <div class="palette">
+      <label>Left leaf<input id="left-color" type="color" value="#333435"></label>
+      <label>Right leaf<input id="right-color" type="color" value="#1c1d1f"></label>
+    </div>
+    <label>Headline scale · <span id="scale-value">100%</span><input id="scale" type="range" min="92" max="108" value="100"></label>
+    <label>Tracking · <span id="tracking-value">−0.025em</span><input id="tracking" type="range" min="-60" max="0" value="-25"></label>
+  </fieldset>
+  <fieldset><legend>Typeface</legend>
+    <label>Display face · load a local TTF/OTF<input id="font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+  </fieldset>
+  <p id="status" class="note">Loading spread study…</p>
+  <p class="note">Edit → next painted frame: <span class="metric" id="paint-ms">—</span></p>
+</aside>
+<main>
+  <div class="topline"><h2>Reference proportions · live type fitting</h2><a href="../../../support-references/T13692_06.jpg" target="_blank" rel="noreferrer">Open source image</a></div>
+  <section class="compare" aria-label="Reference and editable reconstruction">
+    <figure><figcaption>Original reference · T13692_06</figcaption><div class="sample"><img src="../../../support-references/T13692_06.jpg" alt="Black and white brutalist architecture editorial spread with four overlapping title lines"></div></figure>
+    <figure><figcaption>HTML/CSS rebuild · editable layers</figcaption><!-- impeccable-disable cramped-padding: the poster artboard fills its preview frame by design, while all interactive controls remain inset. --><div id="artboard" aria-label="Editable two-page dark editorial spread">
+      <div id="book"><div id="spread">
+        <div class="page page-left"></div><div class="page page-right"></div>
+        <div id="gutter" aria-hidden="true"></div>
+      </div></div>
+      <div class="photo" id="photo-northwest" role="img" aria-label="Low angle of a concrete office block"></div>
+      <div class="photo" id="photo-northeast" role="img" aria-label="Repeated concrete window grid"></div>
+      <div class="photo" id="photo-southwest" role="img" aria-label="Long low brutalist building"></div>
+      <div class="photo" id="photo-southeast" role="img" aria-label="Geometric concrete tower"></div>
+      <h2 class="headline" id="line-1">Brutalism</h2><h2 class="headline" id="line-2">A Play Between</h2>
+      <h2 class="headline" id="line-3">Crudity</h2><h2 class="headline" id="line-4">And Finesse</h2>
+    </div></figure>
+  </section>
+</main>
+<script src="../../shared/copy-case.js"></script>
+<script>
+const board=document.querySelector('#artboard'),spread=document.querySelector('#spread');
+const ids=['line-1','line-2','line-3','line-4'];let displayFont='"Benchmark Display"',pending=0;
+function fitLines(){const ctx=document.createElement('canvas').getContext('2d'),scale=board.clientWidth/1200,tracking=Number(document.querySelector('#tracking').value)/1000,scaleFactor=Number(document.querySelector('#scale').value)/100;let min=Infinity;
+ for(const[id,index]of ids.map((id,index)=>[id,index])){const el=document.querySelector('#'+id),text=document.querySelector('#copy-'+(index+1)).value.trim()||'Type';el.textContent=text;el.style.fontFamily=displayFont;const boxWidth=el.clientWidth,boxHeight=el.clientHeight,max=132*scale,minSize=38*scale;let lo=minSize,hi=max;
+  for(let i=0;i<24;i++){const size=(lo+hi)/2;ctx.font=`900 ${size}px ${displayFont}, "Times New Roman", serif`;const m=ctx.measureText(text),measuredWidth=(m.actualBoundingBoxLeft||0)+(m.actualBoundingBoxRight||m.width)+tracking*size*Math.max(0,text.length-1),measuredHeight=(m.actualBoundingBoxAscent||size*.74)+(m.actualBoundingBoxDescent||size*.16);if(measuredWidth<=boxWidth*.97&&measuredHeight<=boxHeight*.92)lo=size;else hi=size}
+  const fitted=lo;el.style.fontSize=fitted+'px';min=Math.min(min,fitted);
+ }
+ board.style.setProperty('--display-font',displayFont);board.style.setProperty('--tracking',tracking+'em');board.style.setProperty('--headline-scale',scaleFactor);document.querySelector('#scale-value').textContent=Math.round(scaleFactor*100)+'%';document.querySelector('#tracking-value').textContent=(tracking<0?'−':'')+Math.abs(tracking).toFixed(3)+'em';return min;
+}
+function hexRgb(hex){return hex.trim().slice(1).match(/.{2}/g).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4)}
+function contrast(fg,bg){const lum=x=>.2126*x[0]+.7152*x[1]+.0722*x[2],a=lum(hexRgb(fg)),b=lum(hexRgb(bg));return(Math.max(a,b)+.05)/(Math.min(a,b)+.05)}
+function layoutReport(){const rect=board.getBoundingClientRect(),tracked=[...ids,'photo-northwest','photo-northeast','photo-southwest','photo-southeast'],slots=tracked.map(id=>{const el=document.querySelector('#'+id),r=el.getBoundingClientRect();return{name:id,text:el.textContent.trim().replace(/\s+/g,' '),x:+(r.left-rect.left).toFixed(1),y:+(r.top-rect.top).toFixed(1),width:+r.width.toFixed(1),height:+r.height.toFixed(1),fontSize:parseFloat(getComputedStyle(el).fontSize)||0}}),left=document.querySelector('#left-color').value,right=document.querySelector('#right-color').value;return{frame:{width:rect.width,height:rect.height},headlineFontSize:Math.min(...ids.map(id=>parseFloat(getComputedStyle(document.querySelector('#'+id)).fontSize)||0)).toFixed(2),inkOnPaperContrast:Math.min(contrast('#f1f0ed',left),contrast('#f1f0ed',right)).toFixed(2),slots,outOfBounds:slots.filter(s=>s.x < -1||s.y < -1||s.x+s.width>rect.width+1||s.y+s.height>rect.height+1)}}
+function updateLayout(){const started=performance.now();const size=fitLines();for(const[id,key]of[['left-color','--page-left'],['right-color','--page-right']])spread.style.setProperty(key,document.querySelector('#'+id).value);cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelector('#paint-ms').textContent=(performance.now()-started).toFixed(1)+' ms'));return layoutReport()}
+function installFont(){document.querySelector('#font-file').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;const url=URL.createObjectURL(file),face=new FontFace('Uploaded Brutal Display','url('+url+')');await face.load();document.fonts.add(face);displayFont='"Uploaded Brutal Display"';document.querySelector('#status').textContent=file.name+' loaded as the live display font.';updateLayout()})}
+for(const id of ['copy-1','copy-2','copy-3','copy-4','left-color','right-color','scale','tracking'])document.querySelector('#'+id).addEventListener('input',updateLayout);
+installFont();const resizeObserver=new ResizeObserver(()=>requestAnimationFrame(updateLayout));resizeObserver.observe(board);window.addEventListener('resize',()=>requestAnimationFrame(updateLayout));
+document.fonts.ready.then(()=>{document.querySelector('#status').textContent='Source geometry and photo crops are ready · upload the target face to fit the specimen.';updateLayout()});
+window.getLayoutReport=layoutReport;window.configureTemplate=({lines,headline,leftPage,rightPage,scale,tracking}={})=>{if(Array.isArray(lines))lines.forEach((line,index)=>{if(index<4)document.querySelector('#copy-'+(index+1)).value=window.supportTitleCase(String(line))});else if(typeof headline==='string')headline.split('\n').slice(0,4).forEach((line,index)=>document.querySelector('#copy-'+(index+1)).value=window.supportTitleCase(line));for(const[value,id]of[[leftPage,'left-color'],[rightPage,'right-color']])if(typeof value==='string'&&/^#[0-9a-f]{6}$/i.test(value))document.querySelector('#'+id).value=value;if(Number.isFinite(scale))document.querySelector('#scale').value=Math.max(92,Math.min(108,scale));if(Number.isFinite(tracking))document.querySelector('#tracking').value=Math.max(-60,Math.min(0,Math.round(tracking*1000)));return updateLayout()};
+</script>
+</body>
+</html>

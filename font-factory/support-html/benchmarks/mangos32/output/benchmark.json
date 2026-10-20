@@ -1,0 +1,322 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/mangos32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/mangos32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 27.5,
+  "desktopLayout": {
+    "frame": {
+      "width": 540,
+      "height": 360
+    },
+    "weight": 400,
+    "headlineFontSize": "95.32",
+    "inkOnPaperContrast": 17.42,
+    "cyanContrast": 9.67,
+    "accentOnPaperContrast": 6.67,
+    "slots": [
+      {
+        "name": "weight-ramp",
+        "x": 116.1,
+        "y": 88.56,
+        "width": 388.8,
+        "height": 30.6
+      },
+      {
+        "name": "axis-arrow",
+        "x": 238.68,
+        "y": 34.92,
+        "width": 61.56,
+        "height": 28.8
+      },
+      {
+        "name": "axis-loop",
+        "x": 35.1,
+        "y": 79.92,
+        "width": 70.2,
+        "height": 39.6
+      },
+      {
+        "name": "fruit-mark",
+        "x": 432,
+        "y": 183.6,
+        "width": 70.2,
+        "height": 54
+      }
+    ],
+    "textBounds": [
+      {
+        "name": "wordmark",
+        "text": "Mangos",
+        "x": 89,
+        "y": 66,
+        "width": 272.5,
+        "height": 76
+      },
+      {
+        "name": "foundry",
+        "text": "Mabütype",
+        "x": 790.3,
+        "y": 63,
+        "width": 327.7,
+        "height": 77
+      },
+      {
+        "name": "latin-name",
+        "text": "Mangifera indica L.",
+        "x": 364.5,
+        "y": 297,
+        "width": 733.1,
+        "height": 94
+      },
+      {
+        "name": "energy-caption",
+        "text": "Energy provided",
+        "x": 88,
+        "y": 531,
+        "width": 551,
+        "height": 82
+      },
+      {
+        "name": "trademark",
+        "text": "™",
+        "x": 364.5,
+        "y": 60,
+        "width": 30,
+        "height": 14
+      },
+      {
+        "name": "descriptor-1",
+        "text": "VARIABLE",
+        "x": 80,
+        "y": 291,
+        "width": 109.6,
+        "height": 23.5
+      },
+      {
+        "name": "descriptor-2",
+        "text": "GEOMETRIC",
+        "x": 81,
+        "y": 320,
+        "width": 133.5,
+        "height": 23.5
+      },
+      {
+        "name": "descriptor-3",
+        "text": "SANS SERIF",
+        "x": 80,
+        "y": 349,
+        "width": 130.8,
+        "height": 23.5
+      },
+      {
+        "name": "weight-value-copy",
+        "text": "100g",
+        "x": 83,
+        "y": 409,
+        "width": 191.5,
+        "height": 88
+      },
+      {
+        "name": "ounces-copy",
+        "text": "(3.53oz)",
+        "x": 519.3,
+        "y": 402,
+        "width": 271.4,
+        "height": 87
+      },
+      {
+        "name": "energy-value",
+        "text": "~ 272 kJ",
+        "x": 869,
+        "y": 532,
+        "width": 246,
+        "height": 74
+      },
+      {
+        "name": "tropical",
+        "text": "TROPICAL",
+        "x": 81,
+        "y": 656,
+        "width": 311.8,
+        "height": 56
+      },
+      {
+        "name": "fraction",
+        "text": "½",
+        "x": 563.7,
+        "y": 652,
+        "width": 72.7,
+        "height": 66
+      },
+      {
+        "name": "subtropical",
+        "text": "SUBTROPICAL",
+        "x": 678.8,
+        "y": 656,
+        "width": 441.2,
+        "height": 56
+      }
+    ],
+    "outOfBounds": []
+  },
+  "mobileLayout": {
+    "frame": {
+      "width": 354,
+      "height": 236
+    },
+    "weight": 400,
+    "headlineFontSize": "95.32",
+    "inkOnPaperContrast": 17.42,
+    "cyanContrast": 9.67,
+    "accentOnPaperContrast": 6.67,
+    "slots": [
+      {
+        "name": "weight-ramp",
+        "x": 76.11,
+        "y": 58.056,
+        "width": 254.88,
+        "height": 20.060000000000002
+      },
+      {
+        "name": "axis-arrow",
+        "x": 156.468,
+        "y": 22.892,
+        "width": 40.356,
+        "height": 18.88
+      },
+      {
+        "name": "axis-loop",
+        "x": 23.01,
+        "y": 52.392,
+        "width": 46.02,
+        "height": 25.96
+      },
+      {
+        "name": "fruit-mark",
+        "x": 283.2,
+        "y": 120.36,
+        "width": 46.02,
+        "height": 35.4
+      }
+    ],
+    "textBounds": [
+      {
+        "name": "wordmark",
+        "text": "Mangos",
+        "x": 89,
+        "y": 66,
+        "width": 272.5,
+        "height": 76
+      },
+      {
+        "name": "foundry",
+        "text": "Mabütype",
+        "x": 790.3,
+        "y": 63,
+        "width": 327.7,
+        "height": 77
+      },
+      {
+        "name": "latin-name",
+        "text": "Mangifera indica L.",
+        "x": 364.5,
+        "y": 297,
+        "width": 733.1,
+        "height": 94
+      },
+      {
+        "name": "energy-caption",
+        "text": "Energy provided",
+        "x": 88,
+        "y": 531,
+        "width": 551,
+        "height": 82
+      },
+      {
+        "name": "trademark",
+        "text": "™",
+        "x": 364.5,
+        "y": 60,
+        "width": 30,
+        "height": 14
+      },
+      {
+        "name": "descriptor-1",
+        "text": "VARIABLE",
+        "x": 80,
+        "y": 291,
+        "width": 109.6,
+        "height": 23.5
+      },
+      {
+        "name": "descriptor-2",
+        "text": "GEOMETRIC",
+        "x": 81,
+        "y": 320,
+        "width": 133.5,
+        "height": 23.5
+      },
+      {
+        "name": "descriptor-3",
+        "text": "SANS SERIF",
+        "x": 80,
+        "y": 349,
+        "width": 130.8,
+        "height": 23.5
+      },
+      {
+        "name": "weight-value-copy",
+        "text": "100g",
+        "x": 83,
+        "y": 409,
+        "width": 191.5,
+        "height": 88
+      },
+      {
+        "name": "ounces-copy",
+        "text": "(3.53oz)",
+        "x": 519.3,
+        "y": 402,
+        "width": 271.4,
+        "height": 87
+      },
+      {
+        "name": "energy-value",
+        "text": "~ 272 kJ",
+        "x": 869,
+        "y": 532,
+        "width": 246,
+        "height": 74
+      },
+      {
+        "name": "tropical",
+        "text": "TROPICAL",
+        "x": 81,
+        "y": 656,
+        "width": 311.8,
+        "height": 56
+      },
+      {
+        "name": "fraction",
+        "text": "½",
+        "x": 563.7,
+        "y": 652,
+        "width": 72.7,
+        "height": 66
+      },
+      {
+        "name": "subtropical",
+        "text": "SUBTROPICAL",
+        "x": 678.8,
+        "y": 656,
+        "width": 441.2,
+        "height": 56
+      }
+    ],
+    "outOfBounds": []
+  }
+}

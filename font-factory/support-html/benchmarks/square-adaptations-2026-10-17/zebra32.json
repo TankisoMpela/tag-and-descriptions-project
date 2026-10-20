@@ -1,0 +1,147 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "zebra32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "frame": {
+      "width": 800,
+      "height": 800
+    },
+    "headlineFontSize": "129.27px",
+    "inkOnPaperContrast": 17.88,
+    "slots": [
+      {
+        "name": "left_card",
+        "text": "Love",
+        "x": 33.6,
+        "y": 131.2,
+        "width": 361.6,
+        "height": 539.2,
+        "fontSize": 14
+      },
+      {
+        "name": "right_card",
+        "text": "RosesAre RedChocolatesAre BrownValentineIs BoredIf You AreAlone",
+        "x": 404.8,
+        "y": 131.2,
+        "width": 361.6,
+        "height": 539.2,
+        "fontSize": 14
+      },
+      {
+        "name": "zebra_photo",
+        "text": "Two zebras inside an arched photograph",
+        "x": 57.1,
+        "y": 187.8,
+        "width": 314.6,
+        "height": 209.7,
+        "fontSize": 14
+      },
+      {
+        "name": "love",
+        "text": "Love",
+        "x": 58.9,
+        "y": 468.2,
+        "width": 311,
+        "height": 151,
+        "fontSize": 129.27
+      },
+      {
+        "name": "rose_photo",
+        "text": "A red rose resting across printed pages",
+        "x": 417.4,
+        "y": 489.7,
+        "width": 336.3,
+        "height": 112.1,
+        "fontSize": 14
+      },
+      {
+        "name": "poem_1",
+        "text": "Roses",
+        "x": 424.7,
+        "y": 140.9,
+        "width": 321.8,
+        "height": 39.4,
+        "fontSize": 49.75
+      },
+      {
+        "name": "poem_2",
+        "text": "Are Red",
+        "x": 424.7,
+        "y": 182.9,
+        "width": 321.8,
+        "height": 39.4,
+        "fontSize": 49.75
+      },
+      {
+        "name": "poem_3",
+        "text": "Chocolates",
+        "x": 424.7,
+        "y": 228.2,
+        "width": 321.8,
+        "height": 39.4,
+        "fontSize": 49.75
+      },
+      {
+        "name": "poem_4",
+        "text": "Are Brown",
+        "x": 424.7,
+        "y": 272.5,
+        "width": 321.8,
+        "height": 39.4,
+        "fontSize": 49.75
+      },
+      {
+        "name": "poem_5",
+        "text": "Valentine",
+        "x": 424.7,
+        "y": 319.9,
+        "width": 321.8,
+        "height": 39.4,
+        "fontSize": 49.75
+      },
+      {
+        "name": "poem_6",
+        "text": "Is Bored",
+        "x": 424.7,
+        "y": 363,
+        "width": 321.8,
+        "height": 39.4,
+        "fontSize": 49.75
+      },
+      {
+        "name": "poem_7",
+        "text": "If You Are",
+        "x": 424.7,
+        "y": 407.3,
+        "width": 321.8,
+        "height": 39.4,
+        "fontSize": 49.75
+      },
+      {
+        "name": "poem_8",
+        "text": "Alone",
+        "x": 424.7,
+        "y": 448.2,
+        "width": 321.8,
+        "height": 39.4,
+        "fontSize": 49.75
+      }
+    ],
+    "outOfBounds": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/zebra32.png",
+  "outputBytes": 1544908
+}

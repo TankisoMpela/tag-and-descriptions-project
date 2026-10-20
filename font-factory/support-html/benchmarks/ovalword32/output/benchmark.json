@@ -1,0 +1,105 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/ovalword32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/ovalword32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Maidega-Regular.ttf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 29.6,
+  "imageBytes": {
+    "html": 1264200,
+    "skia": 1319899
+  },
+  "desktopLayout": {
+    "template": "ovalword32",
+    "headlineFontSize": "132.44px",
+    "contrast": 18.629428822346707,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "kicker",
+        "text": "A Typeface For Display",
+        "fontSize": "24.5959px",
+        "x": 113.453125,
+        "y": 61.453125,
+        "width": 482.171875,
+        "height": 35.453125
+      },
+      {
+        "name": "headline",
+        "text": "Sadie",
+        "fontSize": "132.44px",
+        "x": 39,
+        "y": 123.84375,
+        "width": 631.078125,
+        "height": 203.265625
+      },
+      {
+        "name": "sub",
+        "text": "Display Letterforms",
+        "fontSize": "22.7039px",
+        "x": 127.625,
+        "y": 340.34375,
+        "width": 453.8125,
+        "height": 35.453125
+      },
+      {
+        "name": "footer",
+        "text": "Soft Forms · Bright Ideas",
+        "fontSize": "12.298px",
+        "x": 198.53125,
+        "y": 413.625,
+        "width": 312,
+        "height": 18.90625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "ovalword32",
+    "headlineFontSize": "65.7998px",
+    "contrast": 18.629428822346707,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "kicker",
+        "text": "A Typeface For Display",
+        "fontSize": "12.22px",
+        "x": 56.3125,
+        "y": 30.5,
+        "width": 239.359375,
+        "height": 17.59375
+      },
+      {
+        "name": "headline",
+        "text": "Sadie",
+        "fontSize": "65.7998px",
+        "x": 19.359375,
+        "y": 61.46875,
+        "width": 313.265625,
+        "height": 100.890625
+      },
+      {
+        "name": "sub",
+        "text": "Display Letterforms",
+        "fontSize": "11.28px",
+        "x": 63.359375,
+        "y": 168.9375,
+        "width": 225.265625,
+        "height": 17.59375
+      },
+      {
+        "name": "footer",
+        "text": "Soft Forms · Bright Ideas",
+        "fontSize": "6.11001px",
+        "x": 98.546875,
+        "y": 205.3125,
+        "width": 154.875,
+        "height": 9.375
+      }
+    ],
+    "contentWarnings": []
+  }
+}

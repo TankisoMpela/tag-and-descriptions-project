@@ -1,0 +1,112 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "neue32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "neue32",
+    "headlineFontSize": "156px",
+    "smallestDisplayFontSize": "149.22px",
+    "contrast": 11.158274907062891,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "metaLeft",
+        "text": "Type Study / 01",
+        "fontSize": "20px",
+        "x": 48,
+        "y": 56,
+        "width": 280,
+        "height": 32
+      },
+      {
+        "name": "metaRight",
+        "text": "Display Sans Design",
+        "fontSize": "17.24px",
+        "x": 544,
+        "y": 56,
+        "width": 208,
+        "height": 32
+      },
+      {
+        "name": "word1",
+        "text": "Neue!",
+        "fontSize": "149.22px",
+        "x": 36,
+        "y": 128,
+        "width": 416,
+        "height": 168
+      },
+      {
+        "name": "word2",
+        "text": "Neue!",
+        "fontSize": "156px",
+        "x": 208,
+        "y": 320,
+        "width": 464,
+        "height": 168
+      },
+      {
+        "name": "word3",
+        "text": "Neue!",
+        "fontSize": "156px",
+        "x": 320,
+        "y": 512,
+        "width": 456,
+        "height": 168
+      },
+      {
+        "name": "pillTop",
+        "text": "Instant",
+        "fontSize": "44px",
+        "x": 425.7244873046875,
+        "y": 66.833984375,
+        "width": 324.551025390625,
+        "height": 154.33203125
+      },
+      {
+        "name": "pillMid",
+        "text": "Type",
+        "fontSize": "37.6px",
+        "x": 581.6249389648438,
+        "y": 342.8321838378906,
+        "width": 204.7501220703125,
+        "height": 106.33563232421875
+      },
+      {
+        "name": "pillBottom",
+        "text": "Form",
+        "fontSize": "40px",
+        "x": 7.994551181793213,
+        "y": 529.2650146484375,
+        "width": 288.01092529296875,
+        "height": 161.469970703125
+      },
+      {
+        "name": "footer",
+        "text": "A Study In Geometric Form",
+        "fontSize": "19.2px",
+        "x": 48,
+        "y": 736,
+        "width": 344,
+        "height": 28
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/neue32.png",
+  "outputBytes": 110122
+}

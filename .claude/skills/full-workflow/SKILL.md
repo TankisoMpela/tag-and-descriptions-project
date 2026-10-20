@@ -47,14 +47,22 @@ partial file.
 Pass the exact workspace, the new name when the user supplied one (otherwise
 the instruction that Agent 27 decides it under its Naming policy), the old
 description, and any supplied facts to `font-image-generator`. Agent 27 creates
-the fast mechanical text-placeholder handoff and does not use OpenPencil,
-image-generation tools, visual inspection, or OCR. Require:
+white-background font-name specimens, complete matching prompts for the 3:2
+main, 1:1 main, and storefront square, the documented HTML/CSS support layouts,
+factual specimen previews, and active Pinterest template renders. No old
+marketplace thumbnail is required. If the user explicitly requests a prompt
+prototype, use the matching specimen and prompt with the built-in
+image-generation tool and inspect the result. Require:
 
 - `prepared_visuals/3x2/thumbnail_main.png`;
 - `prepared_visuals/1x1/thumbnail_main.png`;
 - `prepared_visuals/1x1/thumbnail_japanese.png` with the same name-only
-  thumbnail treatment;
-- 4-8 sequential `promo_N.png` files in both ratios;
+  specimen treatment;
+- seven layouts under `prepared_visuals/supporting/3x2/` and the matching seven
+  under `prepared_visuals/supporting/1x1/`;
+- four previews under `prepared_visuals/specimens/`;
+- all 23 active template renders under `prepared_visuals/pinterest/` and their
+  template manifest;
 - `visual-handoff-manifest.md`, and `VISUAL-HANDOFF-READY.md`.
 
 Require the exact response marker `READY FOR FONT PREP HANDOFF`, the exact
@@ -70,34 +78,29 @@ Agent 13 must execute its complete run in
 one invocation and must not stop at the metadata/package handoff.
 
 Agent 13 is not allowed to open, visually inspect, OCR, thumbnail, or reason
-from image content, and it copies nothing from Agent 27's drafts. Its mechanical
-pass is one command, `python3 bin/prepare_font_package.py`; its own work is the
-description copy. It must finish the font package, the technical audit, the
-specimen sheets and the final reports before returning. Its judgement goes into two things: the
-description copy and the five Pinterest pins. Step 2 writes `pins.brief.json`
-(five fresh headlines, five colour worlds, plus `"class": "blackletter"` only
-when the seller's own words say blackletter, celtic, uncial, gaelic or gothic,
-`"class": "sports"` only when they say sport, athletic, esports, racing, gym,
-varsity, letterman or jersey, and `"class": "script"` only when they say
-handwritten, hand lettering, script, cursive, calligraphy, signature or wedding
-lettering)
-and runs `bin/render-pins`, which draws `pinterest_1..5` from the font binary
-into `visuals/New-Images/pinterest/`; its Step 2b then renders the two factual
-specimen sheets at both ratios with `bin/render-specimens --class`, which refuses
-to guess the class. So this stays image-inspection-free, and the renderer refuses
-copy that repeats itself. Showcase video rendering is
-archived (`archive/video/README.md`); do not attempt it. Everything else about
-the
-seller's artwork belongs to the standalone `/font-final-images` agent, which
-runs later and outside this workflow.
+from image content. It does not copy thumbnail or support-layout drafts; it
+installs only Agent 27's checksummed Pinterest template pins. Its single pass
+packages and audits the font, writes the description, installs those pins, and
+renders the factual specimen sheets. It must finish the font package, the
+technical audit, the specimen sheets and the final reports before returning.
+Agent 13 installs the
+23 checksummed Pinterest template pins from Agent 27 with
+`bin/install_template_pinterest_pins.py`; it does not create a new Pinterest
+brief or render a second pin set. It then renders four factual specimen sheets
+at both ratios with `bin/render-specimens --class`. This stage does not inspect
+the thumbnail or support-layout images. Showcase video rendering is archived
+(`archive/video/README.md`); do not attempt it. The seller's final thumbnail
+artwork is generated separately from the matching specimen and prompt, then
+processed by `/font-final-images` after it is added to the output folder.
 
 Require a final preparation output path, a successful completion status, the
-five rendered pins, the four specimen sheets, and an **empty**
+23 template pins, the four specimen sheets, and an **empty**
 `visuals/New-Images/` drop directory left in place for the seller apart from
 that `pinterest/` folder.
 
-Agent 13 never copies Agent 27's drafts into `outputs/`: those stay in
-`font-factory/`. The seller generates the final artwork themselves, drops the raw
+Agent 13 leaves Agent 27's thumbnail and support-layout drafts in
+`font-factory/`, and installs only the checksummed Pinterest pins. The seller
+generates the final artwork themselves, drops the raw
 files into `visuals/New-Images/`, and runs `/font-final-images` (Agent 30), which
 is outside this workflow.
 

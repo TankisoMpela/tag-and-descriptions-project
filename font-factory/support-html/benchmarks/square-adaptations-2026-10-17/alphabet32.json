@@ -1,0 +1,103 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "alphabet32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "alphabet32",
+    "headlineFontSize": "93.0999px",
+    "smallestDisplayFontSize": "64.19px",
+    "contrast": 17.42374548267842,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "alphabet-descriptor",
+        "text": "Variable\nGeometric\nSans Serif",
+        "fontSize": "16.8px",
+        "x": 56,
+        "y": 352,
+        "width": 168,
+        "height": 54.421875
+      },
+      {
+        "name": "alphabet-uppercase-0",
+        "text": "ABCDEFGHIJKLM",
+        "fontSize": "93.0999px",
+        "x": 43.890625,
+        "y": 35.03125,
+        "width": 712.21875,
+        "height": 81.921875
+      },
+      {
+        "name": "alphabet-uppercase-1",
+        "text": "NOPQRSTUVWXYZ",
+        "fontSize": "82.8499px",
+        "x": 43.84375,
+        "y": 147.546875,
+        "width": 712.328125,
+        "height": 72.890625
+      },
+      {
+        "name": "alphabet-lowercase-0",
+        "text": "abcdefghijklm",
+        "fontSize": "69.16px",
+        "x": 268,
+        "y": 351.578125,
+        "width": 492.3125,
+        "height": 60.84375
+      },
+      {
+        "name": "alphabet-lowercase-1",
+        "text": "nopqrstuvwxyz",
+        "fontSize": "64.19px",
+        "x": 268,
+        "y": 469.75,
+        "width": 492.265625,
+        "height": 56.484375
+      },
+      {
+        "name": "alphabet-figures",
+        "text": "#0123456789",
+        "fontSize": "74.62px",
+        "x": 52,
+        "y": 635.171875,
+        "width": 496.296875,
+        "height": 65.65625
+      },
+      {
+        "name": "alphabet-metadata-primary",
+        "text": "Letterform Study",
+        "fontSize": "21.6px",
+        "x": 564,
+        "y": 672,
+        "width": 184,
+        "height": 29
+      },
+      {
+        "name": "alphabet-metadata-secondary",
+        "text": "Glyph Specimen",
+        "fontSize": "14.4px",
+        "x": 564,
+        "y": 720,
+        "width": 184,
+        "height": 19
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/alphabet32.png",
+  "outputBytes": 123878
+}

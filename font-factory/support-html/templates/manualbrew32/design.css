@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "ManualBrewLabel";
+  src: url("../../assets/LilitaOne-Regular.ttf") format("truetype");
+  font-display: block;
+}
+#artboard {
+  background: var(--brew-background, #2c2626);
+  color: #fff8e8;
+}
+.brew-word, .brew-credit {
+  position: absolute; left: 50%; display: inline-block;
+  white-space: nowrap; transform: translateX(-50%);
+}
+.brew-word {
+  color: #fff; font-family: var(--display-face, Arial, sans-serif);
+  font-weight: 800; font-synthesis: weight; line-height: .82;
+  font-kerning: none; font-variant-ligatures: none;
+  letter-spacing: var(--brew-tracking, .015em); text-align: center;
+}
+.brew-word span { display: inline-block; margin-inline: .012em; -webkit-text-stroke: .018em currentColor; }
+.brew-manual { top: 22%; }
+.brew-brew { top: 53.5%; }
+.brew-credit {
+  top: 88.5%; width: 70%; color: #fff8e8;
+  font-family: var(--label-face, "ManualBrewLabel", Arial, sans-serif);
+  font-size: 2.4cqh; font-weight: 700; font-synthesis: weight;
+  letter-spacing: .055em; text-align: center; line-height: 1;
+}

@@ -1,0 +1,52 @@
+@font-face {
+  font-family: "SignalLabel";
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-display: block;
+}
+#artboard {
+  background: #000;
+  color: #f8f7f4;
+}
+.signal-value {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: inline-block;
+  width: max-content;
+  color: #f8f7f4;
+  font-family: var(--display-face, Arial, sans-serif);
+  font-weight: 500;
+  line-height: .82;
+  white-space: nowrap;
+  letter-spacing: -.06em;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+}
+.signal-plaque {
+  position: absolute;
+  left: 72%;
+  top: 53.5%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 19%;
+  height: 15.5%;
+  padding: 0 2.2%;
+  color: #fff;
+  background: #ed0d20;
+  clip-path: polygon(10% 0, 90% 0, 100% 16%, 100% 84%, 90% 100%, 10% 100%, 0 84%, 0 16%);
+}
+.signal-currency {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: inline-block;
+  width: max-content;
+  font-family: var(--label-face, "SignalLabel", "Arial Narrow", Arial, sans-serif);
+  font-weight: 600;
+  line-height: .88;
+  letter-spacing: -.04em;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}

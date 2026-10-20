@@ -1,6 +1,6 @@
 ---
 name: agent-30-font-final-visual-processor
-description: Post-workflow processor for seller-replaced font images. Separates final raw images into 3:2 and 1:1 sets, preserves exact source copies, compresses JPEG delivery files, and writes an audit manifest without changing the raw files. Pinterest pins belong to /font-prep (Agent 13) and are left untouched here.
+description: Post-workflow processor for seller-replaced font images. Separates final raw images into 3:2 and 1:1 sets, preserves exact source copies, compresses JPEG delivery files, appends ten Pinterest image panels after every manifested HTML/CSS template pin, and writes an audit manifest without changing the raw files.
 user-invocable: true
 ---
 
@@ -37,6 +37,14 @@ This agent owns only the mechanical final-image delivery pass:
   `New-Images/main/`, and `New-Images/source/1x1/` (supplied or padded) as
   full-dimension JPEGs in `New-Images/squares/`, each at or below `200000`
   bytes;
+- append ten `1000x1500` Pinterest image panels in the existing
+  `New-Images/pinterest/` directory, beginning after all template pins in
+  `pinterest-template-manifest.json`. Agent 27 generates the HTML/CSS template
+  pins and Agent 13 copies them unchanged; preserve every template pin. The
+  first five new panels place `thumbnail_main` at the top; the next five place it in the
+  middle between two randomly selected, distinct 3:2 supporting images;
+  letterbox every image whole on white and never crop it. This requires at
+  least three 3:2 source files;
 - write `New-Images/final-image-manifest.md` with source-to-role mapping,
   dimensions, output paths, byte sizes, source hashes, compositor inputs, and
   the exact processing date.
@@ -73,7 +81,8 @@ python3 bin/check_new_images.py \
 Then choose, from the report:
 
 - unsupported or undecodable files → stop; they are blockers.
-- no 3:2 files → stop; the processor requires at least one 3:2 file.
+- fewer than three 3:2 files → stop; the Pinterest panels need a thumbnail and
+  two supporting images;
 - no 1:1 files → add `--pad-squares`: every square is derived from the 3:2
   set with equal white top/bottom padding, so the counts match.
 - exactly one 1:1 file, name-marked as the square thumbnail, and more than
@@ -99,6 +108,7 @@ python3 bin/process_final_font_images.py \
   "outputs/font-preparation/{catalogue-number}-{font-slug}/visuals/New-Images" \
   --font-name "{Final Font Name}" \
   --auto-order \
+  --pinterest-variants 10 \
   --overwrite
 ```
 
@@ -109,18 +119,19 @@ flags only when the user separately requests a manual mapping. Do not pass
 `--overwrite` can replace prior generated delivery files, but it never permits
 replacement of the raw direct files.
 
-## Pinterest is not yours
+## Pinterest image panels
 
-The five Pinterest pins are designed from the font binary by `/font-prep`
-(Agent 13) and already sit in `New-Images/pinterest/` as `pinterest_1..5` when
-this agent runs. They share those filenames with the old letterbox panels, so
-the compositor is **off by default**: do not pass `--pinterest`, do not
-hand-compose panels, and do not delete, rename, resize or re-encode anything in
-`New-Images/pinterest/`. Your delivery set is `main/` and `squares/`.
-
-`--pinterest` exists only for a seller who explicitly asks for letterbox panels
-instead of designed pins; `--pinterest-format png`, `--pinterest-variants N` and
-`--pinterest-count N` then behave as before.
+Before running, confirm `New-Images/pinterest/` contains the complete
+`pinterest-template-manifest.json` set installed by `/font-prep`. The processor
+validates every index, file hash, dimension, and byte limit, preserves those
+template pins, and starts composites at `template_count + 1`. It appends exactly
+ten composites, then writes `pinterest-set-manifest.json` describing every
+template and composite image with checksums. The 3:2 pool is ordered
+mechanically, so its first file is the thumbnail and the rest are the random
+supporting-image pool. Do not hand-compose panels or use a square source image.
+Pinterest generation is on by default; pass `--skip-pinterest` only when the
+user explicitly asks to skip the ten composites. `--pinterest-format png`
+changes the ten added panels to PNG while preserving all template pins.
 
 ## Verification gate
 
@@ -133,9 +144,10 @@ Before reporting completion, confirm:
   (including any helper-derived padded squares, marked in the manifest);
 - main JPEGs are full-dimension 3:2 files and `<=200000` bytes;
 - square JPEGs are full-dimension 1:1 files and `<=200000` bytes;
-- `New-Images/pinterest/` is exactly as you found it — the five designed pins
-  are untouched, and you added nothing to that folder unless `--pinterest` was
-  explicitly requested;
+- `New-Images/pinterest/` contains every manifested template pin unchanged
+  and exactly ten valid 1000x1500 composites at the next contiguous indexes,
+  unless Pinterest was explicitly skipped; the pin-set manifest matches every
+  file and hash;
 - the manifest is present and reports `COMPLETE`.
 
 If any input is missing, a ratio is wrong, a file cannot be decoded, a
@@ -145,6 +157,7 @@ image; the `--pad-squares` derivation chosen in the decision above is the
 only permitted derivation.
 
 Final response must report the exact `New-Images` output path, the main and
-square counts, the number of squares the helper white-padded (0 if none), that
-`New-Images/pinterest/` was left to Agent 13's five designed pins, the manifest
-path, and `No upload or publication claim`.
+square counts, the number of squares the helper white-padded (0 if none), the count of
+preserved template pins, ten appended Pinterest panels (or that
+Pinterest generation was skipped), the manifest path, and
+`No upload or publication claim`.

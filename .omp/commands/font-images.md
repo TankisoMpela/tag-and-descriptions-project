@@ -1,12 +1,29 @@
 ---
-description: Run the FontFairy font image generator before font preparation. Agent 27 authors the phrase-led theme.txt, visual-plan.json, image notes, and the provisional text-placeholder handoff. It decides the final font name only when the user supplied none, validates with deterministic machine QA only (no vision, no OCR), and leaves a strict mechanical Agent-13 handoff. The later manual image-model pass is the source of final creative artwork.
+description: Run Agent 27 to create white-background font-name specimens, three complete font-specific thumbnail prompts, and the validated visual handoff.
 ---
 
-Dispatch the registered FontFairy task agent `font-image-generator` for this request (the agent reads its canonical spec in `agents/` and executes it).
+Dispatch the registered `font-image-generator` agent. It must follow
+`agents/agent-27-font-image-generator.md` and the relevant handoff guidance in
+`AGENTS.md` and `font-factory/AGENTS.md`.
 
-If the completion confirms a saved output file with `[PASS]`/success status, report its path.
-Otherwise report the blocker honestly; do not invent a completion.
+Use the exact workspace, supplied font name when present, product description,
+and verified facts. Agent 27 creates clean white-background name specimens and
+separate prompts for the 3:2 main thumbnail, 1:1 main thumbnail, and 1:1
+storefront thumbnail. It also produces the documented HTML/CSS support layouts,
+factual specimen previews, and Pinterest template renders. Do not supply or
+request an old marketplace thumbnail.
 
-User request / input:
+If the user explicitly asks to prototype a thumbnail prompt, use the matching
+white-background specimen and complete prompt with the built-in image-generation
+tool, then inspect the result against the reference-structure audit: title
+hierarchy, physical surface integration when called for, model focus, crop,
+contrast and small-size readability. Keep only elements that explain the premise;
+open space can remain empty. Exclude glitter, sparkles, confetti, particles,
+unneeded effects and generic AI decoration.
 
-Please run the registered font-image-generator agent before font preparation. Use the exact font workspace and product description. This agent has no vision/OCR, so do not request or depend on local reference images. When the user supplies a final font name, use it exactly and skip naming research; when not, decide the best evocative name under the agent's Naming policy. Derive a short phrase/concept ledger first: normally 1–4-word promo headlines, varied buyer jobs, phrase meaning, visual metaphor/world, verified font behavior, physical event, artwork, placement, and ratio-specific crop. Write theme.txt, notes, and visual-plan.json from that same ledger so they stay cohesive. Do not force templates or a fixed candidate set. Use scripts only for mechanical placeholder rasterization and validation; do not invoke vision/OCR or font-prep automatically. Finish with READY FOR FONT PREP HANDOFF and the exact prepared_visuals path: $@
+Do not start font preparation automatically. Require the exact
+`READY FOR FONT PREP HANDOFF` marker and report the validated
+`prepared_visuals/` path. If a required output or validation is missing, report
+the blocker honestly.
+
+User request / input: $@

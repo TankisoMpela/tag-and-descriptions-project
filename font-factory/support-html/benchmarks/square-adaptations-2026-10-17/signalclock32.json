@@ -1,0 +1,58 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "signalclock32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "signalclock32",
+    "headlineFontSize": "235.02px",
+    "smallestDisplayFontSize": "68px",
+    "contrast": 19.601928171425822,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "signal-price",
+        "text": "$50.50",
+        "fontSize": "235.02px",
+        "x": 168,
+        "y": 303.6484375,
+        "width": 464,
+        "height": 192.703125
+      },
+      {
+        "name": "signal-currency-plaque",
+        "text": "Dollar",
+        "fontSize": "16px",
+        "x": 576,
+        "y": 428,
+        "width": 152,
+        "height": 124
+      },
+      {
+        "name": "signal-currency-label",
+        "text": "Dollar",
+        "fontSize": "68px",
+        "x": 594,
+        "y": 460.0859375,
+        "width": 116,
+        "height": 59.828125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/signalclock32.png",
+  "outputBytes": 47475
+}

@@ -1,0 +1,117 @@
+@font-face {
+  font-family: "HerbalLabel";
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-display: block;
+}
+#artboard {
+  --herbal-green: #19b722;
+  --herbal-cream: #faf0d5;
+  --herbal-ink: #2a211f;
+  --herbal-yellow: #f4d329;
+  --herbal-orange: #f55324;
+  color: var(--herbal-ink);
+  background: radial-gradient(ellipse at 50% 46%, var(--herbal-green) 0, var(--herbal-green) 73%, #149321 100%);
+}
+.carton-frame, .carton-paper, .plant-mark, .stock-burst, .stock-copy,
+.batch-mark, .product-title, .product-name, .detail-block {
+  position: absolute;
+}
+.carton-frame {
+  z-index: 1; left: 7.1%; top: 9.8%; width: 84.5%; height: 79.8%;
+  border: .48cqw solid var(--herbal-yellow); border-radius: 1.8cqw;
+  background: var(--herbal-ink);
+}
+.carton-paper {
+  z-index: 2; left: 8.05%; top: 11.55%; width: 82.1%; height: 74.1%;
+  border: .36cqw solid var(--herbal-ink);
+  border-radius: 1.15cqw; overflow: hidden;
+  background-color: var(--herbal-cream);
+  background-image: radial-gradient(ellipse at 51% 43%, rgb(255 255 242 / 18%), transparent 73%),
+    radial-gradient(ellipse 65% 48% at 22% 86%, rgb(164 143 104 / 5%), transparent 83%);
+}
+.plant-mark {
+  z-index: 3; left: 19%; top: 14.1%; width: 62%; height: 15.8%;
+  overflow: visible;
+}
+.plant-mark svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.plant-mark path, .plant-mark ellipse {
+  fill: none; stroke: var(--herbal-ink); stroke-width: 4.2;
+  stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke;
+}
+.batch-mark {
+  z-index: 4; left: 39.7%; top: 15.3%; width: 20.6%; height: 17.2%;
+  display: grid; place-items: center; border: .52cqw solid var(--herbal-ink);
+  border-radius: 50%; background: var(--herbal-cream);
+}
+.batch-mark span {
+  display: inline-block; color: var(--herbal-ink);
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 400;
+  font-synthesis: none; line-height: .88; letter-spacing: -.02em;
+}
+.product-title, .product-name, .stock-copy {
+  display: flex; align-items: center; justify-content: center;
+  white-space: nowrap; text-align: center;
+}
+.product-title {
+  z-index: 4; left: 50%; top: 34.3%; width: 74%; height: 20%;
+  color: var(--herbal-ink); font-family: var(--display-face, Arial, sans-serif);
+  font-weight: 400; font-synthesis: none; line-height: .82;
+  letter-spacing: -.018em; transform: translateX(-50%) scale(1.11, 1.22);
+  transform-origin: center top;
+  -webkit-text-stroke: .004em currentColor;
+}
+.product-name {
+  z-index: 4; left: 50%; top: 62.2%; width: 64%; height: 11.8%;
+  border: .55cqw solid var(--herbal-ink); border-radius: 999px;
+  color: var(--herbal-ink); background: var(--herbal-cream);
+  transform: translateX(-50%);
+}
+.product-name span {
+  display: inline-block; padding-inline: 2.5%;
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 400;
+  font-synthesis: none; line-height: .88; letter-spacing: -.035em;
+  transform: scaleY(1.1); transform-origin: center;
+}
+.stock-burst {
+  z-index: 5; left: 1.35%; top: 4.45%; width: 24.2%; height: 24.2%;
+  overflow: visible;
+}
+.stock-burst svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.stock-burst path { fill: var(--herbal-orange); }
+.stock-copy {
+  z-index: 6; left: 13.45%; top: 10.8%; width: 14%; height: 5.7%;
+  color: var(--herbal-cream); font-family: var(--display-face, Arial, sans-serif);
+  font-weight: 400; font-synthesis: none; letter-spacing: .015em; line-height: .9;
+  transform: translateX(-50%) rotate(-4deg);
+  -webkit-text-stroke: .01em currentColor;
+}
+.detail-block {
+  z-index: 4; top: 75.4%; height: 9.2%;
+  display: flex; flex-direction: column; justify-content: center;
+  color: var(--herbal-ink); font-family: var(--label-face, "HerbalLabel", Arial, sans-serif);
+  font-weight: 350; line-height: 1.06;
+}
+.product-process { left: 18.8%; width: 22%; align-items: flex-start; text-align: left; }
+.product-roast {
+  left: 50%; top: 76.7%; width: 28%; height: 9.2%; align-items: center;
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 400;
+  font-synthesis: none; line-height: .86; letter-spacing: -.025em;
+  transform: translateX(-50%);
+}
+.product-date { left: 67%; width: 16.5%; align-items: flex-end; text-align: right; }
+.detail-line { display: inline-block; white-space: nowrap; }
+#artboard[data-ratio="1x1"] {
+  --herbal-green: #315f3a;
+  background: radial-gradient(ellipse at 50% 46%, #446f4a 0, #315f3a 73%, #244c30 100%);
+}
+#artboard[data-ratio="1x1"] .carton-frame { left: 5%; top: 7.5%; width: 90%; height: 85%; }
+#artboard[data-ratio="1x1"] .carton-paper { left: 6.1%; top: 9%; width: 87.8%; height: 80.8%; }
+#artboard[data-ratio="1x1"] .plant-mark { left: 16%; top: 12.5%; width: 68%; height: 14.2%; }
+#artboard[data-ratio="1x1"] .batch-mark { left: 37%; top: 15%; width: 26%; height: 16%; }
+#artboard[data-ratio="1x1"] .product-title { top: 34%; transform: translateX(-50%); }
+#artboard[data-ratio="1x1"] .product-name { top: 54%; width: 74%; height: 10.5%; }
+#artboard[data-ratio="1x1"] .stock-burst { left: 1.2%; top: 3.7%; width: 23%; height: 23%; }
+#artboard[data-ratio="1x1"] .detail-block.product-roast { top: 67%; width: 54%; height: 7%; }
+#artboard[data-ratio="1x1"] .detail-block { top: 76%; height: 8.5%; }
+#artboard[data-ratio="1x1"] .product-process { left: 10%; width: 36%; }
+#artboard[data-ratio="1x1"] .product-date { left: 55%; width: 35%; }

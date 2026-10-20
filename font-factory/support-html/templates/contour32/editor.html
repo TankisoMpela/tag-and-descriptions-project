@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../../shared/editor-shell.css">
+  <link rel="stylesheet" href="./design.css">
+  <title>Contour ligatures — Support Layout Studio</title>
+</head>
+<body>
+  <header class="studio-header">
+    <div>
+      <h1>Contour · Ligature study</h1>
+      <p>A source-led black specimen plate with clipped orange ribbons and a cyan directional glyph row.</p>
+    </div>
+    <span class="source-id">T30930_03 · slot 10</span>
+  </header>
+  <main class="studio-grid">
+    <figure class="reference-panel">
+      <figcaption class="panel-title">Source reference</figcaption>
+      <img src="../../../support-references/T30930_03.jpg" alt="Black geometric specimen board with orange corner ribbons, cyan arrows, a ligature caption, and two large rows of white letterforms">
+      <p class="reference-note">The original stays in charge: airy arrow strip, compact ligature caption, two large specimen rows, and three cropped orange ribbons inside a fine frame.</p>
+    </figure>
+    <section class="stage-panel" aria-label="Live template preview">
+      <h2 class="panel-title">Live composition</h2>
+      <div class="artboard-frame"><div id="artboard" aria-label="Editable ligature specimen board"></div></div>
+    </section>
+    <aside class="controls-panel">
+      <h2 class="panel-title">Layout controls</h2>
+      <label class="font-picker" for="font-file">Specimen font
+        <input id="font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="font-status" class="font-status">Choose a local font to preview its actual letterforms.</span>
+      </label>
+      <div id="template-controls"></div>
+    </aside>
+  </main>
+  <script src="../../shared/layout.js"></script>
+  <script src="./design.js"></script>
+  <script src="../../shared/editor-shell.js"></script>
+  <script>window.SupportEditor.start(window.Contour32);</script>
+</body>
+</html>

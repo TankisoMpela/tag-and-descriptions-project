@@ -44,9 +44,9 @@ stage's final result before starting the next. The only registered agents for th
 five specialists below plus the `full-workflow` orchestrator.
 
 1. `font-image-generator` (Agent 27) — bespoke visual handoff.
-2. `font-prep-specialist` (Agent 13) — metadata/package pass, the rendered specimen
-   sheets, the five designed Pinterest pins, and an empty `visuals/New-Images/` drop
-   directory. It never copies or processes the seller's final images.
+2. `font-prep-specialist` (Agent 13) — metadata/package pass, rendered specimen
+   sheets, and checked installation of Agent 27's 23 HTML/CSS Pinterest template
+   pins into `visuals/New-Images/pinterest/`. It never processes the seller's final images.
 3. `booth-fonts-specialist` (Agent 20) — BOOTH listing; default campaign is a
    limited-time free offer (`FREE_ACTIVE`) with free-campaign tags and a like CTA.
 4. `cm_fonts_specialist` (Agent 2) — Creative Market font listing using a bounded
@@ -57,8 +57,8 @@ five specialists below plus the `full-workflow` orchestrator.
 Every other agent (Pixiv, Cubebrush, YellowImages, DLsite, Etsy, MasterBundles,
 Marketore, Behance, the legacy Pinterest agent 10, X, Telegram, namemaker, brush
 workflows, the-converter, booth-ready) is archived under `archive/` and must not be
-invoked. `/font-final-images` (Agent 30) and the two Pinterest pipeline agents below
-are live, but deliberately outside `/full-workflow`.
+invoked. `/font-final-images` (Agent 30), `/font-rights-check` (Agent 31) and the two
+Pinterest pipeline agents below are live, but deliberately outside `/full-workflow`.
 
 ### Default package copies (Agent 13)
 
@@ -83,13 +83,20 @@ final-image agents do not.
 Relocated to `agents/reference/AGENTS-annex-visual-handoff.md` — read it if you are the
 font-image-generator or the font-final-visual-processor.
 
-Agent 27's `prepared_visuals/` are DRAFTS: they stay in `font-factory/` and are never copied
-into `outputs/`. Agent 13 copies nothing from them: it renders the two
-factual specimen sheets at both ratios (`bin/render-specimens`, Step 2b) and the five
-designed Pinterest pins into `visuals/New-Images/pinterest/`, and leaves the rest of
-`visuals/New-Images/` empty. The seller drops their own generated images there and
-runs `/font-final-images` (Agent 30), which is deliberately outside `/full-workflow` and
-now touches only `main/` and `squares/` — never `pinterest/`.
+Agent 27 writes the handoff to `font-factory/fonts/{slug}/prepared_visuals/`:
+three clean, white-background font-name specimens for use as raw image-model
+material, with complete bespoke 3:2, 1:1, and storefront prompts in
+`visual-direction/theme.txt`; seven eligible HTML/CSS support designs at both
+ratios, four factual specimen previews, and every active HTML/CSS Pinterest
+template rendered with the font. Agent 13 installs the 23 template pins into
+`visuals/New-Images/pinterest/`; the other Agent-27 review assets stay in
+`font-factory/`. Final thumbnails are generated from the matching specimen and
+prompt; an old thumbnail reference is not part of that process.
+After the seller adds final images, `/font-final-images` (Agent 30) adds ten
+image-composite Pinterest panels after the templates and writes a manifest for
+the complete pin set. `/pinterest-prepare` validates and uploads every template
+and composite image to Blob, then writes every public link to `public-urls.md`.
+Agent 30 and the Pinterest preparer are outside `/full-workflow`.
 
 ## 📄 TRIAL INSERT PDF (`/booth-pdf-maker` — standalone)
 
@@ -99,28 +106,72 @@ directory, and trial URL; the product image comes from `{font-dir}/visuals/New-I
 (mechanical `thumbnail_main` pick). One command: `python3 bin/make_booth_trial_pdf.py …` →
 `outputs/booth-pdfs/{slug}-trial-insert.pdf`. Canonical spec: `agents/agent-booth-pdf-maker.md`.
 
+## ⚖️ FONT RIGHTS CHECK (`/font-rights-check` — standalone)
+
+`/font-rights-check` (Agent 31, `font-rights-researcher`) judges whether the seller may ship a
+font sitting in `font-factory/input/<N>-<Family>/`. It is deliberately outside
+`/full-workflow` and must never be invoked by the orchestrator or a listing agent. The staging
+`<N>` is not a `{NUM}`; no product number appears in this workflow.
+
+The queue is the unmarked state itself — `python3 bin/font_rights.py status --unmarked` lists
+every staged folder with no verdict for its files. Research runs **per staged folder, not per
+file**: the seller stages one family per folder and cleans out what does not belong, so
+`plan --folder <N>` picks the folder's Regular/normal cut as its one representative and
+`write … --fanout` spreads that verdict over every sibling (each keeps its own `fsType`).
+`groups --folder <N>` still exists to audit a folder you do not trust, splitting it by
+(family, holder, fsType) — a folder that flags foreign holders may only ever go red or amber,
+never green. Three states, and the middle one is the point:
+
+| state | means | ship it? |
+|---|---|---|
+| `claimed` (red) | still sold or held by an active rights owner | no |
+| `orphan` (amber) | no active holder found **and** no licence terms found | **no — unlicensed, not safe** |
+| `clear` (green) | a grant quote the tool verified in the binary, or the author agreed this run | yes |
+
+`bin/font_rights.py` enforces the evidence rules (a live URL for `claimed`, two searched
+avenues for `orphan`, a verbatim grant quote for `clear`) and decides nothing itself; a name
+table's "free for commercial use" line is a claim until verified, because these files come out
+of a repackaged 29,000-font dump. A `claimed` URL must also be able to *carry* the claim — a
+shop, the holder's own domain, or a type-rights reference; name-table scrapers that republish
+this dump's own metadata are refused, because hosting a font is not holding it. And a `clear`
+never fans across holders: if any file in the folder names a different holder, the tool holds
+back every sibling. The pass is **search-first**: 1-2 searches per folder, and a
+page is fetched only when the verdict would be green, because red and amber both mean "do not
+ship" so a cheaper standard is safe there, while a grant has to be read.
+`font-vault/input_inspector.py` renders each verdict as a coloured chip on the row — press ↻
+Refresh after a run, and click a chip to read the evidence, the searched avenues and the
+dates behind it (its URLs are clickable and copyable, and **Copy full report** takes the
+whole record out as plain text for follow-ups outside the app). The tool never touches a font binary,
+a manifest, or `in-use.txt`; deleting or returning a font in the inspector voids its verdict.
+The sidecars live in a **gitignored** directory, so a finished run must end with
+`python3 bin/font_rights.py sync`, which mirrors them into the tracked
+`outputs/research/font-rights-ledger.json` (`sync --check` exits non-zero on drift).
+Canonical spec: `agents/agent-31-font-rights-researcher.md`.
+
 ## 📌 DAILY PINTEREST RUN (standalone pipeline — outside `/full-workflow`)
 
-Two agents; the archived Agent 10 stays archived and is not invoked.
+The Pinterest image sequence has four stages; the archived Agent 10 stays
+archived and is not invoked.
 
-The pins are made upstream, by Agent 13 Step 2: write a `pins.brief.json` (five
-fresh headlines, five themes), run `bin/render-pins`, and `pinterest_1..5` land
-in `visuals/New-Images/pinterest/`. Canonical specs for that creative half:
-`docs/PIN-ART-DIRECTION.md` (how a font becomes five designed pins — concept,
-hook-first copy, non-deterministic roll vs reasoned call, checks) and
-`docs/SKIA-PIN-RENDERER.md` (probe-verified capability reference for the
-renderer, which lives in `bin/pin-studio/`; it overrides upstream skia web docs
-for this wheel). Pin images are designed from the font binary, never mashed
-together, and neither Pinterest agent designs one.
+Agent 27 renders every active HTML/CSS Pinterest template with the font into
+`prepared_visuals/pinterest/` and records their order, source font hash, sizes,
+and checksums. Agent 13 copies those verified pins to
+`visuals/New-Images/pinterest/`. After the seller's image-model files are added,
+Agent 30 composes exactly ten additional 2:3 panels from the 3:2 image pool in
+the same directory: five lead with the thumbnail and five place it between two
+random 3:2 images. It appends them after the template set and writes
+`pinterest-set-manifest.json`. The preparer validates the complete manifested
+set, uploads every image to Blob, and writes every resulting link to
+`public-urls.md`. The HTML/CSS source templates are in `font-factory/pin-html/`;
+retired `green_starburst` and `phrase` designs stay out of production pins.
 
-- `/pinterest-prepare` (pinterest-font-preparer) is run per new font, on its
-  `outputs/font-preparation/{NUM}-{slug}/` folder. It registers into
-  `outputs/pinterest/registry.json`: ALL FIVE images from
-  `visuals/New-Images/pinterest/` uploaded to the `pinterest-pins-media` Vercel
-  Blob store (one URL per image), BOTH product-page URLs (`--market cm` and
-  `--market cf`), the description (`description.txt`), and a board suggestion
-  (Handwritten / Display / Script / Decorative Fonts); it writes
-  `public-urls.md` into the font folder
+- `/pinterest-prepare` (pinterest-font-preparer) runs after Agent 30 for each
+  font, on its `outputs/font-preparation/{NUM}-{slug}/` folder. It validates
+  the dynamic template count plus ten composites from the pin-set manifest,
+  then uploads every image to the `pinterest-pins-media` Vercel Blob store (one
+  URL per image). It also records both supplied product-page URLs, the
+  description (`description.txt`), and a board suggestion (Handwritten / Display
+  / Script / Decorative Fonts), then writes all image URLs into `public-urls.md`
   (`pinterest-assets/` holds the linked project; auth lives in
   `~/.config/papermoon/blob.env` — never commit or print the token).
 - `/pinterest-daily` (daily-pinterest-run) randomly picks 10 ready fonts per
@@ -128,7 +179,7 @@ together, and neither Pinterest agent designs one.
   per font, and validates + assembles `outputs/pinterest/{YYYY-MM-DD}/buffer.csv`
   (Buffer free-plan import — carries Alt Text; staggered hourly from 09:00
   UTC) plus `pins.csv` as the Pinterest-native fallback. Per pin it takes ONE
-  of the font's five image links and ONE of its two product links (both
+  of the font's manifested image links and ONE of its two product links (both
   marketplaces split evenly, seeded by date so a re-run is identical).
   Anti-cannibalization lives in `outputs/research/pinterest-tags.sqlite`:
   `tag_uses` (keyword counts), `pinned_runs` (re-pin window) and `pins` — the
@@ -136,7 +187,9 @@ together, and neither Pinterest agent designs one.
   `python3 bin/pinterest_tag_ledger.py history --slug <slug> --full` and
   printed automatically in `brief.md` before new copy is written.
 
-Tools: `bin/render-pins` (the skia renderer in `bin/pin-studio/`, run by Agent 13),
+Tools: `font-factory/pin-html/render_gallery.mjs` (run by Agent 27),
+`bin/install_template_pinterest_pins.py` (Agent 13 handoff),
+`bin/process_final_font_images.py` (Agent 30 composites),
 `bin/pinterest_registry.py`, `bin/papermoon-blob.py`,
 `bin/pinterest_tag_ledger.py`, `bin/make_daily_pins.py`. Carousels are not
 supported by the bulk CSV (one Media URL per row) — one image per pin.
@@ -157,12 +210,14 @@ tag-and-description-project/
 ├── font-factory/                       ← FONT INPUT, VISUAL-REFERENCE, PROMPT, AND PREPARATION WORKSPACE
 │   └── fonts/{font-slug}/
 │       ├── raw .otf/.ttf files
-│       ├── visual-references/          ← original thumbnail/supporting images used to write prompt briefs
+│       ├── visual-references/          ← optional source material; no old thumbnail is required
 │       ├── visual-direction/           ← Agent 27 art direction, plan, and review
-│       ├── visual-prompts/             ← supporting-image briefs and references
 │       └── prepared_visuals/           ← Agent 27 DRAFT visuals; stay here, never copied to outputs/
-│           ├── 3x2/                    ← thumbnail_main.png and promo_N.png
-│           ├── 1x1/                    ← thumbnail_main.png, thumbnail_japanese.png, promo_N.png
+│           ├── 3x2/                    ← thumbnail_main.png
+│           ├── 1x1/                    ← thumbnail_main.png and thumbnail_japanese.png
+│           ├── supporting/3x2/         ← seven eligible HTML/CSS templates
+│           ├── supporting/1x1/         ← the same seven square adaptations
+│           ├── specimens/{3x2,1x1}/   ← four factual specimen previews
 │           └── visual-handoff-manifest.md
 ├── outputs/                            ← ALL MARKETPLACE LISTING OUTPUTS
 │   ├── font-preparation/               ← Agent 13 {NUM}-{slug} packages, ZIP copies, and visual derivatives

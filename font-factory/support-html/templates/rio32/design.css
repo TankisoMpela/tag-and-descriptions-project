@@ -1,0 +1,191 @@
+@font-face {
+  font-family: RioLabel;
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 600;
+  font-display: swap;
+}
+
+#artboard {
+  --rio-cream: #f6efdc;
+  --rio-shadow: #241c19;
+  --rio-label-face: RioLabel, sans-serif;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--rio-cream);
+  background-color: #3c322c;
+  background-image: url("../../../support-references/materials/T24250_04_rio-dusk-background.png");
+  background-size: calc(100% * var(--rio-photo-scale, 1)) auto;
+  background-position: var(--rio-photo-x, 50%) var(--rio-photo-y, 50%);
+  background-repeat: no-repeat;
+  container-type: size;
+}
+
+#artboard::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgb(23 19 18 / .27) 0%,
+    rgb(23 19 18 / .23) 35%,
+    rgb(23 19 18 / .37) 68%,
+    rgb(23 19 18 / .48) 100%);
+}
+
+.rio-brand,
+.rio-navigation,
+.rio-title-the,
+.rio-title-city,
+.rio-subtitle,
+.rio-booking,
+.rio-footer {
+  position: absolute;
+  z-index: 2;
+}
+
+.rio-brand {
+  left: 3.8%;
+  top: 5.1%;
+  width: 15%;
+  display: grid;
+  gap: .01em;
+  color: var(--rio-cream);
+  font-size: 5cqh;
+  font-weight: 400;
+  line-height: .95;
+  letter-spacing: -.02em;
+  font-family: var(--display-face, Georgia, "Times New Roman", serif);
+  text-transform: none;
+}
+
+.rio-navigation {
+  left: 51.5%;
+  top: 5.6%;
+  width: 44.8%;
+  height: 5.2%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2%;
+  color: var(--rio-cream);
+  font-family: var(--rio-label-face);
+  font-size: 3.8cqh;
+  line-height: 1;
+  letter-spacing: .035em;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.rio-navigation span {
+  display: inline-block;
+  text-align: center;
+}
+
+.rio-title-the,
+.rio-title-city {
+  left: 14.5%;
+  width: 72%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.rio-title-the {
+  left: 25%;
+  width: 24%;
+  top: 20.8%;
+  height: 10.5%;
+  justify-content: flex-start;
+}
+
+.rio-title-city {
+  top: 32.5%;
+  height: 21.8%;
+}
+
+.rio-display-line {
+  display: inline-block;
+  color: var(--rio-cream);
+  font-family: var(--display-face, Georgia, "Times New Roman", serif);
+  font-style: normal;
+  font-weight: 400;
+  line-height: .9;
+  text-align: center;
+  text-transform: none;
+  white-space: nowrap;
+  text-shadow: 0 2px 16px rgb(20 16 14 / .14);
+}
+
+.rio-display-line--city {
+  letter-spacing: -.045em;
+}
+
+.rio-subtitle {
+  left: 15%;
+  top: 55.7%;
+  width: 70%;
+  height: 8.2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rio-cream);
+  font-family: var(--rio-label-face);
+  font-size: 6.1cqh;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: .035em;
+  text-align: center;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.rio-booking {
+  left: 42.8%;
+  top: 72.1%;
+  width: 14.4%;
+  height: 6.2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: max(1px, .22cqh) solid rgb(246 239 220 / .96);
+  border-radius: 1.5cqh;
+  color: var(--rio-cream);
+  font-family: var(--rio-label-face);
+  font-size: 4.3cqh;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: .015em;
+  text-align: center;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.rio-footer {
+  left: 8%;
+  top: 83.4%;
+  width: 84%;
+  height: 10.2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .16em;
+  color: var(--rio-cream);
+  font-family: var(--rio-label-face);
+  font-size: 2.25cqh;
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: .014em;
+  text-align: center;
+  text-transform: none;
+}
+
+.rio-footer-line {
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+}

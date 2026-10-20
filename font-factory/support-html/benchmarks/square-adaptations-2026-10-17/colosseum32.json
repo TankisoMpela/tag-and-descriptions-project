@@ -1,0 +1,98 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "colosseum32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "colosseum32",
+    "headlineFontSize": "124.02px",
+    "smallestDisplayFontSize": "120.07px",
+    "contrast": 3.982259686508682,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The source uses saturated scarlet ink for both oversized specimen lettering and small publisher marks."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "colosseum-first-specimen",
+        "text": "Colosseum",
+        "fontSize": "120.07px",
+        "x": 49.4921875,
+        "y": 76,
+        "width": 704.203125,
+        "height": 98.4375
+      },
+      {
+        "name": "colosseum-second-specimen",
+        "text": "Gröngöling",
+        "fontSize": "120.88px",
+        "x": 49.0625,
+        "y": 292,
+        "width": 704.25,
+        "height": 99.109375
+      },
+      {
+        "name": "colosseum-third-specimen",
+        "text": "Antarctica",
+        "fontSize": "124.02px",
+        "x": 46.8984375,
+        "y": 512,
+        "width": 704.203125,
+        "height": 101.6875
+      },
+      {
+        "name": "colosseum-publisher-footer",
+        "text": "Distinctive Display TypefaceDesigned For Bold Headlines",
+        "fontSize": "16px",
+        "x": 144,
+        "y": 680,
+        "width": 512,
+        "height": 72
+      },
+      {
+        "name": "colosseum-publisher-copy",
+        "text": "Distinctive Display TypefaceDesigned For Bold Headlines",
+        "fontSize": "16px",
+        "x": 144,
+        "y": 680,
+        "width": 512,
+        "height": 72
+      },
+      {
+        "name": "colosseum-publisher-tagline",
+        "text": "Distinctive Display Typeface",
+        "fontSize": "17.6px",
+        "x": 144,
+        "y": 688.625,
+        "width": 512,
+        "height": 17.59375
+      },
+      {
+        "name": "colosseum-publisher-url",
+        "text": "Designed For Bold Headlines",
+        "fontSize": "11.2px",
+        "x": 144,
+        "y": 721.03125,
+        "width": 512,
+        "height": 11.203125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/tmp/square-adaptation-review/colosseum32.png",
+  "outputBytes": 2154881
+}

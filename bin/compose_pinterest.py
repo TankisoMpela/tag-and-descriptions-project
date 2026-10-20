@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+from itertools import combinations
+import random
 import re
 import shutil
 import subprocess
@@ -90,7 +92,43 @@ def select_variant_images(
     # If we can't find a new combination, return what we have
     return [pool[i] for i in indices[:count]]
 
-def collect_images(directory: Path, mode: str, count: int | None) -> tuple[str, list[Path]]:
+def select_thumbnail_panel_images(
+    pool: list[Path],
+    variant: int,
+    seed: int,
+    top_variants: int = 5,
+    seen_pairs: set[frozenset[str]] | None = None,
+) -> tuple[list[Path], str]:
+    """Select a thumbnail plus two random, distinct 3:2 supporting images.
+
+    Variants 1..top_variants lead with the thumbnail; later variants place it in
+    the centre. The input pool is ordered with thumbnail_main first.
+    """
+    if len(pool) < 3:
+        raise SystemExit(
+            "thumbnail panel layout needs a 3:2 thumbnail and at least two "
+            "other 3:2 images"
+        )
+    thumbnail, *promos = pool
+    rng = random.Random(seed + variant)
+    pairs = list(combinations(promos, 2))
+    if seen_pairs is not None:
+        unseen = [pair for pair in pairs
+                  if frozenset(image.name for image in pair) not in seen_pairs]
+        if not unseen:
+            seen_pairs.clear()
+            unseen = pairs
+        supporting = list(rng.choice(unseen))
+        seen_pairs.add(frozenset(image.name for image in supporting))
+    else:
+        supporting = rng.sample(promos, 2)
+    rng.shuffle(supporting)
+    if variant <= top_variants:
+        return [thumbnail, *supporting], "thumbnail-top"
+    return [supporting[0], thumbnail, supporting[1]], "thumbnail-middle"
+
+def collect_images(directory: Path, mode: str, count: int | None,
+                   *, all_sources: bool = False) -> tuple[str, list[Path]]:
     normal_main = first_existing(directory, ("thumbnail_main.png", "thumbnail.png", "main.png"))
     normal_promos = numbered_images(directory, "promo")
     square_main = first_existing(directory, ("thumbnail_square.png", "main_square.png"))
@@ -100,24 +138,24 @@ def collect_images(directory: Path, mode: str, count: int | None) -> tuple[str, 
         if not normal_main:
             raise SystemExit(f"No main 3:2 thumbnail found in {directory}")
         images = [normal_main] + normal_promos
-        limit = count or 3
+        limit = len(images) if all_sources else count or 3
         return "normal", images[:limit]
 
     if mode == "square":
         if not square_main:
             raise SystemExit(f"No main square thumbnail found in {directory}")
         images = [square_main] + square_promos
-        limit = count or 3
+        limit = len(images) if all_sources else count or 3
         return "square", images[:limit]
 
     if normal_main:
         images = [normal_main] + normal_promos
-        limit = count or (3 if len(images) >= 3 else len(images))
+        limit = len(images) if all_sources else count or (3 if len(images) >= 3 else len(images))
         return "normal", images[:limit]
 
     if square_main:
         images = [square_main] + square_promos
-        limit = count or (3 if len(images) >= 3 else len(images))
+        limit = len(images) if all_sources else count or (3 if len(images) >= 3 else len(images))
         return "square", images[:limit]
 
     raise SystemExit("Could not find usable product images.")
@@ -177,6 +215,11 @@ def main() -> int:
     parser.add_argument("--output", type=Path, default=None, help="Optional output path for PNG")
     parser.add_argument("--variants", type=int, default=1, help="Number of Pinterest variants to create")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for deterministic variant selection")
+    parser.add_argument("--start-index", type=int, default=1,
+                        help="First numbered Pinterest output (default: 1)")
+    parser.add_argument("--panel-layout", choices=("random", "thumbnail-top-middle"),
+                        default="random",
+                        help="Use a fixed thumbnail position pattern for 3-panel variants")
     parser.add_argument("--output-dir", type=Path, default=None, help="Output directory for variant files")
     parser.add_argument("--jpeg-companions", action="store_true", help="Also create JPEG companion files")
 
@@ -186,7 +229,9 @@ def main() -> int:
         raise SystemExit(f"Directory not found: {directory}")
 
     convert = tool("magick", "convert")
-    selected_mode, images = collect_images(directory, args.mode, args.count)
+    selected_mode, images = collect_images(
+        directory, args.mode, args.count,
+        all_sources=args.panel_layout == "thumbnail-top-middle")
     
     # Handle single output or multiple variants
     if args.variants == 1:
@@ -223,18 +268,28 @@ def main() -> int:
             )
         output_dir.mkdir(parents=True, exist_ok=True)
         
+        if args.start_index < 1:
+            raise SystemExit("--start-index must be at least 1")
+        seen_pairs: set[frozenset[str]] = set()
         for variant in range(1, args.variants + 1):
-            variant_images = select_variant_images(images, variant, args.count or 3, args.seed, set())
-            output_png = output_dir / f"pinterest_{variant}.png"
+            output_index = args.start_index + variant - 1
+            if args.panel_layout == "thumbnail-top-middle":
+                variant_images, position = select_thumbnail_panel_images(
+                    images, variant, args.seed, seen_pairs=seen_pairs)
+            else:
+                variant_images = select_variant_images(images, variant, args.count or 3, args.seed, set())
+                position = "random"
+            output_png = output_dir / f"pinterest_{output_index}.png"
             
             with tempfile.TemporaryDirectory(prefix="pinterest-output-") as temp_dir:
                 raw_path = Path(temp_dir) / "raw.png"
                 compose(convert, variant_images, TARGET_WIDTH, raw_path)
                 png_path, jpg_path = process_truecolor_outputs(raw_path, output_png)
             
-            print(f"Variant {variant}: {png_path.name} ({png_path.stat().st_size / 1024:.1f} KB)")
+            print(f"Variant {output_index} ({position}): {png_path.name} ({png_path.stat().st_size / 1024:.1f} KB)")
+            print("Inputs: " + ", ".join(image.name for image in variant_images))
             if args.jpeg_companions:
-                print(f"Variant {variant}: {jpg_path.name} ({jpg_path.stat().st_size / 1024:.1f} KB)")
+                print(f"Variant {output_index}: {jpg_path.name} ({jpg_path.stat().st_size / 1024:.1f} KB)")
     
     return 0
 

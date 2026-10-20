@@ -1,0 +1,76 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "pastpresent32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "pastpresent32",
+    "headlineFontSize": "133.62px",
+    "smallestDisplayFontSize": "104.75px",
+    "contrast": 14.867827023736705,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "source-hand-sign-art",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "timeline-past",
+        "text": "Past",
+        "fontSize": "133.62px",
+        "x": 264.294677734375,
+        "y": 138.80812072753906,
+        "width": 271.41064453125,
+        "height": 103.41499328613281
+      },
+      {
+        "name": "timeline-present",
+        "text": "Present",
+        "fontSize": "133.57px",
+        "x": 165.99264526367188,
+        "y": 342.8048400878906,
+        "width": 468.0146789550781,
+        "height": 103.37469482421875
+      },
+      {
+        "name": "timeline-future",
+        "text": "Future",
+        "fontSize": "104.75px",
+        "x": 248.53921508789062,
+        "y": 540.9891967773438,
+        "width": 302.9216003417969,
+        "height": 81.06842041015625
+      },
+      {
+        "name": "timeline-studio-credit",
+        "text": "Our SunKits © Rivari Studio 2024",
+        "fontSize": "16px",
+        "x": 240,
+        "y": 699.1875,
+        "width": 320,
+        "height": 19
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/pastpresent32.png",
+  "outputBytes": 966581
+}

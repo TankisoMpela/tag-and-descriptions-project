@@ -1,0 +1,57 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "unleashed32",
+  "source": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-references/blackletter-references/T32811_07.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "unleashed32",
+    "headlineFontSize": "228.272px",
+    "smallestDisplayFontSize": "219.835px",
+    "contrast": 15.233614672127375,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "headline",
+        "text": "Unleashed",
+        "fontSize": "219.835px",
+        "x": 174.296875,
+        "y": 41.078125,
+        "width": 851.40625,
+        "height": 197.84375
+      },
+      {
+        "name": "line2",
+        "text": "Infernal",
+        "fontSize": "228.272px",
+        "x": 277,
+        "y": 493.28125,
+        "width": 646,
+        "height": 205.4375
+      },
+      {
+        "name": "descriptor",
+        "text": "A Fierce Display Of Shadow And Fire",
+        "fontSize": "12px",
+        "x": 900.234375,
+        "y": 736,
+        "width": 203.765625,
+        "height": 12
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/unleashed32.png",
+  "outputBytes": 3145810
+}

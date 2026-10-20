@@ -1,0 +1,86 @@
+#artboard {
+  --wide-red: #f5000c;
+  --wide-ink: #080809;
+  --wide-paper: #fff;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--wide-paper);
+  color: var(--wide-ink);
+}
+
+.wide-line,
+.wide-display-row {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.wide-line-text,
+.wide-display-text {
+  display: inline-block;
+  font-family: var(--display-face, Georgia, "Times New Roman", serif);
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .88;
+  text-align: center;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.wide-line-text {
+  font-size: 14cqh;
+  letter-spacing: var(--wide-top-tracking, -.04em);
+}
+
+.wide-line-word--accent,
+.wide-display-letter--red {
+  color: var(--wide-red);
+}
+
+.wide-line-word--ink,
+.wide-display-letter--ink {
+  color: var(--wide-ink);
+}
+
+.wide-display-text {
+  font-size: 48cqh;
+  letter-spacing: var(--wide-display-tracking, -.05em);
+}
+
+.wide-row-one {
+  left: 3.4%;
+  top: 3.6%;
+  width: 93.2%;
+  height: 17.2%;
+}
+
+.wide-row-two {
+  left: 3.4%;
+  top: 21.7%;
+  width: 93.2%;
+  height: 13.8%;
+}
+
+.wide-word-one-row {
+  left: 3.5%;
+  top: var(--wide-word-one-top, 35.5%);
+  width: 93%;
+  height: 31%;
+}
+
+.wide-word-two-row {
+  left: 3.8%;
+  top: var(--wide-word-two-top, 68.5%);
+  width: 92.4%;
+  height: 29%;
+}
+
+.wide-display-letter {
+  display: inline-block;
+  color: var(--wide-ink);
+}

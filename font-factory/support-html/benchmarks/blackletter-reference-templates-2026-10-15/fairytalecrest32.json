@@ -1,0 +1,75 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "fairytalecrest32",
+  "source": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-references/blackletter-references/T32600_01.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "fairytalecrest32",
+    "headlineFontSize": "290.772px",
+    "smallestDisplayFontSize": "77.9px",
+    "contrast": 14.619383739315646,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "The",
+        "fontSize": "77.9px",
+        "x": 354.0625,
+        "y": 152.9375,
+        "width": 107.859375,
+        "height": 70.109375
+      },
+      {
+        "name": "headline",
+        "text": "Fairytale",
+        "fontSize": "290.772px",
+        "x": 132.15625,
+        "y": 249.15625,
+        "width": 935.671875,
+        "height": 261.6875
+      },
+      {
+        "name": "line2",
+        "text": "Multilingual Support",
+        "fontSize": "17px",
+        "x": 785.375,
+        "y": 567.5,
+        "width": 169.234375,
+        "height": 17
+      },
+      {
+        "name": "descriptor",
+        "text": "A Letterform Study",
+        "fontSize": "13px",
+        "x": 636,
+        "y": 609.5,
+        "width": 112.484375,
+        "height": 13
+      },
+      {
+        "name": "footer",
+        "text": "Chapter 01 · 2026",
+        "fontSize": "12px",
+        "x": 546.609375,
+        "y": 724,
+        "width": 106.765625,
+        "height": 12
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/fairytalecrest32.png",
+  "outputBytes": 1319577
+}

@@ -1,0 +1,27 @@
+#artboard {
+  --wall-yellow: #ffe200;
+  --wall-ink: #1b1815;
+  background: var(--wall-yellow);
+  color: var(--wall-ink);
+}
+.typewall-viewport {
+  position: absolute; inset: 0; overflow: hidden;
+}
+.typewall-field {
+  position: absolute; left: -8%; top: -12%; width: 116%; height: 124%;
+  transform: rotate(var(--wall-rotation, -8deg)) scale(var(--wall-scale, 1));
+  transform-origin: 50% 50%;
+}
+.typewall-row {
+  position: absolute; display: flex; align-items: center;
+  width: 126%; height: 17%; color: var(--wall-ink);
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 700;
+  line-height: .83; letter-spacing: -.055em; white-space: nowrap; gap: 3.2cqw;
+}
+.typewall-row span {
+  display: inline-block; flex: 0 0 auto; color: var(--wall-ink);
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 700;
+  font-synthesis: weight;
+  -webkit-text-stroke: .045em currentColor;
+  line-height: .83; letter-spacing: -.055em; white-space: nowrap;
+}

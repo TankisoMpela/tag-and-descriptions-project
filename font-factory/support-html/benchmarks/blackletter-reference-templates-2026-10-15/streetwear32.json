@@ -1,0 +1,75 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "streetwear32",
+  "source": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-references/blackletter-references/T28036_04.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "streetwear32",
+    "headlineFontSize": "211.397px",
+    "smallestDisplayFontSize": "30px",
+    "contrast": 15.493987420216227,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "Streetwear",
+        "fontSize": "98px",
+        "x": 381.0582275390625,
+        "y": 171.53903198242188,
+        "width": 438.451171875,
+        "height": 112.90597534179688
+      },
+      {
+        "name": "headline",
+        "text": "Blackletter",
+        "fontSize": "211.397px",
+        "x": 169.953125,
+        "y": 276.875,
+        "width": 860.078125,
+        "height": 190.25
+      },
+      {
+        "name": "line2",
+        "text": "Whispers Of The Night, Adorned In Metal And Magic",
+        "fontSize": "30px",
+        "x": 303.234375,
+        "y": 494.5,
+        "width": 593.53125,
+        "height": 27
+      },
+      {
+        "name": "descriptor",
+        "text": "Estd",
+        "fontSize": "22px",
+        "x": 431.90625,
+        "y": 612.09375,
+        "width": 36.1875,
+        "height": 19.796875
+      },
+      {
+        "name": "footer",
+        "text": "2025",
+        "fontSize": "22px",
+        "x": 741.6875,
+        "y": 612.09375,
+        "width": 40.609375,
+        "height": 19.796875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/streetwear32.png",
+  "outputBytes": 1079676
+}

@@ -1,0 +1,371 @@
+@font-face {
+  font-family: SourceLabel;
+  src: url("../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+.source-board {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  container-type: size;
+  background: #15171b;
+  color: #f7f1e7;
+}
+
+.source-board::before,
+.source-board::after {
+  position: absolute;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.source-item {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, "Times New Roman", serif);
+  font-weight: 400;
+  line-height: .88;
+  text-align: center;
+  white-space: pre-wrap;
+  font-kerning: normal;
+  text-transform: none;
+}
+.source-item__line { display: inline-block; max-width: 100%; }
+.source-item--multiline { gap: 0; }
+
+.source-item--metadata,
+.source-item--meta,
+.source-item--footer,
+.source-item--kicker,
+.source-item--sub,
+.source-item--eyebrow,
+.source-item--weight-label,
+.source-item--family-label,
+.source-item--button,
+.source-item--body,
+.source-item--subhead {
+  font-family: SourceLabel, Arial, sans-serif;
+  line-height: 1.18;
+}
+
+.source-item--right { text-align: right; justify-content: flex-end; }
+
+/* Plakat: a dense, information-rich variable-font specimen on midnight navy. */
+.source-board--plakat32 {
+  background:
+    radial-gradient(ellipse at 74% 15%, rgb(33 80 126 / .24), transparent 43%),
+    linear-gradient(135deg, #081728, #06101e 62%, #0b1c2d);
+  color: #f5f0e7;
+}
+.source-board--plakat32::before {
+  inset: 0;
+  opacity: .2;
+  background-image: radial-gradient(circle, #5e7d9b 0 1px, transparent 1.4px);
+  background-size: 37px 33px;
+  mask-image: linear-gradient(transparent, #000 25%, transparent 88%);
+}
+.source-board--plakat32 .source-item--headline {
+  z-index: 1;
+  color: #f6f2e9;
+  text-align: center;
+  justify-content: center;
+  line-height: .79;
+}
+.source-board--plakat32 .plakat-symbol-band {
+  position: absolute;
+  z-index: 3;
+  left: 47.5%;
+  top: 52%;
+  width: 18.7%;
+  height: 12%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid rgb(255 255 255 / .62);
+  background: #49c9e4;
+}
+.source-board--plakat32 .plakat-symbol {
+  display: flex;
+  width: 17%;
+  height: 74%;
+  align-items: center;
+  justify-content: center;
+}
+.source-board--plakat32 .plakat-symbol svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: #f6f2e9;
+  stroke: #f6f2e9;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.source-board--plakat32 .plakat-symbol:nth-child(2) svg {
+  stroke-width: 3.5;
+  fill: none;
+}
+.source-board--plakat32 .plakat-symbol:nth-child(3) svg {
+  stroke-width: 2.8;
+  fill: none;
+}
+.source-board--plakat32 .plakat-symbol:nth-child(4) svg {
+  stroke: none;
+}
+.source-board--plakat32 .source-item--note { text-align: left; justify-content: center; padding: 0 1%; }
+.source-board--plakat32 .source-item--variable { background: #f6f0e5; color: #071526; }
+.source-board--plakat32 .source-item--metadata { justify-content: flex-start; color: #dce4e8; }
+.source-board--plakat32 .source-item--rail {
+  justify-content: flex-start;
+  padding: 0 3%;
+  border-top: 1px solid rgb(246 242 233 / .36);
+  border-bottom: 1px solid rgb(246 242 233 / .36);
+  color: #f5f0e7;
+  letter-spacing: .06em;
+}
+.source-board--plakat32 .source-item--rail-right {
+  justify-content: flex-end;
+  padding: 0 3%;
+  border: 0;
+  color: #f5f0e7;
+  letter-spacing: .06em;
+}
+.source-board--plakat32 .source-item--rail::after {
+  position: absolute;
+  left: var(--rail-marker, 74%);
+  width: 2.1%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #48c9e5;
+  content: "";
+  transform: translateX(-50%);
+}
+.source-board--plakat32 .source-item--footer { color: #9aabb9; }
+
+/* Plakat artwork: retain the clean macro-texture and overprint the specimen at its edge. */
+.source-board--plakatart32 { background: #101116; color: #f4f0eb; }
+.source-board--plakatart32::before {
+  left: 34%; top: 7%; width: 62%; height: 67%;
+  background: url("../../support-references/materials/T27673_10_red-cyan-macro-texture.png") center / cover no-repeat;
+  box-shadow: 0 2.2cqh 3.5cqh rgb(0 0 0 / .38);
+}
+.source-board--plakatart32 .source-item--meta { color: #cbd6db; justify-content: flex-start; }
+.source-board--plakatart32 .source-item--cyan { color: #45c6e0; }
+.source-board--plakatart32 .source-item--right { justify-content: flex-end; }
+.source-board--plakatart32 .source-item--headline {
+  z-index: 3;
+  color: #f5f0e9;
+  justify-content: flex-start;
+  text-align: left;
+  line-height: .82;
+  text-shadow: 0 2px 1px rgb(0 0 0 / .20);
+}
+.source-board--plakatart32 .source-item--footer { color: #77818a; justify-content: flex-start; }
+
+/* Birvase: broad red/cyan print fields with a single face-led word. */
+.source-board--birvase32 {
+  background: url("../../support-references/materials/T33110_08_red-cyan-print-texture.png") center / cover no-repeat;
+}
+.source-board--birvase32::after {
+  inset: 0;
+  background: linear-gradient(110deg, rgb(255 255 255 / .035), transparent 60%);
+}
+.source-board--birvase32 .source-item--headline {
+  color: #101014;
+  text-shadow: 0 1px 0 rgb(255 255 255 / .12);
+  line-height: .86;
+}
+
+/* Weight family: three measured alphabet lines over a quiet black page. */
+.source-board--weightfamily32 {
+  background: #101112;
+  color: #f5f4f0;
+}
+.source-board--weightfamily32::before {
+  inset: 0;
+  background: linear-gradient(90deg, transparent 23.8%, rgb(255 255 255 / .17) 23.9% 24%, transparent 24.1%),
+    linear-gradient(180deg, transparent 32%, rgb(255 255 255 / .12) 32.1% 32.25%, transparent 32.35% 63%, rgb(255 255 255 / .12) 63.1% 63.25%, transparent 63.35%);
+}
+.source-board--weightfamily32[data-family-sample-count="2"]::before {
+  background: linear-gradient(90deg, transparent 23.8%, rgb(255 255 255 / .17) 23.9% 24%, transparent 24.1%),
+    linear-gradient(180deg, transparent 49.8%, rgb(255 255 255 / .12) 49.9% 50.1%, transparent 50.2%);
+}
+.source-board--weightfamily32 .source-item--weight-label {
+  justify-content: flex-start;
+  color: #d88442;
+  text-align: left;
+  line-height: 1;
+}
+.source-board--weightfamily32 .source-item--alphabet { justify-content: center; white-space: nowrap; }
+.source-board--weightfamily32 .source-item__line { line-height: 1.16; }
+.source-board--weightfamily32 .source-item--thin,
+.source-board--weightfamily32 .source-item--regular,
+.source-board--weightfamily32 .source-item--bold { font-weight: 400; }
+
+/* Mangos board: orange and ivory variable-font cards, a framed glyph run and three colour tiles. */
+.source-board--mangosboard32 { background: #101112; color: #151515; }
+.source-board--mangosboard32 .source-item--label1,
+.source-board--mangosboard32 .source-item--headline {
+  left: 5%; width: 36%; justify-content: flex-start; text-align: left;
+}
+.source-board--mangosboard32::before {
+  left: 4%; top: 4%; width: 38%; height: 23%;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #f66e0b, #ff9a33);
+  box-shadow: 0 1cqh 2.3cqh rgb(0 0 0 / .3);
+}
+.source-board--mangosboard32::after {
+  left: 46%; top: 4%; width: 50%; height: 23%;
+  border-radius: 2px;
+  background: #f5f1e8;
+  box-shadow: 0 1cqh 2.3cqh rgb(0 0 0 / .3);
+}
+.source-board--mangosboard32 .source-item--family-label { color: #28211b; justify-content: flex-start; text-align: left; }
+.source-board--mangosboard32 .source-item--family-sample { color: #211b16; justify-content: flex-start; text-align: left; white-space: nowrap; }
+.source-board--mangosboard32 .source-item--headline { color: #161616; }
+.source-board--mangosboard32 .source-item--variable { left: 50%; width: 42%; color: #eb6109; }
+.source-board--mangosboard32 .source-item--glyphs {
+  border: 1px solid rgb(245 241 232 / .62);
+  background: #1e2021;
+  color: #f5f2ea;
+}
+.source-board--mangosboard32 .source-item--tile {
+  top: 69%; height: 23%;
+  box-shadow: 0 1cqh 2.3cqh rgb(0 0 0 / .3);
+}
+.source-board--mangosboard32 .source-item--tile-a { background: #00bce7; color: #f7fbff; }
+.source-board--mangosboard32 .source-item--tile-word {
+  overflow: hidden;
+  background: #f7f4ec;
+  color: #e9610b;
+  line-height: .9;
+  text-shadow: none;
+}
+.source-board--mangosboard32 .source-item--tile-at { background: #f5800c; color: #161616; }
+
+/* Oval wordmark: reuse the cleaned pearlescent field and rebuild the thin oval lockup. */
+.source-board--ovalword32 {
+  background: url("../../support-references/materials/T30332_00-clean-pastel-background.png") center / cover no-repeat;
+  color: #101018;
+}
+.source-board--ovalword32[data-ratio="1x1"] {
+  /* The source texture includes its original oval and word. Stretch its
+     abstract field to the square so the editable white oval masks both. */
+  background-size: 100% 100%;
+}
+.source-board--ovalword32 .source-item--headline {
+  z-index: 2;
+  border: 2px solid #14131a;
+  border-radius: 50%;
+  background: #fff;
+  font-family: var(--display-face, Georgia, serif);
+  line-height: .88;
+}
+.source-board--ovalword32 .source-item--kicker,
+.source-board--ovalword32 .source-item--sub { letter-spacing: .18em; }
+.source-board--ovalword32 .source-item--sub {
+  font-family: var(--display-face, Georgia, serif);
+  line-height: .95;
+}
+.source-board--ovalword32 .source-item--footer { color: #514b57; }
+
+/* Stardust: portrait-led monochrome cover, bright editorial type and a small checker signature. */
+.source-board--stardust32 {
+  background: #302b2c url("../../support-references/materials/T30332_01_stardust-photo.png") center 43% / cover no-repeat;
+  color: #fffdf8;
+}
+.source-board--stardust32::before {
+  inset: 0;
+  background: linear-gradient(90deg, rgb(15 13 14 / .20), rgb(15 13 14 / .10) 48%, rgb(15 13 14 / .34)),
+    linear-gradient(0deg, rgb(15 13 14 / .40), transparent 43%);
+}
+.source-board--stardust32::after {
+  left: 43%; top: 75%; width: 14%; height: 2.4%;
+  background-color: #f3eee5;
+  background-image: linear-gradient(45deg, #262324 25%, transparent 25%, transparent 75%, #262324 75%), linear-gradient(45deg, #262324 25%, transparent 25%, transparent 75%, #262324 75%);
+  background-position: 0 0, 6px 6px;
+  background-size: 12px 12px;
+}
+.source-board--stardust32 .source-item--eyebrow { color: #f6f0e7; text-align: right; justify-content: flex-end; }
+.source-board--stardust32 .source-item--headline { line-height: .89; text-shadow: 0 1px 9px rgb(0 0 0 / .25); }
+.source-board--stardust32 .source-item--closing { line-height: .88; }
+.source-board--stardust32 .source-item--footer { color: #f3eee5; }
+
+/* Blossom: a clean red campaign panel paired with its original portrait illustration. */
+.source-board--blossom32 { background: #fffaf5; color: #fffaf5; }
+.source-board--blossom32::before {
+  left: 0; top: 0; width: 62%; height: 100%;
+  background: radial-gradient(ellipse at 48% 20%, rgb(255 255 255 / .11), transparent 56%), #d9091b;
+}
+.source-board--blossom32::after {
+  right: 0; top: 0; width: 38%; height: 100%;
+  background: url("../../support-references/materials/T28576_08_blossom-illustration.png") center / cover no-repeat;
+}
+.source-board--blossom32 .source-item--kicker,
+.source-board--blossom32 .source-item--hero,
+.source-board--blossom32 .source-item--subhead,
+.source-board--blossom32 .source-item--body,
+.source-board--blossom32 .source-item--button { left: auto; }
+.source-board--blossom32 .source-item--hero { justify-content: flex-start; text-align: left; line-height: .9; }
+.source-board--blossom32 .source-item--kicker,
+.source-board--blossom32 .source-item--subhead,
+.source-board--blossom32 .source-item--body { justify-content: flex-start; text-align: left; }
+.source-board--blossom32 .source-item--body { align-items: flex-start; line-height: 1.35; }
+.source-board--blossom32 .source-item--button {
+  border: 1px solid rgb(255 250 245 / .85);
+  border-radius: 999px;
+}
+
+/* Neue: vivid pink ground, a loose descending cadence and three rotated signal pills. */
+.source-board--neue32 { background: #f7b4c6; color: #111016; }
+.source-board--neue32 .source-item--meta { justify-content: flex-start; text-align: left; color: #25212a; }
+.source-board--neue32 .source-item--right { justify-content: flex-end; text-align: right; }
+.source-board--neue32 .source-item--repeat { justify-content: flex-start; text-align: left; line-height: .82; }
+.source-board--neue32 .source-item--pill {
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #fff;
+  font-family: var(--display-face, Georgia, serif);
+  line-height: 1;
+}
+.source-board--neue32 .source-item--pill-top { transform: rotate(8deg); background: #f44445; }
+.source-board--neue32 .source-item--pill-mid { transform: rotate(3deg); background: #fff; color: #dc8da5; }
+.source-board--neue32 .source-item--pill-bottom { transform: rotate(-10deg); background: #8151bd; }
+.source-board--neue32 .source-item--footer { justify-content: flex-start; color: #29232b; }
+
+/* Electromagnetic: the saved violet/green texture remains the page; copy and rails stay editable. */
+.source-board--electromagnetic32 {
+  background: url("../../support-references/materials/T19827_01_electromagnetic-texture.png") center / cover no-repeat;
+  color: #17141b;
+}
+.source-board--electromagnetic32::before {
+  inset: 0;
+  background: linear-gradient(180deg, rgb(13 12 18 / .28), transparent 19%, transparent 76%, rgb(12 11 16 / .3));
+}
+.source-board--electromagnetic32::after {
+  left: 83%; top: 10%; width: 7%; height: 5%;
+  border: 1px solid rgb(225 234 188 / .9);
+  border-radius: 50%;
+  box-shadow: inset 8px 0 0 -7px #dce8b3, inset -8px 0 0 -7px #dce8b3;
+}
+.source-board--electromagnetic32 .source-item--kicker,
+.source-board--electromagnetic32 .source-item--footer { color: #e7e2eb; justify-content: flex-start; text-align: left; }
+.source-board--electromagnetic32 .source-item--hero {
+  justify-content: flex-start;
+  text-align: left;
+  color: #17141b;
+  line-height: .91;
+  text-shadow: 0 1px 0 rgb(255 255 255 / .16);
+}

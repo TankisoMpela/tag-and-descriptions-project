@@ -1,0 +1,203 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/kindersea32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/kindersea32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "AOT Lost Contact.ttf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 25.6,
+  "imageBytes": {
+    "html": 2250079,
+    "skia": 2339692
+  },
+  "desktopLayout": {
+    "template": "kindersea32",
+    "headlineFontSize": "54.4299px",
+    "contrast": 4.406861100661014,
+    "contrastException": {
+      "minimum": 2.5,
+      "rationale": "Source white lettering on textured lavender intentionally follows the reference postcard treatment."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-lavender-stock",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "source-pixel-seascape",
+        "text": "",
+        "fontSize": "16px",
+        "x": 67.0625,
+        "y": 57.296875,
+        "width": 576.125,
+        "height": 236.359375
+      },
+      {
+        "name": "source-corner-stars",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      },
+      {
+        "name": "top-postcard-caption",
+        "text": "FIELD NOTES",
+        "fontSize": "13.0075px",
+        "x": 67.359375,
+        "y": 33.5625,
+        "width": 73.40625,
+        "height": 21.265625
+      },
+      {
+        "name": "vertical-postcard-caption",
+        "text": "POSTCARD",
+        "fontSize": "11.825px",
+        "x": 651.4140625,
+        "y": 236.859375,
+        "width": 11.828125,
+        "height": 55.71875
+      },
+      {
+        "name": "headline-row-1",
+        "text": "I WISH YOU",
+        "fontSize": "16px",
+        "x": 102.8125,
+        "y": 306.3125,
+        "width": 503.453125,
+        "height": 61.453125
+      },
+      {
+        "name": "headline-1",
+        "text": "I WISH YOU",
+        "fontSize": "54.4299px",
+        "x": 147.640625,
+        "y": 312.53125,
+        "width": 413.765625,
+        "height": 48.984375
+      },
+      {
+        "name": "headline-row-2",
+        "text": "a KINDER SEA.",
+        "fontSize": "16px",
+        "x": 67.359375,
+        "y": 377.21875,
+        "width": 574.359375,
+        "height": 61.453125
+      },
+      {
+        "name": "headline-2",
+        "text": "a KINDER SEA.",
+        "fontSize": "54.4299px",
+        "x": 113.265625,
+        "y": 383.4375,
+        "width": 482.53125,
+        "height": 48.984375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "kindersea32",
+    "headlineFontSize": "27.02px",
+    "contrast": 4.406861100661014,
+    "contrastException": {
+      "minimum": 2.5,
+      "rationale": "Source white lettering on textured lavender intentionally follows the reference postcard treatment."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "source-lavender-stock",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "source-pixel-seascape",
+        "text": "",
+        "fontSize": "16px",
+        "x": 33.296875,
+        "y": 28.4375,
+        "width": 286,
+        "height": 117.328125
+      },
+      {
+        "name": "source-corner-stars",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      },
+      {
+        "name": "top-postcard-caption",
+        "text": "FIELD NOTES",
+        "fontSize": "6.46249px",
+        "x": 33.4375,
+        "y": 16.65625,
+        "width": 36.4375,
+        "height": 10.546875
+      },
+      {
+        "name": "vertical-postcard-caption",
+        "text": "POSTCARD",
+        "fontSize": "5.87499px",
+        "x": 323.359375,
+        "y": 117.5859375,
+        "width": 5.875,
+        "height": 27.640625
+      },
+      {
+        "name": "headline-row-1",
+        "text": "I WISH YOU",
+        "fontSize": "16px",
+        "x": 51.03125,
+        "y": 152.046875,
+        "width": 249.90625,
+        "height": 30.5
+      },
+      {
+        "name": "headline-1",
+        "text": "I WISH YOU",
+        "fontSize": "27.02px",
+        "x": 73.3125,
+        "y": 155.140625,
+        "width": 205.34375,
+        "height": 24.3125
+      },
+      {
+        "name": "headline-row-2",
+        "text": "a KINDER SEA.",
+        "fontSize": "16px",
+        "x": 33.4375,
+        "y": 187.25,
+        "width": 285.109375,
+        "height": 30.5
+      },
+      {
+        "name": "headline-2",
+        "text": "a KINDER SEA.",
+        "fontSize": "27.02px",
+        "x": 56.25,
+        "y": 190.34375,
+        "width": 239.46875,
+        "height": 24.3125
+      }
+    ],
+    "contentWarnings": []
+  }
+}

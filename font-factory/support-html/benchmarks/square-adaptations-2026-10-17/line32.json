@@ -1,0 +1,161 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "line32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "line32",
+    "headlineFontSize": "117.44px",
+    "smallestDisplayFontSize": "117.44px",
+    "contrast": 5.016592806131985,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The quiet echo keeps its theme ink over the softly textured field."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "theme-device",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "paper-tooth",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "clipped-ghost-initial",
+        "text": "R",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "overline-row",
+        "text": "New Release",
+        "fontSize": "16px",
+        "x": 44,
+        "y": 61.59375,
+        "width": 712,
+        "height": 28.796875
+      },
+      {
+        "name": "overline",
+        "text": "New Release",
+        "fontSize": "20.4px",
+        "x": 44,
+        "y": 65.78125,
+        "width": 144.5,
+        "height": 20.40625
+      },
+      {
+        "name": "headline-row-1",
+        "text": "Letters ThatLetters That",
+        "fontSize": "16px",
+        "x": 44,
+        "y": 160,
+        "width": 712,
+        "height": 220
+      },
+      {
+        "name": "headline-line-1",
+        "text": "Letters That",
+        "fontSize": "117.44px",
+        "x": 54.59375,
+        "y": 218.328125,
+        "width": 690.796875,
+        "height": 103.34375
+      },
+      {
+        "name": "wireframe-echo",
+        "text": "Letters That",
+        "fontSize": "117.44px",
+        "x": 51.828125,
+        "y": 172.75,
+        "width": 690.796875,
+        "height": 103.34375
+      },
+      {
+        "name": "headline-row-2",
+        "text": "Matter",
+        "fontSize": "16px",
+        "x": 44,
+        "y": 392,
+        "width": 712,
+        "height": 220
+      },
+      {
+        "name": "headline-line-2",
+        "text": "Matter",
+        "fontSize": "117.44px",
+        "x": 210.1875,
+        "y": 450.328125,
+        "width": 379.625,
+        "height": 103.34375
+      },
+      {
+        "name": "footer-row",
+        "text": "Display Specimen",
+        "fontSize": "16px",
+        "x": 44,
+        "y": 684.796875,
+        "width": 712,
+        "height": 40
+      },
+      {
+        "name": "footer-label",
+        "text": "Display Specimen",
+        "fontSize": "26.8px",
+        "x": 44,
+        "y": 684.796875,
+        "width": 241.46875,
+        "height": 26.796875
+      },
+      {
+        "name": "edge-copy-row",
+        "text": "101 Glyphs",
+        "fontSize": "16px",
+        "x": 783.203125,
+        "y": 480.796875,
+        "width": 17.59375,
+        "height": 96
+      },
+      {
+        "name": "edge-copy",
+        "text": "101 Glyphs",
+        "fontSize": "13.57px",
+        "x": 785.21875,
+        "y": 480.6875,
+        "width": 13.5625,
+        "height": 96.21875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/line32.png",
+  "outputBytes": 754868
+}

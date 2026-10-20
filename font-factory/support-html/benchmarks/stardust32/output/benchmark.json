@@ -1,0 +1,141 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/stardust32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/stardust32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Maidega-Regular.ttf",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 28.5,
+  "imageBytes": {
+    "html": 3813678,
+    "skia": 3383452
+  },
+  "desktopLayout": {
+    "template": "stardust32",
+    "headlineFontSize": "87.4298px",
+    "contrast": 16.409110736136714,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "eyebrow",
+        "text": "Type Studio",
+        "fontSize": "16.082px",
+        "x": 468,
+        "y": 42.53125,
+        "width": 184.359375,
+        "height": 25.984375
+      },
+      {
+        "name": "headline",
+        "text": "Dreams AndStories",
+        "fontSize": "16px",
+        "x": 99.265625,
+        "y": 120.53125,
+        "width": 510.546875,
+        "height": 155.984375
+      },
+      {
+        "name": "headline-line-1",
+        "text": "Dreams And",
+        "fontSize": "87.4298px",
+        "x": 99.265625,
+        "y": 120.703125,
+        "width": 510.546875,
+        "height": 77.8125
+      },
+      {
+        "name": "headline-line-2",
+        "text": "Stories",
+        "fontSize": "87.4298px",
+        "x": 99.265625,
+        "y": 198.515625,
+        "width": 510.546875,
+        "height": 77.8125
+      },
+      {
+        "name": "lineTwo",
+        "text": "Studio",
+        "fontSize": "54.3948px",
+        "x": 127.625,
+        "y": 281.265625,
+        "width": 453.8125,
+        "height": 66.171875
+      },
+      {
+        "name": "footer",
+        "text": "In Good Company",
+        "fontSize": "15.11px",
+        "x": 269.453125,
+        "y": 387.625,
+        "width": 170.171875,
+        "height": 25.984375
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "stardust32",
+    "headlineFontSize": "45.0398px",
+    "contrast": 16.409110736136714,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "eyebrow",
+        "text": "Type Studio",
+        "fontSize": "7.99px",
+        "x": 232.3125,
+        "y": 21.109375,
+        "width": 91.515625,
+        "height": 12.890625
+      },
+      {
+        "name": "headline",
+        "text": "Dreams AndStories",
+        "fontSize": "16px",
+        "x": 49.265625,
+        "y": 59.828125,
+        "width": 253.4375,
+        "height": 77.421875
+      },
+      {
+        "name": "headline-line-1",
+        "text": "Dreams And",
+        "fontSize": "45.0398px",
+        "x": 49.265625,
+        "y": 58.46875,
+        "width": 253.4375,
+        "height": 40.078125
+      },
+      {
+        "name": "headline-line-2",
+        "text": "Stories",
+        "fontSize": "45.0398px",
+        "x": 49.265625,
+        "y": 98.546875,
+        "width": 253.4375,
+        "height": 40.078125
+      },
+      {
+        "name": "lineTwo",
+        "text": "Studio",
+        "fontSize": "27.0249px",
+        "x": 63.359375,
+        "y": 139.609375,
+        "width": 225.265625,
+        "height": 32.84375
+      },
+      {
+        "name": "footer",
+        "text": "In Good Company",
+        "fontSize": "9px",
+        "x": 133.75,
+        "y": 192.40625,
+        "width": 84.46875,
+        "height": 12.890625
+      }
+    ],
+    "contentWarnings": []
+  }
+}

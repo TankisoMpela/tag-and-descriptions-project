@@ -1,0 +1,119 @@
+@font-face {
+  font-family: "FunkyLabel";
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-display: block;
+}
+
+#artboard {
+  --poster-pink: #eb637a;
+  --poster-cream: #fff2d8;
+  --poster-ink: #17131a;
+  background: var(--poster-pink);
+  color: var(--poster-cream);
+}
+
+.funky-circle, .funky-portrait, .funky-headline,
+.funky-copy, .funky-signature, .funky-website, .funky-dots, .funky-arrow,
+.funky-bolt, .funky-spark, .funky-sticker {
+  position: absolute;
+}
+
+.funky-circle {
+  left: 26.5%; top: 14.8%; width: 47%; height: 70.5%;
+  border-radius: 50%; background: #c9703f;
+}
+.funky-portrait {
+  left: 26.5%; top: 14.8%; width: 47%; height: 70.5%;
+  overflow: hidden; border-radius: 50%;
+}
+.funky-portrait img {
+  position: absolute; left: 0; top: 8%; display: block;
+  width: 100%; height: auto;
+}
+
+.funky-headline {
+  z-index: 4; display: inline-block; color: var(--poster-cream);
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 600;
+  font-synthesis: weight;
+  -webkit-text-stroke: .018em currentColor;
+  line-height: .82; letter-spacing: -.045em; white-space: nowrap;
+  text-shadow: .72cqh .9cqh 0 var(--poster-ink);
+}
+.funky-title-one { left: 4.6%; top: 7.4%; }
+.funky-title-two { left: 4.7%; top: 24.3%; }
+.funky-side-line {
+  position: absolute; z-index: 5; left: 70.1%; width: 19%; height: 8%;
+  display: inline-block; color: var(--poster-cream);
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 700;
+  font-synthesis: weight;
+  -webkit-text-stroke: .018em currentColor;
+  line-height: .84; letter-spacing: -.045em; white-space: nowrap;
+  text-align: center; text-shadow: .43cqh .55cqh 0 var(--poster-ink);
+}
+.funky-side-line-one { top: 7.2%; }
+.funky-side-line-two { top: 13.8%; }
+
+.funky-dots {
+  z-index: 2; left: 4.4%; top: 51.2%; width: 8.2%; height: 15%;
+  background-image: radial-gradient(circle, var(--poster-cream) 0 2.05px, transparent 2.35px);
+  background-size: 1.8cqw 3cqh; background-position: 0 0;
+  opacity: .98;
+}
+.funky-arrow { z-index: 3; left: 19.1%; top: 52.8%; width: 6.7%; height: 5%; }
+.funky-arrow svg, .funky-bolt svg, .funky-spark svg, .funky-sticker svg {
+  width: 100%; height: 100%; display: block; overflow: visible;
+}
+.funky-bolt { z-index: 5; left: 28.5%; top: 67.1%; width: 10.7%; height: 20.7%; }
+.funky-spark { z-index: 6; color: #fff5dd; }
+.funky-spark-one { left: 28.2%; top: 69.1%; width: 2.6%; height: 4.2%; }
+.funky-spark-two { left: 38.5%; top: 75.9%; width: 2.8%; height: 4.3%; }
+.funky-sticker { z-index: 5; left: 74.7%; top: 21.8%; width: 22.3%; height: 36%; }
+
+.funky-copy {
+  z-index: 4; left: 65.6%; top: 59.2%; width: 29.6%; height: 22.5%;
+  overflow: hidden; color: var(--poster-cream);
+  font-family: var(--label-face, "FunkyLabel", Arial, sans-serif);
+  font-size: 2.95cqh; font-weight: 700; font-synthesis: weight; line-height: 1;
+  -webkit-text-stroke: .025em currentColor;
+  letter-spacing: -.012em; text-wrap: pretty;
+  text-shadow: .08cqh .12cqh 0 #cc5369;
+}
+.funky-signature {
+  z-index: 4; left: 4.4%; top: 79.6%; width: 27%; height: 17.2%;
+  color: var(--poster-cream); font-family: var(--display-face, Arial, sans-serif);
+  font-size: 7.2cqh; font-weight: 700; font-synthesis: weight; line-height: .96;
+  -webkit-text-stroke: .018em currentColor;
+  letter-spacing: -.055em; white-space: pre-line;
+  text-shadow: .72cqh .85cqh 0 var(--poster-ink);
+}
+.funky-website {
+  z-index: 4; right: 5.8%; top: 89.4%; width: 30%;
+  color: var(--poster-cream); font-family: var(--display-face, Arial, sans-serif);
+  font-size: 3.2cqh; font-weight: 700; font-synthesis: weight; line-height: 1;
+  -webkit-text-stroke: .018em currentColor;
+  letter-spacing: -.025em; text-align: right; white-space: nowrap;
+}
+#artboard[data-ratio="1x1"] .funky-circle,
+#artboard[data-ratio="1x1"] .funky-portrait { left: 28%; top: 34%; width: 44%; height: 38%; }
+#artboard[data-ratio="1x1"] .funky-portrait img { top: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+#artboard[data-ratio="1x1"] .funky-copy {
+  left: 5%; top: 74%; width: 90%; height: 14%; padding: 1.4% 2.6%;
+  overflow: hidden; border-radius: 1cqw; background: var(--poster-cream); color: var(--poster-ink);
+  font-size: 2.5cqh; line-height: 1.08; text-shadow: none; -webkit-text-stroke: 0;
+}
+#artboard[data-ratio="1x1"] .funky-signature {
+  left: 5%; top: 89.5%; width: 34%; height: 8%; font-size: 5cqh; line-height: .9;
+}
+#artboard[data-ratio="1x1"] .funky-website {
+  right: 5%; top: 92.5%; width: 40%; font-size: 2.7cqh; line-height: 1;
+}
+#artboard[data-ratio="1x1"] .funky-signature,
+#artboard[data-ratio="1x1"] .funky-website {
+  color: var(--poster-ink); font-family: var(--label-face, "FunkyLabel", Arial, sans-serif);
+  font-weight: 700; font-synthesis: weight; -webkit-text-stroke: 0; letter-spacing: .01em;
+  text-shadow: none;
+}
+#artboard[data-ratio="1x1"] .funky-sticker { left: 73%; top: 29%; width: 22%; height: 29%; }
+#artboard[data-ratio="1x1"] .funky-bolt { left: 9%; top: 49%; width: 10%; height: 20%; }
+#artboard[data-ratio="1x1"] .funky-dots { left: 4%; top: 49%; width: 8%; height: 15%; }
+#artboard[data-ratio="1x1"] .funky-arrow { left: 19%; top: 55%; width: 8%; height: 5%; }

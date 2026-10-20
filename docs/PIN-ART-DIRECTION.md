@@ -1,5 +1,10 @@
 # Pinterest pin art direction — the workflow
 
+> **Legacy Skia workflow.** Production Pinterest template pins are now rendered
+> by Agent 27's HTML/CSS layouts in `font-factory/pin-html/`. This document
+> remains as the archived copywriting and design rationale for the former
+> five-pin `bin/render-pins` route; Agent 13 no longer runs it.
+
 How a font becomes five pins that a stranger would save. Companion to
 `docs/SKIA-PIN-RENDERER.md`, which says what the renderer *can* do; this document says
 what it should *choose* to do, and in what order.
@@ -8,19 +13,18 @@ what it should *choose* to do, and in what order.
 forward-looking statement about nothing. A pin is a small poster whose subject is
 letterforms.
 
-**Status (locked 2026-10; second class added 2026-10-11; third class added
-2026-10-11; fourth class added 2026-10-11).** The templates are the design and the design
-phase is closed: production is Agent 13 STEP 2 (`/font-prep`, inside `/full-workflow`),
-which authors `pins.brief.json` and runs one `bin/render-pins --brief` command. No
-template work happens without a new user instruction. There are now four classes. The
-five **elegant** templates carry every font by default; the five **blackletter / celtic**
-templates carry a face whose own description says blackletter, celtic, uncial, gaelic
-or gothic; the five **tech / sports** templates carry a face whose description says
-sport, athletic, esports, racing, gym, varsity, letterman or jersey; the five
-**handwritten / script** templates carry a face whose description says handwritten, hand
-lettering, script, cursive, calligraphy, signature or wedding lettering. The brief's
-optional `"class"` field is what chooses between them (blackletter piloted with
-Braewick, sports with Circuit Sprint, script with Silken Flourish).
+**Status (2026-10; second class added 2026-10-11; third class added
+2026-10-11; fourth class added 2026-10-11).** Routine production still renders five
+pins from the default set. Template design is active again for careful visual iteration:
+the library now has 30 compositions, with ten optional variants selected explicitly in
+a brief. There are four classes. The five **elegant** defaults carry every font; the
+five **blackletter / celtic** defaults carry a face whose own description says
+blackletter, celtic, uncial, gaelic or gothic; the five **tech / sports** defaults carry
+a face whose description says sport, athletic, esports, racing, gym, varsity, letterman
+or jersey; the five **handwritten / script** defaults carry a face whose description
+says handwritten, hand lettering, script, cursive, calligraphy, signature or wedding
+lettering. The brief's optional `"class"` field chooses between them (blackletter
+piloted with Braewick, sports with Circuit Sprint, script with Silken Flourish).
 
 **Four is the set — this is closed, not paused.** A brush, marker, chalk, paint or
 grunge face stays elegant permanently: its difference is texture, not composition, and
@@ -34,13 +38,21 @@ to serve one font that is already served.
 
 ## 0. What is decided here and what is decided in code
 
-The templates are the spec now. `bin/pin-studio/pin_studio.py` ships twenty tested
-compositions in four classes — elegant `hero`, `set`, `wall`, `phrase`, `full_stack`;
+The templates are the spec now. `bin/pin-studio/pin_studio.py` ships 30 compositions
+in four classes. The default sets are elegant `hero`, `set`, `wall`, `phrase`,
+`full_stack`;
 blackletter `initials`, `knotband`, `scriptorium`, `folio`, `carol`; sports `crest`,
 `bib`, `lane`, `finish`, `timer`; and script `guide`, `copybook`, `trace`, `sample`,
-`markup` — each class rendered and numbered `pinterest_1..5` in its own design order,
-evolved from the `out/v6-black` series, and `--stress` proves them across faces, classes
-and copy lengths.
+`markup` — each class normally renders and numbers these as `pinterest_1..5` in its own
+design order. Ten optional variants are available: elegant `studio_cover`,
+`specimen_mosaic`, `wordmark_atelier`; blackletter `illuminated_broadside`,
+`reliquary_seal`, `scribe_gallery`; sports `jersey_panel`, `scoreboard_split`; script
+`letter_study`, `garden_note`. A brief can choose any five distinct names from its class
+pool with a `"templates"` array; those five names become the required keys under
+`"pins"` and keep the same `pinterest_1..5` output contract. Without that array, the
+original five remain the production default. The compositions evolved from the
+`out/v6-black` series; `--stress` exercises the registered templates across faces,
+classes and copy lengths.
 
 Everything below that is a *mechanical* rule has moved into that code and is no longer
 a thing to remember:
@@ -58,8 +70,8 @@ a thing to remember:
 
 What is left in this document is the part code cannot do: **what to write on the pin**,
 and knowing a good composition from a safe one. §4's concept menu and §9's element menu
-describe improvisation that the template library has now replaced — read them as the
-backlog for templates not yet built, not as instructions for a run.
+are design vocabulary for the existing library and for future compositions; they do not
+choose a random template during a production run.
 
 ---
 

@@ -1,0 +1,13 @@
+#artboard { background: var(--green, #149d26); color: var(--ink, #133c1a); }
+.glyph-grain { position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: url("../../../support-references/materials/T26074_02_paper-grain.png"); background-size: 100% auto; background-repeat: repeat; opacity: .48; mix-blend-mode: soft-light; }
+.glyph-rule, .glyph-copy, .glyph-footer, .glyph-stamp { position: absolute; z-index: 1; }
+.glyph-copy { display: flex; align-items: center; overflow: visible; font-family: var(--display-face, Arial, sans-serif); line-height: .90; }
+.glyph-run { display: inline-block; width: max-content; white-space: nowrap; }
+.digits { left: 5.5%; top: 6.5%; width: 89%; height: 21%; justify-content: center; color: var(--cream, #fffbed); }
+.pangram { left: 7%; top: 31.5%; width: 86%; height: 11%; justify-content: center; color: var(--ink, #133c1a); }
+.symbols { left: 6%; top: 48%; width: 88%; height: 28%; justify-content: center; color: var(--cream, #fffbed); }
+.glyph-rule { left: 5.5%; top: 82%; width: 89%; height: 1px; background: rgb(255 250 226 / 84%); }
+.glyph-footer { left: 16%; top: 84.6%; width: 68%; color: var(--ink, #133c1a); font: 500 2.85cqh/1.12 Arial, sans-serif; letter-spacing: .09em; text-align: center; white-space: nowrap; }
+.glyph-stamp { top: 90.6%; color: var(--ink, #133c1a); font: 500 2cqh/1 Arial, sans-serif; letter-spacing: .07em; }
+.glyph-stamp-left { left: 6%; }
+.glyph-stamp-right { right: 6%; }

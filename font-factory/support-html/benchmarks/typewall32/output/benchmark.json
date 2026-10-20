@@ -1,0 +1,50 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/typewall32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/typewall32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 42,
+  "imageBytes": {
+    "html": 632259,
+    "skia": 337352
+  },
+  "desktopLayout": {
+    "template": "typewall32",
+    "headlineFontSize": "56.9699px",
+    "contrast": 13.576932067214473,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "typewall-composition-viewport",
+        "text": "Classic CultureClassic CultureClassic CultureClassic CultureClassic CultureMusical SynchronyMusical SynchronyMusical SynchronyMusical SynchronyMusical SynchronyCargo ManualCargo ManualCargo ManualCargo ManualCargo ManualMagical UnicornsMagical UnicornsMagical UnicornsMagical UnicornsMagical UnicornsPractical PonyPractical PonyPractical PonyPractical PonyPractical PonyBright ZenithBright ZenithBright ZenithBright ZenithBright ZenithCulture In MotionCulture In MotionCulture In MotionCulture In MotionCulture In MotionLovely PeopleLovely PeopleLovely PeopleLovely PeopleLovely People",
+        "fontSize": "56.9699px",
+        "x": 0,
+        "y": 0,
+        "width": 709.09375,
+        "height": 472.71875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "typewall32",
+    "headlineFontSize": "28.32px",
+    "contrast": 13.576932067214473,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "typewall-composition-viewport",
+        "text": "Classic CultureClassic CultureClassic CultureClassic CultureClassic CultureMusical SynchronyMusical SynchronyMusical SynchronyMusical SynchronyMusical SynchronyCargo ManualCargo ManualCargo ManualCargo ManualCargo ManualMagical UnicornsMagical UnicornsMagical UnicornsMagical UnicornsMagical UnicornsPractical PonyPractical PonyPractical PonyPractical PonyPractical PonyBright ZenithBright ZenithBright ZenithBright ZenithBright ZenithCulture In MotionCulture In MotionCulture In MotionCulture In MotionCulture In MotionLovely PeopleLovely PeopleLovely PeopleLovely PeopleLovely People",
+        "fontSize": "28.32px",
+        "x": 0,
+        "y": 0,
+        "width": 352,
+        "height": 234.65625
+      }
+    ],
+    "contentWarnings": []
+  }
+}

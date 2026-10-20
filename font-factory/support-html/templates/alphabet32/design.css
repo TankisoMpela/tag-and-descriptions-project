@@ -1,0 +1,41 @@
+@font-face {
+  font-family: "AlphabetLabel";
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-weight: 300;
+  font-display: block;
+}
+
+#artboard { background: var(--paper, #faf9ef); color: var(--ink, #141414); }
+.alphabet-row, .metadata, .descriptor, .separator { position: absolute; }
+.alphabet-row {
+  display: flex;
+  align-items: center;
+  color: var(--ink, #141414);
+  font-family: var(--display-face, Arial, sans-serif);
+  line-height: .88;
+  font-kerning: normal;
+}
+.alphabet-run { display: inline-block; width: max-content; white-space: nowrap; }
+.alphabet-run span { display: inline; }
+.alphabet-row .accent { color: var(--orange, #e7651b); }
+.upper-0 { left: 5.5%; top: 3.5%; width: 89%; height: 12%; justify-content: center; }
+.upper-1 { left: 5.5%; top: 17%; width: 89%; height: 12%; justify-content: center; }
+.separator { left: 5.5%; width: 89%; height: 1px; background: #cdc9bb; }
+.separator-upper { top: 34.5%; }
+.separator-lower { top: 69.5%; }
+.descriptor {
+  left: 7%; top: 44%; width: 21%;
+  color: var(--muted, #706d64);
+  font: 300 2.1cqh/1.08 "AlphabetLabel", sans-serif;
+  letter-spacing: -.025em;
+  white-space: pre-line;
+}
+.lower-0 { left: 33.5%; top: 42%; width: 61.5%; height: 11.5%; justify-content: flex-start; }
+.lower-1 { left: 33.5%; top: 56.5%; width: 61.5%; height: 11.5%; justify-content: flex-start; }
+.figures { left: 6.5%; top: 75.5%; width: 62%; height: 16%; justify-content: flex-start; }
+.metadata {
+  right: 6.5%; width: 23%; text-align: right; white-space: nowrap;
+  font-family: "AlphabetLabel", sans-serif;
+}
+.metadata-primary { top: 84%; color: var(--orange, #e7651b); font-size: 2.7cqh; letter-spacing: -.02em; }
+.metadata-secondary { top: 90%; color: var(--muted, #706d64); font-size: 1.8cqh; letter-spacing: .03em; }

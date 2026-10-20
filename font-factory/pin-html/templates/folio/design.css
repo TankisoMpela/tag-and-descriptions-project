@@ -1,0 +1,2 @@
+/* Editable geometry and copy slots are authored in shared/pin-studio.js. */
+.template--folio [data-layout-item="frame"] { border:3px double var(--accent); }

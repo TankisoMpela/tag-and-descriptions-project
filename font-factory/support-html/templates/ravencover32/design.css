@@ -1,0 +1,118 @@
+@font-face {
+  font-family: RavenCoverLabel;
+  src: url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+}
+
+#artboard {
+  --raven-ivory: #f5ebd8;
+  --raven-label-face: RavenCoverLabel, sans-serif;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #24201e;
+  color: var(--raven-ivory);
+}
+
+.raven-photo,
+.raven-veil,
+.raven-rule,
+.raven-badge,
+.raven-label-row,
+.raven-title-row,
+.raven-label,
+.raven-title {
+  position: absolute;
+}
+
+.raven-photo,
+.raven-veil {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.raven-photo {
+  object-fit: cover;
+  object-position: center;
+}
+
+.raven-veil {
+  background: rgba(16, 10, 12, var(--raven-shade, .20));
+  pointer-events: none;
+}
+
+.raven-rule {
+  left: 2.5%;
+  width: 95%;
+  height: 1px;
+  background: rgb(245 235 216 / 88%);
+}
+
+.raven-rule-top { top: 3%; }
+.raven-rule-bottom { top: 93.5%; }
+
+.raven-badge {
+  left: 40.5%;
+  top: 5.8%;
+  width: 19%;
+  height: 10.8%;
+  border: 1px solid rgb(245 235 216 / 90%);
+  border-radius: 50%;
+}
+
+.raven-label-row,
+.raven-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.raven-label {
+  color: var(--raven-ivory);
+  font-family: var(--raven-label-face);
+  font-size: 2.3cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 1px .08em rgb(5 3 3 / 72%);
+}
+
+.raven-kicker-label {
+  font-size: 1.25cqh;
+  letter-spacing: .05em;
+}
+
+.raven-issue-label {
+  font-size: 1.125cqh;
+  letter-spacing: .08em;
+}
+
+.raven-copy-label {
+  letter-spacing: .12em;
+}
+
+.raven-details-label {
+  letter-spacing: .14em;
+}
+
+.raven-title {
+  color: var(--raven-ivory);
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 20.6cqh;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .9;
+  letter-spacing: -.035em;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 1px .025em rgb(5 3 3 / 60%);
+}

@@ -1,0 +1,69 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "hand32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "frame": {
+      "width": 800,
+      "height": 800
+    },
+    "headlineFontSize": "108.13px",
+    "inkOnPaperContrast": 9.41,
+    "noteOnPaperContrast": 10.66,
+    "handOnPaperContrast": 10.66,
+    "slots": [
+      {
+        "name": "headline_top",
+        "text": "Nice",
+        "x": 296,
+        "y": 144,
+        "width": 480,
+        "height": 144,
+        "fontSize": 108.13
+      },
+      {
+        "name": "headline_middle",
+        "text": "Big",
+        "x": 296,
+        "y": 312,
+        "width": 480,
+        "height": 144,
+        "fontSize": 108.13
+      },
+      {
+        "name": "headline_bottom",
+        "text": "Font",
+        "x": 296,
+        "y": 480,
+        "width": 480,
+        "height": 144,
+        "fontSize": 108.13
+      },
+      {
+        "name": "note",
+        "text": "Sometimes You\nJust Need A...",
+        "x": 40,
+        "y": 656,
+        "width": 720,
+        "height": 104,
+        "fontSize": 25.3333
+      }
+    ],
+    "fitFailures": [],
+    "outOfBounds": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/hand32.png",
+  "outputBytes": 106550
+}

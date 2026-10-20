@@ -1,0 +1,125 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "gelatocards32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "gelatocards32",
+    "headlineFontSize": "112.85px",
+    "smallestDisplayFontSize": "54.85px",
+    "contrast": 4.594226999445272,
+    "contrastException": {
+      "minimum": 4.5,
+      "rationale": "The source card uses cobalt display ink over its pale pink print panel."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "gelato-blue-card",
+        "text": "Scoop  /  ShopSweetScoops",
+        "fontSize": "16px",
+        "x": 380,
+        "y": 140,
+        "width": 348,
+        "height": 528
+      },
+      {
+        "name": "gelato-blue-label",
+        "text": "Scoop  /  Shop",
+        "fontSize": "27.2px",
+        "x": 404.3671875,
+        "y": 179.59375,
+        "width": 299.265625,
+        "height": 27.203125
+      },
+      {
+        "name": "gelato-blue-headline-one",
+        "text": "Sweet",
+        "fontSize": "65.65px",
+        "x": 400.8828125,
+        "y": 324.796875,
+        "width": 306.234375,
+        "height": 55.140625
+      },
+      {
+        "name": "gelato-blue-headline-two",
+        "text": "Scoops",
+        "fontSize": "54.85px",
+        "x": 400.8828125,
+        "y": 430.390625,
+        "width": 306.234375,
+        "height": 46.0625
+      },
+      {
+        "name": "gelato-pink-card",
+        "text": "Pastel  /  FrozenSweetScoopsA Little Joy In Every Scoop",
+        "fontSize": "16px",
+        "x": 108,
+        "y": 104,
+        "width": 408,
+        "height": 560
+      },
+      {
+        "name": "gelato-pink-label",
+        "text": "Pastel  /  Frozen",
+        "fontSize": "25.6px",
+        "x": 140.625,
+        "y": 154.390625,
+        "width": 155.34375,
+        "height": 25.59375
+      },
+      {
+        "name": "gelato-pink-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 140.625,
+        "y": 227.1875,
+        "width": 342.71875,
+        "height": 1.5
+      },
+      {
+        "name": "gelato-pink-headline-one",
+        "text": "Sweet",
+        "fontSize": "112.85px",
+        "x": 139.8828125,
+        "y": 260.796875,
+        "width": 344.234375,
+        "height": 93.65625
+      },
+      {
+        "name": "gelato-pink-headline-two",
+        "text": "Scoops",
+        "fontSize": "94.27px",
+        "x": 139.8984375,
+        "y": 406.390625,
+        "width": 344.203125,
+        "height": 78.234375
+      },
+      {
+        "name": "gelato-pink-footer",
+        "text": "A Little Joy In Every Scoop",
+        "fontSize": "23.2px",
+        "x": 140.625,
+        "y": 568.796875,
+        "width": 342.71875,
+        "height": 23.203125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/gelatocards32.png",
+  "outputBytes": 1573313
+}

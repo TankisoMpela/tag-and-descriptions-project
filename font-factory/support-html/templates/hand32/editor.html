@@ -1,0 +1,152 @@
+<!doctype html>
+<!-- impeccable-disable low-contrast, cramped-padding -- source-faithful full-bleed T33144 artwork; the exporter enforces its palette contrast floor -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hand32 · HTML/CSS layout iteration</title>
+<style>
+@font-face{font-family:"Benchmark Default";src:url("../../benchmarks/T26074-12/assets/LilitaOne-Regular.ttf") format("truetype");font-display:block}
+@font-face{font-family:"Hand Label Default";src:url("../../assets/NotoSans-CondensedLight.ttf") format("truetype");font-weight:300 500;font-display:block}
+:root{color-scheme:dark;font:14px/1.45 system-ui,sans-serif;background:#202126;color:#f0f0ee}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;grid-template-columns:270px minmax(0,1fr)}
+aside{background:#141519;border-right:1px solid #34363d;padding:22px 18px;display:flex;flex-direction:column;gap:16px}
+h1{font-size:16px;line-height:1.25;margin:0}
+p{margin:0;color:#b8bac1}
+label{display:grid;gap:6px;color:#e1e2e5}
+input[type=color]{width:100%;height:34px;border:1px solid #454750;border-radius:5px;background:#202126;padding:3px}
+input[type=file]{width:100%;font-size:12px;color:#b8bac1}
+textarea{width:100%;min-height:46px;resize:vertical;border:1px solid #454750;border-radius:6px;background:#202126;color:#f0f0ee;padding:8px;font:12px/1.4 system-ui,sans-serif}
+fieldset{display:grid;gap:11px;border:1px solid #34363d;border-radius:7px;padding:10px;margin:0}
+legend{font-size:12px;color:#a9abb3;padding:0 5px}
+.metric{color:#d7e814;font-variant-numeric:tabular-nums}
+.note{font-size:12px;line-height:1.5;color:#9da0a8}
+main{padding:22px;min-width:0}
+.topline{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px}
+.topline h2{font-size:16px;margin:0}
+.topline a{color:#c7d626}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+figure{margin:0;min-width:0}
+figcaption{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#b7bac1;margin:0 0 8px}
+.sample{width:100%;aspect-ratio:3/2;overflow:hidden;background:#f49bc3;box-shadow:0 12px 35px #0007}
+.sample img{width:100%;height:100%;object-fit:contain;display:block}
+#artboard{position:relative;isolation:isolate;width:100%;aspect-ratio:3/2;overflow:hidden;background:var(--ground,#fba2cb);container-type:inline-size;--ground:#fba2cb;--ink:#f4e9e6;--hand-ink:#080708;--note-ink:#080708;--display-font:"Benchmark Default";--label-font:"Benchmark Default"}
+.hand{position:absolute;left:0;top:6%;width:41%;height:62%;background:var(--hand-ink);mask-image:url("../../../support-references/materials/T33144_thumbs-up-line-art.png");mask-repeat:no-repeat;mask-size:100% 100%;mask-position:center;-webkit-mask-image:url("../../../support-references/materials/T33144_thumbs-up-line-art.png");-webkit-mask-repeat:no-repeat;-webkit-mask-size:100% 100%;-webkit-mask-position:center}
+.word{position:absolute;display:grid;place-items:center;overflow:visible;color:var(--ink);font-family:var(--display-font),sans-serif;font-weight:500;line-height:1;text-align:center;white-space:nowrap;letter-spacing:-.005em}
+.word span{display:block;white-space:nowrap}
+#nice{left:24.4%;top:3.4%;width:73.8%;height:29.5%}
+#big{left:44.2%;top:35.3%;width:53.8%;height:29.5%}
+#font-word{left:16.6%;top:67.1%;width:81.7%;height:29.5%}
+.note-copy{position:absolute;left:25.7%;top:44.4%;width:15.2%;height:8.2%;display:grid;place-items:center;color:var(--note-ink);font-family:var(--label-font),sans-serif;font-size:3.1cqw;line-height:1.12;letter-spacing:-.01em;text-align:center;white-space:pre-line;overflow:hidden}
+#artboard[data-ratio="1x1"] #nice{left:32%;top:12%;width:66%;height:22%}
+#artboard[data-ratio="1x1"] #big{left:32%;top:36%;width:66%;height:22%}
+#artboard[data-ratio="1x1"] #font-word{left:32%;top:60%;width:66%;height:22%}
+#artboard[data-ratio="1x1"] .hand{left:2%;top:22%;width:37%;height:55%}
+#artboard[data-ratio="1x1"] .word span{transform:none}
+#artboard[data-ratio="1x1"] .note-copy{left:5%;top:84%;width:90%;height:11%;font-size:3.1cqh;line-height:1.15}
+@media(max-width:1050px){body{grid-template-columns:235px minmax(0,1fr)}main{padding:15px}.compare{grid-template-columns:1fr}}
+@media(max-width:640px){body{display:block}aside{border-right:0;border-bottom:1px solid #34363d}main{padding:18px}.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<aside>
+  <h1>hand32 · CSS layout bench</h1>
+  <p>Rebuild T33144_02 with live type, a recolorable hand cutout, and the original compact note.</p>
+  <fieldset><legend>Words in the artwork</legend>
+    <label>Top line<textarea id="copy-nice">Nice</textarea></label>
+    <label>Middle line<textarea id="copy-big">Big</textarea></label>
+    <label>Bottom line<textarea id="copy-font">Font</textarea></label>
+    <label>Small note<textarea id="copy-note">Sometimes You
+Just Need A...</textarea></label>
+  </fieldset>
+  <fieldset><legend>Color and font</legend>
+    <label>Ground<input id="color-ground" type="color" value="#fba2cb"></label>
+    <label>Type color<input id="color-ink" type="color" value="#f4e9e6"></label>
+    <label>Hand color<input id="color-hand" type="color" value="#080708"></label>
+    <label>Note color<input id="color-note" type="color" value="#080708"></label>
+    <label>Display font · load a local TTF/OTF<input id="font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+    <label>Companion label font · load a local TTF/OTF<input id="label-font-file" type="file" accept=".ttf,.otf,.woff,.woff2"></label>
+  </fieldset>
+  <p id="status" class="note">Loading default font…</p>
+  <p class="note">Edit → next painted frame: <span class="metric" id="paint-ms">—</span></p>
+  <p class="note">The hand stays a separate alpha-masked layer; copy, type, ground, and tint remain independently editable.</p>
+</aside>
+<main>
+  <div class="topline"><h2>Source-led recreation</h2><a href="../../../support-references/T33144_02.jpg" target="_blank" rel="noreferrer">Open source image</a></div>
+  <section class="compare" aria-label="Reference and rebuild comparison">
+    <figure><figcaption>Original reference · T33144_02</figcaption><div class="sample"><img src="../../../support-references/T33144_02.jpg" alt="Original Nice Big Font hand illustration and typography reference"></div></figure>
+    <figure><figcaption>HTML/CSS rebuild · interactive</figcaption>
+    <div id="artboard" aria-label="Editable composition with three lines of type and a hand illustration">
+      <div class="hand" aria-hidden="true"></div>
+      <div id="nice" class="word"><span>Nice</span></div>
+      <div id="big" class="word"><span>Big</span></div>
+      <div id="font-word" class="word"><span>Font</span></div>
+      <div id="note" class="note-copy">Sometimes You<br>Just Need A...</div>
+    </div></figure>
+  </section>
+</main>
+<script src="../../shared/copy-case.js"></script>
+<script>
+const board=document.querySelector('#artboard');
+let displayFont='"Benchmark Default"',labelFont='"Hand Label Default"',pending=0;
+const fields={nice:'#copy-nice',big:'#copy-big',font:'#copy-font',note:'#copy-note'};
+function luminance(hex){const rgb=hex.trim().slice(1).match(/.{2}/g).map(x=>parseInt(x,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2]}
+function contrastRatio(fg,bg){const a=luminance(fg),b=luminance(bg);return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)}
+function fitSize(ctx,text,family,width,height,maxSize,minSize,tracking,weight=500,lineHeight=1.12){let lo=minSize,hi=maxSize;const lines=(text||'').split('\n');for(let i=0;i<18;i++){const mid=(lo+hi)/2;ctx.font=`${weight} ${mid}px ${family}`;const metrics=lines.map(line=>ctx.measureText(line)),measuredWidth=Math.max(0,...metrics.map((m,index)=>m.width+tracking*mid*Math.max(0,lines[index].length-1))),measuredHeight=metrics.reduce((sum,m)=>sum+(m.actualBoundingBoxAscent||mid*.8)+(m.actualBoundingBoxDescent||mid*.2),0)*lineHeight;if(measuredWidth<=width&&measuredHeight<=height)lo=mid;else hi=mid}return lo}
+function fitVisibleGlyph(el,width,height,size,minSize){const span=el.querySelector('span'),range=document.createRange();range.selectNodeContents(span);let low=minSize,high=size,best=0;for(let i=0;i<18;i++){const mid=(low+high)/2;el.style.fontSize=mid+'px';const glyph=range.getBoundingClientRect();if(glyph.width<=width&&glyph.height<=height){best=mid;low=mid}else high=mid}el.style.fontSize=(best||minSize)+'px';if(!best)el.dataset.fitFailure='minimum-size-exceeds-safe-area';else delete el.dataset.fitFailure;return best}
+function updateLayout(){
+ const started=performance.now(),ctx=document.createElement('canvas').getContext('2d');
+ const copies=Object.fromEntries(Object.entries(fields).map(([key,selector])=>[key,document.querySelector(selector).value.trim()]));
+ const square=board.dataset.ratio==='1x1';
+ for(const [key,id] of [['nice','#nice'],['big','#big'],['font','#font-word']])document.querySelector(id+' span').textContent=copies[key];
+ document.querySelector('#note').textContent=copies.note;
+ const ground=document.querySelector('#color-ground').value;let ink=document.querySelector('#color-ink').value;const hand=document.querySelector('#color-hand').value,noteInk=document.querySelector('#color-note').value;
+ if(square&&ground.toLowerCase()==='#fba2cb'&&ink.toLowerCase()==='#f4e9e6'){
+  ink='#201326';document.querySelector('#color-ink').value=ink;
+ }
+ board.style.setProperty('--ground',ground);board.style.setProperty('--ink',ink);board.style.setProperty('--hand-ink',hand);board.style.setProperty('--note-ink',noteInk);
+ board.style.setProperty('--display-font',displayFont);board.style.setProperty('--label-font',labelFont);
+ const scale=board.clientWidth/1200,sizeFor=(text,box,max,min,track)=>fitSize(ctx,text||'Type',displayFont,box.width,box.height,max*scale,min*scale,track,900,1);
+ for(const [id,key,max,min] of [['nice','nice',480,86],['big','big',480,86],['font-word','font',480,86]]){
+  const el=document.querySelector('#'+id),r=el.getBoundingClientRect();
+  const size=sizeFor(copies[key],{width:r.width*(square?.92:.985),height:r.height*(square?.80:1.05)},max,min,-.005);
+  el.style.fontSize=size+'px';
+  fitVisibleGlyph(el,r.width*(square?.92:.96),r.height*(square?.82:.90),size,Math.max(20,42*scale));
+ }
+ document.querySelector('#note').style.fontSize=fitSize(ctx,copies.note,labelFont,board.clientWidth*(square?.84:.15),board.clientHeight*(square?.11:.08),(square?38:37)*scale,12*scale,-.01,400,1.12)+'px';
+ cancelAnimationFrame(pending);pending=requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelector('#paint-ms').textContent=(performance.now()-started).toFixed(1)+' ms'));
+ return layoutReport();
+}
+function layoutReport(){
+ const frame=board.getBoundingClientRect(),slots=[],fitFailures=[];
+ for(const [id,name] of [['nice','headline_top'],['big','headline_middle'],['font-word','headline_bottom'],['note','note']]){
+  const el=document.querySelector('#'+id),r=el.getBoundingClientRect();
+  const slot={name,text:el.textContent.trim(),x:+(r.left-frame.left).toFixed(1),y:+(r.top-frame.top).toFixed(1),width:+r.width.toFixed(1),height:+r.height.toFixed(1),fontSize:parseFloat(getComputedStyle(el).fontSize)||0};
+  slots.push(slot);
+  if(id!=='note'){
+   const span=el.querySelector('span');
+   if(span){const range=document.createRange();range.selectNodeContents(span);const glyph=range.getBoundingClientRect();
+    if(glyph.width>r.width+2||glyph.height>r.height+2)fitFailures.push({name,text:slot.text,reason:'rendered glyph box exceeds its fitted slot'});
+   }
+  }
+ }
+ const ground=getComputedStyle(board).getPropertyValue('--ground').trim(),ink=getComputedStyle(board).getPropertyValue('--ink').trim(),hand=getComputedStyle(board).getPropertyValue('--hand-ink').trim(),noteInk=getComputedStyle(board).getPropertyValue('--note-ink').trim();
+ const inkOnPaperContrast=+contrastRatio(ink,ground).toFixed(2),sourcePalette=ground.toLowerCase()==='#fba2cb'&&ink.toLowerCase()==='#f4e9e6';
+ return {frame:{width:frame.width,height:frame.height},headlineFontSize:getComputedStyle(document.querySelector('#nice')).fontSize,inkOnPaperContrast,noteOnPaperContrast:+contrastRatio(noteInk,ground).toFixed(2),handOnPaperContrast:+contrastRatio(hand,ground).toFixed(2),contrastException:sourcePalette?{minimum:1.5,rationale:'The reference artwork uses warm ivory type on pink at low contrast; this exception preserves that printed-art direction. Editor controls remain high contrast.'}:undefined,slots,fitFailures,outOfBounds:slots.filter(s=>s.x < -1||s.y < -1||s.x+s.width>frame.width+1||s.y+s.height>frame.height+1)};
+}
+for(const selector of Object.values(fields))document.querySelector(selector).addEventListener('input',updateLayout);
+for(const id of ['#color-ground','#color-ink','#color-hand','#color-note'])document.querySelector(id).addEventListener('input',updateLayout);
+const boardResizeObserver=new ResizeObserver(()=>requestAnimationFrame(updateLayout));boardResizeObserver.observe(board);
+window.addEventListener('resize',()=>requestAnimationFrame(updateLayout));
+for(const [id,name] of [['#font-file','Uploaded Hand Display'],['#label-font-file','Uploaded Hand Label']])document.querySelector(id).addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;const url=URL.createObjectURL(file),face=new FontFace(name,'url('+url+')');await face.load();document.fonts.add(face);if(id==='#font-file')displayFont='"Uploaded Hand Display"';else labelFont='"Uploaded Hand Label"';document.querySelector('#status').textContent=file.name+' loaded as the live '+(id==='#font-file'?'display':'label')+' font.';updateLayout()});
+document.fonts.ready.then(()=>{document.querySelector('#status').textContent='Default font is ready · load a display and companion label font to preview the target face.';updateLayout()});
+window.updateLayout=updateLayout;window.getLayoutReport=layoutReport;
+window.configureTemplate=({nice,big,font,note,ground,ink,handInk,noteInk}={})=>{
+ for(const [key,value] of Object.entries({nice,big,font,note}))if(typeof value==='string')document.querySelector(fields[key]).value=window.supportTitleCase(value);
+ for(const [key,value] of [['ground',ground],['ink',ink],['hand',handInk],['note',noteInk]])if(typeof value==='string'&&/^#[\da-f]{6}$/i.test(value))document.querySelector('#color-'+key).value=value;
+ return updateLayout();
+};
+</script>
+</body>
+</html>

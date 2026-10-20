@@ -1,0 +1,143 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "meditation32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "meditation32",
+    "headlineFontSize": "128.86px",
+    "smallestDisplayFontSize": "128.86px",
+    "contrast": 2.0966622266240766,
+    "contrastException": {
+      "minimum": 1.55,
+      "rationale": "The source keeps large white display lettering over a deliberately soft pastel gradient."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "meditation-woven-paper",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "meditation-bubble-art",
+        "text": "",
+        "fontSize": "16px",
+        "x": 44,
+        "y": 0,
+        "width": 712,
+        "height": 460
+      },
+      {
+        "name": "meditation-sparkle-top-left",
+        "text": "",
+        "fontSize": "16px",
+        "x": 16,
+        "y": 32,
+        "width": 56,
+        "height": 56
+      },
+      {
+        "name": "meditation-sparkle-right",
+        "text": "",
+        "fontSize": "16px",
+        "x": 700.8125,
+        "y": 280,
+        "width": 51.1875,
+        "height": 51.1875
+      },
+      {
+        "name": "meditation-sparkle-small",
+        "text": "",
+        "fontSize": "16px",
+        "x": 759.203125,
+        "y": 208,
+        "width": 28.796875,
+        "height": 28.796875
+      },
+      {
+        "name": "meditation-headline",
+        "text": "Meditation",
+        "fontSize": "128.86px",
+        "x": 63.90625,
+        "y": 60,
+        "width": 672.1875,
+        "height": 110.8125
+      },
+      {
+        "name": "meditation-workshop-pill",
+        "text": "Workshop",
+        "fontSize": "22.4px",
+        "x": 296,
+        "y": 332,
+        "width": 208,
+        "height": 52
+      },
+      {
+        "name": "meditation-sea-photo",
+        "text": "",
+        "fontSize": "16px",
+        "x": 80,
+        "y": 440,
+        "width": 640,
+        "height": 232
+      },
+      {
+        "name": "meditation-reset-burst",
+        "text": "Disc\n30%",
+        "fontSize": "24px",
+        "x": 0,
+        "y": 288,
+        "width": 216,
+        "height": 232
+      },
+      {
+        "name": "meditation-footer-left",
+        "text": "September 30",
+        "fontSize": "18px",
+        "x": 80,
+        "y": 693.59375,
+        "width": 102.03125,
+        "height": 18
+      },
+      {
+        "name": "meditation-year",
+        "text": "2025",
+        "fontSize": "43.2px",
+        "x": 80,
+        "y": 715.1875,
+        "width": 80.171875,
+        "height": 38.015625
+      },
+      {
+        "name": "meditation-footer-right",
+        "text": "Sign Up Here\nwww.meditatewithdelaine.com",
+        "fontSize": "18.4px",
+        "x": 432,
+        "y": 692.796875,
+        "width": 288,
+        "height": 44.15625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/meditation32.png",
+  "outputBytes": 2099749
+}

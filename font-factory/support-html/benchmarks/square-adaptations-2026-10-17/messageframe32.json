@@ -1,0 +1,134 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "messageframe32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "messageframe32",
+    "headlineFontSize": "51.49px",
+    "smallestDisplayFontSize": "51.49px",
+    "contrast": 3.623976255829269,
+    "contrastException": {
+      "minimum": 2.5,
+      "rationale": "The source keeps its small white labels on a textured lavender print band."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "source-message-card-and-print-plate",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "quote-row-1",
+        "text": "You Will Look Back",
+        "fontSize": "16px",
+        "x": 96,
+        "y": 196,
+        "width": 608,
+        "height": 100
+      },
+      {
+        "name": "quote-line-1",
+        "text": "You Will Look Back",
+        "fontSize": "51.49px",
+        "x": 159.296875,
+        "y": 196,
+        "width": 481.390625,
+        "height": 46.328125
+      },
+      {
+        "name": "quote-row-2",
+        "text": "On These Days And",
+        "fontSize": "16px",
+        "x": 96,
+        "y": 300,
+        "width": 608,
+        "height": 100
+      },
+      {
+        "name": "quote-line-2",
+        "text": "On These Days And",
+        "fontSize": "51.49px",
+        "x": 154.15625,
+        "y": 300,
+        "width": 491.6875,
+        "height": 46.328125
+      },
+      {
+        "name": "quote-row-3",
+        "text": "Be So Grateful You",
+        "fontSize": "16px",
+        "x": 96,
+        "y": 404,
+        "width": 608,
+        "height": 100
+      },
+      {
+        "name": "quote-line-3",
+        "text": "Be So Grateful You",
+        "fontSize": "51.49px",
+        "x": 163.234375,
+        "y": 404,
+        "width": 473.515625,
+        "height": 46.328125
+      },
+      {
+        "name": "quote-row-4",
+        "text": "Made It Through",
+        "fontSize": "16px",
+        "x": 144,
+        "y": 508,
+        "width": 512,
+        "height": 100
+      },
+      {
+        "name": "quote-line-4",
+        "text": "Made It Through",
+        "fontSize": "51.49px",
+        "x": 193.296875,
+        "y": 508,
+        "width": 413.40625,
+        "height": 46.328125
+      },
+      {
+        "name": "top-source-label",
+        "text": "Field Notes",
+        "fontSize": "24px",
+        "x": 116,
+        "y": 58.390625,
+        "width": 208,
+        "height": 40
+      },
+      {
+        "name": "bottom-source-label",
+        "text": "A Note To Keep",
+        "fontSize": "24px",
+        "x": 560,
+        "y": 692,
+        "width": 160,
+        "height": 40
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/messageframe32.png",
+  "outputBytes": 2308783
+}

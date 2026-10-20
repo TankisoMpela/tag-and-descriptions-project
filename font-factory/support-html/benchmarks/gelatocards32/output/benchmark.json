@@ -1,0 +1,220 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/gelatocards32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/gelatocards32/editor.html",
+  "browser": "153.0.8010.36",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 27.3,
+  "imageBytes": {
+    "html": 2242368,
+    "skia": 2579414
+  },
+  "desktopLayout": {
+    "template": "gelatocards32",
+    "headlineFontSize": "74.1013px",
+    "contrast": 4.594226999445272,
+    "contrastException": {
+      "minimum": 4.5,
+      "rationale": "The source card uses cobalt display ink over its pale pink print panel."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "gelato-blue-card",
+        "text": "SCOOP  /  SHOPSWEETSCOOPS",
+        "fontSize": "16px",
+        "x": 336.8125,
+        "y": 82.71875,
+        "width": 308.453125,
+        "height": 311.984375
+      },
+      {
+        "name": "gelato-blue-label",
+        "text": "SCOOP  /  SHOP",
+        "fontSize": "16.0724px",
+        "x": 504.65625,
+        "y": 106.109375,
+        "width": 96.125,
+        "height": 16.078125
+      },
+      {
+        "name": "gelato-blue-headline-one",
+        "text": "SWEET",
+        "fontSize": "67.8499px",
+        "x": 464.1015625,
+        "y": 191.90625,
+        "width": 177.234375,
+        "height": 56.984375
+      },
+      {
+        "name": "gelato-blue-headline-two",
+        "text": "SCOOPS",
+        "fontSize": "55.9299px",
+        "x": 464.109375,
+        "y": 254.296875,
+        "width": 177.21875,
+        "height": 46.984375
+      },
+      {
+        "name": "gelato-pink-card",
+        "text": "PASTEL  /  FROZENSWEETSCOOPSA LITTLE JOY IN EVERY SCOOP",
+        "fontSize": "16px",
+        "x": 95.71875,
+        "y": 61.453125,
+        "width": 361.625,
+        "height": 330.890625
+      },
+      {
+        "name": "gelato-pink-label",
+        "text": "PASTEL  /  FROZEN",
+        "fontSize": "15.127px",
+        "x": 124.640625,
+        "y": 91.21875,
+        "width": 105.625,
+        "height": 15.125
+      },
+      {
+        "name": "gelato-pink-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 124.640625,
+        "y": 134.234375,
+        "width": 303.75,
+        "height": 1.5
+      },
+      {
+        "name": "gelato-pink-headline-one",
+        "text": "SWEET",
+        "fontSize": "74.1013px",
+        "x": 179.7265625,
+        "y": 154.09375,
+        "width": 193.609375,
+        "height": 61.484375
+      },
+      {
+        "name": "gelato-pink-headline-two",
+        "text": "SCOOPS",
+        "fontSize": "74.1013px",
+        "x": 159.0859375,
+        "y": 240.125,
+        "width": 234.890625,
+        "height": 61.484375
+      },
+      {
+        "name": "gelato-pink-footer",
+        "text": "A LITTLE JOY IN EVERY SCOOP",
+        "fontSize": "13.7088px",
+        "x": 124.640625,
+        "y": 336.078125,
+        "width": 303.75,
+        "height": 13.703125
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "gelatocards32",
+    "headlineFontSize": "40px",
+    "contrast": 4.594226999445272,
+    "contrastException": {
+      "minimum": 4.5,
+      "rationale": "The source card uses cobalt display ink over its pale pink print panel."
+    },
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "gelato-blue-card",
+        "text": "SCOOP  /  SHOPSWEETSCOOPS",
+        "fontSize": "16px",
+        "x": 167.1875,
+        "y": 41.0625,
+        "width": 153.109375,
+        "height": 154.859375
+      },
+      {
+        "name": "gelato-blue-label",
+        "text": "SCOOP  /  SHOP",
+        "fontSize": "7.97831px",
+        "x": 250.5078125,
+        "y": 52.671875,
+        "width": 47.703125,
+        "height": 7.984375
+      },
+      {
+        "name": "gelato-blue-headline-one",
+        "text": "SWEET",
+        "fontSize": "33.7px",
+        "x": 230.3671875,
+        "y": 95.25,
+        "width": 87.984375,
+        "height": 28.296875
+      },
+      {
+        "name": "gelato-blue-headline-two",
+        "text": "SCOOPS",
+        "fontSize": "27.7698px",
+        "x": 230.375,
+        "y": 126.234375,
+        "width": 87.96875,
+        "height": 23.3125
+      },
+      {
+        "name": "gelato-pink-card",
+        "text": "PASTEL  /  FROZENSWEETSCOOPSA LITTLE JOY IN EVERY SCOOP",
+        "fontSize": "16px",
+        "x": 47.515625,
+        "y": 30.5,
+        "width": 179.515625,
+        "height": 164.25
+      },
+      {
+        "name": "gelato-pink-label",
+        "text": "PASTEL  /  FROZEN",
+        "fontSize": "7.509px",
+        "x": 61.875,
+        "y": 45.28125,
+        "width": 52.4375,
+        "height": 7.515625
+      },
+      {
+        "name": "gelato-pink-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 61.875,
+        "y": 66.625,
+        "width": 150.78125,
+        "height": 1.5
+      },
+      {
+        "name": "gelato-pink-headline-one",
+        "text": "SWEET",
+        "fontSize": "40px",
+        "x": 85,
+        "y": 76.484375,
+        "width": 104.53125,
+        "height": 33.1875
+      },
+      {
+        "name": "gelato-pink-headline-two",
+        "text": "SCOOPS",
+        "fontSize": "40px",
+        "x": 73.859375,
+        "y": 119.1875,
+        "width": 126.8125,
+        "height": 33.1875
+      },
+      {
+        "name": "gelato-pink-footer",
+        "text": "A LITTLE JOY IN EVERY SCOOP",
+        "fontSize": "6.80503px",
+        "x": 61.875,
+        "y": 166.8125,
+        "width": 150.78125,
+        "height": 6.8125
+      }
+    ],
+    "contentWarnings": []
+  }
+}

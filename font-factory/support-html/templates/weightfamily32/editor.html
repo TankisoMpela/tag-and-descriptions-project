@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../../shared/editor-shell.css">
+  <link rel="stylesheet" href="../../shared/source-designs.css">
+  <title>Weight Family — Support Layout Studio</title>
+</head>
+<body>
+  <header class="studio-header">
+    <div><h1>Weight Family</h1><p>Three alphabet rows and warm weight labels preserve the reference hierarchy with separate weight controls.</p></div>
+    <span class="source-id">T30930_01 · slot 25</span>
+  </header>
+  <main class="studio-grid">
+    <figure class="reference-panel">
+      <figcaption class="panel-title">Source Reference</figcaption>
+      <img src="../../../support-references/T30930_01.jpg" alt="Weight Family original source reference">
+      <p class="reference-note">The reference artwork is shown beside a live HTML/CSS reconstruction. Display copy remains editable, and the original source wording is not baked into the new composition.</p>
+    </figure>
+    <section class="stage-panel" aria-label="Live template preview">
+      <h2 class="panel-title">Live Composition</h2>
+      <div class="artboard-frame"><div id="artboard" aria-label="Editable Weight Family design"></div></div>
+    </section>
+    <aside class="controls-panel">
+      <h2 class="panel-title">Layout Controls</h2>
+      <label class="font-picker" for="font-file">Display Font
+        <input id="font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="font-status" class="font-status">Choose a local font to preview its actual letterforms.</span>
+      </label>
+      <fieldset class="family-font-fields">
+        <legend>Actual Family Faces</legend>
+        <p class="reference-note">Upload sibling styles in source order to keep the family proof factual. Each row uses its own font file.</p>
+        <label class="font-picker">First Style<input id="family-font-1" type="file" accept=".otf,.ttf,.woff,.woff2"></label>
+        <label class="font-picker">Second Style<input id="family-font-2" type="file" accept=".otf,.ttf,.woff,.woff2"></label>
+        <label class="font-picker">Third Style<input id="family-font-3" type="file" accept=".otf,.ttf,.woff,.woff2"></label>
+      </fieldset>
+      <div id="template-controls"></div>
+    </aside>
+  </main>
+  <script src="../../shared/layout.js"></script>
+  <script src="../../shared/source-layout.js"></script>
+  <script src="../../shared/editor-shell.js"></script>
+  <script>window.SupportEditor.start(window.SourceLayoutDesign.build("weightfamily32"));
+    window.SourceLayoutDesign.bindFamilyFiles("weightfamily32");</script>
+</body>
+</html>

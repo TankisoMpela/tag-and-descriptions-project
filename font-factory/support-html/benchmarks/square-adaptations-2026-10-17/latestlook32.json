@@ -1,0 +1,85 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "latestlook32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "latestlook32",
+    "headlineFontSize": "166.13px",
+    "smallestDisplayFontSize": "135.35px",
+    "contrast": 11.406246582658145,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "latest-line-one",
+        "text": "Get The",
+        "fontSize": "135.35px",
+        "x": 212,
+        "y": 104,
+        "width": 496.25,
+        "height": 116.390625
+      },
+      {
+        "name": "latest-line-two",
+        "text": "Latest",
+        "fontSize": "158.71px",
+        "x": 212,
+        "y": 280,
+        "width": 496.21875,
+        "height": 136.484375
+      },
+      {
+        "name": "latest-line-three",
+        "text": "Style",
+        "fontSize": "166.13px",
+        "x": 264,
+        "y": 456,
+        "width": 432.21875,
+        "height": 142.859375
+      },
+      {
+        "name": "latest-footer-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 320,
+        "y": 708,
+        "width": 152,
+        "height": 1.5
+      },
+      {
+        "name": "latest-caption",
+        "text": "Display Lettering",
+        "fontSize": "20.4px",
+        "x": 216,
+        "y": 700,
+        "width": 104,
+        "height": 41.625
+      },
+      {
+        "name": "latest-signature",
+        "text": "Autumn Lookbook",
+        "fontSize": "20.4px",
+        "x": 568,
+        "y": 700,
+        "width": 104,
+        "height": 41.625
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/latestlook32.png",
+  "outputBytes": 2554512
+}

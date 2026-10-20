@@ -3,8 +3,10 @@
 
 from __future__ import annotations
 
+import errno
 import hashlib
 import json
+import os
 import shutil
 import sqlite3
 import subprocess
@@ -34,6 +36,10 @@ RENDERER = ROOT / "bin" / "render_font_specimens.py"
 DATA_DIR = Path(__file__).resolve().parent / "data"
 CACHE_DIR = DATA_DIR / "cache"
 INPUT_DIR = ROOT / "font-factory" / "input"
+# "Mark used family" stages a copy into INPUT_DIR, then retires the original here.
+# It is a quarantine, not a delete: the source dump is gitignored, so unlinking
+# anything in it would be unrecoverable.
+STAGED_OUT_DIR = ROOT / "font-factory" / "Fonts" / ".staged-out"
 STATE_PATH = DATA_DIR / "state.json"
 DB_PATH = DATA_DIR / "vault.db"
 BACKUP_DIR = DATA_DIR / "backups"
@@ -338,6 +344,10 @@ class DirectoryScanWorker(QObject):
         total_count = 0
         try:
             for font_path in sorted(self.path.rglob("*")):
+                # rglob does not skip dot-directories, and the staged-out quarantine
+                # lives under the dump — without this a staged family scans back in as new.
+                if any(part.startswith(".") for part in font_path.relative_to(self.path).parts):
+                    continue
                 if font_path.is_file() and font_path.suffix.lower() in FONT_EXTENSIONS:
                     stat = font_path.stat()
                     key = f"file:{font_path.resolve()}:{stat.st_size}:{stat.st_mtime_ns}"
@@ -543,7 +553,11 @@ class FontVaultWindow(QMainWindow):
         copy_row = QHBoxLayout(); copy_row.addWidget(self.button("Copy font details", self.copy_current_details)); copy_row.addWidget(self.button("Copy specimen text", self.copy_specimen_text)); copy_row.addStretch(); preview_layout.addLayout(copy_row)
         preview_layout.addWidget(self.preview, 1); main_layout.addWidget(preview_panel, 1)
 
-        actions = QHBoxLayout(); actions.addStretch(); actions.addWidget(self.button("Create fsType=0 working copy…", self.create_installable_copy)); actions.addWidget(self.button("Mark used family", self.mark_used_family)); actions.addWidget(self.button("Archive family", self.archive_family))
+        stage_button = self.button("Mark used family", self.mark_used_family)
+        stage_button.setToolTip("Copy every style in this family into font-factory/input/<N>-<Family>/, verify each copy byte for byte, then move the originals into font-factory/Fonts/.staged-out/<N>-<Family>/. Nothing is deleted — staged-out.json records where each original came from.")
+        archive_random_button = self.button("Archive & Randomize", self.archive_and_randomize, True)
+        archive_random_button.setToolTip("Archive every style in the current family, then select a random font from the remaining Review queue.")
+        actions = QHBoxLayout(); actions.addStretch(); actions.addWidget(self.button("Create fsType=0 working copy…", self.create_installable_copy)); actions.addWidget(stage_button); actions.addWidget(self.button("Archive family", self.archive_family)); actions.addWidget(archive_random_button)
         navigation = QVBoxLayout(); navigation.setSpacing(5)
         skip_button = self.button("Skip family →", self.skip_family); skip_button.setObjectName("skipFamily"); skip_button.setToolTip("Mark every style in this font family as skipped and move to the next family."); navigation.addWidget(skip_button)
         movement = QHBoxLayout(); movement.setSpacing(5); movement.addWidget(self.button("← Previous", self.previous)); movement.addWidget(self.button("Next →", self.next, True)); navigation.addLayout(movement)
@@ -1369,6 +1383,22 @@ class FontVaultWindow(QMainWindow):
             self.clear_current("No unreviewed font families remain in this view.")
         self.status_label.setText(f"Archived family: {family_label} ({len(members)} style(s)).")
 
+    def archive_and_randomize(self) -> None:
+        """Archive the current family, then jump to a random remaining queue font."""
+        if not self.current:
+            return
+        family_label = self.family_label_for_record(self.current)
+        self.archive_family()
+        self.randomize()
+        if self.current:
+            self.status_label.setText(
+                f"Archived family: {family_label}. Randomized to {self.current.display}."
+            )
+        else:
+            self.status_label.setText(
+                f"Archived family: {family_label}. No review queue fonts remain."
+            )
+
     def mark_used_family(self) -> None:
         if not self.current:
             return
@@ -1390,20 +1420,61 @@ class FontVaultWindow(QMainWindow):
         copied = []
         copied_records = []
         seen_hashes: dict[str, str] = {}
+        quarantine_dir = STAGED_OUT_DIR / destination_dir.name
+        retired: list[dict] = []
+        problems: list[str] = []
         for record in members:
             source = self.materialize(record)
-            digest = hashlib.sha1(source.read_bytes()).hexdigest()
-            if digest in seen_hashes:
-                copied.append({"source": str(source), "display": record.display, "style": self.family_info(record).style, "duplicate_of": seen_hashes[digest]})
+            style = self.family_info(record).style
+            try:
+                digest = hashlib.sha1(source.read_bytes()).hexdigest()
+            except OSError as error:
+                problems.append(f"{source.name}: the source will not open ({error})")
+                continue
+            twin = seen_hashes.get(digest)
+            if twin is None:
+                destination = destination_dir / source.name
+                if destination.exists():
+                    destination = destination_dir / f"{source.stem}__{digest[:8]}{source.suffix}"
+                try:
+                    shutil.copy2(source, destination)
+                    matches = hashlib.sha1(destination.read_bytes()).hexdigest() == digest
+                except OSError as error:
+                    problems.append(f"{source.name}: the copy failed ({error})")
+                    continue
+                if not matches:
+                    destination.unlink(missing_ok=True)
+                    problems.append(f"{source.name}: the staged copy does not match the source byte for byte")
+                    continue
+                seen_hashes[digest] = str(destination)
+                entry = {"source": str(source), "copied_to": str(destination), "display": record.display, "style": style}
+            else:
+                # Byte-identical to a file already staged from this family, so the staged
+                # copy stands for this one too and its original can retire as well.
+                entry = {"source": str(source), "display": record.display, "style": style, "duplicate_of": twin}
+            try:
+                target = self.retire_source(source, quarantine_dir, digest)
+            except OSError as error:
+                problems.append(f"{source.name}: staged, but its original could not be moved out of the dump ({error})")
+                entry["source_move_error"] = str(error)
+                copied.append(entry)
                 copied_records.append(record)
                 continue
-            destination = destination_dir / source.name
-            if destination.exists():
-                destination = destination_dir / f"{source.stem}__{digest[:8]}{source.suffix}"
-            shutil.copy2(source, destination)
-            seen_hashes[digest] = str(destination)
-            copied.append({"source": str(source), "copied_to": str(destination), "display": record.display, "style": self.family_info(record).style})
+            entry["source_moved_to"] = str(target)
+            retired.append({"from": str(source), "to": str(target), "sha1": digest})
+            copied.append(entry)
             copied_records.append(record)
+        if retired:
+            (quarantine_dir / "staged-out.json").write_text(
+                json.dumps({
+                    "family": family_label,
+                    "staged_to": str(destination_dir),
+                    "moved_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                    "note": "Restore a file by moving it back to its 'from' path.",
+                    "files": retired,
+                }, indent=2),
+                encoding="utf-8",
+            )
         for record in copied_records:
             self.item_state(record)["status"] = "used"
             self.item_state(record)["family"] = family
@@ -1417,6 +1488,8 @@ class FontVaultWindow(QMainWindow):
             "source_directory": source_dir,
             "files": copied,
             "duplicate_files_skipped": len(members) - len(seen_hashes),
+            "sources_retired_to": str(quarantine_dir) if retired else None,
+            "problems": problems,
         }
         (destination_dir / "font-vault-manifest.json").write_text(json.dumps(manifest_payload, indent=2), encoding="utf-8")
         # Also write a clear, dedicated text file detailing the source directory
@@ -1432,7 +1505,71 @@ class FontVaultWindow(QMainWindow):
             self.queue.setCurrentRow(0)
         else:
             self.clear_current("No unreviewed font families remain in this view.")
-        self.status_label.setText(f"Marked used and copied family: {family_label} ({len(seen_hashes)} unique file(s), {len(members) - len(seen_hashes)} duplicates skipped).")
+        staged = len(seen_hashes)
+        duplicates = len(members) - staged
+        summary = (f"Staged {family_label}: {staged} file(s) copied and verified, "
+                   f"{duplicates} duplicate(s) skipped")
+        if retired:
+            summary += f"; {len(retired)} original(s) moved to {quarantine_dir.relative_to(ROOT)}"
+        if problems:
+            summary += f"; {len(problems)} left in place — see the manifest"
+            QMessageBox.warning(
+                self,
+                "Some files could not be staged cleanly",
+                "\n".join(f"· {problem}" for problem in problems[:12])
+                + ("\n· …" if len(problems) > 12 else "")
+                + f"\n\nEverything that did stage is in {destination_dir.name}/, and this list is "
+                  f"written to {destination_dir.name}/font-vault-manifest.json.",
+            )
+        self.status_label.setText(summary + ".")
+
+    def retire_source(self, source: Path, quarantine_dir: Path, digest: str) -> Path:
+        """Move a staged original into the quarantine, and hand back where it landed.
+
+        The copy in font-factory/input/ is verified byte for byte before this runs, so
+        the family survives in exactly one place; the quarantine keeps the dump whole
+        enough to restore from, which an unlink would not.
+        """
+        quarantine_dir.mkdir(parents=True, exist_ok=True)
+        target = quarantine_dir / source.name
+        suffix = 1
+        while target.exists():
+            suffix += 1
+            target = quarantine_dir / f"{source.stem}~~{suffix}{source.suffix}"
+        try:
+            self._rename_or_copy(source, target, digest)
+        except OSError:
+            if not any(quarantine_dir.iterdir()):
+                try:
+                    quarantine_dir.rmdir()
+                except OSError:
+                    pass
+            raise
+        return target
+
+    @staticmethod
+    def _rename_or_copy(source: Path, target: Path, digest: str) -> None:
+        """Move source onto target, dropping the source only once the copy is verified.
+
+        shutil.move falls back to copy-then-unlink on *any* rename failure, so an
+        unwritable source directory would leave an unrecorded duplicate sitting in the
+        quarantine. Only a genuine cross-device refusal is allowed to copy.
+        """
+        try:
+            os.rename(source, target)
+        except OSError as error:
+            if error.errno != errno.EXDEV:
+                raise
+        else:
+            return
+        try:
+            shutil.copy2(source, target)
+            if hashlib.sha1(target.read_bytes()).hexdigest() != digest:
+                raise OSError(f"{target.name} is not byte-identical to its source")
+            source.unlink()
+        except OSError:
+            target.unlink(missing_ok=True)
+            raise
 
     def next(self) -> None:
         if not self.visible:

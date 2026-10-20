@@ -1,0 +1,75 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "roseposter32",
+  "source": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-references/blackletter-references/T23026_00.webp",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "roseposter32",
+    "headlineFontSize": "151.89px",
+    "smallestDisplayFontSize": "109.5px",
+    "contrast": 15.21614552493498,
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "overline",
+        "text": "Night Garden",
+        "fontSize": "13px",
+        "x": 66,
+        "y": 41.5,
+        "width": 91.296875,
+        "height": 13
+      },
+      {
+        "name": "headline",
+        "text": "Rose Garden",
+        "fontSize": "151.89px",
+        "x": 235.34375,
+        "y": 95.65625,
+        "width": 729.3125,
+        "height": 136.6875
+      },
+      {
+        "name": "line2",
+        "text": "A Midnight Bloom",
+        "fontSize": "109.5px",
+        "x": 223.59375,
+        "y": 270.71875,
+        "width": 752.8125,
+        "height": 98.546875
+      },
+      {
+        "name": "descriptor",
+        "text": "A Study In Ornamental Letterforms",
+        "fontSize": "17px",
+        "x": 469.03125,
+        "y": 413.5,
+        "width": 261.9375,
+        "height": 17
+      },
+      {
+        "name": "footer",
+        "text": "No. 01 · 2026",
+        "fontSize": "13px",
+        "x": 936,
+        "y": 41.5,
+        "width": 90.390625,
+        "height": 13
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/blackletter-reference-templates-2026-10-15/roseposter32.png",
+  "outputBytes": 2130963
+}

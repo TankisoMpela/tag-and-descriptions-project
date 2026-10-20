@@ -1,0 +1,269 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "card32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "card32",
+    "headlineFontSize": "250.25px",
+    "smallestDisplayFontSize": "74.2999px",
+    "contrast": 11.682650423633548,
+    "contrastException": {
+      "minimum": 3,
+      "rationale": "The cream specimen word stays clear over the tinted paper bench."
+    },
+    "outOfBounds": [],
+    "fitFailures": [],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "bench-device",
+        "text": "",
+        "fontSize": "16px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      },
+      {
+        "name": "bench-caption",
+        "text": "In Hand",
+        "fontSize": "20.4px",
+        "x": 44,
+        "y": 61.59375,
+        "width": 712,
+        "height": 28.796875
+      },
+      {
+        "name": "header-rule",
+        "text": "",
+        "fontSize": "16px",
+        "x": 44,
+        "y": 88.796875,
+        "width": 712,
+        "height": 1
+      },
+      {
+        "name": "specimen-word-column",
+        "text": "ByHeart",
+        "fontSize": "16px",
+        "x": 36,
+        "y": 232,
+        "width": 272,
+        "height": 496
+      },
+      {
+        "name": "specimen-word-1",
+        "text": "By",
+        "fontSize": "250.25px",
+        "x": 36,
+        "y": 232,
+        "width": 272,
+        "height": 215.203125
+      },
+      {
+        "name": "specimen-word-2",
+        "text": "Heart",
+        "fontSize": "116.69px",
+        "x": 36,
+        "y": 509.75,
+        "width": 272,
+        "height": 100.34375
+      },
+      {
+        "name": "under-sheet",
+        "text": "",
+        "fontSize": "16px",
+        "x": 395.7860412597656,
+        "y": 192.85244750976562,
+        "width": 356.4279479980469,
+        "height": 442.2950744628906
+      },
+      {
+        "name": "lettered-card",
+        "text": "In HandCut ForThe LongRunBanners And Tickets",
+        "fontSize": "16px",
+        "x": 314.6272277832031,
+        "y": 132.50523376464844,
+        "width": 418.7455139160156,
+        "height": 510.989501953125
+      },
+      {
+        "name": "left-tape",
+        "text": "",
+        "fontSize": "16px",
+        "x": 293.4082336425781,
+        "y": 119.18515014648438,
+        "width": 58.426239013671875,
+        "height": 56.73622131347656
+      },
+      {
+        "name": "right-tape",
+        "text": "",
+        "fontSize": "16px",
+        "x": 677.0107421875,
+        "y": 105.09932708740234,
+        "width": 58.65509033203125,
+        "height": 55.42601776123047
+      },
+      {
+        "name": "inner-frame",
+        "text": "",
+        "fontSize": "16px",
+        "x": 340.5862731933594,
+        "y": 164.18446350097656,
+        "width": 366.8274841308594,
+        "height": 447.631103515625
+      },
+      {
+        "name": "card-corner-tl",
+        "text": "",
+        "fontSize": "16px",
+        "x": 338.49237060546875,
+        "y": 175.0614776611328,
+        "width": 4.555938720703125,
+        "height": 4.555938720703125
+      },
+      {
+        "name": "card-corner-tr",
+        "text": "",
+        "fontSize": "16px",
+        "x": 688.25,
+        "y": 161.62515258789062,
+        "width": 4.555908203125,
+        "height": 4.5559234619140625
+      },
+      {
+        "name": "card-corner-bl",
+        "text": "",
+        "fontSize": "16px",
+        "x": 355.1940612792969,
+        "y": 609.8189086914062,
+        "width": 4.555938720703125,
+        "height": 4.55596923828125
+      },
+      {
+        "name": "card-corner-br",
+        "text": "",
+        "fontSize": "16px",
+        "x": 704.9517211914062,
+        "y": 596.382568359375,
+        "width": 4.555908203125,
+        "height": 4.55596923828125
+      },
+      {
+        "name": "card-caption-text",
+        "text": "In Hand",
+        "fontSize": "22px",
+        "x": 377.3433532714844,
+        "y": 206.66175842285156,
+        "width": 280.6381530761719,
+        "height": 32.73236083984375
+      },
+      {
+        "name": "card-phrase-block",
+        "text": "Cut ForThe LongRun",
+        "fontSize": "16px",
+        "x": 379.3431091308594,
+        "y": 258.71710205078125,
+        "width": 289.1230773925781,
+        "height": 253.6007080078125
+      },
+      {
+        "name": "card-phrase-1",
+        "text": "Cut For",
+        "fontSize": "74.2999px",
+        "x": 420.1522521972656,
+        "y": 280.0541076660156,
+        "width": 202.19046020507812,
+        "height": 72.99777221679688
+      },
+      {
+        "name": "card-phrase-2",
+        "text": "The Long",
+        "fontSize": "74.2999px",
+        "x": 391.0437927246094,
+        "y": 347.7982482910156,
+        "width": 265.7217102050781,
+        "height": 75.43841552734375
+      },
+      {
+        "name": "card-phrase-3",
+        "text": "Run",
+        "fontSize": "74.2999px",
+        "x": 465.1716613769531,
+        "y": 419.5089416503906,
+        "width": 122.76467895507812,
+        "height": 69.946533203125
+      },
+      {
+        "name": "card-divider",
+        "text": "",
+        "fontSize": "16px",
+        "x": 389.05340576171875,
+        "y": 511.4837951660156,
+        "width": 279.83203125,
+        "height": 11.747833251953125
+      },
+      {
+        "name": "card-foot-text",
+        "text": "Banners And Tickets",
+        "fontSize": "22.4px",
+        "x": 389.815185546875,
+        "y": 531.3129272460938,
+        "width": 280.65374755859375,
+        "height": 33.1383056640625
+      },
+      {
+        "name": "specimen-footer",
+        "text": "Display Specimen",
+        "fontSize": "26.8px",
+        "x": 44,
+        "y": 672,
+        "width": 336,
+        "height": 56
+      },
+      {
+        "name": "footer-tick",
+        "text": "",
+        "fontSize": "26.8px",
+        "x": 44,
+        "y": 672,
+        "width": 38.625,
+        "height": 2
+      },
+      {
+        "name": "footer-label",
+        "text": "Display Specimen",
+        "fontSize": "26.8px",
+        "x": 44,
+        "y": 680.390625,
+        "width": 241.46875,
+        "height": 26.796875
+      },
+      {
+        "name": "edge-label",
+        "text": "101 Glyphs",
+        "fontSize": "13.57px",
+        "x": 763.203125,
+        "y": 352.796875,
+        "width": 17.59375,
+        "height": 96
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-support-3_card32.png",
+  "outputBytes": 823742
+}

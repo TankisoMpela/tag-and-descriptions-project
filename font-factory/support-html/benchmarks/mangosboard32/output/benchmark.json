@@ -1,0 +1,177 @@
+{
+  "comparison": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/mangosboard32/output/comparison.png",
+  "editor": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/templates/mangosboard32/editor.html",
+  "browser": "153.0.8010.36",
+  "displayFont": "Dianda Family",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "editToPaintMs": 90.1,
+  "imageBytes": {
+    "html": 268555,
+    "skia": 236518
+  },
+  "desktopLayout": {
+    "template": "mangosboard32",
+    "headlineFontSize": "89.8697px",
+    "contrast": 16.61538462302415,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "familyThin",
+        "text": "Dianda Extrude  Aa",
+        "fontSize": "23.65px",
+        "x": 42.53125,
+        "y": 25.984375,
+        "width": 234,
+        "height": 25.984375
+      },
+      {
+        "name": "familyRegular",
+        "text": "Dianda Outline  Aa",
+        "fontSize": "23.65px",
+        "x": 42.53125,
+        "y": 54.359375,
+        "width": 234,
+        "height": 25.984375
+      },
+      {
+        "name": "familyBlack",
+        "text": "Dianda Regular  Aa",
+        "fontSize": "23.65px",
+        "x": 42.53125,
+        "y": 82.71875,
+        "width": 234,
+        "height": 25.984375
+      },
+      {
+        "name": "variable",
+        "text": "Variable",
+        "fontSize": "66.2198px",
+        "x": 379.359375,
+        "y": 35.453125,
+        "width": 283.625,
+        "height": 75.625
+      },
+      {
+        "name": "glyphs",
+        "text": "Aa · 0123456789 · & ?",
+        "fontSize": "70.6598px",
+        "x": 35.453125,
+        "y": 146.53125,
+        "width": 638.171875,
+        "height": 137.078125
+      },
+      {
+        "name": "tileA",
+        "text": "Aa",
+        "fontSize": "87.5047px",
+        "x": 35.453125,
+        "y": 326.171875,
+        "width": 134.71875,
+        "height": 108.71875
+      },
+      {
+        "name": "tileWord",
+        "text": "Shape",
+        "fontSize": "85.1397px",
+        "x": 191.453125,
+        "y": 326.171875,
+        "width": 297.8125,
+        "height": 108.71875
+      },
+      {
+        "name": "tileAt",
+        "text": "@",
+        "fontSize": "89.8697px",
+        "x": 510.546875,
+        "y": 326.171875,
+        "width": 163.078125,
+        "height": 108.71875
+      }
+    ],
+    "contentWarnings": []
+  },
+  "mobileLayout": {
+    "template": "mangosboard32",
+    "headlineFontSize": "44.6499px",
+    "contrast": 16.61538462302415,
+    "outOfBounds": [],
+    "slots": [
+      {
+        "name": "familyThin",
+        "text": "Dianda Extrude  Aa",
+        "fontSize": "11.75px",
+        "x": 21.109375,
+        "y": 12.890625,
+        "width": 116.15625,
+        "height": 12.890625
+      },
+      {
+        "name": "familyRegular",
+        "text": "Dianda Outline  Aa",
+        "fontSize": "11.75px",
+        "x": 21.109375,
+        "y": 26.984375,
+        "width": 116.15625,
+        "height": 12.890625
+      },
+      {
+        "name": "familyBlack",
+        "text": "Dianda Regular  Aa",
+        "fontSize": "11.75px",
+        "x": 21.109375,
+        "y": 41.0625,
+        "width": 116.15625,
+        "height": 12.890625
+      },
+      {
+        "name": "variable",
+        "text": "Variable",
+        "fontSize": "32.8999px",
+        "x": 188.3125,
+        "y": 17.59375,
+        "width": 140.796875,
+        "height": 37.53125
+      },
+      {
+        "name": "glyphs",
+        "text": "Aa · 0123456789 · & ?",
+        "fontSize": "35.05px",
+        "x": 17.59375,
+        "y": 72.734375,
+        "width": 316.796875,
+        "height": 68.046875
+      },
+      {
+        "name": "tileA",
+        "text": "Aa",
+        "fontSize": "43.4749px",
+        "x": 17.59375,
+        "y": 161.90625,
+        "width": 66.875,
+        "height": 53.96875
+      },
+      {
+        "name": "tileWord",
+        "text": "Shape",
+        "fontSize": "42.2999px",
+        "x": 95.03125,
+        "y": 161.90625,
+        "width": 147.828125,
+        "height": 53.96875
+      },
+      {
+        "name": "tileAt",
+        "text": "@",
+        "fontSize": "44.6499px",
+        "x": 253.4375,
+        "y": 161.90625,
+        "width": 80.953125,
+        "height": 53.96875
+      }
+    ],
+    "contentWarnings": []
+  }
+}

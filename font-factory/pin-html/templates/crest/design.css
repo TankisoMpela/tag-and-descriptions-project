@@ -1,0 +1,5 @@
+/* Editable geometry and copy slots are authored in shared/pin-studio.js. */
+.template--crest [data-layout-item="word"] { background:var(--accent); color:var(--darkInk); border:0; }
+.template--crest [data-layout-item="line1"],.template--crest [data-layout-item="line2"],.template--crest [data-layout-item="line3"] { letter-spacing:-.045em; }
+.template--crest [data-layout-item="side"] { writing-mode:vertical-rl; transform:rotate(180deg); }
+.template--crest [data-layout-item="shield"] { padding:0; }

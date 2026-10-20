@@ -1,0 +1,75 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "quote32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/fonts/archive/Esviga/Esviga – Blackletter Font 7DZ3HHR/Esviga.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "frame": {
+      "width": 800,
+      "height": 800
+    },
+    "headlineFontSize": "170.873px",
+    "inkOnPaperContrast": 7.27,
+    "slots": [
+      {
+        "name": "quote_line",
+        "text": "Just Like",
+        "x": 64,
+        "y": 179.5,
+        "width": 636.2,
+        "height": 154,
+        "fontSize": 170.9
+      },
+      {
+        "name": "quote_line",
+        "text": "Sweet",
+        "x": 235.1,
+        "y": 338.4,
+        "width": 329.7,
+        "height": 124.1,
+        "fontSize": 130.4
+      },
+      {
+        "name": "quote_line",
+        "text": "Chocolate",
+        "x": 64,
+        "y": 469,
+        "width": 672,
+        "height": 165.6,
+        "fontSize": 173.1
+      },
+      {
+        "name": "quote_mark",
+        "text": "\"",
+        "x": 17,
+        "y": 183.1,
+        "width": 42,
+        "height": 29,
+        "fontSize": 154
+      },
+      {
+        "name": "quote_mark",
+        "text": "\"",
+        "x": 712.9,
+        "y": 472,
+        "width": 42,
+        "height": 29,
+        "fontSize": 154
+      }
+    ],
+    "outOfBounds": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/blackletter-support-7_quote32.png",
+  "outputBytes": 1196398
+}

@@ -1,0 +1,49 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "template": "typewall32",
+  "source": "",
+  "ratio": "1x1",
+  "exportPixels": {
+    "width": 1600,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/outputs/font-preparation/052-big-riff/Big-Riff/BigRiff-Regular.ttf",
+  "headline": "",
+  "descriptor": "",
+  "body": "",
+  "badge": "",
+  "fontClass": "",
+  "layoutReport": {
+    "template": "typewall32",
+    "headlineFontSize": "82.9899px",
+    "smallestDisplayFontSize": "82.9899px",
+    "contrast": 13.576932067214473,
+    "outOfBounds": [],
+    "fitFailures": [
+      {
+        "name": "text",
+        "text": "Musical Synchrony",
+        "reason": "minimum-size-exceeds-safe-area",
+        "fontSize": "56px",
+        "safeWidth": 496,
+        "safeHeight": 142.4
+      }
+    ],
+    "stackOverlaps": [],
+    "slots": [
+      {
+        "name": "typewall-composition-viewport",
+        "text": "Classic CultureClassic CultureClassic CultureClassic CultureMusical SynchronyMusical SynchronyMusical SynchronyMusical SynchronyCargo ManualCargo ManualCargo ManualCargo ManualMagical UnicornsMagical UnicornsMagical UnicornsMagical UnicornsPractical PonyPractical PonyPractical PonyPractical PonyBright ZenithBright ZenithBright ZenithBright ZenithCulture In MotionCulture In MotionCulture In MotionCulture In MotionLovely PeopleLovely PeopleLovely PeopleLovely People",
+        "fontSize": "82.9899px",
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "contentWarnings": []
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/square-adaptations-2026-10-17/typewall32.png",
+  "outputBytes": 278640
+}

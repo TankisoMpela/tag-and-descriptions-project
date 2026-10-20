@@ -1,0 +1,23 @@
+{
+  "renderer": "HTML/CSS + headless Chromium",
+  "browser": "153.0.8010.36",
+  "source": "T26074_12",
+  "exportPixels": {
+    "width": 2400,
+    "height": 1600
+  },
+  "font": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/T26074-12/assets/NotoSans-CondensedExtraBold.ttf",
+  "headline": "Find the signal\nfollow the rhythm\nkeep on moving.",
+  "layout": {
+    "angle": "-6",
+    "size": "160",
+    "y": "0"
+  },
+  "colors": {
+    "lime": "#d7e814",
+    "ink": "#302a31",
+    "pink": "#f68bb6"
+  },
+  "output": "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project/font-factory/support-html/benchmarks/T26074-12/output/roadrunner-cli.png",
+  "outputBytes": 3160822
+}
