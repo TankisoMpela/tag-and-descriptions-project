@@ -1,9 +1,9 @@
 # HTML/CSS support-template renderer
 
-This directory is the browser-rendering migration workspace for the 61 active
-3:2 support-image templates. The current Skia renderer remains the production
-path while each port is reviewed. catalog.json records stable template slots,
-their source/module mappings, and port status.
+This directory contains browser editors and renderers for the support-image
+catalogue. The native Skia set remains 61 layouts across 70 stable slots; 14
+new source-led remakes are HTML-only. `catalog.json` records stable template
+slots, source/module mappings, and port status.
 
 ## T26074_12 design benchmark
 
@@ -38,7 +38,7 @@ templates; `html` requires every selected template to have a port:
 
     bin/pin-studio/.venv/bin/python bin/pin-studio/pin_studio.py --font /path/to/font.ttf --class sports --supports --support-renderer hybrid --out /tmp/support-output
 
-The catalogue records each template's browser editor and port status. All 61 active templates now have opt-in HTML/CSS prototypes:
+The catalogue records each template's browser editor and port status. The 61 native support layouts have HTML/CSS prototypes; the 14 additional references are registered for HTML and hybrid runs only:
 
 `line32`, `duo32`, `card32`, `feature32`, `neon32`, `quote32`,
 `crest32`, `contour32`, `mountain32`, `hand32`, `zebra32`, `soldier32`,
@@ -418,3 +418,24 @@ checklist.
 ## Blackletter reference template set
 
 The 18 Esviga blackletter recreations are each editable in `templates/<id>/editor.html` and `design.js`. Their individual 2400 × 1600 exports, per-image layout reports, one-column gallery, and render manifest are in `benchmarks/blackletter-reference-templates-2026-10-15/`. The gallery links to each separate PNG; it does not combine them into a collage. Each template maps directly to one source in `support-references/blackletter-references/`.
+
+## October 2026 source remakes
+
+Fourteen additional reference-led editors use the supplied T33329, T32243,
+T15503, T16576 and T36099 images. Each page keeps its downloaded reference
+beside the live artwork. Twelve generated text-free plates are stored under
+`support-references/materials/user-batch-2026-10-20/`; T33329_00 and T16576_09
+use their original flat green and pink fields as CSS, so no cleanup plate is
+needed. The originals, source URLs, generated-material mapping, and SHA-256
+checksums are documented in
+`support-references/originals/user-batch-2026-10-20/SOURCES.md`.
+
+The editors are `palmello32`, `quietattempt32`, `hushglow32`,
+`italianhorror32`, `dreamwarriors32`, `nesting32`, `erotica32`,
+`conspiracytheory32`, `overglow32`, `pinkvice32`, `attitude32`,
+`indieground32`, `caramelsundae32` and `sweettreat32`. Their layouts use
+reference-positioned lettering boxes, real uploaded font metrics, and a 10% ×
+24% fitting inset. Text boxes clip at their reserved edges and report a warning
+when the font and copy cannot fit. These fourteen HTML-only templates are
+available to `--support-renderer html` and `hybrid`; the default Skia renderer
+continues to sample its own native layouts.

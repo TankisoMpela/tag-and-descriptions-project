@@ -1,8 +1,6 @@
 # 33-Reference Thumbnail Composition Audit
 
-Reviewed again against all 33 downloaded reference images in `references/` and their complete descriptions in `captions.json`. The captions retain the visible subject, crop, surface, lighting, focus, texture, typography and secondary copy in full. This audit extracts the design mechanics that can transfer to new font thumbnails. It does not turn each reference into a checklist or an imitation target. The descriptions remain observational: some source images physically print or mount type on objects, but that treatment is excluded from this seller's thumbnails.
-
-The seller's constraints override details that happen to appear in source examples. In particular, decorative stars, sparkles, badges, speckles, gratuitous glow, clutter, and excessive microdetail are not recommendations.
+This first-pass composition table is retained as a quick index. Its detailed observations are superseded by reference-review.md, which records a second, individual review of each saved original with corrected full captions, element-use analysis, and per-image prompt lessons. Use that sequential review as the detailed source; use this table only to navigate composition mechanisms. The seller's constraints override details that happen to appear in source examples. In particular, decorative stars, sparkles, badges, speckles, gratuitous glow, clutter, and excessive microdetail are not recommendations.
 
 | # | Reference and composition | What makes the composition work | What can transfer | What to leave behind for this workflow |
 |---|---|---|---|---|

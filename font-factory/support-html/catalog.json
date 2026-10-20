@@ -6,7 +6,7 @@
     "width": 2400,
     "height": 1600
   },
-  "activeCount": 61,
+  "activeCount": 75,
   "retiredCount": 22,
   "templates": [
     {
@@ -740,6 +740,174 @@
       "portStatus": "prototype",
       "portNote": "Opt-in through pin_studio.py --support-renderer html or hybrid; production default remains Skia.",
       "htmlEntry": "support-html/benchmarks/T26074-12/layout-editor.html"
+    },
+    {
+      "id": "palmello32",
+      "slot": 71,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T33329_00",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/palmello32/editor.html",
+      "portNote": "Palmello script wordmark rebuilt from T33329_00, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "quietattempt32",
+      "slot": 72,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T32243_00",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/quietattempt32/editor.html",
+      "portNote": "Quiet Attempt portrait poster rebuilt from T32243_00, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "hushglow32",
+      "slot": 73,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T32243_06",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/hushglow32/editor.html",
+      "portNote": "Hush and Glow close-up poster rebuilt from T32243_06, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "italianhorror32",
+      "slot": 74,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T15503_08",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/italianhorror32/editor.html",
+      "portNote": "Italian Horror broadside rebuilt from T15503_08, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "dreamwarriors32",
+      "slot": 75,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T15503_09",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/dreamwarriors32/editor.html",
+      "portNote": "Dream Warriors horror one-sheet rebuilt from T15503_09, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "nesting32",
+      "slot": 76,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T15503_11",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/nesting32/editor.html",
+      "portNote": "The Nesting horror one-sheet rebuilt from T15503_11, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "erotica32",
+      "slot": 77,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T15503_12",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/erotica32/editor.html",
+      "portNote": "Erotica red title card rebuilt from T15503_12, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "conspiracytheory32",
+      "slot": 78,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T15503_13",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/conspiracytheory32/editor.html",
+      "portNote": "Conspiracy Theory poster rebuilt from T15503_13, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "overglow32",
+      "slot": 79,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T16576_00",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/overglow32/editor.html",
+      "portNote": "Overglow neon script card rebuilt from T16576_00, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "pinkvice32",
+      "slot": 80,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T16576_01",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/pinkvice32/editor.html",
+      "portNote": "Pink Vice retro car poster rebuilt from T16576_01, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "attitude32",
+      "slot": 81,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T16576_04",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/attitude32/editor.html",
+      "portNote": "Attitude teal fashion poster rebuilt from T16576_04, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "indieground32",
+      "slot": 82,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T16576_09",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/indieground32/editor.html",
+      "portNote": "Indieground foundry title card rebuilt from T16576_09, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "caramelsundae32",
+      "slot": 83,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T36099_00",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/caramelsundae32/editor.html",
+      "portNote": "Caramel Sundae candy poster rebuilt from T36099_00, with original reference and text-free background plate; live display copy is measured against a reserved text box."
+    },
+    {
+      "id": "sweettreat32",
+      "slot": 84,
+      "module": "support-html/shared/user-reference-batch.js",
+      "sourceId": "T36099_07",
+      "sourceKind": "source",
+      "note": "User-supplied October 2026 original; cleaned material is separately stored under support-references/materials/user-batch-2026-10-20/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/sweettreat32/editor.html",
+      "portNote": "Sweet Treat ice-cream poster rebuilt from T36099_07, with original reference and text-free background plate; live display copy is measured against a reserved text box."
     }
   ]
 }

@@ -2,7 +2,9 @@
 
 ## Scope and current state
 
-- The active support catalogue has 61 templates in 70 stable numbered slots.
+- The native Skia catalogue has 61 templates in 70 stable numbered slots.
+- Fourteen user-supplied HTML-only reference remakes occupy slots 71–84, for
+  75 templates eligible in HTML/hybrid runs.
 - The registry has 22 retired names; nine numbered slots remain tombstones.
 - The code is split across pin_studio.py (23 active layouts) and five
   support_templates modules: objects.py (9), t30332.py (9), fashion.py (7),
@@ -10,7 +12,7 @@
 - Each selected font currently receives seven eligible support images at
   2400 × 1600. Three family layouts require multiple real styles; two are
   guaranteed when their eligibility gate passes.
-- All 61 active templates now have opt-in HTML/CSS prototypes, listed in catalogue order:
+- All 61 native templates have opt-in HTML/CSS prototypes, listed in catalogue order:
   line32, duo32, card32, feature32, neon32, quote32,
   crest32, contour32, mountain32, hand32, zebra32, soldier32,
   mirror32, brutal32, rio32, boots32, plakat32, plakatart32,
@@ -22,6 +24,10 @@
   gelatocards32, meditation32, strongweak32, funkyfashion32, typewall32, manualbrew32,
   pastpresent32, herbalproduct32, colosseum32, glyphsheet32, freakscene32, greetingsgrid32,
   roadrunner32.
+  Fourteen more HTML-only references are `palmello32`, `quietattempt32`,
+  `hushglow32`, `italianhorror32`, `dreamwarriors32`, `nesting32`,
+  `erotica32`, `conspiracytheory32`, `overglow32`, `pinkvice32`, `attitude32`,
+  `indieground32`, `caramelsundae32` and `sweettreat32`.
   Skia remains the default renderer.
 
 ## Existing pipeline
@@ -43,8 +49,9 @@ The HTML export itself is rasterized by headless Chromium at 2400 × 1600; it
 does not draw pixels with Skia. The integrated `pin_studio.py` HTML route still
 imports Skia and builds Skia-backed font outline context before dispatching the
 browser render, so it is not yet a Skia-independent command. The catalogue has
-61 of 61 browser contracts, but every row is still marked `prototype` and Skia
-remains the default. Template props are also split between the catalogue,
+75 browser contracts, but every row is still marked `prototype` and Skia
+remains the default. The 14 new source remakes are HTML-only and are filtered
+from the Skia-only sampler. Template props are also split between the catalogue,
 per-template browser code, and the large Python `render_support_html` dispatch.
 The next architecture steps are to centralize the catalogue inventory, move
 template props into local adapters, separate renderer-neutral font facts from

@@ -116,13 +116,18 @@ per-font prompt or theme file.
 
 ### Bespoke thumbnail prompt requirements
 
-Read `font-factory/Style-References/thumbnail-prompt-research-2026-10-20/prompt-findings.md`
-and `reference-structure-audit.md` before authoring prompts. Shortlist one or
-two relevant references, then open each saved image and read its full individual
-caption in `captions.json`; do not rely on the audit summary alone. Record the
-specific composition mechanism that applies to this font, and distinguish it
-from the reference's subject, palette, copy, and secondary details. Never turn
-the caption into a prop checklist or copy the source arrangement.
+Read `prompt-findings.md` and `reference-review.md` in
+`font-factory/Style-References/thumbnail-prompt-research-2026-10-20/` before
+authoring prompts. Treat each reference's design analysis and prompt lesson as
+evidence about the relationships that make its composition work, not
+as a recipe. Survey the per-reference lessons before shortlisting one or two
+relevant images. For each shortlisted reference, open its saved original and
+read the full caption, design analysis, and prompt lesson in captions.json and
+reference-review.md; do not rely on the older structure-audit summaries alone.
+Record the one structural mechanism that genuinely fits this font, why it fits,
+which source-specific details you are leaving behind, and any weakness you will
+correct, such as local contrast, crowded detail, or unused space. Never turn a
+caption into a prop checklist or copy the source arrangement.
 
 Run the novelty pass in `prompt-findings.md` before choosing a concept. Compare
 the five most recently updated, non-archived font plans in `font-factory/fonts/`
@@ -130,14 +135,17 @@ using each 3:2 thumbnail concept and its existing route note; inspect a final
 image at small size only when one exists. Do not treat the white specimen
 placeholder as a finished thumbnail. If fewer than five plans are available,
 use the prototype gallery. Privately sketch three distinct directions, then
-select the one that fits the specimen and buyer context while changing at
-least three of these from recent work: medium, composition, focal subject/device,
-palette family, texture/light, and title placement. Record only one concise
+select the one that fits the specimen and buyer context. Compare recent work
+across medium, composition, focal subject/device, palette family, texture/light,
+and title placement. The
+chosen concept must differ in premise or a major structural choice; changing
+only the palette is not a new concept. Do not force a new medium when the
+font-specific idea is stronger in the current one. Record only one concise
 novelty note in the already-required `candidate-review.md`; do not include
-private chain-of-thought. Do not default to glossy “premium” product still
-lifes, amber shallow-focus lighting, velvet/silk, or perfume-and-flower props.
-If a repeated motif is genuinely specific to the font, explain that and change
-the other design choices.
+private chain-of-thought. Do not default to glossy premium product still lifes,
+amber shallow-focus lighting, velvet/silk, or perfume-and-flower props. If a
+repeated motif is genuinely specific to the font, explain that and change the
+other design choices.
 
 Honor the seller's rejected directions recorded in `prompt-findings.md`: do not
 reuse the oversized cropped initial with orbit rings, the blue/berry split
@@ -215,11 +223,14 @@ photographs. Preserve the name's supplied capitalization; never force all caps.
 If the user requests supporting words, use Title Case.
 
 Before writing the final prompt, add a compact composition map to
-`candidate-review.md`: the font-specific reason for the idea; the title's
-position, scale and overlap; the background/illustration role; the palette
-contrast; the one or two design moves that make the image feel finished; and
-the one-sentence novelty note.
-Name one or two reference mechanisms and state what was deliberately left out.
+candidate-review.md: the font-specific reason for the idea; the title's
+position, scale, and overlap; the background/illustration role; the palette
+contrast; the one or two design decisions that make the image feel finished;
+and the one-sentence novelty note. Name one or two reference mechanisms, why
+they suit this font, which source-specific details were left out, and any
+reference weakness deliberately corrected. Design decisions may include scale,
+crop, title placement, color separation, a meaningful subject, or a material
+cue; do not add decorative shapes just to satisfy a count.
 Before accepting the render, check at full size and at 300×200 that the name
 leads, every glyph fits, any face remains secondary, local contrast holds, and
 the composition reads as a designed thumbnail rather than a raw name sample.

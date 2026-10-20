@@ -92,8 +92,8 @@ SPECIMEN_THEME = {"elegant": "sage", "blackletter": "vellum",
 # pin wore, so a shop's five pins and its two specimens are one series.
 SPECIMEN_SET = {"elegant": "set", "blackletter": "knotband",
                 "sports": "lane", "script": "markup"}
-# The supporting-image catalogue: a shared pool drawn natively at 3:2, the same
-# idea as the specimen sheets' second surface but with authored copy. These names
+# The supporting-image catalogue: a shared pool drawn at 3:2, the same idea as
+# the specimen sheets' second surface but with authored copy. These names
 # are deliberately NOT in CLASS_ORDERS — pinterest_1..5 and the registry never
 # learn them; --supports is a separate surface with its own numbering.
 SUPPORT_ORDER = ("line32",
@@ -167,7 +167,18 @@ SUPPORT_ORDER = ("line32",
                  "freakscene32",
                  "greetingsgrid32",
                  "roadrunner32",
+                 "palmello32", "quietattempt32", "hushglow32",
+                 "italianhorror32", "dreamwarriors32", "nesting32",
+                 "erotica32", "conspiracytheory32", "overglow32",
+                 "pinkvice32", "attitude32", "indieground32",
+                 "caramelsundae32", "sweettreat32",
                  )
+HTML_ONLY_SUPPORT = frozenset({
+    "palmello32", "quietattempt32", "hushglow32", "italianhorror32",
+    "dreamwarriors32", "nesting32", "erotica32", "conspiracytheory32",
+    "overglow32", "pinkvice32", "attitude32", "indieground32",
+    "caramelsundae32", "sweettreat32",
+})
 # Retired layouts are out of the active support catalogue. This set exists only
 # so a later support run can withdraw their old renderer-owned PNGs safely.
 SUPPORT_RETIRED = frozenset({
@@ -502,6 +513,20 @@ THEME_PREF = {
     "freakscene32": ("clay", "bone", "midnight", "ember"),
     "greetingsgrid32": ("clay", "bone", "sage", "moss"),
     "roadrunner32": ("bone", "clay", "ember", "sage"),
+    "palmello32": ("sage", "moss", "bone"),
+    "quietattempt32": ("graphite", "inkwell", "sage"),
+    "hushglow32": ("graphite", "inkwell", "clay"),
+    "italianhorror32": ("ember", "midnight", "bone"),
+    "dreamwarriors32": ("midnight", "ember", "inkwell"),
+    "nesting32": ("ember", "midnight", "bone"),
+    "erotica32": ("ember", "midnight", "clay"),
+    "conspiracytheory32": ("midnight", "ember", "inkwell"),
+    "overglow32": ("midnight", "clay", "bone"),
+    "pinkvice32": ("midnight", "clay", "bone"),
+    "attitude32": ("midnight", "clay", "bone"),
+    "indieground32": ("clay", "midnight", "bone"),
+    "caramelsundae32": ("clay", "bone", "sage"),
+    "sweettreat32": ("clay", "bone", "sage"),
 }
 
 
@@ -4847,7 +4872,38 @@ def render_support_html(name, ctx, destination, ratio="3x2"):
     if not script.is_file():
         raise SystemExit(f"HTML support renderer is missing: {script}")
     family_args = []
-    if name == "line32":
+    label_args = []
+    if name in HTML_ONLY_SUPPORT:
+        fallbacks = {
+            "palmello32": "Palmello", "quietattempt32": "Quiet Attempt",
+            "hushglow32": "Hush And Glow", "italianhorror32": "Italian Horror",
+            "dreamwarriors32": "Dream Warriors", "nesting32": "The Nesting",
+            "erotica32": "Erotica", "conspiracytheory32": "Conspiracy Theory",
+            "overglow32": "Overglow", "pinkvice32": "Pink Vice",
+            "attitude32": "Attitude", "indieground32": "Indieground Font Foundry",
+            "caramelsundae32": "Caramel Sundae",
+            "sweettreat32": "Sweet Treat Dreams",
+        }
+        candidate = panel_text(ctx, (fallbacks[name],))
+        missing = sorted({character for character in candidate
+                          if not character.isspace() and not usable(ctx, character)})
+        warnings = []
+        if missing:
+            warnings.append(
+                "The selected display copy has unsupported glyphs; Chromium will "
+                "use a readable fallback for: " + " ".join(missing))
+        props = {"warnings": warnings}
+        if name == "sweettreat32":
+            lines = pack_lines(candidate.split(), min(3, len(candidate.split())))
+            props.update({f"line{i+1}": lines[i] if i < len(lines) else ""
+                          for i in range(3)})
+        elif name in {"quietattempt32", "dreamwarriors32", "conspiracytheory32",
+                      "indieground32", "caramelsundae32"}:
+            props["headline"] = "\n".join(pack_lines(
+                candidate.split(), min(2, len(candidate.split()))))
+        else:
+            props["headline"] = candidate
+    elif name == "line32":
         raw = " ".join(_support_copy(ctx, ("line", "word"),
                                      "Letters That Matter").split())
         words = raw.split()
@@ -11958,6 +12014,9 @@ def main():
         active_supports = tuple(support_names(
             cls, ctx["family"], ctx["family_style_count"],
             ctx["has_weight_triplet"]))
+        if args.support_renderer == "skia":
+            active_supports = tuple(name for name in active_supports
+                                    if name not in HTML_ONLY_SUPPORT)
         prefs = {n: cls_worlds.get(cls, ()) + THEME_PREF[n]
                  for n in active_supports}
         ctx["themes"] = dict(ctx["themes"],
@@ -11991,6 +12050,8 @@ def main():
     owned = (support_names(cls, ctx["family"], ctx["family_style_count"],
                            ctx["has_weight_triplet"]) if args.supports else
              cls_names_spec(cls) if args.specimens else cls_names(cls))
+    if args.supports and args.support_renderer == "skia":
+        owned = [name for name in owned if name not in HTML_ONLY_SUPPORT]
     if args.supports and not args.template:
         seed = int(hashlib.sha256(
             f"{ctx['name']}|{cls}|support-catalogue".encode("utf-8")).hexdigest()[:16], 16)
@@ -12195,6 +12256,19 @@ def _down(img, w):
                                 skia.SamplingOptions(skia.FilterMode.kLinear,
                                                      skia.MipmapMode.kNone))
     return s.makeImageSnapshot()
+
+
+def _html_reference_placeholder(_sheet, _ctx):
+    raise RuntimeError("This reference remake requires --support-renderer html or hybrid")
+
+
+for _html_reference_id in HTML_ONLY_SUPPORT:
+    TEMPLATES[_html_reference_id] = (
+        _html_reference_placeholder,
+        "User-supplied source-led HTML/CSS remake",
+        "elegant",
+        "3x2",
+    )
 
 
 if __name__ == "__main__":

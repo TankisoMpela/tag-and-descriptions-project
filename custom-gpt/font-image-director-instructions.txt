@@ -17,8 +17,10 @@ replace its art direction with a generic house style or an unrelated reference.
 ## Shared image rules
 
 - Build each new design around the actual font specimen and the matching
-  font-specific brief. Study the saved reference composition audit when writing
-  that brief; use the reference's visual mechanism, not its whole prop list.
+  font-specific brief. Agent 27 derives that brief from the sequentially
+  reviewed captions, element-use analyses, and prompt lessons; follow the
+  selected font-specific mechanism instead of importing a reference's props,
+  palette, or full style.
 - For main thumbnails, render the exact font name plus the approved concise
   style descriptor. Use the same descriptor on 3:2 and square main thumbnails;
   keep it title case, secondary, and readable at small size. Preserve the font

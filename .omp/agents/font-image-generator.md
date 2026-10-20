@@ -24,13 +24,19 @@ systemPrompt: |
     name and the same concise, accurate style descriptor in title case. Keep the
     descriptor secondary but legible at small size; do not add unrelated copy.
 
-    Use the 33-reference composition audit to choose a font-specific visual
-    mechanism, then open the selected source image and read its full caption in
-    captions.json. Borrow the structure, not its props or exact arrangement.
-    Follow the novelty pass in the canonical Agent-27 spec: compare recent
-    thumbnails across medium, layout, focal motif, palette, texture/light and
-    title placement; privately consider three directions and record only the
-    selected concept's concise differentiation note. Do not default to glossy
+    Use prompt-findings.md and reference-review.md to survey the lessons across
+    all 33 references. Shortlist one or two relevant examples, then open each
+    original and read its full caption, design analysis, and prompt lesson.
+    Borrow one composition mechanism, not its props, palette, copy, or exact
+    arrangement. Record why it fits and any source weakness corrected. The older
+    structure audit is a navigation aid, not the detailed source. Follow the
+    novelty pass in the canonical Agent-27 spec: compare recent thumbnails
+    across medium, layout, focal motif, palette, texture/light, and title
+    placement; privately consider three directions and choose a concept that
+    differs in premise or major structure. Palette-only changes do not count as
+    novelty, and a medium change is not required when it weakens font fit.
+    Record only the selected concept's concise differentiation note.
+    Do not default to glossy
     premium still-life photography or warm, hazy photography that places a large
     staged object or face on one side against empty title space. Use that layout
     only when the subject is specific to the font and feels balanced. Treat liked

@@ -184,16 +184,16 @@ support_copy = dict.fromkeys(("line", "sub", "over", "word"), "")
 name_ctx = ps.build_ctx(ROOT / FACES["serif"], "Whisky",
                         {**support_copy, "word": "Whisky"})
 case("a support headline cannot repeat the font name",
-     ps._support_copy(name_ctx, ("word", "line"), "POSTER TYPE") == "POSTER TYPE")
+     ps._support_copy(name_ctx, ("word", "line"), "POSTER TYPE") == "Poster Type")
 stock_ctx = ps.build_ctx(ROOT / FACES["serif"], "Andallan",
                          {**support_copy, "word": "Whisky"})
 case("Whisky is not used as stock display copy",
-     ps._support_copy(stock_ctx, ("word",), "POSTER TYPE") == "POSTER TYPE")
+     ps._support_copy(stock_ctx, ("word",), "POSTER TYPE") == "Poster Type")
 case("fixed support furniture is cleaned and cannot repeat the font name",
-     ps.support_render_copy(name_ctx, "Whisky") == "TYPE"
-     and ps.support_render_copy(stock_ctx, "Whisky") == "TYPE")
+     ps.support_render_copy(name_ctx, "Whisky") == "Type"
+     and ps.support_render_copy(stock_ctx, "Whisky") == "Type")
 case("fixed support copy keeps intentional line breaks",
-     ps.support_render_copy(stock_ctx, "MADE WITH\nCARE") == "MADE WITH\nCARE")
+     ps.support_render_copy(stock_ctx, "MADE WITH\nCARE") == "Made With\nCare")
 lit_ctx = dict(stock_ctx, copy={**stock_ctx["copy"], "line": "", "word": ""})
 case("neon fallback keeps the reference's two-line sign lockup",
      len(ps._lit_lockup_text(
@@ -221,14 +221,14 @@ case("feature callouts use real GSUB names when available",
 case("feature callouts stay truthful when the font exposes no feature tags",
      ps.feature_callout_labels({"facts": {"features": []}})
      == ["Feature Set Varies", "See Available Glyphs"])
-case("70 stable support slots retain 61 active templates",
-     len(ps.SUPPORT_ORDER) == 70
-     and len(set(ps.SUPPORT_ORDER)) == 70
+case("84 stable support slots retain 75 active templates",
+     len(ps.SUPPORT_ORDER) == 84
+     and len(set(ps.SUPPORT_ORDER)) == 84
      and ps.SUPPORT_ORDER[42] == "bondibeach32"
      and "bondibeach32" in ps.SUPPORT_RETIRED
      and "bondibeach32" not in ps.TEMPLATES
      and len([name for name in ps.SUPPORT_ORDER
-              if name not in ps.SUPPORT_RETIRED]) == 61
+              if name not in ps.SUPPORT_RETIRED]) == 75
      and set(name for name in ps.SUPPORT_ORDER
              if name not in ps.SUPPORT_RETIRED) <= set(ps.TEMPLATES)
      and all(name in ps.THEME_PREF for name in ps.SUPPORT_ORDER
@@ -251,7 +251,7 @@ blackletter_audit_names = support_audit.class_audit_names(
     "blackletter", list(support_audit.ACTIVE), "blackletter", 2, False)
 case("blackletter comparison rerenders follow the reviewed eligible pool",
      set(blackletter_audit_names)
-     == set(ps.support_names("blackletter", "blackletter", 2)))
+     == set(ps.support_names("blackletter", "blackletter", 2)) - ps.HTML_ONLY_SUPPORT)
 case("contour32 stays available only for handwritten and display styles",
      "contour32" in ps.support_names("script", "script", 1)
      and "contour32" in ps.support_names("elegant", "display-bold", 1)
@@ -260,12 +260,12 @@ case("contour32 stays available only for handwritten and display styles",
                  ("blackletter", "blackletter", 2), ("script", "brush", 1),
                  ("sports", "brush", 3), ("sports", "pixel", 2))))
 style_pools = {
-    "blackletter": ("blackletter", "blackletter", 2, 37),
-    "handwritten": ("script", "script", 1, 48),
-    "tech-sports": ("sports", "brush", 3, 41),
-    "brush": ("script", "brush", 1, 52),
-    "pixel": ("sports", "pixel", 2, 46),
-    "display": ("elegant", "display-bold", 1, 51),
+    "blackletter": ("blackletter", "blackletter", 2, 51),
+    "handwritten": ("script", "script", 1, 62),
+    "tech-sports": ("sports", "brush", 3, 55),
+    "brush": ("script", "brush", 1, 66),
+    "pixel": ("sports", "pixel", 2, 60),
+    "display": ("elegant", "display-bold", 1, 65),
 }
 case("renderer classes resolve to the six audited support styles",
      ps.support_style_group("blackletter", "blackletter") == "blackletter"

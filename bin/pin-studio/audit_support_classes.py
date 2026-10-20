@@ -134,7 +134,8 @@ REFERENCES = {
     "roadrunner32": ("T26074_12", "source", ""),
 }
 
-ACTIVE = tuple(n for n in ps.SUPPORT_ORDER if n not in ps.SUPPORT_RETIRED)
+ACTIVE = tuple(n for n in ps.SUPPORT_ORDER
+               if n not in ps.SUPPORT_RETIRED and n not in ps.HTML_ONLY_SUPPORT)
 COPY = {key: "" for key in ("line", "sub", "over", "word")}
 CLASS_WORLDS = {
     "blackletter": ("vellum", "gilded"),

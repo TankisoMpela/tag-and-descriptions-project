@@ -1,12 +1,13 @@
 # Supporting-template handoff guide
 
-Source of truth for Agent 27 when the Skia renderer selects seven supporting
-templates. The catalogue lives in six files: the original 26 panels in
+Source of truth for Agent 27 when the renderer selects seven supporting
+templates. The native Skia catalogue lives in six files: the original 26 panels in
 `bin/pin-studio/pin_studio.py` and 44 reference remakes in
 `bin/pin-studio/support_templates/{t30332,fashion,photo,poster,objects}.py`.
-Every number, slot name and guard quoted below is read from those files, so this
+Every native slot name and guard quoted below is read from those files, so this
 guide and the renderer cannot disagree. If you change one, change the other.
-The guide retains historical sections for retired layouts; the renderer's
+Fourteen additional HTML-only source remakes occupy slots 71–84 and are
+documented after the native layouts. The guide retains historical sections for retired layouts; the renderer's
 `--list --supports` output and `SUPPORT_RETIRED` set determine the live catalogue.
 
 Support images must not repeat the font's name — the thumbnail already does that.
@@ -53,8 +54,10 @@ the protecting; know them before you read a single template.
 
 ## 1.1 One surface, one pass
 
-Every support panel draws at 3:2, 2400x1600, and nothing else. There is no square
-support variant and no per-panel ratio decision. `--support-count` is fixed at 7
+Every native Skia support panel draws at 3:2, 2400x1600. The fourteen HTML-only
+source remakes also have separate 1:1 compositions in the browser editor; their
+text boxes refit to the selected ratio and their background subjects remain
+separately inspectable. `--support-count` is fixed at 7
 by `bin/generate_font_text_placeholders.py`; passing any other value is a hard
 `SystemExit`.
 
@@ -1462,6 +1465,80 @@ that most faces do not draw (see 1.6 and `bin/check_support_glyph_coverage.py`).
   `size 168`, **3 lines**, `min_read 40`, leading .83; kicker 22, footer 21. **Budget:**
   6 fixed words. **Guard:** the star sits at `0.15w/0.18h`, clear of the type box that
   starts at `0.25h`.
+
+### HTML-only user-reference remakes — slots 71–84
+
+These source-led remakes are available only with `--support-renderer html` or
+`hybrid`; the default Skia run excludes them. Each editor shows the downloaded
+source image beside the recreated artboard. Twelve use a generated text-free
+plate under `support-references/materials/user-batch-2026-10-20/`; the green
+T33329_00 and pink T16576_09 fields are recreated directly in CSS. Uploaded
+display fonts are measured with `SupportLayout.fitLine()` inside reserved
+boxes. The measurement inset is 10% horizontally and 24% vertically; text is
+clipped at the editor box edge, and the editor reports a warning if the copy
+still cannot fit at its minimum size. For production captions, name the visible
+type treatment and source art, and describe the text that actually rendered.
+
+* **`palmello32` (71)** — T33329_00, a quiet dark-green field with one centered
+  muted-teal script word. **Copy:** one word; fallback `Palmello`. There is no
+  caption or decoration. **Alt text:** one teal script word on a dark-green field.
+* **`quietattempt32` (72)** — T32243_00, a pale two-line script phrase over a
+  charcoal portrait silhouette and fine monochrome grain. **Copy:** up to two
+  lines; fallback `Quiet Attempt`. A small widely tracked caption sits below.
+  **Alt text:** two pale script lines over a dark profile silhouette.
+* **`hushglow32` (73)** — T32243_06, pink script across a tightly cropped,
+  glitter-shadowed eye photograph with a black lower band. **Copy:** one main
+  line; fallback `Hush And Glow`. The secondary phrase sits in the lower band.
+  **Alt text:** pink script over a close-up eye photograph and black caption band.
+* **`italianhorror32` (74)** — T15503_08, a broad white brush title across a
+  red-black horror still, with narrow spaced subtitle lettering. **Copy:** one
+  line; fallback `Italian Horror`. **Alt text:** white brush lettering over a
+  red-black horror scene.
+* **`dreamwarriors32` (75)** — T15503_09, a stacked white brush title on a
+  red-lit scene with a small dark figure at lower left. **Copy:** up to two
+  lines; fallback `Dream Warriors`. A small lower caption is fixed. **Alt text:**
+  two-line white brush lettering above a lone figure in a red-lit scene.
+* **`nesting32` (76)** — T15503_11, a white brush title over a crimson textured
+  backdrop with shadowed hands to the right. **Copy:** one main line; fallback
+  `The Nesting`. A small centered credit sits below. **Alt text:** white brush
+  lettering over a crimson background and shadowed hands.
+* **`erotica32` (77)** — T15503_12, one red brush word over a near-black image
+  with a diagonal red light streak and underline. **Copy:** one word; fallback
+  `Erotica`. **Alt text:** red brush lettering with an underline on a dark,
+  red-lit field.
+* **`conspiracytheory32` (78)** — T15503_13, a large two-line white brush
+  phrase with an angled underline over a red-black paper collage. **Copy:** up
+  to two lines; fallback `Conspiracy Theory`. **Alt text:** stacked white brush
+  lettering over a distressed red paper collage.
+* **`overglow32` (79)** — T16576_00, a pink central script word with violet-blue
+  and indigo offset shadows on a blue-violet star field. Small top and bottom
+  captions remain separate. **Copy:** one word; fallback `Overglow`. **Alt text:**
+  pink script over a blue-violet star field.
+* **`pinkvice32` (80)** — T16576_01, blue script with a pink offset shadow above
+  a centered pink sports car on cracked pale paper. **Copy:** one main line;
+  fallback `Pink Vice`. A small bottom label is fixed. **Alt text:** blue script
+  above a pink car on textured pale paper.
+* **`attitude32` (81)** — T16576_04, pale script with pink and blue offset
+  shadows across a teal fashion photograph. Small top and lower-right labels are
+  separate. **Copy:** one word; fallback `Attitude`. **Alt text:** pale script
+  across a teal fashion portrait.
+* **`indieground32` (82)** — T16576_09, blue two-line script with a pink offset
+  shadow on a vivid pink field. **Copy:** up to two lines; fallback
+  `Indieground Font Foundry`. **Alt text:** a blue two-line script wordmark on
+  a pink field.
+* **`caramelsundae32` (83)** — T36099_00, two brown title lines inside a
+  scalloped cream panel over coral stripes, with a coral banner below. **Copy:**
+  up to two lines; fallback `Caramel Sundae`. **Alt text:** brown display text
+  and a coral ribbon on a scalloped pastel candy poster.
+* **`sweettreat32` (84)** — T36099_07, three right-aligned display rows beside
+  a smiling ice-cream cone illustration, with waffle corners. **Copy:** up to
+  three rows; fallback `Sweet Treat Dreams`. **Alt text:** three display rows
+  beside a smiling ice-cream cone and waffle-pattern corners.
+
+`T32243_06` has a source-black lower band; the caption belongs in that band.
+`T16576_01` and `T16576_04` deliberately place lettering over their subjects as
+flat graphic overlays. Preserve those overlaps while keeping every editable
+text box within its measured area.
 
 ## Registered but not selectable
 

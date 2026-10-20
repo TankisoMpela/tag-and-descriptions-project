@@ -25,17 +25,17 @@ styling.
 
 ## Image direction
 
-Follow the per-font prompt and its composition choice. The 33 saved reference
-images and complete captions are distilled in
-`font-factory/Style-References/thumbnail-prompt-research-2026-10-20/reference-structure-audit.md`.
-Borrow their composition logic: huge type against a crop, a quiet title plane
-inside a photograph, a single meaningful illustration, atmospheric background
-imagery, strong color blocks, or two deliberate scales of the font's own
-letterforms. Before using a reference, open the saved image and read its full
-caption in `captions.json`; use the audit as an index, not as a substitute for
-that review. Record the structural choice being borrowed, and leave its subject,
-copy, palette, and secondary details behind unless they independently fit the
-font. Do not copy whole references or treat their captions as a prop list.
+Follow the per-font prompt and its composition choice. The 33 saved
+reference images have sequential full captions, element-use analyses, and
+individual prompt lessons in reference-review.md and captions.json; cross-set
+findings are in prompt-findings.md. The older structure audit is a quick
+navigation summary. Borrow a composition mechanism only when it supports this
+font's idea. Before using a reference, open its saved image and read its full
+caption, design analysis, and prompt lesson. Note both what works and any
+weakness to avoid, such as uneven local contrast, crowded copy, or unnecessary
+empty space. Leave the reference's subject, copy, palette, and secondary
+details behind unless they independently fit the font. Do not copy whole
+references or treat captions as a prop list.
 
 All thumbnail lettering remains a flat, front-facing graphic overlay. It may
 sit over photography, people, illustration, or color fields, but it must never

@@ -2,7 +2,7 @@
 
 ## Evidence reviewed
 
-All 33 saved thumbnail images and their complete, individual captions in `captions.json` were reviewed again while correcting the prototype set. The captions preserve the visible subject, crop, typography, exposure, focus, surface, texture, and copy. `reference-structure-audit.md` records the transferable structure of each image. Captions are evidence about what the examples contain; they are not a shopping list of details to reproduce.
+All 33 saved originals were reviewed individually in order. captions.json now stores a full visual caption, a separate design_analysis, and a prompt_lesson for each image; reference-review.md presents those notes beside links to the originals. The structure audit is a quick index. These records distinguish what is visible from what can transfer, and they do not turn any image into a prop checklist.
 
 ## What makes the references feel designed
 
@@ -15,7 +15,7 @@ All 33 saved thumbnail images and their complete, individual captions in `captio
 - **Texture belongs to the medium.** Knit, dry marker, paper grain, halftone, pixel edges, glass reflections, and film haze work because the reference has a reason for them. Use one relevant treatment and leave unrelated effects out.
 - **Restraint is not emptiness.** A type-only image still needs an authored layout: purposeful scale contrast, cropped glyphs, a strong asymmetry, a framed color field, or a single meaningful graphic. A centered name on a nearly blank field is a raw specimen, not a finished thumbnail direction.
 - **The reference set is varied.** It moves among still life, close photo crop, cinematic landscape, action photography, print poster, flat character illustration, and typographic composition. Repeating one layout with new colors is not real variety.
-- **Variation must change the idea, not just the color.** Before a new font prompt, compare the recent thumbnail concepts by medium, composition, focal subject/device, palette family, texture/light, and title placement. Keep the name dominant and make the next concept differ across several of those choices.
+- **Variation should come from the concept, not a checklist.** Compare recent concepts across medium, composition, focal subject/device, palette family, texture/light, and title placement. The next thumbnail should have a distinct premise or major structural choice; a palette swap alone is not a new idea. Do not force a medium change or several attribute changes when they weaken a font-specific concept.
 - **Do not use “premium” as a default concept.** Glossy tabletop still lifes, amber window light, velvet or silk, perfume/flower props, shallow-focus product scenes, and gold accents can make unrelated fonts look like the same generated image. Use a photo only when its subject has a clear, font-specific reason; a clean typographic, illustrated, or other purposeful scene can be stronger.
 - **Restrained does not mean textureless.** A flat layout can use one fitting material cue—paper tooth, uneven ink, a print grain, or a faint illustration—to feel authored. Keep it quiet and specific to the concept; scattered flecks, particles, and stacked effects make the image noisy rather than tactile.
 
@@ -87,3 +87,28 @@ Write a compact composition map before the image prompt:
 Then check the render at full size and at 300×200. Do not accept an image solely because it followed the prompt. Reject it if the layout looks like an empty title sample, if a supporting detail competes with the name, if the concept could belong to any font unchanged, or if typography looks attached to the background scene. Fix the composition decision directly and keep superseded renders out of the current review set.
 
 For a restrained type-led design, keep useful negative space but do not leave the background sterile by default. Consider one quiet, concept-specific surface treatment—paper tooth, dry ink, print wear, fine halftone—or one faint illustration. Describe what it looks like and where it sits. Avoid arbitrary flecks, orbit lines, stacked textures, and geometry added only to occupy space. When reviewing a batch, check that the images differ in their underlying visual idea and medium, not only in palette or frame shape.
+
+
+## Findings from the second sequential caption review
+
+The revised records in captions.json now distinguish three things for every reference: a literal visual caption, an analysis of how the elements work together, and a prompt lesson that can be adapted without copying the layout. The same material is available in reference-review.md and the image-linked index.html.
+
+### What the close review adds
+
+- **People are often texture, crop, or motion—not the subject of the thumbnail.** In the fashion examples, the face is absent or reduced to lips and chin; the title crosses the body or knit. In the basketball example, the player is cropped above the face and the words cover the action. The repeated runners in Replay are useful because their motion blur makes “replay” visible. A full face is not needed to make a photograph feel human.
+- **The title can work across the whole frame, but local contrast still matters.** Examples such as Double Knuckle, Castrell, and Spot Light let a large name span more than one visual region. A pale fill, outline, or saturated color carries it through the change. Other references are weaker where a title crosses a similar-valued area: Mirales crosses skin and taupe; Peach Crush crosses blush; Return to Avalon stays low contrast throughout; Grotesk changes from aqua to black behind the red name. Record these as caution points, not rules to emulate.
+- **A typeface’s own construction is frequently the concept.** The swash joining the lettering in Alicent Hightower, Double Knuckle, Mr. Fox, Magic Whisper, and The Salieta; the hybrid transitions in Design Maison; the dry marker strokes in Tokyo Marker; and the bitmap edges in Rose Tinted all show product traits directly. The imagery is not carrying the whole idea.
+- **Photographic variety is broader than a luxury still life.** The set includes story-driven woodland and lamp, a high mountain valley, action, palm silhouettes, rippling water, close fabric, low-key glassware, and a smoky noir silhouette. Several of these place the title centrally over the scene. The photo should have a reason tied to the word, the font, or a buyer use; warm lighting and a large staged object are not a substitute for that reason.
+- **Illustration and flat graphics have distinct useful structures.** Peach Crush uses one fruit with botanical framing; Spektora uses a penguin against a feature list; Pink Beach builds a small set of related beach shapes; FT Buck uses a deliberately simple landscape under extruded lettering. Newake uses a balanced geometric collage, while Grotesk makes oversized glyphs its background. These show different composition methods, not a shared template.
+- **Texture is legible when its source is clear.** The references use red screenprint distress, paper fibres, halftone, knit, glass reflections, film grain, pixel edges, and marker streaks. The texture belongs to the depicted medium or font sample. Stacking unrelated particles, glow, scratches, and ornaments would obscure that relationship.
+- **Metadata follows the composition.** Some posters use top-corner labels, bottom credits, a banner, or a feature row. These small blocks finish a specimen, but are not required in every image. The title stays first; copy must be accurate, short, and placed where the image leaves room.
+- **Empty space is a choice, not a deliverable.** Chunk Grotesk and Tokyo Marker leave substantial lower or central quiet areas; their captions now call this out explicitly. A new design can preserve the calm mood while scaling or repositioning the title to avoid unused space.
+- **Some references are intentionally maximal and should not be generalized.** Magic Whisper’s stars, Grand Motley’s sparkles and layered shadows, Comicon’s burst badge, and Fonseca Grande’s overlapping postal marks fit their specific poster languages. Their presence does not justify adding decorative flourishes to an unrelated font.
+
+### Corrections made after viewing the pixels
+
+The original captions sometimes inferred details not clearly visible or missed the actual crop and hierarchy. The revised captions correct, among other things, the all-capital title and integrated swashes in Alicent Hightower; Mirales’ face-free body crop; the partial lower face and necklace in Double Knuckle; the actual flat-glass still life in Quine; Spektora’s full-width top title with a separate right-side penguin; the four-color Grotesk poster; and the brush lettering and large lower blank area in Tokyo Marker. Where a scene could not be identified confidently, the new caption describes visible shapes and surfaces instead of naming an uncertain object.
+
+### Working principle for new font thumbnails
+
+Start from what is distinctive in the specimen and the supplied font name. Choose one visual premise that earns its subject, composition, palette, and texture. Give the font name the strongest scale and local contrast. Then add only the supporting image, illustration, graphic frame, or product details that make that premise easier to read. A reference can inform a decision; it does not choose the next thumbnail’s style.

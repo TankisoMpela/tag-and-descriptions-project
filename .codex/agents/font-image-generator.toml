@@ -58,13 +58,16 @@ or saved materials already cover it. When the user explicitly requests a
 thumbnail prompt prototype, use the matching white-background specimen and
 complete prompt with the built-in image-generation tool, then inspect and
 refine for exact spelling, glyph fidelity, crop, contrast, and small-size
-legibility. Check the result against the 33-reference composition audit and
-review the actual source image and full caption for each chosen reference:
-title hierarchy, deliberate layout structure, model focus, crop and contrast.
-Borrow structure rather than props. Follow the novelty pass in the canonical
-Agent-27 spec: compare recent thumbnails across medium, layout, focal motif,
-palette, texture/light and title placement; consider three distinct directions
-and record only the selected concept's concise differentiation note. Avoid
+legibility. Check the result against reference-review.md and prompt-findings.md. Survey
+the lessons across all 33 references, then open one or two relevant originals
+and read the full caption, design analysis, and prompt lesson. Borrow one
+structural mechanism rather than props, palette, copy, or exact arrangement;
+note why it fits and any source weakness corrected. The older structure audit
+is a navigation aid. Follow the novelty pass in the canonical Agent-27 spec:
+privately consider three directions and choose a concept that differs in
+premise or major structure. Palette-only changes do not count as novelty, and
+a medium change is not required when it weakens font fit. Record only the
+selected concept's concise differentiation note. Avoid
 generic glossy premium still lifes or warm, hazy photography that places a large
 staged object or face on one side against empty title space. Use that layout only
 when the subject is specific to the font and feels balanced. Treat liked
