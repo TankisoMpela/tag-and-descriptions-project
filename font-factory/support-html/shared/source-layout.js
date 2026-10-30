@@ -148,9 +148,9 @@
       items: [
         C("metaLeft", "Type Study / 01", [.06,.07,.35,.04], { max: .025, track: .08, className: "meta" }),
         C("metaRight", "Display Sans Design", [.68,.07,.26,.04], { max: .024, track: .06, className: "meta right" }),
-        C("word1", "repeated", [.045,.16,.52,.21], { display: true, max: .195, track: -.04, className: "repeat repeat-one" }),
-        C("word2", "repeated", [.26,.40,.58,.21], { display: true, max: .195, track: -.04, className: "repeat repeat-two" }),
-        C("word3", "repeated", [.40,.64,.57,.21], { display: true, max: .195, track: -.04, className: "repeat repeat-three" }),
+        C("word1", "repeated", [.045,.155,.58,.24], { display: true, literal: true, max: .26, track: -.04, className: "repeat repeat-one" }),
+        C("word2", "repeated", [.26,.39,.65,.25], { display: true, literal: true, max: .28, track: -.04, className: "repeat repeat-two" }),
+        C("word3", "repeated", [.40,.62,.59,.28], { display: true, literal: true, max: .30, track: -.04, className: "repeat repeat-three" }),
         C("pillTop", "pillTop", [.54,.11,.39,.14], { max: .055, track: .03, className: "pill pill-top" }),
         C("pillMid", "pillMid", [.73,.435,.25,.12], { max: .047, track: .06, className: "pill pill-mid" }),
         C("pillBottom", "pillBottom", [.02,.69,.34,.145], { max: .05, track: .06, className: "pill pill-bottom" }),
@@ -188,6 +188,16 @@
         }
         const items = [];
         let itemSpecs = spec.items.map((item) => ({ ...item, box: [...item.box] }));
+        if (id === "neue32" && board.dataset.ratio === "1x1") {
+          const squareBoxes = {
+            pillTop: [.66,.12,.32,.13],
+            word2: [.24,.39,.56,.25],
+            pillMid: [.82,.435,.17,.12],
+          };
+          itemSpecs.forEach((item) => {
+            if (squareBoxes[item.key]) item.box = squareBoxes[item.key];
+          });
+        }
         if (id === "plakat32") {
           itemSpecs = itemSpecs.filter((item) => item.key !== "glyphs");
         }

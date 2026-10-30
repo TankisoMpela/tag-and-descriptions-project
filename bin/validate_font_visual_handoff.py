@@ -12,9 +12,14 @@ from pathlib import Path
 from PIL import Image
 
 
-SUPPORT_RE = re.compile(r"^support-\d+_[a-z0-9]+\.png$")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SUPPORT_CATALOG = PROJECT_ROOT / "font-factory" / "support-html" / "catalog.json"
+SUPPORT_RE = re.compile(r"^support-\d+_[a-z0-9]+(?:-[a-z0-9]+)*\.png$")
 THUMBNAIL_VARIANTS = {"left", "center", "band"}
 RENDERER_CLASSES = {"elegant", "blackletter", "sports", "script"}
+FAMILY_SHOWCASE_TEMPLATES = {
+    "plakat32", "weightfamily32", "mangosboard32", "italicregular32",
+}
 ACTIVE_PIN_TEMPLATES = (
     "hero", "set", "wall", "full_stack", "studio_cover", "specimen_mosaic",
     "initials", "knotband", "scriptorium", "carol", "illuminated_broadside",
@@ -44,6 +49,126 @@ def check_png(path: Path, expected_size: tuple[int, int], failures: list[str]) -
                 failures.append(f"wrong dimensions: {path} is {image.size}, expected {expected_size}")
     except Exception as error:
         failures.append(f"unreadable PNG: {path}: {error}")
+
+
+def active_html_support_templates(failures: list[str]) -> set[str]:
+    try:
+        catalog = json.loads(SUPPORT_CATALOG.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        failures.append(f"support catalogue: cannot read {SUPPORT_CATALOG}: {error}")
+        return set()
+    templates = catalog.get("templates") if isinstance(catalog, dict) else None
+    if not isinstance(templates, list):
+        failures.append(f"support catalogue: templates must be a list in {SUPPORT_CATALOG}")
+        return set()
+    return {
+        item["id"] for item in templates
+        if isinstance(item, dict)
+        and isinstance(item.get("id"), str)
+        and item.get("htmlEntry")
+        and item.get("portStatus") in {"prototype", "ported"}
+    }
+
+
+def source_family_style_count(root: Path, plan: dict, failures: list[str]) -> int | None:
+    value = plan.get("primary_font")
+    if not isinstance(value, str) or not value.strip():
+        return None
+    path = Path(value).expanduser()
+    workspace = root.parent.resolve()
+    if not path.is_absolute():
+        path = workspace / path
+    path = path.resolve()
+    try:
+        path.relative_to(workspace)
+    except ValueError:
+        failures.append("strict art-direction: primary_font must remain inside the font-factory/fonts source workspace")
+        return None
+    if not path.is_file():
+        failures.append(f"strict art-direction: source font is missing: {path}")
+        return None
+
+    try:
+        from fontTools.ttLib import TTFont
+
+        primary = TTFont(str(path), fontNumber=0, lazy=True)
+        try:
+            names = primary["name"]
+            family = (names.getDebugName(16) or names.getDebugName(1) or "").strip()
+            cmap = primary.getBestCmap() or {}
+            basic_latin = sum(
+                1 for codepoint in cmap
+                if 0x41 <= codepoint <= 0x5A or 0x61 <= codepoint <= 0x7A
+            )
+            plan["_verified_coverage"] = {
+                "mapped_characters": len(cmap),
+                "basic_latin": f"{basic_latin}/52",
+            }
+        finally:
+            primary.close()
+        if not family:
+            failures.append(f"strict art-direction: source font has no family name: {path}")
+            return None
+
+        candidates = [
+            candidate for candidate in sorted(path.parent.iterdir())
+            if candidate.suffix.casefold() in {".otf", ".ttf"}
+        ]
+        plan["_verified_source_formats"] = sorted(
+            {candidate.suffix[1:].upper() for candidate in candidates}
+        )
+        styles: dict[tuple[str, int], dict] = {}
+        for candidate in candidates:
+            try:
+                face = TTFont(str(candidate), fontNumber=0, lazy=True)
+                try:
+                    face_names = face["name"]
+                    face_family = (
+                        face_names.getDebugName(16) or face_names.getDebugName(1) or ""
+                    ).strip()
+                    if face_family.casefold() != family.casefold():
+                        continue
+                    style = (
+                        face_names.getDebugName(17) or face_names.getDebugName(2) or "Regular"
+                    ).strip()
+                    os2 = face["OS/2"]
+                    weight = int(getattr(os2, "usWeightClass", 400))
+                    width = int(getattr(os2, "usWidthClass", 5))
+                    selection = int(getattr(os2, "fsSelection", 0))
+                    post = face["post"] if "post" in face else None
+                    italic = bool(selection & (1 | (1 << 9))) or bool(
+                        post and abs(float(getattr(post, "italicAngle", 0.0))) > 0.01
+                    ) or any(token in style.casefold() for token in ("italic", "oblique"))
+                    key = (style.casefold(), weight)
+                    row = {
+                        "style_name": style,
+                        "weight_class": weight,
+                        "width_class": width,
+                        "italic": italic,
+                    }
+                    prior = styles.get(key)
+                    if prior is None or (
+                        candidate.suffix.casefold() == ".otf"
+                        and prior.get("_format") != "otf"
+                    ):
+                        row["_format"] = candidate.suffix.casefold()[1:]
+                        styles[key] = row
+                finally:
+                    face.close()
+            except Exception:
+                continue
+        rows = sorted(
+            styles.values(),
+            key=lambda item: (item["weight_class"], item["style_name"].casefold()),
+        )
+        plan["_verified_family_styles"] = [
+            {key: value for key, value in row.items() if key != "_format"}
+            for row in rows
+        ]
+        return max(1, len(rows))
+    except Exception as error:
+        failures.append(f"strict art-direction: cannot inspect source font family: {path}: {error}")
+        return None
 
 
 def contrast_ratio(foreground: str, background: str) -> float:
@@ -126,6 +251,54 @@ def validate_japanese_square(owner: object, failures: list[str]) -> None:
         failures.append("strict art-direction: japanese_thumbnail 1x1 copy_order must be non-empty")
 
 
+def validate_verified_product_facts(owner: object, failures: list[str]) -> None:
+    facts = owner.get("verified_product_facts") if isinstance(owner, dict) else None
+    if not isinstance(facts, dict):
+        failures.append("strict art-direction: verified_product_facts object is required for listing handoff")
+        return
+
+    def string_list(value: object, label: str, *, required: bool = False) -> None:
+        if (not isinstance(value, list)
+                or any(not isinstance(item, str) or not item.strip() for item in value)
+                or required and not value):
+            suffix = " must be a non-empty string list" if required else " must be a string list"
+            failures.append(f"strict art-direction: verified_product_facts.{label}{suffix}")
+
+    string_list(facts.get("source_formats"), "source_formats", required=True)
+    styles = facts.get("family_styles")
+    if not isinstance(styles, list) or not styles:
+        failures.append("strict art-direction: verified_product_facts.family_styles must be a non-empty list")
+    else:
+        for index, style in enumerate(styles):
+            if not isinstance(style, dict):
+                failures.append(f"strict art-direction: family_styles[{index}] must be an object")
+                continue
+            if not isinstance(style.get("style_name"), str) or not style["style_name"].strip():
+                failures.append(f"strict art-direction: family_styles[{index}].style_name is required")
+            for key in ("weight_class", "width_class"):
+                value = style.get(key)
+                if not isinstance(value, int) or isinstance(value, bool):
+                    failures.append(f"strict art-direction: family_styles[{index}].{key} must be an integer")
+            if not isinstance(style.get("italic"), bool):
+                failures.append(f"strict art-direction: family_styles[{index}].italic must be a boolean")
+
+    coverage = facts.get("coverage")
+    if not isinstance(coverage, dict):
+        failures.append("strict art-direction: verified_product_facts.coverage object is required")
+    else:
+        mapped = coverage.get("mapped_characters")
+        if not isinstance(mapped, int) or isinstance(mapped, bool) or mapped < 0:
+            failures.append("strict art-direction: coverage.mapped_characters must be a non-negative integer")
+        if not isinstance(coverage.get("basic_latin"), str):
+            failures.append("strict art-direction: coverage.basic_latin must be a string")
+        string_list(coverage.get("unicode_scripts"), "coverage.unicode_scripts")
+        string_list(coverage.get("languages"), "coverage.languages")
+
+    for key in ("opentype_features", "verified_alternates",
+                "verified_ligatures", "buyer_uses"):
+        string_list(facts.get(key), key)
+
+
 def validate_art_direction(root: Path, failures: list[str]) -> dict | None:
     direction = root.parent / "visual-direction"
     for name in ("art-direction.md", "visual-plan.json", "candidate-review.md"):
@@ -150,12 +323,16 @@ def validate_art_direction(root: Path, failures: list[str]) -> dict | None:
         failures.append("strict art-direction: font_name must be non-empty")
     if not isinstance(plan.get("primary_font"), str) or not plan["primary_font"].strip():
         failures.append("strict art-direction: primary_font must identify the source font")
+    else:
+        family_style_count = source_family_style_count(root, plan, failures)
+        if family_style_count is not None:
+            plan["_verified_family_style_count"] = family_style_count
     if plan.get("renderer_class") not in RENDERER_CLASSES:
         failures.append("strict art-direction: renderer_class must be elegant, blackletter, sports, or script")
-    if plan.get("support_count", 7) != 7:
-        failures.append("strict art-direction: support_count is fixed at 7")
-    if plan.get("support_renderer", "html") not in {"skia", "hybrid", "html"}:
-        failures.append("strict art-direction: support_renderer must be skia, hybrid, or html")
+    if plan.get("support_count", 13) != 13:
+        failures.append("strict art-direction: support_count is fixed at 13")
+    if plan.get("support_renderer", "html") != "html":
+        failures.append("strict art-direction: support_renderer must be html")
     if plan.get("promos") not in (None, []):
         failures.append("strict art-direction: custom promos are retired; use the support-template catalogue")
     for retired in ("supporting_image_theme", "thumbnail_candidates", "selected_thumbnail_candidate"):
@@ -171,12 +348,78 @@ def validate_art_direction(root: Path, failures: list[str]) -> dict | None:
                 failures.append(f"strict art-direction: campaign.{key} must be non-empty")
 
     profile = plan.get("font_profile")
+    profile_schema = plan.get("font_profile_schema")
+    if profile_schema != 2:
+        failures.append("strict art-direction: font_profile_schema must be 2")
     if not isinstance(profile, dict):
         failures.append("strict art-direction: font_profile object is required")
     else:
         for key in ("construction", "personality", "buyer_fit"):
             if not isinstance(profile.get(key), str) or not profile[key].strip():
                 failures.append(f"strict art-direction: font_profile.{key} must be non-empty")
+        if plan.get("font_profile_schema") == 2:
+            for key in ("type_label", "subtext", "product_description"):
+                if not isinstance(profile.get(key), str) or not profile[key].strip():
+                    failures.append(f"strict art-direction: font_profile.{key} must be non-empty for schema 2")
+            subtext = profile.get("subtext")
+            if isinstance(subtext, str) and subtext.strip() and not 2 <= len(subtext.split()) <= 6:
+                failures.append("strict art-direction: font_profile.subtext must contain 2–6 words")
+            features = profile.get("distinctive_features")
+            if not isinstance(features, list) or not features or any(not isinstance(value, str) or not value.strip() for value in features):
+                failures.append("strict art-direction: font_profile.distinctive_features must be a non-empty string list for schema 2")
+    validate_verified_product_facts(plan, failures)
+    product_facts = plan.get("verified_product_facts")
+    if isinstance(product_facts, dict):
+        actual_formats = set(plan.get("_verified_source_formats", []))
+        claimed_formats = product_facts.get("source_formats")
+        if isinstance(claimed_formats, list):
+            normalized_formats = {
+                str(value).strip().removeprefix(".").upper()
+                for value in claimed_formats if isinstance(value, str)
+            }
+            if normalized_formats != actual_formats:
+                failures.append(
+                    "strict art-direction: verified_product_facts.source_formats "
+                    "must match the source workspace files"
+                )
+
+        actual_styles = {
+            (
+                str(style.get("style_name", "")).casefold(),
+                style.get("weight_class"),
+                style.get("width_class"),
+                style.get("italic"),
+            )
+            for style in plan.get("_verified_family_styles", [])
+        }
+        claimed_styles = product_facts.get("family_styles")
+        if isinstance(claimed_styles, list) and all(
+            isinstance(style, dict) for style in claimed_styles
+        ):
+            normalized_styles = {
+                (
+                    str(style.get("style_name", "")).casefold(),
+                    style.get("weight_class"),
+                    style.get("width_class"),
+                    style.get("italic"),
+                )
+                for style in claimed_styles
+            }
+            if normalized_styles != actual_styles:
+                failures.append(
+                    "strict art-direction: verified_product_facts.family_styles "
+                    "must match the source family metadata"
+                )
+
+        coverage = product_facts.get("coverage")
+        actual_coverage = plan.get("_verified_coverage")
+        if isinstance(coverage, dict) and isinstance(actual_coverage, dict):
+            for key in ("mapped_characters", "basic_latin"):
+                if coverage.get(key) != actual_coverage.get(key):
+                    failures.append(
+                        f"strict art-direction: verified_product_facts.coverage.{key} "
+                        "must match the source font cmap"
+                    )
 
     checks, palette = plan.get("contrast_checks"), plan.get("palette")
     if not isinstance(checks, list) or len(checks) < 2 or not isinstance(palette, dict):
@@ -367,13 +610,14 @@ def main() -> int:
         check_png(root / relative, sizes[ratio], failures)
     required_assets.extend(pin_assets)
 
+    active_templates = active_html_support_templates(failures)
     support_names: dict[str, set[str]] = {}
     support_count = 0
     for ratio in sizes:
         support_dir = root / "supporting" / ratio
         supports = sorted(support_dir.glob("support-*.png")) if support_dir.is_dir() else []
-        if len(supports) != 7:
-            failures.append(f"supporting/{ratio}: expected exactly 7 support templates, found {len(supports)}")
+        if len(supports) != 13:
+            failures.append(f"supporting/{ratio}: expected exactly 13 support templates, found {len(supports)}")
         names = {path.stem.split("_", 1)[-1] for path in supports}
         support_names[ratio] = names
         if len(names) != len(supports):
@@ -381,15 +625,36 @@ def main() -> int:
         for path in supports:
             if not SUPPORT_RE.fullmatch(path.name):
                 failures.append(f"supporting/{ratio}: unexpected support filename: {path.name}")
+            template = path.stem.split("_", 1)[-1]
+            if template not in active_templates:
+                failures.append(
+                    f"supporting/{ratio}: {template} is not an active HTML/CSS catalogue template"
+                )
             check_png(path, sizes[ratio], failures)
             required_assets.append(path.relative_to(root).as_posix())
         support_count += len(supports)
     if support_names.get("3x2") != support_names.get("1x1"):
-        failures.append("supporting: the selected 3:2 and 1:1 templates must be the same seven layouts")
+        failures.append("supporting: the selected 3:2 and 1:1 templates must be the same 13 layouts")
+    if plan is not None:
+        family_style_count = plan.get("_verified_family_style_count")
+        if isinstance(family_style_count, int):
+            selected_family = support_names.get("3x2", set()) & FAMILY_SHOWCASE_TEMPLATES
+            expected_family = FAMILY_SHOWCASE_TEMPLATES if family_style_count >= 2 else set()
+            if selected_family != expected_family:
+                if family_style_count >= 2:
+                    failures.append(
+                        "supporting: a multi-style source family must include all four "
+                        "family showcases: " + ", ".join(sorted(FAMILY_SHOWCASE_TEMPLATES))
+                    )
+                elif selected_family:
+                    failures.append(
+                        "supporting: single-style source fonts must not include family showcases: "
+                        + ", ".join(sorted(selected_family))
+                    )
 
     png_count = len(list(root.rglob("*.png")))
-    if png_count != 21:
-        failures.append(f"handoff: expected exactly 21 PNGs (3 thumbnails, 14 support renders, 4 specimens), found {png_count}")
+    if png_count != 33:
+        failures.append(f"handoff: expected exactly 33 PNGs (3 thumbnails, 26 support renders, 4 specimens), found {png_count}")
 
     validate_handoff_documents(root, required_assets, failures, args.allow_pending_marker)
     if plan is not None and plan.get("render_mode") != "text_placeholder":
@@ -400,7 +665,7 @@ def main() -> int:
         return 1
 
     print(f"[PASS] visual handoff valid: {png_count} PNGs, {len(pin_assets)} Pinterest JPEGs (3 thumbnails, {support_count} support renders, 4 factual specimens)")
-    print("[PASS] supporting templates: 7 matched layouts at 3:2 and 1:1")
+    print("[PASS] supporting templates: 13 matched layouts at 3:2 and 1:1")
     print("[PASS] factual specimens: 4 across 3x2 and 1x1")
     print(f"[PASS] Pinterest templates: {len(pin_assets)} rendered with the supplied font")
     return 0

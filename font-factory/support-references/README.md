@@ -8,12 +8,15 @@ including duplicates); its 44 unique source images are indexed in
 [`SOURCES.md`](SOURCES.md) and reviewed in
 [`previews/incoming-reference-contact-2026-10-14.png`](previews/incoming-reference-contact-2026-10-14.png).
 
-These are references and source materials for the Skia supporting-image templates. Template code uses selected materials directly; final font-specific artwork belongs in the active font workspace, never beside the reference originals. `materials/` contains transparent user-supplied cutouts, generated image plates, an OpenCV-cleaned pastel reference background, and a transparent mirror portrait insert.
+The 2026-10-29 reference set contains 27 original images from 15 source IDs. Original responses, exact URLs, and SHA-256 records are in [`originals/reference-batch-2026-10-29-a/`](originals/reference-batch-2026-10-29-a/); the [contact sheet](previews/reference-contact-2026-10-29-a.png) gives a labelled overview. Each source will be developed as a separate template, with both aspect ratios completed before advancing.
 
-The renderer has 61 active supporting templates and reproducibly selects seven
-eligible layouts for a font. `plakat32`, `weightfamily32`, and `mangosboard32`
-require at least two actual styles from one family; the two family boards are
-guaranteed in the seven when that gate passes. Supporting artwork uses display specimen copy rather than repeating
+These are references and source materials for the Skia and HTML/CSS supporting-image templates. Template code uses selected materials directly; final font-specific artwork belongs in the active font workspace, never beside the reference originals. `materials/` contains transparent user-supplied cutouts, generated image plates, cleaned photo backgrounds, and source-derived crops.
+
+The active catalogue has 135 supporting templates and reproducibly selects 13
+eligible layouts for a font. `plakat32`, `weightfamily32`, `mangosboard32`, and
+`italicregular32` require at least two actual styles from one family; all four
+family showcases are guaranteed in the 13 when that gate passes.
+Supporting artwork uses display specimen copy rather than repeating
 the font name. Caption, word-length, palette/contrast, flexibility, and alt-text
 guidance is in [TEMPLATE-GUIDE.md](TEMPLATE-GUIDE.md); the exact source mapping is
 in [REMAKE-MAP.md](REMAKE-MAP.md). New image-generation prompts are preserved in
@@ -31,7 +34,8 @@ and [slots 57–70](previews/slots-57-70-2026-10-14.png). Use
 `bin/pin-studio/.venv/bin/python bin/pin-studio/pin_studio.py --list --supports`
 for the current active list. Actual handoffs render the selected layouts with
 the target font and include both family panels when multiple real styles are
-present.
+present. The current full 3:2 and square review is under
+[`support-html/benchmarks/catalogue-review-2026-10-26/`](../support-html/benchmarks/catalogue-review-2026-10-26/).
 
 The [paired six-style catalogue audit](class-audit-2026-10-14/README.md) records
 the historical six-style comparison and preflight results; its pool counts
@@ -57,6 +61,9 @@ predate the first-pass retirements and blackletter exclusions.
 - `T33631_05`: dark editorial/type composition using the user's exact mountain crop.
 - `T24507_04`: western fashion-photography layout with line-art horseshoe and boot motifs.
 - `T13692_01`: paired zebra and rose posters; `T13692_03`: soldier-photo specimen; `T13692_06`: brutalist editorial spread; `T13692_07`: brutalism identity/packaging studies; `T13692_12`: mirror portrait with an overprinted quote.
+- Behance project 40630743: `sexyshout32` preserves the reference and rebuilds “Sexy” / “Shout” as live selected-font text over the supplied grayscale photo.
+- Envato download `33a5cffa`: `embracesexiest32` retypes “Embrace” and “The Sexiest” over the user's unchanged fashion photo; neutral specimen labels replace the reference foundry credit.
+- Behance project 40630743: `sexyshout32` preserves the reference and rebuilds “Sexy” / “Shout” as live selected-font text over the supplied, uncensored grayscale photo.
 
 ## Local materials
 
@@ -64,6 +71,9 @@ predate the first-pass retirements and blackletter exclusions.
 - `originals/vintage-rose-on-book-pages.png` — transparent/source material for the T13692-inspired floral treatment.
 - `originals/zebra-pair-in-arched-savanna-frame.png` — transparent/source material for the T13692-inspired animal treatment.
 - `originals/transparent-thumbs-up-line-art.png` — the user's transparent thumbs-up material, placed directly by `hand32`.
+- `materials/reference-batch-2026-10-26-e/sexyshout-user-photo.png` — the user's supplied grayscale photo, preserved unchanged for `sexyshout32`.
+- `materials/reference-batch-2026-10-26-f/33a5cffa-user-photo.png` — the user's supplied fashion photo, preserved unchanged for `embracesexiest32`.
+- `materials/reference-batch-2026-10-26-e/sexyshout-user-photo.png` — the user's clean grayscale photo, preserved unchanged and used directly by `sexyshout32` in both ratios.
 
 ## Reusable derivatives
 
@@ -86,10 +96,10 @@ predate the first-pass retirements and blackletter exclusions.
 - `materials/T33110_08_red-cyan-print-texture.png` — one-pass generated, text-free red/cyan halftone texture used behind the wordmark in `birvase32`.
 - `materials/T13692_zebra-arched.png` and `materials/T13692_rose-strip.png` — supplied transparent materials used directly by `zebra32`.
 - `materials/T33144_thumbs-up-line-art.png` — supplied transparent hand art used directly by `hand32`.
-- `materials/T30332_01_stardust-photo.png` and `materials/T30332_02_cliff-sea-background.png` — one-pass, text-free portrait and coastal photo plates for the matching editorial layouts.
+- `materials/T30332_01_stardust-photo.png` — the user-provided clean portrait background, copied unchanged from Downloads for `stardust32`; `materials/T30332_02_cliff-sea-background.png` is the one-pass coastal photo plate for its matching editorial layout.
 - `materials/T24908_00_amber-dawn-photo.png`, `T24908_01_clean-photo-background.png`, `T24908_02_clean-photo-background.png`, and `T24908_03_gelato-background.png` — one-pass, text-free fashion-photo plates for the matching amber, skincare, lookbook, and gelato layouts. The earlier `T24908_01_skin-portrait-background.png` is retained but no longer used by `skinbadge32`.
 - `materials/T26289_01_orange-fashion-cutout.png` and `T28576_03_editorial-face-cutout.png` — transparent photo/illustration cutouts used by active layouts. `T28576_09_beach-fashion-cutout.png` is retained as provenance for withdrawn `bondibeach32`; no active template uses it.
-- `materials/T28660_00_red-jacket-photo.png` — one-pass clean red-tailoring photograph, used instead of the typography-overprinted source cover.
+- `materials/T28660_00_red-jacket-photo.png` — the user-provided red-blazer photograph, copied unchanged from Downloads and used instead of the typography-overprinted source cover.
 - `materials/T26003_01_lemonade-line-art.png` — one-pass transparent engraved lemonade illustration.
 - `materials/T28576_04_eye-illustration.png`, `T28576_05_artist-illustration.png`, `T28576_05_hands-strip.png`, `T28576_06_eye-detail.png`, and `T28576_08_blossom-illustration.png` — exact source crops saved separately from adjacent copy and panel furniture.
 - `materials/T28576_04_eye-illustration-clean.png` — one-pass transparent cleanup of the eye crop, removing the tiny source-font imprint across the iris; used by `confident32`.

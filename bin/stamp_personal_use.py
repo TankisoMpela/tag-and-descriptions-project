@@ -13,9 +13,10 @@ Two modes:
            punctuation (letters stay clean for previewing), matching the
            charset-class lock used by commercial demo fonts.
 
-The commercial and personal package folders are never modified in place when
-called from prepare_font_package.py — stamping writes to a separate tree used
-only for the Free-Trial-Demo archive.
+This is a legacy standalone utility. The current preparation workflow does not
+invoke it and does not create a watermarked trial archive. If run manually, it
+writes stamped fonts to the requested output directory and leaves the source
+package unchanged.
 
 Usage:
     python3 bin/stamp_personal_use.py outline \\

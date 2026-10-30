@@ -455,14 +455,16 @@ html, body {{
 
 
 def find_chromium() -> str:
+    configured = os.environ.get("CHROMIUM_EXECUTABLE_PATH") or os.environ.get(
+        "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH"
+    )
+    if configured and Path(configured).is_file():
+        return configured
     for name in ("chromium", "chromium-browser", "google-chrome", "google-chrome-stable"):
         path = shutil.which(name)
         if path:
             return path
-    for path in ("/usr/bin/chromium", "/usr/bin/chromium-browser"):
-        if Path(path).is_file():
-            return path
-    die("chromium not found on PATH (need headless print-to-pdf)")
+    die("Chromium not found on PATH; set CHROMIUM_EXECUTABLE_PATH for a custom install")
     raise AssertionError
 
 

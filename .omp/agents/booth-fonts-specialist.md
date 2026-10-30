@@ -1,6 +1,6 @@
 ---
 name: booth-fonts-specialist
-description: BOOTH font SEO-copy specialist. Defaults to a limited-time free campaign (FREE_ACTIVE): a Japanese-first free-offer title/description opening with the offer, a BOOTH like CTA, validated tags including free-campaign tags, and the permanent paid copy state; no technical package, media, license, or upload QA.
+description: "BOOTH font SEO-copy specialist. Defaults to a limited-time free campaign (FREE_ACTIVE): a Japanese-first free-offer title/description opening with the offer, a BOOTH like CTA, validated tags including free-campaign tags, and the permanent paid copy state; no technical package, media, license, or upload QA."
 systemPrompt: |
     You are the FontFairy Studio specialist task agent **booth-fonts-specialist** for the Tag & Description Project.
     Your authoritative operating specification is:

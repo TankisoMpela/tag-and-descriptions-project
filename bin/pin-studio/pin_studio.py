@@ -96,6 +96,7 @@ SPECIMEN_SET = {"elegant": "set", "blackletter": "knotband",
 # the specimen sheets' second surface but with authored copy. These names
 # are deliberately NOT in CLASS_ORDERS — pinterest_1..5 and the registry never
 # learn them; --supports is a separate surface with its own numbering.
+# Retired names stay in this tuple as tombstones so the remaining slot IDs stay stable.
 SUPPORT_ORDER = ("line32",
                  "duo32",
                  "card32",
@@ -172,12 +173,147 @@ SUPPORT_ORDER = ("line32",
                  "erotica32", "conspiracytheory32", "overglow32",
                  "pinkvice32", "attitude32", "indieground32",
                  "caramelsundae32", "sweettreat32",
+                 "saucystack32", "anteliascard32", "peacebreath32",
+                 "nyccoffee32", "afterhours32", "outofoffice32",
+                 "skincareroutine32", "youlookgood32", "spiritadventure32",
+                 "dreamfollow32", "angelinastyle32", "comesnatural32",
+                 "calmafterstorm32", "beachclub32", "splitampersand32",
+                 "setrum32", "nectarambience32", "fluorescentduo32",
+                 "sacharon32", "lastnightsweden32", "crywolf32",
+                 "welcomemorning32", "esens32", "asbon32", "italicregular32",
+                 "smokeletters32", "blackerwear32", "silentnight32", "playgrid32",
+                 "fridayrunning32", "greatness32", "medievalcreatures32",
+                 "littlemadquote32",
+                 "soulrevenge32",
+                 "allworkplay32",
+                 "sociato32",
+                 "owlstory32",
+                 "hazysky32",
+                 "itsokay32",
+                 "nightonearth32",
+                 "goodthingstothose32",
+                 "rudybrownie32",
+                 "spaceprint32",
+                 "scriptgrid32",
+                 "smashcourt32",
+                 "scriptpattern32",
+                 "brushpanel32",
+                 "avalonbrush32",
+                 "ssrange32",
+                 "allsummerlong32",
+                 "boldcampaign32",
+                 "goodtimeroll32",
+                 "childhoodbook32",
+                 "playerglyph32",
+                 "alicebadge32",
+                 "notallroads32",
+                 "practicehard32",
+                 "rainbowstack32",
+                 "wakefamous32",
+                 "sexyshout32",
+                 "embracesexiest32",
+                 "prettyinpink32",
+                 "dynamicplayful32",
+                 "retroshowcase32",
+                 "iconicposter32",
+                 "summerparadise32",
+                 "calgarywelcome32",
+                 "latinmaxims32",
+                 "onlygooddieyoung32",
+                 "blackholesun32",
+                 "somethingabouther32",
+                 "darknightbrighterday32",
+                 "tc-panthoma-specimen32",
+                 "tcpanthomarepeat32",
+                 "strongerquote32",
+                 "scarygangsta32",
+                 "darkbriton32",
+                 "darkbritonthankyou32",
+                 "hailcrash32",
+                 "awakeportrait32",
+                 "pixelledger32",
+                 "winevintage32",
+                 "blackgold32",
+                 "hongkongcrisis32",
+                 "caves46532",
+                 "yabbadabbadoo32",
+                 "choosinghappiness32",
+                 "fatkillkat32",
                  )
 HTML_ONLY_SUPPORT = frozenset({
     "palmello32", "quietattempt32", "hushglow32", "italianhorror32",
     "dreamwarriors32", "nesting32", "erotica32", "conspiracytheory32",
     "overglow32", "pinkvice32", "attitude32", "indieground32",
     "caramelsundae32", "sweettreat32",
+    "saucystack32", "anteliascard32", "peacebreath32",
+    "nyccoffee32", "afterhours32", "outofoffice32",
+    "skincareroutine32", "youlookgood32", "spiritadventure32",
+    "dreamfollow32", "angelinastyle32", "comesnatural32",
+    "calmafterstorm32", "beachclub32", "splitampersand32",
+    "setrum32", "nectarambience32", "fluorescentduo32",
+    "sacharon32", "lastnightsweden32", "crywolf32", "welcomemorning32",
+    "esens32", "asbon32", "italicregular32", "smokeletters32",
+    "blackerwear32",
+    "silentnight32",
+    "playgrid32",
+    "fridayrunning32",
+    "medievalcreatures32",
+    "littlemadquote32",
+    "soulrevenge32",
+    "allworkplay32",
+    "sociato32",
+    "owlstory32",
+    "hazysky32",
+    "itsokay32",
+    "nightonearth32",
+    "goodthingstothose32",
+    "rudybrownie32",
+    "spaceprint32",
+    "scriptgrid32",
+    "smashcourt32",
+    "scriptpattern32",
+    "brushpanel32",
+    "avalonbrush32",
+    "ssrange32",
+    "allsummerlong32",
+    "boldcampaign32",
+    "goodtimeroll32",
+    "childhoodbook32",
+    "playerglyph32",
+    "alicebadge32",
+    "notallroads32",
+    "practicehard32",
+    "rainbowstack32",
+    "wakefamous32",
+    "sexyshout32",
+    "embracesexiest32",
+    "prettyinpink32",
+    "dynamicplayful32",
+    "retroshowcase32",
+    "iconicposter32",
+    "summerparadise32",
+    "calgarywelcome32",
+    "latinmaxims32",
+    "onlygooddieyoung32",
+    "blackholesun32",
+    "somethingabouther32",
+    "darknightbrighterday32",
+    "tc-panthoma-specimen32",
+    "tcpanthomarepeat32",
+    "strongerquote32",
+    "scarygangsta32",
+    "darkbriton32",
+    "darkbritonthankyou32",
+    "hailcrash32",
+    "awakeportrait32",
+    "pixelledger32",
+    "winevintage32",
+    "blackgold32",
+    "hongkongcrisis32",
+    "caves46532",
+    "yabbadabbadoo32",
+    "choosinghappiness32",
+    "fatkillkat32",
 })
 # Retired layouts are out of the active support catalogue. This set exists only
 # so a later support run can withdraw their old renderer-owned PNGs safely.
@@ -186,7 +322,16 @@ SUPPORT_RETIRED = frozenset({
     "cast32", "loop32", "deboss32", "anatomy32", "riso32", "shear32",
     "mosaic32", "stencil32", "bondibeach32", "sticker32", "echo32",
     "brutalpack32", "dreamchalk32", "lovecard32", "queens32",
-    "lemonade32", "sunkiss32",
+    "lemonade32", "sunkiss32", "greatness32",
+    # Seller-selected retirements on 2026-10-26.
+    "line32", "duo32", "card32", "hand32", "zebra32",
+    "electromagnetic32", "demolition32", "skinbadge32", "gelatocards32",
+    "angelinastyle32", "beachclub32", "fluorescentduo32",
+    "lastnightsweden32", "spaceprint32",
+    # Seller-selected retirements on 2026-10-29.
+    "soldier32", "brutal32", "storyteller32", "blossom32", "meditation32",
+    "sociato32", "scriptpattern32", "avalonbrush32", "boldcampaign32",
+    "skincareroutine32", "saucystack32", "indieground32", "crest32",
 })
 # Mono faces still avoid the two badge/card constructions that rely on a
 # proportioned wordmark. Style-specific exclusions below were assigned after
@@ -241,7 +386,12 @@ SUPPORT_STYLE_EXCLUDE = {
 
 SUPPORT_MIN_STYLES = {
     "boots32": 2, "plakat32": 2, "weightfamily32": 2, "mangosboard32": 2,
+    "italicregular32": 2,
 }
+
+FAMILY_SHOWCASE_SUPPORTS = (
+    "plakat32", "weightfamily32", "mangosboard32", "italicregular32",
+)
 
 # Keep every eligible layout available to every class. A small relative weight
 # gives blackletter runs a few more chances to land on typographic, framed, or
@@ -288,6 +438,14 @@ def support_names(cls, family="", family_styles=1, has_weight_triplet=False):
         n, cls, family, family_styles, has_weight_triplet)]
 
 
+def support_review_names(family_styles=1):
+    """Return every active support layout for a catalogue review, independent
+    of class fit but retaining retired and real-family-style gates."""
+    return [name for name in SUPPORT_ORDER
+            if name not in SUPPORT_RETIRED
+            and family_styles >= SUPPORT_MIN_STYLES.get(name, 1)]
+
+
 def sample_supports(rng, names, count, cls):
     """Sample without replacement, with a modest blackletter-friendly tilt.
 
@@ -305,6 +463,15 @@ def sample_supports(rng, names, count, cls):
         selected.append(choice)
         candidates.remove(choice)
     return selected
+
+
+def select_support_templates(rng, names, count, cls):
+    """Keep eligible family showcases, then fill remaining slots randomly."""
+    required = [name for name in FAMILY_SHOWCASE_SUPPORTS if name in names]
+    remaining = [name for name in names if name not in required]
+    selected = required + sample_supports(
+        rng, remaining, max(0, count - len(required)), cls)
+    return sorted(selected, key=SUPPORT_ORDER.index)
 LABEL = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Regular.ttf")
 LABEL_B = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Medium.ttf")
 CLEAN = {"liga": 0}         # display ligs stripe the specimen marks
@@ -527,6 +694,96 @@ THEME_PREF = {
     "indieground32": ("clay", "midnight", "bone"),
     "caramelsundae32": ("clay", "bone", "sage"),
     "sweettreat32": ("clay", "bone", "sage"),
+    "saucystack32": ("clay", "ember", "sage"),
+    "anteliascard32": ("bone", "sage", "clay"),
+    "peacebreath32": ("sage", "bone", "midnight"),
+    "nyccoffee32": ("bone", "clay", "midnight"),
+    "afterhours32": ("sage", "clay", "bone"),
+    "outofoffice32": ("ember", "clay", "bone"),
+    "skincareroutine32": ("bone", "sage", "clay"),
+    "youlookgood32": ("sage", "bone", "midnight"),
+    "spiritadventure32": ("midnight", "bone", "sage"),
+    "dreamfollow32": ("midnight", "sage", "bone"),
+    "angelinastyle32": ("midnight", "sage", "bone"),
+    "comesnatural32": ("bone", "sage", "clay"),
+    "calmafterstorm32": ("sage", "bone", "clay"),
+    "beachclub32": ("clay", "bone", "sage"),
+    "splitampersand32": ("bone", "midnight", "clay"),
+    "setrum32": ("midnight", "chrome", "bone"),
+    "nectarambience32": ("midnight", "clay", "sage"),
+    "fluorescentduo32": ("clay", "bone", "midnight"),
+    "sacharon32": ("clay", "midnight", "bone"),
+    "lastnightsweden32": ("midnight", "clay", "bone"),
+    "crywolf32": ("midnight", "bone", "clay"),
+    "welcomemorning32": ("clay", "bone", "sage"),
+    "esens32": ("clay", "bone", "sage"),
+    "asbon32": ("clay", "bone", "sage"),
+    "italicregular32": ("bone", "clay", "sage"),
+    "smokeletters32": ("bone", "midnight", "clay"),
+    "blackerwear32": ("midnight", "bone", "clay"),
+    "silentnight32": ("midnight", "bone", "clay"),
+    "playgrid32": ("midnight", "bone", "clay"),
+    "fridayrunning32": ("midnight", "bone", "clay"),
+    "medievalcreatures32": ("midnight", "clay", "bone"),
+    "littlemadquote32": ("midnight", "bone", "clay"),
+    "soulrevenge32": ("midnight", "bone", "clay"),
+    "allworkplay32": ("midnight", "bone", "clay"),
+    "sociato32": ("midnight", "bone", "clay"),
+    "owlstory32": ("bone", "clay", "sage"),
+    "hazysky32": ("clay", "sage", "bone"),
+    "itsokay32": ("midnight", "clay", "bone"),
+    "nightonearth32": ("midnight", "bone", "clay"),
+    "goodthingstothose32": ("midnight", "bone", "clay", "ember"),
+    "rudybrownie32": ("afterhours", "ember", "midnight", "clay"),
+    "spaceprint32": ("midnight", "clay", "ember"),
+    "scriptgrid32": ("midnight", "bone", "inkwell"),
+    "smashcourt32": ("midnight", "afterhours", "bone"),
+    "scriptpattern32": ("bone", "clay", "sage"),
+    "brushpanel32": ("clay", "sage", "bone"),
+    "avalonbrush32": ("bone", "clay", "sage"),
+    "ssrange32": ("midnight", "clay", "bone"),
+    "allsummerlong32": ("midnight", "clay", "bone"),
+    "boldcampaign32": ("bone", "midnight", "sage"),
+    "goodtimeroll32": ("afterhours", "bone", "clay"),
+    "childhoodbook32": ("bone", "ember", "afterhours"),
+    "playerglyph32": ("midnight", "afterhours", "clay"),
+    "alicebadge32": ("midnight", "afterhours", "clay"),
+    "notallroads32": ("midnight", "afterhours", "clay"),
+    "practicehard32": ("midnight", "afterhours", "clay"),
+    "rainbowstack32": ("midnight", "afterhours", "bone"),
+    "wakefamous32": ("midnight", "afterhours", "clay"),
+    "sexyshout32": ("midnight", "bone", "clay"),
+    "embracesexiest32": ("clay", "bone", "midnight"),
+    # Reference-led additions need catalogue themes too, even when their HTML
+    # editors carry a fixed source palette. These shortlists keep the review
+    # rotation complete and deterministic for every active slot.
+    "prettyinpink32": ("clay", "bone", "sage"),
+    "dynamicplayful32": ("clay", "sage", "bone"),
+    "retroshowcase32": ("clay", "midnight", "bone"),
+    "iconicposter32": ("midnight", "clay", "bone"),
+    "summerparadise32": ("sage", "clay", "bone"),
+    "calgarywelcome32": ("clay", "sage", "bone"),
+    "latinmaxims32": ("midnight", "bone", "clay"),
+    "onlygooddieyoung32": ("midnight", "ember", "bone"),
+    "blackholesun32": ("midnight", "ember", "clay"),
+    "somethingabouther32": ("midnight", "clay", "bone"),
+    "darknightbrighterday32": ("midnight", "bone", "sage"),
+    "tc-panthoma-specimen32": ("midnight", "bone", "clay"),
+    "tcpanthomarepeat32": ("midnight", "bone", "clay"),
+    "strongerquote32": ("midnight", "clay", "bone"),
+    "scarygangsta32": ("midnight", "ember", "bone"),
+    "darkbriton32": ("midnight", "gilded", "vellum", "bone"),
+    "darkbritonthankyou32": ("midnight", "gilded", "vellum", "bone"),
+    "hailcrash32": ("midnight", "ember", "clay", "bone"),
+    "awakeportrait32": ("midnight", "clay", "bone"),
+    "pixelledger32": ("midnight", "chrome", "bone"),
+    "winevintage32": ("midnight", "gilded", "clay", "bone"),
+    "blackgold32": ("midnight", "gilded", "bone"),
+    "hongkongcrisis32": ("midnight", "ember", "bone"),
+    "caves46532": ("midnight", "clay", "bone"),
+    "yabbadabbadoo32": ("bone", "clay", "sage"),
+    "choosinghappiness32": ("clay", "sage", "bone"),
+    "fatkillkat32": ("midnight", "clay", "bone"),
 }
 
 
@@ -4573,6 +4830,25 @@ def family_style_label(family_name, style_name):
     return style_name or family_name
 
 
+def real_italic_sibling(ctx):
+    """Choose the nearest actual Italic style in this font's detected family."""
+    current_path = Path(ctx["font_path"]).resolve()
+    styles = ctx.get("family_styles", [])
+    current = next((style for style in styles
+                    if Path(style["path"]).resolve() == current_path), None)
+    candidates = [style for style in styles
+                  if style.get("italic") and
+                  Path(style["path"]).resolve() != current_path]
+    if not candidates:
+        return None
+    current_weight = current.get("weight", 400) if current else 400
+    return min(candidates, key=lambda style: (
+        abs(style.get("weight", 400) - current_weight),
+        any(token in style.get("style", "").casefold()
+            for token in ("condensed", "narrow")),
+        style.get("style", "").casefold(), str(style["path"])))
+
+
 def build_ctx(font_path, name, copy, palette=None, mode=None, about="",
               cls="elegant"):
     """Everything a pin needs, decided from the font's own data.
@@ -4862,7 +5138,7 @@ SUPPORT_HTML_SPECS = {
 SUPPORT_HTML_RENDERERS = frozenset(SUPPORT_HTML_SPECS)
 
 
-def render_support_html(name, ctx, destination, ratio="3x2"):
+def render_support_html(name, ctx, destination, ratio="3x2", review_mode=False):
     """Render a migrated support layout with Chromium, then verify its frame."""
     if name not in SUPPORT_HTML_RENDERERS:
         raise ValueError(f"no HTML/CSS renderer is registered for {name}")
@@ -4883,8 +5159,74 @@ def render_support_html(name, ctx, destination, ratio="3x2"):
             "attitude32": "Attitude", "indieground32": "Indieground Font Foundry",
             "caramelsundae32": "Caramel Sundae",
             "sweettreat32": "Sweet Treat Dreams",
+            "saucystack32": "Saucy Stack",
+            "anteliascard32": "Antelias",
+            "peacebreath32": "Keep Your Mind Open To Peace Make Space To Slow Down And Breathe",
+            "nyccoffee32": "New York Coffee Shops",
+            "afterhours32": "After Hours",
+            "outofoffice32": "Out Of Office",
+            "skincareroutine32": "Night Skincare Routine",
+            "youlookgood32": "You Look Good Today",
+            "spiritadventure32": "Spirit Of Adventure",
+            "dreamfollow32": "Follow Your Dreams",
+            "angelinastyle32": "Angelina Jolie",
+            "comesnatural32": "Do What Comes Natural",
+            "calmafterstorm32": "Calm After The Storm",
+            "beachclub32": "Beach Club",
+            "splitampersand32": "Letters Matter",
+            "setrum32": "Setrum",
+            "nectarambience32": "Nector Ambience",
+            "fluorescentduo32": "Fluorescent Adolescent",
+            "sacharon32": "Sacharon",
+            "lastnightsweden32": "Last Night In Sweden",
+            "crywolf32": "Cry Wolf",
+            "welcomemorning32": "Welcome Morning",
+            "esens32": "ESENS",
+            "asbon32": "ASBON",
+            "italicregular32": "Family Member Sample vs Current Style Sample Aa",
+            "smokeletters32": "fh",
+            "blackerwear32": "Blacker Wear Trendy Fashion",
+            "silentnight32": "Silent Night",
+            "playgrid32": "Pickle 2037 Play 82 69 45",
+            "fridayrunning32": "Friday Running 20 Club 25",
+            "medievalcreatures32": "medieval creatures 1348 manuscript and bestiaries",
+            "littlemadquote32": "We All Go A Little Mad Sometimes Psycho 1960",
+            "soulrevenge32": "Soul's Revenge The Dragon Knight 1987 A Legend Awakens",
+            "allworkplay32": "All work and no play makes Jack a dull boy All play and no work makes Jack a mere toy",
+            "sociato32": "Sociato Quirky Type",
+            "owlstory32": "The Owl Who Couldn’t Sleep",
+            "hazysky32": "Hazy Sky Session IPA",
+            "itsokay32": "it's Okay Fenotype Studios POSTRE Tasty Display Type",
+            "nightonearth32": "Night on earth",
+            "goodthingstothose32": "Good things come to those who Lurk Mull Sniggle Garble Scuttle",
+            "rudybrownie32": "Rudy Brownie",
+            "spaceprint32": "HOLO 2023",
+            "scriptgrid32": "Decline Courier Pianist Interim Actuals Fruited Rolling",
+            "smashcourt32": "Smash Court Elevate Your Potential Master the Court Own the Match Unleash Your Potential on the Court Elevate Your Game",
+            "scriptpattern32": "Everyday Time Sometimes Moon Sunday",
+            "brushpanel32": "Orchid North Design Fresh Believe to Achieve Vivid Boutique",
+            "avalonbrush32": "Avalon Font Specimen",
+            "ssrange32": "S/S Range New Vogue Fashion Lettering",
+            "allsummerlong32": "All Summer Long",
+            "boldcampaign32": "Cool Sh*t We've Done This Week Give Away We're Hiring 8 Brands Killin' It Right Now",
+            "goodtimeroll32": "Let The Good Times Roll",
+            "childhoodbook32": "This book Read naked remind me about my Childhood",
+            "playerglyph32": "Player your game manifestation",
+            "alicebadge32": "Rabbits Go Ask Alice Follow The White Rabbit",
+            "notallroads32": "NOT all roads ARE simple,",
+            "practicehard32": "Practice HARD Train HARD Work HARD Play HARDER",
+            "rainbowstack32": "RAINBOW RAINBOW RAINBOW RAINBOW",
+            "wakefamous32": "WAKE ME UP WHEN I'M FAMOUS!",
+            "sexyshout32": "Sexy Shout",
+            "embracesexiest32": "Embrace The Sexiest With Bold And Simplicity",
         }
-        candidate = panel_text(ctx, (fallbacks[name],))
+        fallback = fallbacks.get(name)
+        if fallback is None:
+            # New source-led HTML templates own their copy in the editor module;
+            # use the readable catalogue id as a glyph probe when no explicit
+            # renderer sample has been authored for that entry yet.
+            fallback = name.removesuffix("32").replace("-", " ")
+        candidate = panel_text(ctx, (fallback,))
         missing = sorted({character for character in candidate
                           if not character.isspace() and not usable(ctx, character)})
         warnings = []
@@ -4893,7 +5235,312 @@ def render_support_html(name, ctx, destination, ratio="3x2"):
                 "The selected display copy has unsupported glyphs; Chromium will "
                 "use a readable fallback for: " + " ".join(missing))
         props = {"warnings": warnings}
-        if name == "sweettreat32":
+        if name == "welcomemorning32":
+            words = candidate.split()
+            if len(words) == 1:
+                words.append(words[0])
+            lines = pack_lines(words, 2)
+            props.update({"lineOne": lines[0].upper(),
+                          "lineTwo": lines[1].upper() if len(lines) > 1 else ""})
+        elif name == "esens32":
+            props.update({"headline": candidate.upper(),
+                          "caption": "LOTION BEAUTY SKINCARE"})
+        elif name == "asbon32":
+            props.update({"headline": candidate.upper()})
+        elif name == "awakeportrait32":
+            props.update({"headline": support_render_copy(ctx, "Awake").upper()})
+        elif name == "calgarywelcome32":
+            props.update({"eyebrow": support_render_copy(ctx, "Welcome to"),
+                          "headline": support_render_copy(ctx, "Calgary")})
+        elif name == "peacebreath32":
+            headline = clean(
+                ctx, "keep your mind\nopen to PEACE\nmake space to\nslow down and\nBREATHE")
+            props.update({"headline": headline})
+        elif name == "italicregular32":
+            styles = ctx.get("family_styles", [])
+            current_path = Path(ctx["font_path"]).resolve()
+            current = next((style for style in styles
+                            if Path(style["path"]).resolve() == current_path), None)
+            siblings = [style for style in styles
+                        if Path(style["path"]).resolve() != current_path]
+            if current is None or not siblings:
+                raise ValueError(
+                    "italicregular32 requires a distinct sibling font in the same family")
+            opposite_style = [style for style in siblings
+                              if style["italic"] != current["italic"]]
+            sibling = min(opposite_style or siblings, key=lambda style: (
+                abs(style["weight"] - current["weight"]),
+                any(token in style["style"].casefold()
+                    for token in ("condensed", "narrow")),
+                style["style"].casefold(), str(style["path"])))
+            props.update({
+                "leftLabel": f"{sibling['style']} Sample",
+                "rightLabel": f"vs {current['style']} Sample",
+                # Use identical specimen text in both panels so the comparison
+                # demonstrates the sibling face rather than uppercase vs lowercase.
+                "leftGlyph": "Aa", "rightGlyph": "Aa",
+            })
+            family_args.extend(["--family-font", str(sibling["path"])])
+        elif name == "smokeletters32":
+            props.update({"leftGlyph": "f", "rightGlyph": "h"})
+        elif name == "blackerwear32":
+            props.update({"leftTitle": "Blacker", "leftTagline": "Wear",
+                          "rightTitle": "Trendy", "rightItalic": "Fashion",
+                          "bodyCopy": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."})
+        elif name == "silentnight32":
+            props.update({"leftWord": "Silent", "rightWord": "Night"})
+        elif name == "nesting32":
+            props.update({"headline": "Nesting", "pretitle": "The"})
+        elif name == "skincareroutine32":
+            props.update({"headline": "night & skincare\nROUTINE"})
+        elif name == "youlookgood32":
+            props.update({"headline": "you look\ngood today"})
+        elif name == "spiritadventure32":
+            props.update({"headline": "the Spirit\nof\nAdventure"})
+        elif name == "dreamfollow32":
+            props.update({"headline": "follow your dreams\nno matter what!"})
+        elif name == "comesnatural32":
+            props.update({"headline": "Do\nWhat\nComes\nNatural"})
+        elif name == "splitampersand32":
+            props.update({"headline": "Letters\nMatter"})
+        elif name == "nectarambience32":
+            props.update({"headline": "Nector Ambience"})
+        elif name == "playgrid32":
+            props.update({"topLeft": "hora nocte", "topRight": "neyro mono",
+                          "label": "Pickle", "year": "2037", "gridTitle": "PLAY",
+                          "topNumber": "82", "leftNumber": "69",
+                          "rightNumber": "45", "bottomNumber": "82"})
+        elif name == "fridayrunning32":
+            props.update({"topLeftLabel": "HORA NOCTE", "topRightLabel": "NEYRO MONO",
+                          "topTitle": "FRIDAY", "headline": "RUNNING",
+                          "leftNumber": "20", "club": "CLUB", "rightNumber": "25",
+                          "footerLeft": "6 STYLES", "footerRight": "© 2025"})
+        elif name == "medievalcreatures32":
+            props.update({"topLine": "medieval creatures", "yearLine": "{1348}",
+                          "bottomLine": "manuscript and bestiaries"})
+        elif name == "littlemadquote32":
+            props.update({"topLeft": "Hora Nocte", "topRight": "HN Relvick",
+                          "lineOne": "We All Go", "lineTwo": "A Little Mad",
+                          "lineThree": "Sometimes", "attribution": "Psycho (1960)",
+                          "footerLeft": "20 Styles",
+                          "footerRight": "All Right Reserved © 2026"})
+        elif name == "soulrevenge32":
+            props.update({"cinemaCredit": "23 CINEMAS PRESENT",
+                          "titleOne": "Soul’s", "titleTwo": "Revenge",
+                          "director": "A Film By Daniel V. Harrington",
+                          "castOne": "Victor\nWHITMORE",
+                          "castTwo": "Eleanor\nGRAVES",
+                          "castThree": "Isabella\nCROWE",
+                          "castFour": "Lucas\nBLACKWOOD",
+                          "dragonTitle": "THE DRAGON KNIGHT",
+                          "yearOne": "1", "yearTwo": "9",
+                          "yearThree": "8", "yearFour": "7",
+                          "dragonTagline": "A LEGEND AWAKENS"})
+        elif name == "allworkplay32":
+            props.update({"lineOne": "All work and no play",
+                          "lineTwo": "makes Jack a dull boy,",
+                          "lineThree": "All play and no work",
+                          "lineFour": "makes Jack a mere toy."})
+        elif name == "sociato32":
+            props.update({"initial": "R", "highlight": "Quirky.",
+                          "bodyCopy": "Perfect for modern trends, it’s a typeface full of character. The typeface was inspired by a declaration published during the French Revolution that extolled the development of a new religion, the cult of the Supreme Being. It’s a stunning piece of work, with a wild, baroque layout and hand drawn typography. It’s a veritable goldmine of typographic ideas."})
+        elif name == "owlstory32":
+            props.update({"titleLineOne": "The", "titleLineTwo": "Owl",
+                          "captionOne": "WHO", "captionTwo": "COULDN’T",
+                          "captionThree": "SLEEP"})
+        elif name == "hazysky32":
+            props.update({"headlineOne": "hazy", "headlineTwo": "sky",
+                          "caption": "SESSION IPA"})
+        elif name == "itsokay32":
+            props.update({"headlineOne": "it's", "headlineTwo": "Okay!",
+                          "studioOne": "Fenotype", "studioTwo": "Studios",
+                          "footer": "POSTRE - TASTY DISPLAY TYPE"})
+        elif name == "nightonearth32":
+            props.update({"headlineOne": "Night on", "headlineTwo": "earth."})
+        elif name == "goodthingstothose32":
+            props.update({"brandLetter": "F", "lineOne": "Good things",
+                          "lineTwo": "come to those", "lineThree": "who",
+                          "period": ".", "optionOne": "Lurk", "optionTwo": "Mull",
+                          "optionThree": "Sniggle", "optionFour": "Garble",
+                          "optionFive": "Scuttle", "checkedOption": 2})
+        elif name == "rudybrownie32":
+            props.update({"lineOne": "Rudy", "lineTwo": "Brownie",
+                          "displayScale": 1})
+        elif name == "spaceprint32":
+            props.update({"topWord": "HOLO", "year": "2023",
+                          "displayScale": 1})
+        elif name == "scriptgrid32":
+            name_table = ctx["tt"]["name"]
+            family_label = (name_table.getDebugName(16)
+                            or name_table.getDebugName(1)
+                            or ctx["name"]).strip()
+            designer = (name_table.getDebugName(9) or "Family Specimen").strip()
+            props.update({
+                "familyName": family_label,
+                "typeLabel": "Type Specimen",
+                "creatorLabel": designer,
+                "formatLabel": "OpenType",
+                **{f"word{i + 1}": word for i, word in enumerate(
+                    ("Decline", "Courier", "Pianist", "Interim",
+                     "Actuals", "Fruited", "Decline", "Rolling"))},
+                "displayScale": 1,
+            })
+        elif name == "smashcourt32":
+            props.update({
+                "lineOne": "“Smash Court",
+                "lineTwo": "Elevate Your",
+                "lineThree": "Potential”",
+                "rightCaption": "MASTER THE\nCOURT\nOWN THE\nMATCH",
+                "footerCaption": "UNLEASH YOUR\nPOTENTIAL ON THE COURT\nELEVATE YOUR GAME",
+                "displayScale": 1,
+            })
+        elif name == "scriptpattern32":
+            props.update({
+                "word1": "Everyday",
+                "word2": "Time",
+                "word3": "Sometimes",
+                "word4": "Moon",
+                "word5": "Sunday",
+                "displayScale": 1,
+            })
+        elif name == "brushpanel32":
+            props.update({
+                "topWordOne": "Orchid",
+                "topWordTwo": "North",
+                "topCaption": "DESIGN",
+                "repeatWord": "#FRESH",
+                "beliefWord": "Believe",
+                "connector": "TO",
+                "achievement": "Achieve",
+                "bottomWord": "Vivid",
+                "bottomCaption": "BOUTIQUE",
+                "displayScale": 1,
+            })
+        elif name == "avalonbrush32":
+            props.update({"mainWord": "Avalon", "displayScale": 1})
+        elif name == "ssrange32":
+            props.update({"lineOne": "S/S_RANGE", "lineTwo": "NEW_vogue",
+                          "displayScale": 1})
+        elif name == "allsummerlong32":
+            name_table = ctx["tt"]["name"]
+            family_label = (name_table.getDebugName(16)
+                            or name_table.getDebugName(1)
+                            or ctx["name"]).strip()
+            props.update({"lineOne": "ALL", "lineTwo": "Summer",
+                          "lineThree": "Long", "familyLabel": family_label,
+                          "displayScale": 1})
+        elif name == "boldcampaign32":
+            name_table = ctx["tt"]["name"]
+            family_label = (name_table.getDebugName(16)
+                            or name_table.getDebugName(1)
+                            or ctx["name"]).strip()
+            props.update({
+                "coolLineOne": "Cool Sh*t",
+                "coolLineTwo": "We've Done",
+                "coolLineThree": "This Week",
+                "giveLineOne": "GIVE",
+                "giveLineTwo": "AWAY",
+                "hireLineOne": "We're",
+                "hireLineTwo": "HIRING",
+                "brandsLineOne": "8 Brands",
+                "brandsLineTwo": "Killin' it",
+                "brandsLineThree": "Right Now",
+                "familyLabel": family_label,
+                "displayScale": 1,
+            })
+        elif name == "goodtimeroll32":
+            words = candidate.split()
+            lines = pack_lines(words, 2)
+            props.update({
+                "lineOne": lines[0] if lines else "Let the Good",
+                "lineTwo": lines[1] if len(lines) > 1 else "Times Roll!",
+                "displayScale": 1,
+            })
+        elif name == "childhoodbook32":
+            props.update({
+                "lineOneLead": "This book",
+                "lineOneAccent": "Read",
+                "lineTwoAccent": "naked",
+                "lineTwoLead": "remind",
+                "lineThree": "me about my",
+                "lineFour": "Childhood...",
+                "displayScale": 1,
+            })
+        elif name == "playerglyph32":
+            props.update({
+                "monogram": "Q",
+                "headline": "Player",
+                "secondLine": "your game",
+                "thirdLine": "manifestation",
+                "displayScale": 1,
+            })
+        elif name == "alicebadge32":
+            props.update({
+                "topText": "RABBITS · GO ASK ALICE",
+                "bottomText": "FOLLOW THE WHITE RABBIT",
+                "displayScale": 1,
+            })
+        elif name == "notallroads32":
+            italic_member = real_italic_sibling(ctx)
+            use_italic_sibling = italic_member is not None
+            if use_italic_sibling:
+                family_args.extend(["--family-font", str(italic_member["path"])])
+            props.update({
+                "topLine": "NOT",
+                "secondLine": "all roads",
+                "thirdLine": "ARE",
+                "bottomLine": "simple,",
+                "displayScale": 1,
+                "useItalicSibling": use_italic_sibling,
+            })
+        elif name == "practicehard32":
+            italic_member = real_italic_sibling(ctx)
+            use_italic_sibling = italic_member is not None
+            if use_italic_sibling:
+                family_args.extend(["--family-font", str(italic_member["path"])])
+            props.update({
+                "verbOne": "Practice", "powerOne": "HARD",
+                "verbTwo": "Train", "powerTwo": "HARD",
+                "verbThree": "Work", "powerThree": "HARD",
+                "verbFour": "Play", "powerFour": "HARDER",
+                "displayScale": 1,
+                "useItalicSibling": use_italic_sibling,
+            })
+        elif name == "rainbowstack32":
+            props.update({
+                "outlineOne": "RAINBOW", "solidOne": "RAINBOW",
+                "outlineTwo": "RAINBOW", "solidTwo": "RAINBOW",
+                "displayScale": 1,
+            })
+        elif name == "wakefamous32":
+            props.update({
+                "lineOne": "WAKE ME UP",
+                "lineTwo": "WHEN I'M",
+                "lineThree": "FAMOUS!",
+                "displayScale": 1,
+            })
+        elif name == "sexyshout32":
+            italic_member = real_italic_sibling(ctx)
+            use_italic_sibling = italic_member is not None
+            if use_italic_sibling:
+                family_args.extend(["--family-font", str(italic_member["path"])])
+            props.update({
+                "lineOne": "Sexy",
+                "lineTwo": "Shout",
+                "displayScale": 1,
+                "useItalicSibling": use_italic_sibling,
+            })
+        elif name == "embracesexiest32":
+            props.update({
+                "eyebrowOne": "TYPE STUDY",
+                "eyebrowTwo": "DISPLAY FORM",
+                "headline": "Embrace",
+                "article": "The",
+                "highlight": "Sexiest",
+                "tagline": "with bold & simplicity",
+                "displayScale": 1,
+            })
+        elif name == "sweettreat32":
             lines = pack_lines(candidate.split(), min(3, len(candidate.split())))
             props.update({f"line{i+1}": lines[i] if i < len(lines) else ""
                           for i in range(3)})
@@ -5059,7 +5706,9 @@ def render_support_html(name, ctx, destination, ratio="3x2"):
                 candidate = candidate[0] if candidate else fallback
             else:
                 candidate = _support_copy(ctx, ("line", "word"), fallback)
-            values[key] = tc(support_render_copy(ctx, candidate))
+            rendered_copy = support_render_copy(ctx, candidate)
+            values[key] = (rendered_copy.upper() if name == "neue32"
+                           else tc(rendered_copy))
         if name == "stardust32":
             values.update({"lineTwo": tc("Studio"),
                            "eyebrow": tc("Type Studio"),
@@ -5320,7 +5969,7 @@ def render_support_html(name, ctx, destination, ratio="3x2"):
                 "The selected face lacks these phone-screen glyphs; Chromium "
                 "will draw them with a readable fallback: "
                 + " ".join(missing))
-        props = {"scale": 1, "centerScale": 1, "tracking": -.035,
+        props = {"scale": 1, "centerScale": .9, "tracking": -.012,
                  "rightSpacing": .073, "warnings": warnings}
         label_args = []
     elif name == "pixelquote32":
@@ -6074,6 +6723,8 @@ def render_support_html(name, ctx, destination, ratio="3x2"):
         label_args = []
     if isinstance(props, dict):
         props["fontClass"] = ctx["class"]
+        if review_mode:
+            props["reviewMode"] = True
     args = ["node", str(script), "--template", name,
             "--ratio", ratio,
             "--editor", spec["htmlEntry"],
@@ -11924,9 +12575,13 @@ def main():
     ap.add_argument("--supports", action="store_true",
                     help="draw a reproducible random sample of supporting-image "
                          "templates into <out>/3x2 as support-N_<name>.png")
-    ap.add_argument("--support-count", type=int, default=7,
-                    help="number of eligible support templates to sample (default: 7; "
-                         "use a large number or --template to render the whole catalogue)")
+    ap.add_argument("--support-count", type=int, default=13,
+                    help="number of eligible support templates to sample (default: 13; "
+                         "use --support-review-all for the full active HTML catalogue)")
+    ap.add_argument("--support-review-all", action="store_true",
+                    help="render every active HTML/CSS support template for review, "
+                         "bypassing class-fit filters but keeping retirement and "
+                         "real-family-style gates")
     ap.add_argument("--support-renderer", choices=("skia", "hybrid", "html"),
                     default="skia",
                     help="support output backend: skia (default), hybrid (HTML for "
@@ -11965,6 +12620,10 @@ def main():
         ap.error("--supports and --specimens are different surfaces; pick one")
     if args.support_renderer != "skia" and not args.supports:
         ap.error("--support-renderer requires --supports")
+    if args.support_review_all and not args.supports:
+        ap.error("--support-review-all requires --supports")
+    if args.support_review_all and args.support_renderer != "html":
+        ap.error("--support-review-all requires --support-renderer html")
     if args.support_ratios != "both" and not args.supports:
         ap.error("--support-ratios requires --supports")
     support_ratio_names = (("3x2", "1x1") if args.support_ratios == "both"
@@ -12011,9 +12670,11 @@ def main():
         cls_worlds = {"blackletter": ("vellum", "gilded"),
                       "sports": ("asphalt", "chrome"),
                       "script": ("graphite", "inkwell")}
-        active_supports = tuple(support_names(
-            cls, ctx["family"], ctx["family_style_count"],
-            ctx["has_weight_triplet"]))
+        active_supports = tuple(
+            support_review_names(ctx["family_style_count"])
+            if args.support_review_all else
+            support_names(cls, ctx["family"], ctx["family_style_count"],
+                          ctx["has_weight_triplet"]))
         if args.support_renderer == "skia":
             active_supports = tuple(name for name in active_supports
                                     if name not in HTML_ONLY_SUPPORT)
@@ -12047,22 +12708,23 @@ def main():
         (out / "pins.brief.json").write_text(
             json.dumps(brief, indent=2, ensure_ascii=False) + "\n",
             encoding="utf-8")
-    owned = (support_names(cls, ctx["family"], ctx["family_style_count"],
-                           ctx["has_weight_triplet"]) if args.supports else
+    owned = ((support_review_names(ctx["family_style_count"])
+              if args.support_review_all else
+              support_names(cls, ctx["family"], ctx["family_style_count"],
+                            ctx["has_weight_triplet"])) if args.supports else
              cls_names_spec(cls) if args.specimens else cls_names(cls))
     if args.supports and args.support_renderer == "skia":
         owned = [name for name in owned if name not in HTML_ONLY_SUPPORT]
-    if args.supports and not args.template:
+    if args.supports and not args.template and args.support_review_all:
+        names = list(owned)
+        if not args.as_json:
+            print(f"  supports: review-all selected {len(names)} of {len(owned)} active templates")
+    elif args.supports and not args.template:
         seed = int(hashlib.sha256(
             f"{ctx['name']}|{cls}|support-catalogue".encode("utf-8")).hexdigest()[:16], 16)
         rng = random.Random(seed)
         count = min(args.support_count, len(owned))
-        required = [n for n in ("weightfamily32", "mangosboard32")
-                    if n in owned]
-        remaining = [n for n in owned if n not in required]
-        chosen = required + sample_supports(
-            rng, remaining, max(0, count-len(required)), cls)
-        names = sorted(chosen, key=SUPPORT_ORDER.index)
+        names = select_support_templates(rng, owned, count, cls)
         if not args.as_json:
             print(f"  supports: selected {len(names)} of {len(owned)} eligible templates")
     elif args.specimens:
@@ -12091,7 +12753,7 @@ def main():
         if idle:
             print(f"  supports: not shipped for {cls}/{ctx['family']}: "
                   + ", ".join(idle), file=sys.stderr)
-        # This is a seven-image deliverable, not a cache of every panel ever
+        # This is a thirteen-design deliverable, not a cache of every panel ever
         # rendered. Remove only the renderer's own support-* outputs outside the
         # newly selected set, leaving every unrelated file untouched.
         for ratio in support_ratio_names:
@@ -12117,7 +12779,8 @@ def main():
                     f"support-{SUPPORT_ORDER.index(name) + 1}_{name}.png")
                 ship.parent.mkdir(parents=True, exist_ok=True)
                 ship, size, html_report = render_support_html(
-                    name, per.get(name, ctx), ship, ratio)
+                    name, per.get(name, ctx), ship, ratio,
+                    review_mode=args.support_review_all)
                 report = html_report.get("layoutReport") or {}
                 if name == "roadrunner32":
                     font_px = float(str(report.get("headlineFontSize", "0")).removesuffix("px"))
@@ -12145,6 +12808,9 @@ def main():
                 errs = []
                 content_warnings = html_report.get("contentWarnings", [])
                 sheet_notes = [f"content: {warning}" for warning in content_warnings]
+                sheet_notes.extend(
+                    f"review: {warning}"
+                    for warning in html_report.get("reviewWarnings", []))
             else:
                 surf, sh = render(name, per.get(name, ctx),
                                   frame_override=ratio if args.supports else None)

@@ -1,6 +1,6 @@
 ---
 name: font-rights-researcher
-description: Standalone rights researcher for the fonts staged under font-factory/input. Treats each staged folder as one family — one research pass per folder — plans its plainest cut as the representative, researches it on the web, and fans that red/amber/green verdict out into the folder's rights-verdicts.json so the Input Inspector renders a chip per font. Never edits fonts, manifests, listings, or the launch pipeline.
+description: Standalone rights and provenance researcher for fonts staged under font-factory/input. Treats each staged folder as one family, checks commercial and free-font distribution sources, records author/history/listing details, and fans a validated red/amber/green verdict plus sourced research into rights-verdicts.json for the Input Inspector. Never edits fonts, manifests, listings, or the launch pipeline.
 user-invocable: true
 ---
 
@@ -95,20 +95,39 @@ you do not trust.
 3. **One search-first pass per folder. A fetch is the exception, not the routine.**
    Discovery with `mcp_call` toolName `mcp__serper__serper_search` (its results are
    compact); `mcp__tavily__tavily_search` and `mcp__exa__exa_search` are
-   alternates, WebSearch the fallback. Budget: **1-2 searches per folder, and at
-   most one page fetch — only when you are about to write `clear`.**
+   alternates, WebSearch the fallback. Budget: **1-2 searches per folder and at
+   most one page fetch.** Use that fetch for the best page that can confirm the
+   exact version, author/uploader, displayed licence, or first publication date;
+   if a `clear` rests on a page's grant, use it to read that grant. An in-binary
+   grant quote or an author reached this run does not need an extra page fetch.
    - The evidence standard is set by what the verdict costs. Neither red nor amber
-     lets the seller ship, so for those a search result that names **this family**
-     on a foundry or marketplace domain is enough, and `bin/font_rights.py`
-     HTTP-checks every `--evidence` URL itself — never fetch just to prove a link
-     is alive. Green is different: a grant has to be *read*, so green is the only
-     state that earns `firecrawl_scrape`/WebFetch, and its `--grant-quote` must be
-     verbatim from this binary's own name records.
-   - The marketplace sweep is **one query, not five**:
-     `"<family>" (myfonts OR fonts.com OR creativefabrica OR dafont OR fontspace)`.
-     Record each avenue that came back empty in `--looked` (e.g.
-     `--looked "myfonts: no match for 'Junius'"`), because an amber with no
-     recorded search is just a guess.
+     lets the seller ship. A search result that names **this design and version**
+     on a current commercial seller, the holder's own site, or a type-rights
+     reference can support `claimed`; `bin/font_rights.py` checks those evidence
+     links itself. A free-font directory is a distribution record, not proof of
+     ownership or a licence grant, and belongs in `research.sources`, never by
+     itself in `--evidence`. Green still needs a verbatim commercial grant from
+     this binary's name records or an author reached this run.
+   - Search commercial sellers and free-font directories in the same first sweep:
+     `"<family>" (myfonts OR fonts.com OR creativefabrica OR dafont OR fontgeek OR fontsgeek OR fontfreak OR fontspace OR 1001fonts OR 1001freefonts OR fontasy OR abstractfonts OR ffonts OR fontsquirrel OR fontlibrary)`.
+     `FontGeek` may appear as **FontsGeek** (`fontsgeek.com`); include both
+     spellings in the query. These are examples, not an exhaustive allowlist.
+     Search a second time only if needed to distinguish a recut, find an author or
+     date, or verify the claimed holder. Record empty avenues in `--looked` and
+     actual pages in `research.sources`.
+   - Identify whether each page is the exact font/version, a related family or
+     just a name collision. Record where it is currently offered, the page's own
+     freeware/shareware/demo/personal-use label, who uploaded or is credited for
+     it, and any listing date. Keep the page's wording distinct from a verified
+     licence; if pages conflict, report both labels instead of choosing one.
+     Look for an original release/first-seen date, including a dated archive page,
+     and whether the author is actually active, deceased, or simply not reached.
+     Do not infer age from `head.created`: bundlers often reset it. Use `unknown`
+     when a detail is not supported by a page.
+   - `abandonware` is an informal historical label, never a rights state or
+     permission to ship. Record `yes`, `no`, or `unclear` with the source-based
+     reason; absence of a current listing or an unreachable author is not proof
+     that copyright ended.
    - The false-negative path to keep in mind is a 1990s design a foundry
      re-digitised and re-sells under a slightly different name; if the holder
      string points at a real foundry, search that pairing too.
@@ -117,13 +136,20 @@ you do not trust.
    ```bash
    python3 bin/font_rights.py write --folder <folder> --file "<exact filename>" \
      --state claimed --maker "Monotype" --evidence "https://…" --confidence high \
-     --note "one line" --fanout
+     --note "one line" \
+     --research-json '{"author":"…","author_status":"unknown","first_known_date":"…","age_estimate":"…","age_basis":"…","distribution_assessment":"…","abandonware_assessment":"unclear","abandonware_basis":"…","sources":[{"site":"DaFont","url":"https://…","source_type":"free_distribution","match":"exact family; version uncertain","availability":"download offered","distribution_label":"Free for personal use","uploader":"…","date":"…","note":"…"}]}' \
+     --fanout
    ```
+   `--research-json` is required. Include all top-level fields; use `unknown` or
+   `not stated` with a short basis when research cannot establish a value. `sources`
+   may be empty, but every listed page needs its type, match, availability, page
+   label, uploader and date (use `unknown`/`not stated` if the page omits them).
    The tool validates and can refuse (exit 2). Read the rejection and comply —
    it is the contract, not an obstacle: `claimed` needs a live URL (the tool
-   HTTP-checks it) **on a domain that can carry the claim — a shop, the holder's
-   own site, or a type-rights reference; a name-table scraper that mirrors this
-   dump's own metadata, or a page that merely mentions the name, is refused**,
+   HTTP-checks it) **on a domain that can carry the claim — a commercial seller,
+   the holder's own site, or a type-rights reference; free-font directories,
+   name-table scrapers that mirror this dump's own metadata, and pages that merely
+   mention the name are refused**,
    `orphan` refuses any `--evidence` and refuses `high`
    confidence, `clear` refuses a `--grant-quote` that is not verbatim in the
    binary. Never paraphrase a grant into the quote field to get it through.
@@ -136,6 +162,9 @@ you do not trust.
    the next run's queue. Report them.
 5. **One line per folder** in your running report:
    `<folder> → <state> (n files) — <reason>`.
+   Include the provenance finding in that reason; the full author, age, licence
+   label, uploader, and source URLs are stored under `research` and shown in the
+   Input Inspector's rights-chip dialog.
 6. Continue until the queue is empty or you hit the pass cap. Report what remains.
 7. **Publish the ledger.** `font-factory/input/` is gitignored, so the sidecars you
    just wrote are invisible to version control and vanish with the staging:
@@ -170,14 +199,15 @@ tracked ledger copy that `sync` publishes from it. You never:
 
 1. No state without evidence the tool accepted. A rejected write is not a
    smaller verdict — leave the font unmarked and say why.
-2. For `claimed` and `orphan`, a search result that names this family on a real
-   foundry or marketplace domain is the evidence, and the tool checks the URL is
-   live — that is enough, because neither verdict permits shipping and a wrong red
-   only costs a lost sale. For `clear` it is not: **green requires the wording**,
-   quoted verbatim from the binary or from a page you fetched this run. Never
-   invent a grant from a snippet, and never fetch a page you do not need.
-   The tool also refuses a `claimed` whose every URL is a name-table mirror or an
-   unrelated page: hosting a font is not the same as holding it.
+2. For `claimed`, the evidence must be a current commercial offer or a source
+   that can speak for the holder; the tool checks its URL is live. A free-font
+   directory page is recorded under `research.sources`, not used alone to make
+   the font red. For `orphan`, record at least two searched avenues. For `clear`,
+   **green requires the wording**, quoted verbatim from this binary or from a page
+   you fetched this run. Never invent a grant from a snippet, and never fetch a
+   page you do not need. The tool also refuses a `claimed` whose every URL is a
+   name-table mirror or an unrelated page: hosting a font is not the same as
+   holding it.
 3. A re-digitisation you cannot disambiguate (MT/URW/ITC/H&F co-cuts, the same
    name under two foundries) may only be `claimed` or `orphan` — never `clear`.
 4. Never weaken an existing verdict on the same evidence. If new evidence
@@ -185,8 +215,9 @@ tracked ledger copy that `sync` publishes from it. You never:
    in `history` with its date, which is exactly the audit trail.
 5. A name-table "free for commercial use" line is a claim, not a grant, unless
    you can quote it verbatim (the tool checks) **and** the wording covers
-   commercial use. If the author is unreachable, it is amber with the wording
-   kept in `--note`.
+   commercial use. If no qualifying holder or grant is found and the author is
+   unreachable, it is amber; preserve the exact label and contact finding in
+   `research` and `--note`.
 6. `--fanout` spreads one verdict over the whole staged folder, because the
    folder is one family by the seller's staging rule. Do not second-guess that by
    researching weights separately, and do not hand-write a sibling's verdict to
@@ -195,8 +226,9 @@ tracked ledger copy that `sync` publishes from it. You never:
    and say so in your report. **The tool enforces that now**: a `clear` fanned
    over a folder with a mismatched holder string is held back on every sibling.
 7. Cost is a constraint, not a style preference: **1-2 searches per folder, one
-   fetch only for green.** If a folder needs more than that to decide, the honest
-   answer is amber with what you found, not another five searches.
+   fetch maximum.** If a folder needs more than that to decide, the honest answer
+   is amber with what you found, not another five searches. Free-font listing
+   labels and `abandonware` claims are provenance, not commercial permission.
 8. Report any verdict in the sidecar whose file has vanished from the folder,
    and any font whose binary will not open — `show` prints the read error; an
    unreadable binary cannot be researched, so leave it unmarked and list it.
@@ -235,6 +267,9 @@ researched, and how many remain queued), then:
 
 - every `clear` with its grant quote or the author contacted and when;
 - every `claimed` with its evidence URL;
+- the author/status, earliest date or age estimate, observed distribution labels,
+  abandonware assessment, and exact free/commercial directory pages and uploader
+  details recorded for each family;
 - the ambers you would most like a second opinion on, and what you could not
   find;
 - duplicates and unreadable binaries you are reporting but did not touch;

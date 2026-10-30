@@ -1,0 +1,43 @@
+#artboard.user-reference-goodtimeroll {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #4c3930;
+  color: #fff;
+}
+
+#artboard.user-reference-goodtimeroll .gtr-plate {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 52%;
+  pointer-events: none;
+}
+
+#artboard.user-reference-goodtimeroll .gtr-line {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #fff;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .88;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  text-shadow: 0 2px 3px rgb(27 20 18 / 78%), 0 5px 13px rgb(27 20 18 / 72%);
+  -webkit-text-stroke: .008em rgb(27 20 18 / 35%);
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  transform: translateX(-50%);
+}

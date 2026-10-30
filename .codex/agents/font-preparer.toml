@@ -17,6 +17,23 @@ archive names, metadata, technical audit, the two factual specimen sheets
 and the `visuals/New-Images/` handoff. Follow it exactly. Do not rely on older visual derivative, video, or
 OpenCode instructions.
 
+The technical audit is a release gate. It checks that CFF TopDict FamilyName
+and FullName plus the CFF Name INDEX FontName match name IDs 1, 4, and 6 across
+the prepared package formats, reports the prepared GSUB/GPOS inventory, and verifies
+that Commercial-Use and Personal-Use archives contain identical font bytes.
+Stop on any CFF metadata or archive-payload mismatch. Remove source Name ID 10
+and preserve the source head.created timestamp; let fontTools refresh
+head.modified when saving. If the user
+supplies an exact `.fea` file, pass it through `--layout-features` and verify
+the requested shaping with HarfBuzz before reporting completion.
+
+For `/full-workflow`, use the canonical profile in
+`font-factory/fonts/{input-slug}/visual-direction/visual-plan.json`. When it
+has `font_profile_schema: 2`, copy `font_profile.product_description` exactly
+to the preparation root's `description.txt`. Do not invent a second version.
+Treat Agent 27's type label and subtext as verified product facts for the
+downstream listing stages.
+
 Use Codex-native tools and repository helpers only. Never invoke OpenCode, the
 `opencode` CLI, an OpenCode agent, Codex CLI as a subprocess, or another agent.
 Do not generate, redesign, inspect, copy, compress, or creatively process the

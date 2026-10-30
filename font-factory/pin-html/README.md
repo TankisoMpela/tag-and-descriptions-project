@@ -10,7 +10,13 @@ Render all active designs into one individual-image review folder:
 node font-factory/pin-html/render_gallery.mjs
 ```
 
-The gallery includes a manifest with dimensions, source lineage, layout reports, and links to the individual editors. Twelve excluded variants are listed in its manifest; retired source files remain intact unless separately removed.
+By default this creates a date-stamped folder under `outputs/`. The renderer
+refuses to replace existing renderer outputs unless `--overwrite` is supplied;
+when overwriting it removes only its named gallery files (or numbered pin
+renders in production mode), leaving contact sheets and other files in place.
+The gallery includes a manifest with dimensions, source lineage, layout
+reports, and links to the individual editors. Retired variants remain out of
+production pins.
 
 The local specimen fonts mirror the families used in the prior review set. Upload any other font through an editor's font picker to compare the layouts against it.
 

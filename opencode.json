@@ -35,7 +35,7 @@
     "font-image-generator": {
       "mode": "subagent",
       "prompt": "{file:./agents/agent-27-font-image-generator.md}",
-      "description": "Agent 27 creates clean white-background font-name specimens, three complete font-specific thumbnail prompts, HTML/CSS support layouts, factual specimens, and Pinterest template renders; it validates the handoff before font preparation.",
+      "description": "Agent 27 visual handoff: three complete thumbnail prompts, 13 seeded-random support catalogue designs at both ratios including eligible family showcases, four factual previews, and 23 active Pinterest template renders.",
       "permission": {
         "task": "allow"
       }
@@ -58,7 +58,7 @@
     "full-workflow": {
       "mode": "primary",
       "prompt": "{file:./agents/agent-28-full-workflow.md}",
-      "description": "Strict active font launch workflow: Agent 27 provisional text handoff (deciding a new font name itself when none is supplied), continuous Agent 13 preparation, then BOOTH, Pixiv, and Creative Fabrica. X, DLsite, YellowImages, and other marketplace stages are paused.",
+      "description": "Strict active font launch: Agent 27 visual handoff, Agent 13 preparation, BOOTH, Creative Market, and Creative Fabrica in sequence. Pixiv and other marketplace stages are paused.",
       "permission": {
         "task": "allow"
       }
@@ -100,8 +100,8 @@
       "agent": "creative-fabrica-fonts-specialist"
     },
     "cm-font": {
-      "description": "Run the local-corpus Creative Market font listing specialist.",
-      "template": "Please run the cm-fonts-specialist agent using every parseable Markdown listing in outputs/creativemarket and the generated local tag-pattern bank; produce exactly 30 product-fit tags and the validated Creative Market PDP: {input}",
+      "description": "Run Agent 2 for a bounded, fact-checked Creative Market font listing using current taxonomy and product facts.",
+      "template": "Please run cm-fonts-specialist with the supplied final name, product facts, description, slug, and unified product number. Follow agents/agent-2-fonts-specialist.md and agents/reference/AGENTS-annex-listing.md: perform the bounded current Creative Market research pass, create exactly 30 defensible tags, run the validator, and return the exact output path. Do not upload or publish: {input}",
       "agent": "cm-fonts-specialist"
     },
     "font-final-images": {
@@ -111,7 +111,7 @@
     },
     "font-images": {
       "description": "Run the FontFairy font image generator before font preparation. It creates a fast mechanical text-placeholder handoff, plans 3:2 and 1:1 outputs, and leaves a strict Agent-13 handoff. Final artwork replacement is a separate optional seller step.",
-      "template": "Run the registered font-image-generator agent using the exact font workspace, supplied name when present, product description, and verified facts. Follow agents/agent-27-font-image-generator.md: create white-background name specimens, matching complete prompts for 3:2 main, 1:1 main, and storefront square, the documented HTML/CSS support layouts, factual specimens, and Pinterest template renders. Do not request or use an old marketplace thumbnail. If the user explicitly asks for a prompt prototype, use the 33-reference composition audit with the matching specimen and prompt; review title hierarchy, physical surface integration, model focus, crop, contrast and small-size readability. Remove unrelated details, glitter, gratuitous glow and generic AI decoration; open space can remain empty. Do not invoke font preparation automatically. Finish with READY FOR FONT PREP HANDOFF and the exact prepared_visuals path: {input}",
+      "template": "Run the registered font-image-generator using the exact selected source workspace, user-supplied final name and description when provided, and relevant facts. Follow agents/agent-27-font-image-generator.md and agents/reference/AGENTS-annex-visual-handoff.md. Inspect the font metadata and mapped-glyph specimen before deciding any unsupplied name or profile. Produce the required specimens, matching prompts, active support layouts, factual specimens, and Pinterest template renders. Do not require old thumbnails or research galleries. Finish with READY FOR FONT PREP HANDOFF and the exact prepared_visuals path: {input}",
       "agent": "font-image-generator"
     },
     "font-prep": {
@@ -125,8 +125,8 @@
       "agent": "font-rights-researcher"
     },
     "full-workflow": {
-      "description": "Run the full-workflow agent through the complete sequential font launch from visual generation through preparation, BOOTH, Pixiv, and Creative Fabrica. X, DLsite, YellowImages, and other marketplace stages are paused.",
-      "template": "Please run the full-workflow agent with the exact font workspace directory, old font description, and any factual constraints supplied here. If the user supplied a new font name, pass it through; if not, Agent 27 decides the final name itself (name-uniqueness research is forbidden). Execute visual generation, continuous font preparation, BOOTH, Pixiv, and Creative Fabrica strictly sequentially; X, DLsite, YellowImages, and all other marketplace stages stay paused: {input}",
+      "description": "Run the shared five-stage sequential font launch through preparation, BOOTH, Creative Market, and Creative Fabrica; Pixiv and other marketplace stages are paused.",
+      "template": "Run the registered full-workflow agent. Follow agents/agent-28-full-workflow.md as the shared source of truth. Execute 1) font-image-generator (Agent 27), 2) font-prep-specialist (Agent 13), 3) booth-fonts-specialist (Agent 20), 4) cm-fonts-specialist (Agent 2), and 5) creative-fabrica-fonts-specialist (Agent 29) strictly sequentially, verifying each stage before continuing. For a new source, stage only the exact user-selected Saved family. Do not invoke Pixiv or other paused stages, and do not claim upload/publication: {input}",
       "agent": "full-workflow"
     },
     "booth-pdf-maker": {

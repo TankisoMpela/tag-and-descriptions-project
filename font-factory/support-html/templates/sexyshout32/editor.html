@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sexy Shout</title>
+  <link rel="stylesheet" href="../../shared/editor-shell.css">
+  <link rel="stylesheet" href="../../shared/user-reference-batch-k.css">
+</head>
+<body>
+  <header class="studio-header">
+    <div>
+      <h1>Sexy Shout</h1>
+      <p class="source-id">Behance 40630743 · reference remake</p>
+    </div>
+  </header>
+  <main class="studio-grid">
+    <figure class="reference-panel">
+      <figcaption class="panel-title">Original Behance reference</figcaption>
+      <img src="../../../support-references/originals/reference-batch-2026-10-26-e/behance-40630743_01.webp" alt="White Sexy Shout lettering over a grayscale reclining fashion model">
+      <p class="reference-note">The original is archived unchanged. The live remake uses the supplied clean photo and editable words.</p>
+    </figure>
+    <section class="stage-panel" aria-label="Live template preview">
+      <h2 class="panel-title">Live composition</h2>
+      <div class="artboard-frame"><div id="artboard" data-ratio="3x2" aria-label="Two large live display words over the supplied grayscale fashion photo"></div></div>
+    </section>
+    <aside class="controls-panel">
+      <h2 class="panel-title">Layout controls</h2>
+      <label class="font-picker" for="font-file">Display font
+        <input id="font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="font-status" class="font-status">Choose a font to fit both words to the composition.</span>
+      </label>
+      <label class="font-picker" for="italic-file">Actual Italic family member (optional)
+        <input id="italic-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="italic-status" class="font-status">Upload an Italic cut from the same family. The words stay upright when none is loaded.</span>
+      </label>
+      <div id="template-controls"></div>
+    </aside>
+  </main>
+  <script src="../../shared/layout.js"></script>
+  <script src="../../shared/user-reference-batch-k.js"></script>
+  <script src="../../shared/editor-shell.js"></script>
+  <script>
+    window.SupportEditor.start(window.UserReferenceBatchK.create("sexyshout32"));
+    window.UserReferenceBatchK.bindItalicFamily();
+  </script>
+</body>
+</html>

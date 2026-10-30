@@ -56,11 +56,17 @@ if it cannot be matched unambiguously, ask rather than guessing.
 
 3. Read only the first ~30 lines of `description.txt` and the font name. Choose
    one board: `Handwritten Fonts`, `Display Fonts`, `Script Fonts`, or
-   `Decorative Fonts`, then record it:
+   `Decorative Fonts`, then record it as a suggestion in the registry:
 
    ```bash
    python3 bin/pinterest_registry.py set-board --slug <slug> --board "<Board>"
    ```
+
+   This does not create the Pinterest board. Buffer imports require the named
+   board to exist, so create the suggested boards in Pinterest before the first
+   Buffer batch. Pinterest's native CSV import can create a missing board.
+   References: [Buffer bulk upload](https://support.buffer.com/articles/how-to-upload-posts-in-bulk-to-buffer-cTIhl4mv6H)
+   and [Pinterest bulk upload](https://help.pinterest.com/en/business/article/bulk-upload-video-pins).
 
 4. Upload the complete manifested set to the `pinterest-pins-media` Vercel
    Blob store:
@@ -71,8 +77,10 @@ if it cannot be matched unambiguously, ask rather than guessing.
 
    The helper discovers the template count from the manifest, checks that the
    set contains those template pins followed by exactly ten composites, then
-   uploads every numbered file. It skips URLs already recorded unless the user
-   explicitly requests `--force`. Use `--index N` only for a targeted retry.
+   uploads every numbered file to a content-hash pathname, so changed artwork
+   gets a fresh public URL instead of a stale cached copy. It skips unchanged
+   files already recorded unless the user explicitly requests `--force`. Use
+   `--index N` only for a targeted retry.
    If validation reports a missing file, hash, or manifest, stop and complete
    the missing upstream stage; never fill a gap manually.
 
@@ -100,6 +108,9 @@ workflow; it does not create, schedule, or publish Pins on Pinterest.
 - Never edit font binaries, raw images, or `description.txt`.
 - Blob credentials come from `~/.config/papermoon/blob.env`; never print or
   commit the write token.
+- `list --ready` requires every image in a current manifest-backed set. Older
+  pre-manifest records remain readable during migration if their stored image
+  links are present.
 - `outputs/pinterest/registry.json` is the only registry state store; change it
   only through `bin/pinterest_registry.py`.
 - Do not inspect image content or claim that Pins were published.

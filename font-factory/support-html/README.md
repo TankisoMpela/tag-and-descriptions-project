@@ -1,10 +1,89 @@
 # HTML/CSS support-template renderer
 
 This directory contains browser editors and renderers for the support-image
-catalogue. The native Skia set remains 61 layouts across 70 stable slots; 14
-new source-led remakes are HTML-only. `catalog.json` records stable template
-slots, source/module mappings, and port status.
+catalogue. The native Skia layouts occupy 70 stable slots, with 52 active;
+source-led remakes are HTML-only. The generator can sample 135 active
+templates. `catalog.json` records active template slots, source/module
+mappings, and port status.
 
+The October 2026 reference batch C was built one source at a time, completing
+both 3:2 and square reviews before advancing. Its 20 original editors were
+`welcomemorning32`, `esens32`, `asbon32`, `italicregular32`,
+`smokeletters32`, `blackerwear32`, `silentnight32`, `playgrid32`,
+`fridayrunning32`, `medievalcreatures32`, `littlemadquote32`,
+`soulrevenge32`, `allworkplay32`, `sociato32`, `owlstory32`, `hazysky32`,
+`itsokay32`, `nightonearth32`, `goodthingstothose32`, and `rudybrownie32`.
+Each has 3:2 and square layouts with source wording rebuilt as editable
+HTML/CSS; display lines fit the uploaded font. The original references, source materials,
+provenance, and sequential queue are under
+`support-references/{originals,materials}/user-batch-2026-10-26-c/`; the two-ratio
+review renders are under `benchmarks/user-reference-batch-c-2026-10-26/output/`.
+`greatness32` was withdrawn; slot 115 remains reserved.
+Thirteen more templates were retired from the active catalogue on 2026-10-26:
+`line32`, `duo32`, `card32`, `hand32`, `zebra32`, `electromagnetic32`,
+`demolition32`, `skinbadge32`, `gelatocards32`, `angelinastyle32`, `beachclub32`,
+`fluorescentduo32`, and `lastnightsweden32`. Their editor files and technical
+notes remain as history; `SUPPORT_RETIRED` and `catalog.json` control selection.
+
+Reference batch D was developed sequentially, completing each active source in
+both ratios before moving on. Slot 127, `spaceprint32`, was withdrawn at the
+seller's request; the slot remains reserved, and its original, editor, and
+artwork plates remain as history. The 16 original batch D entries were:
+
+- `scriptgrid32` (128), eight live script words with font-derived family and
+designer labels.
+- `smashcourt32` (129), a live three-line quote over a clean tennis-court photo.
+- `scriptpattern32` (130), large staggered diagonal words with natural canvas
+edge crops over the preserved cream-paper grain.
+- `brushpanel32` (131), source-matched blush, mint, ivory, and charcoal panels,
+with repeated `#FRESH` type and a subtle paper-grain overlay.
+- `avalonbrush32` (132), a live magenta Avalon word, repeated type, and a
+format-neutral badge.
+- `ssrange32` (133), live yellow fashion lettering over the seller's unchanged
+photo plates.
+- `allsummerlong32` (134), the same square main-photo crop repeated in three
+equal cards, with an identical live-text composition on every card and natural
+side clipping at the canvas edges.
+- `boldcampaign32` (135), four vivid color panels with live selected-font copy.
+- `goodtimeroll32` (136), two live lines over the cleaned skater photo; the
+skater, clothing, and roller skates remain unchanged.
+- `childhoodbook32` (137), four enlarged black-and-orange live-text rows on
+white, with source-matched color and row spacing.
+- `playerglyph32` (138), the live `Yukas` credit, a selected-font Q in the
+upright pink panel, and three pink lines on charcoal.
+- `alicebadge32` (139), live curved text around a drawn sunset badge.
+- `notallroads32` (140), four live gold and white lines over the clean road
+photo; white lines use an actual Italic sibling when available.
+- `practicehard32` (141), paired live sports slogans over the clean basketball
+photo, using an actual Italic sibling for white verbs when available.
+- `rainbowstack32` (142), alternating live outlined and solid white rows over
+the clean dark photo.
+- `wakefamous32` (143), three live uppercase lines and a frame over the clean
+dark plate.
+
+All 17 original batch D source responses remain preserved; slots 127, 130,
+132, and 135 are now retired. Each active template has 3:2 and square exports.
+Batch E adds `sexyshout32` (slot 144) over the user's unchanged grayscale photo. Batch F adds
+`embracesexiest32` (slot 145) over the user's unchanged fashion photo, with the
+source credit replaced by neutral specimen labels. Both were reviewed in both
+ratios.
+
+Reference batch G adds 27 active source-led remakes at slots 146–172. The
+originals remain in `support-references/originals/reference-batch-2026-10-29-a/`;
+each remake keeps its wording editable and has separate 3:2 and square layouts.
+On 2026-10-29, slots 14, 16, 39, 42, 54, 120, 130, 132, and 135 were retired
+(`soldier32`, `brutal32`, `storyteller32`, `blossom32`, `meditation32`,
+`sociato32`, `scriptpattern32`, `avalonbrush32`, and `boldcampaign32`). Their
+source material and editor history remain in place, but they are excluded from
+`catalog.json` and catalogue renders. Later on 2026-10-29, slots 8, 82, 85,
+and 91 were retired (`crest32`, `indieground32`, `saucystack32`, and
+`skincareroutine32`). The active catalogue now has 135 templates and 50 retired
+slots. The current 135-template Maidega review
+is under `benchmarks/catalogue-review-2026-10-26/maidega/`. The Amalie Script
+review at `benchmarks/catalogue-review-2026-10-26/amalie-script/` renders all
+135 active templates in both ratios and uses the actual Bold sibling in family
+comparison layouts. The earlier 148-template Velmorin set is retained as a
+pre-cull comparison.
 ## T26074_12 design benchmark
 
 Open benchmarks/T26074-12/layout-editor.html through a local web server from
@@ -38,32 +117,44 @@ templates; `html` requires every selected template to have a port:
 
     bin/pin-studio/.venv/bin/python bin/pin-studio/pin_studio.py --font /path/to/font.ttf --class sports --supports --support-renderer hybrid --out /tmp/support-output
 
-The catalogue records each template's browser editor and port status. The 61 native support layouts have HTML/CSS prototypes; the 14 additional references are registered for HTML and hybrid runs only:
+For a culling pass, add `--support-review-all --support-renderer html`; this
+renders every active HTML template and both ratios, bypassing class-fit filters
+while retaining retired-template and real-family-style gates.
 
-`line32`, `duo32`, `card32`, `feature32`, `neon32`, `quote32`,
-`crest32`, `contour32`, `mountain32`, `hand32`, `zebra32`, `soldier32`,
-`mirror32`, `brutal32`, `rio32`, `boots32`, `plakat32`, `plakatart32`,
-`mangos32`, `alphabet32`, `birvase32`, `weightfamily32`, `mangosboard32`, `ovalword32`,
-`stardust32`, `cliffpostcard32`, `kindersea32`, `messageframe32`, `contactlist32`, `sunsetpromise32`,
-`phonegarden32`, `pixelquote32`, `ravencover32`, `voguecover32`, `confident32`, `storyteller32`,
-`focusposter32`, `wideclaim32`, `blossom32`, `neue32`, `electromagnetic32`, `demolition32`,
-`yearposter32`, `stadiumposter32`, `signalclock32`, `amberdawn32`, `skinbadge32`, `latestlook32`,
-`gelatocards32`, `meditation32`, `strongweak32`, `funkyfashion32`, `typewall32`, `manualbrew32`,
-`pastpresent32`, `herbalproduct32`, `colosseum32`, `glyphsheet32`, `freakscene32`, `greetingsgrid32`,
-`roadrunner32`.
+`catalog.json` is the active editor/slot list. Retired editor files and design
+writeups below remain historical references and are not selected by the
+renderer.
 
-Each exposes the same `configureTemplate(props)` and `getLayoutReport()` browser contract and uses the shared `render_template.mjs` Playwright exporter. The specimen editors share font upload, fit controls, bounds/contrast reporting, and the responsive editor shell while keeping artwork in per-template CSS and JS. Newly authored display copy uses Title Case: each word starts with a capital letter, while alphabet and glyph specimen strings retain their literal forms.
+The 21 second-batch HTML/CSS remakes occupy slots 85–105 and are listed in the
+October 2026 batch B section of `support-references/TEMPLATE-GUIDE.md`. Four
+were retired in this culling pass; the remaining 17 can join the generator's
+13-template random sample.
+
+Each exposes the same `configureTemplate(props)` and `getLayoutReport()` browser contract and uses the shared `render_template.mjs` Playwright exporter. The specimen editors share font upload, fit controls, bounds/contrast reporting, and the responsive editor shell while keeping artwork in per-template CSS and JS. Generic new display copy uses Title Case; source-led remakes preserve source wording and case, while alphabet and glyph specimen strings stay literal.
 
 The current 71-image Title Case review—61 active layouts and 10 blackletter
 variants—and its five overview sheets are under
 `benchmarks/titlecase-rerender-2026-10-15/`. All renders, sheets, the manifest,
 and searchable gallery are kept together there. The manifest records four
 readable-fallback notices for glyphs Kaitten lacks.
-The exporter title-cases copy props before fitting and preserves literal
-alphabet, glyph, digit, and symbol specimens. This single-font pass checks copy
-casing and fit but does not replace representative-family review.
+The exporter applies Title Case to display copy, including source-led remakes,
+and disables forced uppercase styling on the rendered artboard. Literal
+alphabet, glyph, digit, and symbol specimens keep their exact glyph casing;
+`practicehard32` retains its emphasized uppercase words, and `neue32` retains
+the uppercase `NEUE!` repetition. Single-font reviews check copy casing and fit but do not replace
+representative-family review.
 
-The remaining catalogue prototypes include the paper-stack baseline (`card32`); the red/cyan print studies (`plakat32`, `plakatart32`, and `birvase32`); the real-style family proof (`weightfamily32`); the three-card colour specimen (`mangosboard32`); the pearlescent oval wordmark (`ovalword32`); the wellness portrait layouts (`stardust32` and `blossom32`); the stepped repetition poster (`neue32`); and the violet/green signal board (`electromagnetic32`). Their source-led editors and captures are grouped under `templates/` and `benchmarks/`.
+The Agincort Regular review renders all 135 active templates in 3:2 and square,
+with contact sheets in catalogue order. Its selected Italic sibling is used in
+family-aware comparisons; see
+`benchmarks/catalogue-review-2026-10-26/agincort/README.md`.
+
+The active catalogue prototypes include the red/cyan print studies (`plakat32`,
+`plakatart32`, and `birvase32`), the real-style family proof (`weightfamily32`),
+the three-card colour specimen (`mangosboard32`), the pearlescent oval wordmark
+(`ovalword32`), the wellness portrait layouts (`stardust32` and `blossom32`),
+and the stepped repetition poster (`neue32`). Retired `card32` and
+`electromagnetic32` notes remain in the historical sections below.
 
 The normal job can select a renderer in its visual plan with
 `support_renderer: "skia"`, `"hybrid"`, or `"html"`. The default remains Skia.
@@ -405,7 +496,7 @@ production output.
 The active templates also use the broader pin/studio path in
 bin/pin-studio/pin_studio.py; it creates Pinterest artwork and factual
 specimens and uses Skia-backed font outlines for measurement and fit checks.
-Migrating the 61 supports alone therefore does not remove Skia from the
+Migrating the active support catalogue alone therefore does not remove Skia from the
 repository.
 
 See AUDIT.md for the catalogue, architecture, visual review, and migration
@@ -418,6 +509,23 @@ checklist.
 ## Blackletter reference template set
 
 The 18 Esviga blackletter recreations are each editable in `templates/<id>/editor.html` and `design.js`. Their individual 2400 × 1600 exports, per-image layout reports, one-column gallery, and render manifest are in `benchmarks/blackletter-reference-templates-2026-10-15/`. The gallery links to each separate PNG; it does not combine them into a collage. Each template maps directly to one source in `support-references/blackletter-references/`.
+
+## Sexy Shout source remake
+
+`templates/sexyshout32/editor.html` rebuilds Behance project 40630743 as two
+editable selected-font words over the user's unchanged grayscale photograph.
+The downloaded reference and supplied photo are archived separately. The
+Velmorin review renders both 2400 × 1600 and 1600 × 1600 layouts with no fit or
+bounds errors; the photo is used without censorship or wardrobe edits.
+
+## Embrace The Sexiest source remake
+
+`templates/embracesexiest32/editor.html` rebuilds the poster with editable
+selected-font lettering over the user's unchanged fashion photograph. Both
+downloaded reference encodings and the exact response from the user's Envato
+preview URL are archived byte-for-byte; the source foundry credit is replaced
+by neutral specimen labels. The Velmorin review renders both ratios without
+fit or bounds errors.
 
 ## October 2026 source remakes
 

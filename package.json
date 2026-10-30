@@ -4,13 +4,15 @@
     "sql.js": "^1.11.0"
   },
   "devDependencies": {
-    "@open-pencil/cli": "0.14.0"
+    "@open-pencil/cli": "0.14.0",
+    "playwright": "^1.63.0"
   },
   "scripts": {
     "openpencil:text-studies": "node font-factory/openpencil/text-studies.mjs",
     "prep:check": "python3 bin/validate_font_factory.py",
     "validate:py": "python3 -m compileall -q bin && echo 'python compile: ok'",
-    "validate:json": "python3 -c \"import json;[json.load(open(f)) for f in ['opencode.json','.opencode/opencode.json','.mcp.json','package.json']]\" && echo 'json: ok'",
-    "validate": "npm run validate:json && npm run validate:py && npm run prep:check"
+    "validate:json": "python3 -c \"import json;[json.load(open(f)) for f in ['opencode.json','package.json','.opencode/package.json']]\" && echo 'json: ok'",
+    "validate": "npm run validate:json && npm run validate:py && npm run prep:check",
+    "check:full-workflow-sync": "python3 bin/check_full_workflow_sync.py"
   }
 }

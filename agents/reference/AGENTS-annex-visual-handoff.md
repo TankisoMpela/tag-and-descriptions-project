@@ -8,15 +8,20 @@ every agent in the project. The rules below are authoritative for the visual han
 
 Agent 27 (`font-image-generator`) runs before Agent 13. It authors one
 font-specific plan for the main and storefront thumbnail prompts, selects the
-renderer class, and runs seven eligible HTML/CSS supporting layouts at both
-3:2 and 1:1, plus four factual specimen previews. It reads
+renderer class, and reproducibly selects 13 random eligible HTML/CSS support designs
+at both 3:2 and 1:1, plus four factual specimen previews. It reads
 `font-factory/support-references/TEMPLATE-GUIDE.md` for each support layout's
 specimen copy, caption/alt-text guidance, and theme flexibility. Each square
 layout uses the same template code and materials but is fitted independently;
 it is not a stretched, cropped, or white-padded landscape render. Supporting
-artwork must not repeat the font name. When a real family has at least two
-distinct sibling styles, both family-proof templates are guaranteed in the
-seven and use actual font files. Agent 27 renders three clean, white-background
+artwork must not repeat the font name. When real sibling styles make family
+showcase templates eligible, `plakat32`, `weightfamily32`, `mangosboard32`,
+and `italicregular32` are guaranteed in the 13 and use actual font files.
+Use Title Case for new or replacement support copy. Intentional all-caps
+support copy is limited to `support-23_alphabet32.png`,
+`support-25_weightfamily32.png`, `support-44_neue32.png`, and
+`support-141_practicehard32.png`.
+Agent 27 renders three clean, white-background
 font-name specimens as raw lettering material and writes complete prompts for
 the 3:2 main, 1:1 main, and storefront square. Those are the only image-model
 placeholders. No old thumbnail is needed or used. An essential missing cutout
@@ -25,8 +30,10 @@ check it once and move on, without iterating. Agent 27 never modifies font
 binaries or claims an upload.
 
 When the user does not supply a final font name, Agent 27 decides the best
-evocative name from the description under its Naming policy; name-uniqueness
-research and the namemaker agent are forbidden (uniqueness does not matter).
+concept-led name from the description under the Naming policy in the canonical
+Agent-27 spec. External name-uniqueness research and the archived namemaker
+agent are outside this workflow; treat reference names as pattern evidence and
+never copy them or close variants.
 
 Agent 27 also renders all 23 active HTML/CSS Pinterest templates with the
 primary font into `prepared_visuals/pinterest/`. It omits the retired
@@ -45,44 +52,29 @@ white-background specimen with its corresponding complete prompt in
 is the art direction. Supporting designs are produced by the shared HTML/CSS
 catalogue and reviewed as a set.
 
-## Required order
+## Full workflow and follow-up stages
 
-1. `/font-images` → three complete thumbnail prompts plus white-background
-   lettering specimens, seven reference-led HTML/CSS support
-   layouts rendered at 3:2 and 1:1, four factual specimen previews, and all 23
-   active HTML/CSS Pinterest pins rendered with the font. Only thumbnail
-   placeholders await image-model replacement.
-2. `/font-prep` → the single preparation pass: metadata, package, specimen
-   sheets, and checked installation of the 23 Agent-27 pins into
-   `outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/pinterest/`. Other
-   thumbnail/support drafts remain in the font workspace. Agent 13 renders
-   only the final factual specimen sheets from the font binary.
-3. **Seller step (manual):** for each output, attach the matching white-background
-   font-name specimen and use its complete prompt from
-   `font-factory/fonts/{slug}/visual-direction/theme.txt` with an image model.
-   Generate the 3:2 and 1:1 main images independently, inspect name spelling,
-   letterform fidelity, legibility, contrast, crop, and prompt fidelity, then
-   drop the approved raw files into
-   `outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/`.
-4. `/font-final-images` (Agent 30) → classifies the raw 3:2 and 1:1 files,
-   preserves exact source copies, writes full-dimension delivery JPEGs into
-   `main/` and `squares/`, and adds ten image-composite Pinterest panels after
-   the template pins at the next contiguous indexes. It preserves every pin
-   installed by Agent 13 and writes the full-set manifest. This agent is
-   deliberately outside `/full-workflow`.
-5. `/pinterest-prepare` → validates and uploads every pin listed in the
-   manifest, then writes all resulting public image links to `public-urls.md`.
+Codex `/full-workflow` starts from one user-selected folder in
+`font-factory/Saved/`. The staging helper moves its original root-level
+OTF/TTF files into `font-factory/fonts/{input-slug}/`; those source files
+remain there for future completed-work checks. Agent 27 writes its review
+handoff under that same input-slug folder. Agent 13 writes new package and
+preparation artifacts to `outputs/font-preparation/{NUM}-{slug}/`. The
+orchestrator then runs BOOTH, Creative Market, and Creative Fabrica in order.
+Each Codex child must finish successfully before the next begins.
 
-## Running it
+Final thumbnail generation and the image drop are seller follow-up work. Pair
+each white-background specimen with its complete prompt from
+`font-factory/fonts/{input-slug}/visual-direction/theme.txt`. Generate the 3:2
+and square main images independently, then place both in the preparation
+directory named by Agent 13, along with at least two additional 3:2 images for
+Pinterest composites.
 
-Run `/font-images` first with the raw font files, final name, description, and
-font workspace. Wait for `READY FOR FONT PREP HANDOFF`. Then run `/font-prep` for
-the preparation pass; it ends at `READY FOR FINAL IMAGES` and names the drop
-directory. Generate your images, drop them in, then run `/font-final-images`.
-
-For a single uninterrupted launch, use `/full-workflow` with the exact font
-workspace directory, new name, and old description. It runs Agent 27, Agent 13,
-then BOOTH, Pixiv, and Creative Fabrica sequentially. Agent 13 does not inspect
-image content in this mode; it also creates the main `1920x1080` showcase and the
-2:1 `1920x960` promo video plus its script. Final images remain the seller's
-manual step after the workflow returns.
+Agent 30 waits for the named thumbnail pair and minimum 3:2 image pool, then
+classifies the raw 3:2 and 1:1 files, preserves exact source copies, writes
+full-dimension delivery JPEGs into `main/` and `squares/` targeting 200 KB
+with a 300 KB ceiling, and adds ten image-composite Pinterest panels after the
+template pins. It preserves every pin installed by Agent 13 and writes the
+full-set manifest. Agent 30 and the Pinterest preparer are separate from
+`/full-workflow`; Pinterest preparation uploads the manifested set only when
+invoked as its own stage.

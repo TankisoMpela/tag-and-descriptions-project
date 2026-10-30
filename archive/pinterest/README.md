@@ -15,6 +15,10 @@ original 2026-09-21 design. The reinstatement snapshot
 `process_final_font_images-pinterest-aware.py` has been deleted (git history
 preserves it); the live processor is now the reference implementation.
 
+The obsolete four-Pin Agent 10 Codex registration is archived at
+`archive/pinterest/codex-legacy/pinterest-fonts-specialist.toml`. The active
+Pinterest workflow uses `daily-pinterest-run` and `pinterest-font-preparer`.
+
 ## What was archived on 2026-09-21
 
 | File | Was at | Role |

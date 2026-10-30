@@ -47,12 +47,10 @@ import sys
 import time
 import urllib.parse
 from pathlib import Path
+from mcp_paths import configured_mcp_script
 
 FIRECRAWL_URL = "https://api.firecrawl.dev/v1/scrape"
 DEFAULT_BANK = Path("outputs/research/booth-font-tag-bank.md")
-MCP_KEY_FILE = Path(
-    "/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/firecrawl_mcp.py"
-)
 COUNT_RE = re.compile(r"([\d,]+)\s*点")
 ROUTE = "https://booth.pm/ja/items?tags%5B%5D="
 
@@ -63,13 +61,14 @@ def resolve_key(explicit: str | None) -> str:
     env = os.environ.get("FIRECRAWL_API_KEY")
     if env:
         return env.strip()
-    if MCP_KEY_FILE.exists():
-        m = re.search(r"(fc-[A-Za-z0-9]{20,})", MCP_KEY_FILE.read_text(errors="ignore"))
+    key_file = configured_mcp_script("firecrawl_mcp.py")
+    if key_file and key_file.is_file():
+        m = re.search(r"(fc-[A-Za-z0-9]{20,})", key_file.read_text(errors="ignore"))
         if m:
             return m.group(1)
     sys.exit(
-        "no Firecrawl key: pass --key, set FIRECRAWL_API_KEY, or keep the MCP "
-        f"key file at {MCP_KEY_FILE}"
+        "no Firecrawl key: pass --key, set FIRECRAWL_API_KEY, or configure "
+        "PAPERMOON_MCP_DIR / PAPERMOON_FIRECRAWL_MCP"
     )
 
 

@@ -1,12 +1,16 @@
 ---
-description: Run the active sequential font launch workflow through preparation, BOOTH, Pixiv, and Creative Fabrica. Marketore, YellowImages, and DLsite are paused.
+description: Run the shared five-stage sequential font launch workflow through preparation, BOOTH, Creative Market, and Creative Fabrica. Pixiv and other marketplace stages are paused.
 ---
 
-Dispatch the registered FontFairy task agent `full-workflow` for this request (the agent reads its canonical spec in `agents/` and executes it).
+Dispatch the registered `full-workflow` task agent. It reads the shared
+contract in `agents/agent-28-full-workflow.md` and runs these five active
+stages strictly sequentially: `font-image-generator` (Agent 27),
+`font-prep-specialist` (Agent 13), `booth-fonts-specialist` (Agent 20),
+`cm-fonts-specialist` (Agent 2), then `creative-fabrica-fonts-specialist`
+(Agent 29). It selects/stages only the user-chosen
+Saved family when a new source is required. It does not run Pixiv or any other
+paused marketplace, and makes no upload or publication claim.
 
-If the completion confirms a saved output file with `[PASS]`/success status, report its path. 
-Otherwise report the blocker honestly; do not invent a completion.
+User request / constraints:
 
-User request / input:
-
-Please run the full-workflow agent with the exact font workspace directory, old font description, and any factual constraints supplied here. If the user supplied a new font name, pass it through; if not, Agent 27 decides the final name itself under its Naming policy (name-uniqueness research is forbidden). Execute visual generation, continuous font preparation (packages, both videos), BOOTH, Pixiv, and Creative Fabrica strictly sequentially, one registered agent at a time, waiting for each final result. Do not invoke Marketore, YellowImages, DLsite, X, or font-final-visual-processor, and never claim any publication or upload: $@
+$@

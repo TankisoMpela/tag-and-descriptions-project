@@ -1,13 +1,14 @@
 # One-pass image materials
 
-Each asset below is generated once with the built-in OpenAI image-generation
-tool, using its listed reference for visual direction or as an edit target.
-These are clean materials for the Skia templates, not finished supporting images; lettering,
-logos, captions, and product names are rebuilt separately in code.
+This file preserves the built-in image-generation prompts used for reusable
+materials. The T30332_01 Stardust and T28660_00 Raven Cover entries are historical
+only: user-provided Downloads images now supply those active backgrounds, as
+recorded in `SOURCES.md`. Other listed prompts document the generated materials;
+all lettering, logos, captions, and product names are rebuilt separately in code.
 
 | Material | Reference |
 |---|---|
-| `materials/T30332_01_stardust-photo.png` | `T30332_01.jpg` |
+| `materials/T30332_01_stardust-photo.png` *(superseded; historical prompt)* | `T30332_01.jpg` |
 | `materials/T30332_02_cliff-sea-background.png` | `T30332_02.jpg` |
 | `materials/T30332_06-clean-index-plate.png` | `T30332_06.jpg` |
 | `materials/T30332_07-clean-sunset-background.png` | `T30332_07.jpg` |
@@ -25,8 +26,12 @@ logos, captions, and product names are rebuilt separately in code.
 | `materials/T19827_06_demolition-texture.png` | `T19827_06.jpg` |
 | `materials/T21458_04_distressed-red-paper.png` | `T21458_04.jpg` |
 | `materials/T21458_11_stadium-red-print.png` | `T21458_11.jpg` |
-| `materials/T28660_00_red-jacket-photo.png` | `T28660_00.jpg` |
+| `materials/T28660_00_red-jacket-photo.png` *(superseded; historical prompt)* | `T28660_00.jpg` |
 | `materials/T26003_01_lemonade-line-art.png` | `T26003_01.jpg` |
+| `materials/reference-batch-2026-10-26-d/T16168_01-background-3x2.png` | `originals/reference-batch-2026-10-26-d/T16168_01.webp` |
+| `materials/reference-batch-2026-10-26-d/T16168_07-background-3x2.png` | `originals/reference-batch-2026-10-26-d/T16168_07.webp` |
+| `materials/reference-batch-2026-10-26-d/T19310_08-background-3x2.png` | `originals/reference-batch-2026-10-26-d/T19310_08.webp` |
+| `materials/reference-batch-2026-10-26-d/T19310_10-background-3x2.png` | `originals/reference-batch-2026-10-26-d/T19310_10.webp` |
 
 ## Prompts
 
@@ -42,7 +47,7 @@ Use case: precise-object-edit. Asset type: clean 3:2 backing plate for a referen
 
 Use case: precise-object-edit. Asset type: text-free backing plate for a three-phone typography specimen. Edit the attached T30332_08 reference. Remove all words and lettering from all three phone screens, including every occurrence of 'CONVENT GARDEN' and the right-screen message 'Timeless Charm, Rooted in Grace.', plus the two vertical source labels between the phones ('TAN TYPE CO.' and 'SADIE'). Restore the original warm-cream screen areas cleanly where text was. Preserve the exact 3:2 page crop, bright yellow background, all three black outlined phone bodies and their size/position/rounded corners, cream screens, top speaker islands and menu/search icons, every flower illustration (including petals, leaves and centers), and every small star/sparkle. Do not redraw, move, recolor, enlarge, or remove any flower, phone, or decorative star. Add no text and no new elements. The output is a clean plate for separately typeset copy.
 
-### T30332_01 — grayscale editorial portrait
+### T30332_01 — grayscale editorial portrait (superseded; historical prompt only)
 
 Use case: photorealistic-natural. Asset type: text-free 3:2 background plate for a type specimen. Input image: `T30332_01.jpg`, reference for monochrome mood and portrait placement only. Create a polished black-and-white fashion-editorial head-and-shoulders photograph of an adult woman wearing a simple high-neck dark top, with dark windswept hair, soft atmospheric light, and subtle film grain. Keep the fully clothed subject toward the left half and reserve calm dark negative space on the right for separately typeset copy. Non-suggestive portrait. No lettering, logos, watermark, frame, or graphic overlays.
 
@@ -102,10 +107,30 @@ Use case: precise-object-edit. Asset type: reusable text-free background plate f
 
 Use case: precise-object-edit. Asset type: reusable clean background plate for a sports typography poster. Input image: the provided football poster reference, used as the edit target. Remove all words, letters, logos, and small labels, including the huge white lettering. Reconstruct the source's full-bleed football-stadium crowd and players as a subtle photographic layer under a deep red distressed print treatment. Preserve the source's red monochrome tint, rough ink/grain texture, smoky shadows, player/crowd forms visible mostly through the right and lower areas, and wide 3:2 crop as closely as possible. No text, letters, logos, numbers, symbols, lines, or watermark.
 
-### T28660_00 — red-jacket fashion photo
+### T28660_00 — red-jacket fashion photo (superseded; historical prompt only)
 
 Use case: photorealistic-natural. Asset type: text-free 3:2 fashion-editorial background. Input image: `T28660_00.jpg`, reference for the red leather jacket, close crop, and weathered urban texture only. Create a candid editorial photograph of a fully clothed adult, cropped from shoulders to hips, featuring a vivid red tailored leather jacket over a dark top against a softly blurred gray city wall. Use natural overcast light and subtle analog grain; leave enough calm texture for large type. No lettering, logos, watermark, or graphic overlays.
 
 ### T26003_01 — engraved lemonade cutout
 
 Use case: illustration-story. Asset type: transparent-background line-art illustration. Input image: `T26003_01.jpg`, reference for a single glass with citrus and straw only. Create a clean vintage engraved drawing of a tall glass of lemonade with ice, a curved straw, and two lemon slices, in confident dark ink with sparse etched shading. Center the full glass and fruit with crisp edges. Isolated on genuine transparency; no background, lettering, logos, watermark, or frame.
+
+### T17997_03 — clean sunset text-removal plate
+
+Use case: precise-object-edit. Asset type: reusable text-free sunset photograph for a display-type template. Input image: `T17997_03.jpg`, used as the edit target. Remove only the large cream-colored two-line words “Rudy Brownie” and reconstruct the obscured pixels as a natural continuation of the existing photograph. Preserve the original composition and photographic look: deep magenta dusk sky, orange sunset at the horizon, calm reflective water, dark palm silhouettes, beach foreground, same camera framing and color grade. Do not change the palms or add objects. The output is solely the clean text-free photograph. Do not create, retain, or invent any letters, words, logos, graphics, panels, or watermark.
+
+### T16168_01 — text-clean autumn forest road
+
+Use case: precise-object-edit. Asset type: reusable text-free 3:2 photograph for a live typography poster. Input image: the preserved `T16168_01.webp` reference. Remove only the four overlaid typography lines “NOT”, “all roads”, “ARE”, and “simple,”. Reconstruct the autumn forest and winding asphalt road naturally underneath those letters, matching the adjacent photograph. Preserve the exact original landscape crop, road shape and position, road markings, surrounding trees, autumn foliage, lighting, colors, grain, perspective, contrast, and photographic style. Do not crop, redesign, stylize, blur, darken, recolor, replace, or censor any part of the landscape. Add no lettering, signs, people, vehicles, logos, frames, or other objects. Keep the original 3:2 aspect ratio.
+
+### T16168_07 — text-clean basketball photograph
+
+Use case: precise-object-edit. Edit the attached preserved T16168_07 source image into a separate text-free photo plate. This is a local cleanup of the existing photograph, not a new image or a new crop. Remove only the eight overlaid words: “Practice”, “HARD”, “Train”, “HARD”, “Work”, “HARD”, “Play”, and “HARDER”. Reconstruct only the photo pixels directly beneath those letters, extending the exact adjacent surfaces. Keep the basketball exactly the same size, shape, and center position as in the input. Keep its panel seams, orange leather pebble grain, gray-white bands, surrounding dark woven fabric, folds, highlights, and shadows in their original positions. Preserve the entire source canvas, all four edges, exact camera framing, perspective, lighting, color, and 3:2 aspect ratio. Do not zoom, resize, crop, recompose, redraw the ball, alter the photograph outside the lettering, or add text, logos, objects, details, lines, or watermark.
+
+### T19310_08 — text-clean RAINBOW photograph
+
+Use case: precise-object-edit. Make a separate clean background plate from the preserved T19310_08 reference. Remove only all four large overlaid words “RAINBOW”: the first outlined row at the top, the second solid white row, the third outlined row, and the fourth solid white row at the bottom. Reconstruct the dark underlying photograph and soft brown-black shadows beneath the letter shapes, matching the exact adjacent pixels and texture. Preserve the whole 3:2 canvas, crop, lighting, dark tonal range, photograph, perspective, and every detail outside the letters. Do not zoom, crop, shift, brighten, redesign, stylize, blur, or replace any part of the photo. Add no lettering, outlines, logos, icons, frames, objects, or watermark. The output must be a text-free image plate.
+
+### T19310_10 — framed “WAKE ME UP” dark display
+
+Make a separate clean background plate by editing the attached preserved reference. Remove only the white lettering “WAKE ME UP”, “WHEN I’M”, and “FAMOUS!” and the thin white rectangular outline frame. Reconstruct the dark brown-black softly mottled background directly beneath those marks, matching adjacent tones and texture. Preserve the complete original canvas, exact 3:2 crop, lighting, dark tonal range, subtle central brown glow, and all background detail outside those marks. Do not zoom, crop, shift, brighten, smooth, blur, stylize, or replace the background. Add no text, lettering, frame, logo, icon, object, or watermark. The result must be a text-free and frame-free dark background plate.

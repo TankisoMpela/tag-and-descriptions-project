@@ -1,0 +1,114 @@
+#artboard.user-reference-board-b {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff;
+  background: #101014;
+}
+#artboard.user-reference-board-b .urb-background {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+#artboard.user-reference-board-b .urb-field {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0 2.5%;
+  line-height: .88;
+  text-align: center;
+  white-space: pre-line;
+  overflow-wrap: normal;
+  word-break: normal;
+  text-rendering: geometricPrecision;
+  font-kerning: normal;
+  font-synthesis: none;
+}
+#artboard.user-reference-board-b .urb-label {
+  z-index: 3;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+#artboard.user-reference-saucystack .urb-accent {
+  position: absolute; z-index: 1; left: 13%; top: 23%; width: 74%; height: 17%;
+  background: #ee292a; border-radius: 3px; transform: rotate(-1deg);
+}
+#artboard.user-reference-anteliascard .urb-field { transform: rotate(-2.7deg); }
+#artboard.user-reference-peacebreath .urb-field:not(.urb-label) {
+  text-shadow: 0 2px 4px rgba(255, 222, 148, .48), 0 5px 10px rgba(7, 25, 35, .78);
+  -webkit-text-stroke: .45px rgba(255, 232, 176, .32);
+}
+#artboard.user-reference-nyccoffee .urb-field:not(.urb-label) { text-shadow: 0 2px 5px #16120e; }
+#artboard.user-reference-afterhours .urb-field:not(.urb-label) { text-shadow: 0 2px 3px #243522; }
+#artboard.user-reference-outofoffice .urb-field:not(.urb-label) { text-shadow: 0 2px 3px #713b19; }
+#artboard.user-reference-skincareroutine .urb-field:not(.urb-label) { text-shadow: 0 2px 5px #3a3330; }
+#artboard.user-reference-nectarambience .urb-field:not(.urb-label) {
+  justify-content: center;
+  padding: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+#artboard.user-reference-youlookgood .urb-field:not(.urb-label) { text-shadow: 0 2px 4px #317173; }
+#artboard.user-reference-spiritadventure .urb-field:not(.urb-label),
+#artboard.user-reference-dreamfollow .urb-field:not(.urb-label) { text-shadow: 0 2px 5px #101c2a; }
+#artboard.user-reference-angelinastyle .urb-field:not(.urb-label) { text-shadow: 0 2px 4px #10212a; }
+#artboard.user-reference-calmafterstorm .urb-field:not(.urb-label) { text-shadow: 0 2px 4px #342b28; }
+#artboard.user-reference-comesnatural .urb-field:not(.urb-label) { text-shadow: 0 1px 2px #f7f6ef; }
+#artboard.user-reference-beachclub { background: #45bfc2 !important; }
+#artboard.user-reference-beachclub .urb-background { object-fit: contain; }
+#artboard.user-reference-beachclub .urb-accent {
+  position: absolute; z-index: 1; left: 0; top: 18%; width: 80%; height: 64%;
+  background: linear-gradient(145deg, #39b8bf, #4bc7c8 52%, #35aeb7);
+  clip-path: polygon(0 3%, 84% 0, 100% 14%, 96% 91%, 68% 100%, 0 89%);
+}
+#artboard.user-reference-beachclub .urb-source-mask {
+  position: absolute; z-index: 1; left: 76%; top: 66%; width: 23%; height: 29%;
+  border: 2px solid rgba(255,255,255,.8); border-radius: 50%; background: #42b8bd;
+}
+#artboard.user-reference-beachclub .urb-field:not(.urb-label) { text-shadow: 0 2px 3px rgba(19,92,97,.25); }
+#artboard.user-reference-splitampersand { background: linear-gradient(90deg, #fff 0 50%, #080808 50% 100%) !important; }
+#artboard.user-reference-setrum [data-layout-item="setrum-date"] {
+  -webkit-text-stroke: 2px #ff394b;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 3px #172047;
+}
+#artboard.user-reference-setrum [data-layout-item="setrum-headline"] {
+  text-shadow: 0 3px 10px rgba(0,0,0,.58);
+}
+#artboard.user-reference-nectarambience .urb-field:not(.urb-label) { text-shadow: 0 0 8px rgba(41,255,192,.45); }
+#artboard.user-reference-fluorescentduo .urb-field { align-items: flex-start; padding-top: 6%; }
+#artboard.user-reference-sacharon .urb-field:not(.urb-label) { text-shadow: 0 3px 2px #8d243d; }
+#artboard.user-reference-lastnightsweden .urb-field:not(.urb-label) { text-shadow: 0 2px 3px #583917; }
+#artboard.user-reference-crywolf .urb-field:not(.urb-label) { text-shadow: 0 3px 4px #070809; }
+
+/* Square layouts recompose the artwork and text around each source scene. */
+#artboard.user-reference-beachclub[data-ratio="1x1"] .urb-accent {
+  left: 0; top: 15%; width: 88%; height: 73%;
+  background: linear-gradient(145deg, #39b8bf, #4bc7c8 52%, #35aeb7);
+  clip-path: polygon(0 2%, 84% 0, 100% 14%, 96% 91%, 68% 100%, 0 94%);
+}
+#artboard.user-reference-beachclub[data-ratio="1x1"] .urb-source-mask {
+  left: 78%; top: 71%; width: 19%; height: 18%;
+}
+#artboard.user-reference-saucystack[data-ratio="1x1"] .urb-accent {
+  left: 12%; top: 12%; width: 76%; height: 12%;
+}
+#artboard.user-reference-beachclub[data-ratio="1x1"] .urb-background { object-fit: cover; }
+#artboard.user-reference-angelinastyle[data-ratio="1x1"] .urb-background {
+  object-fit: cover;
+  object-position: right center;
+}
+#artboard.user-reference-afterhours[data-ratio="1x1"] .urb-field:not(.urb-label) { text-shadow: 0 2px 5px rgba(35,48,35,.64); }
+#artboard.user-reference-outofoffice[data-ratio="1x1"] .urb-field:not(.urb-label) { text-shadow: 0 2px 5px rgba(78,47,23,.58); }
+#artboard.user-reference-skincareroutine[data-ratio="1x1"] .urb-field:not(.urb-label) { text-shadow: 0 2px 6px rgba(30,25,22,.72); }
+#artboard.user-reference-youlookgood[data-ratio="1x1"] .urb-field:not(.urb-label) { text-shadow: 0 2px 6px rgba(35,79,83,.56); }
+#artboard.user-reference-spiritadventure[data-ratio="1x1"] .urb-field:not(.urb-label) { text-shadow: 0 3px 8px rgba(5,16,28,.8); }

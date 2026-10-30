@@ -1,5 +1,5 @@
 name = "font_image_generator"
-description = "Codex-registered PaperMoon font handoff: thumbnail briefs, seven HTML/CSS supports at 3:2 and 1:1, four factual specimen previews, and all 23 active HTML/CSS Pinterest pins rendered with the font."
+description = "Codex-registered PaperMoon font handoff: thumbnail prompts, 13 support catalogue designs at 3:2 and 1:1 including eligible family showcases, four factual specimen previews, and all 23 active HTML/CSS Pinterest pins rendered with the font."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
@@ -12,7 +12,9 @@ Before taking action, read these files completely:
 - `agents/agent-27-font-image-generator.md`
 
 The canonical Agent-27 file is authoritative. Follow its three complete
-thumbnail prompts, seven HTML/CSS support layouts rendered at both 3:2 and 1:1, four factual
+thumbnail prompts, 13 HTML/CSS support catalogue designs rendered at both 3:2
+and 1:1, including the eligible family-showcase templates with real sibling
+font files, four factual
 specimen previews, all active Pinterest HTML/CSS templates rendered with the
 supplied font, one-pass asset policy, and mechanical handoff validation. Ignore
 superseded custom-promo instructions and stale runtime-specific workflows.
@@ -24,10 +26,11 @@ product claims.
 
 Before authoring image copy or rendering images, run the family-wide preflight
 on the font's subdirectory (not just the primary file), then run the fact
-sheet on the primary/display-weight file:
+sheet on the primary/display-weight file, whether its original source is OTF or
+TTF:
 
-  python3 bin/font_preflight_audit.py "font-factory/fonts/{slug}/"
-  python3 bin/font_fact_sheet.py "font-factory/fonts/{slug}/{Primary}.otf" \
+  python3 bin/font_preflight_audit.py "font-factory/fonts/{input-slug}/"
+  python3 bin/font_fact_sheet.py "font-factory/fonts/{input-slug}/{Primary}.{ext}" \
     --shape "phrase one" --shape "phrase two"
 
 The directory-mode preflight automatically cross-checks all family members for:
@@ -40,7 +43,16 @@ The directory-mode preflight automatically cross-checks all family members for:
 If the vendor package ships both OTF and TTF for the same style (common),
 the family check will flag duplicate style names and weight signatures —
 this is expected for format pairs, not an error. Verify from file names,
-note it in the handoff, and use OTF files only for rendering.
+note it in the handoff, and use only original OTF/TTF source files for visual
+analysis. Do not require an OTF when the selected Saved family contains only
+TTF files.
+
+Before choosing a name or writing the profile, read the complete metadata and
+fact-sheet output, then render and inspect every page of the full mapped-
+character atlas for each distinct style with `bin/render_font_glyph_atlas.py`.
+Save the atlases under `visual-direction/character-atlases/`. The canonical
+Agent-27 spec defines the `font_profile_schema: 2` fields; its product
+description is passed unchanged to Agent 13 and the listing stages.
 
 Record family consistency findings, kern/GPOS/GSUB status, and shaping
 results in the visual plan metadata or existing handoff notes. Do not make
@@ -58,29 +70,19 @@ or saved materials already cover it. When the user explicitly requests a
 thumbnail prompt prototype, use the matching white-background specimen and
 complete prompt with the built-in image-generation tool, then inspect and
 refine for exact spelling, glyph fidelity, crop, contrast, and small-size
-legibility. Check the result against reference-review.md and prompt-findings.md. Survey
-the lessons across all 33 references, then open one or two relevant originals
-and read the full caption, design analysis, and prompt lesson. Borrow one
-structural mechanism rather than props, palette, copy, or exact arrangement;
-note why it fits and any source weakness corrected. The older structure audit
-is a navigation aid. Follow the novelty pass in the canonical Agent-27 spec:
-privately consider three directions and choose a concept that differs in
-premise or major structure. Palette-only changes do not count as novelty, and
-a medium change is not required when it weakens font fit. Record only the
-selected concept's concise differentiation note. Avoid
-generic glossy premium still lifes or warm, hazy photography that places a large
-staged object or face on one side against empty title space. Use that layout only
-when the subject is specific to the font and feels balanced. Treat liked
-examples as quality signals, not templates. Apply the rejected-style notes in
-prompt-findings.md: do not default to the cropped initial with orbit rings,
-split blue/berry descriptor panel, or arch/portal title frame. All titles stay
-flat, front-facing overlays and must never be embedded into 3D objects or
-environments. A type-only design needs authored scale, crop, asymmetry, color
-structure, or one relevant illustration; a centered name on an empty field is
-insufficient. One quiet, relevant paper/ink/print texture or faint illustration
-can keep a flat field tactile; avoid random specks and texture stacks. Keep only
-elements that explain the premise.
-Exclude glitter, sparkles, confetti, gratuitous glow and generic AI decoration. If an
+legibility. Read `docs/AGENT-27-CREATIVE-PROCESS.md`; do not require archived reference
+images, galleries, or prior runs. Follow the novelty pass in the canonical
+Agent-27 spec: privately consider three directions and choose a concept that
+differs in premise or major structure from available recent plans. Palette-only
+changes do not count as novelty, and a medium change is not required when it
+weakens font fit. Record only the selected concept's concise differentiation
+note. Avoid generic glossy premium still lifes or warm, hazy photography that
+places a large staged object or face beside empty title space. All title type
+stays a flat, front-facing overlay. A type-only design needs authored scale,
+crop, asymmetry, color structure, or one relevant illustration; a centered name
+on an empty field is insufficient. One quiet, relevant paper/ink/print texture
+or faint illustration may keep a flat field tactile. Exclude glitter, sparkles,
+confetti, gratuitous glow, and generic AI decoration. If an
 essential cutout or texture is genuinely missing and image generation is
 authorized, make one pass and check it once for usability. Do not invoke font preparation automatically. Do not run listing
 agents, upload anything, or claim publication.

@@ -13,8 +13,10 @@ const option = (name, fallback = null) => {
   return index >= 0 ? argv[index + 1] : fallback;
 };
 const mode = option("--mode", "review");
+const overwrite = argv.includes("--overwrite");
 const positionalOut = argv[0] && !argv[0].startsWith("--") ? argv[0] : null;
-const out = path.resolve(option("--out", positionalOut || path.join(repo, "outputs/pinterest-template-review-2026-10-16")));
+const reviewDate = new Date().toISOString().slice(0, 10);
+const out = path.resolve(option("--out", positionalOut || path.join(repo, `outputs/pinterest-template-review-${reviewDate}`)));
 const fontPath = option("--font") ? path.resolve(option("--font")) : null;
 const fontName = option("--font-name", "");
 if (!["review", "pins"].includes(mode)) throw new Error(`Unknown render mode: ${mode}`);
@@ -36,15 +38,32 @@ const sourceFor = {
 };
 
 await mkdir(out, { recursive: true });
-for (const entry of await readdir(out, { withFileTypes: true })) {
-  if (entry.isFile() && (mode === "pins"
-    ? /^pinterest_\d+\.(?:png|jpe?g)$/iu.test(entry.name) || entry.name === "pinterest-template-manifest.json"
-    : /\.(?:png|jpe?g|json)$/iu.test(entry.name) && entry.name !== "render-manifest.json")) {
-    await rm(path.join(out, entry.name));
+const expectedOutputs = mode === "pins"
+  ? [...ids.map((_, i) => `pinterest_${i + 1}.jpg`), "pinterest-template-manifest.json"]
+  : [...ids.map((id) => `${id}.${extensions[id] || "jpg"}`), "render-manifest.json", "index.html"];
+const existing = new Map((await readdir(out, { withFileTypes: true })).map((entry) => [entry.name, entry]));
+const managedOutputs = new Set(expectedOutputs);
+if (mode === "pins") {
+  for (const name of existing.keys()) {
+    if (/^pinterest_\d+\.(?:png|jpe?g)$/iu.test(name)) managedOutputs.add(name);
   }
 }
+const collisions = [...managedOutputs].filter((name) => existing.has(name));
+if (collisions.length && !overwrite) {
+  throw new Error(`Output already contains renderer-managed files. Choose a new --out folder or pass --overwrite:\n${collisions.join("\n")}`);
+}
+for (const name of collisions) {
+  if (!existing.get(name).isFile()) throw new Error(`Refusing to replace non-file output: ${path.join(out, name)}`);
+  await rm(path.join(out, name));
+}
 
-const browser = await chromium.launch({ executablePath: "/usr/bin/chromium", headless: true, args: ["--no-sandbox", "--allow-file-access-from-files"] });
+const browser = await chromium.launch({
+  ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+    ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH }
+    : {}),
+  headless: true,
+  args: ["--no-sandbox", "--allow-file-access-from-files"],
+});
 const records = [];
 try {
   const page = await browser.newPage({ viewport: { width: 1100, height: 1600 }, deviceScaleFactor: 1 });

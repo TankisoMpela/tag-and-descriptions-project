@@ -1,5 +1,5 @@
 name = "font_final_visual_processor"
-description = "Post-workflow processor for seller-replaced font images. Separates final 3:2 and 1:1 images, creates bounded JPEG delivery copies, appends ten Pinterest composites after all manifested Agent-27 template pins, and writes full-set manifests without changing raw files."
+description = "Post-workflow processor for seller-generated font images. Waits for a named 3:2/square thumbnail pair, validates all inputs, targets 200 KB JPEGs with a 300 KB ceiling, and appends ten Pinterest composites without changing raw files."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
@@ -12,22 +12,23 @@ Before taking any task action, open and read
 post-workflow agent: never invoke it from `full-workflow`, and never do font
 packaging, metadata, video rendering, listing research, or uploading.
 
-The user supplies raw final image files directly in
-`outputs/font-preparation/{font-slug}/visuals/New-Images/`. Do not use vision,
-contact sheets, or semantic thumbnail identification. Run
-`bin/process_final_font_images.py --auto-order`; it sorts direct filenames
-within each ratio, assigns the first 3:2 and first 1:1 files as
-`thumbnail_main`, and numbers all remaining files as promos. Preserve every
-raw direct file unchanged.
+The user supplies every raw final image directly in
+`outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/`. Do not use vision,
+contact sheets, or semantic thumbnail identification. Do not process until
+exactly one 3:2 and one 1:1 thumbnail filename contains `thumbnail_main`, and
+at least two additional 3:2 images are present for Pinterest composites. If
+the readiness gate is incomplete, report the missing inputs and leave all
+output folders untouched. Then run `bin/process_final_font_images.py
+--auto-order`; it uses the two named thumbnails and sorts remaining direct
+files as promos. Preserve every raw direct file unchanged.
 Write exact canonical source copies plus compressed full-dimension JPEGs under
 `New-Images/source/3x2/`, `New-Images/source/1x1/`, `New-Images/main/`, and
-`New-Images/squares/`. First run `bin/check_new_images.py` on the folder;
-when it reports no 1:1 files, or only a name-marked square thumbnail, pass
-`--pad-squares` to the processor so the helper white-pads the missing squares
-from the 3:2 set (equal top/bottom bars, recorded in the manifest); otherwise
-run without it. Bound main
-and square JPEGs to `<=200000` bytes. Never pad, crop, or derive images
-yourself, invent missing artwork, or overwrite raw files. Do not replace the
+`New-Images/squares/`. First run `bin/check_new_images.py` on the folder. The
+helper requires the seller-supplied thumbnail pair and never derives a missing
+square thumbnail. Target `<=200000` bytes for every main and square JPEG; allow
+up to `300000` only when no quality rung fits the target, and report those
+exceptions. Never pad, crop, or derive images yourself, invent missing
+artwork, or overwrite raw files. Do not replace the
 older `visuals/main/` or `visuals/squares/` directories unless the user makes
 that a separate explicit request.
 
@@ -40,6 +41,7 @@ explicitly requests that.
 
 Do not report completion until the helper has written
 `New-Images/final-image-manifest.md`, every raw direct image is accounted for,
-all generated files pass their dimensions and byte limits, and the exact
-output paths and counts are reported. End with `No upload or publication claim`.
+all generated files pass their dimensions and 300 KB hard limit, and the exact
+output paths, counts, and 200 KB target exceptions are reported. End with
+`No upload or publication claim`.
 """

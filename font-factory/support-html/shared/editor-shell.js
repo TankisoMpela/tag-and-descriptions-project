@@ -17,14 +17,27 @@
     return text.replace(/\uE000(\d+)\uE001/gu, (_match, index) => urls[Number(index)]);
   }
 
+  const literalCaseKeys = {
+    alphabet32: new Set(["uppercase", "lowercase", "figures", "alphabet", "glyphs"]),
+    glyphsheet32: new Set(["symbols", "digits", "figures"]),
+    alternatechart32: new Set(["upperRows", "lowerRows", "figures"]),
+    mangosboard32: new Set(["glyphs", "tileA", "tileAt"]),
+    weightfamily32: new Set(["row1", "row2", "row3"]),
+    practicehard32: new Set(["powerOne", "powerTwo", "powerThree", "powerFour"]),
+    neue32: new Set(["repeated"]),
+    italicregular32: new Set(["leftGlyph", "rightGlyph"]),
+    smokeletters32: new Set(["leftGlyph", "rightGlyph"]),
+    awakeportrait32: new Set(["year"]),
+  };
+
   function titleCaseValues(values, design) {
-    const literalKeys = new Set(design.literalKeys || []);
-    if (design.id === "contour32") ["lineOne", "lineTwo"].forEach((key) => literalKeys.add(key));
-    if (design.id === "weightfamily32") ["row1", "row2", "row3"].forEach((key) => literalKeys.add(key));
-    if (design.id === "mangosboard32") literalKeys.add("glyphs");
+    const literalKeys = literalCaseKeys[design.id] || new Set();
     return Object.fromEntries(Object.entries(values).map(([key, value]) => [
       key,
-      typeof value === "string" && !literalKeys.has(key)
+      typeof value === "string" && !literalKeys.has(key) &&
+        key !== "fontClass" && key !== "warnings" &&
+        !key.toLocaleLowerCase("en").includes("url") &&
+        !/^(?:#[\da-f]{3,8}|rgba?\(|hsla?\()/iu.test(value.trim())
         ? titleCaseCopy(value) : value,
     ]));
   }

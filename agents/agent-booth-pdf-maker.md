@@ -29,7 +29,7 @@ string). Ask once, clearly, if any are missing — never invent URLs.
 | Input | Meaning | Example |
 |---|---|---|
 | BOOTH item URL | Full product page | `https://shop.booth.pm/items/123456` |
-| Font directory | Local folder that contains the font binary (and, when available, `visuals/New-Images/squares/`) | `font-factory/fonts/{slug}` or `outputs/font-preparation/{NUM}-{slug}` |
+| Font directory | Local folder that contains the font binary (and, when available, `visuals/New-Images/squares/`) | `font-factory/fonts/{input-slug}` or `outputs/font-preparation/{NUM}-{slug}` |
 | Trial URL | Public trial page on font-showroom | `https://your-domain/trial/{slug}` |
 
 Optional (use sensible defaults when omitted):

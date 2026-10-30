@@ -32,17 +32,24 @@ try {
 }
 if (!template || !entry) throw new Error("--template and --editor are required");
 if (!frameSpec) throw new Error('--ratio must be "3x2" or "1x1"');
+if (template === "italicregular32" && familyFonts.length < 1) {
+  throw new Error("italicregular32 requires a real sibling family font via --family-font");
+}
 
-// Display copy is authored in Title Case throughout the support catalogue.
-// Literal glyph runs keep their supplied casing so alphabet and character
-// specimens remain factual. URLs and colour values are data, not prose.
+// All display copy uses Title Case, including source-led remakes. Only literal
+// glyph specimen strings preserve their source casing; URLs and colours are
+// data, not prose.
 const literalCaseKeys = {
   alphabet32: new Set(["uppercase", "lowercase", "figures", "alphabet", "glyphs"]),
-  contour32: new Set(["lineOne", "lineTwo"]),
   glyphsheet32: new Set(["symbols", "digits", "figures"]),
   alternatechart32: new Set(["upperRows", "lowerRows", "figures"]),
   mangosboard32: new Set(["glyphs", "tileA", "tileAt"]),
   weightfamily32: new Set(["row1", "row2", "row3"]),
+  practicehard32: new Set(["powerOne", "powerTwo", "powerThree", "powerFour"]),
+  neue32: new Set(["repeated"]),
+  italicregular32: new Set(["leftGlyph", "rightGlyph"]),
+  smokeletters32: new Set(["leftGlyph", "rightGlyph"]),
+  awakeportrait32: new Set(["year"]),
 };
 function titleCaseCopy(value) {
   const urls = [];
@@ -78,7 +85,9 @@ props = titleCaseProps(props);
 const editor = path.resolve(process.cwd(), entry);
 await mkdir(path.dirname(out), { recursive: true });
 const browser = await chromium.launch({
-  executablePath: "/usr/bin/chromium",
+  ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+    ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH }
+    : {}),
   headless: true,
   // Source artwork may be a local image mask inside an editor loaded via
   // file://. Allow same-session local assets for this isolated export browser.
@@ -91,6 +100,9 @@ try {
   });
   await page.goto(pathToFileURL(editor).href, { waitUntil: "networkidle" });
   await page.evaluate(() => document.fonts.ready);
+  await page.addStyleTag({
+    content: "#artboard, #artboard * { text-transform: none !important; }",
+  });
   if (font) {
     const input = page.locator("#font-file");
     if (!(await input.count())) throw new Error(`${template}: editor is missing #font-file`);
@@ -181,8 +193,11 @@ try {
   if (accentContrast !== undefined && Number(accentContrast) < 4.5) {
     throw new Error(`${template}: accent contrast is below 4.5:1: ${accentContrast}`);
   }
+  const reviewWarnings = [];
   if (Number.parseFloat(layoutReport.headlineFontSize || "0") < 38) {
-    throw new Error(`${template}: headline fell below the 38 CSS px legibility floor: ${layoutReport.headlineFontSize}`);
+    const warning = `headline is below the 38 CSS px legibility floor: ${layoutReport.headlineFontSize}`;
+    if (props.reviewMode) reviewWarnings.push(warning);
+    else throw new Error(`${template}: ${warning}`);
   }
   await frame.screenshot({ path: out, scale: "device" });
   const report = {
@@ -199,6 +214,7 @@ try {
     body: props.body ?? "",
     badge: props.badge ?? "",
     fontClass: props.fontClass ?? "",
+    reviewWarnings,
     layoutReport,
     output: out,
     outputBytes: (await stat(out)).size,

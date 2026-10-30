@@ -1,0 +1,602 @@
+#artboard.user-reference-spaceprint {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #632f91;
+  color: #211331;
+}
+
+#artboard.user-reference-spaceprint .spc-plate {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+#artboard.user-reference-spaceprint .spc-type {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .88;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+#artboard.user-reference-spaceprint .spc-word {
+  left: 51.3%;
+  top: 9%;
+  width: 16%;
+  height: 19%;
+  color: #39205c;
+  letter-spacing: -.035em;
+}
+
+#artboard.user-reference-spaceprint .spc-year {
+  left: 51.5%;
+  top: 39%;
+  width: 46.5%;
+  height: 23%;
+  color: #fff0cb;
+  letter-spacing: -.045em;
+}
+
+#artboard.user-reference-spaceprint [data-layout-item] {
+  transform-origin: center;
+}
+
+#artboard.user-reference-ssrange {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #151719;
+  color: #f4ef00;
+}
+
+#artboard.user-reference-ssrange .ssr-plate {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+#artboard.user-reference-ssrange .ssr-line {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: #f4ef00;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: -.035em;
+  line-height: .9;
+  text-align: center;
+  text-shadow: 0 2px 7px rgb(0 0 0 / 58%);
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+#artboard.user-reference-allsummerlong {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #e5f58e;
+  color: #f43b6a;
+}
+
+#artboard.user-reference-allsummerlong .asl-card {
+  position: absolute;
+  z-index: 1;
+  overflow: hidden;
+}
+
+#artboard.user-reference-allsummerlong .asl-card-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+#artboard.user-reference-allsummerlong .asl-line,
+#artboard.user-reference-allsummerlong .asl-family-label {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .88;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+#artboard.user-reference-allsummerlong .asl-line {
+  color: #f43b6a;
+  letter-spacing: -.03em;
+  -webkit-text-stroke: 1.5px #172013;
+  paint-order: stroke fill;
+  text-shadow: 0 3px 7px rgb(12 18 10 / 78%);
+}
+
+#artboard.user-reference-allsummerlong .asl-family-label {
+  color: #fff8e8;
+  letter-spacing: .01em;
+  text-shadow: 0 1px 4px rgb(8 14 9 / 76%);
+}
+
+@font-face {
+  font-family: ScriptGridLabel;
+  src: url("../assets/NotoSans-CondensedLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+}
+
+#artboard.user-reference-scriptgrid {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #2935b8;
+  color: #fbf8ff;
+}
+
+#artboard.user-reference-scriptgrid .sg-word,
+#artboard.user-reference-scriptgrid .sg-meta {
+  position: absolute;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#artboard.user-reference-scriptgrid .sg-word {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fbf8ff;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: -.025em;
+  line-height: .92;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-scriptgrid .sg-meta {
+  color: #f2efff;
+  font-family: ScriptGridLabel, "Noto Sans", sans-serif;
+  font-weight: 400;
+  letter-spacing: .015em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-scriptgrid .sg-meta-top-left {
+  left: 6.5%;
+  top: 7.8%;
+  width: 42%;
+  text-align: left;
+}
+
+#artboard.user-reference-scriptgrid .sg-meta-top-right {
+  right: 6.5%;
+  top: 7.8%;
+  width: 42%;
+  text-align: right;
+}
+
+#artboard.user-reference-scriptgrid .sg-meta-bottom-left {
+  left: 6.5%;
+  bottom: 8%;
+  width: 58%;
+  text-align: left;
+}
+
+#artboard.user-reference-scriptgrid .sg-meta-bottom-right {
+  right: 6.5%;
+  bottom: 8%;
+  width: 28%;
+  text-align: right;
+}
+
+#artboard.user-reference-smashcourt {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #17263d;
+  color: #f7f5f0;
+}
+
+#artboard.user-reference-smashcourt .sc-plate {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+#artboard.user-reference-smashcourt .sc-line {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  color: #f7f5f0;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 120px;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: -.035em;
+  line-height: .86;
+  text-align: center;
+  text-shadow: 0 1px 4px rgb(0 0 0 / 42%);
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+#artboard.user-reference-smashcourt .sc-line-one {
+  left: 8%;
+  top: 14%;
+  width: 78%;
+  height: 21%;
+}
+
+#artboard.user-reference-smashcourt .sc-line-two {
+  left: 7%;
+  top: 35%;
+  width: 76%;
+  height: 21%;
+}
+
+#artboard.user-reference-smashcourt .sc-line-three {
+  left: 16%;
+  top: 56%;
+  width: 68%;
+  height: 22%;
+}
+
+#artboard.user-reference-smashcourt .sc-caption {
+  position: absolute;
+  z-index: 3;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: #f7f5f0;
+  font-family: ScriptGridLabel, "Noto Sans", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: .08em;
+  line-height: 1.2;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 55%);
+  white-space: pre-line;
+}
+
+#artboard.user-reference-smashcourt .sc-right-caption {
+  top: 35%;
+  right: 2.7%;
+  width: 13%;
+  height: 19%;
+  text-align: center;
+}
+
+#artboard.user-reference-smashcourt .sc-footer-caption {
+  left: 4%;
+  bottom: 2%;
+  width: 24%;
+  height: 12%;
+  text-align: left;
+}
+
+#artboard.user-reference-smashcourt[data-ratio="1x1"] .sc-line-one {
+  left: 3%;
+  top: 13%;
+  width: 94%;
+  height: 18%;
+}
+
+#artboard.user-reference-smashcourt[data-ratio="1x1"] .sc-line-two {
+  left: 3%;
+  top: 32%;
+  width: 94%;
+  height: 18%;
+}
+
+#artboard.user-reference-smashcourt[data-ratio="1x1"] .sc-line-three {
+  left: 9%;
+  top: 51%;
+  width: 82%;
+  height: 20%;
+}
+
+#artboard.user-reference-smashcourt[data-ratio="1x1"] .sc-right-caption {
+  top: 79%;
+  right: 5%;
+  width: 27%;
+  height: 18%;
+  text-align: right;
+}
+
+#artboard.user-reference-smashcourt[data-ratio="1x1"] .sc-footer-caption {
+  left: 4%;
+  bottom: 3%;
+  width: 57%;
+  height: 16%;
+}
+
+#artboard.user-reference-scriptpattern {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #eeeae1;
+  color: #5a5652;
+}
+
+#artboard.user-reference-scriptpattern .sp-plate {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+#artboard.user-reference-scriptpattern .sp-pattern {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#artboard.user-reference-scriptpattern .sp-word {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  color: #5a5652;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: -.045em;
+  line-height: .88;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  transform: rotate(var(--sp-angle, -12deg));
+  transform-origin: center;
+}
+
+#artboard.user-reference-brushpanel {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  overflow: hidden;
+  background: #f7f7f5;
+}
+
+#artboard.user-reference-brushpanel .bp-panel {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#artboard.user-reference-brushpanel .bp-panel::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background-image: url("../../support-references/materials/reference-batch-2026-10-26-d/T19363_09-paper-3x2.png");
+  background-position: center;
+  background-size: cover;
+  content: "";
+  mix-blend-mode: multiply;
+  opacity: .1;
+  pointer-events: none;
+}
+
+#artboard.user-reference-brushpanel .bp-panel-orchid {
+  background: #f2d4d7;
+}
+
+#artboard.user-reference-brushpanel .bp-panel-fresh {
+  background: #9fe8db;
+}
+
+#artboard.user-reference-brushpanel .bp-panel-believe {
+  background: #f8f8f8;
+}
+
+#artboard.user-reference-brushpanel .bp-panel-vivid {
+  background: #262626;
+}
+
+#artboard.user-reference-brushpanel .bp-type {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 0;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .84;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  text-shadow: 0 2px 1px rgb(0 0 0 / 12%), 0 8px 14px rgb(0 0 0 / 10%);
+}
+
+#artboard.user-reference-brushpanel .bp-orchid,
+#artboard.user-reference-brushpanel .bp-connector {
+  color: #191719;
+}
+
+#artboard.user-reference-brushpanel .bp-north,
+#artboard.user-reference-brushpanel .bp-fresh-paper {
+  color: #fff;
+  -webkit-text-stroke: 1.2px #28665d;
+  paint-order: stroke fill;
+}
+
+#artboard.user-reference-brushpanel .bp-fresh-row {
+  justify-content: flex-start;
+  letter-spacing: -.045em;
+  text-align: left;
+}
+
+#artboard.user-reference-brushpanel .bp-fresh-ink {
+  color: #191919;
+  -webkit-text-stroke: .7px #191919;
+  paint-order: stroke fill;
+}
+
+#artboard.user-reference-brushpanel .bp-north {
+  color: #fff;
+  -webkit-text-stroke: 1.5px #8b304d;
+  paint-order: stroke fill;
+  text-shadow: 0 2px 1px rgb(58 10 30 / 30%), 0 8px 14px rgb(58 10 30 / 18%);
+}
+
+#artboard.user-reference-brushpanel .bp-design {
+  color: #1b1a1b;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+#artboard.user-reference-brushpanel .bp-belief,
+#artboard.user-reference-brushpanel .bp-achieve {
+  color: #e4417f;
+}
+
+#artboard.user-reference-brushpanel .bp-vivid {
+  color: #eb2ca8;
+  -webkit-text-stroke: .7px #eb2ca8;
+  paint-order: stroke fill;
+}
+
+#artboard.user-reference-brushpanel .bp-boutique {
+  color: #fff;
+  letter-spacing: .04em;
+}
+
+#artboard.user-reference-avalonbrush {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #fbfaf8;
+  color: #171717;
+}
+
+#artboard.user-reference-avalonbrush .av-main,
+#artboard.user-reference-avalonbrush .av-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .82;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: pre;
+}
+
+#artboard.user-reference-avalonbrush .av-pattern {
+  position: absolute;
+  inset: -24% -22%;
+  z-index: 0;
+  overflow: hidden;
+  transform: rotate(-12deg) scale(1.02);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+#artboard.user-reference-avalonbrush .av-pattern-row {
+  position: absolute;
+  width: 150%;
+  color: #171615;
+  letter-spacing: -.065em;
+  line-height: .72;
+  white-space: nowrap;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 10%);
+  pointer-events: none;
+}
+
+#artboard.user-reference-avalonbrush .av-main {
+  z-index: 1;
+  overflow: visible;
+  color: #ee087f;
+  letter-spacing: -.035em;
+  text-shadow: 0 4px 7px rgb(69 0 37 / 18%);
+  transform: scaleY(1.16);
+}
+
+#artboard.user-reference-avalonbrush .av-badge {
+  z-index: 2;
+  border-radius: 50%;
+  background: #11d4a5;
+  color: #fff;
+  line-height: .9;
+  white-space: pre-line;
+  box-shadow: 0 8px 18px rgb(20 32 28 / 19%);
+}

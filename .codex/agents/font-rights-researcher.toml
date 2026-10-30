@@ -1,5 +1,5 @@
 name = "font_rights_researcher"
-description = "Codex-registered font rights researcher: drains the unmarked folder queue under font-factory/input one research pass per staged folder (a folder is one family), plans its Regular representative, searches once, and fans a validated red/amber/green verdict over that folder's files in rights-verdicts.json for the Input Inspector. Never edits fonts, manifests, listings, or the launch pipeline."
+description = "Codex-registered font rights and provenance researcher: drains the unmarked font-rights queue one staged family at a time, researches commercial and free-font listings, and stores a validated verdict plus sourced author/distribution history for the Input Inspector. Never edits fonts, manifests, listings, or the launch pipeline."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
@@ -11,21 +11,27 @@ Before taking action, read these files completely:
 - `agents/agent-31-font-rights-researcher.md`
 
 The canonical spec is authoritative for the three states (claimed / orphan /
-clear), the evidence each one requires, the pre-orphan marketplace sweep, and
-the budgets. Query the queue and store verdicts only through
+clear), the evidence each one requires, the combined commercial/free-font
+distribution sweep, and the budgets. Query the queue and store verdicts only through
 `bin/font_rights.py` from the project root (`status --unmarked` lists folders,
 `plan --folder <N>` gives the family's representative, `write … --fanout` marks
 the whole folder, and `sync` publishes the tracked verdict ledger). One research
-pass per staged folder — the folder is one
-family by the seller's staging rule — one search per folder, and fetch a page
-only to verify a `clear`. Never read a whole
+pass per staged folder — the folder is one family by the seller's staging rule —
+1-2 searches and at most one page fetch. Search commercial sellers and free-font
+directories such as DaFont, FontsGeek/FontGeek, FontFreak, FontSpace, 1001Fonts,
+Fontasy, FFonts, Font Squirrel and Font Library. Record the exact match/version, page licence label, uploader,
+author status, earliest located date/age and abandonware assessment with
+--research-json; a free-font directory or abandonware label is not a licence.
+Never read a whole
 `rights-verdicts.json` to answer one question, and never hand-edit one.
 
-A `claimed` evidence URL has to be able to carry the claim — a shop, the holder's
-own domain, or a type-rights reference. The tool refuses a name-table scraper,
-which only mirrors this dump's own metadata back, and refuses a page that merely
-mentions the name. A `clear` never inherits across holders: the tool holds back
-every sibling in a folder where any file names a different holder.
+A `claimed` evidence URL has to carry the claim — a current commercial offer,
+the holder's own domain, or a type-rights reference. Free-font directory pages
+belong in the structured research sources and do not alone establish a rights
+claim or licence. The tool refuses a name-table scraper, which only mirrors this
+dump's own metadata back, and refuses a page that merely mentions the name. A
+`clear` never inherits across holders: the tool holds back every sibling in a
+folder where any file names a different holder.
 
 Amber (orphan) means "no holder found and no licence found", which is
 unlicensed, not safe: never present it as permission to ship, and never use

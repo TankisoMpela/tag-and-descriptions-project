@@ -1,0 +1,29 @@
+#artboard.user-reference-alicebadge {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #242328;
+  color: #ff526d;
+}
+
+#artboard.user-reference-alicebadge .ab-art {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+#artboard.user-reference-alicebadge .ab-ring {
+  fill: #ff526d;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 72px;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: 1.5px;
+  text-rendering: geometricPrecision;
+  text-transform: uppercase;
+  white-space: pre;
+}

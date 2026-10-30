@@ -32,7 +32,7 @@ never cut the listing prose, which is the product.
 
 Source fonts in `font-factory/fonts/{input-slug}/`; preparation in
 `outputs/font-preparation/{NUM}-{slug}/`; listings in
-`outputs/{booth|pixiv|creative-fabrica}/{NUM}-{slug}-{booth|pixiv|cf}.md`. Numbers
+`outputs/{booth|creativemarket|pixiv|creative-fabrica}/{NUM}-{slug}-{booth|cm|pixiv|cf}.md`. Numbers
 are unpadded, and tools live in `bin/` — never search the tree for one.
 
 ---
@@ -60,21 +60,31 @@ workflows, the-converter, booth-ready) is archived under `archive/` and must not
 invoked. `/font-final-images` (Agent 30), `/font-rights-check` (Agent 31) and the two
 Pinterest pipeline agents below are live, but deliberately outside `/full-workflow`.
 
+Before stage 1, `/full-workflow` selects one exact source folder from
+`font-factory/Saved/`. If the user has not named it, list the available folders
+and root-level OTF/TTF files with `python3 bin/stage_saved_font.py --list` and
+ask which one to use. Move only that folder's original root-level OTF/TTF files
+into a fresh `font-factory/fonts/{input-slug}/` with the same helper; these
+remain there as the source of record for completed work. Nested repair/output
+folders stay in Saved and are excluded; unrelated existing destinations are
+never overwritten. Agent 27 inspects the staged source metadata and full
+mapped-glyph specimen before deciding a name or profile.
+
 ### Default package copies (Agent 13)
 
 Agent 13 writes font binaries into a folder named after the font, never `pro/`, then creates
-three archives: `{Font-Name}-Commercial-Use.zip` and `{Font-Name}-Personal-Use.zip` (both
-clean, identical font binaries; Personal-Use may add a like-request note at the root) plus
-`{Font-Name}-Free-Trial-Demo.zip` (digits and ASCII punctuation replaced with the FontFairy
-demo stamp; letters stay clean for preview).
-All archives contain only the font folder and the OTF/TTF/WOFF/WOFF2 files;
-`description.txt` remains at the preparation output root and is never packaged.
+two archives: `{Font-Name}-Commercial-Use.zip` and
+`{Font-Name}-Personal-Use.zip`. Both contain byte-identical font binaries;
+Personal-Use may add a like-request note at the root. The preparation workflow
+does not watermark trial fonts. Both archives contain the font folder and the
+OTF/TTF/WOFF/WOFF2 files; `description.txt` remains at the preparation output
+root and is never packaged.
 
 ## 🚧 LISTING-AGENT SCOPE, TAG RULES, PLATFORM MATRIX & FETCH POLICY
 
-Relocated to `agents/reference/AGENTS-annex-listing.md` — listing agents
-(BOOTH, Pixiv, Creative Fabrica) read it; the visual, preparation, and
-final-image agents do not.
+Relocated to `agents/reference/AGENTS-annex-listing.md` — current BOOTH and
+Creative Fabrica listing agents read it; its Pixiv section is archived
+reference only. Creative Market follows its dedicated agent spec.
 
 ---
 
@@ -83,16 +93,27 @@ final-image agents do not.
 Relocated to `agents/reference/AGENTS-annex-visual-handoff.md` — read it if you are the
 font-image-generator or the font-final-visual-processor.
 
-Agent 27 writes the handoff to `font-factory/fonts/{slug}/prepared_visuals/`:
+Agent 27 writes the handoff to `font-factory/fonts/{input-slug}/prepared_visuals/`:
 three clean, white-background font-name specimens for use as raw image-model
 material, with complete bespoke 3:2, 1:1, and storefront prompts in
-`visual-direction/theme.txt`; seven eligible HTML/CSS support designs at both
-ratios, four factual specimen previews, and every active HTML/CSS Pinterest
-template rendered with the font. Agent 13 installs the 23 template pins into
-`visuals/New-Images/pinterest/`; the other Agent-27 review assets stay in
+`visual-direction/theme.txt`; 13 seeded-random HTML/CSS support designs
+at both ratios (including eligible family-showcase templates), four factual
+specimen previews, and every active HTML/CSS Pinterest template rendered with
+the font. Its `visual-plan.json` also stores the
+metadata- and specimen-grounded type label, thumbnail subtext, personality, and
+product description, plus a verified product-facts bundle for the listing
+stages. Agent 13 writes that description to the preparation
+folder's `description.txt`; the orchestrator passes the same profile to the
+three listing agents. Agent 13 installs the 23 template pins into
+`outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/pinterest/`; the other Agent-27 review assets stay in
 `font-factory/`. Final thumbnails are generated from the matching specimen and
 prompt; an old thumbnail reference is not part of that process.
-After the seller adds final images, `/font-final-images` (Agent 30) adds ten
+After the seller adds final images directly to
+`outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/`, including both
+`thumbnail_main_3x2` and `thumbnail_main_1x1` plus at least two additional 3:2
+images, `/font-final-images` (Agent 30) processes the complete set. It waits
+without writing outputs until the named thumbnail pair and Pinterest image pool
+are present, targets 200 KB JPEGs with a 300 KB maximum, then adds ten
 image-composite Pinterest panels after the templates and writes a manifest for
 the complete pin set. `/pinterest-prepare` validates and uploads every template
 and composite image to Blob, then writes every public link to `public-urls.md`.
@@ -132,16 +153,20 @@ never green. Three states, and the middle one is the point:
 avenues for `orphan`, a verbatim grant quote for `clear`) and decides nothing itself; a name
 table's "free for commercial use" line is a claim until verified, because these files come out
 of a repackaged 29,000-font dump. A `claimed` URL must also be able to *carry* the claim — a
-shop, the holder's own domain, or a type-rights reference; name-table scrapers that republish
-this dump's own metadata are refused, because hosting a font is not holding it. And a `clear`
+commercial seller, the holder's own domain, or a type-rights reference; free-font directories
+and name-table scrapers are provenance sources, not proof of ownership or licence. And a `clear`
 never fans across holders: if any file in the folder names a different holder, the tool holds
-back every sibling. The pass is **search-first**: 1-2 searches per folder, and a
-page is fetched only when the verdict would be green, because red and amber both mean "do not
-ship" so a cheaper standard is safe there, while a grant has to be read.
+back every sibling. The pass is **search-first**: 1-2 searches per folder across commercial
+places and free-font directories (including DaFont, FontsGeek/FontGeek, FontFreak, FontSpace,
+1001Fonts and similar sources), and at most one page fetch for the best source on exact match,
+author/uploader, licence label, date or a grant. Record the author/status, earliest date or age,
+distribution claims, abandonware assessment, and each relevant page/uploader in the verdict's
+structured `research` field; use unknown when a detail cannot be sourced. Abandonware and a free
+download never grant permission to ship.
 `font-vault/input_inspector.py` renders each verdict as a coloured chip on the row — press ↻
-Refresh after a run, and click a chip to read the evidence, the searched avenues and the
-dates behind it (its URLs are clickable and copyable, and **Copy full report** takes the
-whole record out as plain text for follow-ups outside the app). The tool never touches a font binary,
+Refresh after a run, and click a chip to read the evidence and provenance history, including
+the distribution pages and uploaders (their URLs are clickable and copyable, and **Copy full
+report** takes the whole record out as plain text for follow-ups outside the app). The tool never touches a font binary,
 a manifest, or `in-use.txt`; deleting or returning a font in the inspector voids its verdict.
 The sidecars live in a **gitignored** directory, so a finished run must end with
 `python3 bin/font_rights.py sync`, which mirrors them into the tracked
@@ -179,13 +204,14 @@ retired `green_starburst` and `phrase` designs stay out of production pins.
   per font, and validates + assembles `outputs/pinterest/{YYYY-MM-DD}/buffer.csv`
   (Buffer free-plan import — carries Alt Text; staggered hourly from 09:00
   UTC) plus `pins.csv` as the Pinterest-native fallback. Per pin it takes ONE
-  of the font's manifested image links and ONE of its two product links (both
-  marketplaces split evenly, seeded by date so a re-run is identical).
+  manifested image link and one product link; image indexes are balanced across
+  the batch and both choices are stable for that date.
   Anti-cannibalization lives in `outputs/research/pinterest-tags.sqlite`:
-  `tag_uses` (keyword counts), `pinned_runs` (re-pin window) and `pins` — the
-  full text of every pin shipped, looked up with
-  `python3 bin/pinterest_tag_ledger.py history --slug <slug> --full` and
-  printed automatically in `brief.md` before new copy is written.
+  `prepared_pins` holds editable drafts; after a human confirms import,
+  `tag_uses` (keyword counts), `pinned_runs` (re-pin window), and `pins` record
+  accepted rows. Read confirmed copy with
+  `python3 bin/pinterest_tag_ledger.py history --slug <slug> --full`; that
+  history is included automatically in `brief.md`.
 
 Tools: `font-factory/pin-html/render_gallery.mjs` (run by Agent 27),
 `bin/install_template_pinterest_pins.py` (Agent 13 handoff),
@@ -193,10 +219,15 @@ Tools: `font-factory/pin-html/render_gallery.mjs` (run by Agent 27),
 `bin/pinterest_registry.py`, `bin/papermoon-blob.py`,
 `bin/pinterest_tag_ledger.py`, `bin/make_daily_pins.py`. Carousels are not
 supported by the bulk CSV (one Media URL per row) — one image per pin.
-Uploading `buffer.csv` to Buffer (free: connect the Pinterest business
-channel, channel timezone = a no-DST UTC city like Reykjavik, 10-slot rolling
-queue — upload only after the previous batch published) is always the human
-step; the agents make no publication claim. Keyword candidates are seeded
+Buffer is the primary human import. Its Pinterest `Board Name` must already
+exist in Pinterest, so create the four suggested boards before the first Buffer
+import ([Buffer guide](https://support.buffer.com/articles/how-to-upload-posts-in-bulk-to-buffer-cTIhl4mv6H)). The
+Pinterest-native CSV importer can create a missing board ([Pinterest guide](https://help.pinterest.com/en/business/article/bulk-upload-video-pins)). After
+Buffer accepts/queues rows (or Pinterest accepts the native CSV), record only
+those fonts with `python3 bin/pinterest_tag_ledger.py mark-imported --date D
+--slugs slug-a slug-b`; this records import acceptance, not publication. Buffer's
+free queue is limited to 10 waiting posts, so import within remaining slots.
+The agents make no publication claim. Keyword candidates are seeded
 mechanically in `brief.md` from each font's description.txt, then rotated via
 the ledger — CM listing tags / `bin/search.js` validation remain optional
 future seed sources.
@@ -208,20 +239,21 @@ All generated marketplace listing copy and font preparation outputs live under `
 ```
 tag-and-description-project/
 ├── font-factory/                       ← FONT INPUT, VISUAL-REFERENCE, PROMPT, AND PREPARATION WORKSPACE
-│   └── fonts/{font-slug}/
+│   └── fonts/{input-slug}/
 │       ├── raw .otf/.ttf files
 │       ├── visual-references/          ← optional source material; no old thumbnail is required
 │       ├── visual-direction/           ← Agent 27 art direction, plan, and review
 │       └── prepared_visuals/           ← Agent 27 DRAFT visuals; stay here, never copied to outputs/
 │           ├── 3x2/                    ← thumbnail_main.png
 │           ├── 1x1/                    ← thumbnail_main.png and thumbnail_japanese.png
-│           ├── supporting/3x2/         ← seven eligible HTML/CSS templates
-│           ├── supporting/1x1/         ← the same seven square adaptations
+│           ├── supporting/3x2/         ← 13 eligible HTML/CSS templates
+│           ├── supporting/1x1/         ← the same 13 square adaptations
 │           ├── specimens/{3x2,1x1}/   ← four factual specimen previews
 │           └── visual-handoff-manifest.md
-├── outputs/                            ← ALL MARKETPLACE LISTING OUTPUTS
+├── outputs/                            ← GENERATED LISTINGS AND FONT PREPARATION OUTPUTS
 │   ├── font-preparation/               ← Agent 13 {NUM}-{slug} packages, ZIP copies, and visual derivatives
 │   ├── booth/                          ← {NEXT_NUM}-{slug}-booth.md + booth-tag-ledger.md
+│   ├── creativemarket/                 ← {NEXT_NUM}-{slug}-cm.md
 │   ├── booth-pdfs/                     ← /booth-pdf-maker one-page trial inserts
 │   ├── pixiv/                          ← {NEXT_NUM}-{slug}-pixiv.md + pixiv-tag-ledger.md
 │   ├── creative-fabrica/               ← {NEXT_NUM}-{slug}-cf.md
@@ -247,8 +279,8 @@ Every product processed in the pipeline receives a **unified numeric ID** (`{NEX
 2. **New Product Generation**:
    - If generating a new product from scratch, scan **all platform folders** (`outputs/*/*.md`) for existing numeric file prefixes (`[0-9]*.md`) — never a single platform folder on its own, or different platforms will collide on the same number.
    - Extract the highest existing numeric prefix (`MAX_NUM`). If no files exist, set `MAX_NUM = 0`.
-   - Set `NEXT_NUM = MAX_NUM + 1`, and pass that one number to every stage (BOOTH, Pixiv, Creative Fabrica) — the orchestrator computes it once and supplies it.
-   - Use this `{NEXT_NUM}` prefix for all platform output files created during the run (e.g., `33-my-font-booth.md`, `33-my-font-pixiv.md`, `33-my-font-cf.md`).
+   - Set `NEXT_NUM = MAX_NUM + 1`, and pass that one number to every active listing stage (BOOTH, Creative Market, Creative Fabrica) — the orchestrator computes it once and supplies it.
+   - Use this `{NEXT_NUM}` prefix for all platform output files created during the run (e.g., `33-my-font-booth.md`, `33-my-font-cm.md`, `33-my-font-cf.md`).
 
 ---
 
@@ -265,6 +297,13 @@ and pricing reference are preserved in `agents/reference/AGENTS-full-archive.md`
 Read it only when the user explicitly reactivates one of those workflows.
 
 ## CODEX ROUTING (NATIVE REGISTRY)
+
+`agents/agent-28-full-workflow.md` is the shared, runtime-neutral full-workflow
+contract. Codex, Qwen, OMP, and OpenCode registrations must preserve its
+five-stage order and handoffs while using only their own native delegation
+mechanism. Run `python3 bin/check_full_workflow_sync.py` after changing a
+runtime registration to check that stage order and child-agent entries remain
+aligned.
 
 When this repository is operated by Codex, use only the Codex registrations in
 `.codex/agents/`. The active Codex font workflow is `full_workflow`, and its

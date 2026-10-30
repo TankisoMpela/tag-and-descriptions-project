@@ -9,7 +9,13 @@ const id = process.argv[2];
 const target = path.resolve(process.argv[3] || `/tmp/${id || "pin"}.png`);
 if (!id) throw new Error("Usage: node render_template.mjs <template-id> [output.png]");
 const editor = path.join(here, "templates", id, "editor.html");
-const browser = await chromium.launch({ executablePath: "/usr/bin/chromium", headless: true, args: ["--no-sandbox", "--allow-file-access-from-files"] });
+const browser = await chromium.launch({
+  ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+    ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH }
+    : {}),
+  headless: true,
+  args: ["--no-sandbox", "--allow-file-access-from-files"],
+});
 try {
   const page = await browser.newPage({ viewport: { width: 1100, height: 1600 }, deviceScaleFactor: 1 });
   await page.goto(pathToFileURL(editor).href, { waitUntil: "networkidle" });

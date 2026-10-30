@@ -2,16 +2,14 @@
 """Process seller-replaced font images after the font workflow is complete.
 
 The raw image folder is intentionally treated as immutable input. In
-``--auto-order`` mode, the first stable filename in each detected ratio is
-assigned ``thumbnail_main`` mechanically; all remaining files are numbered as
-promos independently. No visual thumbnail identification is performed. With
-``--pad-squares``, missing squares are derived from the 3:2 set by
-white-padding with equal top/bottom bars (every square when no 1:1 file
-exists; only the supporting squares when the sole 1:1 file is a name-marked
-square thumbnail); the derivation is recorded in the manifest. Exact source
-copies, bounded JPEG delivery files, Pinterest variants, and a traceable
-manifest are written beneath the output folder (which defaults to the raw
-folder itself).
+``--auto-order`` mode, exactly one ``thumbnail_main``-marked file in each
+detected ratio is required and selected as the thumbnail; remaining direct
+files are numbered as promos in stable filename order. No visual thumbnail
+identification is performed. The optional ``--pad-squares`` flag can only
+derive missing square promos when a seller-supplied square thumbnail exists;
+it can never replace a missing square thumbnail. Exact source copies,
+bounded JPEG delivery files, Pinterest variants, and a traceable manifest are
+written beneath the output folder (which defaults to the raw folder itself).
 """
 
 from __future__ import annotations
@@ -37,7 +35,8 @@ IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp", ".avif", ".tif", ".tiff"}
 MAIN_RATIO = 3 / 2
 SQUARE_RATIO = 1.0
 RATIO_TOLERANCE = 0.025
-JPEG_MAX_BYTES = 200_000
+JPEG_TARGET_BYTES = 200_000
+JPEG_MAX_BYTES = 300_000
 SQUARE_THUMB_MARKERS = ("thumb", "square", "1x1", "1:1", "1-1", "1_1")
 PINTEREST_MAX_BYTES = 200_000
 PINTEREST_WIDTH = 1000
@@ -102,6 +101,11 @@ def direct_images(source_dir: Path) -> list[Path]:
         for path in source_dir.iterdir()
         if path.is_file() and path.suffix.lower() in IMAGE_SUFFIXES
     )
+
+
+def is_main_thumbnail_name(path: Path) -> bool:
+    normalized = re.sub(r"[^a-z0-9]+", "-", path.stem.casefold()).strip("-")
+    return re.search(r"(?:^|-)thumbnail-main(?:-|$)", normalized) is not None
 
 
 def required_template_pins(pinterest_dir: Path) -> dict[int, Path]:
@@ -593,10 +597,18 @@ def write_manifest(
         f"- **Processed:** {date.today().isoformat()}",
         f"- **Raw source folder:** `{source_dir}`",
         f"- **Output folder:** `{output_dir}`",
-        f"- **JPEG delivery limit:** {JPEG_MAX_BYTES} bytes per main/square file.",
+        f"- **JPEG goal:** {JPEG_TARGET_BYTES} bytes per main/square file where quality allows; absolute limit {JPEG_MAX_BYTES} bytes.",
         "- **Raw source policy:** direct source files were preserved; no raw file was overwritten, renamed, or compressed.",
-        "- **Numbering policy:** files are assigned mechanically in stable filename order within each ratio; the first file is `thumbnail_main` and remaining files are numbered `promo_1` upward. No visual thumbnail identification is performed.",
+        "- **Numbering policy:** the one file containing `thumbnail_main` in each ratio is the thumbnail; remaining files are assigned promo numbers in stable filename order. No visual thumbnail identification is performed.",
     ]
+    over_target = sorted(
+        path.name for path in [*output_dir.joinpath("main").glob("*.jpg"),
+                               *output_dir.joinpath("squares").glob("*.jpg")]
+        if path.stat().st_size > JPEG_TARGET_BYTES
+    )
+    lines.append("- **300 KB allowance used:** " +
+                 (", ".join(f"`{name}`" for name in over_target)
+                  if over_target else "none; every JPEG met the 200 KB goal"))
     if padded_from:
         lines.append(
             f"- **Square padding:** {len(padded_from)} square file(s) were derived from their "
@@ -766,12 +778,10 @@ def main() -> int:
     parser.add_argument(
         "--auto-order",
         action="store_true",
-        help="Mechanically sort direct files by filename within each ratio; first becomes thumbnail_main",
+        help="Select one named thumbnail_main file per ratio; sort remaining promo files mechanically",
     )
     parser.add_argument("--pad-squares", action="store_true",
-                        help="With --auto-order: derive missing squares from the 3:2 set using equal "
-                             "white top/bottom padding (every square when no 1:1 file exists; only the "
-                             "supporting squares when the sole 1:1 file is a name-marked square thumbnail)")
+                        help="With --auto-order: derive missing promo squares only; a seller-supplied 1:1 thumbnail is still required")
     parser.add_argument("--square-japanese-thumbnail", default=None,
                         help="Optional separate raw 1:1 Japanese thumbnail filename")
     parser.add_argument("--main-promo", action="append", default=None,
@@ -846,25 +856,22 @@ def main() -> int:
             else:
                 fail(f"{image.name} is neither 3:2 nor 1:1; auto-order cannot classify it")
         if not ratio_groups["3:2"]:
-            fail("--auto-order requires at least one direct 3:2 file")
+            fail("--auto-order requires a named direct 3:2 thumbnail and at least two more 3:2 files")
         three_two, squares = ratio_groups["3:2"], ratio_groups["1:1"]
-        if not squares and not args.pad_squares:
-            fail("--auto-order found no direct 1:1 file; rerun with --pad-squares to derive "
-                 "every square from the 3:2 set (equal white top/bottom padding)")
+        main_candidates = [path for path in three_two if is_main_thumbnail_name(path)]
+        square_candidates = [path for path in squares if is_main_thumbnail_name(path)]
+        if len(main_candidates) != 1:
+            fail("--auto-order requires exactly one 3:2 thumbnail file whose name contains "
+                 "'thumbnail_main' (for example thumbnail_main_3x2.png)")
+        if len(square_candidates) != 1:
+            fail("--auto-order requires exactly one 1:1 thumbnail file whose name contains "
+                 "'thumbnail_main' (for example thumbnail_main_1x1.png)")
         square_japanese = None
-        main_thumbnail, main_promos = three_two[0], three_two[1:]
-        if args.pad_squares and not squares:
-            print(
-                f"Pad squares: deriving all {len(three_two)} square(s) from the "
-                "3:2 set (equal white top/bottom padding).",
-                file=sys.stderr,
-            )
-            square_thumbnail = source_11 / "thumbnail_main.png"
-            square_promos = [source_11 / f"promo_{index}.png" for index in range(1, len(three_two))]
-            padded_from[square_thumbnail] = main_thumbnail
-            for index, parent in enumerate(main_promos, start=1):
-                padded_from[source_11 / f"promo_{index}.png"] = parent
-        elif (
+        main_thumbnail = main_candidates[0]
+        main_promos = [path for path in three_two if path != main_thumbnail]
+        square_thumbnail = square_candidates[0]
+        square_promos = [path for path in squares if path != square_thumbnail]
+        if (
             args.pad_squares
             and len(squares) == 1
             and any(token in squares[0].name.lower() for token in SQUARE_THUMB_MARKERS)
@@ -875,13 +882,9 @@ def main() -> int:
                 "3:2 promos; keeping the supplied square thumbnail (equal white top/bottom padding).",
                 file=sys.stderr,
             )
-            square_thumbnail = squares[0]
             square_promos = [source_11 / f"promo_{index}.png" for index in range(1, len(three_two))]
             for index, parent in enumerate(main_promos, start=1):
                 padded_from[source_11 / f"promo_{index}.png"] = parent
-        else:
-            square_thumbnail = squares[0]
-            square_promos = squares[1:]
     else:
         if args.pad_squares:
             fail("--pad-squares requires --auto-order")
@@ -915,6 +918,8 @@ def main() -> int:
         square_promos = ordered_promos(
             source_dir, all_images, square_thumbnail, square_japanese, args.square_promo, SQUARE_RATIO, "1:1"
         )
+    if pinterest_enabled and len(main_promos) < 2:
+        fail("Pinterest panels require the named 3:2 thumbnail plus at least two additional direct 3:2 images; add them before processing")
     if not main_promos:
         print("Warning: no 3:2 supporting promos were supplied.", file=sys.stderr)
     if not square_promos:
@@ -994,12 +999,14 @@ def main() -> int:
                 canonical_copy(source, source_11 / canonical, overwrite=args.overwrite)
 
         encode_args = [sys.executable, str(Path(__file__).with_name("encode_main_jpeg.py")),
-                       str(staging_32), str(main_dir), "--max-bytes", str(JPEG_MAX_BYTES)]
+                       str(staging_32), str(main_dir), "--target-bytes", str(JPEG_TARGET_BYTES),
+                       "--max-bytes", str(JPEG_MAX_BYTES)]
         if args.max_dim is not None:
             encode_args += ["--max-dim", str(args.max_dim)]
         run(encode_args, label="3:2 JPEG encoding")
         encode_args = [sys.executable, str(Path(__file__).with_name("encode_main_jpeg.py")),
-                       str(staging_11), str(square_dir), "--max-bytes", str(JPEG_MAX_BYTES)]
+                       str(staging_11), str(square_dir), "--target-bytes", str(JPEG_TARGET_BYTES),
+                       "--max-bytes", str(JPEG_MAX_BYTES)]
         if args.max_dim is not None:
             encode_args += ["--max-dim", str(args.max_dim)]
         run(encode_args, label="1:1 JPEG encoding")

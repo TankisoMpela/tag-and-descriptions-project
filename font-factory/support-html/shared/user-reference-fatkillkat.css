@@ -1,0 +1,88 @@
+#artboard.user-reference-fat-kill-kat {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #07162d;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%23567790' stroke-width='1' opacity='.24'%3E%3Cpath d='M5 21l23-10m14 44 31-17m39 4 14-9m21 30 9-17M1 102l17-7m33 21 27-11m46 10 26-13M15 151l21-18m37 9 19-9m32 15 27-14M92 24l10 7m-60 99 11-7'/%3E%3Cpath d='M20 5l-7 12m90 25-6 9m39 58-13 14m-85 10-9 12' stroke='%23020a16' opacity='.45'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 160px 160px;
+  color: #fff9ec;
+}
+
+#artboard.user-reference-fat-kill-kat .fkk-footer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 700;
+  line-height: .82;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: pre;
+}
+
+#artboard.user-reference-fat-kill-kat .fkk-title {
+  position: absolute;
+}
+
+#artboard.user-reference-fat-kill-kat .fkk-title-face,
+#artboard.user-reference-fat-kill-kat .fkk-title-extrusion {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 700;
+  line-height: .82;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: pre;
+  letter-spacing: -.025em;
+  transform-origin: center;
+  transform: scaleX(1.12);
+}
+
+#artboard.user-reference-fat-kill-kat .fkk-title-face {
+  z-index: 1;
+  color: transparent;
+  background-color: #ffb848;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' fill='%23ffb848'/%3E%3Cpath d='M-20 82L82-20M0 110L110 0M24 120L120 24' fill='none' stroke='%23f19c2d' stroke-width='2' opacity='.76'/%3E%3Cpath d='M18 26c7-4-2-9 5-14m24 48c7-4-2-9 5-14m25 44c7-4-2-9 5-14m-3-53c7-4-2-9 5-14' fill='none' stroke='%23dd6b2d' stroke-width='3' stroke-linecap='round' opacity='.7'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 96px 96px;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#artboard.user-reference-fat-kill-kat .fkk-title-extrusion {
+  z-index: 0;
+  color: #91d5d4;
+  transform: translate(var(--fkk-extrusion-x, 8px), var(--fkk-extrusion-y, 10px)) scaleX(1.12);
+}
+
+#artboard.user-reference-fat-kill-kat .fkk-footer {
+  gap: .28em;
+  letter-spacing: -.07em;
+}
+
+#artboard.user-reference-fat-kill-kat .fkk-lower-blue {
+  color: #91d5d4;
+}
+
+#artboard.user-reference-fat-kill-kat .fkk-lower-cream {
+  color: #fff9ec;
+}
+
+#artboard.user-reference-fat-kill-kat.fat-kill-kat-square .fkk-footer {
+  gap: .19em;
+}

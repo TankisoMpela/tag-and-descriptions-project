@@ -12,8 +12,9 @@ import os
 import re
 import shutil
 import sys
+from pathlib import Path
 
-ROOT = "/home/tankiso/Projects/Business-and-Tools/tag-and-description-project"
+ROOT = str(Path(__file__).resolve().parent.parent)
 OUT = os.path.join(ROOT, ".claude")
 
 TOOL_MAP = {
@@ -33,11 +34,11 @@ WORKFLOW_DELEGATION = {
         ("yellowimages-fonts-specialist", "YellowImages (Creative Store font listing, exactly 30 canonical-first tags)"),
     ],
     "full-workflow": [
-        ("font-image-generator", "Agent 27 — OpenPencil visual handoff; decides final name when not supplied (no uniqueness research)"),
-        ("font-prep-specialist", "Agent 13 — continuous metadata/package/audit, both videos, factual-specimen copy, visual handoff"),
-        ("booth-fonts-specialist", "Agent 20 — BOOTH paid-only listing"),
-        ("marketore-fonts-specialist", "Agent 24 — Marketore listing"),
-        ("yellowimages-fonts-specialist", "Agent 23 — YellowImages listing"),
+        ("font-image-generator", "Agent 27 — validated visual handoff"),
+        ("font-prep-specialist", "Agent 13 — continuous package, audit, specimens, and checked Pinterest templates"),
+        ("booth-fonts-specialist", "Agent 20 — BOOTH listing"),
+        ("cm-fonts-specialist", "Agent 2 — Creative Market listing"),
+        ("creative-fabrica-fonts-specialist", "Agent 29 — Creative Fabrica Fonts listing"),
     ],
     "ivoryglass-marketplace-workflow": [
         ("booth-fonts-specialist", "BOOTH listing"),

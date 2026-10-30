@@ -15,6 +15,7 @@ import random
 import re
 import signal
 import time
+import threading
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -22,12 +23,12 @@ from pathlib import Path
 from fontTools.ttLib import TTFont
 from fontTools.pens.recordingPen import RecordingPen
 from PIL import Image, ImageDraw, ImageFont
-from PySide6.QtCore import QObject, QThread, Qt, Signal, Slot
-from PySide6.QtGui import QKeySequence, QPixmap, QShortcut
+from PySide6.QtCore import QObject, QSocketNotifier, QThread, Qt, QTimer, Signal, Slot
+from PySide6.QtGui import QAction, QKeySequence, QPixmap, QShortcut
 from PySide6.QtWidgets import (
     QApplication, QCheckBox, QComboBox, QFileDialog, QFrame, QHBoxLayout,
     QLabel, QLineEdit, QListWidget, QListWidgetItem, QMainWindow, QMessageBox,
-    QPushButton, QScrollArea, QSizePolicy, QSplitter, QVBoxLayout, QWidget,
+    QProgressBar, QPushButton, QScrollArea, QSizePolicy, QSplitter, QVBoxLayout, QWidget,
 )
 
 
@@ -68,6 +69,70 @@ DEEP_OUTLINE_TIMEOUT = 0.5
 
 class OutlineTimeoutError(Exception):
     """The bounded outline pass ran out of time — no verdict about the font."""
+
+
+class OperationCancelled(Exception):
+    """A background family operation was stopped at a safe checkpoint."""
+
+
+def scan_state_key(vault_id: int) -> str:
+    return f"scan_incomplete:{vault_id}"
+
+
+class InterruptExitBridge(QObject):
+    """Turn terminal SIGINT into a normal, Qt-driven window close."""
+
+    def __init__(self, callback, parent: QObject | None = None) -> None:
+        super().__init__(parent)
+        self.callback = callback
+        self.read_fd, self.write_fd = os.pipe()
+        os.set_blocking(self.read_fd, False)
+        os.set_blocking(self.write_fd, False)
+        self.previous_handler = signal.getsignal(signal.SIGINT)
+        signal.signal(signal.SIGINT, self._on_sigint)
+        try:
+            self.previous_wakeup_fd = signal.set_wakeup_fd(
+                self.write_fd, warn_on_full_buffer=False
+            )
+        except Exception:
+            signal.signal(signal.SIGINT, self.previous_handler)
+            os.close(self.read_fd)
+            os.close(self.write_fd)
+            raise
+        self.notifier = QSocketNotifier(
+            self.read_fd, QSocketNotifier.Type.Read, self
+        )
+        self.notifier.activated.connect(self._on_wakeup)
+        self._restored = False
+
+    @staticmethod
+    def _on_sigint(_signum, _frame) -> None:
+        # CPython writes the signal byte to the wakeup fd. Qt handles it on the
+        # UI thread instead of attempting application work inside a signal.
+        return
+
+    def _on_wakeup(self, *_args) -> None:
+        try:
+            while os.read(self.read_fd, 4096):
+                pass
+        except BlockingIOError:
+            pass
+        self.callback()
+
+    def restore(self) -> None:
+        if self._restored:
+            return
+        self._restored = True
+        try:
+            signal.set_wakeup_fd(self.previous_wakeup_fd, warn_on_full_buffer=False)
+            signal.signal(signal.SIGINT, self.previous_handler)
+        except (ValueError, OSError):
+            pass
+        for descriptor in (self.read_fd, self.write_fd):
+            try:
+                os.close(descriptor)
+            except OSError:
+                pass
 
 
 def pretty_display(display: str) -> str:
@@ -322,12 +387,173 @@ def family_member_matches(target: FamilyInfo, candidate: FamilyInfo) -> bool:
     return False
 
 
+def find_family_members_for_action(
+    db: VaultDB,
+    vault_id: int | None,
+    target_record: FontRecord,
+    records: list[FontRecord],
+    visible: list[FontRecord],
+    family_cache: dict[str, FamilyInfo],
+    progress,
+    cancelled=lambda: False,
+) -> tuple[FamilyInfo, list[FontRecord]]:
+    """Resolve a family off the UI thread and persist its metadata in one batch."""
+    computed: dict[str, FamilyInfo] = {}
+    metadata_updates: list[tuple[str, str, str, str]] = []
+
+    def info(record: FontRecord) -> FamilyInfo:
+        if cancelled():
+            raise OperationCancelled("The operation was stopped to close Font Vault.")
+        cached = family_cache.get(record.key) or computed.get(record.key)
+        if cached is not None:
+            return cached
+        resolved = resolve_family(record.display, read_family_metadata(Path(record.source)))
+        computed[record.key] = resolved
+        metadata_updates.append((record.key, resolved.key, resolved.label, resolved.style))
+        return resolved
+
+    target_info = info(target_record)
+    target_path = Path(target_record.source)
+    prefix = target_info.key[:3] if len(target_info.key) >= 3 else target_info.key
+
+    if vault_id is not None:
+        legacy_key = " ".join(target_info.label.casefold().split())
+        db.conn.set_progress_handler(lambda: 1 if cancelled() else 0, 10_000)
+        try:
+            rows = db.find_family_candidates(
+                vault_id,
+                str(target_path.parent.resolve()),
+                prefix,
+                family_key=target_info.key,
+                legacy_family_key=legacy_key,
+            )
+        except sqlite3.OperationalError as error:
+            if cancelled():
+                raise OperationCancelled(
+                    "The operation was stopped to close Font Vault."
+                ) from error
+            raise
+        finally:
+            db.conn.set_progress_handler(None, 0)
+        candidates = [
+            FontRecord(key=row["file_key"], display=row["display"], source=row["file_path"])
+            for row in rows
+        ]
+    else:
+        candidates = [
+            record for record in records
+            if Path(record.source).parent == target_path.parent
+            or (prefix and prefix in record.display.casefold())
+        ]
+        if not candidates:
+            candidates = list(records)
+
+    by_key = {record.key: record for record in candidates}
+    if visible:
+        target_index = next((i for i, record in enumerate(visible) if record.key == target_record.key), -1)
+        if target_index >= 0:
+            for step in (-1, 1):
+                index = target_index + step
+                while 0 <= index < len(visible):
+                    candidate = visible[index]
+                    if not family_member_matches(target_info, info(candidate)):
+                        break
+                    by_key.setdefault(candidate.key, candidate)
+                    index += step
+    by_key.setdefault(target_record.key, target_record)
+    candidates = list(by_key.values())
+
+    members: list[FontRecord] = []
+    total = len(candidates)
+    for index, candidate in enumerate(candidates, 1):
+        if cancelled():
+            raise OperationCancelled("The operation was stopped to close Font Vault.")
+        if family_member_matches(target_info, info(candidate)):
+            members.append(candidate)
+        if index == 1 or index % 25 == 0 or index == total:
+            progress(f"Checking family names… {index:,}/{total:,}", index, total)
+
+    if not any(record.key == target_record.key for record in members):
+        members.insert(0, target_record)
+    members.sort(key=lambda item: item.display.casefold())
+
+    if metadata_updates:
+        progress("Saving family metadata…", total, total)
+        db.conn.set_progress_handler(lambda: 1 if cancelled() else 0, 10_000)
+        try:
+            db.update_font_family_meta_bulk(metadata_updates)
+        except sqlite3.OperationalError as error:
+            if cancelled():
+                raise OperationCancelled(
+                    "The operation was stopped to close Font Vault."
+                ) from error
+            raise
+        finally:
+            db.conn.set_progress_handler(None, 0)
+        family_cache.update(computed)
+    return target_info, members
+
+
+def sha1_file(path: Path) -> str:
+    """Hash large font files in bounded memory."""
+    digest = hashlib.sha1()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def write_json_atomic(path: Path, payload: dict) -> None:
+    """Replace a JSON sidecar atomically so interrupted writes leave the prior copy intact."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.{os.getpid()}.{threading.get_ident()}.tmp")
+    try:
+        temporary.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def retire_source(source: Path, quarantine_dir: Path, digest: str) -> Path:
+    """Move a verified source to quarantine, copying only across file systems."""
+    quarantine_dir.mkdir(parents=True, exist_ok=True)
+    target = quarantine_dir / source.name
+    suffix = 1
+    while target.exists():
+        suffix += 1
+        target = quarantine_dir / f"{source.stem}~~{suffix}{source.suffix}"
+    try:
+        os.rename(source, target)
+    except OSError as error:
+        if error.errno != errno.EXDEV:
+            try:
+                if not any(quarantine_dir.iterdir()):
+                    quarantine_dir.rmdir()
+            except OSError:
+                pass
+            raise
+        try:
+            shutil.copy2(source, target)
+            if sha1_file(target) != digest:
+                raise OSError(f"{target.name} is not byte-identical to its source")
+            source.unlink()
+        except OSError:
+            target.unlink(missing_ok=True)
+            try:
+                if not any(quarantine_dir.iterdir()):
+                    quarantine_dir.rmdir()
+            except OSError:
+                pass
+            raise
+    return target
+
+
 class DirectoryScanWorker(QObject):
     """Find font paths off the UI thread; index directly into SQLite with fast batching."""
 
     progress = Signal(int)
     batch = Signal(object)
-    completed = Signal(int)
+    completed = Signal(int, int, object)
     failed = Signal(str)
     finished = Signal()
 
@@ -336,26 +562,55 @@ class DirectoryScanWorker(QObject):
         self.path = path
         self.db = db
         self.vault_id = vault_id
+        self.cancelled = False
 
     @Slot()
     def run(self) -> None:
         pending_records: list[dict] = []
         ui_batch: list[FontRecord] = []
         total_count = 0
+        skipped_count = 0
+        skipped_samples: list[str] = []
+
+        def note_problem(error: OSError) -> None:
+            nonlocal skipped_count
+            skipped_count += 1
+            if len(skipped_samples) < 6:
+                location = error.filename or str(self.path)
+                skipped_samples.append(f"{location}: {error}")
+
         try:
-            for font_path in sorted(self.path.rglob("*")):
-                # rglob does not skip dot-directories, and the staged-out quarantine
-                # lives under the dump — without this a staged family scans back in as new.
-                if any(part.startswith(".") for part in font_path.relative_to(self.path).parts):
-                    continue
-                if font_path.is_file() and font_path.suffix.lower() in FONT_EXTENSIONS:
-                    stat = font_path.stat()
-                    key = f"file:{font_path.resolve()}:{stat.st_size}:{stat.st_mtime_ns}"
+            self.db.set_app_state(scan_state_key(self.vault_id), True)
+
+            def on_walk_error(error: OSError) -> None:
+                note_problem(error)
+
+            # Walk incrementally and prune hidden folders before descending. This
+            # avoids materializing a huge path list and skips caches/quarantine trees.
+            for root, directories, filenames in os.walk(self.path, topdown=True, onerror=on_walk_error):
+                if self.cancelled:
+                    break
+                directories[:] = [name for name in directories if not name.startswith(".")]
+                directories.sort()
+                filenames.sort()
+                for filename in filenames:
+                    if self.cancelled:
+                        break
+                    if filename.startswith(".") or Path(filename).suffix.lower() not in FONT_EXTENSIONS:
+                        continue
+                    font_path = Path(root) / filename
+                    try:
+                        stat = font_path.stat()
+                        resolved_path = font_path.resolve()
+                    except OSError as error:
+                        note_problem(error)
+                        continue
+                    key = f"file:{resolved_path}:{stat.st_size}:{stat.st_mtime_ns}"
                     record = FontRecord(key, font_path.stem, str(font_path))
                     ui_batch.append(record)
                     pending_records.append({
                         "file_key": key,
-                        "file_path": str(font_path.resolve()),
+                        "file_path": str(resolved_path),
                         "file_size": stat.st_size,
                         "mtime_ns": stat.st_mtime_ns,
                         "stem": font_path.stem,
@@ -377,10 +632,13 @@ class DirectoryScanWorker(QObject):
                 self.db.bulk_insert_font_records(self.vault_id, pending_records)
             if ui_batch:
                 self.batch.emit(ui_batch)
-            self.completed.emit(total_count)
+            if not self.cancelled:
+                self.db.set_app_state(scan_state_key(self.vault_id), False)
+            self.completed.emit(total_count, skipped_count, skipped_samples)
         except Exception as error:
             self.failed.emit(str(error))
         finally:
+            self.db.close_thread_connection()
             self.finished.emit()
 
 
@@ -405,22 +663,283 @@ class SpecimenRenderWorker(QObject):
 
     @Slot()
     def run(self) -> None:
-        for record in self.records:
-            if self.cancelled:
-                break
+        try:
+            for record in self.records:
+                if self.cancelled:
+                    break
+                try:
+                    # Deep outline checks use SIGALRM timeouts and must stay on the
+                    # UI thread (queue_selected runs them); the worker uses the fast
+                    # cmap pass, which is enough for broken/missing-letter notes.
+                    state = self.window.analyze_record(record, deep=False)
+                    note = f" · excluded: {state.get('reason')}" if state.get("classification") == "broken" else ""
+                    path = str(self.window.render_path(record))
+                    facts = self.window.inspect(record) + note
+                except Exception as error:
+                    self.failed.emit(record.key, str(error))
+                    continue
+                self.ready.emit(record.key, path, facts, note)
+        finally:
+            self.window.db.close_thread_connection()
+            self.done.emit()
+
+
+class FamilyActionWorker(QObject):
+    """Resolve and update one family without blocking the desktop event loop."""
+
+    progress = Signal(str, int, int)
+    completed = Signal(object)
+    failed = Signal(str)
+    finished = Signal()
+
+    def __init__(
+        self,
+        mode: str,
+        db: VaultDB,
+        vault_id: int | None,
+        target: FontRecord,
+        records: list[FontRecord],
+        visible: list[FontRecord],
+        family_cache: dict[str, FamilyInfo],
+    ) -> None:
+        super().__init__()
+        self.mode = mode
+        self.db = db
+        self.vault_id = vault_id
+        self.target = target
+        self.records = records
+        self.visible = visible
+        self.family_cache = family_cache
+        self.cancelled = False
+
+    def cancel(self) -> None:
+        self.cancelled = True
+
+    def check_cancelled(self) -> None:
+        if self.cancelled:
+            raise OperationCancelled("The operation was stopped to close Font Vault.")
+
+    @Slot()
+    def run(self) -> None:
+        try:
+            self.progress.emit("Finding matching font styles…", 0, 0)
+            family, members = find_family_members_for_action(
+                self.db,
+                self.vault_id,
+                self.target,
+                self.records,
+                self.visible,
+                self.family_cache,
+                lambda message, value, total: self.progress.emit(message, value, total),
+                cancelled=lambda: self.cancelled,
+            )
+            self.check_cancelled()
+            if self.mode == "mark_used":
+                result = self.stage_family(family, members)
+            else:
+                self.check_cancelled()
+                status = "skipped" if self.mode == "skip" else "archived"
+                self.progress.emit("Saving family review status…", 0, 0)
+                self.db.update_reviews_bulk(
+                    [record.key for record in members], status, family.key, family.label
+                )
+                result = {
+                    "mode": self.mode,
+                    "family": family,
+                    "members": members,
+                    "status": status,
+                }
+            self.completed.emit(result)
+        except OperationCancelled:
+            pass
+        except Exception as error:
+            self.failed.emit(f"{type(error).__name__}: {error}")
+        finally:
+            self.db.close_thread_connection()
+            self.finished.emit()
+
+    def stage_family(self, family: FamilyInfo, members: list[FontRecord]) -> dict:
+        source_dir = str(Path(self.target.source).parent.resolve())
+        safe_family = re.sub(r"[^A-Za-z0-9._-]+", "_", family.label).strip("._") or "unnamed-family"
+        INPUT_DIR.mkdir(parents=True, exist_ok=True)
+        used_numbers = []
+        for child in INPUT_DIR.iterdir():
+            if child.is_dir():
+                match = re.match(r"^(\d+)-", child.name)
+                if match:
+                    used_numbers.append(int(match.group(1)))
+        next_number = max(used_numbers, default=0) + 1
+        while True:
+            destination_dir = INPUT_DIR / f"{next_number}-{safe_family}"
             try:
-                # Deep outline checks use SIGALRM timeouts and must stay on the
-                # UI thread (queue_selected runs them); the worker uses the fast
-                # cmap pass, which is enough for broken/missing-letter notes.
-                state = self.window.analyze_record(record, deep=False)
-                note = f" · excluded: {state.get('reason')}" if state.get("classification") == "broken" else ""
-                path = str(self.window.render_path(record))
-                facts = self.window.inspect(record) + note
-            except Exception as error:
-                self.failed.emit(record.key, str(error))
-                continue
-            self.ready.emit(record.key, path, facts, note)
-        self.done.emit()
+                destination_dir.mkdir()
+                break
+            except FileExistsError:
+                next_number += 1
+
+        manifest_path = destination_dir / "font-vault-manifest.json"
+        quarantine_dir = STAGED_OUT_DIR / destination_dir.name
+        retired: list[dict] = []
+        copied: list[dict] = []
+        copied_records: list[FontRecord] = []
+        seen_hashes: dict[str, str] = {}
+        problems: list[str] = []
+        manifest_payload = {
+            "family": family.label,
+            "family_key": family.key,
+            "source_directory": source_dir,
+            "files": copied,
+            "duplicate_files_skipped": 0,
+            "sources_retired_to": None,
+            "problems": problems,
+            "staging_complete": False,
+        }
+        try:
+            write_json_atomic(manifest_path, manifest_payload)
+        except Exception:
+            try:
+                destination_dir.rmdir()
+            except OSError:
+                pass
+            raise
+
+        try:
+            total = len(members)
+            for index, record in enumerate(members, 1):
+                if self.cancelled:
+                    break
+                source = Path(record.source)
+                self.progress.emit(f"Staging {index:,}/{total:,}: {source.name}", index - 1, total)
+                style = (self.family_cache.get(record.key) or resolve_family(
+                    record.display, read_family_metadata(source)
+                )).style
+                try:
+                    digest = sha1_file(source)
+                except OSError as error:
+                    problems.append(f"{source.name}: the source will not open ({error})")
+                    write_json_atomic(manifest_path, manifest_payload)
+                    continue
+
+                twin = seen_hashes.get(digest)
+                if twin is None:
+                    destination = destination_dir / source.name
+                    if destination.exists():
+                        destination = destination_dir / f"{source.stem}__{digest[:8]}{source.suffix}"
+                    try:
+                        shutil.copy2(source, destination)
+                        matches = sha1_file(destination) == digest
+                    except OSError as error:
+                        destination.unlink(missing_ok=True)
+                        problems.append(f"{source.name}: the copy failed ({error})")
+                        write_json_atomic(manifest_path, manifest_payload)
+                        continue
+                    if not matches:
+                        destination.unlink(missing_ok=True)
+                        problems.append(f"{source.name}: the staged copy does not match the source byte for byte")
+                        write_json_atomic(manifest_path, manifest_payload)
+                        continue
+                    seen_hashes[digest] = str(destination)
+                    entry = {
+                        "source": str(source),
+                        "copied_to": str(destination),
+                        "display": record.display,
+                        "style": style,
+                        "sha1": digest,
+                    }
+                else:
+                    entry = {
+                        "source": str(source),
+                        "display": record.display,
+                        "style": style,
+                        "duplicate_of": twin,
+                        "sha1": digest,
+                    }
+
+                # Record the verified staged copy before retiring its source. If the
+                # app stops during the move, this manifest still identifies recovery.
+                copied.append(entry)
+                copied_records.append(record)
+                write_json_atomic(manifest_path, manifest_payload)
+                try:
+                    target = retire_source(source, quarantine_dir, digest)
+                except OSError as error:
+                    problems.append(f"{source.name}: staged, but its original could not be moved out of the dump ({error})")
+                    entry["source_move_error"] = str(error)
+                else:
+                    entry["source_moved_to"] = str(target)
+                    retired.append({"from": str(source), "to": str(target), "sha1": digest})
+                    write_json_atomic(manifest_path, manifest_payload)
+                    write_json_atomic(quarantine_dir / "staged-out.json", {
+                        "family": family.label,
+                        "staged_to": str(destination_dir),
+                        "moved_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                        "note": "Restore a file by moving it back to its 'from' path.",
+                        "files": retired,
+                    })
+                write_json_atomic(manifest_path, manifest_payload)
+
+            self.progress.emit("Finalizing staged files…", total, total)
+            manifest_payload["duplicate_files_skipped"] = sum(
+                1 for entry in copied if "duplicate_of" in entry
+            )
+            manifest_payload["sources_retired_to"] = str(quarantine_dir) if retired else None
+            manifest_payload["staging_complete"] = not self.cancelled
+            if self.cancelled:
+                manifest_payload["cancelled"] = True
+            try:
+                (destination_dir / "source-directory.txt").write_text(
+                    f"Font Family: {family.label}\n"
+                    f"Original Source Directory: {source_dir}\n"
+                    f"Extracted Files Count: {len(copied)}\n",
+                    encoding="utf-8",
+                )
+            except OSError as error:
+                problems.append(f"Could not write source-directory.txt: {error}")
+            try:
+                self.db.update_reviews_bulk(
+                    [record.key for record in copied_records], "used", family.key, family.label
+                )
+                review_state_saved = True
+            except sqlite3.Error as error:
+                review_state_saved = False
+                manifest_payload["review_update_error"] = str(error)
+                problems.append(f"Files were staged, but review status could not be saved: {error}")
+            write_json_atomic(manifest_path, manifest_payload)
+        except Exception as error:
+            manifest_payload["fatal_error"] = f"{type(error).__name__}: {error}"
+            manifest_payload["staging_complete"] = False
+            try:
+                write_json_atomic(manifest_path, manifest_payload)
+            except OSError:
+                pass
+            return {
+                "mode": self.mode,
+                "family": family,
+                "members": members,
+                "copied_records": copied_records,
+                "destination_dir": destination_dir,
+                "manifest_path": manifest_path,
+                "retired": retired,
+                "problems": problems,
+                "fatal_error": f"{type(error).__name__}: {error}",
+                "review_state_saved": False,
+                "staged_count": len(seen_hashes),
+                "duplicate_count": sum(1 for entry in copied if "duplicate_of" in entry),
+            }
+
+        return {
+            "mode": self.mode,
+            "family": family,
+            "members": members,
+            "copied_records": copied_records,
+            "destination_dir": destination_dir,
+            "manifest_path": manifest_path,
+            "retired": retired,
+            "problems": problems,
+            "review_state_saved": review_state_saved,
+            "staged_count": len(seen_hashes),
+            "duplicate_count": sum(1 for entry in copied if "duplicate_of" in entry),
+        }
 
 
 class FontVaultWindow(QMainWindow):
@@ -454,7 +973,9 @@ class FontVaultWindow(QMainWindow):
         self.rng = random.SystemRandom()
         self.family_cache: dict[str, FamilyInfo] = {}
         self.queue_page = 0
+        self.scan_count = 0
         self._closing = False
+        self._close_requested = False
         self.scan_thread: QThread | None = None
         self.scan_worker: DirectoryScanWorker | None = None
         # Background specimen rendering + result caches
@@ -464,9 +985,19 @@ class FontVaultWindow(QMainWindow):
         self._render_thread: QThread | None = None
         self._render_worker: SpecimenRenderWorker | None = None
         self._pending_renders: list[FontRecord] = []
+        self._retry_after_render: FontRecord | None = None
+        self._render_failures: dict[str, str] = {}
+        self._action_thread: QThread | None = None
+        self._action_worker: FamilyActionWorker | None = None
+        self._action_result: dict | None = None
+        self._action_error = ""
+        self._busy_widgets: list[QWidget] = []
+        self._activities: dict[str, tuple[str, int, int]] = {}
+        self._activity_priority = {"render": 1, "scan": 2, "action": 3}
 
         self.batch_label = QLabel("No font batch loaded")
         self.status_label = QLabel("Choose a font directory to begin.")
+        self.activity_label = QLabel("")
         self.search = QLineEdit(); self.search.setPlaceholderText("Search this batch")
         self.filter = QComboBox(); self.filter.addItems(["Review queue", "Unreviewed", "Used", "Archived", "Skipped", "Broken / excluded", "All scanned"])
         self.skip_broken = QCheckBox("Auto-skip broken fonts")
@@ -477,7 +1008,10 @@ class FontVaultWindow(QMainWindow):
         self.preview.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.name_label = QLabel("No font selected")
         self.facts_label = QLabel("")
+        self.retry_preview_button: QPushButton | None = None
         self.build_ui()
+        self.activity_label.setWordWrap(True)
+        self.status_label.setWordWrap(True)
         self.search.textChanged.connect(self.refresh_list)
         self.filter.currentTextChanged.connect(self.refresh_list)
         self.queue.currentRowChanged.connect(self.queue_selected)
@@ -497,6 +1031,9 @@ class FontVaultWindow(QMainWindow):
         QFrame#panel { background: #191c1f; border-radius: 10px; }
         QLabel#title { color: #f3f0e8; font-size: 21px; font-weight: 700; letter-spacing: 2px; }
         QLabel#muted, QLabel#facts, QLabel#status { color: #9ca5a8; }
+        QLabel#activity { color: #d5a85e; }
+        QProgressBar { border: 0; border-radius: 3px; background: #2a2f33; max-height: 7px; }
+        QProgressBar::chunk { border-radius: 3px; background: #d5a85e; }
         QLabel#fontName { color: #f0eee9; font-size: 19px; font-weight: 700; }
         QLineEdit, QComboBox { background: #2a2f33; color: #f0eee9; border: 1px solid #3a4246; border-radius: 6px; padding: 8px; }
         QListWidget { background: #191c1f; border: 0; color: #dedbd3; outline: 0; }
@@ -518,16 +1055,24 @@ class FontVaultWindow(QMainWindow):
         if primary:
             button.setObjectName("primary")
         button.clicked.connect(slot)
+        self._busy_widgets.append(button)
         return button
 
     def build_ui(self) -> None:
+        file_menu = self.menuBar().addMenu("&File")
+        self.exit_action = QAction("Exit Font Vault", self)
+        self.exit_action.setShortcut(QKeySequence("Ctrl+Q"))
+        self.exit_action.setShortcutContext(Qt.ShortcutContext.ApplicationShortcut)
+        self.exit_action.triggered.connect(self.request_exit)
+        file_menu.addAction(self.exit_action)
+
         root = QWidget(); self.setCentralWidget(root)
         outer = QVBoxLayout(root); outer.setContentsMargins(18, 18, 18, 14); outer.setSpacing(12)
         header = QHBoxLayout()
         title = QLabel("FONT VAULT"); title.setObjectName("title"); header.addWidget(title)
         self.batch_label.setObjectName("muted"); header.addWidget(self.batch_label); header.addStretch()
         self.recent_vaults = QComboBox(); self.recent_vaults.setMinimumWidth(220); self.recent_vaults.setToolTip("Saved vaults stay available after unloading.")
-        header.addWidget(self.recent_vaults); header.addWidget(self.button("Load recent", self.open_recent)); header.addWidget(self.button("↻ Re-sync", self.resync_vault)); header.addWidget(self.button("Unload", self.unload_vault)); header.addWidget(self.button("Open directory", self.open_directory, True)); outer.addLayout(header)
+        header.addWidget(self.recent_vaults); header.addWidget(self.button("Load recent", self.open_recent)); header.addWidget(self.button("↻ Re-sync", self.resync_vault)); header.addWidget(self.button("Unload", self.unload_vault)); header.addWidget(self.button("Open directory", self.open_directory, True)); header.addWidget(self.button("Exit", self.request_exit)); outer.addLayout(header)
 
         split = QSplitter(Qt.Orientation.Horizontal); split.setChildrenCollapsible(False)
         sidebar = QFrame(); sidebar.setObjectName("panel"); sidebar.setMinimumWidth(220); sidebar.setMaximumWidth(275)
@@ -550,7 +1095,12 @@ class FontVaultWindow(QMainWindow):
         self.facts_label.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
         scroll.setWidget(self.facts_label)
         preview_layout.addWidget(scroll)
-        copy_row = QHBoxLayout(); copy_row.addWidget(self.button("Copy font details", self.copy_current_details)); copy_row.addWidget(self.button("Copy specimen text", self.copy_specimen_text)); copy_row.addStretch(); preview_layout.addLayout(copy_row)
+        copy_row = QHBoxLayout(); copy_row.addWidget(self.button("Copy font details", self.copy_current_details)); copy_row.addWidget(self.button("Copy specimen text", self.copy_specimen_text)); copy_row.addStretch()
+        self.retry_preview_button = self.button("Retry preview", self.retry_current_render)
+        self.retry_preview_button.setToolTip("Clear this font's cached preview and try rendering it again.")
+        self.retry_preview_button.hide()
+        copy_row.addWidget(self.retry_preview_button)
+        preview_layout.addLayout(copy_row)
         preview_layout.addWidget(self.preview, 1); main_layout.addWidget(preview_panel, 1)
 
         stage_button = self.button("Mark used family", self.mark_used_family)
@@ -563,7 +1113,45 @@ class FontVaultWindow(QMainWindow):
         movement = QHBoxLayout(); movement.setSpacing(5); movement.addWidget(self.button("← Previous", self.previous)); movement.addWidget(self.button("Next →", self.next, True)); navigation.addLayout(movement)
         navigation.addWidget(self.button("Randomize", self.randomize)); actions.addLayout(navigation); main_layout.addLayout(actions)
         split.addWidget(sidebar); split.addWidget(main); split.setSizes([245, 1100]); outer.addWidget(split, 1)
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setTextVisible(False)
+        self.progress_bar.setFixedHeight(7)
+        self.progress_bar.hide()
+        outer.addWidget(self.progress_bar)
+        self.activity_label.setObjectName("activity")
+        self.activity_label.hide()
+        outer.addWidget(self.activity_label)
         self.status_label.setObjectName("status"); outer.addWidget(self.status_label)
+
+    def _set_activity(self, owner: str, message: str, value: int = 0, total: int = 0) -> None:
+        self._activities[owner] = (message, value, total)
+        self._refresh_activity()
+
+    def _clear_activity(self, owner: str) -> None:
+        self._activities.pop(owner, None)
+        self._refresh_activity()
+
+    def _refresh_activity(self) -> None:
+        if not self._activities:
+            self.progress_bar.hide()
+            self.activity_label.hide()
+            return
+        owner = max(self._activities, key=lambda key: self._activity_priority.get(key, 0))
+        message, value, total = self._activities[owner]
+        self.activity_label.setText(message)
+        self.activity_label.show()
+        if total > 0:
+            self.progress_bar.setRange(0, total)
+            self.progress_bar.setValue(min(value, total))
+        else:
+            self.progress_bar.setRange(0, 0)
+        self.progress_bar.show()
+
+    def _set_action_busy(self, busy: bool) -> None:
+        for widget in self._busy_widgets:
+            widget.setEnabled(not busy)
+        for widget in (self.queue, self.search, self.filter, self.skip_broken, self.recent_vaults):
+            widget.setEnabled(not busy)
 
     def open_directory(self) -> None:
         chosen = QFileDialog.getExistingDirectory(self, "Choose a font directory")
@@ -573,31 +1161,54 @@ class FontVaultWindow(QMainWindow):
         if self.scan_thread and self.scan_thread.isRunning():
             self.status_label.setText("A vault is already loading. Please wait for that scan to finish.")
             return
+        if self._action_thread is not None and self._action_thread.isRunning():
+            self.status_label.setText("A family operation is still running. Wait for it to finish before switching vaults.")
+            return
         if not path.is_dir():
             self.status_label.setText(f"Directory not found: {path}")
             return
+        if self.source_path is not None and self.source_path.resolve() != path.resolve():
+            self.state = {"items": {}}
+            self.family_cache.clear()
+            self._pixmap_orig_cache.clear()
+            self._pixmap_cache.clear()
+            self._facts_cache.clear()
+            self._render_failures.clear()
+            self._pending_renders = []
+            self._retry_after_render = None
+            self._clear_activity("render")
+            if self._render_worker is not None:
+                self._render_worker.cancelled = True
         self.source_path, self.source_kind = path, "directory"
         self.records = []; self.filtered_records = []; self.visible = []; self.current = None; self.queue_page = 0; self.queue.clear()
+        self.scan_count = 0
 
         # Register vault in DB and check if already indexed
-        vault_id = self.db.upsert_vault(path)
-        self.vault_id = vault_id
-        existing_count = self.db.count_vault_fonts(vault_id)
+        try:
+            vault_id = self.db.upsert_vault(path)
+            self.vault_id = vault_id
+            existing_count = self.db.count_vault_fonts(vault_id)
+        except (OSError, sqlite3.Error) as error:
+            self.batch_label.setText("Vault index could not be opened")
+            self.status_label.setText(f"Could not open this vault's local index: {error}")
+            return
 
-        if existing_count > 0 and not force_rescan:
+        scan_incomplete = bool(self.db.get_app_state(scan_state_key(vault_id), False))
+        if existing_count > 0 and not force_rescan and not scan_incomplete:
             # Instant load from DB index — no disk scan needed
             self._load_from_db(path, vault_id, existing_count)
             return
 
         self.batch_label.setText(f"{'Re-scanning' if force_rescan else 'Scanning'} {path.name}…")
         self.preview.setText("Scanning directory…\n\nThe app is staying responsive while it indexes font paths.")
-        self.status_label.setText("Scanning directory…")
+        self.retry_preview_button.hide()
+        self._set_activity("scan", "Scanning directory…", 0, 0)
         self.scan_thread = QThread(self)
         self.scan_worker = DirectoryScanWorker(path, self.db, vault_id)
         self.scan_worker.moveToThread(self.scan_thread)
         self.scan_thread.started.connect(self.scan_worker.run)
         self.scan_worker.batch.connect(self.append_scan_records)
-        self.scan_worker.progress.connect(lambda count: self.status_label.setText(f"Scanning directory… {count:,} font files found"))
+        self.scan_worker.progress.connect(self.scan_progress)
         self.scan_worker.completed.connect(self.finish_load)
         self.scan_worker.failed.connect(self.scan_failed)
         self.scan_worker.finished.connect(self.scan_thread.quit)
@@ -605,6 +1216,9 @@ class FontVaultWindow(QMainWindow):
         self.scan_thread.finished.connect(self.scan_thread.deleteLater)
         self.scan_thread.finished.connect(self.scan_finished)
         self.scan_thread.start()
+
+    def scan_progress(self, count: int) -> None:
+        self._set_activity("scan", f"Scanning directory… {count:,} font files found", 0, 0)
 
     def _load_from_db(self, path: Path, vault_id: int, total: int) -> None:
         """Instant vault load from SQLite index — no disk scan required."""
@@ -639,12 +1253,22 @@ class FontVaultWindow(QMainWindow):
     def scan_finished(self) -> None:
         self.scan_thread = None
         self.scan_worker = None
+        self._finish_close_request()
 
     def scan_failed(self, message: str) -> None:
-        self.records = []; self.filtered_records = []; self.visible = []; self.current = None; self.queue_page = 0; self.queue.clear()
-        self.batch_label.setText("Vault load failed")
-        self.preview.setText("This directory could not be loaded.")
-        self.status_label.setText(f"Load failed: {message}")
+        self._clear_activity("scan")
+        count = 0
+        if self.vault_id is not None:
+            try:
+                count = self.db.count_vault_fonts(self.vault_id)
+                name = self.source_path.name if self.source_path else "Vault"
+                self.batch_label.setText(f"{name} · partial index · {count:,} font(s)")
+                self.refresh_list(select_first=True)
+            except sqlite3.Error:
+                self.batch_label.setText("Vault scan stopped")
+        self.status_label.setText(
+            f"Scan stopped: {message}. {count:,} indexed font(s) are still available; use ↻ Re-sync to continue."
+        )
 
     def populate_recent_vaults(self) -> None:
         if not hasattr(self, "recent_vaults"): return
@@ -681,6 +1305,9 @@ class FontVaultWindow(QMainWindow):
         self.load_directory(self.source_path, force_rescan=True)
 
     def unload_vault(self) -> None:
+        if self._action_thread is not None and self._action_thread.isRunning():
+            self.status_label.setText("Wait for the family operation to finish before unloading this vault.")
+            return
         if self.scan_thread and self.scan_thread.isRunning():
             self.status_label.setText("The vault is still loading; it will be safe to unload after indexing finishes.")
             return
@@ -689,6 +1316,12 @@ class FontVaultWindow(QMainWindow):
             return
         unloaded = self.source_path
         self.records = []; self.filtered_records = []; self.visible = []; self.visible_index = {}; self.current = None; self.queue_page = 0
+        if self._render_worker is not None:
+            self._render_worker.cancelled = True
+        self._pending_renders = []
+        self._retry_after_render = None
+        self._render_failures.clear()
+        self._clear_activity("render")
         # Per-vault caches: statuses and family metadata live in SQLite, so the
         # in-memory copies must be dropped or they accumulate across vaults.
         self.state = {"items": {}}
@@ -696,6 +1329,7 @@ class FontVaultWindow(QMainWindow):
         self._pixmap_orig_cache = {}; self._pixmap_cache = {}; self._facts_cache = {}
         self.source_path = None; self.source_kind = ""; self.vault_id = None
         self.queue.clear(); self.preview.setText("No vault loaded.\n\nChoose a saved vault or open a directory.")
+        self.preview.setToolTip(""); self.retry_preview_button.hide()
         self.name_label.setText("No font selected"); self.facts_label.clear(); self.batch_label.setText("No vault loaded · data saved")
         self.db.set_app_state("last_source", ""); self.populate_recent_vaults()
         self.status_label.setText(f"Unloaded {unloaded.name}. Review data and cache remain saved.")
@@ -717,18 +1351,52 @@ class FontVaultWindow(QMainWindow):
             self.db.export_to_state_json(BACKUP_DIR / "reviews.json")
         return snapshot
 
-    def closeEvent(self, event) -> None:
-        """Stop worker threads, snapshot the review data, then fold the WAL back in."""
+    def _running_worker_threads(self) -> list[QThread]:
+        return [
+            thread for thread in (self.scan_thread, self._render_thread, self._action_thread)
+            if thread is not None and thread.isRunning()
+        ]
+
+    def _active_worker_names(self) -> list[str]:
+        active = []
+        for name, thread in (
+            ("directory scan", self.scan_thread),
+            ("specimen render", self._render_thread),
+            ("family operation", self._action_thread),
+        ):
+            if thread is not None and thread.isRunning():
+                active.append(name)
+        return active
+
+    def request_exit(self) -> None:
+        """Cancel background work at safe checkpoints and close when it drains."""
+        self._close_requested = True
         self._closing = True
+        if self.scan_worker is not None:
+            self.scan_worker.cancelled = True
         if self._render_worker is not None:
             self._render_worker.cancelled = True
-        for thread in (self._render_thread, self.scan_thread):
-            if thread is not None and thread.isRunning():
-                thread.quit()
-                # quit() is only heard once the worker's run() returns; without this
-                # wait the QThread is destroyed while still running, which aborts.
-                if not thread.wait(10000):
-                    print("A worker thread did not stop; leaving it running.", file=sys.stderr)
+        if self._action_worker is not None:
+            self._action_worker.cancel()
+        if self._running_worker_threads():
+            self.status_label.setText(
+                "Stopping " + ", ".join(self._active_worker_names())
+                + " safely… Font Vault will close when the work reaches a safe point."
+            )
+            return
+        self.close()
+
+    def _finish_close_request(self) -> None:
+        if self._close_requested and not self._running_worker_threads():
+            QTimer.singleShot(0, self.close)
+
+    def closeEvent(self, event) -> None:
+        """Cancel workers, then snapshot review data and fold the WAL back in."""
+        if self._running_worker_threads():
+            event.ignore()
+            self.request_exit()
+            return
+        self._closing = True
         try:
             self.backup_vault()
         except (OSError, sqlite3.Error) as error:
@@ -741,15 +1409,20 @@ class FontVaultWindow(QMainWindow):
         super().closeEvent(event)
 
     def append_scan_records(self, records: list[FontRecord]) -> None:
-        self.records.extend(records)
+        self.scan_count += len(records)
+        if self.vault_id is None:
+            self.records.extend(records)
+        elif len(self.records) < MAX_QUEUE_ROWS:
+            self.records.extend(records[:MAX_QUEUE_ROWS - len(self.records)])
         # Fill the first page quickly, then refresh once per page-sized batch.
-        if len(self.records) <= MAX_QUEUE_ROWS or len(self.records) % MAX_QUEUE_ROWS < len(records):
+        if self.scan_count <= MAX_QUEUE_ROWS or self.scan_count % MAX_QUEUE_ROWS < len(records):
             self.refresh_list(select_first=not self.current, reset_page=False)
-        self.batch_label.setText(f"Loading {self.source_path.name if self.source_path else 'vault'}… {len(self.records):,} font(s)")
+        self.batch_label.setText(f"Loading {self.source_path.name if self.source_path else 'vault'}… {self.scan_count:,} font(s)")
 
-    def finish_load(self, total: int) -> None:
+    def finish_load(self, total: int, skipped_count: int = 0, skipped_samples: list[str] | None = None) -> None:
+        self._clear_activity("scan")
         label = self.source_path.name if self.source_path else "Vault"
-        self.batch_label.setText(f"{label}  ·  {len(self.records):,} font(s)")
+        self.batch_label.setText(f"{label}  ·  {total:,} font(s)")
         # Restore saved search/filter from DB
         q, f = self.db.get_vault_prefs(self.source_path)
         self.search.setText(q)
@@ -759,8 +1432,18 @@ class FontVaultWindow(QMainWindow):
         self.db.set_app_state("last_source", str(self.source_path))
         self._update_recent_sources(self.source_path)
         self.populate_recent_vaults(); self.refresh_list(select_first=True)
-        queue_note = f" Use Page → to browse all {len(self.records):,} indexed fonts." if len(self.records) > MAX_QUEUE_ROWS else ""
-        self.status_label.setText("Vault loaded. Font paths are indexed; glyph checks happen only when you open a font." + queue_note)
+        queue_note = f" Use Page → to browse all {total:,} indexed fonts." if total > MAX_QUEUE_ROWS else ""
+        if skipped_count:
+            self.status_label.setText(
+                f"Vault loaded with {skipped_count:,} unreadable path(s) skipped. "
+                "Use ↻ Re-sync after fixing access, or continue with the indexed fonts."
+            )
+            self.status_label.setToolTip("\n".join(skipped_samples or []))
+        else:
+            self.status_label.setText(
+                "Vault loaded. Font paths are indexed; glyph checks happen only when you open a font." + queue_note
+            )
+            self.status_label.setToolTip("")
 
     def resume_last_vault(self) -> None:
         saved = self.db.get_app_state("last_source")
@@ -813,49 +1496,48 @@ class FontVaultWindow(QMainWindow):
         try:
             # Keep queue rebuilding lightweight. Corrupt old glyf tables can
             # otherwise make startup spend minutes unpacking invalid outlines.
-            font = TTFont(self.materialize(record), lazy=True, ignoreDecompileErrors=True)
-            cmap = font.getBestCmap() or {}
-            missing: list[str] = []
-            for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz":
-                glyph_name = cmap.get(ord(char))
-                if not glyph_name or glyph_name == ".notdef":
-                    missing.append(char); continue
-            if missing:
-                result = {"classification": "broken", "reason": "missing " + "".join(missing), "outline_checked": True}
-            elif deep:
-                # Outline checks are bounded because a few historical fonts
-                # contain malformed glyf data that can otherwise hang startup.
-                def timeout_handler(_signum, _frame):
-                    nonlocal alarm_fired
-                    alarm_fired = True
-                    raise OutlineTimeoutError("outline inspection timed out")
+            with TTFont(self.materialize(record), lazy=True, ignoreDecompileErrors=True) as font:
+                cmap = font.getBestCmap() or {}
+                missing: list[str] = []
+                for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz":
+                    glyph_name = cmap.get(ord(char))
+                    if not glyph_name or glyph_name == ".notdef":
+                        missing.append(char); continue
+                if missing:
+                    result = {"classification": "broken", "reason": "missing " + "".join(missing), "outline_checked": True}
+                elif deep:
+                    # Outline checks are bounded because a few historical fonts
+                    # contain malformed glyf data that can otherwise hang startup.
+                    def timeout_handler(_signum, _frame):
+                        nonlocal alarm_fired
+                        alarm_fired = True
+                        raise OutlineTimeoutError("outline inspection timed out")
 
-                old_handler = signal.signal(signal.SIGALRM, timeout_handler)
-                signal.setitimer(signal.ITIMER_REAL, DEEP_OUTLINE_TIMEOUT)
-                try:
-                    glyph_set = font.getGlyphSet()
-                    signatures: dict[str, str] = {}
-                    blank: list[str] = []
-                    for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz":
-                        pen = RecordingPen()
-                        glyph_set[cmap[ord(char)]].draw(pen)
-                        if not pen.value:
-                            blank.append(char)
-                        signatures[char] = repr(pen.value)
-                    if blank:
-                        result = {"classification": "broken", "reason": "blank " + "".join(blank)}
-                    elif all(signatures[upper] == signatures[lower] for upper, lower in zip("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz")):
-                        result = {"classification": "broken", "reason": "uppercase and lowercase outlines are identical"}
-                finally:
-                    signal.setitimer(signal.ITIMER_REAL, 0)
-                    signal.signal(signal.SIGALRM, old_handler)
-                    # Only a pass that ran to completion is remembered, so the
-                    # bounded check does not repeat on every selection — and an
-                    # interrupted one is not, because running out of time is no
-                    # evidence about the font and a verdict this cheap would stick.
-                    if not alarm_fired:
-                        state["outline_checked"] = True
-            font.close()
+                    old_handler = signal.signal(signal.SIGALRM, timeout_handler)
+                    signal.setitimer(signal.ITIMER_REAL, DEEP_OUTLINE_TIMEOUT)
+                    try:
+                        glyph_set = font.getGlyphSet()
+                        signatures: dict[str, str] = {}
+                        blank: list[str] = []
+                        for char in "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz":
+                            pen = RecordingPen()
+                            glyph_set[cmap[ord(char)]].draw(pen)
+                            if not pen.value:
+                                blank.append(char)
+                            signatures[char] = repr(pen.value)
+                        if blank:
+                            result = {"classification": "broken", "reason": "blank " + "".join(blank)}
+                        elif all(signatures[upper] == signatures[lower] for upper, lower in zip("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz")):
+                            result = {"classification": "broken", "reason": "uppercase and lowercase outlines are identical"}
+                    finally:
+                        signal.setitimer(signal.ITIMER_REAL, 0)
+                        signal.signal(signal.SIGALRM, old_handler)
+                        # Only a pass that ran to completion is remembered, so the
+                        # bounded check does not repeat on every selection — and an
+                        # interrupted one is not, because running out of time is no
+                        # evidence about the font and a verdict this cheap would stick.
+                        if not alarm_fired:
+                            state["outline_checked"] = True
         except Exception as error:
             if alarm_fired:
                 # The alarm can go off inside fontTools' lazy table loading, which
@@ -1033,7 +1715,15 @@ class FontVaultWindow(QMainWindow):
         if source.suffix.lower() in {".woff", ".woff2"}:
             converted = CACHE_DIR / "renderable" / (hashlib.sha256(record.key.encode()).hexdigest()[:20] + ".otf")
             if not converted.exists():
-                converted.parent.mkdir(parents=True, exist_ok=True); font = TTFont(source); font.flavor = None; font.save(converted); font.close()
+                converted.parent.mkdir(parents=True, exist_ok=True)
+                temporary = converted.with_suffix(".partial.otf")
+                try:
+                    with TTFont(source) as font:
+                        font.flavor = None
+                        font.save(temporary)
+                    temporary.replace(converted)
+                finally:
+                    temporary.unlink(missing_ok=True)
             render_source = converted
         return render_source
 
@@ -1041,11 +1731,17 @@ class FontVaultWindow(QMainWindow):
         render_source = self.renderable_path(record)
         output = CACHE_DIR / "renders" / hashlib.sha256((record.key + ":combined-v3").encode()).hexdigest()[:20]; output.mkdir(parents=True, exist_ok=True); image_path = output / "main" / "specimen-alphabet-numerals.png"
         if not image_path.exists():
-            result = subprocess.run([sys.executable, str(RENDERER), str(render_source), str(output), "--name", record.display.title(), "--basic", "--fast-png"], capture_output=True, text=True)
+            result = subprocess.run(
+                [sys.executable, str(RENDERER), str(render_source), str(output), "--name", record.display.title(), "--basic", "--fast-png"],
+                capture_output=True,
+                text=True,
+                timeout=45,
+            )
             if result.returncode != 0: raise RuntimeError((result.stdout + result.stderr).strip()[-1000:])
         combined_path = output / "combined-specimen.png"
         if not combined_path.exists() or combined_path.stat().st_mtime_ns < image_path.stat().st_mtime_ns:
-            base = Image.open(image_path).convert("RGB")
+            with Image.open(image_path) as source_image:
+                base = source_image.convert("RGB")
             width, height = base.size
             sentence_height = 430
             combined = Image.new("RGB", (width, height + sentence_height), (8, 8, 10))
@@ -1063,37 +1759,51 @@ class FontVaultWindow(QMainWindow):
             sentence_width = draw.textlength(sentence, font=sentence_font)
             draw.text(((width - label_width) / 2, height + 45), label, font=label_font, fill=(155, 155, 155))
             draw.text(((width - sentence_width) / 2, height + 145), sentence, font=sentence_font, fill=(248, 248, 245))
-            combined.save(combined_path, format="PNG")
+            temporary = combined_path.with_suffix(".partial.png")
+            try:
+                combined.save(temporary, format="PNG")
+                temporary.replace(combined_path)
+            finally:
+                temporary.unlink(missing_ok=True)
         return combined_path
 
     def inspect(self, record: FontRecord) -> str:
         return self.inspect_path(self.materialize(record))
 
     def inspect_path(self, path: Path) -> str:
-        font = TTFont(path); cmap = font.getBestCmap() or {}; letters = sum(1 for c in cmap if 0x41 <= c <= 0x5A or 0x61 <= c <= 0x7A)
-        dates = "font dates unavailable"
-        if "head" in font:
-            def format_date(value) -> str:
-                try:
-                    # OpenType head timestamps are seconds since 1904-01-01
-                    # (the Macintosh epoch), not seconds after 1970.
-                    return datetime.fromtimestamp(value - 2082844800, tz=timezone.utc).strftime("%Y-%m-%d")
-                except (OverflowError, OSError, TypeError, ValueError):
-                    return "unknown"
-            head = font["head"]; dates = f"created={format_date(head.created)} · modified={format_date(head.modified)}"
-        name_values: dict[int, str] = {}
-        for record in font["name"].names if "name" in font else []:
-            if record.nameID in {8, 9, 11, 12, 13, 14} and record.nameID not in name_values:
-                try:
-                    value = record.toUnicode().strip()
-                    if value:
-                        name_values[record.nameID] = value
-                except Exception:
-                    continue
-        author = name_values.get(9) or name_values.get(8) or "unknown"
-        license_text = name_values.get(13, "unknown")
-        url = name_values.get(14) or name_values.get(12) or name_values.get(11) or "unknown"
-        facts = f"{len(font.getGlyphOrder())} glyphs  ·  {letters}/52 basic letters  ·  {dates}  ·  author={author}  ·  license={license_text}  ·  url={url}  ·  fsType={font['OS/2'].fsType if 'OS/2' in font else 'unknown'}  ·  legacy kern={'yes' if 'kern' in font else 'no'}  ·  GPOS={'yes' if 'GPOS' in font else 'no'}  ·  GSUB={'yes' if 'GSUB' in font else 'no'}"; font.close(); return facts
+        with TTFont(path) as font:
+            cmap = font.getBestCmap() or {}
+            letters = sum(1 for c in cmap if 0x41 <= c <= 0x5A or 0x61 <= c <= 0x7A)
+            dates = "font dates unavailable"
+            if "head" in font:
+                def format_date(value) -> str:
+                    try:
+                        # OpenType head timestamps are seconds since 1904-01-01
+                        # (the Macintosh epoch), not seconds after 1970.
+                        return datetime.fromtimestamp(value - 2082844800, tz=timezone.utc).strftime("%Y-%m-%d")
+                    except (OverflowError, OSError, TypeError, ValueError):
+                        return "unknown"
+                head = font["head"]
+                dates = f"created={format_date(head.created)} · modified={format_date(head.modified)}"
+            name_values: dict[int, str] = {}
+            for record in font["name"].names if "name" in font else []:
+                if record.nameID in {8, 9, 11, 12, 13, 14} and record.nameID not in name_values:
+                    try:
+                        value = record.toUnicode().strip()
+                        if value:
+                            name_values[record.nameID] = value
+                    except Exception:
+                        continue
+            author = name_values.get(9) or name_values.get(8) or "unknown"
+            license_text = name_values.get(13, "unknown")
+            url = name_values.get(14) or name_values.get(12) or name_values.get(11) or "unknown"
+            return (
+                f"{len(font.getGlyphOrder())} glyphs  ·  {letters}/52 basic letters  ·  {dates}  ·  "
+                f"author={author}  ·  license={license_text}  ·  url={url}  ·  "
+                f"fsType={font['OS/2'].fsType if 'OS/2' in font else 'unknown'}  ·  "
+                f"legacy kern={'yes' if 'kern' in font else 'no'}  ·  GPOS={'yes' if 'GPOS' in font else 'no'}  ·  "
+                f"GSUB={'yes' if 'GSUB' in font else 'no'}"
+            )
 
     def render_current(self, _mode=None) -> None:
         """Show the specimen instantly when cached; render in the background otherwise.
@@ -1107,24 +1817,31 @@ class FontVaultWindow(QMainWindow):
         current = self.current
         key = current.key
         self.name_label.setText(pretty_display(current.display))
+        self.retry_preview_button.hide()
+        self.preview.setToolTip("")
         if key in self._pixmap_orig_cache:
             self._set_cached_preview(key)
             if self._facts_cache.get(key):
                 self.facts_label.setText(self._facts_cache[key])
+            self._clear_activity("render")
             self.status_label.setText("Combined specimen rendered.")
+        elif key in self._render_failures:
+            self._clear_activity("render")
+            self._show_render_failure(current, self._render_failures[key])
         else:
             self.preview.clear(); self.preview.setText("Rendering specimen…")
             self.facts_label.clear()
+            self._set_activity("render", f"Rendering preview for {pretty_display(current.display)}…", 0, 0)
             self._request_render([current], replace=True)
         self._prefetch_adjacent()
 
     def _request_render(self, records: list[FontRecord], replace: bool = False) -> None:
         """Queue a background render batch, starting it if none is running."""
-        batch = [r for r in records if r.key not in self._pixmap_orig_cache]
+        batch = [r for r in records if r.key not in self._pixmap_orig_cache and r.key not in self._render_failures]
         if not batch:
             return
-        if self._render_thread and self._render_thread.isRunning():
-            if replace and self._render_worker is not None:
+        if self._render_thread is not None:
+            if self._render_thread.isRunning() and replace and self._render_worker is not None:
                 # A freshly selected font takes priority: cancel the in-flight
                 # prefetch batch and render it as soon as the thread drains.
                 self._render_worker.cancelled = True
@@ -1140,6 +1857,8 @@ class FontVaultWindow(QMainWindow):
     def _start_render_batch(self, records: list[FontRecord]) -> None:
         if self._closing:
             return
+        if self.current and any(record.key == self.current.key for record in records):
+            self._set_activity("render", f"Rendering preview for {pretty_display(self.current.display)}…", 0, 0)
         self._render_thread = QThread(self)
         self._render_worker = SpecimenRenderWorker(self, records)
         self._render_worker.cancelled = False
@@ -1156,8 +1875,17 @@ class FontVaultWindow(QMainWindow):
     def _render_thread_finished(self) -> None:
         self._render_thread = None
         self._render_worker = None
+        if self._close_requested:
+            self._finish_close_request()
+            return
         if self._closing:
             return
+        if self._retry_after_render is not None:
+            record = self._retry_after_render
+            self._retry_after_render = None
+            self._clear_render_cache(record)
+            self._render_failures.pop(record.key, None)
+            self._pending_renders = [record]
         if self._pending_renders:
             batch = self._pending_renders
             self._pending_renders = []
@@ -1167,23 +1895,66 @@ class FontVaultWindow(QMainWindow):
         self._facts_cache[key] = facts
         pixmap = QPixmap(str(path))
         if pixmap.isNull():
+            message = "The generated preview image could not be opened."
+            self._render_failures[key] = message
             if self.current and self.current.key == key:
-                self.preview.clear(); self.preview.setText(f"Font could not be rendered.\n\n{path}")
+                self._show_render_failure(self.current, message)
                 self.facts_label.setText(facts or "Source load/render failed.")
-                self.status_label.setText("Font render failed; the font remains selected for review.")
+                self._clear_activity("render")
             return
+        self._render_failures.pop(key, None)
         self._pixmap_orig_cache[key] = pixmap
         self._trim_pixmap_cache()
         if self.current and self.current.key == key:
             self._set_cached_preview(key)
             self.facts_label.setText(facts)
+            self.retry_preview_button.hide()
+            self.preview.setToolTip("")
+            self._clear_activity("render")
             self.status_label.setText("Combined specimen rendered.")
 
     def _on_render_failed(self, key, message) -> None:
+        self._render_failures[key] = str(message)
         if self.current and self.current.key == key:
-            self.preview.clear(); self.preview.setText(f"Font could not be rendered.\n\n{message}")
+            self._show_render_failure(self.current, str(message))
             self.facts_label.setText("Source load/render failed.")
-            self.status_label.setText("Font render failed; the font remains selected for review.")
+            self._clear_activity("render")
+
+    def _show_render_failure(self, record: FontRecord, message: str) -> None:
+        self.preview.clear()
+        self.preview.setText(
+            "Font could not be rendered.\n\n"
+            "The source may be damaged or incomplete. Replace or re-sync the file, then retry the preview."
+        )
+        self.preview.setToolTip(message)
+        self.retry_preview_button.show()
+        self.status_label.setText(f"Preview failed for {record.display}: {message[:180]}. The font remains selected.")
+
+    def _clear_render_cache(self, record: FontRecord) -> None:
+        render_key = hashlib.sha256((record.key + ":combined-v3").encode()).hexdigest()[:20]
+        shutil.rmtree(CACHE_DIR / "renders" / render_key, ignore_errors=True)
+        if Path(record.source).suffix.lower() in {".woff", ".woff2"}:
+            converted = CACHE_DIR / "renderable" / (hashlib.sha256(record.key.encode()).hexdigest()[:20] + ".otf")
+            converted.unlink(missing_ok=True)
+        self._pixmap_orig_cache.pop(record.key, None)
+        self._pixmap_cache.pop(record.key, None)
+        self._facts_cache.pop(record.key, None)
+
+    def retry_current_render(self) -> None:
+        if self.current is None:
+            return
+        record = self.current
+        self.retry_preview_button.hide()
+        self._render_failures.pop(record.key, None)
+        if self._render_thread is not None:
+            self._retry_after_render = record
+            if self._render_thread.isRunning() and self._render_worker is not None:
+                self._render_worker.cancelled = True
+            self._pending_renders = [record]
+            self._set_activity("render", f"Waiting to retry preview for {record.display}…", 0, 0)
+            return
+        self._clear_render_cache(record)
+        self.render_current()
 
     def _prefetch_adjacent(self) -> None:
         """Eagerly render the next couple of fonts so Next feels instant."""
@@ -1209,18 +1980,27 @@ class FontVaultWindow(QMainWindow):
         self.preview.setPixmap(scaled)
         return True
 
-    def _trim_pixmap_cache(self, limit: int = 60) -> None:
-        while len(self._pixmap_orig_cache) > limit:
-            oldest = next(iter(self._pixmap_orig_cache))
-            self._pixmap_orig_cache.pop(oldest, None)
+    def _trim_pixmap_cache(self, limit: int = 16, max_bytes: int = 320 * 1024 * 1024) -> None:
+        def estimated_bytes(pixmap: QPixmap) -> int:
+            return pixmap.width() * pixmap.height() * 4
+
+        cache_bytes = sum(estimated_bytes(pixmap) for pixmap in self._pixmap_orig_cache.values())
+        while len(self._pixmap_orig_cache) > limit or cache_bytes > max_bytes:
+            current_key = self.current.key if self.current else None
+            oldest = next((key for key in self._pixmap_orig_cache if key != current_key), None)
+            if oldest is None:
+                break
+            removed = self._pixmap_orig_cache.pop(oldest, None)
             self._pixmap_cache.pop(oldest, None)
+            if removed is not None:
+                cache_bytes -= estimated_bytes(removed)
 
     def resizeEvent(self, event) -> None:
         super().resizeEvent(event)
         self._pixmap_cache.clear()
 
     def clear_current(self, message: str) -> None:
-        self.current = None; self.preview.clear(); self.preview.setText(message); self.name_label.setText("No font selected"); self.facts_label.clear(); self.status_label.setText(message)
+        self.current = None; self.preview.clear(); self.preview.setText(message); self.preview.setToolTip(""); self.retry_preview_button.hide(); self.facts_label.clear(); self.name_label.setText("No font selected"); self._clear_activity("render"); self.status_label.setText(message)
 
     def set_status(self, status: str) -> None:
         if not self.current: return
@@ -1243,333 +2023,187 @@ class FontVaultWindow(QMainWindow):
         if self.visible:
             self.queue.setCurrentRow(min(max(old_row, 0), len(self.visible) - 1))
 
-    def family_info(self, record: FontRecord) -> FamilyInfo:
-        """The family a font reports, cached per session and mirrored into the index."""
-        info = self.family_cache.get(record.key)
-        if info is None:
-            info = resolve_family(record.display, read_family_metadata(self.materialize(record)))
-            self.family_cache[record.key] = info
-            # Persist family metadata to DB so find_family_candidates can use the index
-            self.db.update_font_family_meta(record.key, info.key, info.label, info.style)
-        return info
+    def _start_family_action(self, mode: str) -> None:
+        if self._action_thread is not None and self._action_thread.isRunning():
+            return
+        if self.scan_thread is not None and self.scan_thread.isRunning():
+            self.status_label.setText("Wait for directory indexing to finish before changing a family.")
+            return
+        if self.current is None:
+            self.status_label.setText("Select a font first.")
+            return
 
-    def family_for_record(self, record: FontRecord) -> str:
-        return self.family_info(record).key
+        self._active_action_mode = mode
+        self._action_result = None
+        self._action_error = ""
+        self._set_action_busy(True)
+        self._set_activity("action", "Finding matching font styles…", 0, 0)
+        self._action_thread = QThread(self)
+        self._action_worker = FamilyActionWorker(
+            mode,
+            self.db,
+            self.vault_id,
+            self.current,
+            list(self.records),
+            list(self.visible),
+            self.family_cache,
+        )
+        self._action_worker.moveToThread(self._action_thread)
+        self._action_thread.started.connect(self._action_worker.run)
+        self._action_worker.progress.connect(self._family_action_progress)
+        self._action_worker.completed.connect(self._store_family_action_result)
+        self._action_worker.failed.connect(self._store_family_action_error)
+        self._action_worker.finished.connect(self._action_thread.quit)
+        self._action_worker.finished.connect(self._action_worker.deleteLater)
+        self._action_thread.finished.connect(self._action_thread.deleteLater)
+        self._action_thread.finished.connect(self._family_action_thread_finished)
+        self._action_thread.start()
 
-    def family_label_for_record(self, record: FontRecord) -> str:
-        return self.family_info(record).label
+    def _family_action_progress(self, message: str, value: int, total: int) -> None:
+        self._set_activity("action", message, value, total)
 
-    def find_family_members(self, target_record: FontRecord) -> list[FontRecord]:
-        """Find all styles belonging to the same family using DB candidate pre-filtering and list adjacency."""
-        target_info = self.family_info(target_record)
-        family_key = target_info.key
-        target_path = Path(target_record.source)
-        target_dir = str(target_path.parent)
-        prefix = family_key[:3] if len(family_key) >= 3 else family_key
+    def _store_family_action_result(self, result: dict) -> None:
+        self._action_result = result
 
-        # 1. Fetch candidates from database (same directory + prefix matches, ordered alphabetically)
-        if self.vault_id is not None:
-            legacy_key = " ".join(target_info.label.casefold().split())
-            db_candidates = self.db.find_family_candidates(
-                self.vault_id, target_dir, prefix, family_key=family_key, legacy_family_key=legacy_key
-            )
-            candidates = [
-                FontRecord(key=r["file_key"], display=r["display"], source=r["file_path"])
-                for r in db_candidates
-            ]
+    def _store_family_action_error(self, message: str) -> None:
+        self._action_error = message
+
+    def _family_action_thread_finished(self) -> None:
+        result = self._action_result
+        error = self._action_error
+        mode = getattr(self, "_active_action_mode", "family action")
+        self._action_thread = None
+        self._action_worker = None
+        self._action_result = None
+        self._action_error = ""
+        if self._close_requested:
+            self._finish_close_request()
+            return
+        self._set_action_busy(False)
+        self._clear_activity("action")
+        if error:
+            label = "mark used" if mode == "mark_used" else "update"
+            self.status_label.setText(f"Could not {label} family: {error}. No review statuses were changed.")
+            return
+        if result is None:
+            self.status_label.setText("The family operation ended without a result. Review your queue and try again.")
+            return
+        self._apply_family_action_result(result)
+
+    def _refresh_review_queue(self) -> None:
+        self.filter.blockSignals(True)
+        self.filter.setCurrentText("Review queue")
+        self.filter.blockSignals(False)
+        self.refresh_list(select_first=False, reset_page=True)
+        if self.visible:
+            self.queue.setCurrentRow(0)
         else:
-            candidates = []
-            for r in self.records:
-                r_path = Path(r.source)
-                if r_path.parent == target_path.parent or (prefix and prefix in r.display.casefold()):
-                    candidates.append(r)
-            if not candidates:
-                candidates = self.records
+            self.clear_current("No unreviewed font families remain in this view.")
 
-        # 2. Match family members
-        members: list[FontRecord] = []
-        seen_keys: set[str] = set()
+    def _apply_family_action_result(self, result: dict) -> None:
+        mode = result["mode"]
+        family: FamilyInfo = result["family"]
+        members: list[FontRecord] = result["members"]
 
-        def belongs_to_family(r: FontRecord) -> bool:
-            return family_member_matches(target_info, self.family_info(r))
+        if mode == "mark_used":
+            copied_records: list[FontRecord] = result.get("copied_records", [])
+            review_saved = result.get("review_state_saved", False)
+            if copied_records and not review_saved:
+                # Retry once on the UI-owned connection after the worker has closed
+                # its handle; a short WAL writer overlap may have caused the first try.
+                try:
+                    self.db.update_reviews_bulk(
+                        [record.key for record in copied_records], "used", family.key, family.label
+                    )
+                    review_saved = True
+                    result["problems"] = [
+                        problem for problem in result.get("problems", [])
+                        if not problem.startswith("Files were staged, but review status could not be saved:")
+                    ]
+                    result.pop("review_update_error", None)
+                    manifest_path = result.get("manifest_path")
+                    if manifest_path and Path(manifest_path).exists():
+                        try:
+                            manifest_data = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+                            manifest_data.pop("review_update_error", None)
+                            manifest_data["problems"] = result["problems"]
+                            write_json_atomic(Path(manifest_path), manifest_data)
+                        except (OSError, json.JSONDecodeError):
+                            pass
+                except sqlite3.Error as error:
+                    result["review_update_error"] = str(error)
+            if review_saved:
+                for record in copied_records:
+                    state = self.item_state(record)
+                    state.update(status="used", family=family.key, family_label=family.label)
+            self._refresh_review_queue()
 
-        # First pass: check candidates in the same directory and prefix matches
-        for r in candidates:
-            if r.key in seen_keys:
-                continue
-            if belongs_to_family(r):
-                members.append(r)
-                seen_keys.add(r.key)
+            destination = result.get("destination_dir")
+            manifest = result.get("manifest_path")
+            retired = result.get("retired", [])
+            problems = result.get("problems", [])
+            fatal_error = result.get("fatal_error", "")
+            staged = result.get("staged_count", 0)
+            duplicates = result.get("duplicate_count", 0)
+            summary = (
+                f"Staged {family.label}: {staged} file(s) copied and verified, "
+                f"{duplicates} duplicate(s) skipped"
+            )
+            if retired:
+                summary += f"; {len(retired)} original(s) moved to {destination.name if destination else 'quarantine'}"
+            if not review_saved and copied_records:
+                summary += "; review status could not be saved"
+            if fatal_error:
+                summary += "; staging stopped early"
+            elif problems:
+                summary += f"; {len(problems)} issue(s) recorded in the manifest"
+            if destination:
+                summary += f" — {destination.relative_to(ROOT)}"
+            self.status_label.setText(summary + ".")
 
-        # Second pass: Check adjacent neighbors in the visible queue list
-        # Inspect preceding and succeeding items in the queue list for contiguous family members
-        if getattr(self, "visible", None):
-            target_idx = -1
-            for idx, r in enumerate(self.visible):
-                if r.key == target_record.key:
-                    target_idx = idx
-                    break
-            if target_idx >= 0:
-                # Walk backward in list
-                curr = target_idx - 1
-                while curr >= 0:
-                    cand = self.visible[curr]
-                    if belongs_to_family(cand):
-                        if cand.key not in seen_keys:
-                            members.append(cand)
-                            seen_keys.add(cand.key)
-                        curr -= 1
-                    else:
-                        break
-                # Walk forward in list
-                curr = target_idx + 1
-                while curr < len(self.visible):
-                    cand = self.visible[curr]
-                    if belongs_to_family(cand):
-                        if cand.key not in seen_keys:
-                            members.append(cand)
-                            seen_keys.add(cand.key)
-                        curr += 1
-                    else:
-                        break
+            if problems or fatal_error or (copied_records and not review_saved):
+                details = problems[:10]
+                if fatal_error:
+                    details.append(f"Staging stopped: {fatal_error}")
+                if result.get("review_update_error"):
+                    details.append(f"Review status was not saved: {result['review_update_error']}")
+                if manifest:
+                    details.append(f"Partial or complete file record: {manifest}")
+                QMessageBox.warning(
+                    self,
+                    "Family staging needs attention",
+                    "\n".join(f"· {detail}" for detail in details)
+                    + ("\n· …" if len(problems) > 10 else ""),
+                )
+            return
 
-        # Ensure target_record itself is always included
-        if not any(m.key == target_record.key for m in members):
-            members.insert(0, target_record)
-
-        # Sort members nicely by display name
-        members.sort(key=lambda item: item.display.lower())
-        return members
+        status = result["status"]
+        for record in members:
+            state = self.item_state(record)
+            state.update(status=status, family=family.key, family_label=family.label)
+        self._refresh_review_queue()
+        if mode == "skip":
+            self.status_label.setText(f"Skipped family: {family.label} ({len(members)} style(s)).")
+        elif mode == "archive_randomize":
+            if self.current:
+                self.randomize()
+                self.status_label.setText(f"Archived family: {family.label}. Randomized to {self.current.display}.")
+            else:
+                self.status_label.setText(f"Archived family: {family.label}. No review queue fonts remain.")
+        else:
+            self.status_label.setText(f"Archived family: {family.label} ({len(members)} style(s)).")
 
     def skip_family(self) -> None:
-        if not self.current:
-            return
-        family = self.family_for_record(self.current)
-        family_label = self.family_label_for_record(self.current)
-        members = self.find_family_members(self.current)
-        keys = [r.key for r in members]
-        # Bulk-write to SQLite in one transaction
-        self.db.update_reviews_bulk(keys, "skipped", family, family_label)
-        # Update in-memory cache
-        for record in members:
-            st = self.item_state(record)
-            st["status"] = "skipped"; st["family"] = family; st["family_label"] = family_label
-        self.filter.setCurrentText("Review queue")
-        self.refresh_list()
-        if self.visible:
-            self.queue.setCurrentRow(0)
-        else:
-            self.clear_current("No unreviewed font families remain in this view.")
-        self.status_label.setText(f"Skipped family: {family_label} ({len(members)} style(s)).")
+        self._start_family_action("skip")
 
     def archive_family(self) -> None:
-        if not self.current:
-            return
-        family = self.family_for_record(self.current)
-        family_label = self.family_label_for_record(self.current)
-        members = self.find_family_members(self.current)
-        keys = [r.key for r in members]
-        # Bulk-write to SQLite in one transaction
-        self.db.update_reviews_bulk(keys, "archived", family, family_label)
-        # Update in-memory cache
-        for record in members:
-            st = self.item_state(record)
-            st["status"] = "archived"; st["family"] = family; st["family_label"] = family_label
-        self.filter.setCurrentText("Review queue")
-        self.refresh_list()
-        if self.visible:
-            self.queue.setCurrentRow(0)
-        else:
-            self.clear_current("No unreviewed font families remain in this view.")
-        self.status_label.setText(f"Archived family: {family_label} ({len(members)} style(s)).")
+        self._start_family_action("archive")
 
     def archive_and_randomize(self) -> None:
-        """Archive the current family, then jump to a random remaining queue font."""
-        if not self.current:
-            return
-        family_label = self.family_label_for_record(self.current)
-        self.archive_family()
-        self.randomize()
-        if self.current:
-            self.status_label.setText(
-                f"Archived family: {family_label}. Randomized to {self.current.display}."
-            )
-        else:
-            self.status_label.setText(
-                f"Archived family: {family_label}. No review queue fonts remain."
-            )
+        self._start_family_action("archive_randomize")
 
     def mark_used_family(self) -> None:
-        if not self.current:
-            return
-        family = self.family_for_record(self.current)
-        family_label = self.family_label_for_record(self.current)
-        members = self.find_family_members(self.current)
-        source_dir = str(Path(self.current.source).parent.resolve())
-        safe_family = re.sub(r"[^A-Za-z0-9._-]+", "_", family_label).strip("._") or "unnamed-family"
-        INPUT_DIR.mkdir(parents=True, exist_ok=True)
-        used_numbers = []
-        for child in INPUT_DIR.iterdir():
-            if child.is_dir():
-                match = re.match(r"^(\d+)-", child.name)
-                if match:
-                    used_numbers.append(int(match.group(1)))
-        next_number = max(used_numbers, default=0) + 1
-        destination_dir = INPUT_DIR / f"{next_number}-{safe_family}"
-        destination_dir.mkdir(parents=True, exist_ok=True)
-        copied = []
-        copied_records = []
-        seen_hashes: dict[str, str] = {}
-        quarantine_dir = STAGED_OUT_DIR / destination_dir.name
-        retired: list[dict] = []
-        problems: list[str] = []
-        for record in members:
-            source = self.materialize(record)
-            style = self.family_info(record).style
-            try:
-                digest = hashlib.sha1(source.read_bytes()).hexdigest()
-            except OSError as error:
-                problems.append(f"{source.name}: the source will not open ({error})")
-                continue
-            twin = seen_hashes.get(digest)
-            if twin is None:
-                destination = destination_dir / source.name
-                if destination.exists():
-                    destination = destination_dir / f"{source.stem}__{digest[:8]}{source.suffix}"
-                try:
-                    shutil.copy2(source, destination)
-                    matches = hashlib.sha1(destination.read_bytes()).hexdigest() == digest
-                except OSError as error:
-                    problems.append(f"{source.name}: the copy failed ({error})")
-                    continue
-                if not matches:
-                    destination.unlink(missing_ok=True)
-                    problems.append(f"{source.name}: the staged copy does not match the source byte for byte")
-                    continue
-                seen_hashes[digest] = str(destination)
-                entry = {"source": str(source), "copied_to": str(destination), "display": record.display, "style": style}
-            else:
-                # Byte-identical to a file already staged from this family, so the staged
-                # copy stands for this one too and its original can retire as well.
-                entry = {"source": str(source), "display": record.display, "style": style, "duplicate_of": twin}
-            try:
-                target = self.retire_source(source, quarantine_dir, digest)
-            except OSError as error:
-                problems.append(f"{source.name}: staged, but its original could not be moved out of the dump ({error})")
-                entry["source_move_error"] = str(error)
-                copied.append(entry)
-                copied_records.append(record)
-                continue
-            entry["source_moved_to"] = str(target)
-            retired.append({"from": str(source), "to": str(target), "sha1": digest})
-            copied.append(entry)
-            copied_records.append(record)
-        if retired:
-            (quarantine_dir / "staged-out.json").write_text(
-                json.dumps({
-                    "family": family_label,
-                    "staged_to": str(destination_dir),
-                    "moved_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                    "note": "Restore a file by moving it back to its 'from' path.",
-                    "files": retired,
-                }, indent=2),
-                encoding="utf-8",
-            )
-        for record in copied_records:
-            self.item_state(record)["status"] = "used"
-            self.item_state(record)["family"] = family
-            self.item_state(record)["family_label"] = family_label
-        # Bulk-write "used" status to SQLite for all copied records
-        copied_keys = [r.key for r in copied_records]
-        self.db.update_reviews_bulk(copied_keys, "used", family, family_label)
-        manifest_payload = {
-            "family": family_label,
-            "family_key": family,
-            "source_directory": source_dir,
-            "files": copied,
-            "duplicate_files_skipped": len(members) - len(seen_hashes),
-            "sources_retired_to": str(quarantine_dir) if retired else None,
-            "problems": problems,
-        }
-        (destination_dir / "font-vault-manifest.json").write_text(json.dumps(manifest_payload, indent=2), encoding="utf-8")
-        # Also write a clear, dedicated text file detailing the source directory
-        (destination_dir / "source-directory.txt").write_text(
-            f"Font Family: {family_label}\n"
-            f"Original Source Directory: {source_dir}\n"
-            f"Extracted Files Count: {len(copied)}\n",
-            encoding="utf-8"
-        )
-        self.filter.setCurrentText("Review queue")
-        self.refresh_list()
-        if self.visible:
-            self.queue.setCurrentRow(0)
-        else:
-            self.clear_current("No unreviewed font families remain in this view.")
-        staged = len(seen_hashes)
-        duplicates = len(members) - staged
-        summary = (f"Staged {family_label}: {staged} file(s) copied and verified, "
-                   f"{duplicates} duplicate(s) skipped")
-        if retired:
-            summary += f"; {len(retired)} original(s) moved to {quarantine_dir.relative_to(ROOT)}"
-        if problems:
-            summary += f"; {len(problems)} left in place — see the manifest"
-            QMessageBox.warning(
-                self,
-                "Some files could not be staged cleanly",
-                "\n".join(f"· {problem}" for problem in problems[:12])
-                + ("\n· …" if len(problems) > 12 else "")
-                + f"\n\nEverything that did stage is in {destination_dir.name}/, and this list is "
-                  f"written to {destination_dir.name}/font-vault-manifest.json.",
-            )
-        self.status_label.setText(summary + ".")
-
-    def retire_source(self, source: Path, quarantine_dir: Path, digest: str) -> Path:
-        """Move a staged original into the quarantine, and hand back where it landed.
-
-        The copy in font-factory/input/ is verified byte for byte before this runs, so
-        the family survives in exactly one place; the quarantine keeps the dump whole
-        enough to restore from, which an unlink would not.
-        """
-        quarantine_dir.mkdir(parents=True, exist_ok=True)
-        target = quarantine_dir / source.name
-        suffix = 1
-        while target.exists():
-            suffix += 1
-            target = quarantine_dir / f"{source.stem}~~{suffix}{source.suffix}"
-        try:
-            self._rename_or_copy(source, target, digest)
-        except OSError:
-            if not any(quarantine_dir.iterdir()):
-                try:
-                    quarantine_dir.rmdir()
-                except OSError:
-                    pass
-            raise
-        return target
-
-    @staticmethod
-    def _rename_or_copy(source: Path, target: Path, digest: str) -> None:
-        """Move source onto target, dropping the source only once the copy is verified.
-
-        shutil.move falls back to copy-then-unlink on *any* rename failure, so an
-        unwritable source directory would leave an unrecorded duplicate sitting in the
-        quarantine. Only a genuine cross-device refusal is allowed to copy.
-        """
-        try:
-            os.rename(source, target)
-        except OSError as error:
-            if error.errno != errno.EXDEV:
-                raise
-        else:
-            return
-        try:
-            shutil.copy2(source, target)
-            if hashlib.sha1(target.read_bytes()).hexdigest() != digest:
-                raise OSError(f"{target.name} is not byte-identical to its source")
-            source.unlink()
-        except OSError:
-            target.unlink(missing_ok=True)
-            raise
+        self._start_family_action("mark_used")
 
     def next(self) -> None:
         if not self.visible:
@@ -1634,12 +2268,38 @@ class FontVaultWindow(QMainWindow):
         answer = QMessageBox.question(self, "Create working copy", "This changes only the copy's fsType embedding flag to 0. It does not change the original or grant licensing rights. Continue?")
         if answer != QMessageBox.StandardButton.Yes: return
         try:
-            font = TTFont(source); font["OS/2"].fsType = 0; font.flavor = ("woff" if source.suffix.lower() == ".woff" else "woff2" if source.suffix.lower() == ".woff2" else None); font.save(target); font.close(); self.status_label.setText(f"Saved working copy: {target}")
+            with TTFont(source) as font:
+                font["OS/2"].fsType = 0
+                font.flavor = ("woff" if source.suffix.lower() == ".woff" else "woff2" if source.suffix.lower() == ".woff2" else None)
+                font.save(target)
+            self.status_label.setText(f"Saved working copy: {target}")
         except Exception as error: QMessageBox.critical(self, "Could not create copy", str(error))
 
 
-def main() -> None:
-    app = QApplication(sys.argv); window = FontVaultWindow(); window.show(); sys.exit(app.exec())
+def main() -> int:
+    app = QApplication(sys.argv)
+    window_ref: list[FontVaultWindow | None] = [None]
+
+    def request_window_exit() -> None:
+        window = window_ref[0]
+        if window is None:
+            app.quit()
+        else:
+            window.request_exit()
+
+    # Install before constructing the window. Startup can include a legacy
+    # state migration; SIGINT stays queued on the wakeup fd until Qt begins
+    # processing events, then requests the same orderly close as the GUI.
+    interrupt_bridge = InterruptExitBridge(request_window_exit, app)
+    app.aboutToQuit.connect(interrupt_bridge.restore)
+    try:
+        window = FontVaultWindow()
+        window_ref[0] = window
+        window.show()
+        return app.exec()
+    finally:
+        interrupt_bridge.restore()
 
 
-if __name__ == "__main__": main()
+if __name__ == "__main__":
+    sys.exit(main())

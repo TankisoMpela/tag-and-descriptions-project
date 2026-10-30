@@ -1,0 +1,2346 @@
+#artboard.user-reference-prettyinpink {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #ffe35b;
+  color: #0b0d0a;
+}
+
+#artboard.user-reference-prettyinpink .pip-confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#artboard.user-reference-prettyinpink .pip-frame,
+#artboard.user-reference-prettyinpink .pip-panel {
+  position: absolute;
+  inset: 0;
+}
+
+#artboard.user-reference-prettyinpink .pip-frame {
+  z-index: 1;
+  background: #fff;
+  clip-path: polygon(3.1% 22.2%, 95.6% 7.3%, 84.6% 91.2%, 12.7% 78.5%);
+}
+
+#artboard.user-reference-prettyinpink .pip-panel {
+  z-index: 2;
+  overflow: hidden;
+  background: #0b0d0a;
+  clip-path: polygon(6.3% 24.1%, 93.2% 10.1%, 82.7% 88.1%, 14.3% 76.3%);
+}
+
+#artboard.user-reference-prettyinpink .pip-panel-marks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: #302d32;
+  opacity: .82;
+  pointer-events: none;
+}
+
+#artboard.user-reference-prettyinpink .pip-title {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  color: #f52870;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: -.035em;
+  line-height: .78;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  -webkit-text-stroke: 5px #fff;
+  paint-order: stroke fill;
+  text-shadow: 0 2px 2px rgb(0 0 0 / 22%);
+}
+
+#artboard.user-reference-prettyinpink .pip-title-one {
+  transform: rotate(-5deg);
+}
+
+#artboard.user-reference-prettyinpink .pip-title-two {
+  transform: rotate(-4deg);
+}
+
+#artboard.user-reference-prettyinpink.prettyinpink-square .pip-frame {
+  clip-path: polygon(3.8% 20.8%, 96% 10.4%, 87% 87.2%, 12.5% 81%);
+}
+
+#artboard.user-reference-prettyinpink.prettyinpink-square .pip-panel {
+  clip-path: polygon(6.7% 23.2%, 93.5% 13.3%, 84.7% 84.8%, 14.2% 78.8%);
+}
+
+#artboard.user-reference-prettyinpink.prettyinpink-square .pip-title-one {
+  transform: rotate(-4deg);
+}
+
+#artboard.user-reference-prettyinpink.prettyinpink-square .pip-title-two {
+  transform: rotate(-3deg);
+}
+
+#artboard.user-reference-dynamicplayful {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #00977e;
+  color: #111714;
+}
+
+#artboard.user-reference-dynamicplayful .dyp-field,
+#artboard.user-reference-dynamicplayful .dyp-squiggles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#artboard.user-reference-dynamicplayful .dyp-field {
+  z-index: 0;
+  background-image:
+    repeating-linear-gradient(17deg, rgb(255 255 255 / .8%) 0 1px, transparent 1px 10px),
+    repeating-linear-gradient(93deg, rgb(0 31 28 / .9%) 0 1px, transparent 1px 13px),
+    radial-gradient(ellipse at 50% 44%, transparent 34%, rgb(0 42 35 / 10%) 100%),
+    linear-gradient(110deg, #02977e, #00947a 49%, #059b81);
+}
+
+#artboard.user-reference-dynamicplayful .dyp-squiggles {
+  z-index: 1;
+  overflow: visible;
+  fill: none;
+  stroke-width: 14;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+#artboard.user-reference-dynamicplayful .dyp-wave-shadow {
+  stroke: #111714;
+  transform: translate(5px, 6px);
+}
+
+#artboard.user-reference-dynamicplayful .dyp-wave-hot {
+  stroke: #ed2671;
+}
+
+#artboard.user-reference-dynamicplayful .dyp-label {
+  position: absolute;
+  z-index: 2;
+  color: #11231f;
+  font-family: sans-serif;
+  font-size: clamp(11px, 1.36vw, 20px);
+  font-weight: 650;
+  letter-spacing: .035em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-dynamicplayful .dyp-label-top-left {
+  left: 6.4%;
+  top: 8.5%;
+}
+
+#artboard.user-reference-dynamicplayful .dyp-label-top-right {
+  right: 6.2%;
+  top: 8.5%;
+}
+
+#artboard.user-reference-dynamicplayful .dyp-label-bottom-left {
+  left: 6.4%;
+  bottom: 8.3%;
+}
+
+#artboard.user-reference-dynamicplayful .dyp-label-bottom-right {
+  right: 6.2%;
+  bottom: 8.3%;
+}
+
+#artboard.user-reference-dynamicplayful .dyp-title {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  color: #ffec65;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: -.005em;
+  line-height: .78;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  text-shadow: .025em .035em 0 #111714, .043em .053em 0 #111714;
+}
+
+#artboard.user-reference-dynamicplayful .dyp-title-1 {
+  transform: rotate(-.9deg);
+}
+
+#artboard.user-reference-dynamicplayful .dyp-title-2 {
+  transform: rotate(-.55deg);
+}
+
+#artboard.user-reference-dynamicplayful.dynamicplayful-square .dyp-label {
+  font-size: clamp(10px, 1.22vw, 18px);
+}
+
+#artboard.user-reference-dynamicplayful.dynamicplayful-square .dyp-title-1 {
+  transform: rotate(-.65deg);
+}
+
+#artboard.user-reference-dynamicplayful.dynamicplayful-square .dyp-title-2 {
+  transform: rotate(-.35deg);
+}
+
+#artboard.user-reference-retroshowcase {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #f1efe6;
+  color: #11110f;
+}
+
+#artboard.user-reference-retroshowcase .rts-paper,
+#artboard.user-reference-retroshowcase .rts-confetti {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#artboard.user-reference-retroshowcase .rts-paper {
+  z-index: 0;
+  background-image:
+    repeating-linear-gradient(13deg, rgb(72 62 43 / 1.2%) 0 1px, transparent 1px 11px),
+    repeating-linear-gradient(102deg, rgb(255 255 255 / 19%) 0 1px, transparent 1px 17px),
+    radial-gradient(ellipse at 52% 45%, transparent 40%, rgb(71 61 45 / 6%) 100%);
+}
+
+#artboard.user-reference-retroshowcase .rts-confetti {
+  z-index: 1;
+  overflow: visible;
+}
+
+#artboard.user-reference-retroshowcase .rts-band-shadow,
+#artboard.user-reference-retroshowcase .rts-band {
+  position: absolute;
+  box-sizing: border-box;
+  clip-path: polygon(.2% 0, 99.6% .8%, 100% 98%, 1.3% 100%);
+}
+
+#artboard.user-reference-retroshowcase .rts-band-shadow {
+  z-index: 2;
+  background: #10100f;
+}
+
+#artboard.user-reference-retroshowcase .rts-band {
+  z-index: 3;
+}
+
+#artboard.user-reference-retroshowcase .rts-band-yellow {
+  background: #ffdf56;
+}
+
+#artboard.user-reference-retroshowcase .rts-band-pink {
+  background: #f31169;
+}
+
+#artboard.user-reference-retroshowcase .rts-band-teal {
+  background: #00a98e;
+}
+
+#artboard.user-reference-retroshowcase .rts-title {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .82;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  text-shadow: .018em .026em 0 rgb(16 16 15 / 34%);
+}
+
+#artboard.user-reference-retroshowcase .rts-title-yellow,
+#artboard.user-reference-retroshowcase .rts-title-teal {
+  color: #ed1b68;
+}
+
+#artboard.user-reference-iconicposter {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #ffeb7b;
+  color: #15130e;
+}
+
+#artboard.user-reference-iconicposter .icp-paper,
+#artboard.user-reference-iconicposter .icp-confetti {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#artboard.user-reference-iconicposter .icp-paper {
+  z-index: 0;
+  background-image:
+    radial-gradient(ellipse at 22% 20%, rgb(255 255 255 / 23%) 0 1px, transparent 2px),
+    radial-gradient(ellipse at 70% 66%, rgb(129 98 20 / 7%) 0 1px, transparent 3px),
+    radial-gradient(ellipse at 50% 50%, transparent 34%, rgb(142 103 21 / 8%) 100%),
+    linear-gradient(115deg, #ffec7b, #ffe56f 52%, #ffed83);
+  background-size: 19px 19px, 23px 23px, auto, auto;
+}
+
+#artboard.user-reference-iconicposter .icp-confetti {
+  z-index: 1;
+  overflow: visible;
+}
+
+#artboard.user-reference-iconicposter .icp-stripe-shadow,
+#artboard.user-reference-iconicposter .icp-slab-shadow,
+#artboard.user-reference-iconicposter .icp-slab {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+#artboard.user-reference-iconicposter .icp-stripe-shadow {
+  z-index: 2;
+  left: 9%;
+  top: 57%;
+  width: 84%;
+  height: 13%;
+  transform: rotate(-4.8deg);
+  background: repeating-linear-gradient(135deg, #c8a944 0 11px, transparent 11px 26px);
+  opacity: .7;
+}
+
+#artboard.user-reference-iconicposter .icp-slab-shadow,
+#artboard.user-reference-iconicposter .icp-slab {
+  left: 6%;
+  top: 34%;
+  width: 88%;
+  height: 29%;
+  clip-path: polygon(0 12%, 99% 0, 100% 89%, 1.3% 100%);
+}
+
+#artboard.user-reference-iconicposter .icp-slab-shadow {
+  z-index: 3;
+  transform: rotate(-4.8deg) translate(1.2%, 8%);
+  background: #c9ae4a;
+}
+
+#artboard.user-reference-iconicposter .icp-slab {
+  z-index: 4;
+  transform: rotate(-4.8deg);
+  background: #f31169;
+}
+
+#artboard.user-reference-iconicposter .icp-label {
+  position: absolute;
+  z-index: 6;
+  color: #191711;
+  font-family: sans-serif;
+  font-size: clamp(11px, 1.36vw, 20px);
+  font-weight: 650;
+  letter-spacing: .035em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-iconicposter .icp-label-top-left {
+  left: 6.4%;
+  top: 8.5%;
+}
+
+#artboard.user-reference-iconicposter .icp-label-top-right {
+  right: 6.2%;
+  top: 8.5%;
+}
+
+#artboard.user-reference-iconicposter .icp-label-bottom-left {
+  left: 6.4%;
+  bottom: 8.3%;
+}
+
+#artboard.user-reference-iconicposter .icp-label-bottom-right {
+  right: 6.2%;
+  bottom: 8.3%;
+}
+
+#artboard.user-reference-iconicposter .icp-headline {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  color: #003a34;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: -.04em;
+  line-height: .73;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  text-shadow: 0 .018em 0 rgb(7 50 42 / 24%);
+}
+
+#artboard.user-reference-iconicposter.iconicposter-square .icp-label {
+  font-size: clamp(10px, 1.22vw, 18px);
+}
+
+#artboard.user-reference-summerparadise {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #d94f48;
+  color: #fff0d1;
+}
+
+#artboard.user-reference-summerparadise .spx-texture,
+#artboard.user-reference-summerparadise .spx-sun,
+#artboard.user-reference-summerparadise .spx-rays,
+#artboard.user-reference-summerparadise .spx-clouds,
+#artboard.user-reference-summerparadise .spx-underline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#artboard.user-reference-summerparadise .spx-texture {
+  z-index: 0;
+  background-image:
+    radial-gradient(ellipse at 19% 23%, rgb(255 245 207 / 8%) 0 1px, transparent 2px),
+    radial-gradient(ellipse at 72% 68%, rgb(112 33 29 / 7%) 0 1px, transparent 2px),
+    repeating-linear-gradient(14deg, rgb(255 240 209 / 2%) 0 1px, transparent 1px 7px),
+    radial-gradient(ellipse at 50% 44%, transparent 35%, rgb(99 28 26 / 13%) 100%);
+  background-size: 15px 15px, 19px 19px, auto, auto;
+}
+
+#artboard.user-reference-summerparadise .spx-sun {
+  z-index: 1;
+  inset: 13% auto auto 31%;
+  width: 44%;
+  height: 43%;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 36% 33%, rgb(255 224 135 / 45%), transparent 42%),
+    radial-gradient(ellipse at 53% 56%, #f6b648 0 42%, #efa63b 72%, #e28d2b 100%);
+  box-shadow: inset 0 0 24px rgb(185 100 24 / 12%);
+}
+
+#artboard.user-reference-summerparadise .spx-rays {
+  z-index: 2;
+  overflow: visible;
+  fill: none;
+  stroke: #e7a832;
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+
+#artboard.user-reference-summerparadise .spx-title {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  color: #fff0d1;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: -.035em;
+  line-height: .78;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  text-shadow: 0 2px 0 rgb(132 44 38 / 18%);
+}
+
+#artboard.user-reference-summerparadise .spx-clouds {
+  z-index: 4;
+  overflow: visible;
+}
+
+#artboard.user-reference-summerparadise .spx-cloud {
+  fill: #c9e7dc;
+  stroke: #e0efe1;
+  stroke-width: 7;
+  stroke-linejoin: round;
+}
+
+#artboard.user-reference-summerparadise .spx-cloud-2 {
+  fill: #cee9df;
+}
+
+#artboard.user-reference-summerparadise .spx-underline {
+  z-index: 5;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+}
+
+#artboard.user-reference-summerparadise .spx-underline-shadow {
+  stroke: rgb(158 55 46 / 23%);
+  stroke-width: 26;
+  transform: translateY(7px);
+}
+
+#artboard.user-reference-summerparadise .spx-underline-mark {
+  stroke: #fff0d1;
+  stroke-width: 21;
+}
+
+#artboard.user-reference-calgarywelcome {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #70271a;
+  color: #fff8ed;
+}
+
+#artboard.user-reference-calgarywelcome .cgw-texture {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(ellipse at 17% 18%, rgb(242 182 138 / 15%) 0 1px, transparent 2px),
+    radial-gradient(ellipse at 77% 42%, rgb(39 11 7 / 15%) 0 1px, transparent 3px),
+    radial-gradient(ellipse at 49% 77%, rgb(239 185 137 / 10%) 0 1px, transparent 2px),
+    repeating-linear-gradient(7deg, rgb(255 229 195 / 2%) 0 1px, transparent 1px 8px),
+    radial-gradient(ellipse at 50% 45%, transparent 23%, rgb(31 9 5 / 28%) 100%),
+    linear-gradient(135deg, #7a2b1c, #652116 48%, #74291b);
+  background-size: 15px 15px, 21px 21px, 17px 17px, auto, auto, auto;
+}
+
+#artboard.user-reference-calgarywelcome .cgw-eyebrow,
+#artboard.user-reference-calgarywelcome .cgw-headline {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-calgarywelcome .cgw-eyebrow {
+  color: #c0ded0;
+  line-height: .86;
+  letter-spacing: -.02em;
+  transform: rotate(-1deg) skewX(-5deg);
+}
+
+#artboard.user-reference-calgarywelcome .cgw-headline {
+  color: #fff8ed;
+  line-height: .84;
+  letter-spacing: -.025em;
+  transform: rotate(-1.4deg) skewX(-3deg);
+  text-shadow: 0 3px 0 rgb(37 14 8 / 25%);
+}
+
+#artboard.user-reference-latinmaxims {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #08080a;
+  color: #f8f7f4;
+}
+
+#artboard.user-reference-latinmaxims .ltm-line {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  color: #f8f7f4;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .88;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-latinmaxims .ltm-line-1,
+#artboard.user-reference-latinmaxims .ltm-line-5 {
+  color: #b4b2b4;
+  opacity: .58;
+}
+
+#artboard.user-reference-latinmaxims .ltm-line-2 {
+  opacity: .94;
+}
+
+#artboard.user-reference-latinmaxims .ltm-line-3,
+#artboard.user-reference-latinmaxims .ltm-line-4 {
+  color: #fffdf9;
+}
+
+#artboard.user-reference-onlygooddieyoung {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #666669;
+  color: #ffb20d;
+}
+
+#artboard.user-reference-onlygooddieyoung .ogd-scene {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+#artboard.user-reference-onlygooddieyoung .ogd-title {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  color: #ffb20d;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: -.03em;
+  line-height: .8;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  text-shadow: 0 2px 0 rgb(39 29 8 / 25%);
+}
+
+#artboard.user-reference-onlygooddieyoung.onlygooddieyoung-square .ogd-title-1 {
+  transform: rotate(-1.5deg);
+}
+
+#artboard.user-reference-onlygooddieyoung.onlygooddieyoung-square .ogd-title-2 {
+  transform: rotate(-1deg);
+}
+
+#artboard.user-reference-onlygooddieyoung.onlygooddieyoung-square .ogd-title-3 {
+  transform: rotate(-.6deg);
+}
+
+#artboard.user-reference-blackholesun {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #030405;
+  color: #00edf0;
+}
+
+#artboard.user-reference-blackholesun .bhs-texture,
+#artboard.user-reference-blackholesun .bhs-streaks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#artboard.user-reference-blackholesun .bhs-texture {
+  z-index: 0;
+  background-image:
+    radial-gradient(ellipse at 75% 66%, rgb(138 8 18 / 19%) 0 7%, transparent 37%),
+    radial-gradient(ellipse at 32% 20%, rgb(92 4 12 / 15%) 0 2%, transparent 36%),
+    linear-gradient(167deg, transparent 0 31%, rgb(95 5 13 / 15%) 31.5% 32%, transparent 33% 58%, rgb(133 8 14 / 17%) 59% 60%, transparent 61%),
+    #030405;
+}
+
+#artboard.user-reference-blackholesun .bhs-streaks {
+  z-index: 1;
+  overflow: visible;
+  fill: none;
+  stroke: #770812;
+  stroke-width: 9;
+  stroke-linecap: round;
+  opacity: .42;
+}
+
+#artboard.user-reference-blackholesun .bhs-streak-2 {
+  stroke: #b20b16;
+  stroke-width: 13;
+  opacity: .3;
+}
+
+#artboard.user-reference-blackholesun .bhs-streak-3,
+#artboard.user-reference-blackholesun .bhs-streak-4 {
+  stroke-width: 5;
+  opacity: .28;
+}
+
+#artboard.user-reference-blackholesun .bhs-sun {
+  position: absolute;
+  z-index: 2;
+  left: 65%;
+  top: 58%;
+  width: 21%;
+  height: 24%;
+  border: 2px solid #00dce7;
+  border-radius: 50%;
+  background: radial-gradient(circle at 42% 35%, #18ffff, #00dbe6 67%, #03a9c3 100%);
+}
+
+#artboard.user-reference-blackholesun .bhs-sun-cut {
+  position: absolute;
+  z-index: 3;
+  left: 64%;
+  width: 23%;
+  height: 2.6%;
+  background: #030405;
+  transform: rotate(-2deg);
+}
+
+#artboard.user-reference-blackholesun .bhs-sun-cut-one {
+  top: 68.5%;
+}
+
+#artboard.user-reference-blackholesun .bhs-sun-cut-two {
+  top: 76%;
+}
+
+#artboard.user-reference-blackholesun .bhs-sun-glint {
+  position: absolute;
+  z-index: 3;
+  left: 69%;
+  top: 73.5%;
+  width: 10%;
+  height: .8%;
+  background: #334bcc;
+}
+
+#artboard.user-reference-blackholesun .bhs-title,
+#artboard.user-reference-blackholesun .bhs-lyric,
+#artboard.user-reference-blackholesun .bhs-artist {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-blackholesun .bhs-title {
+  z-index: 4;
+  color: #00edf0;
+  font-weight: 400;
+  letter-spacing: -.025em;
+  line-height: .78;
+  text-shadow: 0 2px 0 rgb(0 23 31 / 38%);
+}
+
+#artboard.user-reference-blackholesun .bhs-lyric {
+  z-index: 4;
+  color: #304bcc;
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: .86;
+}
+
+#artboard.user-reference-blackholesun .bhs-artist {
+  z-index: 4;
+  color: #9a1720;
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: .9;
+}
+
+#artboard.user-reference-blackholesun.blackholesun-square .bhs-sun {
+  left: 66%;
+  top: 58%;
+  width: 25%;
+  height: 23%;
+}
+
+#artboard.user-reference-blackholesun.blackholesun-square .bhs-sun-cut {
+  left: 65%;
+  width: 27%;
+}
+
+#artboard.user-reference-blackholesun.blackholesun-square .bhs-sun-glint {
+  left: 70%;
+  width: 12%;
+}
+
+#artboard.user-reference-retroshowcase .rts-title-pink {
+  color: #fffaf1;
+}
+
+#artboard.user-reference-somethingabouther {
+  isolation: isolate;
+  background: #392433;
+  color: #f2eadb;
+}
+
+#artboard.user-reference-somethingabouther .sah-texture {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 46%, rgb(125 78 99 / 31%) 0 10%, transparent 67%),
+    radial-gradient(ellipse at 8% 5%, rgb(159 105 121 / 25%) 0 3%, transparent 48%),
+    radial-gradient(ellipse at 89% 95%, rgb(14 8 18 / 44%) 0 9%, transparent 54%),
+    repeating-linear-gradient(2deg, rgb(238 212 205 / 3%) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(91deg, rgb(12 8 15 / 9%) 0 1px, transparent 1px 5px),
+    linear-gradient(139deg, #543348 0%, #43283b 44%, #332235 100%);
+}
+
+#artboard.user-reference-somethingabouther .sah-grain {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .1;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+#artboard.user-reference-somethingabouther .sah-title {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  color: #f2eadb;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 72px;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  letter-spacing: -.035em;
+  line-height: .9;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  text-shadow: 0 1px 1px rgb(10 5 10 / 30%);
+  white-space: nowrap;
+}
+
+#artboard.user-reference-somethingabouther .sah-title-lineOne {
+  transform: rotate(-1.5deg);
+}
+
+#artboard.user-reference-somethingabouther .sah-title-lineTwo {
+  transform: rotate(1deg);
+}
+
+#artboard.user-reference-somethingabouther .sah-title-lineThree {
+  transform: rotate(-1.7deg);
+}
+
+#artboard.user-reference-somethingabouther .sah-underline {
+  position: absolute;
+  z-index: 2;
+  left: 42%;
+  top: 73%;
+  width: 16%;
+  height: 2.3%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+#artboard.user-reference-somethingabouther .sah-underline path {
+  fill: none;
+  stroke: #f2eadb;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+#artboard.user-reference-somethingabouther.somethingabouther-square .sah-underline {
+  left: 35%;
+  width: 30%;
+  top: 76%;
+}
+
+#artboard.user-reference-darknightbrighterday {
+  isolation: isolate;
+  background: #17191d;
+  color: #ece9de;
+}
+
+#artboard.user-reference-darknightbrighterday .dnbd-texture {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 54% 46%, rgb(101 46 67 / 34%) 0 6%, transparent 56%),
+    radial-gradient(ellipse at 18% 81%, rgb(44 53 58 / 44%) 0 8%, transparent 51%),
+    radial-gradient(ellipse at 90% 14%, rgb(102 52 71 / 21%) 0 5%, transparent 47%),
+    repeating-linear-gradient(1deg, rgb(229 222 222 / 2.5%) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(92deg, rgb(4 7 9 / 18%) 0 1px, transparent 1px 4px),
+    linear-gradient(135deg, #273035 0%, #1b2227 40%, #17181d 100%);
+}
+
+#artboard.user-reference-darknightbrighterday .dnbd-grain {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .12;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+#artboard.user-reference-darknightbrighterday .dnbd-title {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  color: #ece9de;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 68px;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  letter-spacing: -.025em;
+  line-height: .9;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  text-shadow: 0 1px 1px rgb(4 6 9 / 36%);
+  white-space: nowrap;
+}
+
+#artboard.user-reference-darknightbrighterday .dnbd-title-lineOne {
+  transform: rotate(-1deg);
+}
+
+#artboard.user-reference-darknightbrighterday .dnbd-title-lineTwo {
+  transform: rotate(.65deg);
+}
+
+#artboard.user-reference-darknightbrighterday .dnbd-title-lineThree {
+  transform: rotate(-.8deg);
+}
+
+#artboard.user-reference-darknightbrighterday .dnbd-title-lineFour {
+  transform: rotate(-1.4deg);
+}
+
+#artboard.user-reference-tcpanthomaspecimen {
+  background: #030303;
+  color: #ed1c24;
+}
+
+#artboard.user-reference-tcpanthomaspecimen .tps-title,
+#artboard.user-reference-tcpanthomaspecimen .tps-meta-left,
+#artboard.user-reference-tcpanthomaspecimen .tps-meta-center,
+#artboard.user-reference-tcpanthomaspecimen .tps-meta-right {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: visible;
+  font-synthesis: none;
+  font-kerning: normal;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-tcpanthomaspecimen .tps-title {
+  justify-content: center;
+  color: #ed1c24;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 72px;
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: .86;
+  text-align: center;
+}
+
+#artboard.user-reference-tcpanthomaspecimen .tps-meta-left,
+#artboard.user-reference-tcpanthomaspecimen .tps-meta-center,
+#artboard.user-reference-tcpanthomaspecimen .tps-meta-right {
+  color: #ed1c24;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -.015em;
+  line-height: .92;
+}
+
+#artboard.user-reference-tcpanthomaspecimen .tps-meta-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+#artboard.user-reference-tcpanthomaspecimen .tps-meta-center {
+  justify-content: center;
+  text-align: center;
+}
+
+#artboard.user-reference-tcpanthomaspecimen .tps-meta-right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+#artboard.user-reference-tcpanthomarepeat {
+  background: #c72b20;
+  color: #050505;
+}
+
+#artboard.user-reference-tcpanthomarepeat .tpr-title {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  color: #050505;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 72px;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: .86;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-strongerquote {
+  isolation: isolate;
+  overflow: hidden;
+  background: #090a0d;
+  color: #f2f1ed;
+}
+
+#artboard.user-reference-strongerquote .sq-photo-frame {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  width: 46%;
+  height: 100%;
+  overflow: hidden;
+  background: #050607;
+}
+
+#artboard.user-reference-strongerquote .sq-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 14% 50%;
+  transform: scale(1.18);
+}
+
+#artboard.user-reference-strongerquote .sq-text-panel {
+  position: absolute;
+  z-index: 1;
+  left: 44%;
+  top: 0;
+  width: 56%;
+  height: 100%;
+  background: linear-gradient(90deg, #07080a 0%, #090a0d 100%);
+}
+
+#artboard.user-reference-strongerquote .sq-text-panel::after {
+  position: absolute;
+  content: "";
+  left: 22%;
+  top: 16%;
+  width: 70%;
+  height: 68%;
+  background: rgb(36 37 41 / 76%);
+  clip-path: polygon(16% 0, 100% 4%, 82% 100%, 0 91%);
+}
+
+#artboard.user-reference-strongerquote .sq-line {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  color: #f2f1ed;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 68px;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: .88;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  text-shadow: 0 1px 1px rgb(0 0 0 / 38%);
+  white-space: nowrap;
+}
+
+#artboard.user-reference-strongerquote .sq-line-lineOne {
+  transform: rotate(-1deg);
+}
+
+#artboard.user-reference-strongerquote .sq-line-lineTwo {
+  transform: rotate(.5deg);
+}
+
+#artboard.user-reference-strongerquote .sq-line-lineThree {
+  transform: rotate(-.7deg);
+}
+
+#artboard.user-reference-strongerquote .sq-line-lineFour {
+  transform: rotate(-1.3deg);
+}
+
+#artboard.user-reference-strongerquote .sq-quote-mark {
+  position: absolute;
+  z-index: 3;
+  color: #f2f1ed;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 112px;
+  font-weight: 700;
+  line-height: .7;
+}
+
+#artboard.user-reference-strongerquote .sq-quote-open {
+  left: 78%;
+  top: 4%;
+}
+
+#artboard.user-reference-strongerquote .sq-quote-close {
+  left: 78%;
+  top: 88%;
+}
+
+#artboard.user-reference-strongerquote.strongerquote-square .sq-photo-frame {
+  width: 46%;
+  height: 100%;
+}
+
+#artboard.user-reference-strongerquote.strongerquote-square .sq-photo {
+  object-position: 20% 50%;
+  transform: scale(1.18);
+}
+
+#artboard.user-reference-strongerquote.strongerquote-square .sq-text-panel {
+  left: 44%;
+  top: 0;
+  width: 56%;
+  height: 100%;
+  background: linear-gradient(90deg, #07080a 0%, #090a0d 100%);
+}
+
+#artboard.user-reference-strongerquote.strongerquote-square .sq-text-panel::after {
+  left: 18%;
+  top: 15%;
+  width: 76%;
+  height: 70%;
+  clip-path: polygon(16% 0, 100% 4%, 82% 100%, 0 91%);
+}
+
+#artboard.user-reference-strongerquote.strongerquote-square .sq-quote-mark {
+  font-size: 82px;
+}
+
+#artboard.user-reference-strongerquote.strongerquote-square .sq-quote-open {
+  left: 79%;
+  top: 3%;
+}
+
+#artboard.user-reference-strongerquote.strongerquote-square .sq-quote-close {
+  left: 79%;
+  top: 89%;
+}
+
+#artboard.user-reference-scarygangsta {
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 41%, rgb(107 77 148 / 28%) 0 10%, transparent 60%),
+    radial-gradient(ellipse at 50% 75%, #211637 0%, #160f27 65%, #120d20 100%);
+  color: #fff8eb;
+}
+
+#artboard.user-reference-scarygangsta .sg-moon {
+  position: absolute;
+  z-index: 1;
+  left: 29%;
+  top: 9%;
+  width: 42%;
+  height: 63%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 27%, rgb(255 255 224 / 80%) 0 2%, transparent 2.7%),
+    radial-gradient(circle at 65% 58%, rgb(255 255 224 / 55%) 0 3.5%, transparent 4.3%),
+    radial-gradient(circle at 31% 71%, rgb(232 227 175 / 45%) 0 2.4%, transparent 3.2%),
+    radial-gradient(circle at 52% 48%, #fffddc 0%, #f9f2cc 66%, #e8dfb0 100%);
+}
+
+#artboard.user-reference-scarygangsta .sg-moon-light {
+  position: absolute;
+  z-index: 0;
+  left: 17%;
+  top: -1%;
+  width: 66%;
+  height: 82%;
+  background: radial-gradient(ellipse at 50% 48%, rgb(255 246 198 / 29%) 0%, rgb(255 246 198 / 11%) 42%, transparent 73%);
+  pointer-events: none;
+}
+
+#artboard.user-reference-scarygangsta .sg-forest {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#artboard.user-reference-scarygangsta .sg-title,
+#artboard.user-reference-scarygangsta .sg-badge,
+#artboard.user-reference-scarygangsta .sg-footer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-scarygangsta .sg-title {
+  z-index: 4;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 72px;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  letter-spacing: -.025em;
+  line-height: .85;
+  -webkit-text-stroke: 2px #251638;
+  paint-order: stroke fill;
+  text-shadow: 0 4px 0 #48203d, 0 8px 0 #251638, 0 12px 15px rgb(7 5 15 / 58%);
+}
+
+#artboard.user-reference-scarygangsta .sg-title.title-one {
+  color: #ff8b4c;
+}
+
+#artboard.user-reference-scarygangsta .sg-title.title-two {
+  color: #ff6476;
+}
+
+#artboard.user-reference-scarygangsta .sg-badge {
+  z-index: 5;
+  border: 3px solid #2b1734;
+  border-radius: 48% 52% 45% 55%;
+  background: #b92a4d;
+  color: #fff8eb;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 48px;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  line-height: .9;
+  transform: rotate(-12deg);
+  box-shadow: 0 7px 0 #291538, 0 12px 16px rgb(0 0 0 / 32%);
+}
+
+#artboard.user-reference-scarygangsta .sg-footer {
+  z-index: 4;
+  overflow: visible;
+  color: #fff8eb;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 28px;
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  letter-spacing: .32em;
+  line-height: .9;
+  text-align: center;
+}
+
+#artboard.user-reference-scarygangsta.scarygangsta-square .sg-moon {
+  left: 20%;
+  top: 12%;
+  width: 60%;
+  height: 60%;
+}
+
+#artboard.user-reference-scarygangsta.scarygangsta-square .sg-moon-light {
+  left: 7%;
+  top: 2%;
+  width: 86%;
+  height: 82%;
+}
+
+#artboard.user-reference-darkbriton {
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 44%, rgb(75 31 40 / 24%) 0 12%, transparent 62%),
+    repeating-linear-gradient(127deg, rgb(237 231 220 / 2.5%) 0 1px, transparent 1px 8px),
+    linear-gradient(145deg, #19171a 0%, #0e0d0f 60%, #1a1518 100%);
+  color: #f7f5ef;
+}
+
+#artboard.user-reference-darkbriton .db-panel {
+  position: absolute;
+  z-index: 0;
+  left: 6%;
+  top: 19%;
+  width: 88%;
+  height: 62%;
+  background:
+    radial-gradient(ellipse at 52% 40%, rgb(173 39 48 / 60%) 0 8%, transparent 64%),
+    repeating-linear-gradient(2deg, rgb(20 8 12 / 25%) 0 2px, transparent 2px 6px),
+    linear-gradient(132deg, #791e29 0%, #56161f 42%, #771a25 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 98%, 0 98%);
+}
+
+#artboard.user-reference-darkbriton .db-grain {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .1;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+#artboard.user-reference-darkbriton .db-marks {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#artboard.user-reference-darkbriton .db-scratch {
+  fill: none;
+  stroke: #d6c9bc;
+  stroke-width: 2;
+  opacity: .28;
+}
+
+#artboard.user-reference-darkbriton .db-figure {
+  fill: #151114;
+  opacity: .82;
+}
+
+#artboard.user-reference-darkbriton .db-figure-detail {
+  fill: none;
+  stroke: #a92e37;
+  stroke-width: 10;
+  stroke-linecap: round;
+  opacity: .55;
+}
+
+#artboard.user-reference-darkbriton .db-trident {
+  position: absolute;
+  z-index: 5;
+  left: 6%;
+  top: 4%;
+  width: 8%;
+  height: 7%;
+  fill: #f7f5ef;
+}
+
+#artboard.user-reference-darkbriton .db-skulls {
+  position: absolute;
+  z-index: 5;
+  left: 88.5%;
+  top: 4.2%;
+  display: flex;
+  width: 8%;
+  height: 6.5%;
+  gap: 3%;
+}
+
+#artboard.user-reference-darkbriton .db-skulls svg {
+  width: 47%;
+  height: 100%;
+  overflow: visible;
+}
+
+#artboard.user-reference-darkbriton .db-skull {
+  fill: #f7f5ef;
+}
+
+#artboard.user-reference-darkbriton .db-skull-hole {
+  fill: #19171a;
+}
+
+#artboard.user-reference-darkbriton .db-footer-art {
+  position: absolute;
+  z-index: 3;
+  left: 34%;
+  bottom: 2%;
+  width: 34%;
+  height: 5.6%;
+  opacity: .65;
+  pointer-events: none;
+}
+
+#artboard.user-reference-darkbriton .db-bar {
+  fill: none;
+  stroke: #e7e4dd;
+  stroke-width: 3;
+}
+
+#artboard.user-reference-darkbriton .db-eyebrow,
+#artboard.user-reference-darkbriton .db-new,
+#artboard.user-reference-darkbriton .db-title,
+#artboard.user-reference-darkbriton .db-glyph,
+#artboard.user-reference-darkbriton .db-copy,
+#artboard.user-reference-darkbriton .db-footer-left,
+#artboard.user-reference-darkbriton .db-footer-center,
+#artboard.user-reference-darkbriton .db-footer-right {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  line-height: .92;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-darkbriton .db-eyebrow,
+#artboard.user-reference-darkbriton .db-new {
+  justify-content: center;
+  color: #f7f5ef;
+  font-size: 34px;
+  letter-spacing: .08em;
+  text-align: center;
+}
+
+#artboard.user-reference-darkbriton .db-title {
+  justify-content: center;
+  color: #f7f5ef;
+  font-size: 72px;
+  letter-spacing: -.04em;
+  text-align: center;
+  text-shadow: 3px 5px 0 #120c0e;
+  -webkit-text-stroke: 1px #1a1012;
+  paint-order: stroke fill;
+}
+
+#artboard.user-reference-darkbriton .db-glyph {
+  justify-content: center;
+  color: #f7f5ef;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+  text-align: center;
+}
+
+#artboard.user-reference-darkbriton .db-copy {
+  justify-content: flex-start;
+  overflow: hidden;
+  color: #eee9e0;
+  font-size: 25px;
+  letter-spacing: .015em;
+  white-space: normal;
+}
+
+#artboard.user-reference-darkbriton .db-footer-left,
+#artboard.user-reference-darkbriton .db-footer-center,
+#artboard.user-reference-darkbriton .db-footer-right {
+  justify-content: center;
+  color: #f7f5ef;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-align: center;
+}
+
+#artboard.user-reference-darkbriton.darkbriton-square .db-panel {
+  top: 21%;
+  height: 51%;
+}
+
+#artboard.user-reference-darkbriton.darkbriton-square .db-footer-art {
+  left: 31%;
+  bottom: 2%;
+  width: 38%;
+  height: 4%;
+}
+
+#artboard.user-reference-darkbriton-thankyou {
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(127deg, rgb(237 231 220 / 2.5%) 0 1px, transparent 1px 8px),
+    linear-gradient(145deg, #19171a 0%, #0e0d0f 63%, #181416 100%);
+  color: #f7f5ef;
+}
+
+#artboard.user-reference-darkbriton-thankyou .ty-grain {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .12;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+#artboard.user-reference-darkbriton-thankyou .ty-art-frame {
+  position: absolute;
+  z-index: 1;
+  left: 6%;
+  top: 43%;
+  width: 88%;
+  height: 33%;
+  overflow: hidden;
+  background: #711923;
+}
+
+#artboard.user-reference-darkbriton-thankyou .ty-art-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 72.5%;
+}
+
+#artboard.user-reference-darkbriton-thankyou .ty-footer-art {
+  position: absolute;
+  z-index: 2;
+  left: 34%;
+  bottom: 2%;
+  width: 34%;
+  height: 5.6%;
+  opacity: .65;
+  pointer-events: none;
+}
+
+#artboard.user-reference-darkbriton-thankyou .ty-bar {
+  fill: none;
+  stroke: #e7e4dd;
+  stroke-width: 3;
+}
+
+#artboard.user-reference-darkbriton-thankyou .ty-eyebrow,
+#artboard.user-reference-darkbriton-thankyou .ty-title,
+#artboard.user-reference-darkbriton-thankyou .ty-glyph,
+#artboard.user-reference-darkbriton-thankyou .ty-copy,
+#artboard.user-reference-darkbriton-thankyou .ty-footer-left,
+#artboard.user-reference-darkbriton-thankyou .ty-footer-center,
+#artboard.user-reference-darkbriton-thankyou .ty-footer-right {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  line-height: .92;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-darkbriton-thankyou .ty-eyebrow {
+  justify-content: center;
+  color: #f7f5ef;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-align: center;
+}
+
+#artboard.user-reference-darkbriton-thankyou .ty-title {
+  justify-content: center;
+  color: #f7f5ef;
+  font-size: 72px;
+  letter-spacing: -.045em;
+  text-align: center;
+  text-shadow: 3px 5px 0 #120c0e;
+  -webkit-text-stroke: 1px #1a1012;
+  paint-order: stroke fill;
+}
+
+#artboard.user-reference-darkbriton-thankyou .ty-glyph {
+  justify-content: center;
+  color: #f7f5ef;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+  text-align: center;
+}
+
+#artboard.user-reference-darkbriton-thankyou .ty-copy {
+  justify-content: flex-start;
+  overflow: hidden;
+  color: #eee9e0;
+  font-size: 25px;
+  letter-spacing: .015em;
+}
+
+#artboard.user-reference-darkbriton-thankyou .ty-footer-left,
+#artboard.user-reference-darkbriton-thankyou .ty-footer-center,
+#artboard.user-reference-darkbriton-thankyou .ty-footer-right {
+  justify-content: center;
+  color: #f7f5ef;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-align: center;
+}
+
+#artboard.user-reference-darkbriton-thankyou.darkbriton-thankyou-square .ty-art-frame {
+  top: 39%;
+  height: 22%;
+}
+
+#artboard.user-reference-darkbriton-thankyou.darkbriton-thankyou-square .ty-footer-art {
+  left: 31%;
+  bottom: 2%;
+  width: 38%;
+  height: 4%;
+}
+
+#artboard.user-reference-hail-crash {
+  position: relative;
+  overflow: hidden;
+  color: #f4f1ea;
+  background-color: #121012;
+  background-image:
+    repeating-linear-gradient(133deg, rgba(255,255,255,.026) 0 1px, transparent 1px 9px),
+    linear-gradient(112deg, transparent 0 63%, rgba(142,25,41,.17) 63% 64%, transparent 64% 100%);
+}
+
+#artboard.user-reference-hail-crash::before {
+  position: absolute;
+  z-index: 0;
+  inset: 2.4%;
+  border: 1px solid rgba(186,35,52,.76);
+  content: "";
+  pointer-events: none;
+}
+
+#artboard.user-reference-hail-crash .hc-art-frame {
+  position: absolute;
+  z-index: 1;
+  left: 5.5%;
+  top: 10.5%;
+  width: 47.2%;
+  height: 30.5%;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 2px solid #b82537;
+  background: #781b29;
+}
+
+#artboard.user-reference-hail-crash .hc-art-image {
+  position: absolute;
+  left: -10%;
+  top: -11.45%;
+  width: 197.333%;
+  height: auto;
+  max-width: none;
+}
+
+#artboard.user-reference-hail-crash .hc-globe {
+  position: absolute;
+  z-index: 2;
+  left: 8%;
+  top: 59%;
+  width: 10%;
+  height: 14%;
+  fill: none;
+  stroke: #171316;
+  stroke-width: 2.2;
+}
+
+#artboard.user-reference-hail-crash .hc-card-paper {
+  position: absolute;
+  z-index: 1;
+  left: 6%;
+  top: 51%;
+  width: 39%;
+  height: 30%;
+  box-sizing: border-box;
+  border: 2px solid #b82537;
+  background: #f4f1ea;
+}
+
+#artboard.user-reference-hail-crash .hc-red-rule {
+  position: absolute;
+  z-index: 2;
+  left: 6%;
+  top: 51%;
+  width: 39%;
+  height: .8%;
+  background: #b82537;
+}
+
+#artboard.user-reference-hail-crash .hc-barcode {
+  position: absolute;
+  z-index: 2;
+  left: 70%;
+  top: 72%;
+  width: 23%;
+  height: 8%;
+  fill: #171316;
+}
+
+#artboard.user-reference-hail-crash .hc-eyebrow,
+#artboard.user-reference-hail-crash .hc-title,
+#artboard.user-reference-hail-crash .hc-card-title,
+#artboard.user-reference-hail-crash .hc-card-copy,
+#artboard.user-reference-hail-crash .hc-callout,
+#artboard.user-reference-hail-crash .hc-status,
+#artboard.user-reference-hail-crash .hc-footer-title,
+#artboard.user-reference-hail-crash .hc-footer-count,
+#artboard.user-reference-hail-crash .hc-footer-copy {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  line-height: .92;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-hail-crash .hc-eyebrow {
+  justify-content: center;
+  color: #d8d0c6;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: .16em;
+}
+
+#artboard.user-reference-hail-crash .hc-title {
+  justify-content: center;
+  color: #f4f1ea;
+  font-size: 112px;
+  letter-spacing: -.045em;
+  text-align: center;
+  text-shadow: 2px 3px 0 #080708;
+  -webkit-text-stroke: .8px #171316;
+  paint-order: stroke fill;
+}
+
+#artboard.user-reference-hail-crash .hc-card-title {
+  justify-content: center;
+  color: #171316;
+  font-size: 43px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+#artboard.user-reference-hail-crash .hc-card-copy {
+  justify-content: flex-start;
+  color: #171316;
+  font-size: 20px;
+  letter-spacing: .025em;
+}
+
+#artboard.user-reference-hail-crash .hc-callout {
+  justify-content: flex-start;
+  color: #f4f1ea;
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: .06em;
+}
+
+#artboard.user-reference-hail-crash .hc-status {
+  justify-content: center;
+  border: 1px solid #b82537;
+  background: #b82537;
+  color: #fffaf3;
+  font-size: 38px;
+  font-weight: 600;
+  letter-spacing: .2em;
+}
+
+#artboard.user-reference-hail-crash .hc-footer-title,
+#artboard.user-reference-hail-crash .hc-footer-count {
+  justify-content: center;
+  color: #f4f1ea;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: .11em;
+  text-align: center;
+}
+
+#artboard.user-reference-hail-crash .hc-footer-copy {
+  justify-content: flex-end;
+  color: #e0d9d2;
+  font-size: 19px;
+  letter-spacing: .05em;
+  text-align: right;
+}
+
+#artboard.user-reference-hail-crash.hail-crash-square .hc-art-frame {
+  left: 6%;
+  top: 9%;
+  width: 88%;
+  height: 38.4%;
+}
+
+#artboard.user-reference-hail-crash.hail-crash-square .hc-globe {
+  left: 7%;
+  top: 74%;
+  width: 9%;
+  height: 12%;
+}
+
+#artboard.user-reference-hail-crash.hail-crash-square .hc-card-paper {
+  left: 5%;
+  top: 67%;
+  width: 46%;
+  height: 22%;
+}
+
+#artboard.user-reference-hail-crash.hail-crash-square .hc-red-rule {
+  left: 5%;
+  top: 67%;
+  width: 46%;
+  height: .8%;
+}
+
+#artboard.user-reference-hail-crash.hail-crash-square .hc-barcode {
+  left: 68%;
+  top: 85%;
+  width: 24%;
+  height: 3.5%;
+}
+
+#artboard.user-reference-awake-portrait {
+  position: relative;
+  overflow: hidden;
+  color: #f5e9e9;
+  background-color: #171316;
+  background-image:
+    radial-gradient(ellipse at 73% 30%, rgba(117,45,70,.2), transparent 48%),
+    repeating-linear-gradient(138deg, rgba(255,255,255,.022) 0 1px, transparent 1px 10px);
+}
+
+#artboard.user-reference-awake-portrait::before {
+  position: absolute;
+  z-index: 0;
+  inset: 2.5%;
+  border: 1px solid rgba(231,183,202,.56);
+  content: "";
+  pointer-events: none;
+}
+
+#artboard.user-reference-awake-portrait .ap-image-frame {
+  position: absolute;
+  z-index: 1;
+  left: 4%;
+  top: 8%;
+  width: 60%;
+  height: 60.2%;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 2px solid rgba(238,205,218,.88);
+  background: #211b1d;
+}
+
+#artboard.user-reference-awake-portrait .ap-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#artboard.user-reference-awake-portrait .ap-photo-headline {
+  position: absolute;
+  z-index: 2;
+  left: 21.5%;
+  top: 39%;
+  width: 57%;
+  height: 27%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  color: #efadc7;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 112px;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .88;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  text-shadow: 1px 2px 0 #090809;
+}
+
+#artboard.user-reference-awake-portrait .ap-rule {
+  position: absolute;
+  z-index: 1;
+  left: 66%;
+  top: 48%;
+  width: 30%;
+  height: .55%;
+  background: #d78da9;
+}
+
+#artboard.user-reference-awake-portrait .ap-pill {
+  position: absolute;
+  z-index: 1;
+  box-sizing: border-box;
+  border: 1px solid rgba(238,205,218,.8);
+  border-radius: 999px;
+  background: rgba(23,19,22,.18);
+}
+
+#artboard.user-reference-awake-portrait .ap-pill-one {
+  left: 66%;
+  top: 52%;
+  width: 14%;
+  height: 6%;
+}
+
+#artboard.user-reference-awake-portrait .ap-pill-two {
+  left: 82%;
+  top: 52%;
+  width: 14%;
+  height: 6%;
+}
+
+#artboard.user-reference-awake-portrait .ap-signature,
+#artboard.user-reference-awake-portrait .ap-headline,
+#artboard.user-reference-awake-portrait .ap-category-one,
+#artboard.user-reference-awake-portrait .ap-category-two,
+#artboard.user-reference-awake-portrait .ap-year {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  line-height: .92;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-awake-portrait .ap-signature {
+  justify-content: center;
+  color: #f5e9e9;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: .08em;
+}
+
+#artboard.user-reference-awake-portrait .ap-headline {
+  justify-content: center;
+  color: #efadc7;
+  font-size: 112px;
+  letter-spacing: -.055em;
+  text-align: center;
+  text-shadow: 1px 2px 0 #090809;
+}
+
+#artboard.user-reference-awake-portrait .ap-category-one,
+#artboard.user-reference-awake-portrait .ap-category-two {
+  justify-content: center;
+  color: #f5e9e9;
+  font-size: 26px;
+  letter-spacing: .12em;
+  text-align: center;
+}
+
+#artboard.user-reference-awake-portrait .ap-year {
+  justify-content: center;
+  color: #d6c2c9;
+  font-size: 30px;
+  letter-spacing: .2em;
+}
+
+#artboard.user-reference-awake-portrait.awake-portrait-square .ap-image-frame {
+  left: 6%;
+  top: 8%;
+  width: 88%;
+  height: 58.8%;
+}
+
+#artboard.user-reference-awake-portrait.awake-portrait-square .ap-rule {
+  left: 12%;
+  top: 84%;
+  width: 76%;
+  height: .45%;
+}
+
+#artboard.user-reference-awake-portrait.awake-portrait-square .ap-pill-one {
+  left: 14%;
+  top: 85%;
+  width: 33%;
+  height: 5%;
+}
+
+#artboard.user-reference-awake-portrait.awake-portrait-square .ap-pill-two {
+  left: 53%;
+  top: 85%;
+  width: 33%;
+  height: 5%;
+}
+
+#artboard.user-reference-pixel-ledger {
+  position: relative;
+  overflow: hidden;
+  color: #fff2e8;
+  background: #000;
+}
+
+#artboard.user-reference-pixel-ledger .pl-top-left,
+#artboard.user-reference-pixel-ledger .pl-top-right,
+#artboard.user-reference-pixel-ledger .pl-second-left,
+#artboard.user-reference-pixel-ledger .pl-second-right,
+#artboard.user-reference-pixel-ledger .pl-numerals,
+#artboard.user-reference-pixel-ledger .pl-footer-left,
+#artboard.user-reference-pixel-ledger .pl-footer-middle,
+#artboard.user-reference-pixel-ledger .pl-footer-right {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  line-height: .92;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-pixel-ledger .pl-top-left,
+#artboard.user-reference-pixel-ledger .pl-second-right,
+#artboard.user-reference-pixel-ledger .pl-numerals,
+#artboard.user-reference-pixel-ledger .pl-footer-right {
+  color: #fff2e8;
+}
+
+#artboard.user-reference-pixel-ledger .pl-top-right,
+#artboard.user-reference-pixel-ledger .pl-second-left,
+#artboard.user-reference-pixel-ledger .pl-footer-left,
+#artboard.user-reference-pixel-ledger .pl-footer-middle {
+  color: #00aa88;
+}
+
+#artboard.user-reference-pixel-ledger .pl-top-left,
+#artboard.user-reference-pixel-ledger .pl-top-right,
+#artboard.user-reference-pixel-ledger .pl-second-left,
+#artboard.user-reference-pixel-ledger .pl-second-right {
+  font-size: 70px;
+  letter-spacing: -.025em;
+}
+
+#artboard.user-reference-pixel-ledger .pl-numerals {
+  justify-content: center;
+  font-size: 250px;
+  letter-spacing: -.055em;
+  text-align: center;
+}
+
+#artboard.user-reference-pixel-ledger .pl-footer-left,
+#artboard.user-reference-pixel-ledger .pl-footer-middle,
+#artboard.user-reference-pixel-ledger .pl-footer-right {
+  font-size: 70px;
+  letter-spacing: -.04em;
+}
+
+#artboard.user-reference-pixel-ledger.pixel-ledger-square .pl-numerals {
+  font-size: 240px;
+}
+
+#artboard.user-reference-wine-vintage {
+  position: relative;
+  overflow: hidden;
+  color: #151313;
+  background: #fff1e8;
+}
+
+#artboard.user-reference-wine-vintage::before {
+  position: absolute;
+  z-index: 0;
+  inset: 3.6%;
+  border: 1px solid rgba(0,143,114,.2);
+  content: "";
+  pointer-events: none;
+}
+
+#artboard.user-reference-wine-vintage .wv-top-line,
+#artboard.user-reference-wine-vintage .wv-brand,
+#artboard.user-reference-wine-vintage .wv-origin,
+#artboard.user-reference-wine-vintage .wv-vintage,
+#artboard.user-reference-wine-vintage .wv-footer {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 400;
+  line-height: .92;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-wine-vintage .wv-top-line,
+#artboard.user-reference-wine-vintage .wv-vintage {
+  color: #00765e;
+}
+
+#artboard.user-reference-wine-vintage .wv-brand {
+  color: #151313;
+  font-size: 154px;
+  font-weight: 500;
+  letter-spacing: -.045em;
+}
+
+#artboard.user-reference-wine-vintage .wv-top-line,
+#artboard.user-reference-wine-vintage .wv-origin,
+#artboard.user-reference-wine-vintage .wv-footer {
+  font-size: 58px;
+  font-weight: 500;
+  letter-spacing: .12em;
+}
+
+#artboard.user-reference-wine-vintage .wv-vintage {
+  font-size: 220px;
+  letter-spacing: -.035em;
+}
+
+#artboard.user-reference-wine-vintage.wine-vintage-square .wv-brand {
+  font-size: 148px;
+}
+
+#artboard.user-reference-wine-vintage.wine-vintage-square .wv-vintage {
+  font-size: 205px;
+}
+
+#artboard.user-reference-hongkong-crisis {
+  position: relative;
+  overflow: hidden;
+  color: #fffdf7;
+  background: #2b08d8;
+}
+
+#artboard.user-reference-hongkong-crisis .hk-marker,
+#artboard.user-reference-hongkong-crisis .hk-location,
+#artboard.user-reference-hongkong-crisis .hk-headline {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  color: #fffdf7;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 700;
+  line-height: .85;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-hongkong-crisis .hk-marker,
+#artboard.user-reference-hongkong-crisis .hk-headline {
+  font-size: 230px;
+  letter-spacing: -.065em;
+}
+
+#artboard.user-reference-hongkong-crisis .hk-location {
+  font-size: 204px;
+  letter-spacing: -.075em;
+}
+
+#artboard.user-reference-hongkong-crisis.hongkong-crisis-square .hk-marker {
+  font-size: 170px;
+}
+
+#artboard.user-reference-hongkong-crisis.hongkong-crisis-square .hk-location {
+  font-size: 160px;
+}
+
+#artboard.user-reference-hongkong-crisis.hongkong-crisis-square .hk-headline {
+  font-size: 170px;
+}
+
+#artboard.user-reference-caves-465 {
+  position: relative;
+  overflow: hidden;
+  color: #111;
+  background: #faf9f7;
+}
+
+#artboard.user-reference-caves-465 .c465-title,
+#artboard.user-reference-caves-465 .c465-subtitle,
+#artboard.user-reference-caves-465 .c465-year,
+#artboard.user-reference-caves-465 .c465-final-line {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  color: #111;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 700;
+  line-height: .86;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-caves-465 .c465-title {
+  font-size: 152px;
+  letter-spacing: -.07em;
+}
+
+#artboard.user-reference-caves-465 .c465-subtitle {
+  font-size: 64px;
+  letter-spacing: -.04em;
+}
+
+#artboard.user-reference-caves-465 .c465-year {
+  font-size: 150px;
+  letter-spacing: -.08em;
+}
+
+#artboard.user-reference-caves-465 .c465-final-line {
+  font-size: 108px;
+  letter-spacing: -.07em;
+}
+
+#artboard.user-reference-yabba-dabba-doo {
+  position: relative;
+  overflow: hidden;
+  color: #fffdf9;
+  background: #181818;
+}
+
+#artboard.user-reference-yabba-dabba-doo .ydd-first-line,
+#artboard.user-reference-yabba-dabba-doo .ydd-second-line,
+#artboard.user-reference-yabba-dabba-doo .ydd-third-line {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  font-family: var(--display-face, Georgia, serif);
+  font-synthesis: none;
+  font-kerning: normal;
+  font-weight: 700;
+  line-height: .82;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-yabba-dabba-doo .ydd-first-line,
+#artboard.user-reference-yabba-dabba-doo .ydd-second-line {
+  color: #6040ff;
+  font-size: 200px;
+  letter-spacing: -.025em;
+}
+
+#artboard.user-reference-yabba-dabba-doo .ydd-third-line {
+  color: #fffdf9;
+  font-size: 360px;
+  letter-spacing: -.025em;
+}
+
+#artboard.user-reference-yabba-dabba-doo.yabba-dabba-doo-square .ydd-first-line,
+#artboard.user-reference-yabba-dabba-doo.yabba-dabba-doo-square .ydd-second-line {
+  font-size: 188px;
+}
+
+#artboard.user-reference-yabba-dabba-doo.yabba-dabba-doo-square .ydd-third-line {
+  font-size: 336px;
+}

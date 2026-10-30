@@ -3,23 +3,20 @@
 
 This is the whole mechanical pass in one invocation: discover the raw fonts,
 rewrite the name table and OS/2 flags, emit OTF/TTF/WOFF/WOFF2, leave the empty
-image drop directory, write the audit reports, build the three delivery archives,
+image drop directory, write the audit reports, build the two delivery archives,
 and sanitize every delivered format with the OpenType Sanitizer as an independent
 second parser.
 
 An OTF (CFF) source is the master and the TTF is derived from it with cu2qu. A
-glyf-only source — the usual shape of a marketplace demo download — is handled
-the other way round: the branded TTF keeps the source's quadratic outlines and
-hinting untouched, and the OTF master is derived from it by converting the
-outlines to cubic charstrings (fontTools qu2cu). Either way the package carries
-the same four formats with identical metadata.
+glyf-only source keeps its quadratic outlines and TrueType hinting in the TTF;
+the OTF is derived with qu2cu. Outline conversion cannot preserve the source
+hinting program, so the audit report identifies which formats retain it.
+WOFF and WOFF2 are generated from the OTF master. Branded metadata is normalized
+across name-table platforms, while head.created remains the source value and
+head.modified reflects the save time.
 
-The Commercial-Use and Personal-Use archives both carry the clean package
-(Personal-Use may add a like-request note at the archive root). The
-Free-Trial-Demo archive is rebuilt from a temporary copy whose digits and
-ASCII punctuation have been replaced with the FontFairy demo stamp
-(bin/stamp_personal_use.py); letters stay clean so the face can still be
-previewed.
+The Commercial-Use and Personal-Use archives carry identical font binaries.
+Personal-Use may add a like-request note at the archive root.
 
 What it deliberately does NOT do, because it needs judgement:
   - description.txt          (marketplace copy)
@@ -27,9 +24,10 @@ Author it, then pass it with --description-file, or write it at the output root.
 
 Showcase video rendering is archived; see archive/video/README.md to reinstate it.
 
-Name IDs 0 and 10 are treated differently on purpose: ID 0 is overwritten with
-the FontFairy copyright, ID 10 (the original upstream credit) is left untouched,
-matching the packages already in outputs/font-preparation.
+Name ID 10 is the optional Description field, not an author-credit field. The
+packager removes it from delivered fonts; the raw-input preflight report keeps
+the source value for review. `head.created` is retained from the source and
+fontTools refreshes `head.modified` when saving.
 
 Usage:
     python3 bin/prepare_font_package.py \
@@ -40,18 +38,15 @@ from __future__ import annotations
 
 import argparse
 import datetime as _datetime
-import hashlib
-import json
 import re
 import shutil
-import struct
 import subprocess
 import sys
-import tempfile
 import zipfile
 from pathlib import Path
 
 from fontTools.fontBuilder import FontBuilder
+from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.pens.cu2quPen import Cu2QuPen
 from fontTools.pens.qu2cuPen import Qu2CuPen
 from fontTools.pens.t2CharStringPen import T2CharStringPen
@@ -76,6 +71,7 @@ BRAND = {
 }
 LIKE_FILE_NAME = "PLEASE-GIVE-US-A-LIKE.txt"
 FONT_SUFFIXES = (".otf", ".ttf")
+PACKAGE_FONT_SUFFIXES = (".otf", ".ttf", ".woff", ".woff2")
 
 
 def rel(path: Path) -> str:
@@ -106,15 +102,45 @@ def file_basename(name: str) -> str:
     return re.sub(r"\s+", "", name.strip())
 
 
+def postscript_name(name: str, subfamily: str) -> str:
+    """Build a printable, space-free PostScript name, capped at 63 characters."""
+    base = re.sub(r"[^A-Za-z0-9-]", "", file_basename(name)) or "FontFairy"
+    style = re.sub(r"[^A-Za-z0-9-]", "", subfamily) or "Regular"
+    base = base[:max(1, 62 - len(style))]
+    return f"{base}-{style}"[:63]
+
+
+def postscript_prefix(name: str, subfamily: str) -> str:
+    """Return the family prefix from the generated PostScript name."""
+    ps_name = postscript_name(name, subfamily)
+    style = re.sub(r"[^A-Za-z0-9-]", "", subfamily) or "Regular"
+    suffix = f"-{style}"
+    return ps_name[:-len(suffix)] if ps_name.endswith(suffix) else ps_name
+
+
 def subfamily_of(path: Path) -> str:
-    """Derive the subfamily, preferring the font's own Name ID 2."""
+    """Derive a clean style label from OS/2 weight, width, and slant fields."""
     try:
         with TTFont(str(path)) as font:
-            for record in font["name"].names:
-                if record.nameID == 2 and record.platformID == 3:
-                    value = record.toUnicode().strip()
-                    if value:
-                        return value
+            os2 = font["OS/2"]
+            weights = {
+                100: "Thin", 200: "Extra Light", 300: "Light", 350: "Book",
+                400: "Regular", 500: "Medium", 600: "Semi Bold", 700: "Bold",
+                800: "Extra Bold", 900: "Black", 1000: "Extra Black",
+            }
+            widths = {
+                1: "Ultra Condensed", 2: "Extra Condensed", 3: "Condensed",
+                4: "Semi Condensed", 5: "", 6: "Semi Expanded",
+                7: "Expanded", 8: "Extra Expanded", 9: "Ultra Expanded",
+            }
+            weight = min(weights, key=lambda value: abs(value - os2.usWeightClass))
+            style_parts = [weights[weight]]
+            width = widths.get(os2.usWidthClass, "")
+            if width:
+                style_parts.append(width)
+            if os2.fsSelection & (0x0001 | 0x0200):
+                style_parts.append("Italic")
+            return " ".join(style_parts)
     except Exception:  # noqa: BLE001 - fall back to the filename
         pass
     lowered = path.stem.lower()
@@ -125,31 +151,111 @@ def subfamily_of(path: Path) -> str:
 
 
 def set_name(name_table, name_id: int, value: str) -> None:
-    """Replace a name ID on the Windows record, matching the shipped packages."""
+    """Replace every platform/language variant with one Windows Unicode record."""
+    remove_name(name_table, name_id)
     name_table.setName(value, name_id, 3, 1, 0x409)
 
 
-# Name IDs this pass owns. Anything else (10 = upstream credit, 20/21/22, ...)
-# is left exactly as the source shipped it.
-BRANDED_NAME_IDS = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17)
+def remove_name(name_table, name_id: int) -> None:
+    """Remove all records for a name ID, regardless of platform or language."""
+    name_table.names[:] = [record for record in name_table.names
+                           if record.nameID != name_id]
+
+
+def referenced_name_ids(font) -> set[int]:
+    """Find name IDs referenced by other tables before dropping unused custom IDs."""
+    referenced: set[int] = set()
+    visited: set[int] = set()
+
+    def visit(value) -> None:
+        if value is None or isinstance(value, (str, bytes, bytearray, int, float, bool)):
+            return
+        identity = id(value)
+        if identity in visited:
+            return
+        visited.add(identity)
+        if isinstance(value, dict):
+            children = value.items()
+        elif isinstance(value, (list, tuple, set)):
+            children = enumerate(value)
+        else:
+            attributes = getattr(value, "__dict__", None)
+            if not attributes:
+                return
+            children = attributes.items()
+        for key, child in children:
+            if (isinstance(key, str) and key.lower().endswith("nameid")
+                    and isinstance(child, int) and child != 0xFFFF):
+                referenced.add(child)
+            visit(child)
+
+    for table_tag in ("fvar", "STAT", "CPAL"):
+        if table_tag in font:
+            try:
+                visit(font[table_tag])
+            except Exception:  # noqa: BLE001 - malformed optional table is reported elsewhere
+                continue
+    if "CPAL" in font:
+        cpal = font["CPAL"].table
+        for attribute in ("paletteLabels", "paletteEntryLabels"):
+            values = getattr(cpal, attribute, ()) or ()
+            referenced.update(
+                value for value in values
+                if isinstance(value, int) and value != 0xFFFF
+            )
+    for table_tag in ("GSUB", "GPOS"):
+        if table_tag not in font:
+            continue
+        try:
+            feature_list = font[table_tag].table.FeatureList
+            for feature in getattr(feature_list, "FeatureRecord", ()) or ():
+                visit(getattr(feature, "FeatureParams", None))
+        except Exception:  # noqa: BLE001 - malformed optional table is reported elsewhere
+            continue
+    return referenced
+
+
+def sanitize_cff_string_index(cff, source_metadata: set[str]) -> None:
+    """Replace orphaned CFF strings from rewritten identity fields in place."""
+    if not source_metadata:
+        return
+    top_dict = cff.topDictIndex[0]
+    glyph_names = set(getattr(top_dict, "charset", ()))
+    strings = cff.strings
+    for index, value in enumerate(strings.strings):
+        if value in source_metadata and value not in glyph_names:
+            strings.strings[index] = "FontFairy"
+    strings.__dict__.pop("stringMapping", None)
+    strings.buildStringMapping()
+
+
+# Optional platform-specific or descriptive records are rewritten or removed
+# alongside IDs 0-14 and 16-17. Other referenced names are retained for features.
+BRANDED_NAME_IDS = (
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14,
+    16, 17, 19, 20, 21, 22, 25,
+)
+REMOVED_NAME_IDS = (10, 15, 18)
+REMOVED_TABLES = ("DSIG", "FFTM", "PCLT", "meta")
 
 
 def set_metadata(font, name: str, subfamily: str, brand: dict) -> None:
-    """Write the branded name table and OS/2 flags onto an open font object."""
-    records = font["name"]
-    file_base = file_basename(name)
+    """Write branded name-table, CFF-name, and OS/2 metadata onto a font.
 
-    # A source carrying the typographic family/subfamily pair (IDs 16/17) would
-    # otherwise keep announcing the old family name in every typography-aware
-    # font menu, and legacy Mac-platform (1,0,0) records for the branded IDs
-    # would keep the upstream name and copyright alive next to the Windows ones.
-    # Shipped packages carry Windows records only, so drop the stale Mac records
-    # and re-emit 16/17 on the Windows platform when the source had them.
-    has_typo_family = any(r.nameID == 16 for r in records.names)
-    has_typo_subfamily = any(r.nameID == 17 for r in records.names)
-    for record in [r for r in records.names
-                   if r.platformID == 1 and r.nameID in BRANDED_NAME_IDS]:
-        records.names.remove(record)
+    Name ID 10 is the optional Description field, not an author-credit field;
+    it is removed from the shipped font. head.created remains from the source,
+    and fontTools refreshes head.modified when saving.
+    """
+    records = font["name"]
+    present_name_ids = {record.nameID for record in records.names}
+    refs = referenced_name_ids(font)
+    for name_id in (*BRANDED_NAME_IDS, *REMOVED_NAME_IDS):
+        remove_name(records, name_id)
+    # Name IDs 26-65535 are reserved for future standard fields or font-specific
+    # names. Retain values only when another table references them.
+    for record in list(records.names):
+        if 26 <= record.nameID <= 0xFFFF and record.nameID not in refs:
+            records.names.remove(record)
 
     set_name(records, 0, brand["copyright_pro"])
     set_name(records, 1, name)
@@ -157,7 +263,7 @@ def set_metadata(font, name: str, subfamily: str, brand: dict) -> None:
     set_name(records, 3, f"{brand['year']};{brand['foundry']};{name}-{subfamily}")
     set_name(records, 4, f"{name} {subfamily}")
     set_name(records, 5, f"Version 1.000;{brand['year']};{brand['version_tag']}")
-    set_name(records, 6, f"{file_base}-{subfamily}")
+    set_name(records, 6, postscript_name(name, subfamily))
     set_name(records, 7, brand["trademark"].format(name=name))
     set_name(records, 8, brand["foundry"])
     set_name(records, 9, brand["foundry"])
@@ -165,19 +271,80 @@ def set_metadata(font, name: str, subfamily: str, brand: dict) -> None:
     set_name(records, 12, brand["store_url"])
     set_name(records, 13, brand["license_line"])
     set_name(records, 14, brand["store_url"])
-    if has_typo_family:
+    if 16 in present_name_ids or 16 in refs:
         set_name(records, 16, name)
-    if has_typo_subfamily:
+    if 17 in present_name_ids or 17 in refs:
         set_name(records, 17, subfamily)
+    if 19 in present_name_ids or 19 in refs:
+        set_name(records, 19, f"{name} {subfamily}")
+    if 20 in present_name_ids:
+        set_name(records, 20, records.getDebugName(6))
+    if 21 in present_name_ids:
+        set_name(records, 21, name)
+    if 22 in present_name_ids:
+        set_name(records, 22, subfamily)
+    if 25 in present_name_ids:
+        set_name(records, 25, postscript_prefix(name, subfamily))
 
+    # CFF duplicates names and identifiers outside the OpenType name table.
+    if "CFF " in font:
+        cff = font["CFF "].cff
+        top_dict = cff.topDictIndex[0]
+        source_cff_metadata = {
+            value for field in ("FamilyName", "FullName", "Weight", "Copyright", "Notice")
+            if isinstance((value := getattr(top_dict, field, None)), str) and value
+        }
+        top_dict.FamilyName, top_dict.FullName = (
+            records.getDebugName(1), records.getDebugName(4)
+        )
+        top_dict.Weight = records.getDebugName(2)
+        cff.fontNames[0] = records.getDebugName(6)
+        top_dict.Copyright = records.getDebugName(0)
+        top_dict.Notice = records.getDebugName(13)
+        sanitize_cff_string_index(cff, source_cff_metadata)
+        for field in ("UniqueID", "XUID"):
+            top_dict.rawDict.pop(field, None)
+            if hasattr(top_dict, field):
+                top_dict.__dict__.pop(field, None)
+
+    # Editing any table invalidates an existing signature. FFTM, PCLT and meta
+    # carry optional application, printer or descriptive metadata.
+    for table_tag in REMOVED_TABLES:
+        if table_tag in font:
+            del font[table_tag]
+
+    # These are the OS/2 identity/licensing fields this workflow owns. Weight,
+    # width, coverage, selection, PANOSE and metrics remain source-derived.
     font["OS/2"].fsType = 0
     font["OS/2"].achVendID = brand["vendor_id"][:4].ljust(4)
 
 
-def apply_metadata(source: Path, destination: Path, name: str, subfamily: str, brand: dict) -> None:
-    """Write the branded Pro font. Name ID 10 (upstream credit) is preserved."""
-    font = TTFont(str(source))
+def apply_layout_features(font, feature_file: Path) -> None:
+    """Replace GSUB/GPOS from an explicit Adobe Feature File input."""
+    feature_file = feature_file.expanduser().resolve()
+    if not feature_file.is_file():
+        raise FileNotFoundError(f"layout feature file not found: {feature_file}")
+    addOpenTypeFeaturesFromString(
+        font,
+        feature_file.read_text(encoding="utf-8"),
+        filename=str(feature_file),
+        tables=("GSUB", "GPOS"),
+    )
+
+
+def apply_metadata(
+    source: Path,
+    destination: Path,
+    name: str,
+    subfamily: str,
+    brand: dict,
+    layout_features: Path | None = None,
+) -> None:
+    """Write branded metadata and optional replacement GSUB/GPOS tables."""
+    font = TTFont(str(source), recalcTimestamp=True)
     set_metadata(font, name, subfamily, brand)
+    if layout_features is not None:
+        apply_layout_features(font, layout_features)
     destination.parent.mkdir(parents=True, exist_ok=True)
     font.save(str(destination))
     font.close()
@@ -197,7 +364,7 @@ def convert_ttf(otf: Path, ttf: Path, max_err: float = 1.0) -> None:
     the original OTF, the FontForge TTF and this TTF, the two conversions differ
     from each other by 1.12 mean absolute intensity over 0.78% of pixels.
     """
-    font = TTFont(str(otf))
+    font = TTFont(str(otf), recalcTimestamp=True)
     order = font.getGlyphOrder()
     glyph_set = font.getGlyphSet()
 
@@ -272,7 +439,7 @@ def convert_otf(ttf: Path, otf: Path, max_err: float = 1.0) -> None:
     0.379), and rendering a mixed string at 200 px differs from the source by
     0.14 mean absolute intensity over 0.47% of pixels. OTS accepts the result.
     """
-    font = TTFont(str(ttf))
+    font = TTFont(str(ttf), recalcTimestamp=True)
     glyph_set = font.getGlyphSet()
     hmtx = font["hmtx"]
     charstrings = {}
@@ -294,6 +461,9 @@ def convert_otf(ttf: Path, otf: Path, max_err: float = 1.0) -> None:
         charstrings,
         {},
     )
+    cff_top_dict = font["CFF "].cff.topDictIndex[0]
+    cff_top_dict.Copyright = records.getDebugName(0)
+    cff_top_dict.Notice = records.getDebugName(13)
 
     del font["glyf"]
     del font["loca"]
@@ -313,7 +483,7 @@ def make_woff(otf: Path) -> list[Path]:
     written = []
     for flavor, suffix in (("woff", ".woff"), ("woff2", ".woff2")):
         target = otf.with_suffix(suffix)
-        font = TTFont(str(otf))
+        font = TTFont(str(otf), recalcTimestamp=True)
         font.flavor = flavor
         font.save(str(target))
         font.close()
@@ -391,45 +561,38 @@ def build_archive(
             archive.writestr(info, like_file.read_bytes())
 
 
-def stamp_personal_package(package: Path) -> tuple[Path, dict[str, int], tempfile.TemporaryDirectory]:
-    """Stamp a clean package into a temp tree for the Free-Trial-Demo archive.
-
-    Returns (stamped_dir_with_same_basename, per-file glyph counts, tempdir).
-    Caller must keep the TemporaryDirectory alive until the zip is written,
-    then call .cleanup().
-    """
-    sys.path.insert(0, str(ROOT / "bin"))
-    from stamp_personal_use import (  # noqa: PLC0415 - local helper module
-        DEFAULT_STAMP_PATHS,
-        DEFAULT_STAMP_SVG,
-        outline_stamp,
-        parse_coverage,
-        stamp_package,
+def verify_archive_font_payloads(commercial: Path, personal: Path) -> tuple[str, bool]:
+    """Verify both license archives carry the same font paths and bytes."""
+    with zipfile.ZipFile(commercial) as commercial_zip, zipfile.ZipFile(personal) as personal_zip:
+        commercial_fonts = {
+            name: commercial_zip.read(name)
+            for name in commercial_zip.namelist()
+            if Path(name).suffix.lower() in PACKAGE_FONT_SUFFIXES
+        }
+        personal_fonts = {
+            name: personal_zip.read(name)
+            for name in personal_zip.namelist()
+            if Path(name).suffix.lower() in PACKAGE_FONT_SUFFIXES
+        }
+    ok = bool(commercial_fonts) and commercial_fonts == personal_fonts
+    detail = (
+        f"matching font payload: {len(commercial_fonts)} file(s)"
+        if ok else "font paths or binary contents differ"
     )
-
-    stamp_svg = DEFAULT_STAMP_PATHS
-    if not stamp_svg.is_file() and DEFAULT_STAMP_SVG.is_file():
-        outline_stamp(DEFAULT_STAMP_SVG, DEFAULT_STAMP_PATHS)
-
-    tmp = tempfile.TemporaryDirectory(prefix="font-demo-stamp-")
-    # stamp_package writes into out_dir as a flat folder; we need the zip
-    # entries under package.name/, so stamp into tmp/package.name.
-    stamped_root = Path(tmp.name) / package.name
-    stats = stamp_package(package, stamped_root, stamp_svg, parse_coverage("digits,punct"))
-    return stamped_root, stats, tmp
+    return detail, ok
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--workspace", required=True, type=Path, help="font-factory/fonts/{slug}")
+    parser.add_argument("--workspace", required=True, type=Path, help="font-factory/fonts/{input-slug}")
     parser.add_argument("--name", required=True, help="final font name, exact spelling")
     parser.add_argument("--number", help="catalogue number; omit to read visual-direction/catalogue-number.txt")
     parser.add_argument("--description-file", type=Path, default=None,
                         help="authored description.txt to install at the output root")
+    parser.add_argument("--layout-features", type=Path, default=None,
+                        help="optional Adobe Feature File (.fea) that replaces GSUB/GPOS")
     parser.add_argument("--like-file", type=Path, default=None,
                         help=f"{LIKE_FILE_NAME} to include in the Personal-Use archive")
-    parser.add_argument("--demo-readme", type=Path, default=None,
-                        help="README.txt to include in the Free-Trial-Demo archive")
     parser.add_argument("--force", action="store_true", help="overwrite an existing output directory")
     args = parser.parse_args()
 
@@ -440,6 +603,8 @@ def main() -> int:
     sources = sorted(p for p in workspace.iterdir() if p.is_file() and p.suffix.lower() in FONT_SUFFIXES)
     if not sources:
         raise SystemExit(f"no .otf/.ttf files in {workspace}")
+    if args.layout_features is not None and not args.layout_features.expanduser().is_file():
+        raise SystemExit(f"layout feature file not found: {args.layout_features}")
 
     # One source per subfamily. A workspace commonly carries both .otf and .ttf for
     # the same weight, and both would resolve to the SAME output filename, so the
@@ -456,6 +621,11 @@ def main() -> int:
         elif path.suffix.lower() == ".otf" and current.suffix.lower() != ".otf":
             by_subfamily[subfamily] = path
             skipped.append((current, path))
+        elif path.suffix.lower() == current.suffix.lower():
+            raise SystemExit(
+                f"multiple source files derive the same OS/2 style label {subfamily!r}: "
+                f"{current.name}, {path.name}; split the styles or correct their OS/2 fields"
+            )
         else:
             skipped.append((path, current))
     sources = [by_subfamily[key] for key in sorted(by_subfamily)]
@@ -488,6 +658,7 @@ def main() -> int:
 
     generated: list[Path] = []
     flavors: set[str] = set()
+    hinting_notes: list[str] = []
     for source in sources:
         subfamily = subfamily_of(source)
         flavor = outline_flavor(source)
@@ -495,8 +666,12 @@ def main() -> int:
         base = file_basename(args.name)
 
         if flavor == "cff":
+            hinting_notes.append(
+                f"- {source.name}: OTF/WOFF/WOFF2 retain the source CFF hint data; "
+                "the cu2qu-derived TTF has no equivalent source hint program."
+            )
             otf = package / f"{base}-{subfamily}.otf"
-            apply_metadata(source, otf, args.name, subfamily, BRAND)
+            apply_metadata(source, otf, args.name, subfamily, BRAND, args.layout_features)
             generated.append(otf)
             print(f"  metadata + otf  {otf.name}")
 
@@ -504,8 +679,12 @@ def main() -> int:
             convert_ttf(otf, ttf)
             generated.append(ttf)
         else:
+            hinting_notes.append(
+                f"- {source.name}: TTF retains source TrueType instructions; "
+                "the qu2cu-derived OTF/WOFF/WOFF2 do not carry those instructions."
+            )
             ttf = package / f"{base}-{subfamily}.ttf"
-            apply_metadata(source, ttf, args.name, subfamily, BRAND)
+            apply_metadata(source, ttf, args.name, subfamily, BRAND, args.layout_features)
             generated.append(ttf)
             print(f"  metadata + ttf  {ttf.name} (glyf source; OTF derived)")
 
@@ -532,7 +711,7 @@ def main() -> int:
         f"- **Output Slug**: {slug}",
         f"- **Package Basename**: {package.name}",
         f"- **Font File Basename**: {file_basename(args.name)}",
-        f"- **PostScript Name**: {file_basename(args.name)}-{subfamily_of(sources[0])}",
+        f"- **PostScript Name**: {postscript_name(args.name, subfamily_of(sources[0]))}",
         f"- **Source Font**: {sources[0].name}", "",
         "## Name Derivation",
         f"- Slug derivation: {args.name} → {slug}",
@@ -542,35 +721,17 @@ def main() -> int:
     ]
     (out / "name-report.md").write_text("\n".join(name_report) + "\n", encoding="utf-8")
 
-    # archives — Commercial and Personal both carry the clean package (Personal
-    # may add the like note); Free-Trial-Demo is rebuilt from a temporary tree
-    # whose digits/punctuation carry the FontFairy demo stamp.
+    # Both license archives carry the same clean font binaries. Personal-Use
+    # may additionally carry the like-request note at the archive root.
     like_file = args.like_file
-    demo_readme = args.demo_readme
-    build_archive(out / f"{package.name}-Commercial-Use.zip", package, None)
-    build_archive(out / f"{package.name}-Personal-Use.zip", package, like_file,
-                  note_entry_name=LIKE_FILE_NAME)
-    stamped_root, stamp_stats, stamp_tmp = stamp_personal_package(package)
-    try:
-        build_archive(
-            out / f"{package.name}-Free-Trial-Demo.zip",
-            stamped_root,
-            demo_readme,
-            note_entry_name="README.txt",
-        )
-        stamped_ots = run_ots(sorted(f for f in stamped_root.iterdir() if f.is_file()))
-    finally:
-        stamp_tmp.cleanup()
-    stamp_total = sum(stamp_stats.values())
-    stamp_note = (
-        f"{len(stamp_stats)} file(s), {stamp_total} glyph replacement(s) "
-        f"(coverage digits+punct)"
-        if stamp_total
-        else "NO GLYPHS STAMPED — free-trial-demo archive is not watermarked"
-    )
+    commercial_archive = out / f"{package.name}-Commercial-Use.zip"
+    personal_archive = out / f"{package.name}-Personal-Use.zip"
+    build_archive(commercial_archive, package, None)
+    build_archive(personal_archive, package, like_file, note_entry_name=LIKE_FILE_NAME)
+    archive_report, archives_ok = verify_archive_font_payloads(commercial_archive, personal_archive)
     print(f"  archives       {package.name}-Commercial-Use.zip (clean), "
-          f"{package.name}-Personal-Use.zip (clean), "
-          f"{package.name}-Free-Trial-Demo.zip (stamped: {stamp_note})")
+          f"{package.name}-Personal-Use.zip (same font binaries)")
+    print(f"  archive audit  {archive_report} — {'PASS' if archives_ok else 'FAIL'}")
 
     # technical audit
     audit = subprocess.run(
@@ -578,7 +739,19 @@ def main() -> int:
         capture_output=True, text=True,
     )
     ots_report, ots_ok = run_ots(sorted(f for f in package.iterdir() if f.is_file()))
-    stamp_ots_report, stamp_ots_ok = stamped_ots
+    legacy_trial_archive = out / f"{package.name}-Free-Trial-Demo.zip"
+    legacy_archive_note = "no legacy trial archive present"
+    if args.force and legacy_trial_archive.exists():
+        if audit.returncode == 0 and ots_ok and archives_ok:
+            try:
+                legacy_trial_archive.unlink()
+                legacy_archive_note = "removed obsolete Free-Trial-Demo archive during successful forced rebuild"
+            except OSError as error:
+                legacy_archive_note = f"failed to remove obsolete Free-Trial-Demo archive: {error}"
+                archives_ok = False
+        else:
+            legacy_archive_note = "kept because the replacement package did not pass its audit"
+        print(f"  legacy archive {legacy_archive_note}")
     stamp = _datetime.datetime.now(_datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     derivation = (
         "CFF source master; TTF derived with cu2qu" if flavors == {"cff"}
@@ -589,32 +762,32 @@ def main() -> int:
               f"- **Font Name**: {args.name}", f"- **Catalogue Number**: {number}",
               f"- **Output Slug**: {slug}", f"- **Package Basename**: {package.name}",
               f"- **Date**: {stamp}", f"- **Outline Derivation**: {derivation}",
-              f"- **Free-Trial-Demo Stamp**: {stamp_note}", "",
+              f"- **GSUB/GPOS source**: {rel(args.layout_features) if args.layout_features else 'preserved from source font'}",
+              "- **Archive payloads**: Commercial-Use and Personal-Use contain identical font binaries.", "",
+              "## OUTLINE CONVERSION AND HINTING", "", *hinting_notes, "",
+              f"- **Legacy trial archive cleanup**: {legacy_archive_note}.", "",
               "## PRE-FLIGHT AUDIT (raw inputs)", "", "```",
               preflight_report, "```", "", "## TECHNICAL FONT AUDIT (Pro package)", "", "```",
               audit.stdout.strip(), "```", "", "## OPENTYPE SANITIZER (independent parser)", "", "```",
-              ots_report, "```", "", "## OPENTYPE SANITIZER (Free-Trial-Demo stamped)", "", "```",
-              stamp_ots_report, "```", ""]
+              ots_report, "```", "", "## ARCHIVE FONT PAYLOAD CHECK", "", archive_report, ""]
     (out / "audit-report.md").write_text("\n".join(report) + "\n", encoding="utf-8")
 
     print()
     print(f"✅ Font Metadata & Package Complete: {rel(out)}/")
     print(f"- Winning Font Name: {args.name} (Slug: {slug})")
     print(f"- Pro package: {', '.join(sorted({p.suffix[1:].upper() for p in generated}))}")
-    print(f"- Free-Trial-Demo watermark: {stamp_note}")
+    print("- Archives: Commercial-Use and Personal-Use carry identical font binaries")
     print(f"- Final images: NOT PROCESSED — drop them into "
           f"{rel(out)}/visuals/New-Images/ then run /font-final-images")
-    passed = audit.returncode == 0 and ots_ok and stamp_ots_ok and stamp_total > 0
+    passed = audit.returncode == 0 and ots_ok and archives_ok
     print(f"- Audit: {'PASS' if passed else 'FAIL — see audit-report.md'}")
     if not passed:
         if audit.returncode != 0:
             print(audit.stdout.strip()[-600:])
         if not ots_ok:
             print(ots_report[-600:])
-        if not stamp_ots_ok:
-            print(stamp_ots_report[-600:])
-        if stamp_total == 0:
-            print("free-trial-demo stamp replaced 0 glyphs — check the stamp SVG and coverage")
+        if not archives_ok:
+            print(archive_report)
     return 0 if passed else 1
 
 

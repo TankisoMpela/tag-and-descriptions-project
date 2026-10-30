@@ -14,14 +14,12 @@
 }
 .typewall-row {
   position: absolute; display: flex; align-items: center;
-  width: 126%; height: 17%; color: var(--wall-ink);
-  font-family: var(--display-face, Arial, sans-serif); font-weight: 700;
-  line-height: .83; letter-spacing: -.055em; white-space: nowrap; gap: 3.2cqw;
+  width: 126%; height: 15.2%; color: var(--wall-ink);
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 400;
+  line-height: .9; letter-spacing: .005em; white-space: nowrap; gap: 4cqw;
 }
 .typewall-row span {
   display: inline-block; flex: 0 0 auto; color: var(--wall-ink);
-  font-family: var(--display-face, Arial, sans-serif); font-weight: 700;
-  font-synthesis: weight;
-  -webkit-text-stroke: .045em currentColor;
-  line-height: .83; letter-spacing: -.055em; white-space: nowrap;
+  font-family: var(--display-face, Arial, sans-serif); font-weight: 400;
+  line-height: .9; letter-spacing: .005em; white-space: nowrap;
 }

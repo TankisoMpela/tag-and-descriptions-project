@@ -13,7 +13,7 @@ Outputs live in outputs/pinterest/{YYYY-MM-DD}/:
   copy.json       agent-written pin copy (input to assemble)
   buffer.csv      Buffer bulk-upload file — has Alt Text (assemble, primary)
   pins.csv        Pinterest-native bulk-import file (assemble, fallback)
-  tag-report.md   tag usage after recording (assemble)
+  tag-report.md   prepared tag choices (assemble)
 
 Usage:
   python3 bin/make_daily_pins.py pick --date 2026-10-11 [--count 10] [--seed S]
@@ -52,9 +52,8 @@ CSV_HEADER = ["Title", "Media URL", "Pinterest board", "Thumbnail",
 BUFFER_HEADER = ["Text", "Image URL", "Board Name", "Tags", "Posting Time",
                  "Title", "Alt Text", "Link"]
 
-# Mechanical candidate-keyword seed for brief.md (research 2026-10: Pinterest
-# ranks via pin title + description + board; these seeds just narrow the
-# agent's drafting space — the ledger still owns rotation).
+# Mechanical candidate-keyword seed for brief.md. These seeds narrow the
+# drafting space; the ledger owns rotation.
 STYLE_TERMS = ("art deco", "sans serif", "sans-serif", "blackletter", "handwritten",
                "calligraphy", "signature", "decorative", "minimalist", "minimal",
                "geometric", "condensed", "monoline", "outline", "stencil", "rounded",
@@ -91,14 +90,58 @@ def looks_like_shop_root(url: str) -> bool:
     return len(segments) <= 1
 
 
-def pick_image_url(rec: dict, date: str) -> str | None:
-    """Seeded per (date, slug) choice among the font's uploaded pin images —
-    stable across re-assembles of the same day, random across days."""
-    images = sorted((rec.get("images") or {}).values(),
-                    key=lambda im: im.get("pathname", ""))
-    if not images:
-        return None
-    return random.Random(f"img:{date}:{rec['slug']}").choice(images)["url"]
+def image_index(key: str, image: dict) -> int | None:
+    if str(key).isdigit():
+        return int(key)
+    match = re.search(r"pinterest_(\d+)", image.get("pathname", ""), re.IGNORECASE)
+    return int(match.group(1)) if match else None
+
+
+def assign_images(slugs: list[str], reg_fonts: dict, date: str) -> dict[str, dict]:
+    """Choose one stable image per font and spread a batch across image indexes."""
+    rng = random.Random(f"images:{date}")
+    index_uses: dict[int, int] = {}
+    assignments: dict[str, dict] = {}
+    for slug in slugs:
+        rec = reg_fonts.get(slug) or {}
+        keyed_images = [(key, image) for key, image in (rec.get("images") or {}).items()
+                        if image.get("url")]
+        if not keyed_images:
+            continue
+        choices = [(key, image, image_index(key, image)) for key, image in keyed_images]
+        indexed = [choice for choice in choices if choice[2] is not None]
+        pool = indexed or choices
+        min_uses = min(index_uses.get(index, 0) for _, _, index in pool if index is not None) \
+            if indexed else 0
+        balanced = [(key, image, index) for key, image, index in pool
+                    if index is None or index_uses.get(index, 0) == min_uses]
+        key, image, index = rng.choice(balanced)
+        assignments[slug] = {**image, "index": index, "registry_key": key}
+        if index is not None:
+            index_uses[index] = index_uses.get(index, 0) + 1
+    return assignments
+
+
+def image_description(rec: dict, image: dict) -> str:
+    """Describe the selected pin from its uploaded manifest metadata."""
+    kind, template = image.get("kind"), image.get("template")
+    if not kind:
+        image_set = rec.get("image_set") or {}
+        index = image.get("index")
+        template_count = image_set.get("template_count")
+        image_count = image_set.get("image_count")
+        if isinstance(index, int) and isinstance(template_count, int):
+            if index <= template_count:
+                kind = "template"
+            elif isinstance(image_count, int) and index <= image_count:
+                kind = "composite"
+    if kind == "template" and template:
+        return f"Template layout: {str(template).replace('_', ' ')}"
+    if kind == "template":
+        return "Template layout (identify the visible copy and composition in this design)"
+    if kind == "composite":
+        return "Seller-image composite (describe the visible artwork and font treatment)"
+    return "Manifested Pinterest image (describe the selected design, not only the font)"
 
 
 def assign_links(slugs: list[str], reg_fonts: dict, date: str) -> dict[str, str]:
@@ -153,9 +196,13 @@ def extract_candidates(text: str, max_out: int = 12) -> list[str]:
 
 
 def cmd_pick(args, con) -> int:
+    if not 1 <= args.count <= 10:
+        sys.exit("error: count must be between 1 and 10 for the current Buffer free-plan batch")
     reg = pinterest_registry.load_registry()
     eligible = [s for s, r in reg["fonts"].items()
                 if pinterest_registry.is_ready(r) and s not in recent_pins(con, args.date)]
+    if not eligible:
+        sys.exit("error: no ready fonts remain after the 14-day exclusion")
     seed = args.seed or f"{args.date}:{args.count}"
     rng = random.Random(seed)
     chosen = sorted(rng.sample(eligible, min(args.count, len(eligible))))
@@ -187,6 +234,7 @@ def cmd_pick(args, con) -> int:
 
 def cmd_brief(args, con) -> int:
     sel, reg = read_selection(args.date)
+    image_assignments = assign_images(sel["fonts"], reg["fonts"], args.date)
     lines = [f"# Pinterest brief — {args.date}", ""]
     brief_fonts = []
     for slug in sel["fonts"]:
@@ -200,13 +248,18 @@ def cmd_brief(args, con) -> int:
         prior = pinterest_tag_ledger.font_pins(con, slug, PRIOR_PINS_IN_BRIEF)
         candidates = extract_candidates(desc) if desc else []
         urls = r.get("urls") or {}
-        images = sorted((r.get("images") or {}).values(),
-                        key=lambda im: im.get("pathname", ""))
+        today_image = image_assignments.get(slug)
         entry = {
             "slug": slug, "number": r.get("number"), "name": r.get("name"),
             "board": r.get("board"), "urls": urls,
-            "image_urls": [im["url"] for im in images],
-            "today_image_url": pick_image_url(r, args.date),
+            "today_image": ({
+                "index": today_image.get("index"),
+                "kind": today_image.get("kind"),
+                "template": today_image.get("template"),
+                "description": image_description(r, today_image),
+                "source_path": today_image.get("source"),
+                "url": today_image.get("url"),
+            } if today_image else None),
             "description_excerpt": desc,
             "candidates": candidates,
             "most_used_tags": [t for t, _ in top_used],
@@ -215,15 +268,21 @@ def cmd_brief(args, con) -> int:
         brief_fonts.append(entry)
         lines.append(f"## {r['name']} ({slug})")
         lines.append(f"- Board suggestion: {r.get('board') or 'decide one of ' + ', '.join(pinterest_registry.BOARDS)}")
-        for i, im in enumerate(images, 1):
-            lines.append(f"- Pin image {i} (Media URL): {im['url']}")
+        if today_image:
+            index_label = f"#{today_image['index']}" if today_image.get("index") else "selected"
+            lines.append(f"- Assigned image {index_label}: {image_description(r, today_image)}")
+            if today_image.get("source"):
+                lines.append(f"- Local image to inspect for accurate alt text: {today_image['source']}")
+            lines.append(f"- Media URL used by both CSVs: {today_image['url']}")
+            lines.append("- Alt text must describe this exact image and its visible wording/layout; do not use a generic font-only specimen description.")
+        else:
+            lines.append("- Assigned image: MISSING — no uploaded image URL is available.")
         if urls.get("creative_market"):
             lines.append(f"- Creative Market product URL: {urls['creative_market']}")
         if urls.get("creative_fabrica"):
             lines.append(f"- Creative Fabrica product URL: {urls['creative_fabrica']}")
-        lines.append(f"- (The tool assigns each pin one of the {len(images)} images and, "
-                     "when both URLs exist, splits destinations 5/5 between the "
-                     "marketplaces — seeded by date, stable across re-runs.)")
+        lines.append("- Image choice is stable for this date and balanced across selected fonts; "
+                     "when both product URLs exist, destinations are split as evenly as possible.")
         lines.append(f"- Description source: {desc or '(no description.txt)'}…")
         if candidates:
             lines.append(f"- Candidate keywords (mechanical seed — vary phrasing, rotate via ledger): {', '.join(candidates)}")
@@ -270,6 +329,7 @@ def validate(entries: list[dict], reg: dict, date: str, start_hour: int, interva
     titles: dict[str, int] = {}
     links: dict[str, int] = {}
     batch_links = assign_links([e.get("slug") or "" for e in entries], reg["fonts"], date)
+    batch_images = assign_images([e.get("slug") or "" for e in entries], reg["fonts"], date)
     now = datetime.now(timezone.utc)
     start = datetime.strptime(f"{date}T00:00:00", "%Y-%m-%dT%H:%M:%S").replace(
         hour=start_hour, tzinfo=timezone.utc)
@@ -319,7 +379,8 @@ def validate(entries: list[dict], reg: dict, date: str, start_hour: int, interva
         link = add_utm(link, date, f"{slug}-{i + 1}")
         if e.get("link"):
             links[link] = links.get(link, 0) + 1
-        media = pick_image_url(r, date)
+        selected_image = batch_images.get(slug)
+        media = selected_image.get("url") if selected_image else None
         if not media:
             errors.append(f"{slug}: no uploaded image URL in registry")
             continue
@@ -328,6 +389,7 @@ def validate(entries: list[dict], reg: dict, date: str, start_hour: int, interva
                      pub.strftime("%Y-%m-%dT%H:%M:%S"), ", ".join(kws)])
         e["_tags"] = kws
         e["_alt"] = alt
+        e["_image_index"] = selected_image.get("index") if selected_image else None
         e["_pub"] = pub.strftime("%Y-%m-%d %H:%M")
     for t, n in titles.items():
         if n > 1:
@@ -346,10 +408,18 @@ def cmd_assemble(args, con) -> int:
     entries = json.loads(copy_path.read_text())
     if not isinstance(entries, list):
         sys.exit("error: copy.json must be a JSON list of pin objects")
+    if not entries:
+        sys.exit("error: copy.json has no pins to assemble")
     picked, slugs = sel["fonts"], [e.get("slug") for e in entries]
-    if sorted(slugs) != sorted(picked):
-        sys.exit(f"error: copy.json slugs don't match selection.json\n"
+    if slugs != picked:
+        sys.exit(f"error: copy.json slugs/order don't match selection.json\n"
                  f"  selection: {picked}\n  copy:      {slugs}")
+    imported = {row[0] for row in con.execute(
+        "SELECT font_slug FROM pins WHERE run_date=? AND font_slug IN (%s)" %
+        ",".join("?" for _ in picked), (args.date, *picked))} if picked else set()
+    if imported:
+        sys.exit("error: this date already has imported pin history for "
+                 f"{', '.join(sorted(imported))}; do not overwrite an imported batch")
     rows, errors = validate(entries, reg, args.date, args.start_hour, args.interval_min)
     if errors:
         print("validation failed:", file=sys.stderr)
@@ -369,38 +439,28 @@ def cmd_assemble(args, con) -> int:
         w = csv.writer(f, quoting=csv.QUOTE_ALL)
         w.writerow(BUFFER_HEADER)
         w.writerows(buffer_rows)
-    report = [f"# Tag report — {args.date}", ""]
-    # Record the shipped text itself, not just the keywords: the next run needs
-    # to see this font's old titles and alt text to avoid writing twins. Done
-    # before the tag loop so re-assembling an edited copy refreshes it too.
+    report = [f"# Draft tag report — {args.date}", "",
+              "These are prepared drafts. History and re-pin exclusion update only after you confirm the destination accepted the import.", ""]
     for e, row in zip(entries, rows):
-        pinterest_tag_ledger.record_pin(
+        pinterest_tag_ledger.prepare_pin(
             con, slug=e["slug"], date=args.date, title=row[0], description=row[4],
             alt=e["_alt"], keywords=e["_tags"], board=row[2], image_url=row[1],
-            link=row[5])
-    already = {r[0] for r in con.execute(
-        "SELECT DISTINCT font_slug FROM tag_uses WHERE run_date = ?", (args.date,))}
-    for e in entries:
-        if e["slug"] in already:
-            report.append(f"## {e['slug']}\n- tags already recorded for this date — CSV regenerated, no re-record")
-            continue
-        con.execute("INSERT OR IGNORE INTO pinned_runs (font_slug, run_date, csv_path) VALUES (?,?,?)",
-                    (e["slug"], args.date, str(csv_path)))
-        for t in e["_tags"]:
-            con.execute("INSERT INTO tag_uses (font_slug, tag, run_date) VALUES (?,?,?)",
-                        (e["slug"], t, args.date))
+            link=row[5], csv_path=str(csv_path))
         counts = pinterest_tag_ledger.font_counts(con, e["slug"])
         total = sum(counts.values()) or 1
         top = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[:5]
         report.append(f"## {e['slug']}")
-        report.append(f"- used: {', '.join(e['_tags'])}")
-        report.append(f"- heaviest tags now: " + ", ".join(f"{t} ({100 * c // total}%)" for t, c in top))
+        report.append(f"- prepared keywords: {', '.join(e['_tags'])}")
+        if top:
+            report.append("- historical tag mix: " + ", ".join(f"{t} ({100 * c // total}%)" for t, c in top))
+        report.append(f"- selected image index: {e.get('_image_index') or 'unknown'}")
     con.commit()
     (out_dir / "tag-report.md").write_text("\n".join(report) + "\n")
     print(f"buffer.csv written: {buffer_path} ({len(buffer_rows)} rows, publish {rows[0][6]} → {rows[-1][6]} UTC)")
     print(f"pins.csv written:   {csv_path} (Pinterest-native fallback, no alt text)")
-    print("import manually: Buffer (free) → Pinterest channel → settings → Bulk Upload → upload buffer.csv → Add Posts to Queue")
-    print("upload only after the previous batch has fully published (10-slot free queue)")
+    print("Buffer requires each Board Name in the CSV to already exist in Pinterest; see the agent guide for one-time setup.")
+    print("After Buffer accepts/queues rows (or Pinterest accepts pins.csv), record only those fonts:")
+    print(f"python3 bin/pinterest_tag_ledger.py mark-imported --date {args.date} --slugs " + " ".join(picked))
     return 0
 
 

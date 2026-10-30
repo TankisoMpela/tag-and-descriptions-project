@@ -170,11 +170,15 @@ def is_ready(rec: dict) -> bool:
     images = rec.get("images") or {}
     image_set = rec.get("image_set") or {}
     expected = image_set.get("image_count")
-    if isinstance(expected, int):
+    if isinstance(expected, int) and expected > 0:
         image_indexes = {int(key) for key in images if str(key).isdigit()}
-        images_complete = image_indexes == set(range(1, expected + 1))
+        images_complete = (image_indexes == set(range(1, expected + 1))
+                           and all((images.get(str(index)) or {}).get("url")
+                                   for index in range(1, expected + 1)))
     else:
-        images_complete = bool(images)  # legacy registry records remain readable
+        # Keep pre-manifest records usable during migration; all current uploads
+        # receive image_set metadata and must have their complete image set.
+        images_complete = bool(images) and all(image.get("url") for image in images.values())
     return bool((urls.get("creative_market") or urls.get("creative_fabrica"))
                 and images_complete)
 
@@ -227,23 +231,30 @@ def cmd_set_board(args, reg: dict) -> int:
     rec = get_font(reg, args.slug)
     rec["board"] = normalize_board(args.board)
     save_registry(reg)
-    print(f"{args.slug}: board = {rec['board']}" if not args.json else json.dumps(rec, indent=2))
+    print(f"{args.slug}: board suggestion = {rec['board']}" if not args.json else json.dumps(rec, indent=2))
     return 0
 
 
-def _upload_one(slug: str, chosen: Path, force: bool, rec: dict) -> dict:
+def _upload_one(slug: str, chosen: Path, force: bool, rec: dict,
+                manifest_row: dict | None = None) -> dict:
     index = re.search(r"pinterest_(\d+)", chosen.stem)
     # An unnumbered file must not claim slot "1" from pinterest_1.png.
     key = index.group(1) if index else chosen.stem.casefold()
     images = rec.setdefault("images", {})
     source_hash = hashlib.sha256(chosen.read_bytes()).hexdigest()
     if key in images and not force and images[key].get("sha256") == source_hash:
+        if manifest_row:
+            images[key].update({"kind": manifest_row.get("kind"),
+                                "template": manifest_row.get("template")})
         print(f"  skip {chosen.name} (already uploaded — pass --force to replace)")
         return images[key]
-    pathname = f"fonts/{slug}/{chosen.stem.lower()}{chosen.suffix.lower()}"
+    pathname = f"fonts/{slug}/{chosen.stem.lower()}-{source_hash}{chosen.suffix.lower()}"
+    upload_command = [sys.executable, "bin/papermoon-blob.py", "upload", str(chosen),
+                      "--pathname", pathname, "--json"]
+    if force:
+        upload_command.append("--allow-overwrite")
     proc = subprocess.run(
-        [sys.executable, "bin/papermoon-blob.py", "upload", str(chosen),
-         "--pathname", pathname, "--json"],
+        upload_command,
         capture_output=True, text=True,
     )
     if proc.returncode != 0:
@@ -255,6 +266,8 @@ def _upload_one(slug: str, chosen: Path, force: bool, rec: dict) -> dict:
         "pathname": blob["pathname"],
         "url": blob["url"],
         "uploaded_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "kind": (manifest_row or {}).get("kind"),
+        "template": (manifest_row or {}).get("template"),
     }
     print(f"  uploaded {chosen.name} → {blob['url']}")
     return images[key]
@@ -267,6 +280,7 @@ def cmd_upload(args, reg: dict) -> int:
     if not files:
         sys.exit(f"error: no pin images under {rec['prep_path']}/visuals/New-Images/pinterest/")
     pin_manifest, expected_count = validate_pin_set(prep, files)
+    manifest_rows = {int(row["index"]): row for row in pin_manifest["images"]}
     set_manifest_path = prep / "visuals" / "New-Images" / "pinterest" / PINSET_MANIFEST
     rec["image_set"] = {
         "template_count": pin_manifest["template_count"],
@@ -284,7 +298,9 @@ def cmd_upload(args, reg: dict) -> int:
         rec["images"] = {key: value for key, value in (rec.get("images") or {}).items()
                          if key in valid_keys}
     for chosen in files:
-        _upload_one(args.slug, chosen, args.force, rec)
+        index_match = re.search(r"pinterest_(\d+)", chosen.stem)
+        metadata = manifest_rows.get(int(index_match.group(1))) if index_match else None
+        _upload_one(args.slug, chosen, args.force, rec, metadata)
         save_registry(reg)
     images = rec.get("images", {})
     print(f"{args.slug}: {len(images)}/{expected_count} pin images on the Blob store")
@@ -376,18 +392,18 @@ def main(argv=None) -> int:
 
     sb = sub.add_parser("set-board", parents=[common])
     sb.add_argument("--slug", required=True)
-    sb.add_argument("--board", required=True)
+    sb.add_argument("--board", required=True, help="recommended board; does not create it on Pinterest")
     sb.set_defaults(func=cmd_set_board)
 
     up = sub.add_parser("upload", parents=[common])
     up.add_argument("--slug", required=True)
-    up.add_argument("--index", type=int, help="upload only a specific pinterest_N image")
+    up.add_argument("--index", type=int, help="upload only a specific numbered Pinterest image")
     up.add_argument("--force", action="store_true", help="replace already-uploaded images")
     up.set_defaults(func=cmd_upload)
 
     li = sub.add_parser("list", parents=[common])
     li.add_argument("--ready", action="store_true",
-                    help="only fonts with a product URL + at least one image")
+                    help="product URL + complete current manifest; legacy records need stored image links")
     li.set_defaults(func=cmd_list)
 
     sh = sub.add_parser("show", parents=[common])

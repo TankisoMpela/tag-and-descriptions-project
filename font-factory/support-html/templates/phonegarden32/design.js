@@ -22,7 +22,7 @@
   const design = {
     id: "phonegarden32",
     title: "Phone garden",
-    defaults: { scale: 1, centerScale: 1, tracking: -.012, rightSpacing: .073 },
+    defaults: { scale: 1, centerScale: .9, tracking: -.012, rightSpacing: .073 },
     controls: [
       { key: "scale", label: "Display type scale", min: .9, max: 1.08, step: .01 },
       { key: "centerScale", label: "Center lockup scale", min: .9, max: 1.08, step: .01 },
@@ -38,7 +38,7 @@
       board.append(scene);
       board = scene;
       const scale = Number(props.scale ?? state.scale ?? 1);
-      const centerScale = Number(props.centerScale ?? state.centerScale ?? 1);
+      const centerScale = Number(props.centerScale ?? state.centerScale ?? .9);
       const tracking = Number(props.tracking ?? state.tracking ?? -.035);
       const rightSpacing = Number(props.rightSpacing ?? state.rightSpacing ?? .073);
       board.style.setProperty("--label-face", design.labelFace
@@ -70,9 +70,9 @@
       centerPatch.className = "phone-star-patch";
       centerPatch.dataset.layoutItem = "center-screen-star-cleanup";
       centerPatch.style.left = "56.5%";
-      centerPatch.style.top = "19%";
-      centerPatch.style.width = `${board.clientHeight * .15}px`;
-      centerPatch.style.height = `${board.clientHeight * .15}px`;
+      centerPatch.style.top = "14.5%";
+      centerPatch.style.width = `${board.clientHeight * .11}px`;
+      centerPatch.style.height = `${board.clientHeight * .11}px`;
       board.append(centerPatch);
 
       const leftPatch = document.createElement("div");
@@ -153,7 +153,7 @@
       middleWords.forEach((text, index) => {
         const line = document.createElement("span");
         line.className = "phone-type phone-vertical-type";
-        line.style.setProperty("--center-x", `${([.415, .585][index]) * 100}%`);
+        line.style.setProperty("--center-x", `${([.454, .546][index]) * 100}%`);
         line.style.letterSpacing = `${tracking}em`;
         line.dataset.layoutItem = `center-lockup-line-${index + 1}`;
         line.dataset.displayItem = "true";
@@ -256,9 +256,9 @@
         inkAware: true,
       });
       window.SupportLayout.fitLinesTogether(middleElements, {
-        width: board.clientHeight * .66 * .94,
-        height: board.clientHeight * .15 * .88,
-        maxSize: board.clientHeight * .13 * centerScale,
+        width: board.clientHeight * .98 * .94,
+        height: board.clientHeight * .245 * .88,
+        maxSize: board.clientHeight * .155 * centerScale,
         minSize: board.clientHeight * .035,
         tracking,
         inkAware: true,
@@ -282,7 +282,7 @@
 
       addStar("left-lockup-star", .165, .222, .025, 5, .47,
         "none", "#eb63a4", 2.6);
-      addStar("center-lockup-star", .565, .19, .062, 8, .42,
+      addStar("center-lockup-star", .565, .145, .045, 8, .42,
         "#fff297", "#1c3345", 1.2);
     },
     getContrast() {

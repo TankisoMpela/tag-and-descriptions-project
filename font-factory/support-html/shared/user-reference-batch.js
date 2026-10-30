@@ -23,8 +23,8 @@
     italianhorror32: {
       title: "Italian Horror broadside", source: "T15503_08", style: "italianhorror", bg: "materials/user-batch-2026-10-20/T15503_08-clean-bg.png",
       fields: [
-        { key: "headline", label: "Main line", value: "Italian Horror", box: [.035,.42,.93,.19], size: 245, color: "#f5f1ef", tracking: -.035 },
-        { key: "caption", label: "Subtitle", value: "Master Series", box: [.27,.62,.46,.16], size: 110, color: "#e3d4d3", tracking: .18, label: true }
+        { key: "headline", label: "Main line", value: "Italian Horror", box: [.025,.36,.95,.28], size: 325, color: "#f5f1ef", tracking: -.035 },
+        { key: "caption", label: "Subtitle", value: "Master Series", box: [.20,.64,.60,.16], size: 132, color: "#e3d4d3", tracking: .18, label: true }
       ], note: "A broad white brush title sits across a red-black horror still, with narrow spaced lettering below."
     },
     dreamwarriors32: {
@@ -37,8 +37,9 @@
     nesting32: {
       title: "The Nesting horror one-sheet", source: "T15503_11", style: "nesting", bg: "materials/user-batch-2026-10-20/T15503_11-clean-bg.png",
       fields: [
-        { key: "headline", label: "Main phrase", value: "The Nesting", box: [.12,.19,.76,.42], size: 350, color: "#f7f3ef", tracking: -.045 },
-        { key: "caption", label: "Credit line", value: "A Chilling Story", box: [.26,.62,.48,.10], size: 40, color: "#d8c7c4", tracking: .12, label: true }
+        { key: "headline", label: "Main word", value: "Nesting", box: [.025,.20,.76,.45], size: 560, color: "#f7f3ef", tracking: -.045 },
+        { key: "pretitle", label: "Top word", value: "The", box: [.30,.095,.22,.15], size: 170, color: "#f7f3ef", tracking: -.04 },
+        { key: "caption", label: "Credit line", value: "A Chilling Story", box: [.18,.69,.52,.10], size: 50, color: "#d8c7c4", tracking: .12, label: true }
       ], note: "A large white brush title sits over a textured crimson scene, with a fine centered credit beneath."
     },
     erotica32: {

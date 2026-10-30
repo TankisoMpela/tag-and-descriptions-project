@@ -20,6 +20,7 @@ REQUIRED = [
     "PRODUCT DESCRIPTION",
     "META TITLE",
     "META DESCRIPTION",
+    "CLASSIFICATION",
     "RESEARCH NOTES",
 ]
 
@@ -101,7 +102,6 @@ def main() -> int:
     text = args.listing.read_text(encoding="utf-8")
     parsed = sections(text)
     failures: list[str] = []
-    warnings: list[str] = []
 
     for heading in REQUIRED:
         if heading not in parsed or not parsed[heading].strip():
@@ -118,9 +118,7 @@ def main() -> int:
         failures.append(f"meta description is {len(meta_description)} characters; maximum is 155")
 
     classification = parsed.get("CLASSIFICATION", "").strip()
-    if not classification:
-        warnings.append("legacy listing has no CLASSIFICATION section")
-    else:
+    if classification:
         first_line = first_content(classification).strip().casefold()
         category_match = re.search(
             r"classification\s*>\s*(blackletter|handwritten|sans serif|script|serif|slab serif|symbols)",
@@ -173,8 +171,6 @@ def main() -> int:
             print(f"[FAIL] {failure}")
         return 1
 
-    for warning in warnings:
-        print(f"[WARN] {warning}")
     print(f"[PASS] {args.listing}: Creative Market listing-copy hard gates passed")
     return 0
 

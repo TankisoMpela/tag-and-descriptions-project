@@ -19,10 +19,10 @@ Family-consistency check (automatic when >1 file supplied, or with --family):
 
 Usage:
     # Single file
-    python3 bin/font_preflight_audit.py font-factory/fonts/{slug}/{Primary}.otf
+    python3 bin/font_preflight_audit.py font-factory/fonts/{input-slug}/{Primary}.{ext}
 
     # Whole family directory (family check is automatic)
-    python3 bin/font_preflight_audit.py font-factory/fonts/{slug}/
+    python3 bin/font_preflight_audit.py font-factory/fonts/{input-slug}/
 
     # Explicit multi-file with forced family check
     python3 bin/font_preflight_audit.py Regular.otf Bold.otf Italic.otf --family
@@ -130,6 +130,22 @@ def audit(path: Path) -> tuple[list[str], list[str], list[str]]:
     info.append(f"\u2705 Existing Name IDs found: {sorted(existing.keys())}")
     for name_id, value in sorted(existing.items()):
         info.append(f"   ID {name_id}: {value[:80]}")
+    for name_id, label in ((9, "Designer"), (10, "Description")):
+        source_records = []
+        for record in font["name"].names:
+            if record.nameID != name_id:
+                continue
+            try:
+                value = record.toUnicode().strip()
+            except Exception:  # noqa: BLE001 - report unreadable source metadata
+                value = "<unreadable>"
+            source_records.append(
+                f"platform={record.platformID}, encoding={record.platEncID}, "
+                f"language={record.langID}: {value[:120]}"
+            )
+        if source_records:
+            info.append(f"Source Name ID {name_id} ({label}) records across all platforms:")
+            info.extend(f"   {value}" for value in source_records)
 
     info.append(f"\u2705 GSUB (ligatures/alternates): {'present' if 'GSUB' in font else 'absent'}")
     info.append(f"\u2705 GPOS (kerning/positioning): {'present' if 'GPOS' in font else 'absent'}")

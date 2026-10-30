@@ -21,12 +21,14 @@ from process_final_font_images import (  # noqa: E402
     SQUARE_RATIO,
     SQUARE_THUMB_MARKERS,
     inspect_ratio,
+    is_main_thumbnail_name,
     ratio_matches,
 )
 
 
 def classify(path: Path) -> dict[str, object]:
     entry: dict[str, object] = {"file": path.name}
+    entry["thumbnail_main_candidate"] = is_main_thumbnail_name(path)
     try:
         width, height, ratio = inspect_ratio(path, path.name)
     except SystemExit as error:
@@ -63,25 +65,24 @@ def generated_state(folder: Path) -> dict[str, object]:
 def notes_for(files: list[dict[str, object]]) -> list[str]:
     main = [f for f in files if f["ratio"] == "3:2"]
     squares = [f for f in files if f["ratio"] == "1:1"]
-    marked = [f for f in squares if f.get("name_marked_square_thumbnail")]
+    main_thumbnails = [f for f in main if f.get("thumbnail_main_candidate")]
+    square_thumbnails = [f for f in squares if f.get("thumbnail_main_candidate")]
+    notes = []
     if any(f["ratio"] in ("unsupported", "undecodable") for f in files):
-        return ["Blockers present: every direct file must be a decodable 3:2 or 1:1 image."]
+        notes.append("Blocker: every direct file must be a decodable 3:2 or 1:1 image.")
     if not main:
-        return ["No 3:2 files: process_final_font_images.py cannot run (it requires at least one 3:2 file)."]
+        notes.append("Waiting: add the seller-generated 3:2 main thumbnail and supporting images.")
     if not squares:
-        return [
-            f"No 1:1 files: run process_final_font_images.py --auto-order --pad-squares "
-            f"to derive all {len(main)} square(s) from the 3:2 set (equal white top/bottom padding)."
-        ]
-    if len(squares) == 1 and marked and len(main) > 1:
-        return [
-            "One name-marked square thumbnail: run process_final_font_images.py --auto-order "
-            f"--pad-squares to keep it and derive {len(main) - 1} supporting square(s) from the 3:2 promos."
-        ]
-    return [
-        f"{len(squares)} 1:1 file(s) supplied: run process_final_font_images.py --auto-order as-is; "
-        "no padding is implied and the two counts need not match."
-    ]
+        notes.append("Waiting: add the seller-generated 1:1 main thumbnail; square thumbnails are never derived from 3:2.")
+    if len(main_thumbnails) != 1:
+        notes.append("Waiting: name exactly one 3:2 main thumbnail with `thumbnail_main` in its filename (for example `thumbnail_main_3x2.png`).")
+    if len(square_thumbnails) != 1:
+        notes.append("Waiting: name exactly one 1:1 main thumbnail with `thumbnail_main` in its filename (for example `thumbnail_main_1x1.png`).")
+    if len(main) < 3:
+        notes.append("Waiting: add at least two additional direct 3:2 images for the ten Pinterest composites.")
+    if not notes:
+        notes.append("Ready: both named thumbnail ratios and the minimum 3:2 Pinterest image pool are present.")
+    return notes
 
 
 def main() -> int:
@@ -100,23 +101,37 @@ def main() -> int:
     direct = sorted(
         p for p in folder.iterdir() if p.is_file() and p.suffix.lower() in IMAGE_SUFFIXES
     )
-    if not direct:
-        print(f"No direct raster images found in {folder}", file=sys.stderr)
-        return 1
-
     files = [classify(path) for path in direct]
+    main_thumbnails = [f for f in files
+                       if f["ratio"] == "3:2" and f.get("thumbnail_main_candidate")]
+    square_thumbnails = [f for f in files
+                         if f["ratio"] == "1:1" and f.get("thumbnail_main_candidate")]
+    counts = {
+        "3:2": sum(1 for f in files if f["ratio"] == "3:2"),
+        "1:1": sum(1 for f in files if f["ratio"] == "1:1"),
+        "unsupported": sum(1 for f in files if f["ratio"] == "unsupported"),
+        "undecodable": sum(1 for f in files if f["ratio"] == "undecodable"),
+    }
+    ready = (
+        counts["unsupported"] == 0
+        and counts["undecodable"] == 0
+        and len(main_thumbnails) == 1
+        and len(square_thumbnails) == 1
+        and counts["3:2"] >= 3
+    )
     report = {
         "folder": str(folder),
         "direct_images": files,
-        "counts": {
-            "3:2": sum(1 for f in files if f["ratio"] == "3:2"),
-            "1:1": sum(1 for f in files if f["ratio"] == "1:1"),
-            "unsupported": sum(1 for f in files if f["ratio"] == "unsupported"),
-            "undecodable": sum(1 for f in files if f["ratio"] == "undecodable"),
-        },
+        "counts": counts,
+        "ready_for_final_processing": ready,
         "name_marked_square_thumbnails": [
             f["file"] for f in files if f.get("name_marked_square_thumbnail")
         ],
+        "thumbnail_main_candidates": {
+            ratio: [f["file"] for f in files
+                    if f["ratio"] == ratio and f.get("thumbnail_main_candidate")]
+            for ratio in ("3:2", "1:1")
+        },
         "generated_state": generated_state(folder),
         "notes": notes_for(files),
     }
@@ -127,6 +142,12 @@ def main() -> int:
 
     print(f"New-Images situation report: {folder}")
     print("")
+    if not direct:
+        print("Direct images: none")
+        print("")
+        for note in report["notes"]:
+            print(f"Note: {note}")
+        return 0
     print("Direct images (stable filename order = processing order):")
     for entry in files:
         if "width" in entry:
@@ -138,6 +159,7 @@ def main() -> int:
     print("")
     print(f"Counts: {counts['3:2']} x 3:2, {counts['1:1']} x 1:1, "
           f"{counts['unsupported']} unsupported, {counts['undecodable']} undecodable")
+    print(f"Ready for final processing: {'yes' if ready else 'no'}")
     state = report["generated_state"]
     print("Generated state: " + ", ".join(
         f"{key}={value}" for key, value in state.items()

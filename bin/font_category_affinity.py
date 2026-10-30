@@ -25,8 +25,8 @@ import sys
 import time
 from collections import Counter
 from pathlib import Path
+from mcp_paths import require_mcp_script
 
-GEMINI_PROXY = Path("/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy")
 ROOT = Path(__file__).resolve().parent.parent
 BANK = ROOT / "outputs/research/creative-fabrica-tag-bank.json"
 
@@ -48,7 +48,7 @@ STOP = {
 
 
 def mcp_call(server: str, tool: str, args: dict, timeout: int = 120) -> dict | None:
-    cmd = ["python3", str(GEMINI_PROXY / f"{server}_mcp.py")]
+    cmd = ["python3", str(require_mcp_script(f"{server}_mcp.py"))]
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                             stderr=subprocess.DEVNULL, text=True, bufsize=1)
 

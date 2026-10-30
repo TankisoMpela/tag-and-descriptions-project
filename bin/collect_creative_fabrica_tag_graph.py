@@ -29,8 +29,9 @@ import urllib.error
 import urllib.request
 from collections import deque
 from pathlib import Path
+from mcp_paths import require_mcp_script
 
-MCP = Path("/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/firecrawl_mcp.py")
+MCP = require_mcp_script("firecrawl_mcp.py")
 ROOT = Path(__file__).resolve().parent.parent
 CORPUS = ROOT / "outputs/research/creative-fabrica-tag-corpus.jsonl"
 STATE = ROOT / "outputs/research/creative-fabrica-tag-corpus.state.json"

@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""Predict which supporting templates a font would break before rendering them.
+"""Audit glyph coverage in the legacy Python/Skia support renderers.
 
-Every support panel writes its wording as a string literal in the renderer. The
-text engine silently drops characters the face does not carry, so a panel can
-render a nearly empty slot with zero layout errors and zero notes — the one bad
-derivation the renderer cannot see. This walks the renderer's own literals and
-checks them against the font's cmap.
+This utility reads Python panel literals only. It does not audit the active
+HTML/CSS catalogue: Chromium preserves unsupported characters and renders them
+with a browser fallback. Do not use this report as an HTML coverage result.
 
-    bin/check_support_glyph_coverage.py font-factory/fonts/{slug}/{Primary}.otf
+    bin/check_support_glyph_coverage.py font-factory/fonts/{input-slug}/{Primary}.{ext}
     bin/check_support_glyph_coverage.py --json a.otf b.otf
 """
 

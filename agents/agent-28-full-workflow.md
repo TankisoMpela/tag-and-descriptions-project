@@ -1,150 +1,140 @@
 ---
 name: agent-28-full-workflow
-description: Strict sequential font launch orchestrator from Agent 27 visual generation through Agent 13 preparation, BOOTH, Creative Market, and Creative Fabrica. Pixiv, YellowImages, DLsite, Marketore, and other marketplace stages are paused.
-user-invocable: true
+description: Runtime-neutral contract for the five-stage sequential font launch workflow.
 ---
 
 # Full Font Launch Orchestrator
 
-Read `.opencode/skills/full-workflow/SKILL.md` completely before acting. This
-is a parent workflow agent, not a listing or preparation specialist. Delegate
-each stage through OpenCode's native registered-agent mechanism and never do a
-child's work in this parent.
+This file is the single source of truth for `/full-workflow` across the project
+agent runtimes. Runtime registrations may translate agent IDs and delegation
+syntax, but they must preserve this stage order, handoffs, stop conditions, and
+scope. Read `AGENTS.md` and `font-factory/AGENTS.md` first, then this contract
+and the active specialist specs it names. The orchestrator coordinates; it does
+not perform a child agent's work.
 
-## Required Input
+## Source selection and shared product number
 
-Extract and preserve:
+For a new launch, the source family must be selected from `font-factory/Saved/`.
+If the user has not named one exact Saved folder, run
+`python3 bin/stage_saved_font.py --list` and ask them to choose; do not guess,
+stage every folder, or inspect unrelated font collections. After selection,
+stage only that folder's original root-level OTF/TTF files with
+`python3 bin/stage_saved_font.py --source "<exact-folder>"`. Pass the resulting
+`font-factory/fonts/{input-slug}/` path to Agent 27. Nested repairs and output
+files are not source fonts. If the user explicitly asks to resume a family
+already staged in `font-factory/fonts/`, use that exact staged folder without
+moving or copying another source.
 
-- `font workspace`: the exact user-supplied directory containing the raw font;
-- `new name`: the user-supplied final font name, **when one is supplied**. If
-  the user omits the new name (explicitly saying the image generator should
-  decide), do not ask and do not guess: instruct Agent 27 to decide the final
-  name under its own Naming policy (best evocative name from the description,
-  no uniqueness research);
-- `old description`: the user-supplied product description;
-- optional factual constraints supplied by the user.
+Preserve any user-supplied final name, description, and factual constraints.
+When the final name or product description is not supplied, Agent 27 derives
+them from the source metadata, mapped-glyph specimen, and facts. Do not use
+uniqueness research or the namemaker agent. Once a name is decided, preserve
+its exact spelling and derive one shared slug.
 
-If the workspace or the old description is missing, ask one concise question
-and do not start the pipeline. Do not derive the new name from a filename or
-rewrite the old description. The final new name is whatever Agent 27 returns in
-its `READY FOR FONT PREP HANDOFF` marker when the user did not supply one; use
-that exact spelling in every later handoff.
+Compute one new unified product number from the highest numeric prefix across
+existing `outputs/*/*.md` listing files plus one, as specified in `AGENTS.md`.
+Do not inspect font packages, source folders, or images to determine the number.
+Pass the same number and slug to BOOTH, Creative Market, and Creative Fabrica.
 
-Before delegating, scan only existing listing filenames under `outputs/` for
-numeric prefixes, set `UNIFIED_PRODUCT_NUMBER` to the highest prefix plus one,
-and pass that value unchanged to the three active marketplace children. Do not use
-font packages or image files to determine the number.
+## Required sequence
 
-## Active scope and token controls
+Run each child through the current runtime's native agent mechanism, strictly
+one at a time. Wait for the child's final result and verify its expected output
+before dispatching the next stage:
 
-The active run includes only Agent 27, Agent 13, BOOTH, Creative Market, and
-Creative Fabrica. Pixiv, YellowImages and DLsite are explicitly paused, as are Marketore,
-Cubebrush, Etsy, Behance, Pinterest, and all other marketplace stages.
+1. Agent 27 — visual handoff (`font-image-generator` / `font_image_generator`)
+2. Agent 13 — package and preparation (`font-prep-specialist` / `font_preparer`)
+3. Agent 20 — BOOTH (`booth-fonts-specialist` / `booth_fonts_specialist`)
+4. Agent 2 — Creative Market (`cm-fonts-specialist` / `cm_fonts_specialist`)
+5. Agent 29 — Creative Fabrica (`creative-fabrica-fonts-specialist` /
+   `creative_fabrica_fonts_specialist`)
 
-Do not repeatedly paste the entire old description, workspace tree, or prior
-research into every child prompt. Pass the exact source paths, the final name,
-the unified number, and only the factual constraints needed by that child. Agent 13
-needs the exact font workspace path to copy Agent 27's verified Pinterest pin
-set; it renders only the factual specimen sheets from the font binary. Each specialist reads its own standing instructions and
-its product-specific source once. Do not ask the parent to summarize or
-duplicate a child's research report in the final response.
+Never launch later work concurrently, by shell orchestration, or before the
+prior child's final response. If a child fails, is blocked, omits its required
+path, or returns incomplete, stop and report the exact stage, status, first
+blocker, and safe resume point.
 
-## Native Delegation Contract
+## Stage handoffs
 
-Run exactly these registered specialist IDs in this order, one at a time:
+### 1. Agent 27 visual handoff
 
-1. `font-image-generator`
-2. `font-prep-specialist`
-3. `booth-fonts-specialist`
-4. `cm-fonts-specialist`
-5. `creative-fabrica-fonts-specialist`
+Read `agents/agent-27-font-image-generator.md` and
+`agents/reference/AGENTS-annex-visual-handoff.md`. Pass the exact staged source
+folder, any user-supplied final name and description, and only relevant facts.
+Agent 27 inspects the font metadata and complete mapped-glyph specimen before
+deciding an unsupplied name or profile. Require the exact marker
+`READY FOR FONT PREP HANDOFF`, the final name, the exact `prepared_visuals/`
+path, and a successful visual handoff validation. Confirm that path belongs to
+the selected source workspace before continuing.
 
-Use the native in-session delegation mechanism. Never invoke `opencode` CLI,
-`opencode run`, `opencode agent`, Codex, shell subprocesses, task arrays,
-`Promise.all`, concurrent delegation, or background workers for orchestration.
-Wait for each child final response. A partial file, started child, or plausible
-output is not completion.
+Agent 27 writes its structured `visual-direction/visual-plan.json`, clean name
+specimens and matching prompts, the required 3:2 and square support layouts,
+four factual specimen previews, and the active Pinterest template renders.
+Read `font_name`, `font_profile.type_label`, `font_profile.subtext`,
+`font_profile.product_description`, and `verified_product_facts` from the
+validated plan. These are the downstream handoff facts; do not ask another
+agent to restate or infer them.
 
-## Handoff Prompts
+### 2. Agent 13 preparation
 
-### 1. Agent 27
+Read `agents/agent-13-font-prep-specialist.md`. Invoke it in
+`FULL WORKFLOW CONTINUOUS MODE` with the exact source folder, final name,
+product description, unified number, and Agent 27's validated handoff path and
+profile. Agent 13 packages and audits the font, writes the exact product
+description to `outputs/font-preparation/{NUM}-{slug}/description.txt`,
+installs the verified 23 Agent-27 Pinterest template pins, and renders four
+factual specimen sheets. It does not inspect or copy thumbnail/support-layout
+drafts or process the seller's final images. Showcase video rendering is
+archived and is not part of this stage.
 
-Delegate `font-image-generator` with the exact workspace, the new name when the
-user supplied one (otherwise instruct Agent 27 to decide it under its Naming
-policy and forbid uniqueness research), the old description, and facts. Require:
+Before continuing, confirm the preparation output path exists, the child
+reported successful package validation, and `description.txt` matches the
+plan's `product_description` exactly. Confirm the 23 template pins and four
+specimen sheets through the preparation report/validator. Agent 13 leaves the
+seller's final-art drop folder ready; Agent 30 is a separate post-workflow
+stage.
 
-```text
-READY FOR FONT PREP HANDOFF
-Font: [new name]
-Agent-27 prepared visuals: [exact absolute prepared_visuals path]
-```
+### 3–5. Marketplace listings
 
-Verify that the returned path is the workspace's `prepared_visuals/` directory
-and that the child reports a successful visual validator. Do not invoke Agent
-13 without this result. The handoff includes clean white-background name
-specimens, complete matching prompts for the 3:2 main thumbnail, square main,
-and storefront square, seven HTML/CSS support layouts at each ratio, four
-factual specimen previews, and all 23 active Pinterest template renders. No
-old marketplace thumbnail is required. If the user explicitly requests a
-prototype during this stage, use the matching specimen and prompt with the
-built-in image-generation tool and review it against the 33-reference composition
-audit: title hierarchy, physical surface integration when called for, model
-focus, crop, contrast and restraint. Keep only elements that explain the premise;
-open space can remain empty. Exclude glitter and generic AI decoration.
+Read each active listing agent's canonical spec and the listing-specific scope
+annex in `agents/reference/AGENTS-annex-listing.md`. Pass the verified name,
+slug, unified number, preparation output path, exact product description,
+`verified_product_facts`, and only the technical facts reported by Agent 13.
+Keep unknown product facts explicitly unknown. Do not ask listing agents to
+inspect font binaries, image pixels, licenses, or package contents.
 
-### 2. Agent 13
+1. Agent 20 BOOTH: default campaign is `FREE_ACTIVE`; preserve any user-supplied
+   campaign timing or scope. Freeze already-fetched tag evidence if a prior or
+   interrupted run collected it, so evidence is not fetched twice.
+2. Agent 2 Creative Market: one bounded per-font research pass and verified
+   product facts; historical local listings are optional writing references.
+3. Agent 29 Creative Fabrica Fonts: the current 40-tag evidence contract.
 
-Delegate `font-prep-specialist` with:
+Each marketplace agent must return its validated output path and completion
+status before the next is dispatched. Do not claim an upload or publication.
 
-```text
-FULL WORKFLOW CONTINUOUS MODE
-font workspace: [exact workspace]
-final name: [new name]
-description: [old description]
-unified product number: [UNIFIED_PRODUCT_NUMBER]
-Run the complete preparation in one pass and stop at its completion summary.
-Install all 23 checked Pinterest pins from the Agent-27 `prepared_visuals/pinterest/`
-folder with `bin/install_template_pinterest_pins.py`; do not create a new Skia pin
-set. Render the two factual specimen sheets at both ratios per STEP 2b, using the
-class from the visual plan, and leave the rest of `visuals/New-Images/` for the
-user's final artwork.
-Showcase video rendering is archived and is not part of this workflow; see
-`archive/video/README.md` to reinstate it.
-```
+## Paused and post-workflow stages
 
-Wait for the final preparation result. Agent 13 has a single pass and never waits
-for a visual handoff; do not start BOOTH until its preparation result returns.
+Pixiv, X, Marketore, YellowImages, DLsite, Cubebrush, Etsy, Behance, Pinterest,
+and all other marketplace agents are not part of `/full-workflow`. Agent 30
+`font-final-visual-processor`, Agent 31 `font-rights-researcher`, the Pinterest
+preparer, and the daily Pinterest runner remain standalone workflows.
 
-### 3-5. Marketplace agents
+## Runtime ID map
 
-Delegate `booth-fonts-specialist`, wait for its final listing result, then
-delegate `cm-fonts-specialist`, wait for its final result, then delegate
-`creative-fabrica-fonts-specialist`. Pass the exact preparation output path,
-source description path, final name, and `unified product number:
-[UNIFIED_PRODUCT_NUMBER]` to each. Do not delegate YellowImages, DLsite,
-Marketore, Cubebrush, or any other marketplace agent from this workflow.
+| Runtime | Agent 27 | Agent 13 | Agent 20 | Agent 2 | Agent 29 |
+|---|---|---|---|---|---|
+| Codex | `font_image_generator` | `font_preparer` | `booth_fonts_specialist` | `cm_fonts_specialist` | `creative_fabrica_fonts_specialist` |
+| OpenCode / OMP / Qwen / Claude | `font-image-generator` | `font-prep-specialist` | `booth-fonts-specialist` | `cm-fonts-specialist` | `creative-fabrica-fonts-specialist` |
 
-BOOTH tag evidence must be collected exactly once per product. If any run —
-yours, an interrupted one, or a cancelled dispatch — already fetched tag counts
-for this product, freeze the counts, activity labels, and selected set into a
-research file and pass its path to `booth-fonts-specialist`; the agent's
-FROZEN EVIDENCE MODE then performs zero count fetches. Re-dispatching the agent
-without the frozen file after a cancellation restarts the whole scrape batch.
+For Qwen, dispatch named agents in the foreground with
+`run_in_background: false`. Every runtime's full-workflow registration must
+read this contract and use only its native delegation mechanism.
 
-## Failure Gate
+## Completion report
 
-If a child fails, is blocked, lacks its required output path, or says that it
-stopped before its contract was complete, stop. Return the failed child, its
-last reported status, and the next safe resume point. Never launch a later
-child after a failed earlier stage.
-
-## Final Response
-
-After Creative Fabrica returns successfully, report the five active stage
-statuses and output paths. Report the paused stages explicitly as
-`PAUSED — not delegated`. Agent 13's report must confirm the 23 Agent-27 Pinterest template pins
-in `visuals/New-Images/pinterest/`. Tell the user that the remaining final images
-are theirs to generate: they drop the raw files into
-`outputs/font-preparation/{NUM}-{slug}/visuals/New-Images/` and then run
-`/font-final-images`, which preserves the 23 template pins and appends ten image composites. Do not claim that any
-marketplace listing was uploaded or published.
+Return a concise stage-by-stage report with each child's final status and exact
+output path. Report paused agents as `PAUSED — not delegated`. Do not claim any
+marketplace listing was uploaded or published. Agent 13's summary must confirm
+the 23 checked template pins. Tell the user the final image artwork remains a
+separate seller step and `/font-final-images` runs after those files are added.

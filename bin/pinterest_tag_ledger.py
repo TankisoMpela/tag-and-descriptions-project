@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Per-font Pinterest ledger — stops pins cannibalizing each other.
 
-outputs/research/pinterest-tags.sqlite holds two kinds of record. `tag_uses`
-counts every keyword per font, so `avoid` can hand back the least-used
-candidates. `pins` holds the full text of every pin the daily run shipped —
-title, description, alt text, keywords, board, image and link — so `history`
-can answer "what did I already do for this font, and when" before new copy is
-written. `pinned_runs` is the 14-day re-pin exclusion the picker reads.
+outputs/research/pinterest-tags.sqlite holds drafts and confirmed imports.
+`prepared_pins` holds the latest assembled drafts; `pins` holds the full text
+of rows confirmed accepted by Buffer/Pinterest. `tag_uses` counts their
+keywords, and `pinned_runs` drives the 14-day re-pin exclusion. Assembly alone
+does not update history; use `mark-imported` only after the destination accepts
+the rows. This records import/queue acceptance, not publication.
 
 Usage:
   python3 bin/pinterest_tag_ledger.py record --slug quiet-acre --date 2026-10-10 --tags "boho script font, wedding signage font"
+  python3 bin/pinterest_tag_ledger.py mark-imported --date 2026-10-11 --slugs quiet-acre another-font
   python3 bin/pinterest_tag_ledger.py avoid --slug quiet-acre --candidates "boho script font, wedding signage font, ..." --take 5
   python3 bin/pinterest_tag_ledger.py history [--slug quiet-acre] [--limit 3] [--full]
   python3 bin/pinterest_tag_ledger.py stats [--slug quiet-acre]
@@ -52,6 +53,19 @@ CREATE TABLE IF NOT EXISTS pins (
     link        TEXT,
     PRIMARY KEY (font_slug, run_date)
 );
+CREATE TABLE IF NOT EXISTS prepared_pins (
+    font_slug   TEXT NOT NULL,
+    run_date    TEXT NOT NULL,
+    title       TEXT,
+    description TEXT,
+    alt         TEXT,
+    keywords    TEXT,
+    board       TEXT,
+    image_url   TEXT,
+    link        TEXT,
+    csv_path    TEXT,
+    PRIMARY KEY (font_slug, run_date)
+);
 CREATE INDEX IF NOT EXISTS idx_tag_uses ON tag_uses (font_slug, tag);
 """
 
@@ -85,12 +99,7 @@ def font_counts(con: sqlite3.Connection, slug: str) -> dict[str, int]:
 def record_pin(con: sqlite3.Connection, *, slug: str, date: str, title: str,
                description: str, alt: str, keywords: list[str], board: str,
                image_url: str, link: str) -> None:
-    """Keep the full text of a shipped pin so the next run can avoid it.
-
-    REPLACE rather than INSERT: re-running `assemble` for a date regenerates
-    the CSVs, and a stale copy of the previous wording would keep the old
-    phrases looking reusable.
-    """
+    """Keep the full text of a confirmed imported pin for future rotation."""
     con.execute("""
         INSERT OR REPLACE INTO pins
             (font_slug, run_date, title, description, alt, keywords, board,
@@ -98,6 +107,19 @@ def record_pin(con: sqlite3.Connection, *, slug: str, date: str, title: str,
         VALUES (?,?,?,?,?,?,?,?,?)
     """, (slug, date, title, description, alt, ", ".join(keywords), board,
           image_url, link))
+
+
+def prepare_pin(con: sqlite3.Connection, *, slug: str, date: str, title: str,
+                description: str, alt: str, keywords: list[str], board: str,
+                image_url: str, link: str, csv_path: str) -> None:
+    """Keep the latest assembled draft without treating it as imported."""
+    con.execute("""
+        INSERT OR REPLACE INTO prepared_pins
+            (font_slug, run_date, title, description, alt, keywords, board,
+             image_url, link, csv_path)
+        VALUES (?,?,?,?,?,?,?,?,?,?)
+    """, (slug, date, title, description, alt, ", ".join(keywords), board,
+          image_url, link, csv_path))
 
 
 def font_pins(con: sqlite3.Connection, slug: str,
@@ -123,6 +145,51 @@ def cmd_record(args, con: sqlite3.Connection) -> int:
     con.commit()
     out = {"slug": args.slug, "date": args.date, "recorded": tags}
     print(json.dumps(out, indent=2) if args.json else f"{args.slug}: recorded {len(tags)} tag use(s) for {args.date}")
+    return 0
+
+
+def cmd_mark_imported(args, con: sqlite3.Connection) -> int:
+    """Record confirmed Buffer/Pinterest imports in pin history."""
+    slugs = list(dict.fromkeys(args.slugs))
+    if not slugs:
+        sys.exit("error: supply at least one --slugs value")
+
+    prepared: dict[str, sqlite3.Row] = {}
+    already: set[str] = set()
+    missing: list[str] = []
+    for slug in slugs:
+        if con.execute("SELECT 1 FROM pins WHERE font_slug=? AND run_date=?",
+                       (slug, args.date)).fetchone():
+            already.add(slug)
+            continue
+        row = con.execute(
+            "SELECT * FROM prepared_pins WHERE font_slug=? AND run_date=?",
+            (slug, args.date)).fetchone()
+        if row is None:
+            missing.append(slug)
+        else:
+            prepared[slug] = row
+    if missing:
+        sys.exit(f"error: no prepared pin for {args.date}: {', '.join(missing)}")
+
+    for slug, row in prepared.items():
+        record_pin(
+            con, slug=slug, date=args.date, title=row["title"] or "",
+            description=row["description"] or "", alt=row["alt"] or "",
+            keywords=split_tags(row["keywords"] or ""), board=row["board"] or "",
+            image_url=row["image_url"] or "", link=row["link"] or "")
+        con.execute(
+            "INSERT OR IGNORE INTO pinned_runs (font_slug, run_date, csv_path) VALUES (?,?,?)",
+            (slug, args.date, row["csv_path"]))
+        con.executemany(
+            "INSERT INTO tag_uses (font_slug, tag, run_date) VALUES (?,?,?)",
+            [(slug, tag, args.date) for tag in split_tags(row["keywords"] or "")])
+    con.commit()
+    result = {"date": args.date, "recorded": sorted(prepared),
+              "already_recorded": sorted(already)}
+    print(json.dumps(result, indent=2) if args.json else
+          f"{args.date}: recorded {len(prepared)} imported pin(s); "
+          f"{len(already)} already recorded. This confirms import/queue acceptance, not publication.")
     return 0
 
 
@@ -218,13 +285,15 @@ def cmd_stats(args, con: sqlite3.Connection) -> int:
 def cmd_reset(args, con: sqlite3.Connection) -> int:
     n = con.execute("SELECT COUNT(*) FROM tag_uses WHERE font_slug=?", (args.slug,)).fetchone()[0]
     p = con.execute("SELECT COUNT(*) FROM pins WHERE font_slug=?", (args.slug,)).fetchone()[0]
+    d = con.execute("SELECT COUNT(*) FROM prepared_pins WHERE font_slug=?", (args.slug,)).fetchone()[0]
     if not args.yes:
-        sys.exit(f"error: {args.slug} has {n} tag use(s) and {p} recorded pin(s) — pass --yes to clear them")
+        sys.exit(f"error: {args.slug} has {n} tag use(s), {p} imported pin(s), and {d} draft(s) — pass --yes to clear them")
     con.execute("DELETE FROM tag_uses WHERE font_slug=?", (args.slug,))
     con.execute("DELETE FROM pinned_runs WHERE font_slug=?", (args.slug,))
     con.execute("DELETE FROM pins WHERE font_slug=?", (args.slug,))
+    con.execute("DELETE FROM prepared_pins WHERE font_slug=?", (args.slug,))
     con.commit()
-    print(f"{args.slug}: cleared {n} tag use(s) and {p} pin record(s)")
+    print(f"{args.slug}: cleared {n} tag use(s), {p} imported pin(s), and {d} draft(s)")
     return 0
 
 
@@ -240,6 +309,12 @@ def main(argv=None) -> int:
     rec.add_argument("--tags", required=True)
     rec.add_argument("--csv", help="path of the pins.csv this record belongs to")
     rec.set_defaults(func=cmd_record)
+
+    imported = sub.add_parser("mark-imported", parents=[common])
+    imported.add_argument("--date", required=True)
+    imported.add_argument("--slugs", nargs="+", required=True,
+                          help="font slugs whose rows Buffer/Pinterest accepted")
+    imported.set_defaults(func=cmd_mark_imported)
 
     av = sub.add_parser("avoid", parents=[common])
     av.add_argument("--slug", required=True)

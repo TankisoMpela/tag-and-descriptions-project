@@ -17,7 +17,9 @@ Do:
 
 Do not:
 - Do not technically inspect, validate, or cross-check raw product files, ZIPs, fonts, brushes, images, previews, metadata, dimensions, licenses, provenance, AI status, or package contents for completeness, correctness, packaging, or marketplace readiness. Reading relevant files only to gather copy facts is allowed.
-- Run file/package/asset validators, Fontspector, `validate_*` scripts, image checks, manifests, or upload checks.
+- Run package/file/asset validators, Fontspector, image checks, manifests, or
+  upload checks. The mandatory BOOTH listing-copy validator below is allowed
+  and must check only the generated listing text.
 - Produce category/taxonomy, attributes, materials, pricing, license, media/alt-text, AI-content, packaging, or upload recommendations unless explicitly requested.
 - Do not reopen the generated listing or product to cross-check the result. Use relevant local files only for factual copy input; ask if a required fact is still missing.
 
@@ -105,7 +107,8 @@ the copy, including:
 
 Do not enumerate, extract, inspect, validate, or cross-check font binaries,
 archives, images, previews, manifests, audits, metadata, dimensions, package
-contents, or technical files. Do not run validators or QA tools. If a needed
+contents, or technical files. Do not run product validators or QA tools. The
+mandatory listing-copy validator below is the sole exception. If a needed
 copy fact is not present in the supplied description or relevant documentation,
 mark it unknown or ask one concise question; never invent it.
 
@@ -551,12 +554,13 @@ limit. BOOTH's public materials also do not state a numeric character limit for
 an individual product tag. Treat the authenticated BOOTH editor's visible
 counter or rejection behavior as the authority.
 
-Selected tags must number 18-25, targeting 25, ordered by the evidence ranking
-above rather than guessed search volume; `bin/validate_booth_listing.py` fails
-closed outside 18-25 (`MIN_BOOTH_TAGS` / `MAX_BOOTH_TAGS`) and treats
-`TARGET_BOOTH_TAGS` (25) as a warning, not a failure. The target is a goal, not
-a quota: a count of 18-24 passes with a warning, and padding to reach 25 is
-forbidden. No other number appears anywhere in this workflow -- the bank's
+Selected tags normally number 18-25, targeting 25, ordered by the evidence
+ranking above rather than guessed search volume. Above 25 fails. Below 18 is
+allowed only when every selected tag clears the validator's documented
+win-rate exemption; otherwise report BLOCKED. The validator treats
+`TARGET_BOOTH_TAGS` (25) as a warning, not a failure. The target is a goal,
+not a quota: padding to reach either 18 or 25 is forbidden. No other number
+appears anywhere in this workflow -- the bank's
 inventory is a candidate source, not a selected-tag target. The set **combines the font-clear family** (pages
 whose tag results are dominated by fonts, such as `フォント`, `書体`,
 `フォント・書体`, `オリジナルフォント`, `タイポグラフィ`, `デザインフォント`,
@@ -688,10 +692,10 @@ route. Mine related-tag labels and additional relevant paid font pages when the
 initial set is short. Comparable paid-product repetition is a ranking signal,
 not a requirement that forces the final list down to five or six when a tag is
 otherwise live, accurate, and category-relevant. If the second pass still
-cannot reach 18 validated tags, do not write a completed listing: report
-`BLOCKED` with the exact count, since the validator rejects anything below
-`MIN_BOOTH_TAGS`, and record the candidate families and rejection reasons in
-`RESEARCH NOTES`.
+cannot reach 18 validated tags and every selected tag does not meet the
+validator's below-floor win-rate exemption, do not write a completed listing:
+report `BLOCKED` with the exact count and record the candidate families and
+rejection reasons in `RESEARCH NOTES`.
 
 Never invent or pad tags.
 Keep individual tags short and atomic rather than sentence-like because no
@@ -1099,8 +1103,8 @@ python3 bin/validate_booth_listing.py outputs/booth/{NUM}-{product-slug}-booth.m
   report it as ready and move on.
 - If the validator prints `[FAIL]` with any reason, fix the listing to address
   every reported failure and re-run the validator. Repeat until it passes.
-- The validator fails closed on: the 18-25 tag contract
-  (`MIN_BOOTH_TAGS` / `MAX_BOOTH_TAGS`); falling short of the 25
+- The validator fails closed above 25 tags and below 18 unless every selected
+  tag earns the measured win-rate exemption. It also treats falling short of the 25
   `TARGET_BOOTH_TAGS` warns rather than failing, because padding to reach it is
   what the spec forbids. It also fails closed on one tag per line
   with no duplicates, one evidence row per selected tag whose first cell equals

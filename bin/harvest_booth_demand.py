@@ -50,6 +50,7 @@ import urllib.parse
 from collections import Counter
 from datetime import date, datetime
 from pathlib import Path
+from mcp_paths import configured_mcp_script
 
 OUT_DIR = Path("outputs/research/booth-demand")
 CORPUS = OUT_DIR / "autocomplete-corpus.jsonl"
@@ -60,8 +61,8 @@ DB = Path("outputs/research/booth-live-collector/booth.db")
 
 SERPER_URL = "https://google.serper.dev/autocomplete"
 FIRECRAWL_URL = "https://api.firecrawl.dev/v1/scrape"
-SERPER_KEY_FILE = Path("/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/serper_mcp.py")
-FIRECRAWL_KEY_FILE = Path("/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/firecrawl_mcp.py")
+SERPER_KEY_FILE = configured_mcp_script("serper_mcp.py")
+FIRECRAWL_KEY_FILE = configured_mcp_script("firecrawl_mcp.py")
 ROUTE = "https://booth.pm/ja/items?tags%5B%5D="
 COUNT_RE = re.compile(r"([\d,]+)\s*点")
 
@@ -127,16 +128,16 @@ def log(msg: str) -> None:
     print(msg, flush=True)
 
 
-def key_from(explicit: str | None, env: str, path: Path, pattern: str, name: str) -> str:
+def key_from(explicit: str | None, env: str, path: Path | None, pattern: str, name: str) -> str:
     if explicit:
         return explicit.strip()
     if os.environ.get(env):
         return os.environ[env].strip()
-    if path.exists():
+    if path and path.is_file():
         m = re.search(pattern, path.read_text(errors="ignore"))
         if m:
             return m.group(0) if "fc-" in pattern else m.group(0)
-    sys.exit(f"no {name} key: pass --{name}-key, set {env}, or keep {path}")
+    sys.exit(f"no {name} key: pass --{name}-key, set {env}, or configure PAPERMOON_MCP_DIR")
 
 
 def load_state() -> dict:

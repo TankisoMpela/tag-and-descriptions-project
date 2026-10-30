@@ -1,0 +1,263 @@
+#artboard.user-reference-notallroads {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #202321;
+  color: #f7f4ed;
+}
+
+#artboard.user-reference-notallroads .nr-photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+  user-select: none;
+  pointer-events: none;
+}
+
+#artboard.user-reference-notallroads .nr-line {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: visible;
+  color: #f4bd38;
+  font-family: SupportDisplay, serif;
+  font-size: 72px;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .9;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: pre;
+  -webkit-text-stroke: .55px rgba(9, 12, 13, .55);
+  text-shadow: 0 3px 14px rgba(0, 0, 0, .68);
+}
+
+#artboard.user-reference-notallroads .nr-not {
+  top: 4%;
+  left: 25%;
+  width: 50%;
+  height: 22%;
+  text-transform: uppercase;
+}
+
+#artboard.user-reference-notallroads .nr-all-roads {
+  top: 26%;
+  left: 6%;
+  width: 88%;
+  height: 17%;
+  color: #f7f4ed;
+}
+
+#artboard.user-reference-notallroads .nr-are {
+  top: 44%;
+  left: 22%;
+  width: 56%;
+  height: 22%;
+  text-transform: uppercase;
+}
+
+#artboard.user-reference-notallroads .nr-simple {
+  top: 66%;
+  left: 4%;
+  width: 92%;
+  height: 23%;
+  color: #f7f4ed;
+}
+
+#artboard.user-reference-notallroads.nr-square .nr-not {
+  top: 3%;
+  left: 10%;
+  width: 80%;
+  height: 20%;
+}
+
+#artboard.user-reference-notallroads.nr-square .nr-all-roads {
+  top: 22%;
+  left: 2%;
+  width: 96%;
+  height: 17%;
+}
+
+#artboard.user-reference-notallroads.nr-square .nr-are {
+  top: 40%;
+  left: 10%;
+  width: 80%;
+  height: 20%;
+}
+
+#artboard.user-reference-notallroads.nr-square .nr-simple {
+  top: 61%;
+  left: 1%;
+  width: 98%;
+  height: 25%;
+}
+
+#artboard.user-reference-practicehard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #111416;
+  color: #f7f4ed;
+}
+
+#artboard.user-reference-practicehard .ph-photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+  user-select: none;
+  pointer-events: none;
+}
+
+#artboard.user-reference-practicehard .ph-row {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 19%;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+#artboard.user-reference-practicehard .ph-word {
+  display: block;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  overflow: visible;
+  font-family: SupportDisplay, serif;
+  font-size: 72px;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .9;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: pre;
+  -webkit-text-stroke: .45px rgba(8, 10, 11, .6);
+  text-shadow: 0 3px 14px rgba(0, 0, 0, .75);
+}
+
+#artboard.user-reference-practicehard .ph-verb {
+  color: #f7f4ed;
+}
+
+#artboard.user-reference-practicehard .ph-power {
+  color: #f4bd38;
+  text-transform: uppercase;
+}
+
+#artboard.user-reference-rainbowstack {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #111111;
+  color: #f7f4ed;
+}
+
+#artboard.user-reference-rainbowstack .rs-photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+  user-select: none;
+  pointer-events: none;
+}
+
+#artboard.user-reference-rainbowstack .rs-row {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 23.5%;
+  overflow: visible;
+  color: #f7f4ed;
+  font-family: SupportDisplay, serif;
+  font-size: 72px;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .9;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  text-transform: uppercase;
+  white-space: pre;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .42);
+}
+
+#artboard.user-reference-rainbowstack .rs-outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.35px rgba(250, 248, 244, .96);
+  text-shadow: none;
+}
+
+#artboard.user-reference-wakefamous {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #17110f;
+  color: #f7f4ed;
+}
+
+#artboard.user-reference-wakefamous .wf-photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+  user-select: none;
+  pointer-events: none;
+}
+
+#artboard.user-reference-wakefamous .wf-frame {
+  position: absolute;
+  z-index: 1;
+  inset: 14.5% 11.7% 12.9%;
+  border: 1px solid rgba(250, 248, 244, .96);
+  pointer-events: none;
+}
+
+#artboard.user-reference-wakefamous .wf-line {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 23%;
+  overflow: visible;
+  color: #f7f4ed;
+  font-family: SupportDisplay, serif;
+  font-size: 72px;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .9;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: pre;
+}
+
+#artboard.user-reference-wakefamous.wf-square .wf-frame {
+  inset: 7.5%;
+}

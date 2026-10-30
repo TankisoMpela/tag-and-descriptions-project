@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rainbow Stack</title>
+  <link rel="stylesheet" href="../../shared/editor-shell.css">
+  <link rel="stylesheet" href="../../shared/user-reference-batch-j.css">
+</head>
+<body>
+  <header class="studio-header">
+    <div>
+      <h1>Rainbow Stack</h1>
+      <p class="source-id">T19310_08 · reference remake</p>
+    </div>
+  </header>
+  <main class="studio-grid">
+    <figure class="reference-panel">
+      <figcaption class="panel-title">Original reference</figcaption>
+      <img src="../../../support-references/originals/reference-batch-2026-10-26-d/T19310_08.webp" alt="Four oversized RAINBOW rows alternating outlined and solid white letters over a dark photograph">
+      <p class="reference-note">The original remains unchanged. Its four words are removed only from the separate photo plate; replacement lettering stays live in the selected font.</p>
+    </figure>
+    <section class="stage-panel" aria-label="Live template preview">
+      <h2 class="panel-title">Live composition</h2>
+      <div class="artboard-frame"><div id="artboard" data-ratio="3x2" aria-label="Editable four-row display type with alternating outline and solid lettering over a dark photograph"></div></div>
+    </section>
+    <aside class="controls-panel">
+      <h2 class="panel-title">Layout controls</h2>
+      <label class="font-picker" for="font-file">Display font
+        <input id="font-file" type="file" accept=".otf,.ttf,.woff,.woff2">
+        <span id="font-status" class="font-status">Choose a font to fit all four rows.</span>
+      </label>
+      <div id="template-controls"></div>
+    </aside>
+  </main>
+  <script src="../../shared/layout.js"></script>
+  <script src="../../shared/user-reference-batch-j.js"></script>
+  <script src="../../shared/editor-shell.js"></script>
+  <script>
+    window.SupportEditor.start(window.UserReferenceBatchJ.create("rainbowstack32"));
+  </script>
+</body>
+</html>

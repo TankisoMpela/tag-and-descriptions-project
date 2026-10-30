@@ -1,28 +1,33 @@
 # Supporting-template handoff guide
 
-Source of truth for Agent 27 when the renderer selects seven supporting
+Source of truth for Agent 27 when the renderer selects 13 supporting
 templates. The native Skia catalogue lives in six files: the original 26 panels in
 `bin/pin-studio/pin_studio.py` and 44 reference remakes in
 `bin/pin-studio/support_templates/{t30332,fashion,photo,poster,objects}.py`.
 Every native slot name and guard quoted below is read from those files, so this
 guide and the renderer cannot disagree. If you change one, change the other.
-Fourteen additional HTML-only source remakes occupy slots 71–84 and are
-documented after the native layouts. The guide retains historical sections for retired layouts; the renderer's
-`--list --supports` output and `SUPPORT_RETIRED` set determine the live catalogue.
+The stable slots from 71–172 hold the HTML-only source remakes documented
+after the native layouts. The guide retains historical sections for retired
+layouts; `support-html/catalog.json` and the renderer's retirement and eligibility
+gates determine the live catalogue. Seller-selected retirements added on 2026-10-26:
+`line32`, `duo32`, `card32`, `hand32`, `zebra32`, `electromagnetic32`,
+`demolition32`, `skinbadge32`, `gelatocards32`, `angelinastyle32`, `beachclub32`,
+`fluorescentduo32`, and `lastnightsweden32`.
 
 Support images must not repeat the font's name — the thumbnail already does that.
 Captions and alt text describe the rendered result, not an imagined product
 photograph.
 
-New copy that is drawn with a showcased font uses Title Case, with an initial
-capital on each word. Do not force all-caps display copy: a face intended for
+Generic new copy that is drawn with a showcased font uses Title Case, with an
+initial capital on each word. Source-led remakes preserve the wording and case
+of their reference. Do not force all-caps display copy: a face intended for
 capitals supplies that look through its own letterforms. Keep exact letter,
 digit, and symbol specimens in their literal case.
 
 ## How to read this guide (token contract)
 
 Read **Part 1** and **Part 2** in full, then open **only the Part 3 sections for the
-seven templates this font actually shipped**. The renderer prints the selected
+13 templates this font actually shipped**. The renderer prints the selected
 names on the `supports:` line; look them up rather than scrolling the whole
 catalogue. Part 4–6 are reference, not required reading every run.
 
@@ -54,40 +59,35 @@ the protecting; know them before you read a single template.
 
 ## 1.1 One surface, one pass
 
-Every native Skia support panel draws at 3:2, 2400x1600. The fourteen HTML-only
-source remakes also have separate 1:1 compositions in the browser editor; their
-text boxes refit to the selected ratio and their background subjects remain
-separately inspectable. `--support-count` is fixed at 7
-by `bin/generate_font_text_placeholders.py`; passing any other value is a hard
+Every Agent-27 support panel uses the shared HTML/CSS catalogue renderer and is
+composed independently at 3:2 and 1:1. The regular native Skia renderer remains
+available for catalogue maintenance, but is not used for this handoff.
+`--support-count` is fixed at 13 by `bin/generate_font_text_placeholders.py`;
+passing any other value is a hard
 `SystemExit`.
 
 ## 1.2 A layout error fails the whole handoff
 
-`render()` collects each panel's `problems`, and `main()` exits non-zero if any
-panel reports one. The upstream wrapper turns any non-zero exit into
-`SystemExit("Skia renderer failed while creating supporting templates")` and wipes
-the staging directory. **One bad panel means no handoff at all** — which is why
+The renderer and handoff validator stop on any layout or asset failure.
+**One bad panel means no handoff at all** — which is why
 the errors in Part 3 are the interesting part of this document, not a footnote.
 Fix the reported error and re-run; never hand-edit a generated PNG.
 
-## 1.3 Copy inlets — and the fact that production feeds none of them
+## 1.3 Copy inlets — use the selected template's authored copy
 
-A panel can read exactly four authored keys: `word`, `line`, `over`, `sub`.
-
-**Agent 27's pipeline passes no copy at all.** The support run is invoked as
-`--font --name --class --about --supports --support-count 7`, so the four keys
-arrive as the CLI defaults — and those defaults (`"Whiskey"`, `"Midnight letters
-and loud labels"`, `"invitation suite · editorial · packaging"`) are precisely the
-strings banned as stock copy. They get blanked, and every panel falls back to its
-**own authored vocabulary**, rotated by the font name.
-
-That is deliberate and it is the premium path: each panel carries a small
-vocabulary of phrases that suit that particular picture (`card32` offers *"Made to
-be read"*, *"Worth reading twice"*, *"Cut for the long run"*…), and the rotation
-means two faces of the same shape do not both ship the same line. Do not add
-per-font copy to the standard run. Part 6 covers the one case where you should.
+Agent 27 renders 13 selected templates through the shared HTML/CSS catalogue
+with `--support-renderer html --support-ratios both`. Do not author custom
+support promos or inject a second generic copy set. Each selected template's
+authored copy, factual fields, and font-fitting rules govern its output; consult
+only the Part 3 entries for the selected designs. The family showcase layouts
+are included when the source has at least two real styles, and the remaining
+slots come from the seeded random class-fit selection.
 
 ## 1.4 The blanking rules (why your copy may silently vanish)
+
+The rules in §§1.4–1.11 describe the legacy native Skia layouts. Agent 27's
+production handoff uses HTML/CSS templates; use their Part 3 contracts and the
+renderer `contentWarnings` for that output.
 
 Before any support panel runs, `render()` blanks a copy value if it:
 
@@ -145,20 +145,23 @@ Note what `--json` cannot tell you: `greet4` reports a normal size (`165`) on a 
 that painted one glyph, because stripping happens **before** `fit()`. Slot sizes prove
 how big, never how much — only the PNG or this predictor proves content.
 
-Do not rely on reading seven PNGs to catch it either. Run the predictor before the
-render, once per font:
+This glyph predictor applies only to the legacy Python/Skia layouts. It does not
+audit Agent 27's HTML/CSS support output and must not be reported as coverage
+evidence for that handoff. Chromium preserves full text and uses a readable
+fallback for missing glyphs; inspect the rendered HTML `contentWarnings` and
+layout report instead. For a separate native/Skia render, the predictor can
+identify empty or thinned fixed slots:
 
 ```bash
 python3 bin/check_support_glyph_coverage.py \
-  "font-factory/fonts/{slug}/{Primary}.otf"
+  "font-factory/fonts/{input-slug}/{Primary}.{ext}"
 ```
 
 It parses the renderer's own literals, checks them against the font's cmap, and
 exits non-zero naming every panel that would ship an effectively empty slot
 (`EMPTY`) versus a merely thinned one (`thin`). Treat an `EMPTY` line as a real
-finding to report, not something to work around: the panel is in the seven, so
-either the seller accepts the degraded tile or the renderer needs the string
-changed. Never hand-edit a PNG to restore a lost glyph. The predictor needs only
+finding to report, not something to work around. Never hand-edit a PNG to
+restore a lost glyph. The predictor needs only
 `fontTools`, so plain `python3` is right for it — `pin_studio.py` itself needs the
 Skia build in `bin/pin-studio/.venv/bin/python`.
 
@@ -233,8 +236,8 @@ grid, rays, bands, rings, lanes, ruling) and an ornament set.
 `assign_themes()` rotates each panel's `THEME_PREF` shortlist by
 `sha256(font name)` and takes the first world not already used in the roll, so a
 re-run of the same font lands identically and two similar fonts do not ship the
-same colour world. Because 61 active panels draw from at most eight usable worlds,
-repeats across a seven-panel set are possible once the shortlist is spent.
+same colour world. Because 120 active panels draw from at most eight usable worlds,
+repeats across a 13-design set are possible once the shortlist is spent.
 
 **Roughly half the catalogue ignores all of this.** Every panel that sets its
 colours as literals (1.11) overrides the palette, so a `theme` you author for it
@@ -298,35 +301,29 @@ reading: render one font twice with two opposite `--palette` values and compare 
 folders — `python3 bin/check_support_theme_lock.py A/3x2 B/3x2`. Identical bytes mean
 the theme cannot reach the sheet; a mean RGB delta under 1 says only the grain moved.
 
-## 1.12 Eligibility, and how the seven are chosen
+## 1.12 Eligibility and selection of the 13 designs
 
-Starting slots are the 70 stable IDs in `SUPPORT_ORDER`; 69 are active, with retired
-slots excluded before eligibility. Then:
+The active catalogue has 135 templates across 172 stable slots. The Agent-27
+HTML/CSS handoff resolves the font class, excludes retired and class-incompatible
+layouts, then applies each template's real-family-style gate. When the source has
+at least two distinct styles from one family, `plakat32`, `weightfamily32`,
+`mangosboard32`, and `italicregular32` are all guaranteed in the 13. Each uses
+actual sibling files; `italicregular32` chooses the closest opposite
+italic/upright style when available, otherwise the nearest distinct sibling,
+and labels the comparison with the real style names. `boots32` is also gated on
+two real styles but is sampled rather than guaranteed.
 
-- `support_style_group()` resolves the renderer's four classes plus detected
-  family into the six audited style groups (blackletter, handwritten, tech/sports,
-  brush, pixel, display). `SUPPORT_STYLE_EXCLUDE` removes only the hard mismatches
-  from the paired reference/render review; conditional matches remain selectable.
-- `SUPPORT_UNFIT` still excludes `crest32` and `card32` for mono families.
-- `SUPPORT_MIN_STYLES` drops `boots32`, `weightfamily32` and `mangosboard32` unless
-  the source folder holds **at least two real sibling styles** (matched on OpenType
-  family name ID 16/1, format twins deduped).
-- `weightfamily32` and `mangosboard32` are then **always taken** when eligible, so a
-  genuine family always ships both family proofs.
-- The remainder is `rng.sample()` seeded by `sha256("{name}|{class}|support-catalogue")`.
+The remaining slots come from a seeded random class-fit selection using
+`sha256("{font_name}|{class}|support-catalogue")`; the same name and class
+produce the same 13 designs. The current tested eligible-pool sizes are
+blackletter 118, handwritten 123, tech/sports 119, brush 126, pixel 125, and
+display 126. Each ratio folder receives 13 images named
+`support-{N}_{template}.png`, where **N is the catalogue slot, not a 1–13
+ordinal**. Gaps are normal and a panel keeps its number across runs.
 
-For the six audited representative styles, the post-filter eligible pools are
-blackletter 52, handwritten 58, tech/sports 48, brush 63, pixel 55, and display
-61. These include Strong and Conditional matches, then apply real-family gates;
-the full paired sheets, exact exclusions, and low-supply assessment live in
-[`class-audit-2026-10-14/README.md`](class-audit-2026-10-14/README.md).
-**The selection is deterministic** — same name and class, same seven, every time —
-which is what makes Part 6 possible.
-
-Output names are `support-{N}_{template}.png` where **N is the catalogue slot, not
-a 1–7 ordinal**. Gaps are normal and a panel keeps its number across runs.
-Unselected or retired `support-*` files are deleted, so the folder is always
-exactly seven images.
+The separate `--support-review-all --support-renderer html` mode is a full
+catalogue review, not a normal font handoff; it bypasses class-fit filtering but
+keeps retirement and actual-family-style gates.
 
 ## 1.13 Facts the panels assert for you
 
@@ -350,7 +347,7 @@ variable-font evidence is the single worst derivation error available here.
 
 # Part 2 — Choosing what suits the face
 
-You do not choose the seven. You choose the two things that steer them: the
+You do not choose the 13. You choose the two things that steer them: the
 `renderer_class` and the honesty of your `font_profile`. Get those right and the
 catalogue self-selects.
 
@@ -380,7 +377,7 @@ concrete structural language (`connected script with looping entry strokes`,
 | Sports / geometric monoline / techno | See the tested Strong and Conditional sets, and exact hard exclusions, in the [six-style paired audit](class-audit-2026-10-14/README.md); its tech/sports group preserves conditional editorial/illustrative matches while excluding only reviewed hard mismatches | Use the audit’s class-specific list rather than assuming the whole group shares a single structural-fit rule |
 | Ultra-bold display | `sticker32`, `duo32`, `echo32`, `feature32`, `birvase32` | `soldier32`/`mirror32` small rows (legibility floors bite) |
 | Hairline / light | `line32`, `quote32`, `rio32`, `mountain32` | `sticker32`, `neon32`, `zebra32` — heavy flat treatments need mass to survive |
-| Genuine multi-style family | `weightfamily32` + `mangosboard32` (guaranteed), `plakat32` (real weight marker) | — |
+| Genuine multi-style family | `plakat32`, `weightfamily32`, `mangosboard32`, and `italicregular32` (all guaranteed when at least two real styles exist) | — |
 | Single style only | — | family proofs are not offered; never claim a range |
 
 ## 2.3 Word budgets at a glance
@@ -1074,9 +1071,9 @@ whether a later change moved it:
   Rerun the catalogue before treating the old error count as current. The panels that
   failed this class earlier — `cliffpostcard32`,
   `ovalword32` — have since been rebuilt on supplied clean plates marked `bleed=True`,
-  which is the fix, not a re-tuned box. Judge a delivery by the selected panels until a
-  fresh full-catalogue sweep is available.
-  seven selected panels, not by the sweep.
+  which is the fix, not a re-tuned box. Rerun the catalogue before treating its
+  historical error count as current. Judge a delivery by its 13 selected designs,
+  not by that historical sweep.
 * **`hi` is reached, not assumed, and a wide face spends it unevenly.** Short fixed
   strings land on `hi × 1.6`: `yearposter32` 784, `signalclock32` 624, `glyphsheet32`
   208 ×3, `greetingsgrid32` 165 in all six tiles. Longer ones do not: `wideclaim32`
@@ -1540,6 +1537,318 @@ type treatment and source art, and describe the text that actually rendered.
 flat graphic overlays. Preserve those overlaps while keeping every editable
 text box within its measured area.
 
+### October 2026 reference batch B — slots 85–105
+
+These 21 additional source-led editors are HTML-only and use the same measured
+fit and clipping contract. Nineteen have generated text-free background plates
+and square scene extensions under
+`support-references/materials/user-batch-2026-10-20-b/`. `beachclub32` uses the
+preserved original photo under a turquoise cover panel because image cleanup
+was rejected by the image tool. `splitampersand32` rebuilds its two-tone
+specimen directly in CSS. Originals, URLs, material hashes, and cleanup notes
+are in `support-references/originals/user-batch-2026-10-20-b/SOURCES.md`.
+
+* **`saucystack32` (85)** — T34327_05, three chunky green/yellow lines above a
+  snack photograph, with the middle line on a red banner.
+* **`anteliascard32` (86)** — T33743_05, a tilted monochrome studio card with a
+  large script wordmark and small letter-spaced details.
+* **`peacebreath32` (87)** — T15926_01, a golden stacked quote inside a dark
+  rounded screen over a quiet ocean image.
+* **`nyccoffee32` (88)** — T15926_02, a centered white feature title over a
+  warm café photograph and video-frame edge.
+* **`afterhours32` (89)** — T15926_03, golden script and collection details over
+  an outdoor fashion scene.
+* **`outofoffice32` (90)** — T15926_06, a warm orange two-line title over a
+  canyon image, with small greeting and vacation lines.
+* **`skincareroutine32` (91)** — T15926_07, a low white routine title over a
+  skincare portrait; the subject's face stays clear.
+* **`youlookgood32` (92)** — T15926_08, a golden two-line script phrase over
+  soft ocean texture inside a rounded screen frame.
+* **`spiritadventure32` (93)** — T9403_01, a white vertical script quote over
+  a blue glacier landscape.
+* **`dreamfollow32` (94)** — T9403_02, a low white quote below a seated figure
+  facing a night mountain sky.
+* **`angelinastyle32` (95)** — T9403_03, pale script and a small uppercase
+  subtitle at lower left beside a teal fashion portrait.
+* **`comesnatural32` (96)** — T9403_04, black stacked script on the open left
+  side, with a shoreline figure at right.
+* **`calmafterstorm32` (97)** — T9403_05, centered white script over a muted
+  botanical photograph.
+* **`beachclub32` (98)** — T18889_00, yellow two-line script on a turquoise
+  masking panel over the original editorial image; the panel covers the source
+  title and stamp.
+* **`splitampersand32` (99)** — T16351_04, a bold pangram on white paired with
+  an oversized ampersand on black.
+* **`setrum32` (100)** — T16351_08, a white geometric title and red outlined
+  date framing a narrow blue corridor image.
+* **`nectarambience32` (101)** — T18612_01, a fine mint two-line title over a
+  dark magenta science-fiction composition.
+* **`fluorescentduo32` (102)** — T19863_07, two bright portrait cards with
+  separate yellow headings.
+* **`sacharon32` (103)** — T19863_00, a heavy yellow title across a vivid
+  pop-art portrait.
+* **`lastnightsweden32` (104)** — T7553_01, a rough yellow title on blue beside
+  a vertical yellow stripe.
+* **`crywolf32` (105)** — T7553_00, a white brush title over dark forest texture.
+
+### October 2026 reference batch C — sequential build, slot 106 onward
+
+Batch C has 21 user-supplied references preserved in
+`support-references/originals/user-batch-2026-10-26-c/`. Each is developed and
+visually checked in both 3:2 and 1:1 before the next source is started. The first
+editor is `welcomemorning32` (106), based on T31141_04: two left-aligned display
+rows and an eight-point star over a vivid pink field, above a shallow storefront
+photo strip. Built-in ImageGen removed the source title and storefront lettering
+to create separate 3:2 and square plates in
+`support-references/materials/user-batch-2026-10-26-c/`. Its source comparison,
+rendered outputs, and sequential status table are kept with the batch benchmark
+and `originals/.../SOURCES.md`.
+
+The second editor is `esens32` (107), based on T31141_05: one centered pink
+display word over a monochrome portrait with the tracked `LOTION BEAUTY SKINCARE`
+caption beneath it. Its 3:2 plate is copied unchanged from the user-provided
+Downloads image; the square plate is cropped from that same image. The original
+T31141_05 reference remains unchanged. No wardrobe changes or photo retouching
+are applied. Both live text layers are separately editable and fitted to their
+ratio-specific layouts. Its source comparison and ratio renders are stored with
+the batch benchmark.
+
+The third editor is `asbon32` (108), based on T31141_02: a near-black display
+word sits above a wide lagoon photograph inside a vivid pink card with a dark
+outer frame. The 3:2 photograph is cropped from the unchanged source reference;
+the square editor uses a generated square reframe of that same scene. Both
+ratios retain editable, font-fitted headline type and source-matched card and
+photo spacing. Its source comparison, square render, and renderer reports are
+stored with the batch benchmark.
+
+The fourth editor is `italicregular32` (109), based on T30392_12: a centered,
+two-line style label sits above oversized `A` and `a` letterforms. The support
+script offers it only when the selected font has another real style in the same
+family. It chooses the closest opposite italic/upright sibling when available,
+otherwise the nearest distinct style, and uses that face's actual style name in
+the label. The generated clean plate preserves the reference's warm, lightly
+speckled paper; the square editor crops the same texture to fit its board. The
+standalone editor has a sibling-font upload. Its source comparison and ratio
+renders are stored with the batch benchmark.
+
+The fifth editor is `smokeletters32` (110), based on T30392_16: tall curly
+braces enclose two oversized italic letters over a monochrome smoky-paper
+texture. The four corner labels use neutral copy in the source's small tracked
+typewriter style. The 3:2 and square versions use separately cleaned background
+plates; the letters and braces remain independent live layers. Its source
+comparison, ratio renders, and renderer reports are stored with the batch
+benchmark.
+
+The sixth editor is `blackerwear32` (111), based on T26301_02: a grayscale seated
+fashion portrait fills the left side, with two white display lines over the
+photo. The pale gray right panel carries a roman and italic headline plus compact
+body copy. User-supplied clean 3:2 and square plates are stored beside the
+unchanged original and preserve its model, outfit, pose, cap, sunglasses, crop,
+split, and monochrome lighting. All five copy layers are editable, and the
+display lines fit the uploaded font independently. Its source comparison, ratio
+renders, and normal catalogue render checks are under the batch benchmark.
+
+The seventh editor is `silentnight32` (112), based on T0420_02: two large white
+words sit on one centered line across a solid black field, surrounded by small
+white and gray star glints. The typography remains live HTML/CSS; each word fits
+to the source width, and the vector star positions are independent layout
+elements. Both ratios retain the reference's open margins and sparse night-sky
+balance. Its source comparison, ratio renders, and normal catalogue outputs are
+stored with the batch benchmark.
+
+The eighth editor is `playgrid32` (113), based on T29045_05: two charcoal panels
+sit on black, with small cyan corner labels and a large editable `Pickle` title
+and `2037` on the left. The right panel has a live `PLAY` heading and a violet
+and cream 3-by-3 grid with editable numerals, four SVG arrows, and a geometric
+center mark. All displayed words and numerals remain HTML text; no image model
+created the lettering. The same paired-panel proportions adapt to square. Its
+source comparison, two ratio exports, and normal catalogue renders are under
+`support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The ninth editor is `fridayrunning32` (114), based on T29045_06: a black poster
+with cyan corner labels and a large cyan `RUNNING` line, plus a white `FRIDAY`
+title between geometric marks and a lower `20 CLUB 25` lockup. The footer copy
+remains editable, and every word and number is live HTML/CSS text. No image
+plate or AI-generated lettering is used. The square adaptation preserves the
+same stacked hierarchy and fits `RUNNING` within the board. Its source
+comparison, two ratio exports, and normal catalogue renders are under
+`support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The tenth editor was `greatness32` (115), based on T29045_11. It is withdrawn
+from the active catalogue, and slot 115 remains reserved. The archived remake
+used the original tree-lined billboard photo, outer frame, horizontal divider,
+and lower panels, with editable headline and labels over the baked-in header
+copy. The original comparison and ratio exports remain under
+`support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The eleventh editor is `medievalcreatures32` (116), based on T33443_05: the
+original red-on-black specimen is rebuilt from three editable HTML/CSS text
+layers, with `medieval creatures` above oversized `{1348}` and `manuscript and
+bestiaries` below. Both ratios retain the centered hierarchy and source red;
+the square layout expands the caption width while keeping the year dominant.
+Its source comparison, two ratio exports, and normal catalogue renders are
+under `support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The twelfth editor is `littlemadquote32` (117), based on T33443_07: three
+editable crimson italic quote lines sit over a purple radial glow that fades to
+black, with a `Psycho (1960)` attribution and small corner credits. The source
+wording is live HTML/CSS and the gradient is native CSS. Both ratios preserve the
+quote hierarchy and source palette; the original and comparison exports remain
+under `support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The thirteenth editor is `soulrevenge32` (118), based on T33443_11: the paired
+black posters retain the source's three monochrome photo bands, crimson cast
+poster, and red circled 1987 Dragon Knight card over a violet radial field. All
+copy is editable HTML/CSS; the photos are exact crops from the unchanged source.
+The square version keeps both portrait panels side by side at a larger relative
+scale. Its comparison, two-ratio exports, responsive previews, and catalogue
+renders are under `support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The fourteenth editor is `allworkplay32` (119), based on T18053_05: four lines
+of the source quote are live editable italic HTML/CSS text over a text-free,
+ice-blue texture plate. The downloaded reference remains unchanged. Both the
+3:2 and square layouts preserve the four-line rhythm, with each row fitted to
+the uploaded font. Its comparison, two-ratio exports, responsive previews, and
+catalogue renders are under
+`support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The fifteenth editor is `sociato32` (120), based on T16618_06: a large live
+white `R` overlays the vivid portrait while an editable gold `Quirky.` lead-in
+and serif article fill the white right panel. The text-free portrait crop is a
+separate material; the downloaded source remains unchanged, and no image-model
+lettering is used. The square version independently reframes the portrait and
+fits the copy. Its source comparison, two-ratio exports, responsive previews,
+and catalogue renders are under
+`support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The sixteenth editor is `owlstory32` (121), based on T18880_08: `The` and `Owl`
+form two large editable indigo display lines beside the hand-engraved owl, with
+the three-line `WHO COULDN’T SLEEP` subhead below. Separate text-free 3:2 and
+square parchment plates retain the source's paper and illustration style; the
+original remains unchanged, and no image-model lettering is used. The square
+version gives the owl a larger upper-right position and keeps the editable copy
+in the left paper area. Its source comparison, two-ratio exports, responsive
+previews, and catalogue renders are under
+`support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The seventeenth editor is `hazysky32` (122), based on T18880_11: the lowercase
+`hazy` and `sky` display lines use editable type with a muted-gold edge, followed
+by an editable `SESSION IPA` caption. Separate text-free 3:2 and square plates
+preserve the source's warm paper grain and pink, cream, seafoam, and gold brush
+bands. The downloaded original remains unchanged, and no image-model lettering
+was used. Its source comparison, two-ratio exports, responsive previews, and
+catalogue renders are under
+`support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The eighteenth editor is `itsokay32` (123), based on T18880_15: the live cream
+`it's` and `Okay!` title rows sit over a stippled violet rose, with editable
+violet `Fenotype Studios` lettering and the tracked `POSTRE - TASTY DISPLAY
+TYPE` footer. Separate text-free 3:2 and square plates preserve the floral
+poster treatment; the original reference remains unchanged, and no model
+generated lettering. Its comparison, two-ratio exports, responsive previews,
+and normal catalogue renders are under
+`support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The nineteenth editor is `nightonearth32` (124), based on T18021_05: the two
+left-aligned lines `Night on` and `earth.` remain editable in the electric
+indigo used by the source. Its black field is CSS, so there is no generated
+background image or lettering. The original remains unchanged; its comparison,
+two-ratio exports, responsive previews, and normal catalogue renders are under
+`support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The twentieth editor is `goodthingstothose32` (125), based on T17804_02: the
+three source-case quote rows and five checkbox labels stay editable, with a
+CSS-sampled electric blue-purple field and vector underline and checkbox marks.
+The original wording is preserved; no raster material or generated lettering
+is used. The square layout keeps the same hierarchy with independently fitted
+text. Its source comparison, two-ratio exports, responsive previews, and normal
+catalogue renders are under
+`support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+The twenty-first editor is `rudybrownie32` (126), based on T17997_03: centered
+cream `Rudy` and `Brownie` lines are live editable HTML/CSS over separate
+text-free sunset-photo plates. The 3:2 plate is a photo-only text-removal
+cleanup; its square adaptation is an exact center crop. The downloaded original
+is unchanged, and no AI-generated lettering is used. Its source comparison,
+two-ratio exports, responsive previews, and normal catalogue renders are under
+`support-html/benchmarks/user-reference-batch-c-2026-10-26/`.
+
+## Reference batch D — October 2026
+
+The first editor is `spaceprint32` (127), based on E9653_03: the source's
+retro science-fiction screen-print collage is rebuilt with separate text-free
+3:2 and square plates. `HOLO` and `2023` remain live editable type over the
+orange and two-colour panels; the numeral glyphs use the currently selected
+font. The second editor, `scriptgrid32` (128), rebuilds T28885_02 as eight live
+words in a two-column grid. Its family and designer labels come from the selected
+font's metadata, with neutral type and format labels. The source responses are
+kept unchanged as WebP under
+`support-references/originals/reference-batch-2026-10-26-d/`; both ratio exports
+are in the full catalogue review folder. The third editor, `smashcourt32` (129),
+rebuilds T28885_05 as a selected-font three-line quote with both source captions
+editable. Its original court photo stays unchanged; a separate text-free plate
+removes only the original lettering, and the square adaptation uses a centered
+crop of that plate. All wording is live HTML/CSS, not generated into the image.
+The fourth editor, `scriptpattern32` (130), rebuilds T19363_09 as oversized
+selected-font words scattered over text-free cream paper. The fifth,
+`brushpanel32` (131), rebuilds T8461_02 as four pink, mint, white, and charcoal
+CSS panels; Orchid North Design, #FRESH, Believe to Achieve, and Vivid Boutique
+are live selected-font text. Its original is preserved unchanged, and no raster
+material or generated lettering is used.
+The sixth editor, `avalonbrush32` (132), rebuilds T8461_00 with a live selected-
+font Avalon word, repeated edge type, and a green “Font Specimen” badge. Its
+format-neutral badge keeps the design useful for fonts that are not SVG fonts;
+all lettering is live HTML/CSS, and its source remains unchanged.
+The seventh editor, `ssrange32` (133), rebuilds T32952_09 over the seller's
+unchanged clean fashion photo in landscape and square ratios. Both yellow
+source lines, `S/S_RANGE` and `NEW_vogue`, are editable selected-font lettering.
+The downloaded reference remains untouched, and the seller-supplied background
+plates are stored separately from the original. The eighth editor,
+`allsummerlong32` (134), adapts T35520_06 with three large hot-pink live
+selected-font lines over a text-free triptych plate; the model, clothing, pose,
+and image framing are retained. The ninth editor, `boldcampaign32` (135),
+rebuilds T35520_03 as four color blocks with the source's campaign phrases live
+in the selected font; the original paper texture remains beneath CSS panels
+that fully cover the source lettering. The tenth editor, `goodtimeroll32`
+(136), rebuilds T20482_01 with “Let the Good / Times Roll!” in two editable
+selected-font lines over a separate text-clean plate. The original stays
+unchanged, the fully clothed skater and roller skates remain visible, and the
+square adapts by centered cover cropping. The eleventh editor,
+`childhoodbook32` (137), rebuilds T22014_02 as four large live rows with its
+black and orange emphasis over a white field; every word is editable in the
+selected font, and the square layout preserves the four-row rhythm. The
+twelfth editor, `playerglyph32` (138), rebuilds T21126_11 with a selected-font
+P glyph and the source words “Player / your game / manifestation” on a charcoal
+field, using pink CSS blocks instead of added raster artwork.
+The thirteenth editor, `alicebadge32` (139), rebuilds T21126_03 as a circular
+sunset badge. “RABBITS · GO ASK ALICE” follows the upper SVG arc and “FOLLOW
+THE WHITE RABBIT” follows the lower arc; both strings stay editable in the
+selected font. The two blue stars sit in the side gaps, and the sunset scene is
+drawn with SVG geometry, so no extra raster material is needed.
+The fourteenth editor, `notallroads32` (140), rebuilds T16168_01 with four
+editable lines over a text-clean aerial photograph of an autumn road. “NOT”
+and “ARE” stay gold; “all roads” and “simple,” stay white. The two white lines
+use a detected real Italic family member when present, and remain upright in
+the selected face when no Italic member exists; the renderer never synthesizes
+an italic style.
+
+The fifteenth editor, `practicehard32` (141), rebuilds T16168_07 as four
+paired white verbs and gold emphasis words over a text-clean basketball
+photograph. Each pair and the display scale are editable. The square layout
+repositions all four rows over its own centered crop. Verbs use a detected
+actual Italic family member when one exists; without one they stay upright in
+the selected face, with no synthetic italic.
+
+The sixteenth editor, `rainbowstack32` (142), rebuilds T19310_08 with four
+editable uppercase rows that alternate a thin white outline and a solid white
+fill over the source's dark photograph. The square version keeps all four rows
+within the frame over a centered cover crop, and every word remains live text.
+
+The seventeenth editor, `wakefamous32` (143), rebuilds T19310_10 as three
+editable uppercase selected-font lines inside a thin white rectangular frame.
+The text and frame are live HTML/CSS over a separate text-free dark plate; the
+square layout independently positions both within its safer inset.
+
 ## Registered but not selectable
 
 `blush32`, `sign32` and `wash32` are registered by `@support` and appear in
@@ -1592,15 +1901,16 @@ withdrawn from the folder when a support run finds them.
 # Part 5 — Spotting a bad derivation before you ship
 
 The renderer stops hard failures. These are the soft ones that pass validation and
-still look wrong. Check the shipped files against this list once, then move on —
-seven on a normal Agent 27 delivery, 67 if you swept the catalogue on a single-style
-face (the three multi-style proofs decline it).
+still look wrong. Check the 13 selected designs at both ratios against this list
+once, then move on. A normal Agent 27 handoff contains 26 support images; a
+full-catalogue review is a separate, explicit run.
 
 | Symptom | Cause | Fix |
 |---|---|---|
 | Companion type nearly as large as the display line | Copy too long triggered a whole-block shrink `k` | Shorten to the panel's budget |
-| A row of letters noticeably shorter than its neighbours | `clean()` stripped undrawable glyphs | Caption what rendered; do not fill the gap |
-| A tile shows one glyph but `--json` reports a normal size | Stripping happens before `fit()`, so size proves nothing | Run `bin/check_support_glyph_coverage.py`; expect it on `greetingsgrid32`, `glyphsheet32`, `colosseum32` |
+| A row of letters noticeably shorter than its neighbours in a legacy Skia render | `clean()` stripped undrawable glyphs | Caption what rendered; do not fill the gap |
+| A glyph fallback appears in an HTML support render | The selected face lacks that character | Review the displayed fallback and `contentWarnings`; the legacy glyph checker does not audit HTML |
+| A tile shows one glyph but `--json` reports a normal size in legacy Skia | Stripping happens before `fit()`, so size proves nothing | Run `bin/check_support_glyph_coverage.py`; it applies only to Skia literals |
 | `ink lifted X:1 -> Y:1` notes on several slots | Palette fighting the ground | Leave it — the guard is working; only an *unreachable* floor is an error |
 | A lift that starts below 2:1 (`sunkiss32` 1.3, `greetingsgrid32` 1.9) | A locked ground/ink pair that was never high-contrast; `objects.py` only asks 3.2 | Look at the file; do not change the module to chase it |
 | No echo line on `line32` | `FLOWING` family or density ≥ 0.5 | Correct behaviour, not a fault |
@@ -1660,7 +1970,7 @@ four keys `line`, `sub`, `over`, `word` plus `theme` and `tone`.
 
 Rules that will bite, all verified live:
 
-1. **Author only for the seven actually selected.** Selection is deterministic from
+1. **Author only for the 13 actually selected.** Selection is deterministic from
    `sha256("{name}|{class}|support-catalogue")`, so run once and read the
    `supports: selected …` line, then author for those names. Copy for an
    unselected panel is silently wasted; a panel this face cannot wear is reported

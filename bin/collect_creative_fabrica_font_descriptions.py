@@ -32,8 +32,9 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
+from mcp_paths import require_mcp_script
 
-MCP = Path("/home/tankiso/Projects/MCP-and-Integrations/gemini-proxy/firecrawl_mcp.py")
+MCP = require_mcp_script("firecrawl_mcp.py")
 ROOT = Path(__file__).resolve().parent.parent
 CORPUS = ROOT / "outputs/research/creative-fabrica-description-corpus.jsonl"
 SLUGS = ROOT / "outputs/research/creative-fabrica-product-slugs.json"

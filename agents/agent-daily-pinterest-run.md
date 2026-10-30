@@ -30,26 +30,19 @@ python3 bin/make_daily_pins.py brief --date D
 
 `pick` excludes any font pinned in the previous 14 days and writes
 `outputs/pinterest/D/selection.json`. `brief` writes `brief.md` with per-font
-name, board suggestion, ALL FIVE blob image URLs, both product-page URLs,
-description excerpt, a mechanical candidate-keyword seed (extracted from
-description.txt), the font's most-used tags to rotate away from, and its
-previous pins. You do not choose the image or the destination link — `assemble`
-takes one of the five images per pin (seeded by date, so a re-run gives the
-same CSV) and splits fonts that have both market pages evenly between Creative
-Market and Creative Fabrica.
+name, board suggestion, one date-stable image choice with its manifest index
+and layout type, both product-page URLs, description excerpt, candidate
+keywords, historical tags, and confirmed prior pins. The tool balances image
+indexes across selected fonts, then uses that same choice in both CSVs. When
+both product pages exist, destinations split as evenly as possible.
 
 ## Step 2 — write pin copy (your only creative work)
 
 For each selected font write a title, description, alt text, and final
-keywords. The artwork itself is designed upstream, per
-`docs/PIN-ART-DIRECTION.md` (the pin is a typographic poster whose hook is a
-phrase and whose font name is subtext) — your CSV copy must not contradict the
-image's copy or turn it back into a sales pitch, because a pin that reads as an
-ad is not saved. The archive spec `archive/specs/agent-10-pinterest-fonts-specialist.md` §"PINTEREST
-FONT SEO STRATEGY" and the 3-PIN intent framework are your writing reference —
-read the two strategy sections only, not the whole file. Across the day's
-fonts, vary intent (aesthetic/specimen, crafter/Cricut, project/use-case) so
-the batch does not read as one template.
+keywords. Follow the assigned image shown in `brief.md`; keep copy consistent
+with its visible text and composition. Vary intent across the batch
+(aesthetic/specimen, crafter/Cricut, project/use-case) so the copy does not
+read as one template. Do not read the retired Agent 10 listing workflow.
 
 First look at what this font has already been pinned with. `brief.md` prints
 an `ALREADY PINNED` block per font with its past dates, titles, keywords and
@@ -74,11 +67,11 @@ no history block is on its first pin; say so rather than inventing a past.
    term + 1 seasonal/experimental slot (from the calendar below, when in its
    lead window).
 
-### Title (research: 1M-pin study 2025)
+### Title (writing heuristic)
 
 - Target **45–65 chars** (tool enforces 1–100). **Title Case.** Unique in
   the batch (tool enforces).
-- Primary keyword phrase inside the **first 30–35 chars** (feed truncates).
+- Put the primary keyword phrase early, ideally within the **first 30–35 chars**.
 - Vary the template across the batch:
   1. `{Primary Keyword} — {Font Name} | {Use Case}`
   2. `{Use Case} Font: {Style} {Font Name}`
@@ -95,21 +88,23 @@ no history block is on its first pin; say so rather than inventing a past.
 - Close with a soft CTA, never "click": "Perfect for invitations, logos, and
   packaging." / "Download {Font Name} for your next project."
 
-### Alt text (required — buffer.csv carries it; the biggest documented click lever)
+### Alt text (required for the Buffer file; accessibility description)
 
-- One sentence describing what the image shows: font name + style + specimen
-  ("Elegant serif font specimen spelling 'Marren' in luxury logo style").
-- 80–200 chars target (tool enforces 1–500). The primary keyword may appear
-  naturally; never copy the description wholesale; never invent features not
-  in the brief.
+- One concise sentence describing the assigned image: its visible wording,
+  layout, and font treatment. Inspect the brief's local source image first;
+  if it is unavailable, inspect the matching public Media URL. Do not infer a
+  final-image composite's contents from its filename or generic layout label.
+- 80–200 chars target (tool enforces 1–500). Pinterest exposes alt text to
+  screen-reader users, so do not stuff keywords or make unsupported claims
+  ([Pinterest alt-text guidance](https://help.pinterest.com/en/business/article/add-alternative-text-to-your-pins)). Do not copy the description wholesale.
 
 ### Placement notes
 
 - Board: use the brief's suggestion unless another of the four clearly fits.
-  Board title/description are ranking signals — don't park everything on one.
-- The CSV Keywords column mirrors the 3–6 final phrases, comma-separated.
-  Pinterest indexes title + description + board + alt text; treat the
-  Keywords column (pins.csv only) as supporting, not the ranking lever.
+  Board titles should describe their contents; do not claim a ranking effect.
+- Pinterest-native `Keywords` are comma-separated phrases. Buffer has no
+  Pinterest Keywords column; its `Tags` column is Buffer-internal labels and
+  remains empty.
 - Link: leave it out — the tool derives it from the registry and appends
   unique utm params per row.
 
@@ -141,8 +136,9 @@ format, future-dated slots within 14 days), writes `buffer.csv` (Buffer
 import — exact column order of Buffer's own Pinterest template: Text /
 Image URL / Board Name / Tags / Posting Time / Title / Alt Text / Link —
 the primary file), `pins.csv` (Pinterest-native fallback, no alt column),
-and `tag-report.md`, and records the day's tags and pin dates in the ledger.
-On validation failure, fix `copy.json` and re-run — never edit a CSV by hand.
+and `tag-report.md`. It saves wording to `prepared_pins` only; it does not
+update tag counts, pin history, or the 14-day exclusion. On validation failure,
+fix `copy.json` and re-run — never edit a CSV by hand.
 
 ## Step 4 — report and stop
 
@@ -153,30 +149,36 @@ step:
 1. One-time setup: create a Buffer free account (or use an existing one) →
    connect the Pinterest business account as a channel → open that channel's
    settings (⚙️) and set its timezone to a UTC city with no DST (search
-   "Reykjavik") so the CSV's UTC times publish exactly as written.
+   "Reykjavik") so the CSV's UTC times publish exactly as written. Create the
+   four suggested Pinterest boards (`Handwritten Fonts`, `Display Fonts`,
+   `Script Fonts`, `Decorative Fonts`) before using Buffer: its `Board Name`
+   field must match an existing Pinterest board. The Pinterest-native CSV
+   importer can create a missing board.
 2. Each run: publish.buffer.com → select the Pinterest channel → settings
    cog → General → Bulk Upload → upload `buffer.csv` → review the preview →
-   **Add Posts to Queue**. Only do this after the previous batch's last pin
-   has published — the free plan holds 10 waiting posts and silently drops
-   any rows beyond the free slots.
-3. Fallback: `pins.csv` still works via Pinterest Business on desktop →
-   Settings → Import content, but carries no alt text.
+   **Add Posts to Queue**. Check remaining queue capacity first; the free queue
+   allows up to 10 waiting posts.
+3. Fallback: `pins.csv` works via Pinterest Business on desktop → Settings →
+   Import content, but carries no alt-text column. Pinterest creates missing
+   boards from this native CSV.
+4. After the destination confirms which rows it accepted, record only those
+   rows. This records import acceptance, not publication:
 
-Recommend testing the first small batch and never exceeding ~10 pins/day on a
-young account.
+   ```bash
+   python3 bin/pinterest_tag_ledger.py mark-imported --date D --slugs slug-a slug-b
+   ```
 
 End with "Import is pending — human step." You never upload the CSV, never
 touch Pinterest or Buffer, and make no publication claim.
 
 ## Hard rules
 
-- One CSV set per date folder; re-running `assemble` regenerates both files
-  idempotently.
-- Alt text is required on every pin (1–500 chars) — buffer.csv carries it and
-  it is our biggest documented click lever.
-- Every pin's text is recorded in the ledger when `assemble` runs. Read that
-  history before writing new copy and never re-ship a title, alt sentence or
-  keyword string this font has already used.
+- One CSV set per date folder. Re-running `assemble` updates unimported drafts;
+  it refuses to overwrite a date with confirmed imports.
+- Alt text is required on each Buffer row (1–500 chars) and must accurately
+  describe its assigned image for accessibility.
+- Only rows confirmed accepted by Buffer/Pinterest enter pin history or the
+  14-day exclusion. Read that confirmed history before writing new copy.
 - No hashtags anywhere in Keywords — plain comma-separated search terms.
   Buffer's template has no Pinterest Keywords column; its `Tags` column is
   Buffer-internal labels (emit it empty, never fill it). Keywords live in

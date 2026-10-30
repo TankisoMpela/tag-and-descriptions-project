@@ -632,6 +632,8 @@ def render_art_direction(plan: dict, entries: list[tuple[str, dict]]) -> str:
             lines.extend([f"## {title}", ""] + body + [""])
 
     section("Font personality and construction", profile.get("construction"), profile.get("personality"))
+    section("Product type and thumbnail subtext", profile.get("type_label"), profile.get("subtext"))
+    section("Saved product description", profile.get("product_description"))
     features = profile.get("distinctive_features")
     if isinstance(features, list) and features:
         lines += ["- " + str(f) for f in features] + [""]
@@ -717,6 +719,10 @@ def write_derived_views(direction: Path, plan: dict) -> list[Path]:
 
 
 def write_manifest(root: Path, plan: dict) -> None:
+    family_showcases = [
+        template for template in ("plakat32", "weightfamily32", "mangosboard32", "italicregular32")
+        if template in (plan.get("_support_templates") or [])
+    ]
     rows = [
         "# Visual Handoff Manifest",
         "",
@@ -725,8 +731,11 @@ def write_manifest(root: Path, plan: dict) -> None:
         "- manual_replacement_required: thumbnail placeholders only",
         "- source: bin/generate_font_text_placeholders.py",
         "- note: three white-background font-name specimens are raw material for final thumbnail generation; use the matching per-ratio prompts in visual-direction/theme.txt.",
-        f"- supporting_templates: {int(plan.get('support_count', 7))} reproducibly selected eligible layouts at 3:2 and 1:1",
+        f"- supporting_templates: {int(plan.get('support_count', 13))} reproducibly selected eligible layouts at 3:2 and 1:1",
         f"- support_renderer_policy: {plan.get('support_renderer', 'html')}",
+        "- thumbnail_prompts: `../visual-direction/theme.txt` (derived from `visual-plan.json`)",
+        "- family_showcase_templates: " + (", ".join(f"`{template}`" for template in family_showcases)
+                                            if family_showcases else "none eligible for this single-style family"),
         "- pinterest_template_renderer: HTML/CSS + Chromium; all active pin templates",
         "- factual_specimen_renderer: Python Skia",
         "",
@@ -799,18 +808,18 @@ def render_programmatic_assets(staging: Path, plan: dict, primary_font: Path) ->
         for key in ("construction", "personality", "buyer_fit")
         if str(profile.get(key, "")).strip()
     )[:240]
-    count = plan.get("support_count", 7)
-    if count != 7:
-        raise SystemExit("support_count is fixed at 7; omit it or set it to 7")
+    count = plan.get("support_count", 13)
+    if count != 13:
+        raise SystemExit("support_count is fixed at 13; omit it or set it to 13")
     support_renderer = plan.get("support_renderer", "html")
-    if support_renderer not in {"skia", "hybrid", "html"}:
-        raise SystemExit("support_renderer must be skia, hybrid, or html")
+    if support_renderer != "html":
+        raise SystemExit("support_renderer is fixed at html for the Agent 27 handoff")
     common = ["--font", str(primary_font), "--name", str(plan["font_name"]),
               "--class", renderer_class]
     if about:
         common += ["--about", about]
     support_args = common + [
-        "--supports", "--support-count", "7",
+        "--supports", "--support-count", "13",
         "--support-renderer", support_renderer,
         "--support-ratios", "both",
         "--json",
@@ -839,6 +848,9 @@ def render_programmatic_assets(staging: Path, plan: dict, primary_font: Path) ->
                 item["template"]: item["renderer"]
                 for item in payload.get("results", [])
             }
+            plan["_support_templates"] = sorted(
+                {item["template"] for item in payload.get("results", [])}
+            )
             renderers = ", ".join(sorted(set(plan["_support_renderer_by_template"].values())))
             print(f"  supporting templates: {renderers or 'unknown renderer'}")
         elif result.stdout:
@@ -949,10 +961,10 @@ def main() -> int:
     promos = plan.get("promos", [])
     if promos not in (None, []):
         raise SystemExit("visual plan promos are retired; supporting images come from the shared template catalogue")
-    if plan.get("support_count", 7) != 7:
-        raise SystemExit("visual plan support_count must remain 7")
-    if plan.get("support_renderer", "html") not in {"skia", "hybrid", "html"}:
-        raise SystemExit("visual plan support_renderer must be skia, hybrid, or html")
+    if plan.get("support_count", 13) != 13:
+        raise SystemExit("visual plan support_count must remain 13")
+    if plan.get("support_renderer", "html") != "html":
+        raise SystemExit("visual plan support_renderer must be html")
     if plan.get("renderer_class") not in {"elegant", "blackletter", "sports", "script"}:
         raise SystemExit("visual plan renderer_class must be elegant, blackletter, sports, or script")
 
@@ -991,7 +1003,7 @@ def main() -> int:
 
     print(f"[PASS] provisional text visual handoff ready: {output}")
     print(f"[PASS] derived {len(derived)} view(s) from the plan in {plan_path.parent}")
-    print("[PASS] Thumbnail placeholders are provisional; seven support templates were rendered at both 3:2 and 1:1.")
+    print("[PASS] Thumbnail placeholders are provisional; 13 support templates (26 renders) were rendered at both 3:2 and 1:1.")
     print("[PASS] All active HTML/CSS Pinterest templates were rendered with the primary font.")
     print("[PASS] READY FOR FONT PREP HANDOFF")
     return 0

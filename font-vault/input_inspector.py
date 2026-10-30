@@ -10,7 +10,8 @@ Verdicts live in each folder's rights-verdicts.json, written by /font-rights-che
 (bin/font_rights.py): red = still sold by an active holder, amber = no holder and
 no licence found (unlicensed, not safe), green = a verified grant. Rows pick them
 up when you press Refresh; this app never decides a verdict, it only voids one
-when the font it describes is deleted or returned.
+when the font it describes is deleted or returned. The rights-chip dialog also
+displays the researcher's sourced author, age and distribution history.
 """
 
 from __future__ import annotations
@@ -225,6 +226,7 @@ LINK_HEX = "#7fb3d5"
 # evidence_kind as the tool stores it, spelled out for a human reading the dialog.
 EVIDENCE_KIND_LABEL = {
     "seller": "marketplace",
+    "distribution": "font distribution page",
     "holder": "holder's own site",
     "reference": "rights reference",
     "mirror": "scraper mirror",
@@ -236,6 +238,14 @@ LINK_CHECK_LABEL = {
     "blocked-only": "none of these could be loaded — the server refused or blocked it",
     "skipped": "not checked against the network this run",
     "": "the tool recorded no link check for this verdict",
+}
+RESEARCH_SOURCE_LABEL = {
+    "free_distribution": "free-font distribution listing",
+    "commercial_listing": "commercial listing",
+    "author": "author source",
+    "reference": "rights or history reference",
+    "archive": "archived page",
+    "other": "research source",
 }
 UNRESEARCHED_REPORT = (
     "Nobody has judged this font yet. Run /font-rights-check and it will land here "
@@ -260,11 +270,18 @@ class Section(NamedTuple):
 
 
 def evidence_urls(verdict: dict | None) -> list[str]:
-    """Every URL the record carries, evidence first then a URL-shaped author contact."""
+    """Every URL the record carries, including provenance pages."""
     urls = [str(item) for item in (verdict or {}).get("evidence") or [] if str(item).strip()]
     contact = str((verdict or {}).get("author_contact") or "")
     if contact.lower().startswith(("http://", "https://")) and contact not in urls:
         urls.append(contact)
+    research = (verdict or {}).get("research") or {}
+    sources = research.get("sources", []) if isinstance(research, dict) else []
+    if isinstance(sources, list):
+        for source in sources:
+            url = str(source.get("url") or "") if isinstance(source, dict) else ""
+            if url and url not in urls:
+                urls.append(url)
     return urls
 
 
@@ -317,9 +334,63 @@ def verdict_sections(verdict: dict) -> list[Section]:
             note=LINK_CHECK_LABEL["verified"],
             urls=(contact,),
         ))
+    research = verdict.get("research") or {}
+    if isinstance(research, dict) and research:
+        context_lines = []
+        for field, label in (
+            ("author", "Author named in research"),
+            ("author_status", "Author status"),
+            ("first_known_date", "Earliest date found"),
+            ("age_estimate", "Estimated age"),
+            ("age_basis", "Age basis"),
+            ("distribution_assessment", "Observed distribution or licence claims"),
+            ("abandonware_assessment", "Abandonware assessment (not permission)"),
+            ("abandonware_basis", "Abandonware basis"),
+        ):
+            value = str(research.get(field) or "").strip()
+            if value:
+                context_lines.append(f"{label}: {value}")
+        if context_lines:
+            sections.append(Section(
+                "Font history and distribution research",
+                tuple(context_lines),
+                note="These are sourced research findings. A free download or an abandonware label does not grant a licence.",
+            ))
+        sources = research.get("sources") or []
+        if isinstance(sources, list):
+            for source in sources:
+                if not isinstance(source, dict) or not source.get("url"):
+                    continue
+                site = str(source.get("site") or "Research source")
+                source_type = str(source.get("source_type") or "other")
+                details = []
+                for field, label in (
+                    ("match", "Match"),
+                    ("availability", "Availability"),
+                    ("distribution_label", "Page's licence label"),
+                    ("uploader", "Uploader / credited source"),
+                    ("date", "Date shown"),
+                    ("note", "Finding"),
+                ):
+                    value = str(source.get(field) or "").strip()
+                    if value:
+                        details.append(f"{label}: {value}")
+                url = str(source["url"])
+                sections.append(Section(
+                    f"Source — {site}",
+                    (f"· {url}",),
+                    note=" · ".join(details) or "No additional page details recorded.",
+                    urls=(url,),
+                    kinds=(RESEARCH_SOURCE_LABEL.get(source_type, source_type),),
+                ))
+    else:
+        sections.append(Section(
+            "Font history and distribution research",
+            ("Not recorded for this verdict. New rights-research runs show it here.",),
+        ))
     looked = [str(item) for item in verdict.get("looked") or [] if str(item).strip()]
     if looked:
-        sections.append(Section("Searched, and nobody turned up",
+        sections.append(Section("Search avenues",
                                 tuple(f"· {item}" for item in looked)))
     if verdict.get("note"):
         sections.append(Section("Why this verdict", (str(verdict["note"]),)))

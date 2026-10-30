@@ -50,6 +50,7 @@ class VaultDB:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self._local = threading.local()
         self._all_connections: list[sqlite3.Connection] = []
+        self._connections_lock = threading.Lock()
         self._create_schema()
 
     @property
@@ -60,7 +61,8 @@ class VaultDB:
             conn.row_factory = sqlite3.Row
             self._init_pragmas(conn)
             self._local.conn = conn
-            self._all_connections.append(conn)
+            with self._connections_lock:
+                self._all_connections.append(conn)
         return conn
 
     def _init_pragmas(self, conn: sqlite3.Connection) -> None:
@@ -73,13 +75,29 @@ class VaultDB:
         cur.execute(f"PRAGMA busy_timeout = {BUSY_TIMEOUT_MS};")
 
     def close(self) -> None:
-        for conn in self._all_connections:
+        with self._connections_lock:
+            connections = self._all_connections[:]
+            self._all_connections.clear()
+        for conn in connections:
             try:
                 conn.close()
             except sqlite3.Error:
                 pass
-        self._all_connections.clear()
         self._local = threading.local()
+
+    def close_thread_connection(self) -> None:
+        """Close and forget the connection owned by the calling worker thread."""
+        conn = getattr(self._local, "conn", None)
+        if conn is None:
+            return
+        try:
+            conn.close()
+        except sqlite3.Error:
+            pass
+        finally:
+            self._local.conn = None
+            with self._connections_lock:
+                self._all_connections = [item for item in self._all_connections if item is not conn]
 
     def latest_review_epoch(self) -> int:
         """Unix time of the most recent review write (0 when nothing is saved)."""
@@ -263,6 +281,18 @@ class VaultDB:
                 SET family_key = ?, family_label = ?, style = ?
                 WHERE file_key = ?
             """, (family_key, family_label, style, file_key))
+
+    def update_font_family_meta_bulk(self, records: list[tuple[str, str, str, str]]) -> None:
+        """Persist family metadata in one transaction after a background family scan."""
+        if not records:
+            return
+        with self.conn:
+            self.conn.executemany("""
+                UPDATE font_records
+                SET family_key = ?, family_label = ?, style = ?
+                WHERE file_key = ?
+            """, [(family_key, family_label, style, file_key)
+                  for file_key, family_key, family_label, style in records])
 
     def get_review(self, file_key: str) -> dict[str, Any] | None:
         cur = self.conn.cursor()

@@ -48,18 +48,27 @@ GRANT_IDS = (0, 11, 12, 13, 14)
 DEAD_CODES = {404, 410}
 UA = "Mozilla/5.0 (compatible; font-rights-check)"
 
-# Where a ``claimed`` evidence URL is allowed to live. Red asserts that somebody is
-# actively selling or holding this design, so the page has to be capable of making
-# that good: a shop that distributes fonts, the claimed holder's own domain, or a
-# type-rights reference. A live URL to anything else says only "a page mentions this
-# name", which is not a rights claim. Entries are registrable domains, matched on the
-# host and its subdomains, with or without a leading www.
+# Where a ``claimed`` evidence URL is allowed to live. Red asserts an active rights
+# offer or claim, so the page has to be capable of making that good: a commercial
+# seller, the claimed holder's own domain, or a type-rights reference. Free-font
+# directories are useful provenance, but a page hosting a download is not itself a
+# rights claim; those URLs belong in the separate research.sources field.
 SELLER_DOMAINS = frozenset(
     {
         "myfonts.com", "fonts.com", "monotype.com", "linotype.com", "creativelibrary.com",
         "fonts.adobe.com", "rentafont.com", "fontspring.com", "creativefabrica.com",
-        "creative.market", "dafont.com", "fontspace.com", "1001fonts.com",
-        "abstractfonts.com", "fontsc.com", "fontframe.com",
+        "creative.market",
+    }
+)
+# Directory pages are recorded as distribution history, not as evidence that the
+# uploader owns the font or that a download label grants commercial rights.
+DISTRIBUTION_DOMAINS = frozenset(
+    {
+        "dafont.com", "fontsgeek.com", "fontgeek.com", "fontfreak.com", "fontspace.com",
+        "1001fonts.com", "1001freefonts.com", "abstractfonts.com", "fontasy.de",
+        "1001freefonts.net", "ffonts.net", "fontsquirrel.com", "fontlibrary.org",
+        "openfontlibrary.org", "fontarchive.com", "fontsc.com", "fontframe.com",
+        "urbanfonts.com", "fontpalace.com",
     }
 )
 # No shop, but a documented record of who made and owns a design — Devroye's catalogue
@@ -271,7 +280,7 @@ GENERIC_LABELS = frozenset(
 
 
 def evidence_class(url: str, holder_text: str) -> str:
-    """What kind of rights claim this evidence URL is able to support.
+    """Classify claim-capable URLs separately from distribution-only listings.
 
     ``unknown`` is a page that can be perfectly live and still prove nothing: a blog
     post, a forum thread, a re-host of the font itself. ``holder_text`` must already
@@ -280,6 +289,8 @@ def evidence_class(url: str, holder_text: str) -> str:
     host = host_of(url)
     if on_domain(host, MIRROR_DOMAINS):
         return "mirror"
+    if on_domain(host, DISTRIBUTION_DOMAINS):
+        return "distribution"
     if on_domain(host, SELLER_DOMAINS):
         return "seller"
     if on_domain(host, REFERENCE_DOMAINS):
@@ -288,6 +299,111 @@ def evidence_class(url: str, holder_text: str) -> str:
     if any(len(label) >= 3 and label in holder_text for label in labels):
         return "holder"
     return "unknown"
+
+
+RESEARCH_FIELDS = frozenset(
+    {
+        "author", "author_status", "first_known_date", "age_estimate", "age_basis",
+        "distribution_assessment", "abandonware_assessment", "abandonware_basis", "sources",
+    }
+)
+RESEARCH_REQUIRED_FIELDS = RESEARCH_FIELDS
+RESEARCH_SOURCE_FIELDS = frozenset(
+    {
+        "site", "url", "source_type", "match", "availability", "distribution_label",
+        "uploader", "date", "note",
+    }
+)
+RESEARCH_SOURCE_REQUIRED_FIELDS = RESEARCH_SOURCE_FIELDS - {"note"}
+RESEARCH_SOURCE_TYPES = frozenset(
+    {"free_distribution", "commercial_listing", "author", "reference", "archive", "other"}
+)
+
+
+def research_record(raw: str) -> dict:
+    """Validate and normalize the sourced provenance notes stored beside a verdict."""
+    if not raw.strip():
+        reject("--research-json is required; use 'unknown' with a short reason when a detail is unavailable")
+    try:
+        value = json.loads(raw)
+    except json.JSONDecodeError as error:
+        reject(f"--research-json is not valid JSON: {error.msg}")
+    if not isinstance(value, dict):
+        reject("--research-json must be a JSON object")
+    missing = RESEARCH_REQUIRED_FIELDS - set(value)
+    if missing:
+        reject("--research-json is missing required field(s): " + ", ".join(sorted(missing)))
+    unknown = set(value) - RESEARCH_FIELDS
+    if unknown:
+        reject("--research-json has unknown field(s): " + ", ".join(sorted(unknown)))
+
+    result: dict = {}
+    for key, item in value.items():
+        if key == "sources":
+            if not isinstance(item, list):
+                reject("research.sources must be a JSON list")
+            if len(item) > 20:
+                reject("research.sources may contain at most 20 pages per family pass")
+            sources: list[dict] = []
+            for index, source in enumerate(item, start=1):
+                if not isinstance(source, dict):
+                    reject(f"research.sources[{index}] must be a JSON object")
+                missing_source = RESEARCH_SOURCE_REQUIRED_FIELDS - set(source)
+                if missing_source:
+                    reject(
+                        f"research.sources[{index}] is missing required field(s): "
+                        + ", ".join(sorted(missing_source))
+                    )
+                extra = set(source) - RESEARCH_SOURCE_FIELDS
+                if extra:
+                    reject(f"research.sources[{index}] has unknown field(s): " + ", ".join(sorted(extra)))
+                if not isinstance(source.get("site"), str) or not source["site"].strip():
+                    reject(f"research.sources[{index}].site is required")
+                if not isinstance(source.get("url"), str):
+                    reject(f"research.sources[{index}].url is required")
+                try:
+                    parsed = urllib.parse.urlsplit(source["url"].strip())
+                    hostname = parsed.hostname
+                except ValueError:
+                    reject(f"research.sources[{index}].url is malformed")
+                if parsed.scheme not in ("http", "https") or not hostname:
+                    reject(f"research.sources[{index}].url must be an absolute http(s) URL")
+                source_type = source.get("source_type")
+                if not isinstance(source_type, str) or source_type not in RESEARCH_SOURCE_TYPES:
+                    reject(
+                        f"research.sources[{index}].source_type must be one of: "
+                        + ", ".join(sorted(RESEARCH_SOURCE_TYPES))
+                    )
+                normalized = {"site": source["site"].strip(), "url": source["url"].strip(),
+                              "source_type": source_type}
+                for field in RESEARCH_SOURCE_FIELDS - {"site", "url", "source_type"}:
+                    field_value = source.get(field, "")
+                    if not isinstance(field_value, str):
+                        reject(f"research.sources[{index}].{field} must be text")
+                    if len(field_value) > 500:
+                        reject(f"research.sources[{index}].{field} is longer than 500 characters")
+                    if field_value.strip():
+                        normalized[field] = field_value.strip()
+                    elif field in RESEARCH_SOURCE_REQUIRED_FIELDS:
+                        reject(f"research.sources[{index}].{field} must contain a finding or 'unknown'")
+                sources.append(normalized)
+            result[key] = sources
+            continue
+        if not isinstance(item, str):
+            reject(f"research.{key} must be text")
+        if len(item) > 2000:
+            reject(f"research.{key} is longer than 2000 characters")
+        if item.strip():
+            result[key] = item.strip()
+        elif key in RESEARCH_REQUIRED_FIELDS:
+            reject(f"research.{key} must contain a finding or 'unknown' with its reason")
+
+    assessment = result.get("abandonware_assessment", "").casefold()
+    if assessment and assessment not in {"yes", "no", "unclear"}:
+        reject("research.abandonware_assessment must be yes, no, or unclear")
+    if assessment and not result.get("abandonware_basis"):
+        reject("research.abandonware_assessment needs research.abandonware_basis")
+    return result
 
 
 def group_key(info: dict) -> tuple:
@@ -466,6 +582,7 @@ def cmd_write(args: argparse.Namespace) -> int:
 
     evidence = list(args.evidence or [])
     looked = list(args.looked or [])
+    research = research_record(args.research_json)
     info = embedded(path)
     grant = args.grant_quote
     contact = args.author_contact
@@ -484,7 +601,7 @@ def cmd_write(args: argparse.Namespace) -> int:
                 "no --evidence URL here can carry a rights claim ("
                 + ", ".join(f"{host_of(url)}: {kind}" for url, kind in zip(evidence, kinds))
                 + ") — red needs the shop selling it, the holder's own domain, or a type-rights "
-                  "reference; a page that merely hosts or mentions the name proves nothing"
+                  "reference; free-font directories are distribution records, not rights claims"
             )
         if args.skip_link_check:
             link_state = "skipped"
@@ -542,6 +659,7 @@ def cmd_write(args: argparse.Namespace) -> int:
         "fstype": info["fstype"],
         "grant_quote": grant,
         "author_contact": contact,
+        "research": research,
         "link_check": link_state,
         "checked_utc": now(),
         "derived_from": None,
@@ -693,9 +811,13 @@ def main() -> int:
     write.add_argument("--file", required=True)
     write.add_argument("--state", required=True, choices=STATES)
     write.add_argument("--maker", default="")
-    write.add_argument("--evidence", action="append", help="live URL backing the state (repeat)")
-    write.add_argument("--looked", action="append", help="avenue searched with no result (repeat)")
+    write.add_argument("--evidence", action="append", help="URL backing a claimed offer or rights-holder claim (repeat)")
+    write.add_argument("--looked", action="append", help="search avenue with no matching page (repeat)")
     write.add_argument("--note", default="")
+    write.add_argument(
+        "--research-json", default="",
+        help="required JSON research: author, age, distribution, abandonware and source pages",
+    )
     write.add_argument("--confidence", default="")
     write.add_argument("--grant-quote", default="", help="verbatim text found in this binary's name records")
     write.add_argument("--author-contact", default="", help="URL or email reached this run")

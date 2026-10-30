@@ -2,32 +2,36 @@
 
 ## Scope and current state
 
-- The native Skia catalogue has 61 templates in 70 stable numbered slots.
-- Fourteen user-supplied HTML-only reference remakes occupy slots 71–84, for
-  75 templates eligible in HTML/hybrid runs.
-- The registry has 22 retired names; nine numbered slots remain tombstones.
-- The code is split across pin_studio.py (23 active layouts) and five
-  support_templates modules: objects.py (9), t30332.py (9), fashion.py (7),
-  photo.py (7), and poster.py (6).
+- The native Skia catalogue has 52 active templates in its original 70 stable slots.
+- Fifty-one active user-supplied HTML-only reference remakes occupy slots 71–126,
+  for 103 active templates eligible in HTML/hybrid runs. Batch C is complete;
+  `greatness32` is withdrawn from slot 115.
+- The registry has 37 retired names; 24 numbered slots remain tombstones. Fourteen
+  seller-selected retirements are recorded; technical notes and source files remain
+  as history.
+- The native implementations remain in `pin_studio.py` and five
+  `support_templates` modules (`objects`, `t30332`, `fashion`, `photo`, and
+  `poster`); the retired entries are filtered out of active selection.
 - Each selected font currently receives seven eligible support images at
-  2400 × 1600. Three family layouts require multiple real styles; two are
+  2400 × 1600. Five family layouts require multiple real styles; two are
   guaranteed when their eligibility gate passes.
-- All 61 native templates have opt-in HTML/CSS prototypes, listed in catalogue order:
-  line32, duo32, card32, feature32, neon32, quote32,
-  crest32, contour32, mountain32, hand32, zebra32, soldier32,
+- All 61 native implementations have opt-in HTML/CSS prototypes; 52 remain active:
+  feature32, neon32, quote32,
+  crest32, contour32, mountain32, soldier32,
   mirror32, brutal32, rio32, boots32, plakat32, plakatart32,
   mangos32, alphabet32, birvase32, weightfamily32, mangosboard32, ovalword32,
   stardust32, cliffpostcard32, kindersea32, messageframe32, contactlist32, sunsetpromise32,
   phonegarden32, pixelquote32, ravencover32, voguecover32, confident32, storyteller32,
-  focusposter32, wideclaim32, blossom32, neue32, electromagnetic32, demolition32,
-  yearposter32, stadiumposter32, signalclock32, amberdawn32, skinbadge32, latestlook32,
-  gelatocards32, meditation32, strongweak32, funkyfashion32, typewall32, manualbrew32,
+  focusposter32, wideclaim32, blossom32, neue32,
+  yearposter32, stadiumposter32, signalclock32, amberdawn32, latestlook32,
+  meditation32, strongweak32, funkyfashion32, typewall32, manualbrew32,
   pastpresent32, herbalproduct32, colosseum32, glyphsheet32, freakscene32, greetingsgrid32,
   roadrunner32.
   Fourteen more HTML-only references are `palmello32`, `quietattempt32`,
   `hushglow32`, `italianhorror32`, `dreamwarriors32`, `nesting32`,
   `erotica32`, `conspiracytheory32`, `overglow32`, `pinkvice32`, `attitude32`,
   `indieground32`, `caramelsundae32` and `sweettreat32`.
+  October batch C's 21 templates occupy slots 106–126; `greatness32` at slot 115 is withdrawn, leaving 20 active batch C editors.
   Skia remains the default renderer.
 
 ## Existing pipeline
@@ -48,10 +52,11 @@ creative handoff is a separate path and is not the 61-template catalogue.
 The HTML export itself is rasterized by headless Chromium at 2400 × 1600; it
 does not draw pixels with Skia. The integrated `pin_studio.py` HTML route still
 imports Skia and builds Skia-backed font outline context before dispatching the
-browser render, so it is not yet a Skia-independent command. The catalogue has
-75 browser contracts, but every row is still marked `prototype` and Skia
-remains the default. The 14 new source remakes are HTML-only and are filtered
-from the Skia-only sampler. Template props are also split between the catalogue,
+browser render, so it is not yet a Skia-independent command. The catalogue now
+has 103 active browser contracts, with 51 user-reference remakes marked
+`prototype` and filtered from the Skia-only sampler. Skia remains the CLI
+default, while Agent 27's generator explicitly defaults to HTML. Template
+props are also split between the catalogue,
 per-template browser code, and the large Python `render_support_html` dispatch.
 The next architecture steps are to centralize the catalogue inventory, move
 template props into local adapters, separate renderer-neutral font facts from
@@ -172,11 +177,11 @@ the saved three-way HTML capture.
 
 ## Additional catalogue ports
 
-The catalogue now includes browser prototypes for these active layouts:
+These browser-port notes include historical entries. `catalog.json` is the
+active catalogue; `card32` and `electromagnetic32` have been retired.
 
 | Template | Current HTML/CSS direction |
 | --- | --- |
-| card32 | Paper-stack specimen with independently fitted wording and layered paper. |
 | plakat32 | Source-title specimen with a cyan glyph band, selected-font glyph/style facts, and navy texture. |
 | plakatart32 | Lower-left `Plakat` wordmark over the red/cyan macro-texture, with a compact, font-aware specification rail. |
 | birvase32 | One editable specimen word over the saved red/cyan print texture. |
@@ -186,7 +191,6 @@ The catalogue now includes browser prototypes for these active layouts:
 | stardust32 | Monochrome portrait plate with editable editorial headline, footer, and checker detail. |
 | blossom32 | Wellness portrait illustration paired with a red campaign panel and editable call to action. |
 | neue32 | Stepped repetition and angled signal pills on the original pink palette. |
-| electromagnetic32 | Violet/green signal stack, rails, and globe rebuilt as editable browser layers. |
 
 These remain opt-in prototypes. The current 61-image Title Case export is a
 single-font catalogue pass and does not replace representative-family fidelity
@@ -234,8 +238,8 @@ comparison captures.
    parity and then remove Skia only from the support-rendering path.
 
 The browser benchmark demonstrates a faster visual adjustment loop, but this
-does not claim completed parity or a production rollout. All 61 active support
-templates have browser prototypes; Skia remains the default and is still used
+does not claim completed parity or a production rollout. All 103 active support
+templates have browser contracts; Skia remains the default and is still used
 by the separate pin/specimen call sites.
 
 ## Renderer throughput follow-up — 2026-10-15

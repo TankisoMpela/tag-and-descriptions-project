@@ -96,10 +96,10 @@ def cmd_upload(args, env) -> int:
     if not file.is_file():
         sys.exit(f"error: file not found: {file}")
     pathname = args.pathname or default_pathname(file, args.slug, args.index)
-    out = run_blob([
-        "put", str(file), "--access", "public", "--pathname", pathname,
-        "--allow-overwrite", "true",
-    ], env)
+    command = ["put", str(file), "--access", "public", "--pathname", pathname]
+    if args.allow_overwrite:
+        command.extend(["--allow-overwrite", "true"])
+    out = run_blob(command, env)
     url = parse_url(out)
     result = {"pathname": pathname, "url": url, "source": str(file)}
     if args.json:
@@ -145,8 +145,10 @@ def main(argv=None) -> int:
     up = sub.add_parser("upload", parents=[common], help="upload one image and print its public URL")
     up.add_argument("file")
     up.add_argument("--slug", help="font slug for the default pathname fonts/{slug}/…")
-    up.add_argument("--index", type=int, help="pinterest image number (1-5)")
+    up.add_argument("--index", type=int, help="numbered Pinterest image index")
     up.add_argument("--pathname", help="explicit target pathname (overrides --slug/--index)")
+    up.add_argument("--allow-overwrite", action="store_true",
+                    help="replace an existing Blob pathname (default: reject overwrite)")
     up.set_defaults(func=cmd_upload)
 
     li = sub.add_parser("list", parents=[common], help="list stored files")

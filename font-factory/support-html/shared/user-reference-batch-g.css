@@ -1,0 +1,48 @@
+#artboard.user-reference-childhoodbook {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #fff;
+  color: #111;
+}
+
+#artboard.user-reference-childhoodbook .cb-line {
+  position: absolute;
+  left: 1.8%;
+  display: flex;
+  width: 96.5%;
+  height: 22%;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  color: #000;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: -.035em;
+  line-height: .88;
+  text-align: left;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+#artboard.user-reference-childhoodbook .cb-line span {
+  -webkit-text-stroke: .45px currentColor;
+  paint-order: stroke fill;
+}
+
+#artboard.user-reference-childhoodbook .cb-line span + span {
+  margin-left: .22em;
+}
+
+#artboard.user-reference-childhoodbook .cb-accent {
+  color: #ff6400;
+}
+
+#artboard.user-reference-childhoodbook .cb-ink {
+  color: #000;
+}

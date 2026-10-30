@@ -22,12 +22,17 @@ def main() -> int:
     parser.add_argument("--quality", type=int, default=None,
                         help="Use one fixed JPEG quality instead of the size ladder")
     parser.add_argument("--max-bytes", type=int, default=500_000,
-                        help="Prefer the highest quality whose output is at or below this size")
+                        help="Hard byte ceiling; the highest fitting quality is preferred")
+    parser.add_argument("--target-bytes", type=int, default=None,
+                        help="Preferred byte target; if no quality fits, retry up to --max-bytes")
     parser.add_argument("--max-dim", type=int, default=None,
                         help="Resize images so longest edge matches this pixel count (preserves aspect ratio)")
     args = parser.parse_args()
     if not args.source_dir.is_dir() or args.source_dir.resolve() == args.output_dir.resolve():
         raise SystemExit("Source and output directories must be different")
+    if args.max_bytes < 1 or (args.target_bytes is not None and
+                              (args.target_bytes < 1 or args.target_bytes > args.max_bytes)):
+        raise SystemExit("--target-bytes must be positive and no greater than --max-bytes")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     for source in sorted(args.source_dir.iterdir()):
         if not source.is_file() or not CANONICAL.match(source.name):
@@ -56,32 +61,41 @@ def main() -> int:
             # search can settle on a rung one step from the linear walk's answer.
             qualities = ([args.quality] if args.quality is not None
                          else list(QUALITY_LADDER))
-            lo, hi = 0, len(qualities) - 1
+            def highest_fit(cap):
+                lo, hi = 0, len(qualities) - 1
+                chosen, smallest = None, None
+                while lo <= hi:
+                    middle = (lo + hi) // 2
+                    buffer = BytesIO()
+                    rgb.save(buffer, format="JPEG", quality=qualities[middle], optimize=True,
+                             progressive=True, subsampling=2)
+                    payload = buffer.getvalue()
+                    if smallest is None or len(payload) < len(smallest[1]):
+                        smallest = (qualities[middle], payload)
+                    if len(payload) <= cap:
+                        chosen = (qualities[middle], payload)
+                        hi = middle - 1
+                    else:
+                        lo = middle + 1
+                return chosen, smallest
+
             chosen = None
-            smallest = None
-            while lo <= hi:
-                middle = (lo + hi) // 2
-                buffer = BytesIO()
-                rgb.save(buffer, format="JPEG", quality=qualities[middle], optimize=True,
-                         progressive=True, subsampling=2)
-                payload = buffer.getvalue()
-                if smallest is None or len(payload) < len(smallest[1]):
-                    smallest = (qualities[middle], payload)
-                if len(payload) <= args.max_bytes:
-                    chosen = (qualities[middle], payload)
-                    hi = middle - 1
-                else:
-                    lo = middle + 1
+            if args.target_bytes is not None:
+                chosen, _ = highest_fit(args.target_bytes)
             if chosen is None:
-                assert smallest is not None
-                raise SystemExit(
-                    f"{source.name}: could not reach {args.max_bytes} bytes even at "
-                    f"quality {smallest[0]}; output not written"
-                )
+                chosen, smallest = highest_fit(args.max_bytes)
+                if chosen is None:
+                    assert smallest is not None
+                    raise SystemExit(
+                        f"{source.name}: could not reach {args.max_bytes} bytes even at "
+                        f"quality {smallest[0]}; output not written"
+                    )
             quality, payload = chosen
             destination.write_bytes(payload)
+        target_status = ("" if args.target_bytes is None else
+                         f", {'target met' if destination.stat().st_size <= args.target_bytes else 'within hard limit'}")
         print(f"{source.name}: {source.stat().st_size} -> {destination.name}: "
-              f"{destination.stat().st_size} bytes (quality {quality}, 4:2:0)")
+              f"{destination.stat().st_size} bytes (quality {quality}, 4:2:0{target_status})")
     return 0
 
 if __name__ == "__main__":

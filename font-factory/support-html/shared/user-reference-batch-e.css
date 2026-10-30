@@ -1,0 +1,96 @@
+#artboard.user-reference-boldcampaign {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #ededeb;
+}
+
+#artboard.user-reference-boldcampaign .bc-plate {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+#artboard.user-reference-boldcampaign .bc-panel {
+  position: absolute;
+  z-index: 1;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#artboard.user-reference-boldcampaign .bc-panel-one {
+  background: #2e02b5;
+  color: #e6ee47;
+}
+
+#artboard.user-reference-boldcampaign .bc-panel-two {
+  background: #f3f66e;
+  color: #3b16a8;
+}
+
+#artboard.user-reference-boldcampaign .bc-panel-three {
+  background: #42e5f5;
+  color: #3715a4;
+}
+
+#artboard.user-reference-boldcampaign .bc-panel-four {
+  background: #691bc5;
+  color: #49dff2;
+}
+
+#artboard.user-reference-boldcampaign .bc-line {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: inherit;
+  font-family: var(--display-face, Georgia, serif);
+  font-size: 110px;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .88;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+#artboard.user-reference-boldcampaign .bc-underlined {
+  text-decoration: underline;
+  text-decoration-thickness: .06em;
+  text-underline-offset: .04em;
+}
+
+#artboard.user-reference-boldcampaign .bc-family-label {
+  position: absolute;
+  z-index: 3;
+  top: 14%;
+  right: 2.4%;
+  display: flex;
+  width: 8.2%;
+  height: 72%;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: inherit;
+  font-family: var(--display-face, Georgia, serif);
+  font-weight: 400;
+  font-synthesis: none;
+  letter-spacing: .03em;
+  line-height: 1;
+  text-align: center;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+}

@@ -44,11 +44,69 @@ provider's `.jpg` filenames.
 | `T26074_01`, `_02`, `_03`, `_06`, `_12` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T26074_2x/c/T26074_XX.jpg?20241016220542` |
 | `T26392_08` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T26392_3x/c/T26392_08.jpg?20241030224422` |
 
+## Reference batch D — 2026-10-26
+
+| Local file | Source / provenance |
+|---|---|
+| `originals/reference-batch-2026-10-26-d/T35520_06.webp` | Downloaded T35520_06 reference, preserved unchanged. Its source URL was not recorded in this manifest. SHA-256: `e0a1f97d4e5ebf992e561be184023b3cf1eeeefd13947dacc019d47292a7fc88`. |
+| `materials/reference-batch-2026-10-26-d/T35520_06-background-3x2.png` | Separate text-free photo plate derived from the unchanged reference. SHA-256: `e084ee9e609378ae913f09213c1d5f57b76fe43a7b9002d367e388c7b2d1a5b3`. |
+| `materials/reference-batch-2026-10-26-d/T35520_06-main-photo-square.png` | Exact 793 × 793 crop at `(387,113)` from the clean 3:2 plate; the same crop is used in all three All Summer Long cards. SHA-256: `94e716cbc5a3ceb6922ede569dd7beef9d933c9c1f0ab298e6ef50d4a7b8db7d`. |
+
+## Reference batch E — 2026-10-26
+
+| Local file | Source / provenance |
+|---|---|
+| `originals/reference-batch-2026-10-26-e/behance-40630743_01.webp` | Behance project [Sexy Shout Free Font](https://www.behance.net/gallery/40630743/Sexy-Shout-Free-Font); original response saved unchanged from `https://mir-s3-cdn-cf.behance.net/project_modules/hd_webp/89670240630743.578691cf77b5d.jpg`. SHA-256: `2c86fd09af7cfb987854f323d5fde323085ce4c538175ca596b0f3799a14064ae`. |
+| `materials/reference-batch-2026-10-26-e/sexyshout-user-photo.png` | User-supplied grayscale photograph, preserved unchanged as the clean image layer for `sexyshout32`. SHA-256: `c99f1f9cb3c50fae1dd1afd89cdb0d6441f48405bc7a90733e7cbe4d4631cb4d`. |
+
+## Reference batch F — 2026-10-26
+
+| Local file | Source / provenance |
+|---|---|
+| `originals/reference-batch-2026-10-26-f/33a5cffa-604c-4d20-981b-8ec2ce3475b7.jpeg` | Envato reference image downloaded from the user's Downloads folder; the visible credit reads Rantautype Studio. SHA-256: `58543c656557f67c7e0952988589c3b00abfb1dd718612eeba4aa14712ad360a`. |
+| `originals/reference-batch-2026-10-26-f/33a5cffa-604c-4d20-981b-8ec2ce3475b7.avif` | Second downloaded encoding, preserved unchanged. SHA-256: `9626adf9400b5babefa13ec4df30c405ff1cfd846f767386bb3aa2c9f47d6a70`. |
+| `originals/reference-batch-2026-10-26-f/envato-preview-33a5cffa.jpeg` | Exact response from the user-provided [Envato preview URL](https://elements-resized.envatousercontent.com/elements-preview-images/33a5cffa-604c-4d20-981b-8ec2ce3475b7?w=1370&cf_fit=scale-down&q=85&format=auto&s=c1aa16feb61f52d7168055905381d779e623cbd161a4891aec6daa66df61afba); 1370 × 913, SHA-256 `4cca0039faac86da2aad2913df63f7268d7cf1b78f3a041cbabe1ef0d9bde3c5`. |
+| `materials/reference-batch-2026-10-26-f/33a5cffa-user-photo.png` | User-supplied clean fashion photograph, preserved unchanged and used as the background for `embracesexiest32`. SHA-256: `62aa63a50014b006903732060240ab8a70669ca403017e52a16cbe777e1a1a71`. |
+
+## Reference batch A — 2026-10-29
+
+Twenty-seven exact source images across fifteen source IDs. The URLs use `.jpg` paths, but all responses identify as WebP; original response bytes are preserved unchanged. Exact URLs and a machine-readable checksum record are also kept in `originals/reference-batch-2026-10-29-a/`.
+
+| Local file | Exact source URL | Dimensions | SHA-256 |
+|---|---|---:|---|
+| `originals/reference-batch-2026-10-29-a/T22722_03.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T22722_3x/c/T22722_03.jpg?20240315030623` | 1800 × 1204 | `2aa4078e8eacb89a356a3e61bbbb9d058eaf8564706073110dea4c0aac052712` |
+| `originals/reference-batch-2026-10-29-a/T22722_05.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T22722_3x/c/T22722_05.jpg?20240315030623` | 1800 × 1204 | `b700b716bbbf0f72c1dbf4167e631096d56d0e1d944c4f61cfacd277b80ad91b` |
+| `originals/reference-batch-2026-10-29-a/T22722_07.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T22722_3x/c/T22722_07.jpg?20240315030623` | 1800 × 1204 | `2e95ff2ff57fcb2527324e9890d3a27fdb1cc7fb06f31163232424eb95d6a4ff` |
+| `originals/reference-batch-2026-10-29-a/T22722_10.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T22722_3x/c/T22722_10.jpg?20240315030623` | 1800 × 1204 | `3b7f8cd6e4543822267f2b7e71e9a821991dbb9be04695fad570d36f6d23a717` |
+| `originals/reference-batch-2026-10-29-a/T15060_01.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T15060_2x/c/T15060_01.jpg?20211111193949` | 1184 × 792 | `d5054b47549df62bd54808ae404f222de05cf58395900a2afbff99d5f47dcfc7` |
+| `originals/reference-batch-2026-10-29-a/T1391_03.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T1391/c/T1391_03.jpg?20141104142069` | 592 × 396 | `7c64cfe25c2ef2c6cbac6f6999fe0718e6242c6509a56158350cebdcf59d02ee` |
+| `originals/reference-batch-2026-10-29-a/T5315_02.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T5315_3x/c/T5315_02.jpg?20220829011948` | 1800 × 1204 | `ba5f7f07562e6a6c12f8c2dee70556306bda9ed5de8a7afc742f0bdef7e8d02d` |
+| `originals/reference-batch-2026-10-29-a/T9965_02.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T9965_2x/c/T9965_02.jpg?20181018204245` | 1184 × 790 | `d7881c4da09f770ac346eabf311010fc11c95885c8d0b41d8e00eaff9d35e052` |
+| `originals/reference-batch-2026-10-29-a/T10930_03.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T10930_2x/c/T10930_03.jpg?20190614032837` | 1184 × 792 | `de5d03124e7355dccd64a0838a858ed4a7732ea47ee1e794fe75e87fd98f3be4` |
+| `originals/reference-batch-2026-10-29-a/T6569_05.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T6569_2x/c/T6569_05.jpg?20160610010534` | 1184 × 792 | `855fb92528fb805abb57a1b24edb3ddad935bac66055381457df023c9d88220e` |
+| `originals/reference-batch-2026-10-29-a/T6569_03.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T6569_2x/c/T6569_03.jpg?20160610010534` | 1184 × 792 | `4dc356a769e9a714007b816512fd7cc38cc267748acbb0893c392f3237b8a7e4` |
+| `originals/reference-batch-2026-10-29-a/T29536_00.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T29536_2x/c/T29536_00.jpg?20250626214226` | 1184 × 789 | `f33fbaf5fa54eee4f128f505d64b6cb0e44995988a0ac0a4879d4a31fdd5deb9` |
+| `originals/reference-batch-2026-10-29-a/T29536_07.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T29536_2x/c/T29536_07.jpg?20250626214226` | 1184 × 789 | `a614313b30d308362cb75e8b29e6e1313ad29bb242fa531e60221bfd1644707a` |
+| `originals/reference-batch-2026-10-29-a/T26790_05.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T26790_2x/c/T26790_05.jpg?20241128001334` | 1184 × 789 | `727a40a5ef938a2fdeb83fc7ace3469cb2b44634e3bfce74234823741407e423` |
+| `originals/reference-batch-2026-10-29-a/T16928_05.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T16928_2x/c/T16928_05.jpg?20220906020541` | 1184 × 792 | `dc96c73fe1bbff6ba0e22ce6b90e81dba50a1c5196603cd29641afaffe8b2508` |
+| `originals/reference-batch-2026-10-29-a/T25802_00.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T25802_2x/c/T25802_00.jpg?20240926081044` | 1184 × 792 | `6e3ad491533537b7ce5e923dc4bbb25fad137491d7e3a32f4556bf0c058cf6aa` |
+| `originals/reference-batch-2026-10-29-a/T25802_08.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T25802_2x/c/T25802_08.jpg?20240926081044` | 1184 × 792 | `4b465c5c58f0e448c3589bcd19ce729f9e9f9245c00828e97fa3a7a3195c56a3` |
+| `originals/reference-batch-2026-10-29-a/T25802_09.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T25802_2x/c/T25802_09.jpg?20240926081044` | 1184 × 792 | `fc116ae5a804c9f1858b0d1378a66bc1d3d59e022c9a6d215ac7e343e63c07d9` |
+| `originals/reference-batch-2026-10-29-a/T18400_00.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T18400_2x/c/T18400_00.jpg?20230118202222` | 1184 × 789 | `8194508c243c9cfe4cf479bafff0ebc648ef51f0df7407dee164577698f8ff2d` |
+| `originals/reference-batch-2026-10-29-a/T0002_04.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T0002_3x/c/T0002_04.jpg?20231214011743` | 1800 × 1204 | `c9fd572bb1996ee2c8c91d42acf851213da8674b51908c4105bb098f3e073eb6` |
+| `originals/reference-batch-2026-10-29-a/T0002_06.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T0002_3x/c/T0002_06.jpg?20231214011743` | 1800 × 1204 | `b9b8d846a5a5f767303f70e7e45b55ba10e04c4fbf96fe72e9ee3172b4c112e6` |
+| `originals/reference-batch-2026-10-29-a/T0002_00.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T0002_3x/c/T0002_00.jpg?20231214011743` | 1800 × 1204 | `6c86f8cda65b3050517ade345462e58c1ac242ad8dda03e2431b623edf45468d` |
+| `originals/reference-batch-2026-10-29-a/T12704_03.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T12704_2x/c/T12704_03.jpg?20200809213830` | 1184 × 792 | `f82363a0f268022ff32843e590e83659ccc8f6d4acee6fcede69992fdeb4d3b9` |
+| `originals/reference-batch-2026-10-29-a/T12704_04.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T12704_2x/c/T12704_04.jpg?20200809213830` | 1184 × 792 | `996c581d052ec992595acaed3c6b77e07e8ba86b8b0919815c62669fd173d93d` |
+| `originals/reference-batch-2026-10-29-a/T12704_06.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T12704_2x/c/T12704_06.jpg?20200809213830` | 1184 × 792 | `7228303d03e68fc15ae562442511c54e85ca8025bdd9dcdf713117c6fb176e44` |
+| `originals/reference-batch-2026-10-29-a/T8840_03.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T8840_2x/c/T8840_03.jpg?20180306000538` | 1184 × 792 | `3565cffac1e4c5aa6cb870eb23d1bb2109dc1f3e67e55dde3496a0a5ebe96c80` |
+| `originals/reference-batch-2026-10-29-a/T8840_00.jpg` | `https://dfjx2uxqg3cgi.cloudfront.net/img/type/T8840_2x/c/T8840_00.jpg?20180306000538` | 1184 × 792 | `20a4982566eae74b926bf4a7fa4440f6fe3bce5ff88e99205220ea9dbe35424c` |
 ## Incoming-batch materials
 
 Recorded image-generation prompts are in [`IMAGEGEN-PROMPTS.md`](IMAGEGEN-PROMPTS.md). The materials are one-pass outputs, retained as reusable inputs rather than finished template compositions.
 
-- Generated photo plates: `materials/T30332_01_stardust-photo.png`, `T30332_02_cliff-sea-background.png`, `T24908_00_amber-dawn-photo.png`, `T24908_01_skin-portrait-background.png`, `T24908_02_clean-photo-background.png`, `T24908_03_gelato-background.png`, and `T28660_00_red-jacket-photo.png`.
+- Generated photo plates: `materials/T30332_02_cliff-sea-background.png`, `T24908_00_amber-dawn-photo.png`, `T24908_01_skin-portrait-background.png`, `T24908_02_clean-photo-background.png`, and `T24908_03_gelato-background.png`.
+- User-provided photo plates: `materials/T30332_01_stardust-photo.png` (copied unchanged from `Codex Image 26 Oct 2026, 22_10_51.png` in Downloads), `materials/T28660_00_red-jacket-photo.png` (copied unchanged from `Codex Image 26 Oct 2026, 22_15_47.png`), and `materials/user-batch-2026-10-26-c/T31141_05-clean-bg.png` (copied unchanged from `Codex Image 26 Oct 2026, 22_19_59.png`; its square crop is documented in that batch's README).
 - `materials/T24908_01_clean-photo-background.png` — one-pass text-removal reconstruction of the warm hair-and-skin photo behind the two seals in `skinbadge32`.
 - `materials/T24908_02_clean-photo-background.png` — one-pass edit of `T24908_02.jpg` removing the lookbook lettering while preserving its red blazer, model crop, and architecture; used full-bleed by `latestlook32`.
 - `materials/T24908_03_blue-ice-cream-pattern.png` and `T24908_03_crimson-ice-cream-pattern.png` — the user's prepared `Ice-Cream-Background-Designs` files, retained unchanged and clipped into the rear and front cards of `gelatocards32`.

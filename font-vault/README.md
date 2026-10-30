@@ -12,6 +12,12 @@ From the project root:
 python3 font-vault/font_vault.py
 ```
 
+Exit from **File → Exit Font Vault**, the **Exit** button, or **Ctrl+Q**. If
+launched from a terminal, **Ctrl+C** requests the same orderly shutdown. Active
+background work is cancelled at safe checkpoints; a directory scan interrupted
+by exit is marked incomplete and resumes with a re-sync the next time that vault
+is opened.
+
 It uses the PySide6 desktop runtime and does not open a browser. Install the
 project dependencies first with `uv sync` or `pip install -r requirements.txt`.
 
@@ -189,8 +195,13 @@ are easy to spot.
 
 Each row carries a rights chip from that folder's `rights-verdicts.json` — red
 `claimed`, amber `orphan`, green `clear`, dim for not yet researched. Clicking a
-chip opens a dialog with the evidence URLs (clickable, plus a copy-all button),
-the searched avenues, the grant quote, fsType, dates and any superseded verdicts.
+chip opens a dialog with the verdict evidence and a provenance record: author and
+status, earliest date and age estimate, observed freeware/shareware or other
+distribution labels, the abandonware assessment, and the exact directory pages,
+match, uploader and page date. Source URLs are clickable and included in both
+copy buttons. Free-font listings and abandonware labels are research findings;
+neither one grants a licence. The dialog also shows searched avenues, the grant
+quote, fsType, checked date and any superseded verdicts.
 **Copy full report** in the footer takes the whole record out as plain text — every
 fact, section and URL the dialog shows, plus the sidecar path — so you can run your
 own confirmations from it. It is there for every state, including amber verdicts

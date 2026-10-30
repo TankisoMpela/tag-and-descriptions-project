@@ -102,9 +102,10 @@
 
 .phone-vertical-type {
   left: var(--center-x);
-  top: 50.5%;
-  transform: translate(-50%, -50%) rotate(-90deg) scaleY(.72);
+  top: 53.5%;
+  transform: translate(-50%, -50%) rotate(-90deg);
   transform-origin: center;
+  line-height: 1;
 }
 
 .phone-right-title {

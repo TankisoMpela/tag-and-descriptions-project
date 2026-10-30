@@ -1,0 +1,58 @@
+#artboard.user-reference-sexyshout {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #454545;
+  color: #fffdf9;
+}
+
+#artboard.user-reference-sexyshout .ss-photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+  user-select: none;
+  pointer-events: none;
+}
+
+#artboard.user-reference-sexyshout .ss-line {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 49%;
+  overflow: visible;
+  color: #fffdf9;
+  font-family: SupportDisplay, serif;
+  font-size: 72px;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
+  line-height: .9;
+  text-align: center;
+  text-rendering: geometricPrecision;
+  white-space: pre;
+  -webkit-text-stroke: .28px rgba(13, 13, 13, .16);
+  text-shadow: 0 2px 9px rgba(0, 0, 0, .34);
+}
+
+#artboard.user-reference-sexyshout .ss-family-italic {
+  font-family: SupportFamily1, SupportDisplay, serif;
+}
+
+#artboard.user-reference-sexyshout .ss-line[data-layout-item="sexyshout32-lineTwo"] {
+  height: 59%;
+}
+
+#artboard.user-reference-sexyshout.ss-square .ss-photo {
+  object-position: 61% center;
+}
+
+#artboard.user-reference-sexyshout.ss-square .ss-line[data-layout-item="sexyshout32-lineTwo"] {
+  height: 46%;
+}

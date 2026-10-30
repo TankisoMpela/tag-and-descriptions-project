@@ -6,6 +6,7 @@ The claim under test is narrow and checkable: for any copy, any face, any box,
 Sheet.text() draws ink that (a) stays inside the declared box and (b) cannot
 silently land on another block's ink. Everything else is taste; this is correctness.
 """
+import random
 import sys
 from pathlib import Path
 
@@ -221,19 +222,34 @@ case("feature callouts use real GSUB names when available",
 case("feature callouts stay truthful when the font exposes no feature tags",
      ps.feature_callout_labels({"facts": {"features": []}})
      == ["Feature Set Varies", "See Available Glyphs"])
-case("84 stable support slots retain 75 active templates",
-     len(ps.SUPPORT_ORDER) == 84
-     and len(set(ps.SUPPORT_ORDER)) == 84
+case("172 stable support slots retain 135 active templates",
+     len(ps.SUPPORT_ORDER) == 172
+     and len(set(ps.SUPPORT_ORDER)) == 172
      and ps.SUPPORT_ORDER[42] == "bondibeach32"
      and "bondibeach32" in ps.SUPPORT_RETIRED
      and "bondibeach32" not in ps.TEMPLATES
      and len([name for name in ps.SUPPORT_ORDER
-              if name not in ps.SUPPORT_RETIRED]) == 75
+             if name not in ps.SUPPORT_RETIRED]) == 135
      and set(name for name in ps.SUPPORT_ORDER
              if name not in ps.SUPPORT_RETIRED) <= set(ps.TEMPLATES)
      and all(name in ps.THEME_PREF for name in ps.SUPPORT_ORDER
              if name not in ps.SUPPORT_RETIRED),
      f"{len(ps.SUPPORT_ORDER)} slots / {len(set(ps.SUPPORT_ORDER))} unique")
+batch_b = {
+    "saucystack32", "anteliascard32", "peacebreath32", "nyccoffee32",
+    "afterhours32", "outofoffice32", "skincareroutine32", "youlookgood32",
+    "spiritadventure32", "dreamfollow32", "angelinastyle32",
+    "comesnatural32", "calmafterstorm32", "beachclub32", "splitampersand32",
+    "setrum32", "nectarambience32", "fluorescentduo32", "sacharon32",
+    "lastnightsweden32", "crywolf32",
+}
+active_batch_b = batch_b - ps.SUPPORT_RETIRED
+case("active new reference templates remain eligible for all four random support pools",
+     len(batch_b) == 21
+     and active_batch_b <= ps.HTML_ONLY_SUPPORT
+     and all(active_batch_b <= set(ps.support_names(cls, "", 1))
+             for cls in ps.CLASS_ORDERS),
+     f"{len(active_batch_b)} active / {len(batch_b) - len(active_batch_b)} retired")
 case("Bondi Beach cannot be selected by any support class",
      all("bondibeach32" not in ps.support_names(cls)
          for cls in ps.CLASS_ORDERS))
@@ -260,12 +276,12 @@ case("contour32 stays available only for handwritten and display styles",
                  ("blackletter", "blackletter", 2), ("script", "brush", 1),
                  ("sports", "brush", 3), ("sports", "pixel", 2))))
 style_pools = {
-    "blackletter": ("blackletter", "blackletter", 2, 51),
-    "handwritten": ("script", "script", 1, 62),
-    "tech-sports": ("sports", "brush", 3, 55),
-    "brush": ("script", "brush", 1, 66),
-    "pixel": ("sports", "pixel", 2, 60),
-    "display": ("elegant", "display-bold", 1, 65),
+    "blackletter": ("blackletter", "blackletter", 2, 118),
+    "handwritten": ("script", "script", 1, 123),
+    "tech-sports": ("sports", "brush", 3, 119),
+    "brush": ("script", "brush", 1, 126),
+    "pixel": ("sports", "pixel", 2, 125),
+    "display": ("elegant", "display-bold", 1, 126),
 }
 case("renderer classes resolve to the six audited support styles",
      ps.support_style_group("blackletter", "blackletter") == "blackletter"
@@ -279,8 +295,8 @@ for group, (cls, family, styles, expected_count) in style_pools.items():
     excluded = ps.SUPPORT_STYLE_EXCLUDE[group]
     case(f"{group}: hard mismatches are discounted",
          excluded.isdisjoint(pool), f"still eligible: {sorted(excluded & pool)}")
-    case(f"{group}: eligible pool has expected size and can supply seven",
-         len(pool) == expected_count and len(pool) >= 7,
+    case(f"{group}: eligible pool has expected size and can supply thirteen",
+         len(pool) == expected_count and len(pool) >= 13,
          f"{len(pool)} eligible; expected {expected_count}")
 case("Neue is reserved for the sports/tech specimen class",
      all("neue32" in ps.SUPPORT_STYLE_EXCLUDE[group]
@@ -288,13 +304,18 @@ case("Neue is reserved for the sports/tech specimen class",
      and "neue32" not in ps.SUPPORT_STYLE_EXCLUDE["tech-sports"])
 family_font = ROOT / "font-factory/fonts/3-Lindgre/Lindgre L2THLSE/Lindgre/Lindgre-Regular.otf"
 family_ctx = ps.build_ctx(family_font, "Lindgre", support_copy)
-family_panels = {"plakat32", "weightfamily32", "mangosboard32"}
+family_panels = {"plakat32", "weightfamily32", "mangosboard32", "italicregular32"}
 eligible = set(ps.support_names("elegant", family_ctx["family"],
                                 family_ctx["family_style_count"],
                                 family_ctx["has_weight_triplet"]))
-case("family-only boards and Plakat are eligible for a real multi-style family",
+case("family showcase templates are eligible for a real multi-style family",
      family_ctx["family_style_count"] >= 2 and family_panels <= eligible,
      f"{family_ctx['family_style_count']} styles")
+family_selection = ps.select_support_templates(
+    random.Random(2026), list(eligible), 13, "elegant")
+case("13-template family selection always includes eligible showcases",
+     len(family_selection) == 13 and family_panels <= set(family_selection),
+     ", ".join(sorted(set(family_selection) & family_panels)))
 case("family boards do not invent sibling styles for a single face",
      family_panels.isdisjoint(ps.support_names("elegant", "single", 1)))
 family_panel_names = {"boots32", "plakat32", "weightfamily32", "mangosboard32"}
@@ -320,7 +341,7 @@ case("family-gated designs render cleanly with real Lindgre siblings",
      "; ".join(family_findings[:3]) or "4 real-family renders; 0 findings")
 
 focused_supports = {
-    "card32", "boots32", "sunsetpromise32", "contactlist32",
+    "boots32", "sunsetpromise32", "contactlist32",
     "phonegarden32", "pixelquote32",
 }
 support_findings = []
@@ -343,9 +364,9 @@ for slug, cfg in support_audit.CLASSES.items():
             f"{slug}/{template}: {error['message']}"
             for error in ps.as_errors(template, support_sheet)
         )
-case("six spacing fixes pass across all six audited styles",
+case("five active spacing fixes pass across all six audited styles",
      not support_findings,
-     "36 focused renders; " + ("0 findings" if not support_findings
+     "30 focused renders; " + ("0 findings" if not support_findings
                               else "; ".join(support_findings[:3])))
 
 print(f"\n{'ALL GREEN' if fails == 0 else str(fails) + ' FAILURE(S)'}")

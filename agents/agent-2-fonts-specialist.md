@@ -80,14 +80,18 @@ instead of inventing tags.
 
 The allowed primary Creative Market font classification is exactly one of:
 `Blackletter`, `Handwritten`, `Sans Serif`, `Script`, `Serif`, `Slab Serif`,
-`Symbols`. If the supplied facts do not support one confidently, write
-`[CATEGORY NEEDS USER CONFIRMATION]`.
+`Symbols`. If the supplied facts do not support one confidently, stop before
+writing a completed listing and ask the user to confirm the category. Do not
+use a placeholder classification: the required copy validator accepts only one
+of the seven supported values.
 
 ## Output
 
-Reuse an established product number and slug when supplied. For a new product,
-scan `outputs/creativemarket/*.md` and use one higher than the highest numeric
-prefix without overwriting an existing file. Write:
+Reuse the product number and final-name slug supplied by the full-workflow
+orchestrator. For a standalone new product with no supplied number, follow the
+unified numbering rule in `AGENTS.md`: scan all `outputs/*/*.md` listing files,
+not only Creative Market, and use one higher than the highest numeric prefix.
+Never recalculate the number during an orchestrated run. Write:
 
 `outputs/creativemarket/{NUM}-{product-slug}-cm.md`
 
