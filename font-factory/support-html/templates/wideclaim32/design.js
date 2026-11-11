@@ -1,4 +1,26 @@
 (function () {
+  const typeLabels = {
+    blackletter: "Blackletter",
+    brush: "Brush",
+    display: "Display",
+    "display-bold": "Display",
+    "display bold": "Display",
+    grotesk: "Sans Serif",
+    hairline: "Hairline",
+    mono: "Monospaced",
+    pixel: "Pixel",
+    script: "Script",
+    serif: "Serif",
+    swashy: "Swashy",
+  };
+
+  function typeLabel(value) {
+    const key = String(value ?? "").trim().toLocaleLowerCase("en").replace(/[-_]+/gu, " ");
+    if (!key) return "Typeface";
+    if (typeLabels[key]) return typeLabels[key];
+    return key.replace(/\b\p{L}/gu, (letter) => letter.toLocaleUpperCase("en"));
+  }
+
   function titleCase(value) {
     return String(value ?? "").trim().split(/(\s+)/u).map((part) => {
       if (!part || /^\s+$/u.test(part)) return part;
@@ -15,7 +37,7 @@
       lineOne: "A Typeface Is",
       lineTwo: "A Visual Voice",
       wordOne: "Wide",
-      wordTwo: "Serif",
+      wordTwo: "",
       scale: 1,
       topTracking: -.04,
       displayTracking: -.05,
@@ -26,7 +48,7 @@
       { key: "lineOne", label: "Upper Line", type: "text" },
       { key: "lineTwo", label: "Second Line", type: "text" },
       { key: "wordOne", label: "First Display Word", type: "text" },
-      { key: "wordTwo", label: "Second Display Word", type: "text" },
+      { key: "wordTwo", label: "Type Label Override", type: "text" },
       { key: "scale", label: "Display Scale", min: .90, max: 1.08, step: .01 },
       { key: "topTracking", label: "Statement Spacing", min: -.06, max: -.005, step: .001 },
       { key: "displayTracking", label: "Display Word Spacing", min: -.08, max: -.015, step: .001 },
@@ -42,6 +64,8 @@
       const scale = Number(props.scale ?? state.scale ?? 1);
       const wordOneTop = Number(props.wordOneTop ?? state.wordOneTop ?? .355);
       const wordTwoTop = Number(props.wordTwoTop ?? state.wordTwoTop ?? .685);
+      const typeOverride = String(props.wordTwo ?? state.wordTwo ?? "").trim();
+      const typeWord = typeOverride || typeLabel(props.fontType ?? state.fontType);
       board.style.setProperty("--wide-top-tracking", `${topTracking}em`);
       board.style.setProperty("--wide-display-tracking", `${displayTracking}em`);
       board.style.setProperty("--wide-word-one-top", `${wordOneTop * 100}%`);
@@ -127,7 +151,7 @@
         "wide-row-two", { left: .034, top: .217, width: .932, height: .138 }, .13);
       addDisplayWord("display-word-one", props.wordOne ?? state.wordOne ?? "Wide",
         "wide-word-one-row", { left: .035, top: wordOneTop, width: .93, height: .31 });
-      addDisplayWord("display-word-two", props.wordTwo ?? state.wordTwo ?? "Serif",
+      addDisplayWord("display-word-two", typeWord,
         "wide-word-two-row", { left: .038, top: wordTwoTop, width: .924, height: .29 }, true);
     },
     getContrast() {

@@ -1346,7 +1346,7 @@
       ],
       contrastException: {
         minimum: 4.5,
-        rationale: "The source uses white quote lettering against black and deep charcoal panels; the portrait remains unaltered as a cropped image layer.",
+        rationale: "White quote lettering sits against black and deep charcoal panels; the cleaned text-free portrait remains a cropped image layer.",
       },
       warnings: [],
       render(board, state) {
@@ -1361,7 +1361,7 @@
         photoFrame.setAttribute("aria-hidden", "true");
         const photo = document.createElement("img");
         photo.className = "sq-photo";
-        photo.src = "../../../support-references/originals/reference-batch-2026-10-29-a/T26790_05.jpg";
+        photo.src = "../../../support-references/materials/T26790_05_text-free-portrait.png";
         photo.alt = "";
         photoFrame.append(photo);
         board.append(photoFrame);

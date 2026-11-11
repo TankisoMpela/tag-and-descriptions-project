@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stack prepared product visuals into standard 1000x1500 2:3 Pinterest PNG and JPG files."""
+"""Stack full-width source images into Pinterest panels without crop or side fill."""
 
 from __future__ import annotations
 
@@ -7,28 +7,12 @@ import argparse
 from itertools import combinations
 import random
 import re
-import shutil
-import subprocess
 import sys
 import tempfile
 from pathlib import Path
 from PIL import Image
 
 TARGET_WIDTH = 1000
-TARGET_HEIGHT = 1500
-
-def tool(*names: str) -> str:
-    for name in names:
-        path = shutil.which(name)
-        if path:
-            return path
-    raise SystemExit(f"Missing required tool: {', '.join(names)}")
-
-def run(command: list[str]) -> None:
-    result = subprocess.run(command, text=True, capture_output=True)
-    if result.returncode != 0:
-        detail = (result.stderr or result.stdout).strip()
-        raise RuntimeError(f"Command failed ({result.returncode}): {' '.join(command)}\n{detail}")
 
 def slugify(value: str) -> str:
     value = re.sub(r"[^A-Za-z0-9]+", "-", value.strip()).strip("-").lower()
@@ -130,6 +114,7 @@ def select_thumbnail_panel_images(
 def collect_images(directory: Path, mode: str, count: int | None,
                    *, all_sources: bool = False) -> tuple[str, list[Path]]:
     normal_main = first_existing(directory, ("thumbnail_main.png", "thumbnail.png", "main.png"))
+    normal_alt = first_existing(directory, ("thumbnail_alt.png",))
     normal_promos = numbered_images(directory, "promo")
     square_main = first_existing(directory, ("thumbnail_square.png", "main_square.png"))
     square_promos = numbered_images(directory, "promo", "_square.png")
@@ -137,7 +122,7 @@ def collect_images(directory: Path, mode: str, count: int | None,
     if mode == "normal":
         if not normal_main:
             raise SystemExit(f"No main 3:2 thumbnail found in {directory}")
-        images = [normal_main] + normal_promos
+        images = [normal_main] + ([normal_alt] if normal_alt else []) + normal_promos
         limit = len(images) if all_sources else count or 3
         return "normal", images[:limit]
 
@@ -149,7 +134,7 @@ def collect_images(directory: Path, mode: str, count: int | None,
         return "square", images[:limit]
 
     if normal_main:
-        images = [normal_main] + normal_promos
+        images = [normal_main] + ([normal_alt] if normal_alt else []) + normal_promos
         limit = len(images) if all_sources else count or (3 if len(images) >= 3 else len(images))
         return "normal", images[:limit]
 
@@ -160,53 +145,51 @@ def collect_images(directory: Path, mode: str, count: int | None,
 
     raise SystemExit("Could not find usable product images.")
 
-def compose(convert: str, images: list[Path], width: int, raw_output: Path) -> None:
-    """Stack images into a 2:3 panel by fitting each one whole — never cropping.
+def opaque_rgb(image: Image.Image) -> Image.Image:
+    """Flatten source transparency over white before building an opaque Pin."""
+    rgba = image.convert("RGBA")
+    white = Image.new("RGBA", rgba.size, (255, 255, 255, 255))
+    white.alpha_composite(rgba)
+    return white.convert("RGB")
 
-    Every image is scaled to fit inside its slot, then centred on a white
-    canvas of the slot size. Landscape 3:2 sources keep their full content;
-    the leftover width becomes equal white margins instead of a centre-crop
-    that used to slice the top and bottom images of a 3-image stack.
-    """
-    target_height = round(width * 1.5)
-    count = len(images)
-    if count < 1:
+
+def compose(images: list[Path], width: int, raw_output: Path) -> None:
+    """Stack full-width sources, preserving each source's aspect ratio."""
+    if not images:
         raise SystemExit("compose_pinterest: no images to stack")
-    slot_heights = [target_height // count] * count
-    for index in range(target_height % count):
-        slot_heights[index] += 1
-    with tempfile.TemporaryDirectory(prefix="pinterest-compose-") as temp_dir:
-        panels: list[Path] = []
-        for index, (image, slot_height) in enumerate(zip(images, slot_heights), start=1):
-            panel = Path(temp_dir) / f"panel-{index}.png"
-            run([
-                convert,
-                str(image),
-                "-resize", f"{width}x{slot_height}",
-                "-background", "white",
-                "-gravity", "center",
-                "-extent", f"{width}x{slot_height}",
-                "+repage",
-                str(panel),
-            ])
-            panels.append(panel)
-        run([convert, *[str(panel) for panel in panels], "-append", str(raw_output)])
+
+    panels: list[Image.Image] = []
+    for image_path in images:
+        with Image.open(image_path) as source:
+            source = opaque_rgb(source)
+            height = max(1, round(width * source.height / source.width))
+            panels.append(source.resize((width, height), Image.Resampling.LANCZOS))
+
+    total_height = sum(panel.height for panel in panels)
+    canvas = Image.new("RGB", (width, total_height), (255, 255, 255))
+    y = 0
+    for panel in panels:
+        canvas.paste(panel, (0, y))
+        y += panel.height
+    raw_output.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(raw_output, format="PNG", optimize=True)
 
 def process_truecolor_outputs(raw_output: Path, final_png: Path) -> tuple[Path, Path]:
     final_png.parent.mkdir(parents=True, exist_ok=True)
     final_jpg = final_png.with_suffix(".jpg")
 
     with Image.open(raw_output) as img:
-        rgb_img = img.convert("RGB")
-        rgb_img = rgb_img.resize((TARGET_WIDTH, TARGET_HEIGHT), Image.Resampling.LANCZOS)
-        rgb_img.save(final_png, format="PNG", optimize=True)
-        rgb_img.save(final_jpg, format="JPEG", quality=95, optimize=True)
+        rgba_img = img.convert("RGBA")
+        rgba_img.save(final_png, format="PNG", optimize=True)
+        white = Image.new("RGBA", rgba_img.size, (255, 255, 255, 255))
+        white.alpha_composite(rgba_img)
+        white.convert("RGB").save(final_jpg, format="JPEG", quality=95, optimize=True)
 
     return final_png, final_jpg
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Stack prepared product images into standard 1000x1500 2:3 Pinterest PNG and JPG files."
+        description="Stack full-width prepared images without cropping, stretching, or adding side fills."
     )
     parser.add_argument("directory", type=Path, help="Directory containing the prepared product images")
     parser.add_argument("--product", required=True, help="Product name used for the output filename")
@@ -228,15 +211,14 @@ def main() -> int:
     if not directory.is_dir():
         raise SystemExit(f"Directory not found: {directory}")
 
-    convert = tool("magick", "convert")
     selected_mode, images = collect_images(
         directory, args.mode, args.count,
         all_sources=args.panel_layout == "thumbnail-top-middle")
     
     # Handle single output or multiple variants
-    if args.variants == 1:
+    if args.variants == 1 and args.output_dir is None:
         # Never default into the input directory: that directory holds the exact
-        # source images, and a composed 1000x1500 panel written there is picked up
+        # source images, and a composed panel written there is picked up
         # as a stack input by the next run (collect_images reads this directory).
         output_png = (
             args.output
@@ -250,14 +232,15 @@ def main() -> int:
         output_png.parent.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(prefix="pinterest-output-") as temp_dir:
             raw_path = Path(temp_dir) / "raw.png"
-            compose(convert, images, TARGET_WIDTH, raw_path)
+            compose(images, TARGET_WIDTH, raw_path)
             png_path, jpg_path = process_truecolor_outputs(raw_path, output_png)
         
-        print(f"Output PNG (24-bit Truecolor RGB): {png_path} ({png_path.stat().st_size / 1024:.1f} KB)")
-        print(f"Output JPG (High-Quality 95%): {jpg_path} ({jpg_path.stat().st_size / 1024:.1f} KB)")
+        print(f"Output PNG (full-width stacked sources): {png_path} ({png_path.stat().st_size / 1024:.1f} KB)")
+        print(f"Output JPG (white-flattened, High-Quality 95%): {jpg_path} ({jpg_path.stat().st_size / 1024:.1f} KB)")
         print(f"Mode: {selected_mode}; stacked {len(images)} images")
         print("Inputs: " + ", ".join(image.name for image in images))
-        print(f"Dimensions: {TARGET_WIDTH}x{TARGET_HEIGHT} (exact 2:3 ratio)")
+        with Image.open(png_path) as result:
+            print(f"Dimensions: {result.width}x{result.height}")
     else:
         # Multiple variants mode
         output_dir = (args.output_dir or directory / "pinterest").expanduser().resolve()
@@ -283,10 +266,12 @@ def main() -> int:
             
             with tempfile.TemporaryDirectory(prefix="pinterest-output-") as temp_dir:
                 raw_path = Path(temp_dir) / "raw.png"
-                compose(convert, variant_images, TARGET_WIDTH, raw_path)
+                compose(variant_images, TARGET_WIDTH, raw_path)
                 png_path, jpg_path = process_truecolor_outputs(raw_path, output_png)
             
-            print(f"Variant {output_index} ({position}): {png_path.name} ({png_path.stat().st_size / 1024:.1f} KB)")
+            with Image.open(png_path) as result:
+                dimensions = f"{result.width}x{result.height}"
+            print(f"Variant {output_index} ({position}): {png_path.name} ({dimensions}; {png_path.stat().st_size / 1024:.1f} KB)")
             print("Inputs: " + ", ".join(image.name for image in variant_images))
             if args.jpeg_companions:
                 print(f"Variant {output_index}: {jpg_path.name} ({jpg_path.stat().st_size / 1024:.1f} KB)")

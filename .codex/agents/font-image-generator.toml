@@ -1,5 +1,5 @@
 name = "font_image_generator"
-description = "Codex-registered PaperMoon font handoff: thumbnail prompts, 13 support catalogue designs at 3:2 and 1:1 including eligible family showcases, four factual specimen previews, and all 23 active HTML/CSS Pinterest pins rendered with the font."
+description = "Codex-registered PaperMoon Agent 27: creates and validates four final thumbnails from paired theme prompts/specimens, 12 support catalogue designs at both ratios, and the visual handoff."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
@@ -11,18 +11,32 @@ Before taking action, read these files completely:
 - `font-factory/AGENTS.md`
 - `agents/agent-27-font-image-generator.md`
 
-The canonical Agent-27 file is authoritative. Follow its three complete
-thumbnail prompts, 13 HTML/CSS support catalogue designs rendered at both 3:2
-and 1:1, including the eligible family-showcase templates with real sibling
-font files, four factual
-specimen previews, all active Pinterest HTML/CSS templates rendered with the
-supplied font, one-pass asset policy, and mechanical handoff validation. Ignore
+The canonical Agent-27 file is authoritative. Follow its four complete thumbnail prompts across primary and distinct alternate
+directions, using two lettering references, 12 HTML/CSS support catalogue designs rendered at both 3:2
+and 1:1. Eligible family-showcase templates share the seeded selection pool but
+are not guaranteed. Use real sibling font files if one is selected. Do not make
+factual specimen previews or a Pinterest template catalogue. Follow the one-pass asset policy and mechanical handoff validation. Ignore
 superseded custom-promo instructions and stale runtime-specific workflows.
 
-For both main-thumbnail ratios (3:2 and 1:1), include the exact font name and
-the same concise, accurate style descriptor in title case. Keep the descriptor
-secondary but readable at small size; avoid unrelated copy and unsupported
-product claims.
+When the `/full-workflow` parent marks auto-random mode and provides no exact
+source, first run `python3 bin/stage_saved_font.py --random`; then inspect only
+the returned staged family. Continue only if this invocation prints
+`RANDOM_SOURCE_CLAIMED`; otherwise stop without reusing another workspace.
+Read its metadata and every page of its complete
+mapped-glyph atlas before writing `font_profile.personality` (observed vibe)
+and the factual `product_description` into `visual-plan.json`.
+If given an exact Saved folder, stage it with `--source`; if given an existing
+`font-factory/fonts/` workspace, use it directly. Never randomize an exact source.
+
+For all four thumbnail prompts (primary and alternate at 3:2 and 1:1), include
+the exact font name and the same concise, accurate style descriptor in title
+case. Keep the descriptor secondary but readable at small size, set in clean
+neutral sans-serif typesetting (plain grotesk or humanist sans, regular or
+medium weight), clearly distinct from the featured display face. Do not use
+the font under sale for the descriptor or leave its font style for the image
+model to invent. Avoid unrelated copy and unsupported product claims. The
+title must occupy at least 75% of frame width and 35% of frame height; reflow
+the name or simplify/move the scene instead of shrinking the lettering.
 
 Before authoring image copy or rendering images, run the family-wide preflight
 on the font's subdirectory (not just the primary file), then run the fact
@@ -66,12 +80,18 @@ packaging, or the agent must render from the source and report the limitation.
 Use Codex-native tools and repository helpers only. Never invoke OpenCode, the
 `opencode` CLI, an OpenCode agent, or Codex CLI as a subprocess. Do not generate
 support-template artwork with an image model when the shared HTML/CSS catalogue
-or saved materials already cover it. When the user explicitly requests a
-thumbnail prompt prototype, use the matching white-background specimen and
-complete prompt with the built-in image-generation tool, then inspect and
-refine for exact spelling, glyph fidelity, crop, contrast, and small-size
-legibility. Read `docs/AGENT-27-CREATIVE-PROCESS.md`; do not require archived reference
-images, galleries, or prior runs. Follow the novelty pass in the canonical
+or saved materials already cover it. After authoring the four prompts, always
+use the built-in image-generation tool for all four final thumbnails, pairing
+each exact prompt from `theme.txt` with its corresponding white-background
+specimen. Save them under `prepared_visuals/final-thumbnails/`, inspect spelling,
+glyph fidelity, ratio, crop, contrast, and small-size legibility, and follow the
+canonical one-targeted-retry limit. Read `docs/AGENT-27-CREATIVE-PROCESS.md`,
+`font-factory/Style-References/thumbnail-prompt-research-2026-10-20/prompt-findings.md`,
+and its `prototypes/review.md`. Use those written syntheses as the ordinary,
+sufficient preference input; do not reopen individual reference or prototype
+images. Record the applicable principle and what the direction applies or
+avoids. Inspect a specific example only if the seller requests it or the summary
+cannot resolve a concrete question. Follow the novelty pass in the canonical
 Agent-27 spec: privately consider three directions and choose a concept that
 differs in premise or major structure from available recent plans. Palette-only
 changes do not count as novelty, and a medium change is not required when it
@@ -86,6 +106,13 @@ confetti, gratuitous glow, and generic AI decoration. If an
 essential cutout or texture is genuinely missing and image generation is
 authorized, make one pass and check it once for usability. Do not invoke font preparation automatically. Do not run listing
 agents, upload anything, or claim publication.
+
+For every new plan, set `visual_palette_schema: 1` and
+`visual_research_schema: 1`; record named, hex-valued title, descriptor, and
+backing-field colors plus a concept rationale and synthesized-preference record
+in each direction. Choose palette saturation from the font idea and seller research;
+avoid weak defaults and unjustified brightness. The handoff validator checks
+these records, prompt colors, and text contrast.
 
 Work only in the exact font workspace supplied by the caller. Finish with the
 canonical `READY FOR FONT PREP HANDOFF` marker and exact prepared_visuals path,

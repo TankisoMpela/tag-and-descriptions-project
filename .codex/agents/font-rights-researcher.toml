@@ -16,10 +16,16 @@ distribution sweep, and the budgets. Query the queue and store verdicts only thr
 `bin/font_rights.py` from the project root (`status --unmarked` lists folders,
 `plan --folder <N>` gives the family's representative, `write … --fanout` marks
 the whole folder, and `sync` publishes the tracked verdict ledger). One research
-pass per staged folder — the folder is one family by the seller's staging rule —
-1-2 searches and at most one page fetch. Search commercial sellers and free-font
-directories such as DaFont, FontsGeek/FontGeek, FontFreak, FontSpace, 1001Fonts,
-Fontasy, FFonts, Font Squirrel and Font Library. Record the exact match/version, page licence label, uploader,
+pass per staged folder — the folder is one family by the seller's staging rule.
+For every family, run three separate Serper/Google searches: exact family name,
+`site:fonts2u.com` exact family, and `site:findmyfonts.com` exact family. Follow
+relevant links from those pages to the credited designer, foundry, original
+listing, and named commercial sellers, including Creative Market; search an
+unclear destination by exact family/designer and fetch relevant pages to verify
+offers and rights statements. Search other relevant seller or directory leads
+the results reveal. Search commercial sellers and free-font directories such as
+DaFont, FontsGeek/FontGeek, FontFreak, FontSpace, 1001Fonts, Fontasy, FFonts,
+Font Squirrel and Font Library. Record the exact match/version, page licence label, uploader,
 author status, earliest located date/age and abandonware assessment with
 --research-json; a free-font directory or abandonware label is not a licence.
 Never read a whole

@@ -29,6 +29,7 @@ import urllib.error
 import urllib.request
 from collections import deque
 from pathlib import Path
+from urllib.parse import urlsplit
 from mcp_paths import require_mcp_script
 
 MCP = require_mcp_script("firecrawl_mcp.py")
@@ -47,9 +48,10 @@ CORE_SEEDS = [
 COUNT_PATTERNS = [
     re.compile(r"Explore\s+([\d,]+)\s+stunning", re.IGNORECASE),
     re.compile(r"([\d,]+)\+\s+Stunning", re.IGNORECASE),
+    re.compile(r"^#\s+([\d,]+)\s+.+?\s+Designs?\s*&\s*Graphics\s*$", re.IGNORECASE | re.MULTILINE),
 ]
 H1_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
-FONT_TAG_RE = re.compile(r"/tag/([a-z0-9-]+-fonts)/")
+FONT_TAG_RE = re.compile(r"/tag/([a-z0-9-]+-fonts?)/")
 
 
 def load_keys() -> list[str]:
@@ -98,6 +100,22 @@ def parse(data: dict) -> tuple[str, int | None, list[str]]:
     return heading, count, related
 
 
+def tag_display_name(heading: str) -> str:
+    name = re.sub(r"^\s*[\d,]+\s+", "", heading.strip())
+    name = name.split("|", 1)[0]
+    name = re.sub(r"\s+20\d{2}\b.*$", "", name)
+    name = re.sub(r"\s+Designs?\s*&\s*Graphics.*$", "", name, flags=re.IGNORECASE)
+    return name.strip()
+
+
+def font_route_slug(url: str) -> str | None:
+    parsed = urlsplit(url)
+    parts = [part for part in parsed.path.casefold().split("/") if part]
+    if len(parts) == 2 and parts[0] == "tag" and parts[1].endswith(("-font", "-fonts")):
+        return parts[1]
+    return None
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--max-pages", type=int, default=200)
@@ -118,9 +136,8 @@ def main() -> int:
         seeds = list(CORE_SEEDS)
     if not args.seed and BANK.exists():
         bank = json.loads(BANK.read_text(encoding="utf-8"))
-        seeds += [t["slug"] + "-fonts" for t in bank.get("tags", [])
-                  if t.get("status") == "live" and not t["slug"].endswith("-fonts")]
-        seeds += [t["slug"] for t in bank.get("tags", []) if t["slug"].endswith("-fonts")]
+        seeds += [slug for tag in bank.get("tags", []) if tag.get("status") == "live"
+                  if (slug := font_route_slug(tag.get("url", ""))) is not None]
     for seed in seeds:
         if seed not in visited:
             queue.append(seed)
@@ -143,7 +160,7 @@ def main() -> int:
             out.write(json.dumps({
                 "slug": slug,
                 "url": f"https://www.creativefabrica.com/tag/{slug}/",
-                "display_name": re.sub(r"\s+\d{4}.*$", "", heading).replace(" Fonts", "").strip() or None,
+                "display_name": tag_display_name(heading) or None,
                 "h1": heading,
                 "coverage_count": count,
                 "related_font_tags": related,

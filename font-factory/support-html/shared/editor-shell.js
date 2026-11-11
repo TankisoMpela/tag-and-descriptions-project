@@ -35,7 +35,7 @@
     return Object.fromEntries(Object.entries(values).map(([key, value]) => [
       key,
       typeof value === "string" && !literalKeys.has(key) &&
-        key !== "fontClass" && key !== "warnings" &&
+        key !== "fontClass" && key !== "fontType" && key !== "warnings" &&
         !key.toLocaleLowerCase("en").includes("url") &&
         !/^(?:#[\da-f]{3,8}|rgba?\(|hsla?\()/iu.test(value.trim())
         ? titleCaseCopy(value) : value,

@@ -2,7 +2,7 @@
 
 This directory contains browser editors and renderers for the support-image
 catalogue. The native Skia layouts occupy 70 stable slots, with 52 active;
-source-led remakes are HTML-only. The generator can sample 135 active
+source-led remakes are HTML-only. The generator can sample 144 active
 templates. `catalog.json` records active template slots, source/module
 mappings, and port status.
 
@@ -77,13 +77,49 @@ On 2026-10-29, slots 14, 16, 39, 42, 54, 120, 130, 132, and 135 were retired
 source material and editor history remain in place, but they are excluded from
 `catalog.json` and catalogue renders. Later on 2026-10-29, slots 8, 82, 85,
 and 91 were retired (`crest32`, `indieground32`, `saucystack32`, and
-`skincareroutine32`). The active catalogue now has 135 templates and 50 retired
-slots. The current 135-template Maidega review
-is under `benchmarks/catalogue-review-2026-10-26/maidega/`. The Amalie Script
-review at `benchmarks/catalogue-review-2026-10-26/amalie-script/` renders all
-135 active templates in both ratios and uses the actual Bold sibling in family
-comparison layouts. The earlier 148-template Velmorin set is retained as a
-pre-cull comparison.
+`skincareroutine32`). On 2026-11-03, slots 65, 101, 138, 139, 174, and 177
+were retired (`herbalproduct32`, `nectarambience32`, `playerglyph32`,
+`alicebadge32`, `statueframe32`, and `fashioncard32`). On 2026-11-07, slots 10,
+20, 37, 38, and 179 (`contour32`, `plakat32`, `voguecover32`, `confident32`,
+and `parkstatement32`) were also retired at the seller's request. Their stable
+slot IDs, editors, and source files remain as history. Slot 117,
+`littlemadquote32`, was retired at the seller's request on 2026-11-11; its editor
+and reference review remain preserved as history. Slots 181 and 182 add
+`numeralfolio32` and `timechange32`, based on the Creative Market references
+saved under `support-references/originals/creative-market-2026-11-11/`. Both use
+live selected-font display text and a type label derived from the font classifier.
+Slots 183–193 add eleven source-led templates from the recent Downloads
+references: `bottleoffer32`, `bootzyfear32`, `bootzyalmost32`,
+`bootzygraphic32`, `bootzybunny32`, `quadfont32`, `mythicallions32`,
+`lifeinblackwhite32`, `romanstrips32`, `floraltriptych32`, and `homequote32`.
+Each was built and reviewed in both ratios before moving to the next source;
+the original AVIFs, decoded references, and source-specific materials are under
+`support-references/originals/creative-market-batch-2026-11-11/` and
+`support-references/materials/creative-market-batch-2026-11-11/`.
+The active catalogue now has 144 templates and 62 retired slots. The 135-template Maidega and Amalie Script reviews under
+`benchmarks/catalogue-review-2026-10-26/` are historical baselines; they predate
+the eight November image-backed additions. The earlier 148-template Velmorin
+set is retained as a pre-cull comparison.
+
+Eight photo-led templates were added in slots 173–180 using clean text-free
+plates from `support-references/materials/user-batch-2026-11-03-a/`; three have
+since been retired, leaving five active. Each remaining active editor previews its unchanged
+reference beside the clean plate and has editable copy and selected-font
+controls. `catalog.json` points to the 3:2 and square preview renders; each
+active template's `previews/` links to the canonical files in
+`benchmarks/user-reference-batch-2026-11-03-a/renders/`, avoiding duplicate
+PNG assets. Original sources and text-removal prompts remain under
+`support-references/`.
+
+`strongerquote32` also now uses a text-free portrait plate; its four quote
+lines remain editable. Its 3:2 and square clean-plate renders are under
+`benchmarks/strongerquote32/text-free-plate-review/` and linked from that
+template's `previews/` folder.
+
+The random-font review snapshot at
+`benchmarks/catalogue-review-2026-11-03/freedom-9-condensed/` contains the
+143-template active set from before the November 3 cull. Its gallery marks the
+six retired slots; use the current 144-entry `catalog.json` for new runs.
 ## T26074_12 design benchmark
 
 Open benchmarks/T26074-12/layout-editor.html through a local web server from
@@ -144,13 +180,14 @@ alphabet, glyph, digit, and symbol specimens keep their exact glyph casing;
 the uppercase `NEUE!` repetition. Single-font reviews check copy casing and fit but do not replace
 representative-family review.
 
-The Agincort Regular review renders all 135 active templates in 3:2 and square,
+The Agincort Regular review renders its 135-template baseline in 3:2 and square,
 with contact sheets in catalogue order. Its selected Italic sibling is used in
 family-aware comparisons; see
 `benchmarks/catalogue-review-2026-10-26/agincort/README.md`.
 
-The active catalogue prototypes include the red/cyan print studies (`plakat32`,
-`plakatart32`, and `birvase32`), the real-style family proof (`weightfamily32`),
+The catalogue prototypes include the red/cyan print studies (`plakatart32` and
+`birvase32`); `plakat32` was retired on 2026-11-07. Other documented examples
+include the real-style family proof (`weightfamily32`),
 the three-card colour specimen (`mangosboard32`), the pearlescent oval wordmark
 (`ovalword32`), the wellness portrait layouts (`stardust32` and `blossom32`),
 and the stepped repetition poster (`neue32`). Retired `card32` and

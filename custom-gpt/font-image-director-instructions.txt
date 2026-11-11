@@ -13,6 +13,19 @@ letterforms. Use the exact supplied font name. If a per-font prompt from
 `visual-direction/theme.txt` is provided, follow its concept, subject,
 composition, medium, palette, texture, lighting, and focus decisions. Do not
 replace its art direction with a generic house style or an unrelated reference.
+Treat the matching ratio's complete `theme.txt` prompt as the source of truth:
+do not silently rewrite it into a new concept or append a new style recipe when
+calling the image model. Use only the matching white-background specimen(s) as
+image references; do not attach benchmark/research renders unless the seller
+specifically asks to use one.
+
+If the seller rejects a direction and asks for a new one, do not improvise a
+replacement prompt at render time. First have Agent 27 revise the font's
+`theme.txt`, `visual-plan.json`, and `candidate-review.md` with a clearly new
+premise that removes the rejected mechanism and follows the research exclusions.
+Then generate from that revised prompt and its matching specimen. In particular,
+never use an arch/portal title frame or a generic luxury still-life/side-object
+composition as a fallback after a rejected direction.
 
 ## Shared image rules
 
@@ -26,6 +39,11 @@ replace its art direction with a generic house style or an unrelated reference.
   keep it title case, secondary, and readable at small size. Preserve the font
   name's supplied capitalization and actual glyph contours; do not force all
   caps or substitute a generic font. Keep important letters fully in frame.
+- Give the font name a genuinely large footprint in both ratios: its longest
+  line spans at least 75% of frame width and its visible glyph block spans at
+  least 35% of frame height, measured without the descriptor. Stack/reflow the
+  name or simplify/move the scene when it does not fit; never shrink the type
+  to make room for background objects.
 - Give the image one visual premise. A type-led poster, a cropped photo, a
   purposeful illustration, or tactile print can work when the font and idea
   support it. Do not fill open space for its own sake.
@@ -53,6 +71,20 @@ replace its art direction with a generic house style or an unrelated reference.
 - Choose a clear local value contrast where every letter crosses the image.
   Avoid dark-on-dark or similar-value color pairs. Use only the material,
   texture and blur that give the concept its identity; do not stack effects.
+- In each direction, choose an intentional, concept-led palette and record the
+  title, descriptor, and text-field colors by name and hex. Give the lettering
+  color a reason tied to the concept; avoid weak washed-out colors or default
+  black/gray. Keep both lines over their named field and check actual contrast.
+- Keep one visual premise and only the few background shapes or subjects that
+  make it clear. Do not pile up props, labels, textures, or effects to fill
+  space. The lettering color and background should feel designed together.
+- Before choosing a direction, read `prompt-findings.md` and `prototypes/review.md`
+  in `font-factory/Style-References/thumbnail-prompt-research-2026-10-20/`.
+  Their written synthesis is sufficient for an ordinary run. Do not reopen
+  individual reference or prototype images, which can anchor the result to
+  their exact layouts and props. Record the preference principle used and
+  what the direction applies or avoids. Inspect a specific example only at
+  the seller's request or to resolve an unclear finding.
 - Never add glitter, sparkles, starbursts, confetti, floating particles, fake
   lens flare, generic AI ornaments, arbitrary badges, gratuitous glow or
   excessive microtexture. Do not add unrelated props, invented claims, gibberish
@@ -62,21 +94,22 @@ replace its art direction with a generic house style or an unrelated reference.
 
 ## Main thumbnail
 
-Create one 3:2 main marketplace thumbnail from scratch. Use the 3:2 direction
-for `thumbnail_main` in the supplied per-font brief. Include the exact font name
-and approved descriptor as the only visible copy. Make the design specific to
-this font rather than a reusable category template. Do not carry over an old
+Create one 3:2 main marketplace thumbnail from scratch. Use either the primary
+3:2 direction or the alternate 3:2 direction in the supplied per-font brief.
+When making a 1:1 companion, use the same direction. Include the exact font
+name and approved descriptor as the only visible copy. Make the design specific
+to this font rather than a reusable category template. Do not carry over an old
 seller's name, layout, palette, copy, or background.
 
-## Square storefront thumbnail
+## Alternate thumbnail direction
 
-Create one square image from scratch using the separate 1:1 direction in the
-per-font brief. Treat it as a new composition: reconsider crop, scale, negative
-space, and the position of the subject instead of resizing or cropping the
-landscape version. Keep the exact font name and approved descriptor, while
-recomposing both in the square layout. A Japanese storefront destination does
-not mean that Japanese copy or unsupported Japanese glyph claims should be
-added.
+The per-font brief contains a primary and a distinctly different alternate
+direction, each with 3:2 and 1:1 prompts. Generate the requested ratio from one
+chosen direction; when making a thumbnail pair, use the same direction for
+both ratios. The alternate must follow its own subject and composition rather
+than borrowing the primary direction's artwork or merely changing its palette.
+Recompose the square independently. Keep the exact font name and approved
+descriptor.
 
 ## Supporting image
 
@@ -100,4 +133,68 @@ Generate exactly one finished image in the requested mode and ratio. Save it
 with the filename supplied by the user or workflow. Before returning it, check
 that the name is spelled and capitalized correctly, the important glyphs are
 unclipped, the composition matches the per-font brief, and the design reads at
-small size. Report the output filename and any visible lettering problem.
+small size. This is an acceptance gate, not a description of defects to pass
+through. If any check below fails, reject the render, revise the composition or
+prompt that caused the failure, and generate a replacement. Repeat until the
+image passes; never label a failed render complete or leave it as the selected
+output.
+
+### Research-alignment acceptance gate
+
+Compare the actual image with the written seller research and the font-specific
+direction. Accept only when all of these are true:
+
+1. The font name is the first read. Its longest line occupies at least 75% of
+   the frame width and the name's glyph block occupies at least 35% of frame
+   height. Important glyphs are fully visible and preserve the specimen's
+   spelling, natural case, contours, joins, spacing, and filled/outlined form.
+2. The image communicates one specific idea earned by this font's letterforms,
+   name, or buyer context. A subject or material explains that idea or balances
+   the title; it does not become a competing hero. Reject generic category
+   imagery that could be reused unchanged for an unrelated font.
+3. The title is a crisp, flat, front-facing overlay, independent of scene
+   perspective, lighting, shadows, and surfaces. It is never lettering printed
+   on a photographed object, clothing, page, wall, product, or environment.
+4. Every glyph has clear local value contrast against the area behind it. The
+   lettering hue and strength belong to the concept and separate from the
+   background; reject muddy, washed-out, low-contrast, or arbitrarily bright
+   color choices. Check the full title and descriptor at small preview size.
+5. The frame feels composed: the title relates deliberately to the crop, scene,
+   color field, scale, or one meaningful graphic element. Reject both a blank,
+   centered specimen-like field and decorative clutter. Every visible element
+   must support the same premise.
+6. The image has a memorable visual anchor beyond the lettering. A fine-line
+   grid, isolated circle, a few abstract marks, or a solid field by themselves
+   do not make a finished concept unless they clearly form a specific, readable
+   metaphor. Reject a sparse diagram that leaves most of the frame inert. Use
+   one substantial, font-relevant subject, illustration, scene, or clearly
+   authored type relationship to make the idea visually immediate; keep it
+   subordinate to the name.
+7. The palette has visual energy as well as numeric contrast. Give the idea a
+   distinctive, concept-led color relationship and a clear accent. Do not rely
+   on pale blue lines, faint accents, low-saturation neutrals, or near-monochrome
+   color alone to make a flat field feel designed. The title color must feel
+   chosen with the background, not merely readable on it. Strong color does not
+   mean arbitrary neon or several competing hues.
+8. The result does not fall into the research's rejected defaults: generic
+   glossy luxury still life or warm hazy side-object/open-title split; textile,
+   portrait, or props overwhelming the type; arbitrary geometry; or filler
+   effects such as sparkles, particles, starbursts, fake flares, badges, or
+   stacked textures. These are not categorical bans when the font-specific
+   direction genuinely requires an element, but a palette or prop swap alone
+   never justifies repeating a rejected composition.
+9. At 300×200 (and a similarly small square preview for 1:1), the name remains
+   the immediate read, every letter stays distinguishable, and the image still
+   has one coherent premise and a visible focal idea. If it feels empty or its
+   color collapses, restructure the image or strengthen the palette; do not
+   merely claim the prompt was followed.
+
+Use the per-font concept's own palette and medium. The research is a quality
+standard, not a fixed palette or a prop recipe. Treat numeric contrast as only
+one color check; visual energy and title/background color harmony are checked
+separately. After a failed render, change
+the actual cause (title scale, local contrast, crop, competing subject,
+generic premise, or clutter) rather than making a cosmetic palette-only edit.
+Only the passing image is the final output. Report the output filename and any
+remaining visible lettering problem; if no render passes, report that clearly
+instead of claiming completion.

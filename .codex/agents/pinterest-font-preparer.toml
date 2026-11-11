@@ -1,5 +1,5 @@
 name = "pinterest_font_preparer"
-description = "Codex-registered Pinterest asset preparer: validates and uploads every manifested HTML/CSS template pin plus ten final-image composites to Vercel Blob, records product-page URLs, and writes every public link to public-urls.md. No Pinterest-side publication."
+description = "Codex-registered Pinterest preparer: finds exact Creative Market and Creative Fabrica product pages plus source-font Creative Fabrica matches, reviews metadata and visuals into a keyword profile, assigns a Pinterest board, uploads manifested composites, and writes public links. No Pinterest-side publication."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
@@ -10,15 +10,31 @@ Before taking action, read these files completely:
 - `AGENTS.md`
 - `agents/agent-pinterest-font-preparer.md`
 
-The canonical spec is authoritative for the registry fields, board set,
-manifested dynamic pin count, Blob naming, and public-urls.md layout. Run all
+The canonical spec is authoritative for the registry fields, board classification,
+manifested pin set, profile handoff, Blob naming, and public-urls.md layout. Run all
 mechanics through `bin/pinterest_registry.py` and `bin/papermoon-blob.py`
 from the project root. Never read the whole registry file to answer one
 question — use `list`/`show`.
 
-Use Codex-native tools and repository helpers only. Never invoke OpenCode,
-Claude Code, omp, or another agent. Do not inspect image content or publish
-Pins to Pinterest. Never print the Blob RW token. Upload every image listed in
-the validated set manifest and report every resulting public link. Report one
-line per registered font plus any font you could not match.
+After recording the confirmed product URLs and the separate Creative Fabrica
+source-font search result, run
+`node tools/similar-fonts-tracker/scripts/sync-registry.cjs` so both marketplace
+sheets refresh. This derives the Creative Market Similar Fonts URL from the
+product ID and leaves all human review decisions unchanged.
+
+Use read-only web lookup on the configured Creative Fabrica and Creative Market
+seller indexes and exact matching product pages, plus user-supplied direct
+URLs. Check PaperMoonStudioC first; open the Timothy9 index only when the exact
+font is absent from PaperMoonStudioC. Confirm the item title before recording
+the URL. For the source-font check, search Creative Fabrica site-wide using the
+original family name from the preparation audit and verify any exact direct
+item page. Record that result with `set-source-match`, separately from the
+prepared font's Creative Fabrica product URL. A checked no-match means no exact
+source listing was confirmed; do not treat recommendations or the new product
+as a match. Use `view_image` on the supplied font's main
+thumbnail and distinct support designs to build its local keyword profile.
+Never invoke OpenCode, Claude Code, omp, or another agent; do not publish Pins
+to Pinterest. Never print the Blob RW token. Upload every image listed in the
+validated set manifest and report every resulting public link. Report one line
+per registered font plus any font you could not match.
 """

@@ -22,7 +22,7 @@
 .upper-1 { left: 5.5%; top: 17%; width: 89%; height: 12%; justify-content: center; }
 .separator { left: 5.5%; width: 89%; height: 1px; background: #cdc9bb; }
 .separator-upper { top: 34.5%; }
-.separator-lower { top: 69.5%; }
+.separator-lower { top: 72.5%; }
 .descriptor {
   left: 7%; top: 44%; width: 21%;
   color: var(--muted, #706d64);

@@ -50,6 +50,7 @@ const literalCaseKeys = {
   italicregular32: new Set(["leftGlyph", "rightGlyph"]),
   smokeletters32: new Set(["leftGlyph", "rightGlyph"]),
   awakeportrait32: new Set(["year"]),
+  statueframe32: new Set(["headline", "line2", "line3", "line4", "line5"]),
 };
 function titleCaseCopy(value) {
   const urls = [];
@@ -75,7 +76,7 @@ function titleCaseProps(value, key = "", templateId = template) {
       [childKey, titleCaseProps(child, childKey, templateId)]));
   }
   if (typeof value !== "string") return value;
-  if (key === "fontClass" || literalCaseKeys[templateId]?.has(key) || key === "warnings" ||
+  if (key === "fontClass" || key === "fontType" || literalCaseKeys[templateId]?.has(key) || key === "warnings" ||
       key.toLocaleLowerCase("en").includes("url") ||
       /^(?:#[\da-f]{3,8}|rgba?\(|hsla?\()/iu.test(value.trim())) return value;
   return titleCaseCopy(value);
@@ -214,6 +215,7 @@ try {
     body: props.body ?? "",
     badge: props.badge ?? "",
     fontClass: props.fontClass ?? "",
+    fontType: props.fontType ?? "",
     reviewWarnings,
     layoutReport,
     output: out,

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self';">
+  <title>Font Review</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="sheet-tabs" role="tablist" aria-label="Marketplace sheets">
+    <button class="sheet-tab" type="button" role="tab" aria-selected="true" data-sheet="market">Creative Market</button>
+    <button class="sheet-tab" type="button" role="tab" aria-selected="false" data-sheet="fabrica">Creative Fabrica</button>
+  </nav>
+  <main class="table-wrap" role="tabpanel">
+    <table id="font-table" data-sheet="market">
+      <thead><tr id="columns"></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </main>
+  <nav class="pagination" aria-label="Spreadsheet pages">
+    <button id="previous-page" type="button">Previous</button>
+    <span id="page-info" aria-live="polite"></span>
+    <button id="next-page" type="button">Next</button>
+  </nav>
+  <script src="app.js"></script>
+</body>
+</html>

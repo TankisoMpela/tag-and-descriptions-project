@@ -67,7 +67,9 @@ SPECIMEN_LINES = (
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     "abcdefghijklmnopqrstuvwxyz",
     "0123456789   ! ? . , : ; / & @ # % + - = ( ) [ ] { } \" ' < > | _ $ * ~ ^",
+    "The Quick Brown Fox Jumps Over the Lazy Dog.",
 )
+SPECIMEN_VERSION = "title-case-sentence-v1"
 
 STRIP_W = 1500
 MAX_LINE_PX = 64
@@ -482,9 +484,9 @@ def renderable_path(path: Path) -> Path:
 
 
 def render_strip(path: Path) -> Path:
-    """Render one combined strip (alphabet, digits, punctuation), cached on disk."""
+    """Render a combined alphabet, punctuation and sentence strip, cached on disk."""
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    digest = hashlib.sha256(cache_seed(path).encode("utf-8")).hexdigest()[:24]
+    digest = hashlib.sha256(f"{SPECIMEN_VERSION}:{cache_seed(path)}".encode("utf-8")).hexdigest()[:24]
     output = CACHE_DIR / f"{digest}.png"
     if output.exists():
         return output

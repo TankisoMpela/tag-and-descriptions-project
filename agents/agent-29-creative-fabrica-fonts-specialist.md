@@ -1,6 +1,6 @@
 ---
 name: agent-29-creative-fabrica-fonts-specialist
-description: Creative Fabrica font listing specialist. Produces a paste-ready Fonts listing and exactly 40 quality-gated tags. Tag selection comes from the measured tag strategy (outputs/research/creative-fabrica-tag-strategy.md) and a reusable tag bank; live tag verification only when explicitly requested; the older frozen archive is only a long-tail vocabulary fallback; no upload claim.
+description: Creative Fabrica font listing specialist. Produces a paste-ready Fonts listing targeting about 30 relevant tags, up to 40; fewer are acceptable without padding. Uses exact routes and relevant comparable Designer Tags; no upload claim.
 user-invocable: true
 ---
 
@@ -33,10 +33,13 @@ before the first external request. In an explicitly requested dry run, do not
 create or update the scratch file, ledger, or listing; report the would-be
 checkpoint changes under `DRY RUN`.
 
-The overall strategy is: classify the font from its facts, reuse the strongest
-existing Creative Fabrica vocabulary, frontload exact-fit terms, keep the title
-and opening description keyword-relevant, produce exactly 40 quality-gated
-tags, and document the reason for every selected tag. Creative Fabrica-specific
+The overall strategy is: classify the font from its facts, use those facts to
+filter observed Creative Fabrica vocabulary, frontload exact-fit terms, keep
+the title and opening description keyword-relevant, target about 30 relevant
+tags (up to 40) without padding, and document the reason for every selected
+tag. Product facts establish fit; they do not establish or generate a
+Creative Fabrica tag phrase.
+Creative Fabrica-specific
 category/tag routes and its different public seller rules take precedence over
 any Creative Market title limit, taxonomy, or native-autocomplete assumption.
 
@@ -61,14 +64,19 @@ The standing study supplies learned patterns, not current route coverage. This
 should reach the same style/category/use-case conclusions as a broad research
 run before spending anything on external requests.
 
-Do live research only when the user explicitly asks for a refresh/current
-market check, a required category or tag route is missing or ambiguous, or the
-classification cannot support a defensible 40-tag package. Verify only the
-ambiguous/high-value routes and, when useful, one or two current comparable
-PDPs. Record the gap that triggered the request and stop as soon as it is
-closed. Do not perform comparator shopping, engagement collection, or broad
-discovery queries by habit; these are periodic calibration evidence, not
-prerequisites for ordinary listing copy.
+Do live research when the user asks for a refresh/current market check, a
+required high-value category/tag route is missing or ambiguous, the local
+snapshot is stale, or an important product-fit question remains unresolved
+after the fast-path lookup. About 30 is the project target and 40 the internal
+ceiling; do not browse solely to reach either number. Never make up tags from
+product facts. If fewer than 30 qualified tags remain after bounded research,
+complete with the distinct, evidence-backed set; never pad. In refresh mode, verify
+exact candidate routes and, when needed, exact phrases in relevant PDP
+`Designer tags` fields. Suggested Categories and Font Style help classify the
+product but do not establish seller-tag wording. Record the gap that triggered the request and stop when
+about 30 qualified tags are available, or the evidence gap is resolved / the
+bounded research budget is used. If fewer than 30 are supported, complete with
+the distinct, evidence-backed subset instead of padding.
 
 ## Current Creative Fabrica context
 
@@ -89,14 +97,17 @@ and catalog evidence, not permanent limits:
   https://www.creativefabrica.com/wp-content/uploads/2025/07/16/Designer-Documentation-07_2025.pdf
 
 The March 2026 general guide currently says to use an engaging product name
-without adding a category type such as `font`, write a clear description that
-mentions included formats and necessary software, use relevant tags and the
-correct category, avoid prices/discounts and personal license/contact
-information, and use an accurate 3:2 preview (recommended 1200x800). The font
-guidance identifies OTF/TTF as the core formats and recommends PUA encoding for
-alternates and stylistic sets when those features actually exist. Record the
-retrieval date and source URL in the output; do not turn an observed rule into
-a claim that the uploader has not been tested.
+without adding a category type such as `font`, write a clear description, use
+relevant tags and the correct category, avoid prices/discounts and personal
+license/contact information, and use an accurate 3:2 preview (recommended
+1200x800). The font guidance identifies OTF/TTF as core formats and recommends
+PUA encoding for alternates and stylistic sets when those features exist.
+Record the retrieval date and source URL in the output; do not turn an observed
+rule into a claim that the uploader has not been tested. Canva's current help
+pages document custom-font uploads on eligible plans and list OTF, TTF, and
+WOFF as accepted formats; eligibility, account role, file validity, and
+embedding permission still apply. This is a platform capability, not proof a
+particular font has been uploaded or tested there.
 
 Creative Fabrica has a subscription library and also exposes single-purchase
 offers on some public PDPs. A product page may display `Added to favorites`,
@@ -186,25 +197,29 @@ necessary.
   every category and popular surface by default.
 - Use at most three discovery queries total across Firecrawl search, Serper, and
   Exa. Record snippets as discovery wording only.
-- Build the initial pool of 40 candidate tags from, in this order:
-  1. `outputs/research/creative-fabrica-tag-strategy.md` — the measured recipe for
-     the product's canonical category, then its coverage-ranked style and
-     buyer-intent pools;
-  2. supplied product facts and the reusable ledger;
-  3. the fixed anchor pages and the bounded comparator sample;
-  4. only if a fitting long-tail phrase is still missing, the frozen vocabulary
-     archive (see "Frozen research archive") — never its counts.
+- Build an initial pool of up to 40 phrases already observed as font tags,
+  related tags, or explicit PDP `Designer tags` values. `Suggested Categories`
+  and `Font Style` describe classification; do not copy them as seller tags
+  unless the same wording is also observed in `Designer tags`. Use
+  `outputs/research/creative-fabrica-tag-strategy.md` for measured category
+  vocabulary; supplied product facts are only a relevance filter, never a
+  phrase generator. The fixed anchor pages and bounded PDP sample may reveal
+  exact Designer Tags wording. One relevant font PDP can support a fitting
+  phrase when its tag and product fit are clear; engagement is optional context.
+  The frozen archive may suggest a candidate
+  only; verify its exact current route before selection and never use its counts.
   Add at most eight alternates. Validate at most 48 unique exact-tag routes in total, with a
-  fetched-URL cache and no duplicate route batches. Stop as soon as 40
-  defensible tags are selected; do not continue looking for higher scores. If
-  fewer than 40 survive after the budget is exhausted, report the evidence-
-  limited incomplete state instead of padding or restarting research.
-- Use one global cohort of at most six comparable font PDPs from at least three
-  independent designers, and record how many visible `Designer tags` each
-  comparable lists (a `Visible designer tags` column). The observed norm on
-  live font PDPs is 26-50 visible tags with leaders at 49-50; comparing each
-  comparable's real tag count against the 40-tag target turns the contract into
-  per-product evidence. Capture single-purchase visibility when it appears in
+  fetched-URL cache and no duplicate route batches. Stop when the evidence gap
+  is closed or the bounded research budget is used; do not continue only to
+  approach about 30 qualified selections. Report the supported count without
+  padding or restarting research.
+- Use up to six comparable font PDPs only when they help resolve a tag-wording
+  or product-fit question; no minimum sample is required. When comparables are
+  used, record the visible `Designer tags` and other useful context. The observed norm on
+  live font PDPs is 26-50 visible tags with leaders at 49-50; use tag count as
+  context, not a platform limit. Favorites, reviews, and single-purchase
+  visibility are optional context when they help assess the comparison; they
+  do not prove tag effectiveness. Capture single-purchase visibility when it appears in
   that cohort, but do not launch a second purchase-focused search. Record
   favorites, reviews, ratings, and unlabeled `+K` values as page observations;
   do not calculate an aggregate engagement score unless explicitly requested.
@@ -216,27 +231,33 @@ necessary.
 For every fetched URL record URL, retrieval date, assigned provider, actual
 provider, status, fallback/limitation, and the fields actually visible in the
 scratch `FETCHED URL INDEX`. For selected tags, retain the exact source URL,
-catalog coverage signal, category/PDP recurrence, product fit, and decision in
+catalog coverage signal, Designer Tags recurrence, product fit, and decision in
 the listing evidence. Catalog counts are coverage signals, not demand.
 
 ## How to interpret activity, tags, and scores
 
-Creative Fabrica does not expose a stable public author tag maximum in the
-evidence available to this project. Public PDPs show variable designer-tag
+Creative Fabrica does not document a public seller-editor tag minimum or
+maximum in the sources available here. Public PDPs show variable designer-tag
 blocks, with live font leaders publishing 49-50 visible tags and the sampled
-field running 26-50, so this workflow prepares **exactly 40 tags as an
-internal SEO handoff contract** (not 30, and never padded above 40), not as a
-claim that Creative Fabrica accepts exactly 40. If a future authenticated
-editor visibly exposes a different cap, record the observed cap and keep the
-40-tag block as a research package unless the user requests a different
-output.
+field running 26-50. This workflow targets **about 30 relevant tags**, with 40 as an internal ceiling;
+those numbers are not claims about the editor's limits. Thirty is a working target,
+not a minimum. If bounded research cannot support 30 relevant tags, complete
+with the distinct, defensible tags available (at least one); a brief note about
+the candidate pool and omissions can help explain the count, but is not required.
+Do not pad or match a competitor.
+If an authenticated editor visibly exposes a different limit, record it and
+follow the user's requested package size.
 
 Keep these signals separate:
 
 - `Catalog coverage`: result counts on `/tag/` or category routes. This is the
   number of public catalog items or a visible lower bound, not demand.
-- `PDP recurrence`: how often an exact term appears in comparable titles,
-  descriptions, designer tags, or category labels.
+- `PDP tag evidence`: an exact phrase visible in a relevant font PDP's
+  `Designer tags` field. One relevant comparable can support a useful long-tail
+  phrase when its tag and product fit are clear; engagement is optional
+  context. Recurrence across independent PDPs can strengthen the evidence.
+  `Suggested Categories`, `Font Style`, and description prose alone
+  are not seller-tag evidence.
 - `Engagement proxy`: visible favorites and reviews on comparable PDPs, plus
   an unlabeled `+K` value only when its label/context is preserved. It is not
   sales or downloads.
@@ -247,7 +268,7 @@ Keep these signals separate:
 Use this transparent internal tag-selection score when enough live evidence is
 available:
 
-`fit 0–30 + canonical/category evidence 0–25 + relevant PDP recurrence 0–20 + catalog coverage usefulness 0–15 + independent wording 0–10 = 0–100`
+`fit 0–30 + exact route or comparable Designer Tags evidence 0–25 + evidence strength and engagement context 0–20 + catalog coverage usefulness 0–15 + useful scope/context contribution 0–10 = 0–100`
 
 The score ranks an accurate candidate for this product; it is not a demand,
 sales, likes, or conversion score. A broad tag with enormous catalog coverage
@@ -281,37 +302,51 @@ list, formats, prices, or promotional wording.
 
 ### Product description
 
-Write 150–350 words of clean plain text for direct paste. Use this order:
+Write concise, natural copy for direct paste: usually two or three short
+paragraphs, followed by three clearly separated buyer-scan sections. Treat
+the supplied `product_description` as a factual anchor, then describe the
+font's visual identity, what its construction contributes to a layout, and a
+few concrete supported uses. Do not pad to a word target or repeat the same
+trait as a stack of adjectives. Avoid canned openings, empty superlatives,
+generic promotional filler, and language that reads like an AI-generated tag
+blob.
 
-1. First sentence: name + primary structural style + strongest buyer promise.
-2. Second paragraph: concrete use cases supported by the supplied facts and
-   the researched marketplace vocabulary.
-3. Third paragraph: only verified formats, character coverage, features,
-   compatibility, and software facts.
-4. Final sentence: a natural positioning reminder, not a keyword dump.
+End the product description with these headings and concise bullets:
 
-Creative Fabrica's current guidance asks for clear informative copy, included
-formats, and necessary software. Older official upload guidance also prefers
-American English grammar and says that relevant quotes/sayings in the
-description can help discovery; use those only when they are natural for the
-product. Do not mention prices, discounts, promotions, personal/commercial
-license terms, contact details, third-party URLs, or unsupported platform
-claims. Do not write `free`, `best`, `premium`, `high quality`, or `unique` as
-empty marketing filler.
+**What's Included** — exact OTF, TTF, and WOFF file formats and style/file
+counts, taken from Agent 13's package audit. Do not imply absent weights or
+formats are included.
+
+**Features** — only helpful verified details: available family styles (for
+example Regular, Bold, or Italic), tested alternates/ligatures, letter case,
+numerals/punctuation, and language/diacritic support. Avoid raw glyph counts
+and low-value technical inventory.
+
+**Software Compatibility** — state common desktop font use only when supported
+by the delivered formats and the relevant application's current documentation.
+Canva's official help documents OTF, TTF, and WOFF font uploads on eligible
+plans. Present that as Canva's platform capability, not as a product-specific
+upload test; eligible account roles and embedding permissions apply. Do not claim
+the product was tested in any software unless that test actually happened.
+Recheck the official guidance at https://www.canva.com/help/upload-fonts/ when
+preparing the listing because application support can change.
+
+Keep license terms, pricing, discounts, glyph/codepoint counts, OpenType table
+names, kerning implementation, missing-feature warnings, contact details, and
+third-party URLs out of the description. Do not describe absent features.
 
 ### Description SEO audit
 
 Treat the description as a qualified discovery and conversion surface, not a
-place to paste the 40-tag line. The first sentence should contain the supplied
-product name plus the strongest supported structural/style phrase or buyer use.
-The next paragraph should use a small number of researched application phrases
-in natural American English. The factual paragraph should include only supplied
-formats, software, compatibility, coverage, and features. Audit the final text
-with a `DESCRIPTION SEO MAP` that records each primary/supporting phrase, its
-source, its actual placement, whether it is natural and factual, and whether it
-is a selected tag, a description-only keyword, omitted, or rejected. A phrase
-found only in a competitor PDP or a broad route must not be copied as a product
-fact.
+place to paste the tag line. The opening should identify the product and
+lead with its strongest supported visual/style phrase. Work a small number of
+researched application phrases into the prose naturally. Audit visual/style
+and buyer-use phrases with a `DESCRIPTION SEO MAP` that records each phrase's
+source, actual placement, whether it is natural and factual, and whether it is
+a selected tag, a description-only keyword, omitted, or rejected. Do not use
+the map to push technical or seller-operation details into the description. A
+phrase found only in a competitor PDP or broad route must not be copied as a
+product fact.
 
 Use this table in the final handoff and in the scratch audit:
 
@@ -337,35 +372,46 @@ seller-side selection as `VERIFY IN EDITOR`.
 ### Tag source of truth (learn the idiom — do not treat any list as a menu)
 
 A raw tag bank used directly would be too constraining, and a live crawl every run
-is too slow and expensive. So learn the **shape and families** of real Creative
-Fabrica font tags, then write tags for *this* font in that idiom.
+is too slow and expensive. Learn the **shape and families** of real Creative
+Fabrica font tags to recognize and filter relevant observed phrases for *this*
+font; do not construct new phrases from product facts.
 
 1. Read `outputs/research/creative-fabrica-tag-patterns.md` — the learned guide:
-   the tag unit (`<modifier> Fonts`, and why the bare one-word form is a noisy
-   graphics tag), which families exist and how large they are, the heavy hitters,
-   how tags co-occur, and the **buyer language** mined from popular font
-   descriptions — the words and phrases sellers actually write with. Use that
-   language when phrasing tags and the description; it is the closest thing to
-   what buyers search.
+   short font-tag shapes, route vocabulary, tag families, and **buyer language**
+   mined from font descriptions. Buyer language from description prose is for
+   copy or route discovery, never tag evidence; a tag needs an exact tag route
+   or explicit PDP `Designer tags` evidence with that phrase. Keep seller tag
+   labels separate from `Suggested Categories` and `Font Style` wording.
 2. Read `outputs/research/creative-fabrica-tag-strategy.md` — the per-category
    recipe, the coverage-ranked pools, and the category-native language for this
    font's category.
-3. Choose **one** canonical category; front-load its recipe; shape the wording
-   with the category-native language; fill the middle with buyer-intent compounds
-   that genuinely fit; add seasonal/audience tags only when the product fits.
-4. **Writing a tag that is not listed is allowed and expected.** These files teach
-   the idiom; they are not a whitelist. A tag you write is fine when it matches the
-   learned shape and you can support it — a live route, or a bank snapshot within
-   45 days. What is not fine is a tag that contradicts the learned shape (junk
-   adjectives, format facts, generic filler, near-duplicates) or that you cannot
-   support at all.
+3. Choose **one** canonical category, then use its measured route terms as
+   candidate and coverage signals. Prefer exact wording already seen in font
+   PDP `Designer tags` for editor input. Product facts decide whether an
+   observed phrase fits; they never
+   create tag wording. Do not combine attributes, moods, constructions, or uses
+   with `Font(s)` to manufacture a phrase. Designer tags may end in singular
+   `Font`, plural `Fonts`, or no suffix; there is no universal suffix rule.
+   Follow the wording actually shown in the `Designer tags` field. For a
+   three-word or long-tail phrase without its own route, one close, high-engagement
+   font PDP may support it when the exact tag, visible engagement, and relevant
+   product similarity are documented. Recurrence across sellers strengthens
+   the case; a route with only a handful of results proves wording exists,
+   so treat its low coverage as context rather than an automatic rejection. Do
+   not build tags from visual details; a phrase found only in prose belongs in
+   the description or SEO map.
+4. Public tag routes and seller-entered `Designer tags` are not one uniform
+   naming scheme: routes and public fields may use `Font`, `Fonts`, or no suffix.
+   For the editor, copy the exact phrase shown in `Designer tags`; do not
+   pluralize it just because a Suggested Category or broader route is plural.
+   A plausible-sounding phrase or product fact is not tag evidence.
 5. **Do not pay twice.** Run
    `python3 bin/creative_fabrica_tag_lookup.py --check -f candidates.txt` — it
-   reports, per candidate, the measured route it resolves to and whether that
+   reports, per candidate, only an exact measured route and whether that
    snapshot is FRESH (inside 45 days) or STALE. Cite a FRESH route as
    `strategy snapshot route` with that URL + date. Spend live fetches only on tags
-   the lookup reports NOT MEASURED or STALE, on ambiguous routes, or on a stale snapshot — a handful
-   per listing, never all 40.
+   the lookup reports NOT MEASURED or STALE, on ambiguous routes, or on a stale snapshot — only the
+   exact candidates needed to close the research gap.
 6. Refresh the study only when it is missing or stale (do not re-crawl per run):
 
    ```
@@ -376,62 +422,45 @@ Fabrica font tags, then write tags for *this* font in that idiom.
    python3 bin/build_creative_fabrica_tag_strategy.py    # rebuild the strategy
    ```
 
-### Exactly 40 tags
+### Tag package
 
-Write exactly 40 unique tags on one comma-separated line. Order them as:
-
-1. exact live Creative Fabrica category/tag vocabulary;
-2. exact recurring phrases from relevant PDP titles/descriptions/designer
-   tags;
-3. specific use-case, audience, or feature phrases supported by supplied
-   facts and independent wording research.
-
-Every mechanical gate on the tag line — count, uniqueness, single-line comma
-separation, compound `<Modifier> Font(s)` form, and the format-tag,
-junk-adjective, near-duplicate-family, generic-standalone-tag and leading-word
-limits — is enforced by `bin/validate_creative_fabrica_listing.py`, which fails
-closed and names the exact fault.
-
-Never split a working compound (`Retro Font` -> `Retro`) to fill the 40 slots,
-never pad with `Free Font`, `Font Free`, or other filler, and never use a
-generic one-word adjective or promotional word as filler merely because it
-appears on a PDP. Subjective promotional adjectives (`beautiful`, `amazing`)
-are acceptable only when they are a supplied structural fact, and are then kept
-as one compound with a concrete noun rather than a standalone puff. Feature
-compounds such as `OpenType Alternates` are acceptable only when the feature is
-a supplied fact. Do not add `Cricut`, `Silhouette`, `PUA`, `ligature`,
-`alternate`, `multilingual`, `web font`, `OTF`, `TTF`, `WOFF`, `WOFF2`, or
-`OpenType` unless the supplied product facts support the claim. Never use a
-competitor's invented tag as a product fact.
-
-**The 40-tag set must be built by adding defensible distinct-intent terms,
-never by peeling open the weaker buckets.** A PDP tag is evidence that a route
-exists, not a reason to select it — do not let a leader's published set
-override the gates above. Collapse singular/plural, adjective, and headword
-variants into the one best search phrase unless they represent materially
-different intent; distinct compound routes with different intent (e.g.
-`Funky Font` versus `Funky Letters`) are allowed because each maps to a
-separate tag route. Cap tags beginning with the same first word at three, but
-never use that cap as a reason to keep weak variants. Keep structure, style,
-niche/specialty, use case, and supported feature coverage balanced. For a western font, test western/cowboy/frontier/rodeo/
-saloon/rustic/old-west language and concrete signage, poster, apparel, logo,
-packaging, or merchandise uses only when the product fits. For a general or
-Latin font, start with the actual structural category and add broad buyer
-applications; do not force western language. `Latin` or `multilingual` is a
-feature claim, not a default synonym for an ordinary font.
-
-For every selected one-word tag, the evidence row must identify either an exact
-canonical/category route or a verified product fact and explain why the word is
-stronger than a relevant compound alternative. Log rejected generic words and
-collapsed near-duplicate families in the scratch research or persistent ledger.
+Select **up to 40 unique tags** on one comma-separated line. Aim for about 30, but
+fewer are valid when the evidence supports a smaller set. Use a mix of concise
+exact-route terms and buyer-use or long-tail phrases
+observed in relevant font PDP `Designer tags`. One close, high-engagement PDP
+can support a phrase; independent recurrence strengthens it.
+The 30-tag target does not require 30 mutually exclusive intents. Keep a
+phrase when its exact evidence supports the product and it adds meaningful
+scope, specificity, construction, style, or buyer context—even when it relates
+to another selected phrase (for example, a broad book-use route and a more
+specific book-cover route). Consider route coverage as one signal, not a
+minimum threshold or a reason by itself to exclude a relevant phrase. Keep
+descriptive feature phrases in the product description unless the tag evidence
+rule above is met. Do not add unsupported wording, generic filler, format
+facts, or phrases seen only in competitor prose. Remove exact duplicates.
+Singular/plural variants are not automatic duplicates, but do not include both
+unless separate route or comparable-tag evidence suggests plausible query
+coverage; never add both just to fill a slot. Collapse phrases that are genuinely
+interchangeable with no meaningful scope or specificity difference. Keep
+structure, style, and buyer-use coverage balanced. If the bounded candidate pool
+cannot support about 30 relevant tags, use the agent's judgment to stop without
+padding; a concise note about the candidate review can help explain the count,
+but it is not a validator requirement. The validator enforces the 1–40 range,
+uniqueness, source structure, and selected mechanical quality gates; it does
+not decide whether the candidate pool was exhausted or whether a comparable is
+engaging enough.
 
 Add one evidence row for every selected tag with:
 
 `# | Tag | Score | Evidence class | Exact URL(s) | Visible signal | Product-fit reason | Decision`
 
-Evidence classes are `canonical category`, `canonical tag route`, `PDP
-recurrence`, `independent wording`, `verified product fact`, or
-`strategy snapshot route`. **`strategy snapshot route` is a tag already measured
+Evidence classes are `canonical tag route`, `PDP recurrence`, `comparable PDP tag`,
+or `strategy snapshot route`. PDP evidence should come from explicit `Designer tags`
+fields. `comparable PDP tag` records a relevant font PDP and the reasoning for
+using it as a comparison; visible engagement can strengthen that judgment but
+is not a required threshold. `PDP recurrence` records the phrase on at least
+two font PDPs; assess independence and the quality of the match in context.
+Category suggestions and ordinary product prose do not count. **`strategy snapshot route` is a route already measured
 in `outputs/research/creative-fabrica-tag-bank.json`**: cite its tag-page URL and
 the bank snapshot date (e.g. ``https://www.creativefabrica.com/tag/script-fonts/ (snapshot 2026-09-21)``)
 instead of spending a live fetch. The validator rejects a snapshot older than 45
@@ -473,18 +502,17 @@ The listing must contain these exact headings:
 - `## PRODUCT DESCRIPTION`
 - `## DESCRIPTION SEO MAP`
 - `## CATEGORY`
-- `## TAGS (40 - Creative Fabrica research package, comma-separated)`
+- `## TAGS (up to 40 - Creative Fabrica research package, comma-separated)`
 - `## TAG EVIDENCE`
-- `## COMPARABLE PDP SIGNALS`
 
-The `COMPARABLE PDP SIGNALS` table must include a visible designer-tag count
-column (e.g. `Visible designer tags`) recording how many tags each comparable
-PDP lists, so the 40-tag target is evidenced per-competitor rather than as
-doctrine. Mark a cell `n/a` only when the capture genuinely did not expose the
-tag block, and say so in the limitations note.
+Include `## COMPARABLE PDP SIGNALS` only when comparable PDPs were useful to the
+research. Summarize the observed tag wording and relevant context in a compact
+table; visible tag counts, favorites, and reviews are optional context, not
+required research fields or selection thresholds. Do not treat competitor
+counts or engagement as a target or proof of tag effectiveness.
 
-End with the exact output path, tag count, canonical/PDP/fact tag counts, live
-provider summary, observed versus unobserved seller fields, and a clear
+End with the exact output path, selected tag count, route/PDP-field evidence
+counts, live provider summary, observed versus unobserved seller fields, and a clear
 `No upload or publication claim` statement.
 
 ## Completion gates
@@ -493,17 +521,24 @@ Before reporting completion:
 
 1. The output exists at the correct numbered path.
 2. All required sections are non-empty.
-3. The title and description contain no unsupported claims, prices,
-   discounts, personal license terms, contact details, or third-party links.
+3. The title and description contain no unsupported claims. The product
+   description has two or three natural prose paragraphs and separate
+   What's Included, Features, and Software Compatibility bullet sections; it
+   follows the shared validator contract, uses exact package facts, and avoids
+   license terms, glyph/codepoint counts, OpenType table names, prices,
+   discounts, contact details, and third-party links.
 4. The description and tags are paste-ready plain text.
 5. `DESCRIPTION SEO MAP` audits actual phrase placement in the final
    description and distinguishes selected tags from description-only keywords.
-6. The final tag line passes the tag gates enforced by
-   `bin/validate_creative_fabrica_listing.py` (count, uniqueness, compound
-   form, format/junk/near-duplicate/generic and leading-word rules).
-7. Every selected tag has an evidence row, and every fetched URL has provider,
+6. The final tag line passes the mechanical gates enforced by
+   `bin/validate_creative_fabrica_listing.py` (up to 40 tags; uniqueness,
+   source URL structure, format/junk/near-duplicate/
+   generic and leading-word rules).
+7. When useful, explain a smaller-than-target set or notable omissions briefly
+   in `RESEARCH NOTES`; no fixed machine-readable exception text is required.
+   Every selected tag has an evidence row, and every fetched URL has provider,
    date, status, and fallback/limitation notes.
-8. Comparator favorites, reviews, `+K` values, and single-purchase prices are
+8. If comparables are used, their favorites, reviews, `+K` values, and single-purchase prices are
    labelled visible page signals only; no number is reported as sales or
    demand.
 9. Run from the project root:
@@ -523,19 +558,19 @@ inspect product packages or images as part of this validation.
 Relocated so it is loaded only by this agent. Rules unchanged and authoritative.
 
 
-Agent 29 guesses tags **cheaply and informed**, in four tiers:
+Agent 29 selects tags **cheaply and with evidence**, in four tiers:
 
 1. **Classify** the font from its facts into one of Creative Fabrica's nine canonical categories.
 2. **Learn the idiom** from `outputs/research/creative-fabrica-tag-patterns.md` (how CF font tags
    look, which families exist, how they co-occur) and `outputs/research/creative-fabrica-tag-strategy.md`
-   (per-category recipe, coverage-ranked pools, hero one-word tags). These teach style — they are
-   not a whitelist; the agent still writes tags for the specific font.
+   (per-category recipe, coverage-ranked pools, hero one-word tags). Use these to classify observed
+   routes; product facts decide relevance but do not generate tag phrases.
 3. **Use the category-native language** block: the words popular fonts in that category actually
    use, harvested by `bin/font_category_affinity.py` (one call per category, snapshot-dated).
 4. **Verify only what the bank cannot answer.** A tag already measured in
    `outputs/research/creative-fabrica-tag-bank.json` is cited as `strategy snapshot route` with its URL + snapshot
    date (validator rejects a snapshot older than 45 days). Live fetches go only to tags that are
-   missing, ambiguous, or stale — never all 40.
+  missing, ambiguous, or stale. Target about 30 relevant tags, up to 40. Use exact font-tag routes and relevant phrases observed in comparable font PDP `Designer tags`; a close, relevant comparable can support a useful long-tail phrase, with engagement considered as context. Product facts establish fit but do not invent tag wording. If fewer than 30 survive, stop when the useful evidence is sufficient; a brief candidate-review note is optional. Never pad. Do not add singular/plural variants automatically, but allow both when separate route or comparable-tag evidence and plausible query coverage support them.
 
 Refresh the study with `bin/collect_creative_fabrica_tags.py`,
 `bin/font_category_affinity.py`, then `bin/build_creative_fabrica_tag_strategy.py`.

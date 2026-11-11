@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Validate BOOTH listing-copy structure and SEO evidence.
 
-This validator enforces the copy and SEO-evidence contract only. Category,
-price, package, preview, license, and upload checks are deliberately outside
-this validator because BOOTH agent 20 is a copy-and-research agent.
+This validator enforces the copy and SEO-evidence contract only. It rejects
+technical, license, and limitation disclosures in the paste-ready description;
+it does not verify the legal validity of license terms, category, price,
+package, preview, or upload readiness.
 
 Evidence rules enforced here (matching the agent spec):
 - Every selected tag must carry an evidence row whose first cell equals the tag.
@@ -12,10 +13,10 @@ Evidence rules enforced here (matching the agent spec):
 - The font-category URL must use the `/browse/` route and, when it carries a
   `tags[]` param, that param must match the tag text.
 - Each row must carry numeric overall and font-category counts, a
-  paid-products/distinct-sellers value, a provider + date + activity label in
-  the status cell, an evidence tier, and a product-fit reason.
-- Low-activity (1-16 relevant font listings) tags are allowed only as a limited
-  number of documented exceptions.
+  paid-products/distinct-sellers value, a frozen-snapshot or provider + date +
+  coverage/activity label in the status cell, an evidence tier, and a product-fit reason.
+- Low-snapshot-coverage (1-16 category-census items) tags are allowed only as a
+  limited number of documented exceptions.
 - The tag block targets 18-25 validated tags (aim for 25). Fewer than 18 or
   more than 25 after validation marks the listing BLOCKED (fail closed).
 - When --booth-dir is supplied, a sibling-advisory check compares the tag set
@@ -33,6 +34,7 @@ import urllib.parse
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from marketplace_description_rules import validate_booth_description
 import campaign_mode  # noqa: E402
 
 # The workflow targets 18-25 validated tags, aiming for 25. Fewer than 18 or
@@ -90,9 +92,9 @@ COUNT_PLACEHOLDERS = {
 
 VALID_TIERS = {"a", "b", "c"}
 
-# Patterns that indicate a plausible BOOTH activity label. The status cell must
-# contain a provider and a date-like fragment to be treated as current live
-# evidence rather than a vague "Live" assertion.
+# Provider hints support legacy evidence. The active BOOTH font workflow uses a
+# frozen local snapshot, which is accepted separately and must not be described
+# as current live page evidence.
 PROVIDER_HINTS = (
     "firecrawl",
     "webfetch",
@@ -161,10 +163,9 @@ def is_numeric_count(value: str) -> bool:
 
 
 def is_low_activity(status: str, cat_count: str) -> bool:
-    """A row counts as a low-activity exception when the category count is in
-    1-16, or the status labels it low/fewer-than-17, or the paid-proof is weak."""
+    """A row counts as a low-coverage exception when its snapshot count is 1-16."""
     txt = status.casefold()
-    if any(s in txt for s in ("low activity", "fewer than 17", "low-activity")):
+    if any(s in txt for s in ("low snapshot coverage", "low activity", "fewer than 17", "low-activity")):
         return True
     v = cat_count.strip().rstrip("+~頃").replace(",", "").strip()
     if v.isdigit():
@@ -335,6 +336,7 @@ def main() -> int:
         failures.append("paste-ready description is empty")
     if re.search(r"^#{1,6}\s|\*\*|```", description, re.MULTILINE):
         failures.append("paste-ready description contains Markdown formatting")
+    failures.extend(validate_booth_description(description))
 
     tag_body = parsed.get(tag_heading, "") if tag_heading else ""
     tag_lines = [
@@ -521,10 +523,10 @@ def main() -> int:
                     )
                 if not any(
                     w in lowered_status
-                    for w in ("live", "low activity", "dead", "blocked", "low-activity", "stale", "no coverage")
+                    for w in ("live", "low activity", "dead", "blocked", "low-activity", "stale", "no coverage", "snapshot coverage")
                 ):
                     failures.append(
-                        f"tag evidence row {index} status must carry an activity label (live/low-activity/dead/etc.)"
+                        f"tag evidence row {index} status must carry a coverage/activity label (snapshot coverage/low-activity/dead/etc.)"
                     )
 
             # 7. Evidence tier must be A, B, or C.
@@ -542,7 +544,7 @@ def main() -> int:
 
     if low_activity_count > MAX_LOW_ACTIVITY_EXCEPTIONS:
         failures.append(
-            f"{low_activity_count} low-activity tags exceed the maximum of {MAX_LOW_ACTIVITY_EXCEPTIONS} documented exceptions"
+            f"{low_activity_count} low-snapshot-coverage tags exceed the maximum of {MAX_LOW_ACTIVITY_EXCEPTIONS} documented exceptions"
         )
 
     # --- Below-floor tag count, exempted only by verified gate evidence -----
@@ -653,7 +655,7 @@ def main() -> int:
                 pass
     if newest is not None and (today - newest).days > 45:
         warnings.append(
-            f"newest evidence date {newest} is older than 45 days from {today}; refresh page-life evidence"
+            f"newest evidence date {newest} is older than 45 days from {today}; disclose the snapshot provenance and do not refresh BOOTH evidence online"
         )
 
     # Out-of-scope customer-facing phrases.

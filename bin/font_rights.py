@@ -57,7 +57,7 @@ SELLER_DOMAINS = frozenset(
     {
         "myfonts.com", "fonts.com", "monotype.com", "linotype.com", "creativelibrary.com",
         "fonts.adobe.com", "rentafont.com", "fontspring.com", "creativefabrica.com",
-        "creative.market",
+        "creative.market", "creativemarket.com", "3ipfonts.com", "youworkforthem.com",
     }
 )
 # Directory pages are recorded as distribution history, not as evidence that the
@@ -676,7 +676,18 @@ def cmd_write(args: argparse.Namespace) -> int:
     held_back: list[str] = []
     if args.fanout:
         siblings = [(path, embedded(path)) for path in font_files(folder) if path.name != args.file]
-        odd = foreign_holders(info["names"], siblings)
+        family = identity(info["names"].get("19") or info["names"].get("1") or info["names"].get("6") or "")
+        same_family = [
+            (path, sibling_info)
+            for path, sibling_info in siblings
+            if family and identity(
+                sibling_info["names"].get("19")
+                or sibling_info["names"].get("1")
+                or sibling_info["names"].get("6")
+                or ""
+            ) == family
+        ]
+        odd = foreign_holders(info["names"], same_family)
         if args.state == "clear" and odd:
             held_back.append(
                 f"{len(odd)} sibling(s) name a different holder than {args.file} "
@@ -685,6 +696,17 @@ def cmd_write(args: argparse.Namespace) -> int:
             )
         else:
             for sibling, sibling_info in siblings:
+                sibling_family = identity(
+                    sibling_info["names"].get("19")
+                    or sibling_info["names"].get("1")
+                    or sibling_info["names"].get("6")
+                    or ""
+                )
+                if not family or sibling_family != family:
+                    held_back.append(
+                        f"{sibling.name}: different family; judge as a separate family"
+                    )
+                    continue
                 if sibling.name in verdicts and not args.amend:
                     held_back.append(f"{sibling.name}: already judged on its own")
                     continue
@@ -823,7 +845,7 @@ def main() -> int:
     write.add_argument("--author-contact", default="", help="URL or email reached this run")
     write.add_argument("--amend", action="store_true", help="replace an existing verdict, keeping it in history")
     write.add_argument("--fanout", action="store_true",
-                       help="spread this verdict over the rest of the folder — the staged folder is one family, so the Regular answers for every weight")
+                       help="spread this verdict only to other files with the same embedded family name")
     write.add_argument("--skip-link-check", action="store_true", help="no network; recorded as unverified")
     write.set_defaults(func=cmd_write)
 

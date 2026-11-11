@@ -10,12 +10,30 @@ including duplicates); its 44 unique source images are indexed in
 
 The 2026-10-29 reference set contains 27 original images from 15 source IDs. Original responses, exact URLs, and SHA-256 records are in [`originals/reference-batch-2026-10-29-a/`](originals/reference-batch-2026-10-29-a/); the [contact sheet](previews/reference-contact-2026-10-29-a.png) gives a labelled overview. Each source will be developed as a separate template, with both aspect ratios completed before advancing.
 
+The November 3 Creative Market set contains twelve supplied references and
+eight accepted text-free photo plates. Originals, source URLs, hashes, edit
+prompts, and rejected plate notes are in
+[`materials/user-batch-2026-11-03-a/`](materials/user-batch-2026-11-03-a/)
+and [`originals/user-batch-2026-11-03-a/`](originals/user-batch-2026-11-03-a/).
+Eight HTML/CSS layouts were created in slots 173–180; `statueframe32`,
+`fashioncard32`, and `parkstatement32` are retired, leaving five active.
+
+The November 11 Creative Market batch contains eleven additional recent
+Downloads references, remade sequentially in slots 183–193. Originals and
+decoded source images are preserved under
+[`originals/creative-market-batch-2026-11-11/`](originals/creative-market-batch-2026-11-11/);
+transparent character cutouts and text-free art plates are under
+[`materials/creative-market-batch-2026-11-11/`](materials/creative-market-batch-2026-11-11/).
+Each template has separate wide and square previews linked from its entry in
+`support-html/catalog.json`.
+
 These are references and source materials for the Skia and HTML/CSS supporting-image templates. Template code uses selected materials directly; final font-specific artwork belongs in the active font workspace, never beside the reference originals. `materials/` contains transparent user-supplied cutouts, generated image plates, cleaned photo backgrounds, and source-derived crops.
 
-The active catalogue has 135 supporting templates and reproducibly selects 13
-eligible layouts for a font. `plakat32`, `weightfamily32`, `mangosboard32`, and
-`italicregular32` require at least two actual styles from one family; all four
-family showcases are guaranteed in the 13 when that gate passes.
+The active catalogue has 144 supporting templates and selects 12 eligible
+layouts for a font, prioritizing designs used least often in previous handoffs
+of the same renderer class. `weightfamily32`, `mangosboard32`, and
+`italicregular32` require at least two actual styles from one family; eligible
+family showcases join the selection pool but are not guaranteed.
 Supporting artwork uses display specimen copy rather than repeating
 the font name. Caption, word-length, palette/contrast, flexibility, and alt-text
 guidance is in [TEMPLATE-GUIDE.md](TEMPLATE-GUIDE.md); the exact source mapping is

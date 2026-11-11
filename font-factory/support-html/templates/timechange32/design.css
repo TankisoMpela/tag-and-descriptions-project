@@ -1,0 +1,20 @@
+#artboard { position: relative; overflow: hidden; color: #cbe4e7; background: #090a0b; }
+.time-label, .time-display { position: absolute; }
+.time-label {
+  top: 13.5%; width: 25%; height: 6%;
+  display: grid; place-items: center;
+  color: #cbe4e7; font: 600 2.35cqh/1 Arial, sans-serif;
+  letter-spacing: .12em; text-transform: uppercase; white-space: nowrap;
+}
+.time-label-left { left: 8%; }
+.time-label-right { right: 8%; }
+.time-display {
+  left: 50%; display: grid; place-items: center;
+  color: #cbe4e7; font-family: var(--display-face, Georgia, serif);
+  font-weight: 500; line-height: .82; font-kerning: normal;
+  font-synthesis: none; white-space: nowrap; transform: translateX(-50%);
+}
+.time-word { letter-spacing: -.055em; }
+.change-word { letter-spacing: -.065em; }
+.number-word { letter-spacing: -.055em; }
+#artboard.time-change-square .time-label { top: 8%; height: 5%; font-size: 2cqh; }

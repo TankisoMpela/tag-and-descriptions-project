@@ -17,9 +17,7 @@ font-factory/fonts/{font-slug}/
 └── prepared_visuals/
     ├── 3x2/thumbnail_main.png         white-background font-name specimen
     ├── 1x1/thumbnail_main.png         white-background font-name specimen
-    ├── 1x1/thumbnail_japanese.png     white-background font-name specimen
-    ├── supporting/                    shared HTML/CSS template renders
-    ├── specimens/                     factual font specimen previews
+    ├── supporting/                    12 shared HTML/CSS layouts at both ratios
     └── pinterest/                     active template pins and manifest
 ```
 
@@ -28,12 +26,12 @@ font-factory/fonts/{font-slug}/
 1. Stage the source font file(s) in `font-factory/fonts/{font-slug}/`.
 2. Run `/font-images` with the font workspace, final name if already chosen,
    and the product description.
-3. Agent 27 produces clean white-background name specimens with the actual font
-   and writes three complete, font-specific prompts: the landscape 3:2 main
-   image, an independently composed square main image, and the storefront
-   square. Each prompt is paired with the matching specimen in `theme.txt`
-   under `thumbnail_main_3x2`, `thumbnail_main_1x1`, or
-   `thumbnail_japanese_1x1`.
+3. Agent 27 produces two clean white-background name lettering references with the actual font
+   and writes four complete, font-specific prompts: a primary and a distinctly
+   different alternate direction, each composed separately for landscape 3:2
+   and square 1:1. The matching prompts appear in `theme.txt` under
+   `thumbnail_main_3x2`, `thumbnail_main_1x1`, `thumbnail_alt_3x2`, and
+   `thumbnail_alt_1x1`. Use one direction consistently for the thumbnail pair.
 4. To make final thumbnail artwork, attach the matching specimen and use its
    prompt with the image model. Do not supply an old marketplace thumbnail.
    Review spelling, letterform fidelity, crop, contrast, readability, and
@@ -42,7 +40,7 @@ font-factory/fonts/{font-slug}/
    images are processed by `/font-final-images` after they are placed in the
    preparation folder named in the handoff.
 
-The thumbnail specimens are raw lettering references, not finished designs.
-Supporting layouts and factual specimens are separate review drafts. Agent 27
-also renders the active Pinterest template pins; see `AGENTS.md` for the
-complete handoff boundaries and paths.
+The two thumbnail specimens are raw lettering references, not finished
+designs. Agent 27 renders 12 support layouts at both ratios and the active
+Pinterest template pins. It no longer makes factual specimen sheets; Agent 13
+creates those during preparation. See `AGENTS.md` for the handoff paths.

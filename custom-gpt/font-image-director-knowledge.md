@@ -1,41 +1,46 @@
 # FontFairy Font Image Director — Current Workflow
 
 Use the uploaded white-background font-name specimen as the source for the
-lettering. Use the exact supplied font name and the matching complete
-font-specific prompt from `visual-direction/theme.txt`. The 3:2 main thumbnail
-and square main thumbnail carry the font name plus the same concise, accurate
-style descriptor in title case; keep the descriptor secondary but readable at
-small size. Ground it in visible font traits and do not turn it into a product
-claim. There is no old marketplace thumbnail in this workflow.
+lettering. Use the exact supplied font name and one complete direction from
+`visual-direction/theme.txt`. The primary and distinctly different alternate
+directions each contain a 3:2 and 1:1 prompt. A finished thumbnail pair uses
+the same direction at both ratios. Both images carry the font name plus the
+same concise, accurate style descriptor in title case; keep it secondary but
+readable at small size. Ground it in visible font traits and do not turn it
+into a product claim. There is no old marketplace thumbnail in this workflow.
+The font name must have a large footprint in both ratios: its longest line
+spans at least 75% of frame width and its visible glyph block spans at least
+35% of frame height, measured without the descriptor. Stack or reflow the name,
+or simplify/move the scene when it does not fit; do not shrink the type to make
+room for background objects.
 
 ## Thumbnail assets
 
 | Output | Source specimen | Prompt in `theme.txt` |
 |---|---|---|
-| `thumbnail_main.png` | `prepared_visuals/3x2/thumbnail_main.png` | `thumbnail_main_3x2` |
-| square main thumbnail | `prepared_visuals/1x1/thumbnail_main.png` | `thumbnail_main_1x1` |
-| storefront square | `prepared_visuals/1x1/thumbnail_japanese.png` | `thumbnail_japanese_1x1` |
+| 3:2 thumbnail | `prepared_visuals/3x2/thumbnail_main.png` | `thumbnail_main_3x2` or `thumbnail_alt_3x2` |
+| 1:1 thumbnail | `prepared_visuals/1x1/thumbnail_main.png` | `thumbnail_main_1x1` or `thumbnail_alt_1x1` |
 
 Each prompt is written for its specific font and crop. Treat its art direction as
 the creative brief. Remove the specimen's white field when making the finished
 art, but preserve the name's spelling, supplied capitalization, distinctive
-glyph shapes, and spacing. Keep the same short style descriptor on the 3:2 main
-and square main thumbnails; do not add unrelated copy. Never force all-caps
+glyph shapes, and spacing. Choose either the primary or alternate direction
+and do not mix directions in one thumbnail pair. Keep the same short style
+descriptor in both ratios; do not add unrelated copy. Never force all-caps
 styling.
 
 ## Image direction
 
-Follow the per-font prompt and its composition choice. The 33 saved
-reference images have sequential full captions, element-use analyses, and
-individual prompt lessons in reference-review.md and captions.json; cross-set
-findings are in prompt-findings.md. The older structure audit is a quick
-navigation summary. Borrow a composition mechanism only when it supports this
-font's idea. Before using a reference, open its saved image and read its full
-caption, design analysis, and prompt lesson. Note both what works and any
-weakness to avoid, such as uneven local contrast, crowded copy, or unnecessary
-empty space. Leave the reference's subject, copy, palette, and secondary
-details behind unless they independently fit the font. Do not copy whole
-references or treat captions as a prop list.
+Follow the per-font prompt and its composition choice. The 33 saved reference
+images have detailed captions and individual prompt lessons in
+reference-review.md and captions.json; cross-set findings are in
+prompt-findings.md, and prototype preferences are summarized in
+prototypes/review.md. For an ordinary run, use those written syntheses; do not
+reopen individual images, because their exact layouts and props can bias a new
+concept. Carry forward general principles about hierarchy, color, clarity,
+restraint, and variety. Inspect a specific source only at the seller's request
+or to resolve a concrete ambiguity. Never turn references into templates or
+prop lists.
 
 All thumbnail lettering remains a flat, front-facing graphic overlay. It may
 sit over photography, people, illustration, or color fields, but it must never
@@ -74,6 +79,14 @@ outline construction. Do not add unapproved copy or make product claims.
 
 ## Quality review
 
+The seller's written research synthesis is required preference evidence for
+every new direction: `font-factory/Style-References/thumbnail-prompt-research-2026-10-20/`.
+Read `prompt-findings.md` and `prototypes/review.md`; do not inspect source
+images during an ordinary run. Record the relevant preference principle and
+what the design applies or avoids. The liked examples span photography,
+illustration, and flat print. Do not collapse them into one house style or a
+permanent bright-palette rule.
+
 Check exact spelling/case and glyph shape, title scale, clipping, local contrast,
 small-size readability, and whether the composition reads as a designed
 thumbnail rather than a raw specimen. Check that every shape or subject has a
@@ -82,6 +95,12 @@ any face stays secondary. Reject output that is empty, cluttered, face-led,
 low-contrast, generically AI-styled, surface-embedded, or merely follows the
 prompt without making a strong thumbnail. Correct the composition itself; do
 not “fix” weak design by adding decoration.
+
+Every new visual plan records a concept-led title color, descriptor color, and
+the field directly behind them by color name and hex, with a short rationale.
+Choose saturation and contrast to fit the font, idea, and seller's reference
+signals; there is no fixed bright or muted house palette. Keep the background
+focused on one premise and its meaningful details, without unrelated prop piles.
 
 ## Supporting images and Pinterest
 

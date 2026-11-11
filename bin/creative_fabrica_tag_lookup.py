@@ -9,7 +9,7 @@ question costs more than the fetches it is meant to avoid.
 
 This tool reads the bank and prints only the matches:
 
-  python3 bin/creative_fabrica_tag_lookup.py --check "Modern Font" "Script Font" "Quilted Font"
+  python3 bin/creative_fabrica_tag_lookup.py --check "Modern Fonts" "Script Fonts" "Quilted Font"
   python3 bin/creative_fabrica_tag_lookup.py --check -f candidates.txt
   python3 bin/creative_fabrica_tag_lookup.py --stats
 """
@@ -22,12 +22,10 @@ import re
 import sys
 from datetime import date
 from pathlib import Path
+from urllib.parse import urlsplit
 
 DEFAULT_BANK = Path("outputs/research/creative-fabrica-tag-bank.json")
 SNAPSHOT_MAX_AGE_DAYS = 45
-
-TRAILING_FONT_RE = re.compile(r"\s+(fonts?|typefaces?)$", re.IGNORECASE)
-
 
 def load_bank(path: Path) -> dict:
     if not path.exists():
@@ -36,21 +34,58 @@ def load_bank(path: Path) -> dict:
 
 
 def normalise(text: str) -> str:
-    """`Modern Serif Font` -> `modern serif`, matching how the bank stores modifiers."""
-    low = " ".join(str(text).lower().split())
-    while TRAILING_FONT_RE.search(low):
-        low = TRAILING_FONT_RE.sub("", low)
-    return low.strip()
+    """Normalize case/spacing while preserving the observed Font/Fonts suffix."""
+    return " ".join(str(text).casefold().split())
+
+
+def route_label(record: dict) -> str:
+    """Build the measured label from its modifier and exact route suffix."""
+    route_slug = route_slug_from_url(record.get("url", ""))
+    if route_slug.endswith("-fonts"):
+        suffix = "Fonts"
+    elif route_slug.endswith("-font"):
+        suffix = "Font"
+    else:
+        return ""
+    modifier = record.get("tag") or record.get("slug") or ""
+    modifier = re.sub(r"[-_]+", " ", str(modifier))
+    modifier = re.sub(r"\s+fonts?$", "", modifier, flags=re.IGNORECASE).strip()
+    return f"{modifier.title()} {suffix}".strip()
 
 
 def build_index(bank: dict) -> dict[str, dict]:
     index: dict[str, dict] = {}
     for record in bank.get("tags", []):
-        for key in (record.get("tag", ""), record.get("slug", "")):
-            normalised = normalise(key)
-            if normalised:
-                index.setdefault(normalised, record)
+        if record.get("status") != "live" or not is_font_tag_route(record.get("url", "")):
+            continue
+        route_slug = route_slug_from_url(record.get("url", ""))
+        label = route_label(record)
+        if not label or not route_matches_name(route_slug, label):
+            continue
+        index.setdefault(normalise(label), record)
     return index
+
+
+def is_font_tag_route(url: str) -> bool:
+    parsed = urlsplit(url)
+    host = parsed.netloc.casefold().split(":", 1)[0]
+    parts = [part for part in parsed.path.casefold().split("/") if part]
+    return (
+        host in {"creativefabrica.com", "www.creativefabrica.com"}
+        and len(parts) == 2
+        and parts[0] in {"tag", "fonts"}
+        and parts[1].endswith(("-font", "-fonts"))
+    )
+
+
+def route_slug_from_url(url: str) -> str:
+    parts = [part for part in urlsplit(url).path.casefold().split("/") if part]
+    return parts[1] if len(parts) == 2 and parts[0] in {"tag", "fonts"} else ""
+
+
+def route_matches_name(route_slug: str, name: str) -> bool:
+    expected = re.sub(r"[^a-z0-9]+", "-", normalise(name)).strip("-")
+    return route_slug == expected
 
 
 def snapshot_age(record: dict) -> int | None:
@@ -61,20 +96,10 @@ def snapshot_age(record: dict) -> int | None:
 
 
 def lookups_for(candidate: str, index: dict[str, dict]) -> list[tuple[str, dict]]:
-    """The candidate itself, then progressively shorter leading phrases.
-
-    A selected tag like `Modern Serif Font` usually has no route of its own; the
-    measured route is its leading modifier (`modern`). Report every measured
-    prefix so the caller can cite a snapshot instead of paying for a live fetch.
-    """
-    words = normalise(candidate).split()
-    hits: list[tuple[str, dict]] = []
-    for length in range(len(words), 0, -1):
-        key = " ".join(words[:length])
-        record = index.get(key)
-        if record is not None:
-            hits.append((key, record))
-    return hits
+    """Return evidence only for the exact normalized candidate phrase."""
+    key = normalise(candidate)
+    record = index.get(key)
+    return [(key, record)] if record is not None else []
 
 
 def report(candidate: str, index: dict[str, dict], max_age: int) -> dict:
@@ -87,7 +112,7 @@ def report(candidate: str, index: dict[str, dict], max_age: int) -> dict:
         routes.append(
             {
                 "matched_on": key,
-                "tag": record.get("tag"),
+                "tag": route_label(record),
                 "url": record.get("url"),
                 "coverage_count": record.get("coverage_count"),
                 "status": record.get("status"),

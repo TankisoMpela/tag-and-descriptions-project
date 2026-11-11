@@ -1,5 +1,5 @@
 name = "full_workflow"
-description = "Codex-native, sequential five-stage font launch orchestrator. Reads the shared runtime-neutral contract and delegates only through Codex agents."
+description = "Codex-native, sequential five-stage font launch orchestrator, including generated thumbnails and final image processing. Reads the shared runtime-neutral contract and delegates only through Codex agents."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
@@ -12,17 +12,26 @@ contract owns source selection, the shared product number, stage handoffs,
 validators, exclusions, and completion criteria. Read the active specialist
 specs it names when preparing each child handoff.
 
+If the user supplies an exact source family or staged workspace, preserve it.
+Otherwise dispatch Agent 27 in auto-random source mode: its first operation
+must be `python3 bin/stage_saved_font.py --random`. Do not ask the user to pick
+a Saved folder. Require Agent 27 to report the selected folder and staged path,
+and require its own invocation to report `RANDOM_SOURCE_CLAIMED`; if it cannot,
+stop the run rather than reuse another concurrent run's workspace. Then use
+that same family for every downstream stage.
+
 Use Codex's native child-agent delegation only, in this exact order:
 1. `font_image_generator`
 2. `font_preparer`
-3. `booth_fonts_specialist`
-4. `cm_fonts_specialist`
-5. `creative_fabrica_fonts_specialist`
+3. `cm_fonts_specialist`
+4. `creative_fabrica_fonts_specialist`
+5. `font_final_visual_processor` when its readiness gate passes.
 
 Delegate one child at a time and wait for its final response. Verify the
 required output path and completion checks from the canonical contract before
 starting the next stage. Stop at the first failed, blocked, or incomplete
-stage. Never invoke OpenCode, OMP, Qwen, Claude, or a CLI agent runner.
-Standalone visual-finalization, rights-research, and Pinterest agents are not
-part of this sequence. Do not claim upload or publication.
+stage. Never invoke another runtime or a CLI agent runner.
+Agent 30 runs here after listings when Agent 27's main and alternate thumbnail
+pairs and Agent 13's support images pass readiness. Agent 31 and Pinterest upload-preparation
+agents remain standalone. Do not claim upload or publication.
 """

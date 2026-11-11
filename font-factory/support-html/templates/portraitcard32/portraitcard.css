@@ -1,0 +1,90 @@
+.portraitcard32 #plate-copy {
+  left: 10%;
+  top: 39%;
+  width: 80%;
+  height: 32%;
+  justify-content: center;
+  padding: 0;
+  color: #25221d;
+  text-shadow: none;
+}
+
+.portraitcard32 #plate-title {
+  font-size: 14cqh;
+  line-height: .88;
+  letter-spacing: -.025em;
+}
+
+.portraitcard32 #plate-subtitle {
+  position: absolute;
+  top: calc(100% + 5cqh);
+  left: 0;
+  width: 100%;
+  margin-top: 0;
+  color: #463d34;
+  font: 500 2.1cqh/1.2 Georgia, serif;
+  letter-spacing: 0;
+  text-transform: none;
+  text-shadow: none;
+}
+
+.portraitcard32 #plate-eyebrow-left,
+.portraitcard32 #plate-eyebrow-right {
+  position: absolute;
+  z-index: 2;
+  top: 11.5%;
+  width: 24%;
+  color: #29251f;
+  font: 400 1.3cqh/1.2 Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+.portraitcard32 #plate-eyebrow-left {
+  left: 8.3%;
+}
+
+.portraitcard32 #plate-eyebrow-right {
+  right: 8.3%;
+  text-align: right;
+}
+
+.portraitcard32 #plate-body {
+  position: absolute;
+  z-index: 2;
+  left: 20%;
+  top: 82%;
+  width: 60%;
+  height: 11%;
+  display: flex;
+  justify-content: center;
+  color: #302b25;
+  font: 400 1.25cqh/1.35 Arial, sans-serif;
+  text-align: center;
+}
+
+.portraitcard32 #plate-photo {
+  object-position: center 10%;
+}
+
+.portraitcard32 #artboard[data-ratio="1x1"] #plate-copy {
+  left: 8%;
+  top: 44%;
+  width: 84%;
+  height: 29%;
+}
+
+.portraitcard32 #artboard[data-ratio="1x1"] #plate-title {
+  font-size: 13cqh;
+}
+
+.portraitcard32 #artboard[data-ratio="1x1"] #plate-subtitle {
+  top: calc(100% + 3cqh);
+}
+
+.portraitcard32 #artboard[data-ratio="1x1"] #plate-body {
+  left: 8%;
+  top: 81%;
+  width: 84%;
+  height: 13%;
+  font-size: 1.35cqh;
+}

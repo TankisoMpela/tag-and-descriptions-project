@@ -5,10 +5,12 @@ Reads outputs/research/creative-fabrica-tag-corpus.jsonl (append-only, written b
 bin/collect_creative_fabrica_tag_graph.py) and writes
 outputs/research/creative-fabrica-tag-patterns.md.
 
-The guide deliberately describes **how Creative Fabrica font tags look and which
-kinds dominate** — shapes, types, real examples and their coverage — so the agent
-can generate its own tags in that idiom. It is NOT a closed whitelist: an agent
-that only ever copies listed strings would be over-constrained.
+The guide describes **how observed Creative Fabrica font tags look and which
+kinds dominate** — shapes, types, real examples and their coverage. It is not a
+complete whitelist: newly discovered phrases may be considered after an exact
+route or an explicit, relevant PDP `Designer tags` field confirms the wording.
+A close, relevant comparable can support a long-tail phrase; engagement is
+optional context. Product facts qualify fit but never invent tag wording.
 
 Counts are catalog coverage signals, never demand or sales evidence.
 """
@@ -87,7 +89,15 @@ def load() -> dict[str, dict]:
 
 
 def base_word(slug: str) -> str:
-    return re.sub(r"-fonts$", "", slug).replace("-", " ")
+    return re.sub(r"-fonts?$", "", slug).replace("-", " ")
+
+
+def tag_display_name(slug: str, record: dict) -> str:
+    name = record.get("display_name") or base_word(slug).replace("-", " ").title()
+    name = re.sub(r"^\s*[\d,]+\s+", "", name.strip()).split("|", 1)[0]
+    name = re.sub(r"\s+20\d{2}\b.*$", "", name)
+    name = re.sub(r"\s+Designs?\s*&\s*Graphics.*$", "", name, flags=re.IGNORECASE).strip()
+    return name if re.search(r"\bfonts?$", name, re.IGNORECASE) else f"{name} Fonts"
 
 
 def classify(name: str) -> list[str]:
@@ -122,49 +132,76 @@ def main() -> int:
                 edges[(record["slug"], related)] += 1
 
     lines = [
-        "# Creative Fabrica font-tag patterns (learned, not a whitelist)",
+        "# Creative Fabrica font-tag patterns (observed patterns, not a phrase generator)",
         "",
         f"- Corpus: `creative-fabrica-tag-corpus.jsonl` — **{len(records)} distinct font tags** observed"
         f" ({len(live)} with a published count, {len(absent)} absent/empty), snapshot **{stamp}**.",
         f"- Collected by `bin/collect_creative_fabrica_tag_graph.py` (append-only; re-run to extend).",
         "- Counts are catalog coverage signals, never demand or sales evidence.",
         "",
-        "## The tag unit: `<modifier> Fonts`",
+        "## Tag routes versus editor labels",
         "",
-        "A Creative Fabrica **font** tag is the compound tag page `/tag/<modifier>-fonts/`,",
-        "shown as `<Modifier> Fonts`. The bare form is a different, broader tag that is not",
-        "font-scoped — measured 2026-09-21:",
+        "Do not treat tag-directory URLs, Suggested Categories, and the seller's `Designer tags` field",
+        "as one naming system. `Suggested Categories` often uses plural labels; public `Designer tags`",
+        "show singular `Font`, plural `Fonts`, and phrases with no suffix. Copy the exact phrase seen",
+        "in a `Designer tags` field when preparing editor input. A route or category page can suggest",
+        "vocabulary and coverage, but it does not standardize the editor label.",
         "",
-        "| Route | H1 | Published count | What the page shows |",
-        "|---|---|---|---|",
-        "| `/tag/kids/` | `Kids` | none | graphics — *Beach Vibe Lighthouse Bookmark*, *Png For Testing Week* |",
-        "| `/tag/kids-fonts/` | `Kids Fonts` | 14,188 | fonts — *Cute Fonts*, *Bold Fonts* |",
-        "| `/tag/logo/` | `Logo` | none | not font-scoped |",
-        "| `/tag/logo-fonts/` | `Logo Fonts` | 30,956 | font tag page |",
+        "| Surface | Example label | What it means |",
+        "|---|---|---|",
+        "| Designer tags | `Display Font` | singular editor tag, linked to `/tag/display-font/` |",
+        "| Designer tags | `Calligraphy Fonts` | plural editor tag, linked to `/tag/calligraphy-fonts/` |",
+        "| Designer tags | `Architectural Style` | editor tag without a Font(s) suffix |",
+        "| Designer tags | `Chunky Sans Serif` | editor tag without a Font(s) suffix |",
+        "| Suggested Categories | `Display Fonts` | category label, not the Designer tags field |",
         "",
-        "**A bare one-word tag is the noisy one** — it mixes graphics, SVGs and mockups in",
-        "with fonts. The `<modifier> Fonts` compound is font-scoped by construction and",
-        "carries the font intent. Write the compound form unless a live route proves otherwise.",
+        "Some bare tag routes are broad graphics pages, so route scope still matters. But do not",
+        "reject a bare or unsuffixed phrase when it is explicitly used in font PDP `Designer tags`.",
+        "Never manufacture a phrase by appending `Font(s)` to a product fact. Do not reject a relevant `Cute` tag categorically; require clear product fit.",
+        "",
+        "## Firecrawl spot-check (2026-11-03)",
+        "",
+        "Live routes show why exact phrase verification matters. Counts are catalog coverage only:",
+        "route existence establishes vocabulary, not demand or usefulness. Three-word tags can be",
+        "real. A specific long-tail phrase can qualify from one relevant font PDP when its Designer Tags field and product fit are clear; engagement is optional context and recurrence may strengthen it.",
+        "A route with only two results, such as `Space Efficient Font`, proves the wording exists",
+        "but is usually too narrow to merit a tag slot. Prefer concise phrases with clear buyer intent.",
+        "Public Designer tags show mixed labels, including `Display Font`, `Branding Font`,",
+        "`Calligraphy Fonts`, and unsuffixed `Architectural Style`, `Chunky Sans Serif`, and",
+        "`Decorative Casual Lettering`. By contrast, the current [Luminora PDP](https://www.creativefabrica.com/product/luminora/)",
+        "lists `Display Fonts`, `Sans Serif Fonts`, and `Bold Fonts` under Suggested Categories.",
+        "Use Designer tags to choose editor wording; Suggested Categories and description prose do not",
+        "prove that the same phrase belongs in the seller-tag field.",
+        "",
+        "| Exact phrase | Firecrawl route | Result |",
+        "|---|---|---:|",
+        "| Branding Fonts | https://www.creativefabrica.com/tag/branding-fonts/ | 22,382 |",
+        "| Architectural Display Font | https://www.creativefabrica.com/tag/architectural-display-font/ | 44 |",
+        "| Geometric Display Font | https://www.creativefabrica.com/tag/geometric-display-font/ | 399 |",
+        "| Space Efficient Font | https://www.creativefabrica.com/tag/space-efficient-font/ | 2 |",
+        "| Wedge Terminal Font | https://www.creativefabrica.com/tag/wedge-terminal-font/ | not found |",
+        "| Compact Display Font | https://www.creativefabrica.com/tag/compact-display-font/ | not found |",
+        "| Compact Identity Font | https://www.creativefabrica.com/tag/compact-identity-font/ | not found |",
         "",
         "## How the modifier usually looks",
         "",
-        "The modifier before `Fonts` is almost always one word, sometimes two, so the rendered",
-        "tag still reads as a short high-intent phrase (`Kids Fonts`, `Logo Fonts`, `Modern Fonts`):",
+        "The modifier is usually one word and sometimes two, so the rendered tag stays concise",
+        "(`Kids Fonts`, `Logo Fonts`, `Modern Fonts`). Longer phrases must be evidenced exactly:",
         "",
         "| Modifier words | Tags | Examples |",
         "|---|---:|---|",
     ]
     sample_by_len: dict[int, list[str]] = defaultdict(list)
     for slug, record in sorted(live.items(), key=lambda kv: -kv[1]["coverage_count"]):
-        name = record.get("display_name") or base_word(slug).replace("-", " ").title()
+        name = tag_display_name(slug, record)
         n = len(base_word(slug).split())
         if len(sample_by_len[n]) < 6:
-            sample_by_len[n].append(f"{name} Fonts")
+            sample_by_len[n].append(name)
     for n in sorted(shapes):
         if not sample_by_len[n]:  # no live example at this length; fall back to the slug
             for slug in sorted(records):
                 if len(base_word(slug).split()) == n:
-                    sample_by_len[n].append(base_word(slug).title() + " Fonts")
+                    sample_by_len[n].append(tag_display_name(slug, records.get(slug, {})))
                     break
         lines.append(f"| {n} | {shapes[n]} | " + ", ".join(f"`{x}`" for x in sample_by_len[n]) + " |")
 
@@ -206,7 +243,7 @@ def main() -> int:
     lines += ["", "## How tags co-occur (what popular tags sit beside)",
               "",
               "Most frequent neighbours across observed tag pages — useful for building a",
-              "coherent set rather than 40 unrelated strings:", ""]
+              "coherent, relevant set instead of padding a long list:", ""]
     for slug, record in sorted(live.items(), key=lambda kv: -kv[1]["coverage_count"])[:12]:
         related = [r for r in record.get("related_font_tags", []) if r in live]
         if not related:
@@ -242,8 +279,8 @@ def main() -> int:
             "## Buyer language (from popular font descriptions)",
             "",
             f"{len(descriptions)} real seller descriptions of popular Creative Fabrica fonts, mined for",
-            "the phrasing that actually accompanies a font listing. This is the vocabulary to build",
-            "tag and description wording from — not just tag names.",
+            "phrases that actually appear in product copy. Use this section for description wording",
+            "or route discovery only; prose is not evidence that a phrase is a platform tag.",
             "",
             "Some high-frequency phrases are boilerplate (`otf ttf`, `pua encoded`) — those are",
             "description facts, never tags.",
@@ -264,14 +301,14 @@ def main() -> int:
 
     lines += ["", "## How to use this",
               "",
-              "1. This is **idiom guidance, not a menu**. Learn the shapes and families, then write",
-              "   tags for *this* font in the same style — a real CF tag is a 1-2 word phrase plus",
-              "   Font/Fonts, or a buyer-intent phrase that CF itself publishes.",
-              "2. Prefer families that are large and coherent with the product; do not stack five",
-              "   mood adjectives or five use-cases.",
-              "3. Anything you invent must still be live-verified, or cited from the tag bank when",
-              "   the bank already measured it.",
-              "4. Counts rank *coverage*, not sales. Never present them as demand.",
+              "1. Treat exact tag routes and explicit public Designer tags as vocabulary sources; a relevant PDP may support a fitting long-tail phrase. Engagement is optional context. Preserve",
+              "   the phrase shown in the Designer tags field; labels may be singular, plural, or bare.",
+              "2. Prefer a concise set of distinct phrases that fit the product and carry clear",
+              "   buyer intent; do not stack adjective or application variants.",
+              "3. Description phrases below are copy language, not tag evidence. Suggested Categories",
+              "   and Font Style are also separate from the Designer tags field.",
+              "4. A live route establishes that wording exists, not that it merits a slot; consider",
+              "   its catalog coverage and product relevance. Counts are not demand or sales.",
               ""]
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"wrote {OUT} ({len(records)} tags, {len(live)} live)")

@@ -112,17 +112,12 @@ def pct(vals, p):
 
 
 def activity_label(font_cat_n):
-    """Validator-compatible BOOTH activity label for the status cell.
-
-    Under the young-cohort contract the "low activity" label no longer forces
-    an exception slot on its own; the young win-rate cell carries the evidence
-    weight. The label stays for page-life description.
-    """
+    """Return a coverage band for the frozen census, never current page life."""
     if font_cat_n is None or font_cat_n <= 0:
-        return "dead/no coverage"
+        return "no snapshot coverage"
     if font_cat_n < 17:
-        return "low activity"
-    return "live"
+        return "low snapshot coverage"
+    return "snapshot coverage 17+"
 
 
 def make_urls(tag):

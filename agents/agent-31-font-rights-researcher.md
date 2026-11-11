@@ -92,14 +92,20 @@ you do not trust.
    strings as an **unverified statement by whoever last repackaged the file**, not
    as provenance: this corpus comes from a 29,000-font dump whose name tables were
    routinely rewritten by bundlers and cracking tools.
-3. **One search-first pass per folder. A fetch is the exception, not the routine.**
+3. **Run a complete discovery pass for every folder; do not stop at the first result.**
    Discovery with `mcp_call` toolName `mcp__serper__serper_search` (its results are
-   compact); `mcp__tavily__tavily_search` and `mcp__exa__exa_search` are
-   alternates, WebSearch the fallback. Budget: **1-2 searches per folder and at
-   most one page fetch.** Use that fetch for the best page that can confirm the
-   exact version, author/uploader, displayed licence, or first publication date;
-   if a `clear` rests on a page's grant, use it to read that grant. An in-binary
-   grant quote or an author reached this run does not need an extra page fetch.
+   compact); use Serper/Google for every required query. The mandatory first sweep
+   is three distinct searches per family: an exact-name general Google query, a
+   `site:fonts2u.com` exact-name query, and a `site:findmyfonts.com` exact-name
+   query. Include the holder, designer, PostScript name, or unique ID in the
+   general query when it helps separate name collisions. Search additional leads
+   when results reveal a foundry, seller, alternate family name, re-digitisation,
+   or a named marketplace. There is no two-search ceiling for this recheck.
+   Fetch up to three relevant pages per folder when needed: the strongest
+   distribution record, the credited author/foundry page, and any exact current
+   commercial listing or rights reference. A page fetch is required to verify a
+   commercial offer used as `claimed` evidence and to read any grant supporting
+   `clear`; do not infer page terms from snippets.
    - The evidence standard is set by what the verdict costs. Neither red nor amber
      lets the seller ship. A search result that names **this design and version**
      on a current commercial seller, the holder's own site, or a type-rights
@@ -108,13 +114,23 @@ you do not trust.
      ownership or a licence grant, and belongs in `research.sources`, never by
      itself in `--evidence`. Green still needs a verbatim commercial grant from
      this binary's name records or an author reached this run.
-   - Search commercial sellers and free-font directories in the same first sweep:
-     `"<family>" (myfonts OR fonts.com OR creativefabrica OR dafont OR fontgeek OR fontsgeek OR fontfreak OR fontspace OR 1001fonts OR 1001freefonts OR fontasy OR abstractfonts OR ffonts OR fontsquirrel OR fontlibrary)`.
-     `FontGeek` may appear as **FontsGeek** (`fontsgeek.com`); include both
-     spellings in the query. These are examples, not an exhaustive allowlist.
-     Search a second time only if needed to distinguish a recut, find an author or
-     date, or verify the claimed holder. Record empty avenues in `--looked` and
-     actual pages in `research.sources`.
+   - The three required searches must be separate so a broad result set cannot
+     hide a no-result source. Search commercial sellers and free-font directories
+     as follow-up leads, including MyFonts, Monotype, FontShop, Creative Market,
+     Creative Fabrica, DaFont, FontsGeek/FontGeek, FontFreak, FontSpace, 1001Fonts,
+     Fontasy, Abstract Fonts, FFonts, Font Squirrel and Font Library. These are
+     examples, not an exhaustive allowlist. Record each source actually searched
+     in `--looked`, including sources with no exact match; put every relevant
+     located page in `research.sources`.
+   - **Follow the trail.** Inspect links and citations on Fonts2u, FindMyFont,
+     and other distribution or catalogue pages. Follow links to the credited
+     designer, foundry, original product page, and any named seller, including a
+     Creative Market product or shop page. Then search the exact family and
+     designer on that destination with Serper if the link is missing, stale,
+     or ambiguous. Do not stop at an aggregator snippet when it points to a
+     primary source. Record both the discovery page and the followed destination,
+     distinguish an exact product from a similar family/name collision, and
+     describe the license label on each page separately.
    - Identify whether each page is the exact font/version, a related family or
      just a name collision. Record where it is currently offered, the page's own
      freeware/shareware/demo/personal-use label, who uploaded or is credited for
@@ -225,10 +241,12 @@ tracked ledger copy that `sync` publishes from it. You never:
    judge it on its representative — but `claimed`/`orphan` only, never `clear`,
    and say so in your report. **The tool enforces that now**: a `clear` fanned
    over a folder with a mismatched holder string is held back on every sibling.
-7. Cost is a constraint, not a style preference: **1-2 searches per folder, one
-   fetch maximum.** If a folder needs more than that to decide, the honest answer
-   is amber with what you found, not another five searches. Free-font listing
-   labels and `abandonware` claims are provenance, not commercial permission.
+7. Complete source coverage is required: the general Google, Fonts2u, and
+   FindMyFont searches are mandatory for every family. Follow promising links to
+   their primary source, including Creative Market. Stop when those avenues and
+   the material leads they reveal have been checked; do not keep searching merely
+   to increase confidence. Free-font listing labels and `abandonware` claims are
+   provenance, not commercial permission.
 8. Report any verdict in the sidecar whose file has vanished from the folder,
    and any font whose binary will not open — `show` prints the read error; an
    unreadable binary cannot be researched, so leave it unmarked and list it.

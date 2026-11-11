@@ -7,13 +7,13 @@ from pathlib import Path
 from PIL import Image
 
 # Quality ladder, best first. 95 is the ceiling: measured on real 1536x1024
-# composites they need q80-85 to fit the cap, so a higher rung never binds and
-# only costs extra encodes. 55 is the floor, lowered from 60 so 1536x1024 and
-# 1254x1254 AI composites that still exceed the cap at q60 can fit; below it the
-# run fails closed.
-QUALITY_LADDER = (95, 90, 85, 80, 75, 70, 65, 60, 55)
+# composites they need q80-85 to fit the cap, so a higher rung rarely binds.
+# Keep lower rungs for unusually detailed seller-supplied support art: the
+# processor must preserve full dimensions and may use the 200–300 KB allowance
+# before failing closed, but should still find a valid JPEG when q55 is too large.
+QUALITY_LADDER = (95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35)
 
-CANONICAL = re.compile(r"^(thumbnail_main|thumbnail_japanese|promo_[0-9]+)\.png$", re.IGNORECASE)
+CANONICAL = re.compile(r"^(thumbnail_(?:main|alt)|promo_[0-9]+)\.png$", re.IGNORECASE)
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -25,6 +25,8 @@ def main() -> int:
                         help="Hard byte ceiling; the highest fitting quality is preferred")
     parser.add_argument("--target-bytes", type=int, default=None,
                         help="Preferred byte target; if no quality fits, retry up to --max-bytes")
+    parser.add_argument("--allow-over-max", action="store_true",
+                        help="write the smallest quality rung if no JPEG fits --max-bytes")
     parser.add_argument("--max-dim", type=int, default=None,
                         help="Resize images so longest edge matches this pixel count (preserves aspect ratio)")
     args = parser.parse_args()
@@ -86,16 +88,19 @@ def main() -> int:
                 chosen, smallest = highest_fit(args.max_bytes)
                 if chosen is None:
                     assert smallest is not None
-                    raise SystemExit(
-                        f"{source.name}: could not reach {args.max_bytes} bytes even at "
-                        f"quality {smallest[0]}; output not written"
-                    )
+                    if not args.allow_over_max:
+                        raise SystemExit(
+                            f"{source.name}: could not reach {args.max_bytes} bytes even at "
+                            f"quality {smallest[0]}; output not written"
+                        )
+                    chosen = smallest
             quality, payload = chosen
             destination.write_bytes(payload)
         target_status = ("" if args.target_bytes is None else
                          f", {'target met' if destination.stat().st_size <= args.target_bytes else 'within hard limit'}")
+        over_max = " (above configured ceiling; best available quality saved)" if destination.stat().st_size > args.max_bytes else ""
         print(f"{source.name}: {source.stat().st_size} -> {destination.name}: "
-              f"{destination.stat().st_size} bytes (quality {quality}, 4:2:0{target_status})")
+              f"{destination.stat().st_size} bytes (quality {quality}, 4:2:0{target_status}){over_max}")
     return 0
 
 if __name__ == "__main__":

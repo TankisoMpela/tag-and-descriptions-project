@@ -1,0 +1,168 @@
+#artboard.cmr-artboard {
+  position: relative;
+  overflow: hidden;
+  container-type: size;
+  isolation: isolate;
+  background: #f5efe4;
+  color: #111;
+}
+#artboard.cmr-artboard > img { position: absolute; user-select: none; }
+#artboard.cmr-artboard > .cmr-photo-plate {
+  z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover;
+}
+#artboard.cmr-artboard > .cmr-illustration {
+  z-index: -1; object-fit: contain; pointer-events: none;
+}
+#artboard.cmr-artboard .cmr-copy {
+  position: absolute; z-index: 1; display: flex; justify-content: center;
+  align-items: center; line-height: .92; white-space: nowrap; overflow: visible;
+  font-kerning: normal; font-synthesis: none; text-wrap: nowrap;
+}
+#artboard.cmr-artboard .cmr-small-copy { font: min(1.7cqh, 18px)/1.25 Arial, sans-serif; white-space: normal; }
+#artboard.cmr-artboard .cmr-stretched { display: inline-block; transform-origin: center; }
+#artboard.cmr-bottleoffer32 { background: #fcc2c1; }
+#artboard.cmr-bottleoffer32 [data-layout-item="bottle-word"] {
+  text-shadow: 4px 4px 0 #080808, 8px 8px 0 #080808, 12px 12px 0 #080808,
+    16px 16px 0 #080808, 20px 20px 0 #080808;
+  -webkit-text-stroke: .045em #080808;
+}
+#artboard.cmr-bottleoffer32 [data-layout-item="offer-word"] {
+  text-shadow: 4px 4px 0 #080808, 8px 8px 0 #080808, 12px 12px 0 #080808,
+    16px 16px 0 #080808, 20px 20px 0 #080808;
+  -webkit-text-stroke: .045em #080808;
+}
+#artboard.cmr-bottleoffer32 [data-layout-item="bottle-label"] {
+  text-transform: uppercase; -webkit-text-stroke: 2px #080808;
+  text-shadow: 2px 2px 0 #080808, 4px 4px 0 #080808, 6px 6px 0 #080808;
+}
+
+#artboard.cmr-bootzyfear32 { background: #f9c9d7; }
+#artboard.cmr-bootzyfear32 > .cmr-illustration {
+  left: 10%; top: 5%; width: 80%; height: 90%; object-fit: contain;
+}
+
+#artboard.cmr-bootzyalmost32 { background: #ece9e0; }
+#artboard.cmr-bootzyalmost32 [data-layout-item="almost-heavy"] { -webkit-text-stroke: .025em currentColor; }
+
+#artboard.cmr-bootzygraphic32 { background: #feed61; }
+#artboard.cmr-bootzygraphic32 .cmr-copy { color: #050000 !important; }
+
+#artboard.cmr-bootzybunny32 { background: #ece9e0; }
+#artboard.cmr-bootzybunny32 > .cmr-illustration {
+  left: 22.6%; top: 1.5%; width: 52%; height: 75%; object-fit: contain; transform: scale(1.19, 1.12); transform-origin: center;
+}
+#artboard.cmr-bootzyfear32::after,
+#artboard.cmr-bootzyalmost32::after,
+#artboard.cmr-bootzygraphic32::after,
+#artboard.cmr-bootzybunny32::after {
+  position: absolute; content: ""; z-index: 0; left: 3.2%; right: 3.2%; top: 94.8%; height: 1px;
+  background: rgb(48 43 40 / 38%);
+}
+#artboard.cmr-bootzyfear32 [data-layout-item^="bootzy-footer-"],
+#artboard.cmr-bootzyalmost32 [data-layout-item^="bootzy-footer-"],
+#artboard.cmr-bootzygraphic32 [data-layout-item^="bootzy-footer-"],
+#artboard.cmr-bootzybunny32 [data-layout-item^="bootzy-footer-"] {
+  text-transform: uppercase; line-height: 1 !important; white-space: nowrap;
+}
+
+#artboard.cmr-quadfont32 {
+  background-color: #162522;
+  background-image: linear-gradient(#162625, #162625), linear-gradient(#ccccfe, #ccccfe), linear-gradient(#ccccfe, #ccccfe);
+  background-position: left top, right top, left bottom;
+  background-size: 50% 50%; background-repeat: no-repeat;
+}
+#artboard.cmr-quadfont32 [data-layout-item="quad-dark"],
+#artboard.cmr-quadfont32 [data-layout-item="quad-font"] { color: #ffffff !important; }
+#artboard.cmr-quadfont32 [data-layout-item^="quad-bold"],
+#artboard.cmr-quadfont32 [data-layout-item^="quad-modern"] { color: #162625 !important; }
+#artboard.cmr-quadfont32 .cmr-copy { text-transform: uppercase; }
+
+#artboard.cmr-mythicallions32 { background: #ddd4c1; }
+#artboard.cmr-mythicallions32 > .cmr-photo-plate { object-position: center; }
+#artboard.cmr-mythicallions32 [data-layout-item="lions-vertical"],
+#artboard.cmr-mythicallions32 [data-layout-item^="lions-side-"] {
+  writing-mode: vertical-rl; transform: rotate(180deg); color: #fcf71f !important;
+  letter-spacing: -.055em;
+}
+#artboard.cmr-mythicallions32 [data-layout-item="lions-seal"] {
+  border: 2px solid #fff4b0; border-radius: 50%; color: #fff4b0 !important;
+}
+#artboard.cmr-mythicallions32 [data-layout-item="lions-ampersand"] {
+  color: #fcf71f !important; font-family: Georgia, serif !important; font-weight: 400 !important;
+}
+#artboard.cmr-mythicallions32 [data-layout-item="lions-ampersand"] > span {
+  display: inline-block; transform: translateY(-.06em);
+}
+#artboard.cmr-mythicallions32 [data-layout-item^="lions-top-note"],
+#artboard.cmr-mythicallions32 [data-layout-item="lions-caption"] {
+  letter-spacing: .11em; text-transform: uppercase;
+}
+
+#artboard.cmr-lifeinblackwhite32 { background: #151515; }
+#artboard.cmr-lifeinblackwhite32 > .cmr-photo-plate { filter: grayscale(1); }
+#artboard.cmr-lifeinblackwhite32::after {
+  position: absolute; content: ""; z-index: -1; inset: 0;
+  background: linear-gradient(90deg, rgb(0 0 0 / 18%), rgb(0 0 0 / 2%) 55%, rgb(0 0 0 / 24%));
+}
+#artboard.cmr-lifeinblackwhite32 .cmr-copy { text-shadow: 0 1px 8px rgb(0 0 0 / 24%); }
+#artboard.cmr-lifeinblackwhite32 [data-layout-item$="label"] {
+  font-family: Arial, sans-serif !important; font-size: min(1.35cqh, 14px) !important;
+  line-height: 1 !important; letter-spacing: .14em; text-shadow: none !important;
+}
+
+#artboard.cmr-romanstrips32 {
+  background-color: #f3f1ed;
+}
+#artboard.cmr-romanstrips32 > .cmr-photo-plate { object-position: center; }
+#artboard.cmr-romanstrips32 .cmr-copy { font-family: "SupportDisplay", Georgia, serif; }
+#artboard.cmr-romanstrips32 .cmr-copy > i {
+  display: inline-block; font-style: normal; transform: skewX(-9deg);
+}
+
+#artboard.cmr-floraltriptych32 { background: #18251a; }
+#artboard.cmr-floraltriptych32 > .cmr-photo-plate { object-position: center; }
+#artboard.cmr-floraltriptych32 [data-layout-item="flower-left"],
+#artboard.cmr-floraltriptych32 [data-layout-item="flower-center-top"],
+#artboard.cmr-floraltriptych32 [data-layout-item="flower-center-bottom"],
+#artboard.cmr-floraltriptych32 [data-layout-item="flower-right"] { color: #241d16 !important; }
+#artboard.cmr-floraltriptych32 [data-layout-item="flower-sub"] { color: #4a4036 !important; }
+
+#artboard.cmr-homequote32 { background: #19241a; }
+#artboard.cmr-homequote32 > .cmr-photo-plate { object-position: center bottom; }
+#artboard.cmr-homequote32::before {
+  position: absolute; content: ""; z-index: -1; left: 0; right: 0; top: 0; height: 56%;
+  background: #19241a;
+}
+#artboard.cmr-homequote32 .cmr-copy { color: #f1eab3 !important; }
+#artboard.cmr-homequote32 .home-dash {
+  display: inline-block; font-family: Georgia, serif; font-size: .6em;
+  vertical-align: -.03em; margin: 0 -.03em;
+}
+
+#artboard.cmr-artboard.is-square.cmr-bootzyfear32 > .cmr-illustration { left: 14%; top: 12%; width: 72%; height: 70%; }
+#artboard.cmr-artboard.is-square.cmr-bootzyfear32 [data-layout-item="fear-line"] { top: 4% !important; width: 44% !important; height: 13% !important; }
+#artboard.cmr-artboard.is-square.cmr-bootzyfear32 [data-layout-item="beer-line"] { top: 4% !important; left: 53% !important; width: 44% !important; height: 13% !important; }
+#artboard.cmr-artboard.is-square.cmr-bootzyfear32 [data-layout-item="jail-line-1"] { top: 67% !important; left: 4% !important; width: 34% !important; height: 9% !important; }
+#artboard.cmr-artboard.is-square.cmr-bootzyfear32 [data-layout-item="jail-line-2"] { top: 76% !important; left: 4% !important; width: 34% !important; height: 9% !important; }
+#artboard.cmr-artboard.is-square.cmr-bootzyfear32 [data-layout-item="fails-line"] { top: 83% !important; left: 38% !important; width: 58% !important; height: 13% !important; }
+#artboard.cmr-artboard.is-square.cmr-bootzybunny32 > .cmr-illustration { left: 16.6%; top: 3%; width: 64%; height: 73%; transform: scale(.82, 1.15); transform-origin: center; }
+#artboard.cmr-artboard.is-square.cmr-mythicallions32 [data-layout-item="lions-vertical"] { left: 4.5% !important; width: 13% !important; }
+#artboard.cmr-artboard.is-square.cmr-mythicallions32 [data-layout-item="lions-side-coastal"] { left: 20% !important; width: 13% !important; }
+#artboard.cmr-artboard.is-square.cmr-mythicallions32 [data-layout-item="lions-side-study"] { left: 35% !important; width: 10% !important; }
+#artboard.cmr-artboard.is-square.cmr-mythicallions32 [data-layout-item="lions-seal"] { width: 15% !important; }
+#artboard.cmr-artboard.is-square.cmr-mythicallions32 [data-layout-item="lions-ampersand"] { left: 48% !important; width: 52% !important; }
+#artboard.cmr-artboard.is-square.cmr-lifeinblackwhite32 [data-layout-item="life-line-1"] { top: 34% !important; height: 20% !important; }
+#artboard.cmr-artboard.is-square.cmr-lifeinblackwhite32 [data-layout-item="life-line-2"] { top: 52% !important; height: 20% !important; }
+#artboard.cmr-artboard.is-square.cmr-floraltriptych32 [data-layout-item="flower-left"] { left: 1% !important; width: 34% !important; }
+#artboard.cmr-artboard.is-square.cmr-floraltriptych32 [data-layout-item="flower-left-label"] { left: 2% !important; width: 30% !important; }
+#artboard.cmr-artboard.is-square.cmr-floraltriptych32 [data-layout-item="flower-left-body"] { left: 2% !important; width: 32% !important; }
+#artboard.cmr-artboard.is-square.cmr-floraltriptych32 [data-layout-item^="flower-center-"] { left: 46.25% !important; width: 45% !important; }
+#artboard.cmr-artboard.is-square.cmr-floraltriptych32 [data-layout-item="flower-sub"] { left: 48.5% !important; width: 43.5% !important; }
+#artboard.cmr-artboard.is-square.cmr-floraltriptych32 [data-layout-item^="flower-right"] { display: none !important; }
+#artboard.cmr-artboard.is-square.cmr-homequote32::before { height: 48%; }
+#artboard.cmr-artboard.is-square.cmr-homequote32 > .cmr-photo-plate { object-position: center bottom; }
+#artboard.cmr-artboard.is-square.cmr-homequote32 [data-layout-item^="home-quote-"] { width: 90% !important; height: 12% !important; }
+#artboard.cmr-artboard.is-square.cmr-homequote32 [data-layout-item="home-quote-1"] { top: 24% !important; }
+#artboard.cmr-artboard.is-square.cmr-homequote32 [data-layout-item="home-quote-2"] { top: 35% !important; }
+#artboard.cmr-artboard.is-square.cmr-homequote32 [data-layout-item="home-quote-3"] { top: 46% !important; }
+#artboard.cmr-artboard.is-square.cmr-homequote32 [data-layout-item="home-body"] { top: 56% !important; width: 88% !important; height: 11% !important; }

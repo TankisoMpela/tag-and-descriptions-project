@@ -2,6 +2,10 @@
 
 Transcribed from the user's review. Each entry is one comparison image. “Design” notes apply across classes; only explicit suitability notes change class eligibility. Downloaded ChatGPT images in `~/Downloads` are prepared materials for the relevant redesigns.
 
+This October 14 audit is historical. `contour32` (slot 10) and `plakat32`
+(slot 20), both discussed below, were retired from the active catalogue on
+2026-11-07; their audit notes no longer imply current eligibility.
+
 ## Reference/comparison corrections
 
 - **01-line32** and **03-card32** — No original source was supplied. Their refreshed individual comparisons have a deliberately blank left/reference panel; no nearby image is presented as a substitute.

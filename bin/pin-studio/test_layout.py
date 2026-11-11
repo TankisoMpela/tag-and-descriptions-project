@@ -222,14 +222,18 @@ case("feature callouts use real GSUB names when available",
 case("feature callouts stay truthful when the font exposes no feature tags",
      ps.feature_callout_labels({"facts": {"features": []}})
      == ["Feature Set Varies", "See Available Glyphs"])
-case("172 stable support slots retain 135 active templates",
-     len(ps.SUPPORT_ORDER) == 172
-     and len(set(ps.SUPPORT_ORDER)) == 172
+seller_retired = {"contour32", "plakat32", "voguecover32", "confident32",
+                  "parkstatement32"}
+case("seller-retired layouts retain stable slots and leave the active registry",
+     len(ps.SUPPORT_ORDER) == 180
+     and len(set(ps.SUPPORT_ORDER)) == 180
      and ps.SUPPORT_ORDER[42] == "bondibeach32"
      and "bondibeach32" in ps.SUPPORT_RETIRED
      and "bondibeach32" not in ps.TEMPLATES
+     and seller_retired <= ps.SUPPORT_RETIRED
+     and seller_retired <= set(ps.SUPPORT_ORDER)
      and len([name for name in ps.SUPPORT_ORDER
-             if name not in ps.SUPPORT_RETIRED]) == 135
+             if name not in ps.SUPPORT_RETIRED]) == 132
      and set(name for name in ps.SUPPORT_ORDER
              if name not in ps.SUPPORT_RETIRED) <= set(ps.TEMPLATES)
      and all(name in ps.THEME_PREF for name in ps.SUPPORT_ORDER
@@ -268,20 +272,19 @@ blackletter_audit_names = support_audit.class_audit_names(
 case("blackletter comparison rerenders follow the reviewed eligible pool",
      set(blackletter_audit_names)
      == set(ps.support_names("blackletter", "blackletter", 2)) - ps.HTML_ONLY_SUPPORT)
-case("contour32 stays available only for handwritten and display styles",
-     "contour32" in ps.support_names("script", "script", 1)
-     and "contour32" in ps.support_names("elegant", "display-bold", 1)
-     and all("contour32" not in ps.support_names(cls, family, styles)
-             for cls, family, styles in (
-                 ("blackletter", "blackletter", 2), ("script", "brush", 1),
-                 ("sports", "brush", 3), ("sports", "pixel", 2))))
+case("seller-retired layouts are unavailable in every support style pool",
+     all(seller_retired.isdisjoint(ps.support_names(cls, family, styles))
+         for cls, family, styles in (
+             ("blackletter", "blackletter", 2), ("script", "script", 1),
+             ("script", "brush", 1), ("sports", "brush", 3),
+             ("sports", "pixel", 2), ("elegant", "display-bold", 1))))
 style_pools = {
-    "blackletter": ("blackletter", "blackletter", 2, 118),
-    "handwritten": ("script", "script", 1, 123),
-    "tech-sports": ("sports", "brush", 3, 119),
-    "brush": ("script", "brush", 1, 126),
-    "pixel": ("sports", "pixel", 2, 125),
-    "display": ("elegant", "display-bold", 1, 126),
+    "blackletter": ("blackletter", "blackletter", 2),
+    "handwritten": ("script", "script", 1),
+    "tech-sports": ("sports", "brush", 3),
+    "brush": ("script", "brush", 1),
+    "pixel": ("sports", "pixel", 2),
+    "display": ("elegant", "display-bold", 1),
 }
 case("renderer classes resolve to the six audited support styles",
      ps.support_style_group("blackletter", "blackletter") == "blackletter"
@@ -290,35 +293,39 @@ case("renderer classes resolve to the six audited support styles",
      and ps.support_style_group("sports", "brush") == "tech-sports"
      and ps.support_style_group("sports", "pixel") == "pixel"
      and ps.support_style_group("elegant", "display-bold") == "display")
-for group, (cls, family, styles, expected_count) in style_pools.items():
+for group, (cls, family, styles) in style_pools.items():
     pool = set(ps.support_names(cls, family, styles))
     excluded = ps.SUPPORT_STYLE_EXCLUDE[group]
     case(f"{group}: hard mismatches are discounted",
          excluded.isdisjoint(pool), f"still eligible: {sorted(excluded & pool)}")
-    case(f"{group}: eligible pool has expected size and can supply thirteen",
-         len(pool) == expected_count and len(pool) >= 13,
-         f"{len(pool)} eligible; expected {expected_count}")
+    case(f"{group}: eligible pool can supply twelve",
+         len(pool) >= 12, f"{len(pool)} eligible")
 case("Neue is reserved for the sports/tech specimen class",
      all("neue32" in ps.SUPPORT_STYLE_EXCLUDE[group]
          for group in ("blackletter", "handwritten", "brush", "pixel", "display"))
      and "neue32" not in ps.SUPPORT_STYLE_EXCLUDE["tech-sports"])
 family_font = ROOT / "font-factory/fonts/3-Lindgre/Lindgre L2THLSE/Lindgre/Lindgre-Regular.otf"
 family_ctx = ps.build_ctx(family_font, "Lindgre", support_copy)
-family_panels = {"plakat32", "weightfamily32", "mangosboard32", "italicregular32"}
+family_panels = {"weightfamily32", "mangosboard32", "italicregular32"}
 eligible = set(ps.support_names("elegant", family_ctx["family"],
                                 family_ctx["family_style_count"],
                                 family_ctx["has_weight_triplet"]))
 case("family showcase templates are eligible for a real multi-style family",
      family_ctx["family_style_count"] >= 2 and family_panels <= eligible,
      f"{family_ctx['family_style_count']} styles")
-family_selection = ps.select_support_templates(
-    random.Random(2026), list(eligible), 13, "elegant")
-case("13-template family selection always includes eligible showcases",
-     len(family_selection) == 13 and family_panels <= set(family_selection),
-     ", ".join(sorted(set(family_selection) & family_panels)))
+family_selections = [
+    ps.select_support_templates(random.Random(seed), list(eligible), 12, "elegant")
+    for seed in range(20)
+]
+case("family showcases are eligible but not guaranteed selections",
+     all(len(selection) == 12 and set(selection) <= eligible
+         for selection in family_selections)
+     and any(not family_panels <= set(selection) for selection in family_selections),
+     "; ".join(", ".join(sorted(set(selection) & family_panels))
+                for selection in family_selections))
 case("family boards do not invent sibling styles for a single face",
      family_panels.isdisjoint(ps.support_names("elegant", "single", 1)))
-family_panel_names = {"boots32", "plakat32", "weightfamily32", "mangosboard32"}
+family_panel_names = {"boots32", "weightfamily32", "mangosboard32"}
 case("family label names retain the real family and style",
      ps.family_style_label("Mangos", "Black") == "Mangos Black"
      and ps.family_style_label("Mangos", "Mangos Regular") == "Mangos Regular")

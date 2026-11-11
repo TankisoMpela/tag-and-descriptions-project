@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build thumbnail placeholders, support images, and factual specimens."""
+"""Build thumbnail placeholders, support images, and Pinterest pins."""
 
 from __future__ import annotations
 
@@ -15,20 +15,12 @@ from pathlib import Path
 from PIL import Image
 
 from font_outline_renderer import LineMetric, OutlineFont
+from validate_font_visual_handoff import contrast_ratio as measure_contrast_ratio
 
 
 RATIOS = {"3x2": (2400, 1600), "1x1": (1600, 1600)}
 BACKGROUND = (255, 255, 255)
 INK = (20, 20, 24)
-FALLBACK_FONTS = (
-    "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc",
-    "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
-    "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-    "/usr/share/fonts/TTF/DejaVuSans.ttf",
-)
-
-
 def resolve_path(value: object, base: Path) -> Path | None:
     if not isinstance(value, str) or not value.strip():
         return None
@@ -43,14 +35,6 @@ def require_font(value: object, base: Path, label: str) -> Path:
     if path is None or not path.is_file():
         raise SystemExit(f"{label} font is missing or unreadable: {path or value}")
     return path
-
-
-def fallback_font() -> Path:
-    for candidate in FALLBACK_FONTS:
-        path = Path(candidate)
-        if path.is_file():
-            return path
-    raise SystemExit("No system fallback font is available for placeholder copy")
 
 
 def blocks_for(owner: object, label: str) -> list[str]:
@@ -515,7 +499,7 @@ def plan_entries(plan: dict) -> list[tuple[str, dict]]:
     """Thumbnail briefs only; programmatic supports have their own guide."""
     return [
         ("thumbnail_main", plan.get("thumbnail") or {}),
-        ("thumbnail_japanese", plan.get("japanese_thumbnail") or {}),
+        ("thumbnail_alternate", plan.get("thumbnail_alternate") or {}),
     ]
 
 
@@ -528,7 +512,7 @@ def plan_brief(entry: dict) -> str:
 def plan_prompt_entries(plan: dict) -> list[tuple[str, str, str]]:
     """Return complete prompts paired with their exact specimen and ratio."""
     thumbnail = plan.get("thumbnail") or {}
-    japanese = plan.get("japanese_thumbnail") or {}
+    alternate = plan.get("thumbnail_alternate") or {}
     prompts: list[tuple[str, str, str]] = []
     main = plan_brief(thumbnail)
     if main:
@@ -545,14 +529,44 @@ def plan_prompt_entries(plan: dict) -> list[tuple[str, str, str]]:
             "prepared_visuals/1x1/thumbnail_main.png",
             square,
         ))
-    storefront = plan_brief(japanese)
-    if storefront:
+    alternate_landscape = plan_brief(alternate)
+    if alternate_landscape:
         prompts.append((
-            "thumbnail_japanese_1x1",
-            "prepared_visuals/1x1/thumbnail_japanese.png",
-            storefront,
+            "thumbnail_alt_3x2",
+            "prepared_visuals/3x2/thumbnail_main.png",
+            alternate_landscape,
+        ))
+    alternate_layouts = alternate.get("ratio_layouts") or {}
+    alternate_square = plan_brief(alternate_layouts.get("1x1") or {})
+    if alternate_square:
+        prompts.append((
+            "thumbnail_alt_1x1",
+            "prepared_visuals/1x1/thumbnail_main.png",
+            alternate_square,
         ))
     return prompts
+
+
+def contrast_report_lines(plan: dict) -> list[str]:
+    palette = plan.get("palette") or {}
+    lines: list[str] = []
+    for check in plan.get("contrast_checks") or []:
+        foreground = check.get("foreground")
+        background = check.get("background")
+        minimum = check.get("minimum")
+        try:
+            ratio = measure_contrast_ratio(palette[foreground], palette[background])
+            passes = ratio >= float(minimum)
+        except (KeyError, TypeError, ValueError):
+            ratio = None
+            passes = None
+        if ratio is None:
+            detail = f"minimum {minimum}:1; validation requires valid palette values"
+        else:
+            verdict = "passes" if passes else "FAILS"
+            detail = f"{ratio:.2f}:1 (minimum {minimum}:1) — {verdict}"
+        lines.append(f"- {foreground} on {background}: {detail}")
+    return lines
 
 
 def render_note(name: str, entry: dict, plan: dict) -> str:
@@ -574,12 +588,7 @@ def render_note(name: str, entry: dict, plan: dict) -> str:
         lines.append("## Palette / Contrast")
         for key, value in palette.items():
             lines.append(f"- {key}: {value}")
-        for check in plan.get("contrast_checks") or []:
-            verdict = "passes" if check.get("pass") else "FAILS"
-            lines.append(
-                f"- {check.get('foreground')} on {check.get('background')}: "
-                f"{check.get('ratio')}:1 (minimum {check.get('minimum')}:1) — {verdict}"
-            )
+        lines.extend(contrast_report_lines(plan))
         lines.append("")
 
     budget = entry.get("effect_budget")
@@ -645,12 +654,7 @@ def render_art_direction(plan: dict, entries: list[tuple[str, dict]]) -> str:
     if palette:
         lines += ["## Palette and contrast", ""]
         lines += [f"- {key}: {value}" for key, value in palette.items()]
-        for check in plan.get("contrast_checks") or []:
-            verdict = "passes" if check.get("pass") else "FAILS"
-            lines.append(
-                f"- {check.get('foreground')} on {check.get('background')}: "
-                f"{check.get('ratio')}:1 (minimum {check.get('minimum')}:1) — {verdict}"
-            )
+        lines.extend(contrast_report_lines(plan))
         lines.append("")
 
     lines += ["## Image roles", ""]
@@ -706,6 +710,10 @@ def write_derived_views(direction: Path, plan: dict) -> list[Path]:
 
     notes_dir = direction / "image-notes"
     notes_dir.mkdir(parents=True, exist_ok=True)
+    expected_notes = {f"{name}.md" for name, _entry in entries}
+    for stale_note in notes_dir.glob("*.md"):
+        if stale_note.name not in expected_notes:
+            stale_note.unlink()
     for name, entry in entries:
         note = notes_dir / f"{name}.md"
         note.write_text(render_note(name, entry, plan), encoding="utf-8")
@@ -720,7 +728,7 @@ def write_derived_views(direction: Path, plan: dict) -> list[Path]:
 
 def write_manifest(root: Path, plan: dict) -> None:
     family_showcases = [
-        template for template in ("plakat32", "weightfamily32", "mangosboard32", "italicregular32")
+        template for template in ("weightfamily32", "mangosboard32", "italicregular32")
         if template in (plan.get("_support_templates") or [])
     ]
     rows = [
@@ -728,16 +736,15 @@ def write_manifest(root: Path, plan: dict) -> None:
         "",
         "- status: provisional",
         "- render_mode: text_placeholder",
-        "- manual_replacement_required: thumbnail placeholders only",
+        "- thumbnail_state: interim placeholders; Agent 27 generates all four final thumbnails before handoff",
         "- source: bin/generate_font_text_placeholders.py",
-        "- note: three white-background font-name specimens are raw material for final thumbnail generation; use the matching per-ratio prompts in visual-direction/theme.txt.",
-        f"- supporting_templates: {int(plan.get('support_count', 13))} reproducibly selected eligible layouts at 3:2 and 1:1",
+        "- note: two white-background font-name lettering references are raw material for final thumbnail generation; each is shared by the primary and alternate prompt for its ratio.",
+        f"- supporting_templates: {int(plan.get('support_count', 12))} reproducibly selected eligible layouts at 3:2 and 1:1",
         f"- support_renderer_policy: {plan.get('support_renderer', 'html')}",
         "- thumbnail_prompts: `../visual-direction/theme.txt` (derived from `visual-plan.json`)",
-        "- family_showcase_templates: " + (", ".join(f"`{template}`" for template in family_showcases)
-                                            if family_showcases else "none eligible for this single-style family"),
-        "- pinterest_template_renderer: HTML/CSS + Chromium; all active pin templates",
-        "- factual_specimen_renderer: Python Skia",
+        "- family_showcase_templates_selected: " + (", ".join(f"`{template}`" for template in family_showcases)
+                                                     if family_showcases else "none selected; eligible templates are sampled, not guaranteed"),
+        "- Pinterest template catalogue: retired; Agent 30 composes panels from the prepared image set",
         "",
         "| Asset | Dimensions | Status |",
         "|---|---:|---|",
@@ -752,12 +759,8 @@ def write_manifest(root: Path, plan: dict) -> None:
             renderer = (plan.get("_support_renderer_by_template") or {}).get(
                 template, "Python Skia")
             status = f"{renderer} supporting template"
-        elif relative.startswith("specimens/"):
-            status = "factual font specimen"
-        elif relative.startswith("pinterest/"):
-            status = "HTML/CSS template Pinterest pin"
         else:
-            status = "thumbnail placeholder — replace with image-model artwork"
+            status = "thumbnail lettering reference — image-model input"
         rows.append(f"| {relative} | {dimensions} | {status} |")
     (root / "visual-handoff-manifest.md").write_text("\n".join(rows) + "\n", encoding="utf-8")
 
@@ -768,8 +771,8 @@ def write_marker(root: Path, status: str, prepared_path: Path | None = None) -> 
         "",
         f"validation: {status}",
         f"prepared visuals: {(prepared_path or root).resolve()}",
-        "Visual status: three white-background font-name specimens are raw lettering material; supporting templates and factual specimens are renderer-generated.",
-        "Use the matching 3:2, 1:1, and storefront prompts in visual-direction/theme.txt to create final thumbnail artwork, then replace the three matching specimens.",
+        "Visual status: two white-background font-name lettering references are raw material; supporting templates are renderer-generated.",
+        "Choose either complete direction in visual-direction/theme.txt and use its matching 3:2 and 1:1 prompts with the corresponding specimens. Do not mix directions within a thumbnail pair.",
         "Validator: python bin/validate_font_visual_handoff.py --strict-art-direction",
     ]
     (root / "VISUAL-HANDOFF-READY.md").write_text("\n".join(marker) + "\n", encoding="utf-8")
@@ -795,7 +798,7 @@ def validate(staging: Path, allow_pending: bool = False, report_success: bool = 
 
 
 def render_programmatic_assets(staging: Path, plan: dict, primary_font: Path) -> None:
-    """Render support layouts, factual sheets, and every active Pinterest template."""
+    """Render the selected supporting-image catalogue for both ratios."""
     renderer = Path(__file__).resolve().parent / "render-pins"
     if not renderer.is_file():
         raise SystemExit(f"support renderer is missing: {renderer}")
@@ -808,9 +811,9 @@ def render_programmatic_assets(staging: Path, plan: dict, primary_font: Path) ->
         for key in ("construction", "personality", "buyer_fit")
         if str(profile.get(key, "")).strip()
     )[:240]
-    count = plan.get("support_count", 13)
-    if count != 13:
-        raise SystemExit("support_count is fixed at 13; omit it or set it to 13")
+    count = plan.get("support_count", 12)
+    if count != 12:
+        raise SystemExit("support_count is fixed at 12; omit it or set it to 12")
     support_renderer = plan.get("support_renderer", "html")
     if support_renderer != "html":
         raise SystemExit("support_renderer is fixed at html for the Agent 27 handoff")
@@ -819,16 +822,13 @@ def render_programmatic_assets(staging: Path, plan: dict, primary_font: Path) ->
     if about:
         common += ["--about", about]
     support_args = common + [
-        "--supports", "--support-count", "13",
+        "--supports", "--support-count", "12",
         "--support-renderer", support_renderer,
         "--support-ratios", "both",
         "--json",
         "--out", str(staging / "supporting"),
     ]
-    for label, args in (
-        ("supporting templates", support_args),
-        ("factual specimens", common + ["--specimens", "--out", str(staging / "specimens")]),
-    ):
+    for label, args in (("supporting templates", support_args),):
         result = subprocess.run([str(renderer), *args], text=True, capture_output=True,
                                 cwd=Path(__file__).resolve().parent.parent)
         if result.returncode:
@@ -855,22 +855,6 @@ def render_programmatic_assets(staging: Path, plan: dict, primary_font: Path) ->
             print(f"  supporting templates: {renderers or 'unknown renderer'}")
         elif result.stdout:
             sys.stdout.write(result.stdout)
-
-    pin_renderer = Path(__file__).resolve().parents[1] / "font-factory" / "pin-html" / "render_gallery.mjs"
-    if not pin_renderer.is_file():
-        raise SystemExit(f"HTML/CSS Pinterest renderer is missing: {pin_renderer}")
-    command = ["node", str(pin_renderer), "--mode", "pins", "--font", str(primary_font),
-               "--font-name", str(plan["font_name"]), "--out", str(staging / "pinterest")]
-    result = subprocess.run(command, text=True, capture_output=True,
-                            cwd=Path(__file__).resolve().parent.parent)
-    if result.returncode:
-        if result.stdout:
-            sys.stdout.write(result.stdout)
-        if result.stderr:
-            sys.stderr.write(result.stderr)
-        raise SystemExit("HTML/CSS Pinterest template generation failed")
-    if result.stdout:
-        sys.stdout.write(result.stdout)
 
 
 def write_space_report(
@@ -952,17 +936,21 @@ def main() -> int:
     font_name = str(plan.get("font_name", "")).strip()
     if not font_name:
         raise SystemExit("visual plan font_name is required")
+    if "japanese_thumbnail" in plan:
+        raise SystemExit("japanese_thumbnail is retired; use thumbnail_alternate for a second direction")
+    prompt_names = [name for name, _specimen, _prompt in plan_prompt_entries(plan)]
+    if prompt_names != [
+        "thumbnail_main_3x2", "thumbnail_main_1x1",
+        "thumbnail_alt_3x2", "thumbnail_alt_1x1",
+    ]:
+        raise SystemExit("visual plan must provide complete primary and alternate prompts at 3:2 and 1:1")
     primary_font = require_font(plan.get("primary_font"), workspace, "primary")
-    japanese_font = resolve_path(plan.get("japanese_font"), workspace)
-    if japanese_font is None or not japanese_font.is_file():
-        japanese_font = fallback_font()
     primary_outline = OutlineFont(primary_font)
-    japanese_outline = OutlineFont(japanese_font)
     promos = plan.get("promos", [])
     if promos not in (None, []):
         raise SystemExit("visual plan promos are retired; supporting images come from the shared template catalogue")
-    if plan.get("support_count", 13) != 13:
-        raise SystemExit("visual plan support_count must remain 13")
+    if plan.get("support_count", 12) != 12:
+        raise SystemExit("visual plan support_count must remain 12")
     if plan.get("support_renderer", "html") != "html":
         raise SystemExit("visual plan support_renderer must be html")
     if plan.get("renderer_class") not in {"elegant", "blackletter", "sports", "script"}:
@@ -981,9 +969,8 @@ def main() -> int:
         for name, owner, size, ratio in (
             ("thumbnail_main", plan["thumbnail"], RATIOS["3x2"], "3x2"),
             ("thumbnail_main", plan["thumbnail"], RATIOS["1x1"], "1x1"),
-            ("thumbnail_japanese", plan["japanese_thumbnail"], RATIOS["1x1"], "1x1"),
         ):
-            svg, boxes = render_placeholder(owner, size, ratio, name, primary_outline, japanese_outline if name == "thumbnail_japanese" else primary_outline)
+            svg, boxes = render_placeholder(owner, size, ratio, name, primary_outline, primary_outline)
             write_placeholder_png(svg, staging / ratio / f"{name}.png")
             layout.append((name, ratio, size, boxes))
         render_programmatic_assets(staging, plan, primary_font)
@@ -1003,7 +990,7 @@ def main() -> int:
 
     print(f"[PASS] provisional text visual handoff ready: {output}")
     print(f"[PASS] derived {len(derived)} view(s) from the plan in {plan_path.parent}")
-    print("[PASS] Thumbnail placeholders are provisional; 13 support templates (26 renders) were rendered at both 3:2 and 1:1.")
+    print("[PASS] Thumbnail placeholders are provisional; 12 support templates (24 renders) were rendered at both 3:2 and 1:1.")
     print("[PASS] All active HTML/CSS Pinterest templates were rendered with the primary font.")
     print("[PASS] READY FOR FONT PREP HANDOFF")
     return 0

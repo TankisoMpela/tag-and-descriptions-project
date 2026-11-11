@@ -2,15 +2,18 @@
 """Font registry for the Daily-Pinterest-Run pipeline.
 
 outputs/pinterest/registry.json is the single directory the daily run works
-from: one record per font with its preparation folder, description path,
-TWO product-page URLs (Creative Market + Creative Fabrica), a suggested
-board, and the public Blob URLs for every manifested template and composite pin.
+from: one record per font with its preparation folder, description and Pinterest
+profile paths, two prepared-product URLs (Creative Market + Creative Fabrica),
+an optional Creative Fabrica source-font match, an assigned board, and public
+Blob URLs for its manifested composite pins.
 
 Usage:
   python3 bin/pinterest_registry.py add --slug quiet-acre --number 90 [--name "Quiet Acre"]
   python3 bin/pinterest_registry.py set-url --slug quiet-acre --url https://creativemarket.com/... [--market creative_market]
   python3 bin/pinterest_registry.py set-url --slug quiet-acre --url https://creativefabrica.com/... --market creative_fabrica
-  python3 bin/pinterest_registry.py set-board --slug quiet-acre --board "Script Fonts"
+  python3 bin/pinterest_registry.py set-source-match --slug quiet-acre --status found --url https://creativefabrica.com/...
+  python3 bin/pinterest_registry.py set-source-match --slug quiet-acre --status not_found
+  python3 bin/pinterest_registry.py set-board --slug quiet-acre --board "Script & Handwriting Fonts"
   python3 bin/pinterest_registry.py upload --slug quiet-acre [--index 3] [--force]   (default: complete manifested set)
   python3 bin/pinterest_registry.py write-urls --slug quiet-acre
   python3 bin/pinterest_registry.py list [--ready]
@@ -28,13 +31,30 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlsplit
+from urllib.request import Request, urlopen
 
 REGISTRY_PATH = Path("outputs/pinterest/registry.json")
-BOARDS = ["Handwritten Fonts", "Display Fonts", "Script Fonts", "Decorative Fonts"]
+BOARDS = [
+    "Display Fonts for Logos & Posters",
+    "Script & Handwriting Fonts",
+    "Serif Fonts for Branding & Editorial",
+    "Retro & Vintage Fonts",
+    "Gothic & Blackletter Fonts",
+    "Pixel, Gaming & Tech Fonts",
+    "Cricut & Craft Fonts",
+]
+LEGACY_BOARDS = {
+    "handwritten fonts": "Script & Handwriting Fonts",
+    "script fonts": "Script & Handwriting Fonts",
+    "display fonts": "Display Fonts for Logos & Posters",
+    "decorative fonts": "Display Fonts for Logos & Posters",
+}
 MARKETS = ["creative_market", "creative_fabrica"]
 IMAGE_GLOBS = ("*.png", "*.jpg", "*.jpeg")
 PINSET_MANIFEST = "pinterest-set-manifest.json"
 TEMPLATE_MANIFEST = "pinterest-template-manifest.json"
+MAX_BUFFER_BULK_IMAGE_BYTES = 5_000_000
 
 
 def migrate(rec: dict) -> dict:
@@ -69,6 +89,8 @@ def save_registry(reg: dict, path: Path = REGISTRY_PATH) -> None:
 
 
 def normalize_board(board: str) -> str:
+    if board.strip().casefold() in LEGACY_BOARDS:
+        return LEGACY_BOARDS[board.strip().casefold()]
     for b in BOARDS:
         if b.lower() == board.strip().lower():
             return b
@@ -85,6 +107,27 @@ def normalize_market(market: str) -> str:
     if market not in MARKETS:
         sys.exit(f"error: unknown market {market!r} — choose from {MARKETS}")
     return market
+
+
+def validate_product_url(market: str, url: str) -> str:
+    """Reject seller indexes and non-marketplace URLs before they reach Pins."""
+    parsed = urlsplit(url.strip())
+    host = (parsed.hostname or "").casefold()
+    if parsed.scheme != "https" or not parsed.netloc:
+        sys.exit("error: marketplace product URLs must use HTTPS")
+    if market == "creative_market":
+        if host != "creativemarket.com" and not host.endswith(".creativemarket.com"):
+            sys.exit("error: Creative Market URL must be on creativemarket.com")
+        segments = [part for part in parsed.path.split("/") if part]
+        if len(segments) < 2 or any(key in parsed.query.casefold() for key in ("category=", "status=", "page=")):
+            sys.exit("error: Creative Market URL looks like a shop/category index, not a product page")
+    else:
+        if host != "creativefabrica.com" and not host.endswith(".creativefabrica.com"):
+            sys.exit("error: Creative Fabrica URL must be on creativefabrica.com")
+        segments = [part for part in parsed.path.split("/") if part]
+        if len(segments) < 2 or segments[0].casefold() in {"designer", "search", "category", "categories"}:
+            sys.exit("error: Creative Fabrica URL looks like a seller/search index, not a product page")
+    return url.strip()
 
 
 def font_dir(prep_path: Path) -> list[Path]:
@@ -116,23 +159,12 @@ def validate_pin_set(prep_path: Path, files: list[Path]) -> tuple[dict, int]:
     except (OSError, json.JSONDecodeError) as error:
         sys.exit(f"error: invalid Pinterest set manifest: {error}")
     rows = manifest.get("images")
-    template_count = manifest.get("template_count")
     composite_count = manifest.get("composite_count")
     image_count = manifest.get("image_count")
-    if (manifest.get("kind") != "font-pinterest-pin-set" or not isinstance(template_count, int)
-            or template_count < 1 or composite_count != 10 or image_count != template_count + composite_count
+    if (manifest.get("kind") != "font-pinterest-pin-set" or manifest.get("template_count") != 0
+            or composite_count != 10 or image_count != 10
             or not isinstance(rows, list) or len(rows) != image_count):
-        sys.exit("error: Pinterest set manifest must list all template pins plus exactly ten composite pins")
-    template_path = vis / TEMPLATE_MANIFEST
-    if not template_path.is_file():
-        sys.exit(f"error: missing template source manifest: {template_path}")
-    try:
-        template_manifest = json.loads(template_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
-        sys.exit(f"error: invalid Pinterest template manifest: {error}")
-    template_rows = template_manifest.get("images")
-    if template_manifest.get("template_count") != template_count or not isinstance(template_rows, list) or len(template_rows) != template_count:
-        sys.exit("error: final set and template manifests disagree on the number of template pins")
+        sys.exit("error: Pinterest set manifest must list exactly ten composites and no template pins")
     file_by_index = {int(path.stem.rsplit("_", 1)[1]): path for path in files}
     if sorted(file_by_index) != list(range(1, image_count + 1)):
         sys.exit(f"error: expected contiguous Pinterest image indexes 1..{image_count}; found {sorted(file_by_index)}")
@@ -144,18 +176,66 @@ def validate_pin_set(prep_path: Path, files: list[Path]) -> tuple[dict, int]:
         path = vis / str(row.get("file", ""))
         if path.name != row.get("file") or path != file_by_index[index]:
             sys.exit(f"error: Pinterest set manifest file does not match index {index}")
+        byte_size = row.get("bytes")
+        if not isinstance(byte_size, int) or byte_size < 1:
+            sys.exit(f"error: invalid byte size in Pinterest manifest for {path.name}")
+        if byte_size > MAX_BUFFER_BULK_IMAGE_BYTES:
+            sys.exit(f"error: {path.name} exceeds Buffer's 5 MB bulk-upload safe target; compress or re-export it")
         if path.stat().st_size != row.get("bytes") or hashlib.sha256(path.read_bytes()).hexdigest() != row.get("sha256"):
             sys.exit(f"error: Pinterest image differs from its set manifest: {path.name}")
-        expected_kind = "template" if index <= template_count else "composite"
-        if row.get("kind") != expected_kind:
-            sys.exit(f"error: Pinterest image {index} has the wrong kind in the set manifest")
-        if row.get("width") != 1000 or row.get("height") != 1500:
+        if row.get("kind") != "composite":
+            sys.exit(f"error: Pinterest image {index} is not a composite")
+        if row.get("width") != 1000 or row.get("height") != 2001:
             sys.exit(f"error: Pinterest image {index} has invalid dimensions in the set manifest")
-        if index <= template_count:
-            source_row = template_rows[index - 1]
-            if row.get("template") != source_row.get("template") or row.get("sha256") != source_row.get("sha256"):
-                sys.exit(f"error: template pin {index} differs from Agent 27's template manifest")
     return manifest, image_count
+
+
+def verify_public_image(url: str, local_path: Path, manifest_row: dict) -> dict:
+    """Confirm an uploaded URL is public, direct, and serves the exact image."""
+    parsed = urlsplit(url)
+    extension = local_path.suffix.casefold()
+    allowed_types = {
+        ".png": {"image/png"},
+        ".jpg": {"image/jpeg"},
+        ".jpeg": {"image/jpeg"},
+        ".webp": {"image/webp"},
+    }
+    if parsed.scheme != "https" or not parsed.hostname:
+        sys.exit(f"error: public image URL must use HTTPS: {url}")
+    if Path(parsed.path).suffix.casefold() != extension or extension not in allowed_types:
+        sys.exit(f"error: public image URL must end in the supported image extension {extension}: {url}")
+    expected_bytes = int(manifest_row["bytes"])
+    expected_sha = str(manifest_row["sha256"])
+    if not 0 < expected_bytes <= MAX_BUFFER_BULK_IMAGE_BYTES:
+        sys.exit(f"error: {local_path.name} is outside Buffer's 5 MB bulk-upload safe target")
+    request = Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; PaperMoon-Image-Check/1.0)"})
+    try:
+        with urlopen(request, timeout=30) as response:
+            status = response.getcode()
+            content_type = response.headers.get_content_type().casefold()
+            content_length = response.headers.get("Content-Length")
+            if status != 200:
+                sys.exit(f"error: public image fetch returned HTTP {status}: {url}")
+            if content_type not in allowed_types[extension]:
+                sys.exit(f"error: {url} returned {content_type}, expected {', '.join(sorted(allowed_types[extension]))}")
+            if content_length and int(content_length) != expected_bytes:
+                sys.exit(f"error: public image size header differs from manifest for {local_path.name}")
+            size = 0
+            digest = hashlib.sha256()
+            while True:
+                chunk = response.read(1024 * 1024)
+                if not chunk:
+                    break
+                size += len(chunk)
+                if size > MAX_BUFFER_BULK_IMAGE_BYTES:
+                    sys.exit(f"error: public image exceeds Buffer's 5 MB bulk-upload safe target: {url}")
+                digest.update(chunk)
+    except (OSError, ValueError) as error:
+        sys.exit(f"error: could not fetch public image URL {url}: {error}")
+    if size != expected_bytes or digest.hexdigest() != expected_sha:
+        sys.exit(f"error: public image bytes do not match the local manifest for {local_path.name}")
+    return {"passed": True, "http_status": status, "content_type": content_type,
+            "bytes": size, "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
 
 
 def get_font(reg: dict, slug: str) -> dict:
@@ -165,10 +245,40 @@ def get_font(reg: dict, slug: str) -> dict:
     return fonts[slug]
 
 
+def source_font_family(rec: dict) -> str:
+    """Read the original family name from Agent 13's source audit report."""
+    prep = Path(str(rec.get("prep_path") or ""))
+    name_report_path = prep / "name-report.md"
+    audit_report_path = prep / "audit-report.md"
+    if not name_report_path.is_file() or not audit_report_path.is_file():
+        sys.exit("error: preparation name-report.md and audit-report.md are required for a source match")
+    name_report = name_report_path.read_text(encoding="utf-8", errors="replace")
+    source_file_match = re.search(r"^- \*\*Source Font\*\*: (.+)$", name_report, re.M)
+    if not source_file_match:
+        sys.exit("error: source font filename is missing from name-report.md")
+    source_file = source_file_match.group(1).strip()
+    audit_report = audit_report_path.read_text(encoding="utf-8", errors="replace")
+    marker = f"=== Auditing: {source_file} ==="
+    start = audit_report.find(marker)
+    if start < 0:
+        sys.exit(f"error: source font {source_file!r} is missing from audit-report.md")
+    rest = audit_report[start + len(marker):]
+    next_audit = re.search(r"^=== Auditing: ", rest, re.M)
+    source_block = rest[:next_audit.start()] if next_audit else rest
+    family = re.search(r"^\s*ID 1:\s*(.+)$", source_block, re.M)
+    if not family or not family.group(1).strip():
+        sys.exit("error: source family name ID 1 is missing from the pre-flight audit")
+    return family.group(1).strip()
+
+
 def is_ready(rec: dict) -> bool:
     urls = rec.get("urls") or {}
     images = rec.get("images") or {}
     image_set = rec.get("image_set") or {}
+    try:
+        board = normalize_board(str(rec.get("board") or ""))
+    except SystemExit:
+        board = None
     expected = image_set.get("image_count")
     if isinstance(expected, int) and expected > 0:
         image_indexes = {int(key) for key in images if str(key).isdigit()}
@@ -179,7 +289,8 @@ def is_ready(rec: dict) -> bool:
         # Keep pre-manifest records usable during migration; all current uploads
         # receive image_set metadata and must have their complete image set.
         images_complete = bool(images) and all(image.get("url") for image in images.values())
-    return bool((urls.get("creative_market") or urls.get("creative_fabrica"))
+    return bool(board
+                and (urls.get("creative_market") or urls.get("creative_fabrica"))
                 and images_complete)
 
 
@@ -209,6 +320,7 @@ def cmd_add(args, reg: dict) -> int:
         "name": args.name or rec.get("name") or args.slug.replace("-", " ").title(),
         "prep_path": str(prep),
         "description_path": str(desc) if desc.is_file() else None,
+        "profile_path": str(prep / "pinterest-profile.json"),
     })
     reg["fonts"][args.slug] = rec
     save_registry(reg)
@@ -220,10 +332,38 @@ def cmd_add(args, reg: dict) -> int:
 def cmd_set_url(args, reg: dict) -> int:
     rec = get_font(reg, args.slug)
     market = normalize_market(args.market)
+    product_url = validate_product_url(market, args.url)
     rec.setdefault("urls", {"creative_market": None, "creative_fabrica": None})
-    rec["urls"][market] = args.url
+    rec["urls"][market] = product_url
     save_registry(reg)
-    print(f"{args.slug}: {market} = {args.url}" if not args.json else json.dumps(rec, indent=2))
+    print(f"{args.slug}: {market} = {product_url}" if not args.json else json.dumps(rec, indent=2))
+    return 0
+
+
+def cmd_set_source_match(args, reg: dict) -> int:
+    """Record whether the original source font has an exact Creative Fabrica item."""
+    rec = get_font(reg, args.slug)
+    source_name = source_font_family(rec)
+    if args.status == "found":
+        if not args.url:
+            sys.exit("error: --url is required when --status is found")
+        product_url = validate_product_url("creative_fabrica", args.url)
+    else:
+        if args.url:
+            sys.exit("error: --url is only allowed when --status is found")
+        product_url = None
+    rec["source_font_match"] = {
+        "source_name": source_name,
+        "status": args.status,
+        "url": product_url,
+        "checked_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    }
+    save_registry(reg)
+    if args.json:
+        print(json.dumps({"slug": args.slug, **rec["source_font_match"]}, indent=2))
+    else:
+        result = product_url or "no confirmed exact source-font match"
+        print(f"{args.slug}: Creative Fabrica source match {args.status} — {result}")
     return 0
 
 
@@ -231,7 +371,83 @@ def cmd_set_board(args, reg: dict) -> int:
     rec = get_font(reg, args.slug)
     rec["board"] = normalize_board(args.board)
     save_registry(reg)
-    print(f"{args.slug}: board suggestion = {rec['board']}" if not args.json else json.dumps(rec, indent=2))
+    print(f"{args.slug}: assigned board = {rec['board']}" if not args.json else json.dumps(rec, indent=2))
+    return 0
+
+
+def cmd_set_profile(args, reg: dict) -> int:
+    rec = get_font(reg, args.slug)
+    prep = Path(rec["prep_path"]).resolve()
+    profile_path = Path(args.profile_file).resolve()
+    try:
+        profile_path.relative_to(prep)
+    except ValueError:
+        sys.exit(f"error: profile file must stay inside the preparation folder: {prep}")
+    if not profile_path.is_file():
+        sys.exit(f"error: profile file not found: {profile_path}")
+    try:
+        profile = json.loads(profile_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        sys.exit(f"error: invalid Pinterest profile JSON: {error}")
+    if not isinstance(profile, dict) or profile.get("schema_version") != 1:
+        sys.exit("error: Pinterest profile must be an object with schema_version 1")
+    if str(profile.get("font_name", "")).strip().casefold() != str(rec.get("name", "")).strip().casefold():
+        sys.exit(f"error: Pinterest profile font_name must match registered name {rec.get('name')!r}")
+    for key in ("metadata_summary", "visual_summary"):
+        if not isinstance(profile.get(key), str) or not profile[key].strip():
+            sys.exit(f"error: Pinterest profile needs a non-empty {key}")
+    try:
+        datetime.strptime(str(profile.get("reviewed_on", "")), "%Y-%m-%d")
+    except ValueError:
+        sys.exit("error: Pinterest profile reviewed_on must use YYYY-MM-DD")
+    for key in ("metadata_sources", "reviewed_assets", "letterform_traits", "mood_terms", "best_uses", "keyword_bank"):
+        value = profile.get(key)
+        if not isinstance(value, list) or any(not isinstance(item, str) or not item.strip() for item in value):
+            sys.exit(f"error: Pinterest profile {key} must be a list of non-empty strings")
+    if not profile["metadata_sources"]:
+        sys.exit("error: Pinterest profile must cite at least one local metadata source")
+    keywords = [" ".join(value.split()).casefold() for value in profile["keyword_bank"]]
+    if len(keywords) != len(set(keywords)) or not 10 <= len(keywords) <= 60:
+        sys.exit("error: Pinterest profile keyword_bank must contain 10-60 unique phrases")
+    review_paths: list[Path] = []
+    for value in profile["reviewed_assets"]:
+        candidate = (prep / value).resolve()
+        try:
+            candidate.relative_to(prep)
+        except ValueError:
+            sys.exit(f"error: reviewed asset must stay inside the preparation folder: {value}")
+        if not candidate.is_file():
+            sys.exit(f"error: reviewed image is missing: {value}")
+        review_paths.append(candidate)
+    if len(review_paths) != len(set(review_paths)):
+        sys.exit("error: Pinterest profile reviewed_assets contains duplicates")
+    if not any("thumbnail_main" in path.name.casefold() for path in review_paths):
+        sys.exit("error: Pinterest profile must record a reviewed main thumbnail")
+    reviewed_supports = {
+        path for path in review_paths
+        if path.name.casefold().startswith("support-") and "_1x1" not in path.stem.casefold()
+    }
+    vis = prep / "visuals" / "New-Images"
+    available_supports = {
+        path.resolve() for pattern in ("support-*.png", "support-*.jpg", "support-*.jpeg")
+        for path in vis.glob(pattern) if "_1x1" not in path.stem.casefold()
+    }
+    if not reviewed_supports:
+        sys.exit("error: Pinterest profile must record reviewed support images")
+    if available_supports and reviewed_supports != available_supports:
+        missing = sorted(path.name for path in available_supports - reviewed_supports)
+        sys.exit("error: Pinterest profile must record every distinct support design; missing: " + ", ".join(missing[:8]))
+    try:
+        stored_path = str(profile_path.relative_to(Path.cwd().resolve()))
+    except ValueError:
+        stored_path = str(profile_path)
+    rec["profile_path"] = stored_path
+    save_registry(reg)
+    result = {"slug": args.slug, "profile_path": stored_path,
+              "keyword_count": len(profile["keyword_bank"]),
+              "reviewed_images": len(review_paths)}
+    print(json.dumps(result, indent=2) if args.json else
+          f"{args.slug}: profile saved ({len(profile['keyword_bank'])} keywords, {len(review_paths)} reviewed images)")
     return 0
 
 
@@ -283,7 +499,7 @@ def cmd_upload(args, reg: dict) -> int:
     manifest_rows = {int(row["index"]): row for row in pin_manifest["images"]}
     set_manifest_path = prep / "visuals" / "New-Images" / "pinterest" / PINSET_MANIFEST
     rec["image_set"] = {
-        "template_count": pin_manifest["template_count"],
+        "template_count": 0,
         "composite_count": pin_manifest["composite_count"],
         "image_count": expected_count,
         "manifest_sha256": hashlib.sha256(set_manifest_path.read_bytes()).hexdigest(),
@@ -300,8 +516,14 @@ def cmd_upload(args, reg: dict) -> int:
     for chosen in files:
         index_match = re.search(r"pinterest_(\d+)", chosen.stem)
         metadata = manifest_rows.get(int(index_match.group(1))) if index_match else None
-        _upload_one(args.slug, chosen, args.force, rec, metadata)
+        image = _upload_one(args.slug, chosen, args.force, rec, metadata)
         save_registry(reg)
+        if metadata is None:
+            sys.exit(f"error: no manifest row found for {chosen.name}")
+        image["public_check"] = verify_public_image(image["url"], chosen, metadata)
+        save_registry(reg)
+        print(f"  public URL verified: HTTP 200, {image['public_check']['content_type']}, "
+              f"{image['public_check']['bytes']} bytes, SHA-256 matches")
     images = rec.get("images", {})
     print(f"{args.slug}: {len(images)}/{expected_count} pin images on the Blob store")
     print(json.dumps({"slug": args.slug, "images": images}, indent=2))
@@ -314,15 +536,25 @@ def cmd_write_urls(args, reg: dict) -> int:
     images = rec.get("images") or {}
     if not images:
         sys.exit(f"error: {args.slug} has no uploaded Pinterest image links")
+    image_count = (rec.get("image_set") or {}).get("image_count")
+    if isinstance(image_count, int) and image_count > 0:
+        unchecked = [str(index) for index in range(1, image_count + 1)
+                     if not ((images.get(str(index)) or {}).get("public_check") or {}).get("passed")]
+        if unchecked:
+            sys.exit("error: public image preflight is incomplete for pin(s) "
+                     + ", ".join(unchecked) + "; rerun `upload` before writing public-urls.md")
     urls = rec.get("urls") or {}
     rows = [f"# Public Pinterest assets — {rec.get('name') or args.slug}", ""]
     for key in sorted(images, key=lambda value: int(value) if value.isdigit() else 10**9):
         value = images[key]
         rows.append(f"- Pin image {key}: {value.get('url') or 'MISSING'}")
+        check = value.get("public_check") or {}
+        rows.append(f"  Public image check: {'PASS' if check.get('passed') else 'NOT CHECKED'}")
     rows.extend([
         f"- Creative Market product URL: {urls.get('creative_market') or 'MISSING'}",
         f"- Creative Fabrica product URL: {urls.get('creative_fabrica') or 'MISSING'}",
-        f"- Board suggestion: {rec.get('board') or 'MISSING'}",
+        f"- Assigned board: {rec.get('board') or 'MISSING'}",
+        f"- Pinterest content profile: {rec.get('profile_path') or 'MISSING'}",
     ])
     destination = prep / "public-urls.md"
     destination.write_text("\n".join(rows) + "\n", encoding="utf-8")
@@ -390,10 +622,22 @@ def main(argv=None) -> int:
                     help="creative_market (default) or creative_fabrica; aliases cm/cf")
     su.set_defaults(func=cmd_set_url)
 
+    sm = sub.add_parser("set-source-match", parents=[common])
+    sm.add_argument("--slug", required=True)
+    sm.add_argument("--status", choices=("found", "not_found"), required=True,
+                    help="whether an exact Creative Fabrica source-font item was confirmed")
+    sm.add_argument("--url", help="direct Creative Fabrica item URL; required for found")
+    sm.set_defaults(func=cmd_set_source_match)
+
     sb = sub.add_parser("set-board", parents=[common])
     sb.add_argument("--slug", required=True)
-    sb.add_argument("--board", required=True, help="recommended board; does not create it on Pinterest")
+    sb.add_argument("--board", required=True, help="one primary existing Pinterest board; does not create it")
     sb.set_defaults(func=cmd_set_board)
+
+    sp = sub.add_parser("set-profile", parents=[common])
+    sp.add_argument("--slug", required=True)
+    sp.add_argument("--profile-file", required=True)
+    sp.set_defaults(func=cmd_set_profile)
 
     up = sub.add_parser("upload", parents=[common])
     up.add_argument("--slug", required=True)

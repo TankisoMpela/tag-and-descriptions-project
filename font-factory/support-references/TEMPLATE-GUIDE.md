@@ -1,6 +1,6 @@
 # Supporting-template handoff guide
 
-Source of truth for Agent 27 when the renderer selects 13 supporting
+Source of truth for Agent 27 when the renderer selects 12 supporting
 templates. The native Skia catalogue lives in six files: the original 26 panels in
 `bin/pin-studio/pin_studio.py` and 44 reference remakes in
 `bin/pin-studio/support_templates/{t30332,fashion,photo,poster,objects}.py`.
@@ -14,9 +14,24 @@ gates determine the live catalogue. Seller-selected retirements added on 2026-10
 `demolition32`, `skinbadge32`, `gelatocards32`, `angelinastyle32`, `beachclub32`,
 `fluorescentduo32`, and `lastnightsweden32`.
 
+Seller-selected retirements on 2026-11-03: slots 65, 101, 138, 139, 174, and
+177 (`herbalproduct32`, `nectarambience32`, `playerglyph32`, `alicebadge32`,
+`statueframe32`, and `fashioncard32`). Their slot numbers, source material, and
+editors remain as history; they are excluded from the current 137-template
+catalogue and future support runs.
+
 Support images must not repeat the font's name — the thumbnail already does that.
 Captions and alt text describe the rendered result, not an imagined product
 photograph.
+
+Image-backed templates use their documented text-free background plates.
+Source-reference wording, studio credits, font names, and font-category claims
+are not template copy: keep them removed from the plate and use generic,
+buyer-relevant supporting text in the template's editable slots. The selected
+font file renders display copy; functional labels use a neutral sans-serif.
+Never let a reference typeface name or category stand in for the current font's
+verified profile. New photo-led references and text-clean plates are documented
+in `materials/user-batch-2026-11-03-a/README.md`.
 
 Generic new copy that is drawn with a showcased font uses Title Case, with an
 initial capital on each word. Source-led remakes preserve the wording and case
@@ -26,10 +41,11 @@ digit, and symbol specimens in their literal case.
 
 ## How to read this guide (token contract)
 
-Read **Part 1** and **Part 2** in full, then open **only the Part 3 sections for the
-13 templates this font actually shipped**. The renderer prints the selected
-names on the `supports:` line; look them up rather than scrolling the whole
-catalogue. Part 4–6 are reference, not required reading every run.
+Read **Part 1** and **Part 2** in full, then open **only the catalogue sections for
+the 12 templates this font actually shipped**, including later registered-
+template additions. The renderer prints the selected names on the `supports:`
+line; look them up rather than scrolling the whole catalogue. Other parts are
+reference, not required reading every run.
 
 Conventions used below:
 
@@ -62,7 +78,7 @@ the protecting; know them before you read a single template.
 Every Agent-27 support panel uses the shared HTML/CSS catalogue renderer and is
 composed independently at 3:2 and 1:1. The regular native Skia renderer remains
 available for catalogue maintenance, but is not used for this handoff.
-`--support-count` is fixed at 13 by `bin/generate_font_text_placeholders.py`;
+`--support-count` is fixed at 12 by `bin/generate_font_text_placeholders.py`;
 passing any other value is a hard
 `SystemExit`.
 
@@ -75,13 +91,13 @@ Fix the reported error and re-run; never hand-edit a generated PNG.
 
 ## 1.3 Copy inlets — use the selected template's authored copy
 
-Agent 27 renders 13 selected templates through the shared HTML/CSS catalogue
+Agent 27 renders 12 selected templates through the shared HTML/CSS catalogue
 with `--support-renderer html --support-ratios both`. Do not author custom
 support promos or inject a second generic copy set. Each selected template's
 authored copy, factual fields, and font-fitting rules govern its output; consult
 only the Part 3 entries for the selected designs. The family showcase layouts
-are included when the source has at least two real styles, and the remaining
-slots come from the seeded random class-fit selection.
+are eligible when the source has at least two real styles and participate in
+the same seeded selection as the rest of the class-fit pool.
 
 ## 1.4 The blanking rules (why your copy may silently vanish)
 
@@ -251,7 +267,7 @@ The catalogue has four behaviours, not two. Which one a panel has decides whethe
 theme choice is worth any of your attention.
 
 - **Flexible (theme-adaptive ground and ink):** `line32, duo32, card32,
-  sticker32, neon32, quote32, crest32, echo32, contour32, hand32`. No remake panel
+  sticker32, neon32, quote32, crest32, echo32, hand32`. No remake panel
   belongs here: the two that used to set a headline in `P["ink"]` over their own
   ground — `ovalword32` and `cliffpostcard32` — are now built on a supplied clean
   plate with fixed ink.
@@ -274,7 +290,7 @@ theme choice is worth any of your attention.
 - **Locked by default (source-matched RGB; explicit CLI overrides still work):**
   `feature32`.
 - **Locked (hard-coded RGB; theme roll ignored):** `mountain32, zebra32, soldier32,
-  mirror32, brutal32, brutalpack32, rio32, boots32, plakat32, plakatart32,
+  mirror32, brutal32, brutalpack32, rio32, boots32, plakatart32,
   mangos32, alphabet32, birvase32, weightfamily32, mangosboard32`.
 
 `hand32` is the useful hybrid: its artwork and three words are fixed, but its
@@ -301,24 +317,28 @@ reading: render one font twice with two opposite `--palette` values and compare 
 folders — `python3 bin/check_support_theme_lock.py A/3x2 B/3x2`. Identical bytes mean
 the theme cannot reach the sheet; a mean RGB delta under 1 says only the grain moved.
 
-## 1.12 Eligibility and selection of the 13 designs
+## 1.12 Eligibility and selection of the 12 designs
 
-The active catalogue has 135 templates across 172 stable slots. The Agent-27
+The active catalogue has 133 templates across 182 stable slots. The Agent-27
 HTML/CSS handoff resolves the font class, excludes retired and class-incompatible
 layouts, then applies each template's real-family-style gate. When the source has
-at least two distinct styles from one family, `plakat32`, `weightfamily32`,
-`mangosboard32`, and `italicregular32` are all guaranteed in the 13. Each uses
-actual sibling files; `italicregular32` chooses the closest opposite
+at least two distinct styles from one family, `weightfamily32`, `mangosboard32`,
+and `italicregular32` become eligible for selection; none is
+guaranteed. Any selected showcase uses actual sibling files; `italicregular32` chooses the closest opposite
 italic/upright style when available, otherwise the nearest distinct sibling,
 and labels the comparison with the real style names. `boots32` is also gated on
 two real styles but is sampled rather than guaranteed.
+Seller-retired layouts `contour32` (10), `plakat32` (20), `voguecover32` (37),
+`confident32` (38), and `parkstatement32` (179) remain described below as design
+history but are excluded from selection and new handoffs.
 
-The remaining slots come from a seeded random class-fit selection using
-`sha256("{font_name}|{class}|support-catalogue")`; the same name and class
-produce the same 13 designs. The current tested eligible-pool sizes are
-blackletter 118, handwritten 123, tech/sports 119, brush 126, pixel 125, and
-display 126. Each ratio folder receives 13 images named
-`support-{N}_{template}.png`, where **N is the catalogue slot, not a 1–13
+All eligible layouts, including family showcases, use the same seeded
+least-used/random class-fit selection based on
+`sha256("{font_name}|{class}|support-catalogue")`; the same name, class, and
+support-history counts produce the same 12 designs. The current eligible-pool sizes are blackletter
+120, handwritten 125, tech/sports 121, brush 128, pixel 127, and display 128.
+Each ratio folder receives 12 images named
+`support-{N}_{template}.png`, where **N is the catalogue slot, not a 1–12
 ordinal**. Gaps are normal and a panel keeps its number across runs.
 
 The separate `--support-review-all --support-renderer html` mode is a full
@@ -373,11 +393,11 @@ concrete structural language (`connected script with looping entry strokes`,
 |---|---|---|
 | High-contrast display serif / elegant | `line32`, `echo32`, `crest32`, `card32`, `quote32` | `sticker32`, `neon32` (hairlines die in the fat treatment) |
 | Flowing script / brush / swashy | `wash32`-style flow, `line32`, `quote32`, `card32`, `mountain32`, `plakatart32` | `crest32` arches and `line32`'s echo are auto-suppressed for `FLOWING` families (`script, brush, blackletter, swashy`) — expect the eyebrow/echo to be absent, not missing |
-| Blackletter | `vellum`/`gilded` worlds, `contour32`, `crest32`, `echo32` | `sticker32`, `duo32` (silhouette posters fight texture) |
+| Blackletter | `vellum`/`gilded` worlds, `crest32`, `echo32` | `sticker32`, `duo32` (silhouette posters fight texture) |
 | Sports / geometric monoline / techno | See the tested Strong and Conditional sets, and exact hard exclusions, in the [six-style paired audit](class-audit-2026-10-14/README.md); its tech/sports group preserves conditional editorial/illustrative matches while excluding only reviewed hard mismatches | Use the audit’s class-specific list rather than assuming the whole group shares a single structural-fit rule |
 | Ultra-bold display | `sticker32`, `duo32`, `echo32`, `feature32`, `birvase32` | `soldier32`/`mirror32` small rows (legibility floors bite) |
 | Hairline / light | `line32`, `quote32`, `rio32`, `mountain32` | `sticker32`, `neon32`, `zebra32` — heavy flat treatments need mass to survive |
-| Genuine multi-style family | `plakat32`, `weightfamily32`, `mangosboard32`, and `italicregular32` (all guaranteed when at least two real styles exist) | — |
+| Genuine multi-style family | `weightfamily32`, `mangosboard32`, and `italicregular32` (eligible, not guaranteed, when at least two real styles exist) | — |
 | Single style only | — | family proofs are not offered; never claim a range |
 
 ## 2.3 Word budgets at a glance
@@ -396,8 +416,8 @@ errors at the legibility floor or survives by shrinking the whole block flat.
 | `quote32` | 3–6 words | 3 lines | >8 words (middle line collapses) |
 | `crest32` | 1 word 4–9 chars + two 2–4 word arches | arch floor 24*scale | long arches |
 | `echo32` | 1 word, or 2 short words | 2 lines | 5+ words |
-| `contour32` | any word — only its first letter is used | 1 glyph | a word the face cannot draw |
-| `plakat32` | 2–4 words | 2 lines | name |
+| `contour32` · retired | any word — only its first letter is used | 1 glyph | a word the face cannot draw |
+| `plakat32` · retired | 2–4 words | 2 lines | name |
 | `plakatart32` | 1–2 words | 1 line | 3+ words |
 | `birvase32` | 1–2 words | **hard-clipped to 2 words** | 3+ words |
 
@@ -423,8 +443,8 @@ is the standing example, and the table below marks every panel whose display is 
 | `messageframe32` | 6–10 | 5 lines, floor 54 | — |
 | `sunsetpromise32` | 4 fixed lines | 4 outlined lines, floor 52 | — |
 | `pixelquote32` | nothing (its five-line quote is fixed) | 5 lines, floor 52 | authored display copy |
-| `voguecover32` | nothing (only its note rolls) | — | authored display copy |
-| `confident32` | 2 words | 1 line, floor 68 | 3+ |
+| `voguecover32` · retired | nothing (only its note rolls) | — | authored display copy |
+| `confident32` · retired | 2 words | 1 line, floor 68 | 3+ |
 | `storyteller32` | 10–16-word body | 3 lines at floor 16 | an ALL-CAPS body |
 | `focusposter32` | exactly 1 word | floor 84 under `hi 420` | 2+ words |
 | `blossom32` | 8–14-word body | 3 lines at floor 15 | — |
@@ -667,7 +687,7 @@ it is wasted effort.
   `"echo32: the lockup cannot be stood up on the sheet"`.
 - **Caption:** the phrase. **Alt text:** the layered echo and small framing text.
 
-### `contour32` — the glyph as terrain
+### `contour32` — retired; historical design: the glyph as terrain
 - **Draws:** one glyph dilated into 8–13 concentric stepped-tone contour bands
   (even-odd clip, so counters fill like basins), a hairline shoreline in full ink,
   a graticule of cross-rules every 168*scale, clipped at a ruled margin of 0.155h
@@ -851,7 +871,7 @@ accurate.
 - **Caption:** keep the third word as the smaller subline. **Alt text:** the seated
   figure and coral boot/horseshoe art.
 
-### `plakat32` — the poster specimen
+### `plakat32` — retired; historical design: the poster specimen
 - **Draws:** a navy ground with grain; a top fact rail counting real glyph coverage;
   a large two-line display headline; a three-cell band — a facts column, a cyan
   tile with five enlarged cream vector symbols (loop, eight-point star, flower,
@@ -1072,7 +1092,7 @@ whether a later change moved it:
   failed this class earlier — `cliffpostcard32`,
   `ovalword32` — have since been rebuilt on supplied clean plates marked `bleed=True`,
   which is the fix, not a re-tuned box. Rerun the catalogue before treating its
-  historical error count as current. Judge a delivery by its 13 selected designs,
+  historical error count as current. Judge a delivery by its 12 selected designs,
   not by that historical sweep.
 * **`hi` is reached, not assumed, and a wide face spends it unevenly.** Short fixed
   strings land on `hi × 1.6`: `yearposter32` 784, `signalclock32` 624, `glyphsheet32`
@@ -1201,7 +1221,7 @@ and the slot silently disappears.
   **Sizing:** title `hi 330`, one line, `min_read 68`; small oval labels at `hi 20/18`.
   **Colour:** ivory on the darkened photo; theme-independent. **Guard:** the full-bleed
   photo and veil register `bleed=True`; the headline sits over the figure intentionally.
-* **`voguecover32` (37)** — **Draws:** ivory paper, contained transparent face
+* **`voguecover32` (37, retired)** — **Draws:** ivory paper, contained transparent face
   cutout right of centre, hairline at `0.075h`, a red keyline under the masthead.
   **Copy:** masthead `STYLE` fixed; headline `A STUDY IN SILHOUETTE` fixed;
   `cover_note` = `rolled` from three editorial phrases (the only rotating copy here).
@@ -1210,7 +1230,7 @@ and the slot silently disappears.
   and lose the cover. **Colour:** masthead in the nudged red, headline `INK`.
   The opt-in HTML/CSS editor restores the stacked issue label, three-line left story,
   lower editorial block, and right-hand feature deck as individually editable layers.
-* **`confident32` (38)** — **Draws:** paper, a transparent eye-illustration crop with
+* **`confident32` (38, retired)** — **Draws:** paper, a transparent eye-illustration crop with
   the tiny source-font imprint removed, centre-covering the lower 46%, and three rules.
   **Copy:** `confident_word` = `panel_text` from `STAND TALL /
   LOOK AHEAD / OWN YOUR SPACE / KEEP YOUR LINE`; overline/sub/caption fixed.
@@ -1854,9 +1874,11 @@ square layout independently positions both within its safer inset.
 `blush32`, `sign32` and `wash32` are registered by `@support` and appear in
 `--template` choices, but they are **not in `SUPPORT_ORDER`**, so the catalogue
 never samples them and passing them on a support run fails the stray check. Do not
-plan around them. `SUPPORT_ORDER` is the only thing that makes a panel selectable;
-the 13 names in `SUPPORT_RETIRED` are not even registered, and their old PNGs are
-withdrawn from the folder when a support run finds them.
+plan around them. `SUPPORT_ORDER` is the only thing that makes a panel selectable.
+Legacy names may remain in `SUPPORT_RETIRED` without registered renderers;
+active-slot retirements stay in `SUPPORT_ORDER` as numbering tombstones and are
+filtered by `SUPPORT_RETIRED`. Old renderer-owned PNGs are withdrawn from
+shipping output folders when a support run finds them.
 
 ---
 
@@ -1901,8 +1923,8 @@ withdrawn from the folder when a support run finds them.
 # Part 5 — Spotting a bad derivation before you ship
 
 The renderer stops hard failures. These are the soft ones that pass validation and
-still look wrong. Check the 13 selected designs at both ratios against this list
-once, then move on. A normal Agent 27 handoff contains 26 support images; a
+still look wrong. Check the 12 selected designs at both ratios against this list
+once, then move on. A normal Agent 27 handoff contains 24 support images; a
 full-catalogue review is a separate, explicit run.
 
 | Symptom | Cause | Fix |
@@ -1948,6 +1970,41 @@ map and `SOURCES.md` for material provenance.
 ---
 
 # Part 6 — Authoring per-panel copy (exception path)
+
+## Creative Market reference remakes — slots 181–182
+
+`numeralfolio32` is a restrained paper-toned 0–9 sheet with two rows of live
+selected-font numerals. `timechange32` is a black poster with pale-blue live
+“Time”, “Change”, and “(380)” display lines. Both have separate 3:2 and square
+placements. Keep the secondary labels neutral and omit source foundry or font
+names. The small category caption is generated from the selected font's
+classifier so it reflects the actual font being shown.
+
+## November 2026 image-backed additions — slots 173–180
+
+These HTML/CSS layouts use the clean plates in
+`materials/user-batch-2026-11-03-a/`. Display wording is live text in the
+selected font. Keep the supplied neutral label face for secondary captions.
+Do not use source names, studio credits, or font-category claims.
+Slots 174 (`statueframe32`), 177 (`fashioncard32`), and 179
+(`parkstatement32`) have since been retired;
+their rows below are retained as source history.
+
+| Template | Composition and safe copy area | Caption / alt focus |
+|---|---|---|
+| `crimsonportrait32` | Red fashion portrait; white title in the lower-left field. | Red portrait and large lower headline. |
+| `statueframe32` · retired | Classical figures at the sides; compact dark title stays on the central cream panel. | Sculptural side panels and centered message. |
+| `portraitcard32` | Small portrait above/alongside open ivory card; dark copy remains inside the card. | Portrait and airy editorial card. |
+| `warmportrait32` | Warm close-up; pale title sits left of the face and uses a quiet shaded edge. | Close-up portrait and pale display line. |
+| `fashioncard32` · retired | Fashion image on the right; editable dark copy stays inside the left cream card. | Fashion photograph and inset quote card. |
+| `cinemaportrait32` | Low-light portrait; pale title stays low over the shaded image area. | Cinematic portrait and lower title. |
+| `parkstatement32` · retired | Monochrome park photo at left; cream copy sits in the open dark field at right. | Bench-side silhouettes and split composition. |
+| `amberquote32` | Defocused amber image; five-line editable quote and two-line credit placeholder. | Soft amber photograph and large centered quote. |
+
+All eight original entries have independent square placements. The five active
+templates keep their copy editable. Amber Quote retains the five-line reference
+quote in its editable slot rather than replacing it with a short generic phrase;
+the font and studio credit remain placeholders.
 
 Standard runs author nothing for supports (1.3). Pass a brief only when the seller
 has asked for a specific adjustment to a delivered set.

@@ -3,12 +3,14 @@
 This protocol applies to the BOOTH font agent (20), Creative Market font agent (2), and
 Creative Fabrica font agent (29). It exists to preserve research findings before
 context compaction and to prevent a search from expanding after the evidence is
-already sufficient.
+already sufficient. BOOTH research is local-only: it has a zero-external-request
+budget and uses the frozen local census and evidence files.
 
 ## Scratch paths
 
 In normal write mode, create or resume one product-specific scratch file before
-the first external search or page fetch:
+the first research decision. For platforms that allow external research, this
+is before the first search or page fetch:
 
 - BOOTH: `outputs/booth/.research/{NUM}-{product-slug}-research.md`
 - Creative Market: `outputs/creativemarket/.research/{NUM}-{product-slug}-research.md`
@@ -28,17 +30,19 @@ reason to launch a refresh.
 ## Write timing
 
 1. Read and resume the existing product scratch file before doing new research.
-2. Record the product facts, current date, mode, output path, provider
-   availability, and the finite budget before the first request.
-3. After every completed search or page-fetch batch, append a checkpoint before
-   starting another batch. A batch may contain at most two concurrent Firecrawl
-   page requests, and later batches must wait for the prior checkpoint. Divide
-   searches into small sequential batches the same way; never fire several
-   search calls at the same time.
+2. Record the product facts, current date, mode, output path, source provenance,
+   provider availability, and finite budget before research begins.
+3. For platforms that allow external research, after each completed search or
+   page-fetch batch append a checkpoint before starting another batch. A batch
+   may contain at most two concurrent Firecrawl page requests, and later batches
+   must wait for the prior checkpoint. BOOTH makes no external requests; record
+   checkpoints for local database/ledger queries instead.
 4. Record failed, timed-out, blocked, duplicate, owned, and fallback requests;
    do not silently retry them or repeat a completed URL.
-5. Before any candidate expansion, write why the existing candidate pool is
-   insufficient and how much budget remains. If no budget remains, stop.
+5. Before candidate expansion, record why the current candidate pool is
+   insufficient and what next source or local query is needed. For platforms
+   with external research, also record the remaining request budget and stop
+   when it is exhausted.
 6. Before reporting completion, append the final selection, rejected terms,
    complications, method audit, description SEO audit, and next-action status.
 
@@ -116,15 +120,16 @@ research loop.
 
 | Agent | Discovery and evidence ceiling | Stop condition |
 |---|---|---|
-| BOOTH 20 | Four seed routes; 48 candidate phrases; exact/category validation for the strongest 30 plus at most 8 alternates; one global cohort of 4-8 paid comparables; at most one optional tag intersection | Stop when 30 tags pass or the bounded pool/alternates are exhausted. Use the evidence-limited fallback for any lower defensible count. |
-| Creative Market 2 | Local `outputs/creativemarket/*.md` corpus plus the derived `creative-market-font-tag-bank.md`; zero external requests in the default run | Stop after exactly 30 product-fit tags, one supported classification, and a passing `validate_cm_listing.py` result. Do not research for a higher score. |
-| Creative Fabrica 29 | Ordinary run: frozen bank, local tag DB, reusable ledger, prior listings, and product facts; zero external requests. Explicit refresh/gap-fill only: two official guides, Fonts browse, All Tags, at most one additional popular/style surface; 3 discovery queries total; 48 candidate phrases; at most 48 exact-tag checks; at most 6 comparable PDPs | Ordinary run stops after the local evidence sheet and exactly-40 package. A refresh stops immediately when the gap is closed or 40 defensible tags are selected; never research for a higher score after the handoff is defensible. |
+| BOOTH 20 | Frozen local census, tag bank, campaign evidence, saved query-language notes, and ledger; **zero external requests** | Stop after selecting 18-25 defensible tags from local snapshot evidence or exhausting the local candidate pool. Never refresh BOOTH evidence online; disclose the snapshot date and any missing/stale evidence. |
+| Creative Market 2 | One bounded current Creative Market/browser pass: closest taxonomy surfaces, a representative Popular/Bestselling sample, and 2-3 relevant product pages; no Firecrawl or external SEO-volume workflow | Use supplied product facts to select distinct buyer-language phrases; distinguish observed marketplace wording from inferred queries. Stop when the bounded pass is complete and further candidates would be redundant or technical metadata. No fixed tag quota or demand claim. |
+| Creative Fabrica 29 | Ordinary run: frozen bank, local tag DB, reusable ledger, prior listings, and product facts; zero external requests. Explicit refresh/gap-fill only: two official guides, Fonts browse, All Tags, at most one additional popular/style surface; 3 discovery queries total; up to 48 candidate phrases and exact-route checks; at most 6 comparable PDPs | Target about 30 relevant phrases, up to 40. Select exact-route tags plus relevant wording from comparable font `Designer tags`; a single close, high-engagement PDP may support a long-tail phrase, while independent recurrence strengthens it. `Suggested Categories` and `Font Style` are classification fields, not seller-tag evidence. Product facts filter relevance but do not invent tag wording. Ordinary runs stop at the local evidence limit; refresh stops near 30 or when the bounded pool is reviewed. Never pad the set. |
 
-Use the shared two-request Firecrawl batch ceiling. Do not use a second page-life
-request when the primary response already establishes a live page and the
-required evidence; fetch a fallback only for an empty, ambiguous, blocked, or
-failed response. No numeric route count, snippet, favorite, view, review, or
-unlabeled `+K` value is demand or sales evidence.
+For platform passes that explicitly use Firecrawl, use the shared two-request
+batch ceiling. Creative Market follows its specialist's bounded native
+Creative Market/browser pass and does not use Firecrawl. BOOTH is local-only and
+must not use Firecrawl, search tools, browser, or network fetches. No numeric
+route count, snippet, favorite, view, review, or unlabeled `+K` value is demand
+or sales evidence.
 
 ## Keyword and description SEO rule
 

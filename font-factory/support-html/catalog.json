@@ -6,8 +6,8 @@
     "width": 2400,
     "height": 1600
   },
-  "activeCount": 135,
-  "retiredCount": 50,
+  "activeCount": 144,
+  "retiredCount": 62,
   "templates": [
     {
       "id": "feature32",
@@ -44,18 +44,6 @@
       "portStatus": "prototype",
       "htmlEntry": "support-html/templates/quote32/editor.html",
       "portNote": "Opt-in through the shared HTML template renderer; requires representative-font review before default rollout."
-    },
-    {
-      "id": "contour32",
-      "slot": 10,
-      "module": "bin/pin-studio/pin_studio.py",
-      "sourceId": "T30930_03",
-      "sourceKind": "source",
-      "note": "",
-      "minStyles": 1,
-      "portStatus": "prototype",
-      "htmlEntry": "support-html/templates/contour32/editor.html",
-      "portNote": "Rebuilds the source's orange-ribbon ligature specimen board; representative-font review remains."
     },
     {
       "id": "mountain32",
@@ -104,18 +92,6 @@
       "portStatus": "prototype",
       "htmlEntry": "support-html/templates/boots32/editor.html",
       "portNote": "Rebuilds the source's split sky/portrait panel, overlapping horseshoes, script lockup, and complete coral boot with a safe inset and adjustable image framing."
-    },
-    {
-      "id": "plakat32",
-      "slot": 20,
-      "module": "bin/pin-studio/pin_studio.py",
-      "sourceId": "T27673_00",
-      "sourceKind": "source",
-      "note": "",
-      "minStyles": 2,
-      "portStatus": "prototype",
-      "htmlEntry": "support-html/templates/plakat32/editor.html",
-      "portNote": "Rebuilds T27673_00 with the source word, cyan glyph band, selected-font glyph/style facts, endpoint labels, and weight/italic-aware rail markers over navy texture."
     },
     {
       "id": "plakatart32",
@@ -310,30 +286,6 @@
       "portNote": "Keeps the clean tailoring portrait full bleed beneath the source-weight veil, oval issue mark, hairline rules, and independently fitted Title Case cover copy."
     },
     {
-      "id": "voguecover32",
-      "slot": 37,
-      "module": "bin/pin-studio/support_templates/fashion.py",
-      "sourceId": "T28576_03",
-      "sourceKind": "source",
-      "note": "",
-      "minStyles": 1,
-      "portStatus": "prototype",
-      "htmlEntry": "support-html/templates/voguecover32/editor.html",
-      "portNote": "Restores the source cover's oversized masthead, overprinted portrait, stacked issue mark, three-line editorial blocks, and lower-right feature deck with editable multiline copy."
-    },
-    {
-      "id": "confident32",
-      "slot": 38,
-      "module": "bin/pin-studio/support_templates/fashion.py",
-      "sourceId": "T28576_04",
-      "sourceKind": "source",
-      "note": "",
-      "minStyles": 1,
-      "portStatus": "prototype",
-      "htmlEntry": "support-html/templates/confident32/editor.html",
-      "portNote": "Pairs a source-sized Title Case display statement with the cleaned eye crop, framed paper panel, split taglines, and centered star divider."
-    },
-    {
       "id": "focusposter32",
       "slot": 40,
       "module": "bin/pin-studio/support_templates/fashion.py",
@@ -355,7 +307,7 @@
       "minStyles": 1,
       "portStatus": "prototype",
       "htmlEntry": "support-html/templates/wideclaim32/editor.html",
-      "portNote": "Restores the source's clean four-line type-only composition, with a live-font statement, oversized red display word, and alternating red and black title-cased specimen letters."
+      "portNote": "Restores the source's clean four-line type-only composition, with a live-font statement, oversized red display word, and alternating red and black specimen letters; the closing type label is derived from the font's classified style."
     },
     {
       "id": "neue32",
@@ -488,18 +440,6 @@
       "portStatus": "prototype",
       "htmlEntry": "support-html/templates/pastpresent32/editor.html",
       "portNote": "A reference-derived blank-hand-sign plate, scale-matched pink gingham, three independently fitted sign labels, and the exact SunKits studio credit remain separate editable layers."
-    },
-    {
-      "id": "herbalproduct32",
-      "slot": 65,
-      "module": "bin/pin-studio/support_templates/objects.py",
-      "sourceId": "T26223_05",
-      "sourceKind": "source",
-      "note": "",
-      "minStyles": 1,
-      "portStatus": "prototype",
-      "htmlEntry": "support-html/templates/herbalproduct32/editor.html",
-      "portNote": "T26223_05 is rebuilt from its source wording: the green carton, double-framed cream label, twelve-ray New burst, hand-drawn botanical crest, batch oval, rounded HERBALS wordmark, outlined coffee description, and three separate roast-detail columns are live layers. Full requested copy survives export; missing display-font glyphs trigger a warning and readable browser fallback."
     },
     {
       "id": "colosseum32",
@@ -862,18 +802,6 @@
       "portNote": "A geometric white title and outlined date around a narrow blue corridor photograph. Live display text is fit within its reserved area at both aspect ratios."
     },
     {
-      "id": "nectarambience32",
-      "slot": 101,
-      "module": "support-html/shared/user-reference-batch-b.js",
-      "sourceId": "T18612_01",
-      "sourceKind": "source",
-      "note": "User-supplied October 2026 reference; preserved under support-references/originals/user-batch-2026-10-20-b/ with separate text-free materials where generated.",
-      "minStyles": 1,
-      "portStatus": "prototype",
-      "htmlEntry": "support-html/templates/nectarambience32/editor.html",
-      "portNote": "A fine mint title over a dark magenta science-fiction composition. Live display text is fit within its reserved area at both aspect ratios."
-    },
-    {
       "id": "sacharon32",
       "slot": 103,
       "module": "support-html/shared/user-reference-batch-b.js",
@@ -1016,18 +944,6 @@
       "portStatus": "prototype",
       "htmlEntry": "support-html/templates/medievalcreatures32/editor.html",
       "portNote": "Rebuilds T33443_05 as editable red-on-black typography with a small medieval creatures caption, oversized bracketed 1348, and a lower manuscript-and-bestiaries line."
-    },
-    {
-      "id": "littlemadquote32",
-      "slot": 117,
-      "module": "support-html/shared/user-reference-batch-c.js",
-      "sourceId": "T33443_07",
-      "sourceKind": "source",
-      "note": "User-supplied October 2026 reference; the unchanged original is preserved under support-references/originals/user-batch-2026-10-26-c/.",
-      "minStyles": 1,
-      "portStatus": "prototype",
-      "htmlEntry": "support-html/templates/littlemadquote32/editor.html",
-      "portNote": "Rebuilds T33443_07 as a crimson italic three-line quote with Psycho attribution, four corner labels, and a violet-to-black vignette; all wording remains editable HTML text."
     },
     {
       "id": "soulrevenge32",
@@ -1208,30 +1124,6 @@
       "portStatus": "prototype",
       "htmlEntry": "support-html/templates/childhoodbook32/editor.html",
       "portNote": "Rebuilds T22014_02 as four enlarged live selected-font rows on white, retaining the source black and vivid-orange emphasis, a measured word gap, and evenly distributed vertical spacing in both ratios."
-    },
-    {
-      "id": "playerglyph32",
-      "slot": 138,
-      "module": "support-html/shared/user-reference-batch-h.js",
-      "sourceId": "T21126_11",
-      "sourceKind": "source",
-      "note": "Original response preserved byte-for-byte as WebP under support-references/originals/reference-batch-2026-10-26-d/.",
-      "minStyles": 1,
-      "portStatus": "prototype",
-      "htmlEntry": "support-html/templates/playerglyph32/editor.html",
-      "portNote": "Rebuilds T21126_11 with a live Yukas credit, a selected-font Q glyph in the source-pink upright panel, and three pink copy lines on charcoal. The square layout keeps the credit and title at the top and places the Q beside the supporting copy."
-    },
-    {
-      "id": "alicebadge32",
-      "slot": 139,
-      "module": "support-html/shared/user-reference-batch-i.js",
-      "sourceId": "T21126_03",
-      "sourceKind": "source",
-      "note": "Original response preserved byte-for-byte as WebP under support-references/originals/reference-batch-2026-10-26-d/.",
-      "minStyles": 1,
-      "portStatus": "prototype",
-      "htmlEntry": "support-html/templates/alicebadge32/editor.html",
-      "portNote": "Rebuilds T21126_03 as a circular badge with live selected-font text on SVG text paths, CSS/SVG sunset geometry, star accents, and a dark backing field; the same round composition adapts to both ratios."
     },
     {
       "id": "notallroads32",
@@ -1471,7 +1363,11 @@
       "minStyles": 1,
       "portStatus": "prototype",
       "htmlEntry": "support-html/templates/strongerquote32/editor.html",
-      "portNote": "Rebuilds T26790_05 with the original portrait reused unchanged on the image layer and four editable white quote lines on black and slate panels; landscape uses a left photo column and square places the cropped photo above the quote."
+      "portNote": "Rebuilds T26790_05 over a text-free portrait plate, with four editable white quote lines on black and slate panels; landscape uses a left photo column and square places the cropped photo above the quote.",
+      "previewRenders": {
+        "3x2": "support-html/templates/strongerquote32/previews/3x2.png",
+        "1x1": "support-html/templates/strongerquote32/previews/1x1.png"
+      }
     },
     {
       "id": "scarygangsta32",
@@ -1628,6 +1524,250 @@
       "portStatus": "prototype",
       "htmlEntry": "support-html/templates/fatkillkat32/editor.html",
       "portNote": "Rebuilds T8840_00 as live FAT and KILLY KAT lettering with a hard cyan extrusion, orange patterned lettering treatment, and navy hatch field in landscape and square layouts."
+    },
+    {
+      "id": "crimsonportrait32",
+      "slot": 173,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF_01",
+      "sourceKind": "source",
+      "note": "",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/crimsonportrait32/editor.html",
+      "portNote": "Rebuilds the red fashion portrait with editable font-name, collection, and four source corner-copy fields over a text-free photo plate.",
+      "previewRenders": {
+        "3x2": "support-html/templates/crimsonportrait32/previews/3x2.png",
+        "1x1": "support-html/templates/crimsonportrait32/previews/1x1.png"
+      }
+    },
+    {
+      "id": "portraitcard32",
+      "slot": 175,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF_03",
+      "sourceKind": "source",
+      "note": "",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/portraitcard32/editor.html",
+      "portNote": "Rebuilds the ivory portrait card with two top notes, a two-line font name and category, an editable tagline, and a replaceable font description.",
+      "previewRenders": {
+        "3x2": "support-html/templates/portraitcard32/previews/3x2.png",
+        "1x1": "support-html/templates/portraitcard32/previews/1x1.png"
+      }
+    },
+    {
+      "id": "warmportrait32",
+      "slot": 176,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF_06",
+      "sourceKind": "source",
+      "note": "",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/warmportrait32/editor.html",
+      "portNote": "Rebuilds the warm close-up font promo with corner labels, a large font name, an editable style and studio credit, and bottom feature notes.",
+      "previewRenders": {
+        "3x2": "support-html/templates/warmportrait32/previews/3x2.png",
+        "1x1": "support-html/templates/warmportrait32/previews/1x1.png"
+      }
+    },
+    {
+      "id": "cinemaportrait32",
+      "slot": 178,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF_08",
+      "sourceKind": "source",
+      "note": "",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/cinemaportrait32/editor.html",
+      "portNote": "Rebuilds the cinematic font promo with two-line font and studio metadata and the source ‘Take All Patiently’ phrase as editable display copy.",
+      "previewRenders": {
+        "3x2": "support-html/templates/cinemaportrait32/previews/3x2.png",
+        "1x1": "support-html/templates/cinemaportrait32/previews/1x1.png"
+      }
+    },
+    {
+      "id": "amberquote32",
+      "slot": 180,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF_11",
+      "sourceKind": "source",
+      "note": "",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/amberquote32/editor.html",
+      "portNote": "Rebuilds the defocused amber quote card with all five source lines editable and a two-line font, style, and studio credit placeholder.",
+      "previewRenders": {
+        "3x2": "support-html/templates/amberquote32/previews/3x2.png",
+        "1x1": "support-html/templates/amberquote32/previews/1x1.png"
+      }
+    },
+    {
+      "id": "numeralfolio32",
+      "slot": 181,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-MOREN-15",
+      "sourceKind": "source",
+      "note": "Creative Market visual reference saved unchanged under support-references/originals/creative-market-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/numeralfolio32/editor.html",
+      "portNote": "Rebuilds the centered ten-figure specimen sheet with a subtle paper ground and font-derived type label; digits remain live selected-font text in both ratios.",
+      "previewRenders": {
+        "3x2": "support-html/benchmarks/creative-market-remakes-2026-11-11/numeralfolio32-3x2.png",
+        "1x1": "support-html/benchmarks/creative-market-remakes-2026-11-11/numeralfolio32-1x1.png"
+      }
+    },
+    {
+      "id": "timechange32",
+      "slot": 182,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-MOREN-10",
+      "sourceKind": "source",
+      "note": "Creative Market visual reference saved unchanged under support-references/originals/creative-market-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/timechange32/editor.html",
+      "portNote": "Rebuilds the black and pale-blue three-line typographic poster with fitted live display words and a font-derived type label; landscape and square use independent placements.",
+      "previewRenders": {
+        "3x2": "support-html/benchmarks/creative-market-remakes-2026-11-11/timechange32-3x2.png",
+        "1x1": "support-html/benchmarks/creative-market-remakes-2026-11-11/timechange32-1x1.png"
+      }
+    },
+    {
+      "id": "bottleoffer32",
+      "slot": 183,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-2026-11-11-13-O",
+      "sourceKind": "source",
+      "note": "Original AVIF and decoded image are preserved under support-references/originals/creative-market-batch-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/bottleoffer32/editor.html",
+      "portNote": "Two live colored display words with a raised dark outline and a small ligature note."
+    },
+    {
+      "id": "bootzyfear32",
+      "slot": 184,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-2026-11-11-BOOTZY-CLEAN-TM7",
+      "sourceKind": "source",
+      "note": "Original AVIF and decoded image are preserved under support-references/originals/creative-market-batch-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/bootzyfear32/editor.html",
+      "portNote": "A four-part editable phrase poster around the pink-and-black transparent character cutout."
+    },
+    {
+      "id": "bootzyalmost32",
+      "slot": 185,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-2026-11-11-BOOTZY-CLEAN-TM4",
+      "sourceKind": "source",
+      "note": "Original AVIF and decoded image are preserved under support-references/originals/creative-market-batch-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/bootzyalmost32/editor.html",
+      "portNote": "Two live repetitions of Almost contrast in weight on warm paper."
+    },
+    {
+      "id": "bootzygraphic32",
+      "slot": 186,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-2026-11-11-BOOTZY-CLEAN-TM12",
+      "sourceKind": "source",
+      "note": "Original AVIF and decoded image are preserved under support-references/originals/creative-market-batch-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/bootzygraphic32/editor.html",
+      "portNote": "A bold live headline is stacked over a saturated yellow field."
+    },
+    {
+      "id": "bootzybunny32",
+      "slot": 187,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-2026-11-11-BOOTZY-CLEAN-TM8",
+      "sourceKind": "source",
+      "note": "Original AVIF and decoded image are preserved under support-references/originals/creative-market-batch-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/bootzybunny32/editor.html",
+      "portNote": "A black-ink rabbit cutout sits above an editable one-line caption."
+    },
+    {
+      "id": "quadfont32",
+      "slot": 188,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-2026-11-11-3",
+      "sourceKind": "source",
+      "note": "Original AVIF and decoded image are preserved under support-references/originals/creative-market-batch-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/quadfont32/editor.html",
+      "portNote": "Four live font descriptors occupy contrasting dark-green and lavender quadrants."
+    },
+    {
+      "id": "mythicallions32",
+      "slot": 189,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-2026-11-11-MYTHICAL-ROMANCE-FONT-06",
+      "sourceKind": "source",
+      "note": "Original AVIF and decoded image are preserved under support-references/originals/creative-market-batch-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/mythicallions32/editor.html",
+      "portNote": "A watercolor coastal plate with two sea lions, three vertical yellow columns, one circular star seal, small captions, and an oversized ampersand."
+    },
+    {
+      "id": "lifeinblackwhite32",
+      "slot": 190,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-2026-11-11-FANTASY-MAGIST-FONT-05",
+      "sourceKind": "source",
+      "note": "Original AVIF and decoded image are preserved under support-references/originals/creative-market-batch-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/lifeinblackwhite32/editor.html",
+      "portNote": "Live pale display copy overlays the clean monochrome portrait plate."
+    },
+    {
+      "id": "romanstrips32",
+      "slot": 191,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-2026-11-11-SERIF-DISPLAY-FONT-ROMAN-NOIRS-04",
+      "sourceKind": "source",
+      "note": "Original AVIF and decoded image are preserved under support-references/originals/creative-market-batch-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/romanstrips32/editor.html",
+      "portNote": "Five ruled rows and a footer provide a flexible roman and italic specimen."
+    },
+    {
+      "id": "floraltriptych32",
+      "slot": 192,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-2026-11-11-FEGIRAN-4",
+      "sourceKind": "source",
+      "note": "Original AVIF and decoded image are preserved under support-references/originals/creative-market-batch-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/floraltriptych32/editor.html",
+      "portNote": "A three-card botanical clean plate carries live display headings and small supporting copy."
+    },
+    {
+      "id": "homequote32",
+      "slot": 193,
+      "module": "bin/pin-studio/pin_studio.py",
+      "sourceId": "CMREF-2026-11-11-FEGIRAN-6",
+      "sourceKind": "source",
+      "note": "Original AVIF and decoded image are preserved under support-references/originals/creative-market-batch-2026-11-11/.",
+      "minStyles": 1,
+      "portStatus": "prototype",
+      "htmlEntry": "support-html/templates/homequote32/editor.html",
+      "portNote": "An editable home quotation sits in the dark upper panel above a clean architectural photograph."
     }
   ]
 }

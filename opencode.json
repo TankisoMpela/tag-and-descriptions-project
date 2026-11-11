@@ -35,14 +35,14 @@
     "font-image-generator": {
       "mode": "subagent",
       "prompt": "{file:./agents/agent-27-font-image-generator.md}",
-      "description": "Agent 27 visual handoff: three complete thumbnail prompts, 13 seeded-random support catalogue designs at both ratios including eligible family showcases, four factual previews, and 23 active Pinterest template renders.",
+      "description": "Agent 27 visual handoff: selects a Saved family when needed, reviews metadata and the full glyph atlas, records factual description and observed vibe, writes four complete theme prompts, generates their matching primary and alternate thumbnails, and creates 12 support layouts with eligible family showcases in the random pool; Agent 13 owns factual specimen sheets.",
       "permission": {
         "task": "allow"
       }
     },
     "font-prep-specialist": {
       "prompt": "{file:./agents/agent-13-font-prep-specialist.md}",
-      "description": "Agent 13 packages and audits the font, writes the description, installs Agent 27's 23 checksummed Pinterest template pins, and renders four factual specimen sheets without inspecting thumbnail or support-layout drafts.",
+      "description": "Agent 13 prepares OTF files only, creates one font-named ZIP, installs Agent 27's four generated thumbnails and 24 support designs for Agent 30, and renders factual specimen sheets.",
       "permission": {
         "task": "allow"
       }
@@ -105,18 +105,18 @@
       "agent": "cm-fonts-specialist"
     },
     "font-final-images": {
-      "description": "Run the standalone post-workflow final font image processor on a seller-created visuals/New-Images folder.",
-      "template": "Please run the font-final-visual-processor agent after all font preparation and requested marketplace work are complete. Use the exact font-preparation output directory and raw visuals/New-Images folder supplied here: {input}. Do not use vision or determine which image is semantically a thumbnail. First run bin/check_new_images.py on the folder and decide from its report: run bin/process_final_font_images.py --auto-order so direct filenames are sorted independently within 3:2 and 1:1 (the first in each ratio becomes thumbnail_main and the rest become promo_1 upward); if the report shows no 1:1 files, or only a name-marked square thumbnail, add --pad-squares so the helper white-pads the missing squares from the 3:2 set with equal top/bottom bars (recorded in the manifest), and report that padded-square count. Create exact source copies and <=200 KB main/square JPEG delivery files, and write final-image-manifest.md inside New-Images. Do not alter raw images, old visuals/main or visuals/squares folders, font files, or metadata; do not invoke full-workflow and make no upload claim.",
+      "description": "Run Agent 30 standalone for older prepared products; full-workflow now includes final image processing when inputs are ready.",
+      "template": "Please run Agent 30 standalone for the supplied older prepared product. Follow agents/agent-30-font-final-visual-processor.md and use the supplied product-preparation output plus visuals/New-Images folder. Use the named thumbnail pair and exact readiness requirements in that spec; do not use vision to identify a thumbnail. Create exact source copies, optimized JPEG delivery files, and final-image-manifest.md. Do not alter raw images, font files, or metadata; do not invoke full-workflow and make no upload claim.",
       "agent": "font-final-visual-processor"
     },
     "font-images": {
-      "description": "Run the FontFairy font image generator before font preparation. It creates a fast mechanical text-placeholder handoff, plans 3:2 and 1:1 outputs, and leaves a strict Agent-13 handoff. Final artwork replacement is a separate optional seller step.",
-      "template": "Run the registered font-image-generator using the exact selected source workspace, user-supplied final name and description when provided, and relevant facts. Follow agents/agent-27-font-image-generator.md and agents/reference/AGENTS-annex-visual-handoff.md. Inspect the font metadata and mapped-glyph specimen before deciding any unsupplied name or profile. Produce the required specimens, matching prompts, active support layouts, factual specimens, and Pinterest template renders. Do not require old thumbnails or research galleries. Finish with READY FOR FONT PREP HANDOFF and the exact prepared_visuals path: {input}",
+      "description": "Run Agent 27 before font preparation. It writes the visual handoff and generates all four final thumbnails from their paired theme prompts and specimens.",
+      "template": "Run the registered font-image-generator using the exact selected source workspace, user-supplied final name and description when provided, and relevant facts. In /full-workflow, if no exact source was supplied, first select and stage one family with python3 bin/stage_saved_font.py --random. Follow agents/agent-27-font-image-generator.md and agents/reference/AGENTS-annex-visual-handoff.md. Inspect the font metadata and every page of its complete mapped-glyph atlas before recording a factual product description and observed vibe. Produce two lettering references, four primary and alternate thumbnail prompts in theme.txt, and use the built-in image-generation tool to generate each thumbnail with its matching specimen. Also render 12 eligible support layouts at both ratios; eligible family showcases are in the same random pool, not guaranteed. Factual specimen sheets belong to Agent 13. Do not leave thumbnail creation as a manual seller step. Finish with READY FOR FONT PREP HANDOFF and the exact prepared_visuals path: {input}",
       "agent": "font-image-generator"
     },
     "font-prep": {
-      "description": "Package and audit the font, install 23 verified Pinterest templates from Agent 27, and render four factual specimen sheets.",
-      "template": "Run the registered font-prep-specialist agent with the exact font workspace, final name, unified product number, and Agent-27 prepared_visuals path. Follow agents/agent-13-font-prep-specialist.md. Package and audit the font, write the description, install the 23 checksummed Pinterest templates with bin/install_template_pinterest_pins.py, and render four factual specimen sheets. Do not inspect or copy the thumbnail or support-layout drafts, and do not render a second Pinterest set. Leave final thumbnail generation to the matching specimen and image prompt and process those images later with /font-final-images. Report the preparation output path and validation result; do not claim upload or publication: {input}",
+      "description": "Prepare OTF files only, create one `{FontName}.zip` archive, install Agent 27's generated thumbnails and 24 support images for Agent 30, and render factual specimen sheets.",
+      "template": "Run the registered font-prep-specialist agent with the exact font workspace, final name, unified product number, and Agent-27 prepared_visuals path. Follow agents/agent-13-font-prep-specialist.md. Prepare OTF file(s) only and one `{FontName}.zip` containing the font-named folder and its OTF files. Do not output TTF, WOFF, WOFF2, or separate Commercial-Use/Personal-Use archives. Write the description at the output root outside the ZIP, install the four generated thumbnails and 24 support designs unchanged with bin/install_support_images.py --include-thumbnails, and render factual specimen sheets. Do not generate or redesign thumbnail art. Agent 30 processes the images after marketplace stages. Report the preparation output path and validation result; do not claim upload or publication: {input}",
       "agent": "font-prep-specialist"
     },
     "font-rights-check": {
@@ -125,8 +125,8 @@
       "agent": "font-rights-researcher"
     },
     "full-workflow": {
-      "description": "Run the shared five-stage sequential font launch through preparation, BOOTH, Creative Market, and Creative Fabrica; Pixiv and other marketplace stages are paused.",
-      "template": "Run the registered full-workflow agent. Follow agents/agent-28-full-workflow.md as the shared source of truth. Execute 1) font-image-generator (Agent 27), 2) font-prep-specialist (Agent 13), 3) booth-fonts-specialist (Agent 20), 4) cm-fonts-specialist (Agent 2), and 5) creative-fabrica-fonts-specialist (Agent 29) strictly sequentially, verifying each stage before continuing. For a new source, stage only the exact user-selected Saved family. Do not invoke Pixiv or other paused stages, and do not claim upload/publication: {input}",
+      "description": "Run the shared five-stage sequential font launch, including Agent 30 final image processing when the image readiness check passes. Pixiv and other marketplace stages are paused.",
+      "template": "Run the registered full-workflow agent. Follow agents/agent-28-full-workflow.md as the shared source of truth. Execute 1) font-image-generator (Agent 27), 2) font-prep-specialist (Agent 13), 3) cm-fonts-specialist (Agent 2), 4) creative-fabrica-fonts-specialist (Agent 29), and then 5) font-final-visual-processor (Agent 30) only after bin/check_new_images.py confirms readiness. Keep stages strictly sequential, verifying each before continuing. Agent 27 generates all four thumbnails from the exact theme prompts and matching specimens; Agent 13 installs them with the 24 support designs. Preserve an exact supplied source; otherwise have Agent 27 start with python3 bin/stage_saved_font.py --random, then inspect metadata and the complete glyph atlas and record the description and observed vibe before continuing. Do not invoke Pixiv or other paused stages, and do not claim upload/publication: {input}",
       "agent": "full-workflow"
     },
     "booth-pdf-maker": {

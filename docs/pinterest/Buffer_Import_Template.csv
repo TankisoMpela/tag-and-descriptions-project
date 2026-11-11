@@ -1,0 +1,4 @@
+﻿"Text","Image URL","Board Name","Tags","Posting Time","Title","Alt Text","Link"
+"A post with text","https://images.unsplash.com/photo-1458668383970-8ddd3927deed?q=80&w=2334&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D","Animal Designs",,"2026-10-12 17:30","Beautiful nature waterfall","Waterfall cascading into a turquoise pool surrounded by tropical plants","https://example.com/nature-waterfalls"
+"A post with text and an image","https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D","Dark Epic Orchestral Music",,,,,
+"A post with text and tags - must be existing tags","https://images.unsplash.com/photo-1458668383970-8ddd3927deed?q=80&w=2334&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D","Shirt Designs","tag1,tag2",,,,

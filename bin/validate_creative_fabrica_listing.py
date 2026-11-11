@@ -4,16 +4,29 @@
 This is a copy/research validator only. It deliberately does not inspect
 font files, packages, images, licenses, provenance, or upload readiness.
 Creative Fabrica has no stable public author tag cap in the research baseline;
-the exactly-40-tag block is this project's internal handoff contract.
+about 30 is this project's working target and 40 is its maximum, not a claim
+about seller-editor requirements. Fewer than 30 are accepted when the
+agent's review supports a smaller, relevant set.
 
 Quality gates for the tag set (added 2026-09-09 after a live PDP census showed
 the field runs at 40-50+ visible designer tags, not 30):
+- select up to 40 relevant tags, aiming for about 30 without padding;
+- 30 is a working target; tags may have related or overlapping buyer intents when each
+  adds meaningful scope, specificity, construction, style, or buyer context;
+- below 30 is allowed without special validator notes; candidate review and
+  stopping judgment belong to the agent;
+- every selected phrase needs an exact tag route or relevant font-PDP evidence;
+  the agent judges whether a comparable is close enough and whether engagement
+  or recurrence strengthens the wording;
+  product facts,
+  `Suggested Categories`, `Font Style`, and description prose do not prove that
+  a phrase is a seller tag;
 - format terms (OTF, TTF, WOFF, WOFF2, OpenType) are not search tags;
-- junk adjectives (best seller, popular, trendy, cute) are not filler;
-- near-duplicate intent families (Sport/Sports/Sport Font,
-  Energy/Energetic, Headline/Headlines/Headline Font, and singular/plural
-  or {word}/{word} font(s) variants) collapse to one tag rather than padding,
-  while distinct compound routes (e.g. Funky Font vs Funky Letters) are kept.
+- promotional tags (best seller, popular, trendy) are not useful filler; allow
+  descriptive mood words such as Cute when the font fits them;
+- exact duplicates fail; named mechanical families and singular/plural variants
+  trigger a review warning rather than automatic rejection because comparable
+  Creative Fabrica listings sometimes use both forms.
 """
 
 from __future__ import annotations
@@ -23,23 +36,25 @@ import re
 import sys
 from datetime import date
 from pathlib import Path
+from urllib.parse import urlsplit
+
+from marketplace_description_rules import validate_marketplace_description
 
 
 TAG_HEADINGS = (
-    "TAGS (40 - Creative Fabrica research package, comma-separated)",
     "TAGS (up to 40 - Creative Fabrica research package, comma-separated)",
+    "TAGS (20-40 - Creative Fabrica research package, comma-separated)",
+    # Accept existing packages while applying the current target, maximum, and evidence rules.
+    "TAGS (40 - Creative Fabrica research package, comma-separated)",
 )
 SEO_MAP_HEADING = "DESCRIPTION SEO MAP"
 MAX_TITLE_CHARS = 30
-MIN_DESCRIPTION_WORDS = 150
-MAX_DESCRIPTION_WORDS = 350
-EXPECTED_TAG_COUNT = 40
+MIN_TAG_COUNT = 1
+MAX_TAG_COUNT = 40
 EVIDENCE_CLASSES = {
-    "canonical category",
     "canonical tag route",
     "pdp recurrence",
-    "independent wording",
-    "verified product fact",
+    "comparable pdp tag",
     # A tag already measured in outputs/research/creative-fabrica-tag-bank.json:
     # cite its tag-page URL plus the bank snapshot date instead of re-fetching.
     "strategy snapshot route",
@@ -48,13 +63,21 @@ EVIDENCE_CLASSES = {
 # A bank snapshot older than this must be refreshed before it can back a tag.
 SNAPSHOT_MAX_AGE_DAYS = 45
 
-# The real Creative Fabrica font-tag route is the PLURAL compound page
-# /tag/<modifier>-fonts/ (or the /fonts/<category>-fonts/ equivalent). The bare
-# index (/tag/, /fonts/) and the singular /tag/<modifier>-font/ form carry no
-# published count and must not be accepted as tag evidence.
-FONT_ROUTE_RE = re.compile(r"creativefabrica\.com/(?:tag|fonts)/[a-z0-9-]+-fonts/?(?:[\s\)]|$)", re.IGNORECASE)
-PRODUCT_URL_RE = re.compile(r"creativefabrica\.com/product/[a-z0-9-]+/", re.IGNORECASE)
-TAG_ROUTE_CLASSES = {"canonical category", "canonical tag route", "strategy snapshot route", "independent wording"}
+# Font-scoped route pages usually end in `-font` or `-fonts`. Other exact tag
+# routes can back a seller tag only when a font PDP's Designer tags field shows it.
+FONT_ROUTE_RE = re.compile(
+    r"^https?://(?:www\.)?creativefabrica\.com/(?:tag|fonts)/[a-z0-9-]+-fonts?/?(?:[?#]|$)",
+    re.IGNORECASE,
+)
+TAG_ROUTE_RE = re.compile(
+    r"^https?://(?:www\.)?creativefabrica\.com/tag/[a-z0-9-]+/?(?:[?#]|$)",
+    re.IGNORECASE,
+)
+PRODUCT_URL_RE = re.compile(
+    r"^https?://(?:www\.)?creativefabrica\.com/product/[a-z0-9-]+(?:/\d+)?/?(?:[?#]|$)",
+    re.IGNORECASE,
+)
+TAG_ROUTE_CLASSES = {"canonical tag route", "strategy snapshot route"}
 RESEARCH_SECTIONS = (
     "RUN",
     "PRODUCT FACTS",
@@ -74,7 +97,6 @@ REQUIRED = [
     SEO_MAP_HEADING,
     "CATEGORY",
     "TAG EVIDENCE",
-    "COMPARABLE PDP SIGNALS",
     "RESEARCH NOTES",
 ]
 
@@ -82,20 +104,14 @@ PRICE_RE = re.compile(
     r"(?:[$€£]\s*\d|\b\d+(?:\.\d+)?\s*(?:usd|eur|gbp)\b|\b(?:price|pricing|discount|sale|off)\b)",
     re.IGNORECASE,
 )
-LICENSE_RE = re.compile(r"\b(?:personal|commercial|extended)\s+license\b|\blicense\s+(?:terms|file|information)\b", re.IGNORECASE)
 CONTACT_RE = re.compile(r"(?:https?://|www\.|@[A-Za-z0-9_.-]+\.[A-Za-z]{2,}|\b(?:email|contact)\s+me\b)", re.IGNORECASE)
 
-# Quality gates for the extra tag slots: format terms are facts, not search
-# tags; junk adjectives are filler even when leaders publish them.
+# Quality gates for the tag package: format terms are facts, not search tags;
+# junk adjectives are filler even when leaders publish them.
 FORMAT_TAGS = {"otf", "ttf", "woff", "woff2", "opentype"}
-JUNK_TAGS = {"best seller", "popular", "trendy", "cute"}
-# Creative Fabrica FONT tags are the compound `<modifier> Font(s)` form. A bare
-# one-word tag resolves to a broader graphics tag (measured: /tag/kids/ has no
-# count and shows SVGs/graphics, /tag/kids-fonts/ = "Kids Fonts" 14,188), so a
-# standalone one-word tag is never valid font-tag evidence.
-MAX_SINGLE_WORD_TAGS = 0
-# Intent families that differ only by singular/plural or a trailing " font":
-# keep the single strongest tag instead of padding the set.
+JUNK_TAGS = {"best seller", "popular", "trendy"}
+# Narrow, named compatibility families only. Related scoped phrases remain
+# valid when they have their own evidence and product fit.
 NEAR_DUPLICATE_FAMILIES = (
     {"sport", "sports", "sport font"},
     {"energy", "energetic"},
@@ -149,6 +165,25 @@ def is_near_duplicate_pair(a: str, b: str) -> bool:
     return False
 
 
+def extract_urls(value: str) -> list[str]:
+    """Read URLs from Markdown evidence cells without trailing punctuation."""
+    return [url.rstrip(".,;:!?)>]`") for url in re.findall(r"https?://[^\s|]+", value, re.IGNORECASE)]
+
+
+def route_slug_matches_tag(tag: str, url: str) -> bool:
+    """Require the selected seller-tag wording to match its exact route slug."""
+    parsed = urlsplit(url)
+    host = parsed.netloc.casefold().split(":", 1)[0]
+    if host not in {"creativefabrica.com", "www.creativefabrica.com"}:
+        return False
+    parts = [part for part in parsed.path.casefold().split("/") if part]
+    if len(parts) != 2 or parts[0] not in {"tag", "fonts"}:
+        return False
+    route_slug = parts[1]
+    tag_slug = re.sub(r"[^a-z0-9]+", "-", tag.casefold()).strip("-")
+    return route_slug == tag_slug
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("listing", type=Path)
@@ -186,16 +221,10 @@ def main() -> int:
 
     description = parsed.get("PRODUCT DESCRIPTION", "")
     description_text = " ".join(line.strip() for line in description.splitlines() if line.strip())
-    if len(description_text) < 50:
-        failures.append(f"product description is {len(description_text)} characters; provide informative paste-ready copy")
-    description_word_count = len(re.findall(r"\b[\w'-]+\b", description_text))
-    if not MIN_DESCRIPTION_WORDS <= description_word_count <= MAX_DESCRIPTION_WORDS:
-        failures.append(
-            f"product description is {description_word_count} words; expected {MIN_DESCRIPTION_WORDS}-{MAX_DESCRIPTION_WORDS}"
-        )
+    failures.extend(validate_marketplace_description(description))
     if "```" in description:
         failures.append("product description contains a fenced code block")
-    for label, pattern in (("price/discount wording", PRICE_RE), ("license wording", LICENSE_RE), ("contact/third-party URL", CONTACT_RE)):
+    for label, pattern in (("price/discount wording", PRICE_RE), ("contact/third-party URL", CONTACT_RE)):
         if pattern.search(description_text):
             failures.append(f"product description contains prohibited {label}")
 
@@ -256,8 +285,10 @@ def main() -> int:
         failures.append("missing or empty Creative Fabrica tag section")
     tag_line = first_content(parsed.get(tag_heading, "")) if tag_heading else ""
     tags = [tag.strip() for tag in tag_line.split(",") if tag.strip()]
-    if len(tags) != EXPECTED_TAG_COUNT:
-        failures.append(f"tag count is {len(tags)}; expected exactly {EXPECTED_TAG_COUNT} internal handoff tags")
+    if len(tags) < MIN_TAG_COUNT:
+        failures.append("tag section must contain at least one evidence-backed tag")
+    if len(tags) > MAX_TAG_COUNT:
+        failures.append(f"tag count is {len(tags)}; maximum is {MAX_TAG_COUNT} evidence-backed tags")
     folded = [tag.casefold() for tag in tags]
     if len(folded) != len(set(folded)):
         failures.append("tags contain duplicates")
@@ -269,7 +300,7 @@ def main() -> int:
             failures.append(f"semicolon-separated tag is not allowed: {tag}")
         if tag.casefold() in banned_standalone:
             failures.append(f"generic standalone tag is not allowed: {tag}")
-    # Quality gates for the 40-tag contract.
+    # Quality gates for the up-to-40 tag package.
     for tag, casefolded in zip(tags, folded):
         if casefolded in FORMAT_TAGS:
             failures.append(f"format tag is not allowed in the tag set: {tag}")
@@ -278,11 +309,11 @@ def main() -> int:
     for family in NEAR_DUPLICATE_FAMILIES:
         present = sorted(family & set(folded))
         if len(present) > 1:
-            failures.append("near-duplicate intent family must collapse to one tag: " + ", ".join(present))
+            warnings.append("review overlapping tag family for distinct buyer-query value: " + ", ".join(present))
     for i in range(len(tags)):
         for j in range(i + 1, len(tags)):
             if is_near_duplicate_pair(folded[i], folded[j]):
-                failures.append(f"near-duplicate variant tags: {tags[i]} / {tags[j]}")
+                warnings.append(f"review whether both variants earn a slot through distinct evidence/query coverage: {tags[i]} / {tags[j]}")
     starts: dict[str, int] = {}
     for tag in tags:
         first = tag.casefold().split()[0] if tag.split() else ""
@@ -314,18 +345,40 @@ def main() -> int:
         evidence_class = row[3].strip().casefold()
         if evidence_class not in EVIDENCE_CLASSES:
             failures.append(f"TAG EVIDENCE row {index} has an unsupported evidence class: {row[3].strip()}")
-        if evidence_class != "verified product fact" and not re.search(r"https?://", row[4], re.IGNORECASE):
+        row_urls = extract_urls(row[4])
+        if not row_urls:
             failures.append(f"TAG EVIDENCE row {index} needs an exact public URL for its evidence class")
-        row_urls = re.findall(r"https?://\S+", row[4])
-        if evidence_class in TAG_ROUTE_CLASSES and not any(FONT_ROUTE_RE.search(u) for u in row_urls):
-            failures.append(
-                f"TAG EVIDENCE row {index} needs a specific font tag route "
-                "(`https://www.creativefabrica.com/tag/<modifier>-fonts/`) — the bare index "
-                "(`/tag/`, `/fonts/`) and the singular `-font/` form are not tag evidence"
-            )
-        if evidence_class == "pdp recurrence" and not any(
-                FONT_ROUTE_RE.search(u) or PRODUCT_URL_RE.search(u) for u in row_urls):
-            failures.append(f"TAG EVIDENCE row {index} needs a specific tag route or product URL")
+        if evidence_class in TAG_ROUTE_CLASSES:
+            route_pattern = FONT_ROUTE_RE if evidence_class == "strategy snapshot route" else TAG_ROUTE_RE
+            matching_routes = [
+                url for url in row_urls
+                if route_pattern.search(url) and route_slug_matches_tag(row_tag, url)
+            ]
+            if not matching_routes:
+                failures.append(
+                    f"TAG EVIDENCE row {index} needs an exact Creative Fabrica tag route "
+                    f"whose slug matches `{row_tag}`"
+                )
+            if evidence_class == "canonical tag route" and any(
+                not FONT_ROUTE_RE.search(url) for url in matching_routes
+            ):
+                product_urls = [url for url in row_urls if PRODUCT_URL_RE.search(url)]
+                if not product_urls:
+                    failures.append(
+                        f"TAG EVIDENCE row {index} for an unscoped route needs a font PDP URL as supporting evidence"
+                    )
+        if evidence_class == "pdp recurrence":
+            product_urls = [url for url in row_urls if PRODUCT_URL_RE.search(url)]
+            distinct_products = {
+                (urlsplit(url).netloc.casefold(), urlsplit(url).path.rstrip("/").casefold())
+                for url in product_urls
+            }
+            if len(distinct_products) < 2:
+                failures.append(f"TAG EVIDENCE row {index} PDP recurrence needs at least two distinct font PDP URLs")
+        if evidence_class == "comparable pdp tag":
+            product_urls = [url for url in row_urls if PRODUCT_URL_RE.search(url)]
+            if not product_urls:
+                failures.append(f"TAG EVIDENCE row {index} comparable PDP tag needs a font product URL")
         if evidence_class == "strategy snapshot route":
             if "creativefabrica.com" not in row[4].casefold():
                 failures.append(f"TAG EVIDENCE row {index} snapshot route must be a creativefabrica.com tag-page URL")
@@ -333,7 +386,7 @@ def main() -> int:
             if not snapshot:
                 failures.append(
                     f"TAG EVIDENCE row {index} uses a strategy snapshot but does not record its date "
-                    "(write e.g. `https://www.creativefabrica.com/tag/<slug>-fonts/ (snapshot YYYY-MM-DD)`)"
+                    "(write e.g. `https://www.creativefabrica.com/tag/<slug>-font(s)/ (snapshot YYYY-MM-DD)`)"
                 )
             else:
                 try:
@@ -355,20 +408,7 @@ def main() -> int:
         elif count > 1:
             failures.append(f"selected tag has {count} evidence rows instead of one: {tag}")
 
-    # Compound-form gate: every tag must be the `<modifier> Font(s)` form (or a
-    # longer buyer phrase). A bare word is a graphics tag, not a font tag.
-    single_word_tags = [tag for tag in tags if len(tag.split()) == 1]
-    if len(single_word_tags) > MAX_SINGLE_WORD_TAGS:
-        failures.append(
-            f"standalone one-word tags are not allowed ({len(single_word_tags)} found) — "
-            "write the compound `<Modifier> Font(s)` form instead: " + ", ".join(single_word_tags)
-        )
-
     comparable = parsed.get("COMPARABLE PDP SIGNALS", "")
-    if len(evidence_rows(comparable)) < 3 and len([line for line in comparable.splitlines() if line.strip() and not line.strip().startswith("[")]) < 3:
-        failures.append("COMPARABLE PDP SIGNALS must record at least three comparables")
-    if not re.search(r"\b(?:tag count|designer tags|visible tags)\b", comparable, re.IGNORECASE):
-        failures.append("COMPARABLE PDP SIGNALS must record a visible designer-tag count per comparable")
     if re.search(r"\b(?:sales|demand|downloads?)\s*(?:score|volume|rank)\b", comparable, re.IGNORECASE):
         failures.append("comparable section must not label visible engagement as sales/demand/download evidence")
 

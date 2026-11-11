@@ -28,7 +28,7 @@ When given any font product or when `/all-fonts` is invoked:
 /all-fonts "Modern handwritten script font with 4 weights, opentype ligatures, swashes, OTF TTF WOFF"
 ```
 Or pass the font details to the main orchestrator agent. The sequential pipeline runs 3 agents (Creative Market -> MasterBundles -> Cubebrush) to respect search & Firecrawl rate limits:
-1. **Agent 2 (`agent-2-fonts-specialist.md`)** -> Creative Market PDP Listing & 30 Tags
+1. **Agent 2 (`agent-2-fonts-specialist.md`)** -> Creative Market PDP Listing & buyer-relevant tags
 2. **Agent 8 (`agent-8-masterbundles-fonts-specialist.md`)** -> MasterBundles Listing & Fixed-Keyword-List Tags (SEO meta)
 3. **Agent 9 (`agent-9-cubebrush-fonts-specialist.md`)** -> Cubebrush Listing & 20 Tags (300+ word description, Basic/Commercial license, AI-content tagging check)
 
@@ -71,7 +71,7 @@ task(context: "Font optimization (optional): Etsy / DaFont", tasks: [
 ```
 
 ## Data Enrichment & Tooling Pipeline
-- **Firecrawl** is the primary scraper for CM, Etsy, MasterBundles, Cubebrush, DaFont, and FontSpace pages.
-- **Serper/Exa/Tavily** provide search intent and competitor discovery across all marketplaces.
-- **Google Suggestqueries** (`bin/search.js`) validates search volume for tag selection.
+- **Firecrawl** is used only where the marketplace specialist's bounded research rules permit it; Agent 2's CM font pass uses Creative Market/browser pages and does not use Firecrawl.
+- **Serper/Exa/Tavily** are used only where the specialist permits them; Agent 2 does not use external SEO-volume or search-intent workflows.
+- **Google Suggest** (`bin/search.js`) returns suggested phrases; its suggestion counts are not search-volume evidence. Do not report demand from those counts.
 - **CacheRepository** (`lib/`) caches search responses with per-source TTLs.

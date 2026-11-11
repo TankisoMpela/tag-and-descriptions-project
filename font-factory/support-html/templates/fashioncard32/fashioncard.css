@@ -1,0 +1,35 @@
+.fashioncard32 #plate-copy {
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0;
+  text-align: left;
+}
+
+.fashioncard32 #plate-title {
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.fashioncard32 #plate-subtitle {
+  align-self: flex-start;
+  margin-top: 0;
+  color: #19183f;
+  font-family: inherit;
+  font-size: 3.2cqh;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.fashioncard32 #artboard::after {
+  position: absolute;
+  z-index: 3;
+  top: 66%;
+  left: 51%;
+  width: 8.5%;
+  height: 14%;
+  background: url("flourish.svg") center / contain no-repeat;
+  content: "";
+  pointer-events: none;
+}

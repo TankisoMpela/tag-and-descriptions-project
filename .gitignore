@@ -9,6 +9,7 @@ q/
 q.zip
 xd:/
 .fallow/
+.impeccable/
 
 # Local playwright console logs
 .playwright-cli/
@@ -53,6 +54,7 @@ font-vault/*.bak
 
 # Quarantine / scratch staging (malformed font dirs, throwaway work)
 font-factory/.trash/
+font-factory/.stage_saved_font.lock
 
 # OpenCode local tooling that should not be versioned
 .opencode/package-lock.json
@@ -66,10 +68,20 @@ font-factory/Fonts/
 font-factory/input/
 font-factory/Saved/
 font-factory/visuals/
+font-factory/input.zip
+font-factory/source-archive/
 # Per-font source workspaces (raw font binaries, visual references) and
 # generated preparation packages — binary-heavy, regenerable from sources.
 font-factory/fonts/
 font-factory/font-preparation/
+
+# Local-only source references and rendered benchmark sets. These may include
+# marketplace originals or multi-gigabyte output images.
+font-factory/support-references/materials/
+font-factory/support-references/originals/
+font-factory/support-references/previews/
+font-factory/support-html/benchmarks/
+font-factory/support-html/templates/*/previews/
 
 # Renderer logs are transient diagnostics; the saved HTML and image renders are
 # the reviewable output.

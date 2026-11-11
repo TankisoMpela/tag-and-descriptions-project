@@ -12,23 +12,23 @@ from pathlib import Path
 STAGES = (
     "font-image-generator",
     "font-prep-specialist",
-    "booth-fonts-specialist",
     "cm-fonts-specialist",
     "creative-fabrica-fonts-specialist",
+    "font-final-visual-processor",
 )
 CODEX_STAGES = (
     "font_image_generator",
     "font_preparer",
-    "booth_fonts_specialist",
     "cm_fonts_specialist",
     "creative_fabrica_fonts_specialist",
+    "font_final_visual_processor",
 )
 SPEC_FILES = (
     "agents/agent-27-font-image-generator.md",
     "agents/agent-13-font-prep-specialist.md",
-    "agents/agent-20-booth-fonts-specialist.md",
     "agents/agent-2-fonts-specialist.md",
     "agents/agent-29-creative-fabrica-fonts-specialist.md",
+    "agents/agent-30-font-final-visual-processor.md",
 )
 
 
@@ -77,8 +77,8 @@ def check_children(root: Path, runtime: str, directory: str) -> None:
 
 def check_agent27_sync(root: Path, opencode_agents: dict) -> None:
     canonical = read(root, SPEC_FILES[0])
-    if "13" not in canonical or "italicregular32" not in canonical:
-        raise SyncError("canonical Agent 27 spec is missing the 13-design family showcase rule")
+    if "12 eligible layouts" not in canonical or "none is" not in canonical:
+        raise SyncError("canonical Agent 27 spec is missing the 12-design randomized family showcase rule")
 
     registrations = {
         "Codex": read(root, ".codex/agents/font-image-generator.toml"),
@@ -91,9 +91,9 @@ def check_agent27_sync(root: Path, opencode_agents: dict) -> None:
     for runtime, text in registrations.items():
         if SPEC_FILES[0] not in text:
             raise SyncError(f"{runtime} Agent 27 registration does not reference {SPEC_FILES[0]}")
-        if "13" not in text or "family" not in text.lower():
+        if "12" not in text or "family" not in text.lower():
             raise SyncError(
-                f"{runtime} Agent 27 registration is missing the 13-design family showcase handoff"
+                f"{runtime} Agent 27 registration is missing the 12-design family showcase handoff"
             )
 
 
@@ -104,25 +104,31 @@ def check(root: Path) -> list[str]:
     sequence_section = canonical.split("## Required sequence", 1)[1].split(
         "## Stage handoffs", 1
     )[0]
-    if not all(label in sequence_section for label in ("Agent 27", "Agent 13", "Agent 20", "Agent 2", "Agent 29")):
+    if not all(label in sequence_section for label in ("Agent 27", "Agent 13", "Agent 2", "Agent 29", "Agent 30")):
         raise SyncError("canonical contract does not list the five active stages")
     if sequence_section.find("Agent 27") > sequence_section.find("Agent 13"):
         raise SyncError("canonical Agent 27/13 stages are out of order")
     for stage in STAGES[2:]:
         if stage not in sequence_section:
             raise SyncError(f"canonical stage ID missing: {stage}")
-    if "Saved" not in canonical or "stage_saved_font.py" not in canonical:
-        raise SyncError("canonical contract is missing Saved-folder source staging")
+    if (
+        "Saved" not in canonical
+        or "stage_saved_font.py --random" not in canonical
+        or "auto-random source mode" not in canonical
+    ):
+        raise SyncError("canonical contract is missing Agent-27 random Saved-source selection")
     messages.append("canonical contract: five active stages present")
 
     codex = read(root, ".codex/agents/full-workflow.toml")
     require_order(codex, CODEX_STAGES, "Codex orchestrator")
+    if "stage_saved_font.py --random" not in codex:
+        raise SyncError("Codex full-workflow must use Agent-27 random Saved-source selection")
     for filename in (
         "font-image-generator.toml",
         "font-preparer.toml",
-        "booth-fonts-specialist.toml",
         "cm-fonts-specialist.toml",
         "creative-fabrica-fonts-specialist.toml",
+        "font-final-visual-processor.toml",
     ):
         if not (root / ".codex/agents" / filename).is_file():
             raise SyncError(f"Codex is missing child agent: .codex/agents/{filename}")
@@ -132,6 +138,8 @@ def check(root: Path) -> list[str]:
     require_order(omp, STAGES, "OMP orchestrator")
     omp_command = read(root, ".omp/commands/full-workflow.md")
     require_order(omp_command, STAGES, "OMP /full-workflow command")
+    if "stage_saved_font.py --random" not in omp or "stage_saved_font.py --random" not in omp_command:
+        raise SyncError("OMP full-workflow must use Agent-27 random Saved-source selection")
     check_children(root, "OMP", ".omp/agents")
     messages.append("OMP: order, command, and five child profiles present")
 
@@ -145,13 +153,17 @@ def check(root: Path) -> list[str]:
     check_agent27_sync(root, agents)
     opencode_command = opencode_config.get("command", {}).get("full-workflow", {})
     require_order(opencode_command.get("template", ""), STAGES, "OpenCode /full-workflow command")
+    if "stage_saved_font.py --random" not in opencode_command.get("template", ""):
+        raise SyncError("OpenCode full-workflow must use Agent-27 random Saved-source selection")
     if "Pixiv" not in opencode_command.get("description", "") and "paused" not in opencode_command.get("description", ""):
         raise SyncError("OpenCode full-workflow command should identify paused scope")
-    messages.append("Agent 27: 13-design and family showcase handoff aligned across runtimes")
-    messages.append("OpenCode: order, command, and five child registrations present")
+    messages.append("Agent 27: 12-design randomized family showcase handoff aligned across runtimes")
+    messages.append("OpenCode: order, command, and six child registrations present")
 
     qwen_parent = read(root, ".qwen/agents/full-workflow.md")
     require_order(qwen_parent, STAGES, "Qwen orchestrator")
+    if "stage_saved_font.py --random" not in qwen_parent:
+        raise SyncError("Qwen full-workflow must use Agent-27 random Saved-source selection")
     check_children(root, "Qwen", ".qwen/agents")
     if "run_in_background: false" not in qwen_parent:
         raise SyncError("Qwen orchestrator must require foreground sequential children")

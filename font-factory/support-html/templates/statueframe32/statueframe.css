@@ -1,0 +1,17 @@
+.statueframe32 #plate-copy {
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  text-align: center;
+  text-shadow: none;
+}
+
+.statueframe32 #plate-title {
+  line-height: 0.94;
+  letter-spacing: 0;
+  white-space: pre-line;
+}
+
+.statueframe32 #plate-subtitle {
+  display: none;
+}

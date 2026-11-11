@@ -239,6 +239,27 @@ SUPPORT_ORDER = ("line32",
                  "yabbadabbadoo32",
                  "choosinghappiness32",
                  "fatkillkat32",
+                 "crimsonportrait32",
+                 "statueframe32",
+                 "portraitcard32",
+                 "warmportrait32",
+                 "fashioncard32",
+                 "cinemaportrait32",
+                 "parkstatement32",
+                 "amberquote32",
+                 "numeralfolio32",
+                 "timechange32",
+                 "bottleoffer32",
+                 "bootzyfear32",
+                 "bootzyalmost32",
+                 "bootzygraphic32",
+                 "bootzybunny32",
+                 "quadfont32",
+                 "mythicallions32",
+                 "lifeinblackwhite32",
+                 "romanstrips32",
+                 "floraltriptych32",
+                 "homequote32",
                  )
 HTML_ONLY_SUPPORT = frozenset({
     "palmello32", "quietattempt32", "hushglow32", "italianhorror32",
@@ -314,6 +335,12 @@ HTML_ONLY_SUPPORT = frozenset({
     "yabbadabbadoo32",
     "choosinghappiness32",
     "fatkillkat32",
+    "crimsonportrait32", "statueframe32", "portraitcard32", "warmportrait32",
+    "fashioncard32", "cinemaportrait32", "parkstatement32", "amberquote32",
+    "numeralfolio32", "timechange32", "bottleoffer32", "bootzyfear32",
+    "bootzyalmost32", "bootzygraphic32", "bootzybunny32", "quadfont32",
+    "mythicallions32", "lifeinblackwhite32", "romanstrips32",
+    "floraltriptych32", "homequote32",
 })
 # Retired layouts are out of the active support catalogue. This set exists only
 # so a later support run can withdraw their old renderer-owned PNGs safely.
@@ -332,6 +359,14 @@ SUPPORT_RETIRED = frozenset({
     "soldier32", "brutal32", "storyteller32", "blossom32", "meditation32",
     "sociato32", "scriptpattern32", "avalonbrush32", "boldcampaign32",
     "skincareroutine32", "saucystack32", "indieground32", "crest32",
+    # Seller-selected retirements on 2026-11-03; keep their slot tombstones.
+    "herbalproduct32", "nectarambience32", "playerglyph32", "alicebadge32",
+    "statueframe32", "fashioncard32",
+    # Seller-selected retirements on 2026-11-07; keep their slot tombstones.
+    "contour32", "plakat32", "voguecover32", "confident32",
+    "parkstatement32",
+    # Seller-selected retirement on 2026-11-11.
+    "littlemadquote32",
 })
 # Mono faces still avoid the two badge/card constructions that rely on a
 # proportioned wordmark. Style-specific exclusions below were assigned after
@@ -385,13 +420,9 @@ SUPPORT_STYLE_EXCLUDE = {
 
 
 SUPPORT_MIN_STYLES = {
-    "boots32": 2, "plakat32": 2, "weightfamily32": 2, "mangosboard32": 2,
+    "boots32": 2, "weightfamily32": 2, "mangosboard32": 2,
     "italicregular32": 2,
 }
-
-FAMILY_SHOWCASE_SUPPORTS = (
-    "plakat32", "weightfamily32", "mangosboard32", "italicregular32",
-)
 
 # Keep every eligible layout available to every class. A small relative weight
 # gives blackletter runs a few more chances to land on typographic, framed, or
@@ -446,31 +477,63 @@ def support_review_names(family_styles=1):
             and family_styles >= SUPPORT_MIN_STYLES.get(name, 1)]
 
 
-def sample_supports(rng, names, count, cls):
-    """Sample without replacement, with a modest blackletter-friendly tilt.
+def support_history_counts(font_path, cls):
+    """Count prior uses by this class from prepared handoff manifests.
 
-    The weighting applies only when choosing a panel; it never removes or
-    guarantees any eligible template. All other classes retain uniform draws.
+    The current source folder is excluded so rerunning one font does not count
+    its previous selection against itself. Only direct, non-archived font
+    workspaces are considered.
+    """
+    fonts_root = Path(__file__).resolve().parents[2] / "font-factory" / "fonts"
+    current_workspace = Path(font_path).expanduser().resolve().parent
+    counts = {}
+    pattern = re.compile(
+        r"supporting/3x2/support-\d+_([a-z0-9]+(?:-[a-z0-9]+)*)\.png"
+    )
+    for manifest in sorted(fonts_root.glob("*/prepared_visuals/visual-handoff-manifest.md")):
+        workspace = manifest.parent.parent.resolve()
+        if workspace == current_workspace:
+            continue
+        plan_path = workspace / "visual-direction" / "visual-plan.json"
+        try:
+            plan = json.loads(plan_path.read_text(encoding="utf-8"))
+            if plan.get("renderer_class") != cls:
+                continue
+            text = manifest.read_text(encoding="utf-8")
+        except (OSError, json.JSONDecodeError):
+            continue
+        for name in set(pattern.findall(text)):
+            counts[name] = counts.get(name, 0) + 1
+    return counts
+
+
+def sample_supports(rng, names, count, cls, usage_counts=None):
+    """Choose least-used eligible layouts first, randomizing ties.
+
+    Blackletter-friendly weighting applies among equally used candidates; it
+    never overrides usage balancing or removes/guarantees a template.
     """
     candidates = list(names)
     selected = []
+    usage = dict(usage_counts or {})
     count = min(max(0, count), len(candidates))
     for _ in range(count):
+        least_used = min(usage.get(name, 0) for name in candidates)
+        tied = [name for name in candidates
+                if usage.get(name, 0) == least_used]
         weights = [BLACKLETTER_SUPPORT_WEIGHT
                    if cls == "blackletter" and name in BLACKLETTER_SUPPORT_AFFINITY
-                   else 1.0 for name in candidates]
-        choice = rng.choices(candidates, weights=weights, k=1)[0]
+                   else 1.0 for name in tied]
+        choice = rng.choices(tied, weights=weights, k=1)[0]
         selected.append(choice)
+        usage[choice] = least_used + 1
         candidates.remove(choice)
     return selected
 
 
-def select_support_templates(rng, names, count, cls):
-    """Keep eligible family showcases, then fill remaining slots randomly."""
-    required = [name for name in FAMILY_SHOWCASE_SUPPORTS if name in names]
-    remaining = [name for name in names if name not in required]
-    selected = required + sample_supports(
-        rng, remaining, max(0, count - len(required)), cls)
+def select_support_templates(rng, names, count, cls, usage_counts=None):
+    """Sample all eligible layouts; family showcases have no guaranteed slots."""
+    selected = sample_supports(rng, names, count, cls, usage_counts)
     return sorted(selected, key=SUPPORT_ORDER.index)
 LABEL = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Regular.ttf")
 LABEL_B = Path("/usr/share/fonts/Adwaita/AdwaitaSans-Medium.ttf")
@@ -784,6 +847,14 @@ THEME_PREF = {
     "yabbadabbadoo32": ("bone", "clay", "sage"),
     "choosinghappiness32": ("clay", "sage", "bone"),
     "fatkillkat32": ("midnight", "clay", "bone"),
+    "crimsonportrait32": ("midnight", "clay", "bone"),
+    "statueframe32": ("bone", "gilded", "sage"),
+    "portraitcard32": ("bone", "sage", "clay"),
+    "warmportrait32": ("midnight", "clay", "bone"),
+    "fashioncard32": ("bone", "clay", "sage"),
+    "cinemaportrait32": ("midnight", "ember", "bone"),
+    "parkstatement32": ("midnight", "bone", "clay"),
+    "amberquote32": ("midnight", "ember", "clay"),
 }
 
 
@@ -5219,6 +5290,26 @@ def render_support_html(name, ctx, destination, ratio="3x2", review_mode=False):
             "wakefamous32": "WAKE ME UP WHEN I'M FAMOUS!",
             "sexyshout32": "Sexy Shout",
             "embracesexiest32": "Embrace The Sexiest With Bold And Simplicity",
+            "crimsonportrait32": "Own The Moment",
+            "statueframe32": "Make A Lasting Impression",
+            "portraitcard32": "A Quiet Confidence",
+            "warmportrait32": "Softly In Focus",
+            "fashioncard32": "Made To Be Seen",
+            "cinemaportrait32": "Stay With The Story",
+            "parkstatement32": "A Shared Beginning",
+            "numeralfolio32": "0123456789",
+            "timechange32": "Time Change 380",
+            "bottleoffer32": "Bottle Offer Equipped With Ligatures",
+            "bootzyfear32": "I Live In Fear I Have No Beer I Sleep In Jail And Everything Fails",
+            "bootzyalmost32": "Almost Almost",
+            "bootzygraphic32": "Graphic Design Is Easy With Type Mania",
+            "bootzybunny32": "Your Love Is Weird",
+            "quadfont32": "Dark Bold Modern Font",
+            "mythicallions32": "Sea Lions Coastal Study",
+            "lifeinblackwhite32": "Life In Black And White",
+            "romanstrips32": "Velvet Grace Silhouette Novella Whisper Serenade",
+            "floraltriptych32": "Flowers Are Nature’s Poetry Bloom",
+            "homequote32": "Home Is More Than Just A Place Where We Find Comfort",
         }
         fallback = fallbacks.get(name)
         if fallback is None:
@@ -5235,7 +5326,13 @@ def render_support_html(name, ctx, destination, ratio="3x2", review_mode=False):
                 "The selected display copy has unsupported glyphs; Chromium will "
                 "use a readable fallback for: " + " ".join(missing))
         props = {"warnings": warnings}
-        if name == "welcomemorning32":
+        if name in {"numeralfolio32", "timechange32"}:
+            props.update({"fontType": ctx["family"]})
+        elif name in {"crimsonportrait32", "statueframe32", "portraitcard32",
+                    "warmportrait32", "fashioncard32", "cinemaportrait32",
+                    "parkstatement32"}:
+            props.update({"headline": support_render_copy(ctx, candidate)})
+        elif name == "welcomemorning32":
             words = candidate.split()
             if len(words) == 1:
                 words.append(words[0])
@@ -5544,6 +5641,10 @@ def render_support_html(name, ctx, destination, ratio="3x2", review_mode=False):
             lines = pack_lines(candidate.split(), min(3, len(candidate.split())))
             props.update({f"line{i+1}": lines[i] if i < len(lines) else ""
                           for i in range(3)})
+        elif name == "amberquote32":
+            # Keep the five-line editable source quote from the editor config;
+            # a short generic phrase breaks this layout's hierarchy.
+            pass
         elif name in {"quietattempt32", "dreamwarriors32", "conspiracytheory32",
                       "indieground32", "caramelsundae32"}:
             props["headline"] = "\n".join(pack_lines(
@@ -6045,8 +6146,9 @@ def render_support_html(name, ctx, destination, ratio="3x2", review_mode=False):
                  "warnings": warnings}
         label_args = []
     elif name == "wideclaim32":
-        copy = ("A Typeface Is", "A Visual Voice", "Wide", "Serif")
-        missing = sorted({character for text in copy for character in text
+        copy = ("A Typeface Is", "A Visual Voice", "Wide")
+        font_type = ctx["family"]
+        missing = sorted({character for text in (*copy, font_type) for character in text
                           if not character.isspace() and not usable(ctx, character)})
         warnings = []
         if missing:
@@ -6054,7 +6156,7 @@ def render_support_html(name, ctx, destination, ratio="3x2", review_mode=False):
                 "The selected face lacks these specimen characters; Chromium "
                 "will draw them with a readable fallback: " + " ".join(missing))
         props = {"lineOne": copy[0], "lineTwo": copy[1],
-                 "wordOne": copy[2], "wordTwo": copy[3],
+                 "wordOne": copy[2], "fontType": ctx["family"],
                  "warnings": warnings}
         label_args = []
     elif name == "neon32":
@@ -12575,8 +12677,8 @@ def main():
     ap.add_argument("--supports", action="store_true",
                     help="draw a reproducible random sample of supporting-image "
                          "templates into <out>/3x2 as support-N_<name>.png")
-    ap.add_argument("--support-count", type=int, default=13,
-                    help="number of eligible support templates to sample (default: 13; "
+    ap.add_argument("--support-count", type=int, default=12,
+                    help="number of eligible support templates to sample (default: 12; "
                          "use --support-review-all for the full active HTML catalogue)")
     ap.add_argument("--support-review-all", action="store_true",
                     help="render every active HTML/CSS support template for review, "
@@ -12724,9 +12826,10 @@ def main():
             f"{ctx['name']}|{cls}|support-catalogue".encode("utf-8")).hexdigest()[:16], 16)
         rng = random.Random(seed)
         count = min(args.support_count, len(owned))
-        names = select_support_templates(rng, owned, count, cls)
+        usage_counts = support_history_counts(args.font, cls)
+        names = select_support_templates(rng, owned, count, cls, usage_counts)
         if not args.as_json:
-            print(f"  supports: selected {len(names)} of {len(owned)} eligible templates")
+            print(f"  supports: selected {len(names)} of {len(owned)} eligible templates, prioritizing least-used layouts")
     elif args.specimens:
         names = args.template or owned
     else:

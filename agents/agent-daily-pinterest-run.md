@@ -1,6 +1,6 @@
 ---
 name: agent-daily-pinterest-run
-description: Daily Pinterest pipeline. Randomly picks 10 registered fonts, writes fresh per-pin title/description/alt/keywords with tag rotation from the anti-cannibalization ledger, and assembles the staggered bulk-import buffer.csv (Buffer free import — carries alt text) plus pins.csv fallback. Manual import stays a human step.
+description: Daily Pinterest pipeline. Picks up to 10 registered fonts within Buffer's account limit, uses each preparer's saved board assignment, writes fresh per-pin title/description/alt/keywords from the font's profile and pin history, and assembles buffer.csv plus the Pinterest-native pins.csv fallback. Manual import stays a human step.
 user-invocable: true
 ---
 
@@ -20,19 +20,23 @@ reimplement selection, validation, staggering or CSV writing yourself.
 2. Run date `D` = tomorrow (UTC) unless the user names a date. The CSV
    schedules future publish times, so a past/today date will fail validation —
    that is expected, not a bug to route around.
+3. The user confirmed the Buffer Free account has verified email. Use `N=10`
+   by default. If the user later reports that verification is absent, use
+   `N=5` until it is restored.
 
 ## Step 1 — pick and brief
 
 ```bash
-python3 bin/make_daily_pins.py pick --date D --count 10
+python3 bin/make_daily_pins.py pick --date D --count N
 python3 bin/make_daily_pins.py brief --date D
 ```
 
 `pick` excludes any font pinned in the previous 14 days and writes
 `outputs/pinterest/D/selection.json`. `brief` writes `brief.md` with per-font
-name, board suggestion, one date-stable image choice with its manifest index
-and layout type, both product-page URLs, description excerpt, candidate
-keywords, historical tags, and confirmed prior pins. The tool balances image
+name, the preparer's saved board assignment, one date-stable image choice with its manifest index
+and layout type, both product-page URLs, description excerpt, the preparer's
+metadata-and-visual profile and keyword bank, historical Pinterest keywords,
+and confirmed prior pins. The tool balances image
 indexes across selected fonts, then uses that same choice in both CSVs. When
 both product pages exist, destinations split as evenly as possible.
 
@@ -55,17 +59,31 @@ no history block is on its first pin; say so rather than inventing a past.
 
 ### Keywords (decide per font)
 
-1. Start from the brief's "Candidate keywords" line — a mechanical seed from
-   the description. Extend with style/use-case words the seed missed; target
-   8–14 candidates total.
+1. Start from the brief's reviewed profile and "Candidate keywords" line.
+   The profile contains up to 60 phrases grounded in the font metadata and
+   inspected artwork; use the phrases that fit this exact Pin's assigned
+   image and buyer intent. Add a missing style/use-case phrase only when the
+   metadata or image supports it. Select about 12 strong candidates for the
+   rotation command, spanning multiple relevant angles rather than synonyms.
+   If the brief marks the profile MISSING, use only its description fallback,
+   do not claim a visual review, and report the font for preparer refresh.
 2. Rotate: `python3 bin/pinterest_tag_ledger.py avoid --slug <slug> --candidates "<c1, c2, …>" --take 6`
-   → prefer never-used, then least-used. Prefer *fresh phrasings* of the same
-   intent over repeating last run's strings ("wedding script font" →
-   "script font for wedding invitations") — exact-string repetition is what
-   cannibalizes your own pins.
+   → prefer never-used for this font, then least-used across the full Pinterest
+   history. Prefer *fresh, accurate phrasing* over synonym churn ("wedding
+   script font" → "script font for wedding invitations") — exact-string
+   repetition is what cannibalizes your own pins. Across today's batch, avoid
+   reusing the same exact keyword phrase for different fonts unless it is a
+   useful shared category; each font should keep several clearly specific
+   terms.
 3. Final mix of 6: 2 style terms + 2 use-case terms + 1 qualifier/audience
-   term + 1 seasonal/experimental slot (from the calendar below, when in its
-   lead window).
+   term + 1 further supported style/use-case term. A seasonal phrase may take
+   one of these slots only when it fits the font and its lead window below.
+
+The candidate pool and rotation are Pinterest-specific. Do not import BOOTH
+tags or its tag ledger: BOOTH's evidence-validated Japanese marketplace tags
+are a separate system. The Pinterest ledger stores each font's confirmed Pin
+keywords and tracks global phrase use only as a tie-breaker, so keep the
+current batch differentiated using the profile and your cross-font review.
 
 ### Title (writing heuristic)
 
@@ -100,11 +118,14 @@ no history block is on its first pin; say so rather than inventing a past.
 
 ### Placement notes
 
-- Board: use the brief's suggestion unless another of the four clearly fits.
-  Board titles should describe their contents; do not claim a ranking effect.
+- Board: copy the exact board assigned by the preparer and shown in `brief.md`.
+  The preparer classifies the font once from its metadata and visual review;
+  the daily agent must not reclassify it based on today's selected image or copy.
+  If any selected font has no valid board, stop the run and send it back to
+  `/pinterest-prepare` for classification. Do not invent or substitute a board.
 - Pinterest-native `Keywords` are comma-separated phrases. Buffer has no
   Pinterest Keywords column; its `Tags` column is Buffer-internal labels and
-  remains empty.
+  remains empty in this workflow.
 - Link: leave it out — the tool derives it from the registry and appends
   unique utm params per row.
 
@@ -121,7 +142,7 @@ Write `outputs/pinterest/D/copy.json` — a JSON list, one object per selected
 font, in the selection order:
 
 ```json
-[{"slug": "…", "title": "…", "description": "…", "alt": "…", "keywords": ["…"], "board": "…"}]
+[{"slug": "…", "title": "…", "description": "…", "alt": "…", "keywords": ["…"], "board": "<exact board from brief>"}]
 ```
 
 ## Step 3 — assemble
@@ -130,7 +151,7 @@ font, in the selection order:
 python3 bin/make_daily_pins.py assemble --date D
 ```
 
-Default stagger: 09:00 UTC start, one pin per hour (10 pins over 10 hours).
+Default stagger: 09:00 UTC start, one pin per hour (N pins over N hours).
 The tool validates everything (lengths, alt text, uniqueness, boards, keyword
 format, future-dated slots within 14 days), writes `buffer.csv` (Buffer
 import — exact column order of Buffer's own Pinterest template: Text /
@@ -149,15 +170,22 @@ step:
 1. One-time setup: create a Buffer free account (or use an existing one) →
    connect the Pinterest business account as a channel → open that channel's
    settings (⚙️) and set its timezone to a UTC city with no DST (search
-   "Reykjavik") so the CSV's UTC times publish exactly as written. Create the
-   four suggested Pinterest boards (`Handwritten Fonts`, `Display Fonts`,
-   `Script Fonts`, `Decorative Fonts`) before using Buffer: its `Board Name`
-   field must match an existing Pinterest board. The Pinterest-native CSV
-   importer can create a missing board.
+   "Reykjavik") so the CSV's UTC times publish exactly as written. The user
+   has already created the seven Pinterest boards. Keep each CSV `Board Name`
+   identical to the preparer's assignment and the Pinterest board title; use
+   [`agents/reference/pinterest-board-setup.md`](reference/pinterest-board-setup.md)
+   for the canonical titles and descriptions. If a board is missing or renamed,
+   stop before import and have the user restore the exact title.
 2. Each run: publish.buffer.com → select the Pinterest channel → settings
    cog → General → Bulk Upload → upload `buffer.csv` → review the preview →
-   **Add Posts to Queue**. Check remaining queue capacity first; the free queue
-   allows up to 10 waiting posts.
+   **Add Posts to Queue**. Inspect the image preview on every row first; if any
+   thumbnail is missing or broken, stop without queueing and rerun the preparer's
+   upload check. Check remaining queue capacity first; the free plan
+   allows up to 10 posts per channel per upload, limited by open queue slots.
+   Buffer's Pinterest help currently states a daily posting limit of 25 for
+   email-verified accounts and 5 for accounts without verified email. This
+   account is verified, so use 10; if verification is later absent, make a
+   5-pin batch with `--count 5` ([Buffer Pinterest guide](https://support.buffer.com/articles/using-pinterest-with-buffer-PB6dp33lMG)).
 3. Fallback: `pins.csv` works via Pinterest Business on desktop → Settings →
    Import content, but carries no alt-text column. Pinterest creates missing
    boards from this native CSV.
@@ -179,10 +207,10 @@ touch Pinterest or Buffer, and make no publication claim.
   describe its assigned image for accessibility.
 - Only rows confirmed accepted by Buffer/Pinterest enter pin history or the
   14-day exclusion. Read that confirmed history before writing new copy.
-- No hashtags anywhere in Keywords — plain comma-separated search terms.
-  Buffer's template has no Pinterest Keywords column; its `Tags` column is
-  Buffer-internal labels (emit it empty, never fill it). Keywords live in
-  pins.csv only.
+- No hashtags anywhere in Pinterest Keywords — plain comma-separated search
+  terms. Buffer's template has no Pinterest Keywords column; its `Tags` column
+  is for Buffer-internal labels, so the current CSV emits it empty. Pinterest
+  Keywords live in pins.csv only.
 - Titles: Title Case, 45–65 char target, primary keyword in the first 35
   chars, unique in batch. Descriptions: primary keyword in the first sentence
   (~75 chars). Never "click" in title or description; soft CTAs only.

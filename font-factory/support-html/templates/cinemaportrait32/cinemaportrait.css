@@ -1,0 +1,40 @@
+.cinemaportrait32 #plate-copy {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  padding: 0;
+  color: #ffbd45;
+  text-shadow: none;
+}
+
+.cinemaportrait32 #plate-title {
+  position: absolute;
+  left: 6%;
+  top: 41%;
+  width: 88%;
+  height: 52%;
+  color: #ffbd45;
+  font-size: 28cqh;
+  font-weight: 400;
+  line-height: .78;
+  letter-spacing: -.025em;
+  text-align: center;
+  text-shadow: none;
+}
+
+.cinemaportrait32 #plate-subtitle {
+  position: absolute;
+  left: 20%;
+  top: 5.5%;
+  width: 60%;
+  margin: 0;
+  color: #fff8eb;
+  font: 500 1.55cqh/2 "Arial Narrow", Arial, sans-serif;
+  letter-spacing: .075em;
+  text-align: center;
+  text-shadow: 0 1px 6px #100b08;
+  text-transform: uppercase;
+  white-space: pre-line;
+}

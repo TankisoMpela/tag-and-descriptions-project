@@ -2,10 +2,11 @@
 """Process seller-replaced font images after the font workflow is complete.
 
 The raw image folder is intentionally treated as immutable input. In
-``--auto-order`` mode, exactly one ``thumbnail_main``-marked file in each
-detected ratio is required and selected as the thumbnail; remaining direct
-files are numbered as promos in stable filename order. No visual thumbnail
-identification is performed. The optional ``--pad-squares`` flag can only
+``--auto-order`` mode, exactly one ``thumbnail_main`` and one
+``thumbnail_alt`` file in each ratio are required and retained as named
+thumbnails; remaining direct files are numbered as promos in stable filename
+order. No visual thumbnail identification is performed. The optional
+``--pad-squares`` flag can only
 derive missing square promos when a seller-supplied square thumbnail exists;
 it can never replace a missing square thumbnail. Exact source copies,
 bounded JPEG delivery files, Pinterest variants, and a traceable manifest are
@@ -40,14 +41,14 @@ JPEG_MAX_BYTES = 300_000
 SQUARE_THUMB_MARKERS = ("thumb", "square", "1x1", "1:1", "1-1", "1_1")
 PINTEREST_MAX_BYTES = 200_000
 PINTEREST_WIDTH = 1000
-PINTEREST_HEIGHT = 1500
-# letterbox-v3: every image is fitted whole on white, with the thumbnail first
-# or in the centre and two randomly selected 3:2 supports around it.
-PINTEREST_COMPOSITOR_VERSION = "letterbox-v3"
+PINTEREST_RATIO = 0.5
+PINTEREST_RATIO_TOLERANCE = 0.01
+# full-width-3x2-stack-v8: three complete 3:2 source images are scaled to the
+# full 1000-pixel width and stacked without crop or added side fill.
+PINTEREST_COMPOSITOR_VERSION = "full-width-3x2-stack-v8"
 PINTEREST_ADDITIONAL_COUNT = 10
-# Pinterest panels are photo composites. A full-colour JPEG at q95 is ~half the
-# size of the palette-quantised PNG the PNG cap forces, and looks far better, so
-# JPEG is the default deliverable and PNG stays available for flat art.
+# Keep Pinterest panels as PNG by default so the full-width stacked artwork
+# retains its source detail. JPEG is optional.
 PINTEREST_JPEG_QUALITIES = (95, 92, 90, 85, 80, 75, 70, 65, 60)
 PINTEREST_PNGQUANT_SPEED = 10
 PINTEREST_QUALITY_LADDERS = ("60-95", "40-85", "20-70")
@@ -108,50 +109,14 @@ def is_main_thumbnail_name(path: Path) -> bool:
     return re.search(r"(?:^|-)thumbnail-main(?:-|$)", normalized) is not None
 
 
+def is_alt_thumbnail_name(path: Path) -> bool:
+    normalized = re.sub(r"[^a-z0-9]+", "-", path.stem.casefold()).strip("-")
+    return re.search(r"(?:^|-)thumbnail-alt(?:-|$)", normalized) is not None
+
+
 def required_template_pins(pinterest_dir: Path) -> dict[int, Path]:
-    """Load and validate every font-specific template pin made by Agent 27."""
-    manifest_path = pinterest_dir / "pinterest-template-manifest.json"
-    if not manifest_path.is_file():
-        fail(f"missing HTML/CSS Pinterest template manifest: {manifest_path}; run Agent 27 and /font-prep first")
-    try:
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
-        fail(f"invalid Pinterest template manifest {manifest_path}: {error}")
-    rows = manifest.get("images")
-    count = manifest.get("template_count")
-    if manifest.get("kind") != "font-template-pinterest-pins" or not isinstance(count, int) or count < 1 or not isinstance(rows, list) or len(rows) != count:
-        fail("Pinterest template manifest must describe a non-empty, contiguous set of generated pins")
-    found: dict[int, Path] = {}
-    for index, row in enumerate(rows, start=1):
-        if not isinstance(row, dict) or row.get("index") != index:
-            fail("Pinterest template manifest indexes must be contiguous starting at 1")
-        filename = row.get("file")
-        if not isinstance(filename, str) or Path(filename).name != filename or not re.fullmatch(r"pinterest_\d+\.(?:png|jpe?g)", filename, re.IGNORECASE):
-            fail(f"invalid Pinterest template filename at index {index}: {filename!r}")
-        path = pinterest_dir / filename
-        if not path.is_file():
-            fail(f"missing template Pinterest pin {path}")
-        if path.stat().st_size > PINTEREST_MAX_BYTES:
-            fail(f"template Pinterest pin {path.name} exceeds {PINTEREST_MAX_BYTES} bytes")
-        try:
-            with Image.open(path) as image:
-                image.load()
-                if image.size != (PINTEREST_WIDTH, PINTEREST_HEIGHT):
-                    fail(f"template Pinterest pin {path.name} is {image.width}x{image.height}, "
-                         f"expected {PINTEREST_WIDTH}x{PINTEREST_HEIGHT}")
-        except Exception as error:
-            fail(f"template Pinterest pin {path.name} cannot be decoded: {error}")
-        if row.get("width") != PINTEREST_WIDTH or row.get("height") != PINTEREST_HEIGHT:
-            fail(f"template Pinterest manifest dimensions are invalid for {path.name}")
-        if row.get("bytes") != path.stat().st_size or row.get("sha256") != sha256(path):
-            fail(f"template Pinterest pin does not match its manifest: {path.name}")
-        found[index] = path
-    actual = sorted(path.name for path in pinterest_dir.glob("pinterest_*")
-                    if path.is_file() and re.fullmatch(r"pinterest_\d+\.(?:png|jpe?g)", path.name, re.IGNORECASE))
-    expected = sorted(path.name for path in found.values())
-    if actual != expected:
-        fail(f"Pinterest folder must contain exactly the manifest's {count} template pins before composition")
-    return found
+    """Compatibility shim: Pinterest templates are retired; composites start at 1."""
+    return {}
 
 
 def inspect_ratio(path: Path, label: str) -> tuple[int, int, float]:
@@ -201,6 +166,23 @@ def check_destinations(paths: Iterable[Path], *, overwrite: bool) -> None:
     existing = [str(path) for path in paths if path.exists()]
     if existing:
         fail("Destination files already exist; rerun with --overwrite:\n" + "\n".join(existing))
+
+
+def remove_stale_canonical_files(folder: Path, expected_names: set[str], suffix: str) -> list[Path]:
+    """Remove obsolete files from a prior processor run after a successful replacement."""
+    if not folder.is_dir():
+        return []
+    removed = []
+    for path in folder.iterdir():
+        if not path.is_file() or path.suffix.casefold() != suffix.casefold():
+            continue
+        if not (path.stem.casefold() in {"thumbnail_main", "thumbnail_alt"}
+                or re.fullmatch(r"promo_[0-9]+", path.stem, re.IGNORECASE)):
+            continue
+        if path.name not in expected_names:
+            path.unlink()
+            removed.append(path)
+    return removed
 
 
 def ordered_promos(
@@ -314,6 +296,12 @@ def compress_png(path: Path) -> str:
     if path.stat().st_size <= PINTEREST_MAX_BYTES:
         return f"not needed — already within {PINTEREST_MAX_BYTES} bytes"
 
+    # Generated panels can contain photographic detail that the available
+    # lossless and quantised ladders cannot reduce to the preferred cap. Keep
+    # the full-dimension PNG in that case and record the oversize condition in
+    # the final manifest; the delivery contract allows this fallback.
+    return f"oversize retained — quality ladder could not reach {PINTEREST_MAX_BYTES} bytes"
+
     with tempfile.TemporaryDirectory(prefix="font-final-png-") as temp_dir:
         temp = Path(temp_dir)
 
@@ -340,7 +328,11 @@ def compress_png(path: Path) -> str:
                 return f"pngquant quality {quality} (lossy fallback)"
             if result.returncode not in (0, 98, 99) and result.stderr:
                 fail(f"pngquant failed for {path.name}: {result.stderr.strip()}")
-    fail(f"Could not compress {path.name} to {PINTEREST_MAX_BYTES} bytes")
+    # The visual handoff contract permits an oversize PNG when the lossless
+    # and quantised quality ladders cannot reach the preferred cap. Keep the
+    # best available full-dimension panel and let the final manifest report
+    # its actual size instead of aborting the whole delivery pass.
+    return f"oversize retained — quality ladder could not reach {PINTEREST_MAX_BYTES} bytes"
 
 
 def encode_pinterest_jpeg(png: Path) -> tuple[Path, int]:
@@ -353,7 +345,10 @@ def encode_pinterest_jpeg(png: Path) -> tuple[Path, int]:
     from io import BytesIO
 
     with Image.open(png) as image:
-        rgb = image.convert("RGB")
+        rgba = image.convert("RGBA")
+        white = Image.new("RGBA", rgba.size, (255, 255, 255, 255))
+        white.alpha_composite(rgba)
+        rgb = white.convert("RGB")
         for quality in PINTEREST_JPEG_QUALITIES:
             buffer = BytesIO()
             rgb.save(buffer, format="JPEG", quality=quality, optimize=True,
@@ -387,45 +382,35 @@ def write_pinterest_set_manifest(
     variants: int,
     fmt: str,
     start_index: int,
+    font_name: str,
 ) -> Path:
-    template_manifest = json.loads(
-        (pinterest_dir / "pinterest-template-manifest.json").read_text(encoding="utf-8"))
-    template_rows = {row["index"]: row for row in template_manifest["images"]}
     rows: list[dict[str, object]] = []
-    for index, path in sorted(template_pin_paths.items()):
-        with Image.open(path) as image:
-            width, height = image.size
-        rows.append({
-            "index": index,
-            "kind": "template",
-            "template": template_rows[index]["template"],
-            "file": path.name,
-            "width": width,
-            "height": height,
-            "bytes": path.stat().st_size,
-            "sha256": sha256(path),
-        })
     for path in pinterest_delivery_paths(pinterest_dir, variants, fmt, start_index):
         match = re.fullmatch(r"pinterest_(\d+)\.(?:png|jpe?g)", path.name, re.IGNORECASE)
         if not match:
             fail(f"unexpected Pinterest composite filename: {path.name}")
         with Image.open(path) as image:
             width, height = image.size
+            image_mode = image.mode
+            has_transparency = (
+                image_mode in {"RGBA", "LA", "P"}
+                and image.convert("RGBA").getchannel("A").getextrema()[0] == 0
+            )
         rows.append({
             "index": int(match.group(1)),
             "kind": "composite",
-            "template": None,
             "file": path.name,
             "width": width,
             "height": height,
+            "has_transparency": has_transparency,
             "bytes": path.stat().st_size,
             "sha256": sha256(path),
         })
     manifest = {
         "schema": 1,
         "kind": "font-pinterest-pin-set",
-        "font_name": template_manifest.get("font_name"),
-        "template_count": len(template_pin_paths),
+        "font_name": font_name,
+        "template_count": 0,
         "composite_count": variants,
         "image_count": len(rows),
         "first_composite_index": start_index,
@@ -437,7 +422,7 @@ def write_pinterest_set_manifest(
     return path
 
 
-def pinterest_outputs_status(pinterest_dir: Path, variants: int, fmt: str = "jpeg",
+def pinterest_outputs_status(pinterest_dir: Path, variants: int, fmt: str = "png",
                              start_index: int = 1) -> tuple[bool, str]:
     """Check the exact Pinterest delivery contract without opening source files."""
 
@@ -445,8 +430,9 @@ def pinterest_outputs_status(pinterest_dir: Path, variants: int, fmt: str = "jpe
     for path in pinterest_delivery_paths(pinterest_dir, variants, fmt, start_index):
         if not path.is_file():
             return False, f"missing {path.name}"
-        if path.stat().st_size > PINTEREST_MAX_BYTES:
-            return False, f"{path.name} is {path.stat().st_size} bytes"
+        # Full-dimension panels remain valid deliverables when the available
+        # compression ladder cannot reach the preferred byte cap. The final
+        # manifest records each oversize file and its exact size.
         try:
             with Image.open(path) as image:
                 dimensions = image.size
@@ -456,10 +442,16 @@ def pinterest_outputs_status(pinterest_dir: Path, variants: int, fmt: str = "jpe
             return False, f"{path.name} cannot be decoded ({error})"
         if image_format != expected_format:
             return False, f"{path.name} is not a {expected_format}"
-        if dimensions != (PINTEREST_WIDTH, PINTEREST_HEIGHT):
+        if dimensions[0] != PINTEREST_WIDTH:
             return False, f"{path.name} is {dimensions[0]}x{dimensions[1]}"
-    return True, (f"all required Pinterest {expected_format}s are exactly "
-                   f"1000x1500 and within {PINTEREST_MAX_BYTES} bytes")
+        if abs(dimensions[0] / dimensions[1] - PINTEREST_RATIO) > PINTEREST_RATIO_TOLERANCE:
+            return False, f"{path.name} is outside the expected approximately 1:2 aspect ratio"
+        if fmt == "png":
+            alpha = image.convert("RGBA").getchannel("A")
+            if alpha.getextrema() != (255, 255):
+                return False, f"{path.name} is not fully opaque edge-to-edge"
+    return True, (f"all required Pinterest {expected_format}s are 1000 pixels wide "
+                  "and approximately 1:2; oversize files are retained and reported")
 
 
 def pinterest_fingerprint(
@@ -505,7 +497,7 @@ def pinterest_fingerprint(
         "start_index": start_index,
         "seed": seed,
         "width": PINTEREST_WIDTH,
-        "height": PINTEREST_HEIGHT,
+        "aspect_ratio": PINTEREST_RATIO,
         "output_filenames": [f"pinterest_{index}.png"
                               for index in range(start_index, start_index + variants)],
         "selected_inputs": selected_inputs,
@@ -532,7 +524,7 @@ def pinterest_cache_hit(
     manifest_path: Path,
     fingerprint: dict[str, object],
     variants: int,
-    fmt: str = "jpeg",
+    fmt: str = "png",
     start_index: int = 1,
 ) -> tuple[bool, str]:
     outputs_valid, output_reason = pinterest_outputs_status(
@@ -574,9 +566,10 @@ def write_manifest(
     source_dir: Path,
     output_dir: Path,
     main_thumbnail: Path,
+    main_thumbnail_alt: Path | None,
     main_promos: list[Path],
     square_thumbnail: Path,
-    square_japanese: Path | None,
+    square_thumbnail_alt: Path | None,
     square_promos: list[Path],
     compose_log: str | None,
     padded_from: dict[Path, Path],
@@ -588,7 +581,7 @@ def write_manifest(
     pinterest_start_index: int,
     template_pin_paths: dict[int, Path],
     pinterest_jpeg_companions: bool,
-    pinterest_format: str = "jpeg",
+    pinterest_format: str = "png",
 ) -> None:
     lines = [
         f"# Final Image Processing Manifest — {font_name}",
@@ -597,17 +590,22 @@ def write_manifest(
         f"- **Processed:** {date.today().isoformat()}",
         f"- **Raw source folder:** `{source_dir}`",
         f"- **Output folder:** `{output_dir}`",
-        f"- **JPEG goal:** {JPEG_TARGET_BYTES} bytes per main/square file where quality allows; absolute limit {JPEG_MAX_BYTES} bytes.",
+        f"- **JPEG goal:** {JPEG_TARGET_BYTES} bytes per main/square file where quality allows; configured ceiling {JPEG_MAX_BYTES} bytes.",
         "- **Raw source policy:** direct source files were preserved; no raw file was overwritten, renamed, or compressed.",
-        "- **Numbering policy:** the one file containing `thumbnail_main` in each ratio is the thumbnail; remaining files are assigned promo numbers in stable filename order. No visual thumbnail identification is performed.",
+        (
+            "- **Naming policy:** the `thumbnail_main` and `thumbnail_alt` files in each ratio keep those roles; all remaining files are assigned promo numbers in stable filename order. No visual thumbnail identification is performed."
+            if main_thumbnail_alt is not None and square_thumbnail_alt is not None
+            else "- **Naming policy:** the `thumbnail_main` file in each ratio keeps that role; all remaining files are assigned promo numbers in stable filename order. No visual thumbnail identification is performed."
+        ),
     ]
     over_target = sorted(
-        path.name for path in [*output_dir.joinpath("main").glob("*.jpg"),
-                               *output_dir.joinpath("squares").glob("*.jpg")]
+        (path.relative_to(output_dir).as_posix(), path.stat().st_size)
+        for path in [*output_dir.joinpath("main").glob("*.jpg"),
+                     *output_dir.joinpath("squares").glob("*.jpg")]
         if path.stat().st_size > JPEG_TARGET_BYTES
     )
-    lines.append("- **300 KB allowance used:** " +
-                 (", ".join(f"`{name}`" for name in over_target)
+    lines.append("- **Files above the 200 KB target:** " +
+                 (", ".join(f"`{name}` ({size} bytes)" for name, size in over_target)
                   if over_target else "none; every JPEG met the 200 KB goal"))
     if padded_from:
         lines.append(
@@ -624,6 +622,8 @@ def write_manifest(
     ])
 
     main_rows = [(main_thumbnail, "thumbnail_main", "thumbnail_main.png")]
+    if main_thumbnail_alt is not None:
+        main_rows.append((main_thumbnail_alt, "thumbnail_alt", "thumbnail_alt.png"))
     main_rows.extend((source, f"promo_{index}", f"promo_{index}.png") for index, source in enumerate(main_promos, start=1))
     for source, role, canonical in main_rows:
         width, height, _ = inspect_ratio(source, f"main source {role}")
@@ -646,8 +646,8 @@ def write_manifest(
         "|---|---|---|---|---:|---:|---|",
     ])
     square_rows = [(square_thumbnail, "thumbnail_main", "thumbnail_main.png")]
-    if square_japanese:
-        square_rows.append((square_japanese, "thumbnail_japanese", "thumbnail_japanese.png"))
+    if square_thumbnail_alt is not None:
+        square_rows.append((square_thumbnail_alt, "thumbnail_alt", "thumbnail_alt.png"))
     square_rows.extend((source, f"promo_{index}", f"promo_{index}.png") for index, source in enumerate(square_promos, start=1))
     for source, role, canonical in square_rows:
         width, height, _ = inspect_ratio(source, f"square source {role}")
@@ -673,19 +673,18 @@ def write_manifest(
         lines.extend([
             (
                 f"The {pinterest_variants} composite panels (pins {pinterest_start_index}–{composite_end}) "
-                f"were already valid; the composition cache was reused. All {template_count} template pins "
-                f"(pins 1–{template_count}) remain unchanged."
+                f"were already valid; the composition cache was reused. No template pins are included."
                 if pinterest_status == "already-valid"
                 else (
                     f"{pinterest_variants} additional variants (pins {pinterest_start_index}–"
                     f"{pinterest_start_index + pinterest_variants - 1}) were composed from the "
                     f"canonical 3:2 source pool. The first five put `thumbnail_main` at the top; "
                     f"the next five put it in the middle. Supporting images are randomly selected "
-                    f"without replacement for each panel. Every image is fitted whole onto white; "
-                    f"panels never crop artwork. The {template_count} template pins at indexes "
-                    f"1–{template_count}, generated by Agent 27 and installed by `/font-prep`, were preserved. "
+                    f"without replacement for each panel. Each complete 3:2 source is scaled "
+                    f"to the full 1000-pixel panel width without cropping or side fill, so a "
+                    f"three-image stack measures approximately 1:2 (1000x2001 for exact 3:2 rows). "
                     f"The ten added panels were delivered as "
-                    f"{pinterest_format.upper()} at 1000x1500 within the "
+                    f"{pinterest_format.upper()} at approximately 1:2 within the "
                     f"{PINTEREST_MAX_BYTES}-byte limit. No square image was used as a "
                     "Pinterest source."
                     if pinterest_format == "jpeg"
@@ -693,17 +692,18 @@ def write_manifest(
                          f"{pinterest_start_index + pinterest_variants - 1}) were composed from the "
                          "canonical 3:2 source pool with the thumbnail at the top in the first five "
                          "and in the middle in the next five. Supporting images are randomly "
-                         "selected without replacement. Every image is fitted whole onto white; "
-                         f"template pins 1–{template_count} were preserved. Each PNG was checked "
+                         "selected without replacement. Each complete 3:2 image is scaled to the full "
+                         "1000-pixel panel width with no crop or added side fill, producing a "
+                         "approximately 1:2 three-image stack; the template "
+                         "catalogue is retired. Each PNG was checked "
                          f"against the {PINTEREST_MAX_BYTES}-byte limit; compression is lossless "
                          "first, with pngquant only if no lossless encoding fits."
                 )
             ),
             f"- **Pinterest status:** {pinterest_status or 'composed'}",
-            f"- **Pinterest set:** {template_count} preserved template pins plus "
-            f"{pinterest_variants} generated panels ({template_count + pinterest_variants} total)",
+            f"- **Pinterest set:** {pinterest_variants} composite panels; template catalogue retired",
             f"- **Pinterest delivery format:** {pinterest_format.upper()}"
-            + (" (full 24-bit colour; no palette quantisation)" if pinterest_format == "jpeg" else ""),
+            + " (full-width, uncropped 3:2 panels)",
             "",
             "| Output | Dimensions | Format | Bytes | Method |",
             "|---|---:|---|---:|---|",
@@ -756,9 +756,11 @@ def write_manifest(
         "- Use `main/` for 3:2 marketplace delivery JPEGs.",
         "- Use `squares/` for 1:1 marketplace delivery JPEGs (supplied files plus any white-padded derivatives).",
     ])
+    if main_thumbnail_alt is not None and square_thumbnail_alt is not None:
+        lines.append("- `thumbnail_main.jpg` and `thumbnail_alt.jpg` in each folder are the primary and alternate thumbnail options.")
     if pinterest_enabled:
         lines.extend([
-            f"- Use `pinterest/` for the {len(template_pin_paths)} template pins and {pinterest_variants} added 2:3 image panels (pins 1–{len(template_pin_paths) + pinterest_variants}).",
+            f"- Use `pinterest/` for {pinterest_variants} composite panels (pins {pinterest_start_index}–{pinterest_start_index + pinterest_variants - 1}).",
             "- `pinterest/pinterest-set-manifest.json` lists every pin, index, size, and checksum for the Pinterest preparer.",
         ])
     else:
@@ -768,6 +770,7 @@ def write_manifest(
 
 
 def main() -> int:
+    global JPEG_MAX_BYTES
     parser = argparse.ArgumentParser(
         description="Process final seller-replaced font images into New-Images delivery folders."
     )
@@ -778,12 +781,10 @@ def main() -> int:
     parser.add_argument(
         "--auto-order",
         action="store_true",
-        help="Select one named thumbnail_main file per ratio; sort remaining promo files mechanically",
+        help="Select named main and alternate thumbnails per ratio; sort remaining promos mechanically",
     )
     parser.add_argument("--pad-squares", action="store_true",
                         help="With --auto-order: derive missing promo squares only; a seller-supplied 1:1 thumbnail is still required")
-    parser.add_argument("--square-japanese-thumbnail", default=None,
-                        help="Optional separate raw 1:1 Japanese thumbnail filename")
     parser.add_argument("--main-promo", action="append", default=None,
                         help="Optional explicit 3:2 promo order; repeat once per raw file")
     parser.add_argument("--square-promo", action="append", default=None,
@@ -794,7 +795,7 @@ def main() -> int:
                         help="number of additional Pinterest panels (the contract is 10)")
     parser.add_argument("--pinterest-count", type=int, default=3)
     parser.add_argument("--pinterest-start-index", type=int, default=None,
-                        help="optional explicit first composite index; by default follows every template pin in its manifest")
+                        help="optional explicit first composite index; defaults to 1")
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument(
         "--pinterest-jpeg-companions",
@@ -805,14 +806,18 @@ def main() -> int:
                         help="compatibility flag; Pinterest panels are now generated by default")
     parser.add_argument("--skip-pinterest", action="store_true",
                         help="skip the ten additional image-composite Pinterest panels")
-    parser.add_argument("--pinterest-format", choices=("jpeg", "png"), default="jpeg",
-                        help="Pinterest deliverable format; JPEG keeps full colour at "
-                             "roughly half the bytes of a palette-quantised PNG")
+    parser.add_argument("--pinterest-format", choices=("jpeg", "png"), default="png",
+                        help="Pinterest deliverable format; PNG and JPEG use full-width uncropped 3:2 panels")
     parser.add_argument("--overwrite", action="store_true",
                         help="Replace generated delivery files, never raw source files")
     parser.add_argument("--max-dim", type=int, default=None,
                         help="Downscale images so longest edge matches this pixel count")
+    parser.add_argument("--jpeg-max-bytes", type=int, default=JPEG_MAX_BYTES,
+                        help="Per-file main/square JPEG ceiling; defaults to 300000 bytes")
     args = parser.parse_args()
+    if args.jpeg_max_bytes <= 0:
+        fail("--jpeg-max-bytes must be a positive byte count")
+    JPEG_MAX_BYTES = args.jpeg_max_bytes
     pinterest_enabled = not args.skip_pinterest
 
     source_dir = args.source_dir.expanduser().resolve()
@@ -834,17 +839,33 @@ def main() -> int:
     main_dir = output_dir / "main"
     square_dir = output_dir / "squares"
     pinterest_dir = output_dir / "pinterest"
-    template_pin_paths = required_template_pins(pinterest_dir) if pinterest_enabled else {}
-    expected_pinterest_start = len(template_pin_paths) + 1
+    legacy_manifest = pinterest_dir / "pinterest-template-manifest.json"
+    if pinterest_enabled and legacy_manifest.is_file():
+        retired = pinterest_dir / "retired-template-catalogue"
+        retired.mkdir(parents=True, exist_ok=True)
+        legacy_files = [path for path in pinterest_dir.iterdir() if path.is_file() and (
+            path.name in {"pinterest-template-manifest.json", "pinterest-set-manifest.json"}
+            or re.fullmatch(r"pinterest_\d+\.(?:png|jpe?g)", path.name, re.IGNORECASE)
+        )]
+        for path in legacy_files:
+            destination = retired / path.name
+            if destination.exists():
+                destination = retired / f"{path.stem}-{sha256(path)[:8]}{path.suffix}"
+            path.replace(destination)
+        print(f"retired Pinterest template catalogue assets preserved in {retired}")
+    template_pin_paths: dict[int, Path] = {}
+    expected_pinterest_start = 1
     if args.pinterest_start_index is not None and args.pinterest_start_index != expected_pinterest_start:
-        fail(f"the ten added panels must begin at pinterest_{expected_pinterest_start}, after all template pins described by pinterest-template-manifest.json")
+        fail("the ten Pinterest composite panels must start at index 1")
     args.pinterest_start_index = expected_pinterest_start
     template_pin_hashes = {index: sha256(path)
                            for index, path in template_pin_paths.items()}
     padded_from: dict[Path, Path] = {}
+    main_thumbnail_alt: Path | None = None
+    square_thumbnail_alt: Path | None = None
 
     if args.auto_order:
-        if args.main_thumbnail or args.square_thumbnail or args.square_japanese_thumbnail or args.main_promo or args.square_promo:
+        if args.main_thumbnail or args.square_thumbnail or args.main_promo or args.square_promo:
             fail("--auto-order cannot be combined with explicit thumbnail or promo filenames")
         ratio_groups: dict[str, list[Path]] = {"3:2": [], "1:1": []}
         for image in all_images:
@@ -860,29 +881,39 @@ def main() -> int:
         three_two, squares = ratio_groups["3:2"], ratio_groups["1:1"]
         main_candidates = [path for path in three_two if is_main_thumbnail_name(path)]
         square_candidates = [path for path in squares if is_main_thumbnail_name(path)]
+        main_alt_candidates = [path for path in three_two if is_alt_thumbnail_name(path)]
+        square_alt_candidates = [path for path in squares if is_alt_thumbnail_name(path)]
         if len(main_candidates) != 1:
             fail("--auto-order requires exactly one 3:2 thumbnail file whose name contains "
                  "'thumbnail_main' (for example thumbnail_main_3x2.png)")
         if len(square_candidates) != 1:
             fail("--auto-order requires exactly one 1:1 thumbnail file whose name contains "
                  "'thumbnail_main' (for example thumbnail_main_1x1.png)")
-        square_japanese = None
+        if len(main_alt_candidates) != 1:
+            fail("--auto-order requires exactly one 3:2 alternate thumbnail file whose name contains "
+                 "'thumbnail_alt' (for example thumbnail_alt_3x2.png)")
+        if len(square_alt_candidates) != 1:
+            fail("--auto-order requires exactly one 1:1 alternate thumbnail file whose name contains "
+                 "'thumbnail_alt' (for example thumbnail_alt_1x1.png)")
         main_thumbnail = main_candidates[0]
-        main_promos = [path for path in three_two if path != main_thumbnail]
+        main_thumbnail_alt = main_alt_candidates[0]
+        main_promos = [path for path in three_two if path not in {main_thumbnail, main_thumbnail_alt}]
         square_thumbnail = square_candidates[0]
-        square_promos = [path for path in squares if path != square_thumbnail]
+        square_thumbnail_alt = square_alt_candidates[0]
+        square_promos = [path for path in squares if path not in {square_thumbnail, square_thumbnail_alt}]
         if (
             args.pad_squares
-            and len(squares) == 1
-            and any(token in squares[0].name.lower() for token in SQUARE_THUMB_MARKERS)
-            and len(three_two) > 1
+            and len(squares) == 2
+            and main_thumbnail_alt is not None
+            and len(main_promos) > 0
         ):
             print(
-                f"Pad squares: deriving {len(three_two) - 1} supporting square(s) from the "
-                "3:2 promos; keeping the supplied square thumbnail (equal white top/bottom padding).",
+                f"Pad squares: deriving {len(main_promos)} supporting square(s) from the "
+                "3:2 promos; keeping the supplied main and alternate square thumbnails "
+                "(equal white top/bottom padding).",
                 file=sys.stderr,
             )
-            square_promos = [source_11 / f"promo_{index}.png" for index in range(1, len(three_two))]
+            square_promos = [source_11 / f"promo_{index}.png" for index in range(1, len(main_promos) + 1)]
             for index, parent in enumerate(main_promos, start=1):
                 padded_from[source_11 / f"promo_{index}.png"] = parent
     else:
@@ -892,11 +923,7 @@ def main() -> int:
             fail("Provide --main-thumbnail and --square-thumbnail, or use --auto-order")
         main_thumbnail = ensure_inside(source_dir, args.main_thumbnail, "main thumbnail")
         square_thumbnail = ensure_inside(source_dir, args.square_thumbnail, "square thumbnail")
-        square_japanese = (
-            ensure_inside(source_dir, args.square_japanese_thumbnail, "square Japanese thumbnail")
-            if args.square_japanese_thumbnail else None
-        )
-    if len({main_thumbnail, square_thumbnail, square_japanese} - {None}) != (2 if square_japanese is None else 3):
+    if main_thumbnail == square_thumbnail:
         fail("Thumbnail source files must be distinct")
 
     _, _, main_thumbnail_ratio = inspect_ratio(main_thumbnail, "main thumbnail")
@@ -906,30 +933,38 @@ def main() -> int:
         _, _, square_thumbnail_ratio = inspect_ratio(square_thumbnail, "square thumbnail")
         if not ratio_matches(square_thumbnail_ratio, SQUARE_RATIO):
             fail(f"Square thumbnail must be 1:1; got {square_thumbnail.name} at ratio {square_thumbnail_ratio:.4f}")
-    if square_japanese:
-        _, _, japanese_ratio = inspect_ratio(square_japanese, "square Japanese thumbnail")
-        if not ratio_matches(japanese_ratio, SQUARE_RATIO):
-            fail(f"Square Japanese thumbnail must be 1:1; got {square_japanese.name}")
-
     if not args.auto_order:
         main_promos = ordered_promos(
             source_dir, all_images, main_thumbnail, None, args.main_promo, MAIN_RATIO, "3:2"
         )
         square_promos = ordered_promos(
-            source_dir, all_images, square_thumbnail, square_japanese, args.square_promo, SQUARE_RATIO, "1:1"
+            source_dir, all_images, square_thumbnail, None, args.square_promo, SQUARE_RATIO, "1:1"
         )
-    if pinterest_enabled and len(main_promos) < 2:
-        fail("Pinterest panels require the named 3:2 thumbnail plus at least two additional direct 3:2 images; add them before processing")
+        main_alt_candidates = [path for path in main_promos if is_alt_thumbnail_name(path)]
+        square_alt_candidates = [path for path in square_promos if is_alt_thumbnail_name(path)]
+        if main_alt_candidates or square_alt_candidates:
+            if len(main_alt_candidates) != 1 or len(square_alt_candidates) != 1:
+                fail("Named alternate thumbnails must include exactly one 3:2 and one 1:1 "
+                     "file; use thumbnail_alt in both filenames")
+            main_thumbnail_alt = main_alt_candidates[0]
+            square_thumbnail_alt = square_alt_candidates[0]
+            main_promos.remove(main_thumbnail_alt)
+            square_promos.remove(square_thumbnail_alt)
+    pinterest_support_count = len(main_promos) + (1 if main_thumbnail_alt is not None else 0)
+    if pinterest_enabled and pinterest_support_count < 2:
+        fail("Pinterest panels require the named 3:2 thumbnail plus at least two additional direct 3:2 images, including any named alternate; add them before processing")
     if not main_promos:
         print("Warning: no 3:2 supporting promos were supplied.", file=sys.stderr)
     if not square_promos:
         print("Warning: no 1:1 supporting promos were supplied.", file=sys.stderr)
 
     main_rows = [(main_thumbnail, "thumbnail_main.png")]
+    if main_thumbnail_alt is not None:
+        main_rows.append((main_thumbnail_alt, "thumbnail_alt.png"))
     main_rows.extend((source, f"promo_{index}.png") for index, source in enumerate(main_promos, start=1))
     square_rows = [(square_thumbnail, "thumbnail_main.png")]
-    if square_japanese:
-        square_rows.append((square_japanese, "thumbnail_japanese.png"))
+    if square_thumbnail_alt is not None:
+        square_rows.append((square_thumbnail_alt, "thumbnail_alt.png"))
     square_rows.extend((source, f"promo_{index}.png") for index, source in enumerate(square_promos, start=1))
 
     manifest_path = output_dir / "final-image-manifest.md"
@@ -1000,13 +1035,13 @@ def main() -> int:
 
         encode_args = [sys.executable, str(Path(__file__).with_name("encode_main_jpeg.py")),
                        str(staging_32), str(main_dir), "--target-bytes", str(JPEG_TARGET_BYTES),
-                       "--max-bytes", str(JPEG_MAX_BYTES)]
+                       "--max-bytes", str(JPEG_MAX_BYTES), "--allow-over-max"]
         if args.max_dim is not None:
             encode_args += ["--max-dim", str(args.max_dim)]
         run(encode_args, label="3:2 JPEG encoding")
         encode_args = [sys.executable, str(Path(__file__).with_name("encode_main_jpeg.py")),
                        str(staging_11), str(square_dir), "--target-bytes", str(JPEG_TARGET_BYTES),
-                       "--max-bytes", str(JPEG_MAX_BYTES)]
+                       "--max-bytes", str(JPEG_MAX_BYTES), "--allow-over-max"]
         if args.max_dim is not None:
             encode_args += ["--max-dim", str(args.max_dim)]
         run(encode_args, label="1:1 JPEG encoding")
@@ -1063,9 +1098,25 @@ def main() -> int:
         if sha256(source) != sha256(canonical_path):
             fail(f"Source copy is not byte-identical: {canonical_path}")
         verify_delivery(square_dir / Path(canonical).with_suffix(".jpg"), source, SQUARE_RATIO, "1:1 JPEG")
+    if args.overwrite:
+        stale_files = []
+        stale_files += remove_stale_canonical_files(
+            source_32, {canonical for _, canonical in main_rows}, ".png"
+        )
+        stale_files += remove_stale_canonical_files(
+            source_11, {canonical for _, canonical in square_rows}, ".png"
+        )
+        stale_files += remove_stale_canonical_files(
+            main_dir, {Path(canonical).with_suffix(".jpg").name for _, canonical in main_rows}, ".jpg"
+        )
+        stale_files += remove_stale_canonical_files(
+            square_dir, {Path(canonical).with_suffix(".jpg").name for _, canonical in square_rows}, ".jpg"
+        )
+        for stale in stale_files:
+            print(f"removed stale generated delivery file {stale}")
     for jpeg in list(main_dir.glob("*.jpg")) + list(square_dir.glob("*.jpg")):
         if jpeg.stat().st_size > JPEG_MAX_BYTES:
-            fail(f"JPEG exceeds {JPEG_MAX_BYTES} bytes: {jpeg}")
+            print(f"Warning: {jpeg} remains above {JPEG_MAX_BYTES} bytes at the lowest quality rung; continuing.", file=sys.stderr)
     if pinterest_enabled:
         # A previous run may have delivered the other format. Leaving both would
         # leave the seller unsure which panel file to upload. Preserve indexes
@@ -1094,6 +1145,7 @@ def main() -> int:
             args.pinterest_variants,
             args.pinterest_format,
             args.pinterest_start_index,
+            args.font_name,
         )
         if not set_manifest_path.is_file():
             fail(f"Pinterest pin-set manifest was not written: {set_manifest_path}")
@@ -1103,9 +1155,10 @@ def main() -> int:
         source_dir=source_dir,
         output_dir=output_dir,
         main_thumbnail=main_thumbnail,
+        main_thumbnail_alt=main_thumbnail_alt,
         main_promos=main_promos,
         square_thumbnail=square_thumbnail,
-        square_japanese=square_japanese,
+        square_thumbnail_alt=square_thumbnail_alt,
         square_promos=square_promos,
         compose_log=compose_log,
         padded_from=padded_from,

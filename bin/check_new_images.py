@@ -21,6 +21,7 @@ from process_final_font_images import (  # noqa: E402
     SQUARE_RATIO,
     SQUARE_THUMB_MARKERS,
     inspect_ratio,
+    is_alt_thumbnail_name,
     is_main_thumbnail_name,
     ratio_matches,
 )
@@ -29,6 +30,7 @@ from process_final_font_images import (  # noqa: E402
 def classify(path: Path) -> dict[str, object]:
     entry: dict[str, object] = {"file": path.name}
     entry["thumbnail_main_candidate"] = is_main_thumbnail_name(path)
+    entry["thumbnail_alt_candidate"] = is_alt_thumbnail_name(path)
     try:
         width, height, ratio = inspect_ratio(path, path.name)
     except SystemExit as error:
@@ -67,6 +69,8 @@ def notes_for(files: list[dict[str, object]]) -> list[str]:
     squares = [f for f in files if f["ratio"] == "1:1"]
     main_thumbnails = [f for f in main if f.get("thumbnail_main_candidate")]
     square_thumbnails = [f for f in squares if f.get("thumbnail_main_candidate")]
+    main_alternates = [f for f in main if f.get("thumbnail_alt_candidate")]
+    square_alternates = [f for f in squares if f.get("thumbnail_alt_candidate")]
     notes = []
     if any(f["ratio"] in ("unsupported", "undecodable") for f in files):
         notes.append("Blocker: every direct file must be a decodable 3:2 or 1:1 image.")
@@ -78,10 +82,14 @@ def notes_for(files: list[dict[str, object]]) -> list[str]:
         notes.append("Waiting: name exactly one 3:2 main thumbnail with `thumbnail_main` in its filename (for example `thumbnail_main_3x2.png`).")
     if len(square_thumbnails) != 1:
         notes.append("Waiting: name exactly one 1:1 main thumbnail with `thumbnail_main` in its filename (for example `thumbnail_main_1x1.png`).")
+    if len(main_alternates) != 1:
+        notes.append("Waiting: name exactly one 3:2 alternate thumbnail with `thumbnail_alt` in its filename (for example `thumbnail_alt_3x2.png`).")
+    if len(square_alternates) != 1:
+        notes.append("Waiting: name exactly one 1:1 alternate thumbnail with `thumbnail_alt` in its filename (for example `thumbnail_alt_1x1.png`).")
     if len(main) < 3:
         notes.append("Waiting: add at least two additional direct 3:2 images for the ten Pinterest composites.")
     if not notes:
-        notes.append("Ready: both named thumbnail ratios and the minimum 3:2 Pinterest image pool are present.")
+        notes.append("Ready: the main and alternate thumbnail pairs and the minimum 3:2 Pinterest image pool are present.")
     return notes
 
 
@@ -106,6 +114,10 @@ def main() -> int:
                        if f["ratio"] == "3:2" and f.get("thumbnail_main_candidate")]
     square_thumbnails = [f for f in files
                          if f["ratio"] == "1:1" and f.get("thumbnail_main_candidate")]
+    main_alternates = [f for f in files
+                       if f["ratio"] == "3:2" and f.get("thumbnail_alt_candidate")]
+    square_alternates = [f for f in files
+                         if f["ratio"] == "1:1" and f.get("thumbnail_alt_candidate")]
     counts = {
         "3:2": sum(1 for f in files if f["ratio"] == "3:2"),
         "1:1": sum(1 for f in files if f["ratio"] == "1:1"),
@@ -117,6 +129,8 @@ def main() -> int:
         and counts["undecodable"] == 0
         and len(main_thumbnails) == 1
         and len(square_thumbnails) == 1
+        and len(main_alternates) == 1
+        and len(square_alternates) == 1
         and counts["3:2"] >= 3
     )
     report = {
@@ -130,6 +144,11 @@ def main() -> int:
         "thumbnail_main_candidates": {
             ratio: [f["file"] for f in files
                     if f["ratio"] == ratio and f.get("thumbnail_main_candidate")]
+            for ratio in ("3:2", "1:1")
+        },
+        "thumbnail_alt_candidates": {
+            ratio: [f["file"] for f in files
+                    if f["ratio"] == ratio and f.get("thumbnail_alt_candidate")]
             for ratio in ("3:2", "1:1")
         },
         "generated_state": generated_state(folder),

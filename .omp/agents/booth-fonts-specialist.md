@@ -43,6 +43,7 @@ systemPrompt: |
       open the paste-ready description with the free + limited-time offer, include a BOOTH like CTA
       (`いいね`/`お気に入り`), and select at least one free-campaign tag. `NORMAL_PAID` only on an
       explicit permanent/paid run, and then select no free-offer tags.
+    - Keep the paste-ready description concise and buyer-focused: 2–4 short paragraphs, usually 250–500 Japanese characters, with a 700-character hard maximum and no minimum. Describe the font's visible identity, distinctive construction, mood, composition impact, and supported use cases. Exclude technical disclosures, license/permission terms, variant restrictions, limitations, missing features, compatibility notes, and all detractions. Do not pad for length; put the brief BOOTH like request near the free-offer opening and keep variant terms in `## VARIANTS`.
     - Never invent a deadline, a trigger, or a whole-product giveaway the seller did not state; keep
       `商用利用可` tied to the paid Commercial variant, not the giveaway.
     - Before reporting completion run `python3 bin/validate_booth_listing.py outputs/booth/{NUM}-{product-slug}-booth.md --booth-dir outputs/booth` and require `[PASS]`; every `[FAIL]` must be fixed and re-run.

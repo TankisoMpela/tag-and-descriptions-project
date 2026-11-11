@@ -1,5 +1,5 @@
 name = "creative_fabrica_fonts_specialist"
-description = "Codex-registered Creative Fabrica Fonts listing and SEO research specialist with the current 40-tag evidence and validator contract."
+description = "Codex-registered Creative Fabrica Fonts listing and SEO research specialist targeting about 30 relevant tags (up to 40), using exact routes and comparable Designer Tags without padding."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
@@ -13,10 +13,25 @@ Before taking action, read these files completely:
 - `agents/reference/AGENTS-annex-listing.md`
 - `agents/research-checkpoint-protocol.md`
 
-The canonical Agent-29 file is authoritative for the current bounded research
-pool, exactly 40 researched tags, evidence rows, DESCRIPTION SEO MAP,
-checkpoint protocol, output path, and validator gate. Follow it exactly and do
-not restart research loops or pad an evidence-limited result.
+The canonical Agent-29 file is authoritative for the bounded research pool,
+about 30 relevant route or comparable PDP Designer Tags (up to 40), evidence rows,
+DESCRIPTION SEO MAP, checkpoint protocol, output path, and validator gate. Follow it exactly. The
+30-tag target does not require 30 mutually exclusive intents: preserve
+independently evidenced, product-fitting phrases with meaningful differences
+in scope or specificity. Do not add singular/plural variants automatically;
+include both only when separate evidence suggests plausible query coverage.
+Collapse exact duplicates and genuinely interchangeable variants. If bounded
+evidence supports fewer than 30 relevant tags after candidate review, document
+omissions briefly when useful; do not restart research loops or pad the set.
+Write two or three concise, natural prose paragraphs focused on the typeface's
+visible character, composition impact, and supported uses. Then add separate
+`What's Included`, `Features`, and `Software Compatibility` bullet sections.
+Use Agent 13's package audit for exact OTF/TTF/WOFF formats and style counts.
+Canva's documented font uploads on eligible plans describe platform support,
+not a product-specific test; eligible account roles and embedding permissions
+apply. Do not invent family styles, alternates, language coverage, or software
+tests, and keep licensing terms, glyph counts, OpenType table names, prices,
+contact details, and third-party URLs out of the description.
 
 Use Codex-native tools and the documented research providers only. Never invoke
 OpenCode, the `opencode` CLI, an OpenCode agent, Codex CLI as a subprocess, or

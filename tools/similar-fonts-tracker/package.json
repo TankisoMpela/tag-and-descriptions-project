@@ -1,0 +1,15 @@
+{
+  "name": "similar-fonts-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local Creative Market similarity and Creative Fabrica source-font tracker",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "sync": "node scripts/sync-registry.cjs",
+    "db": "node cli.cjs"
+  },
+  "devDependencies": {
+    "electron": "^45.2.3"
+  }
+}

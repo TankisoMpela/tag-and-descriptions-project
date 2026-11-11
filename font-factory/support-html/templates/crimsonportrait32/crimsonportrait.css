@@ -1,0 +1,66 @@
+.crimsonportrait32 #plate-copy {
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  text-align: center;
+  text-shadow: none;
+}
+
+.crimsonportrait32 #plate-title {
+  white-space: nowrap;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+}
+
+.crimsonportrait32 #plate-subtitle {
+  position: absolute;
+  z-index: 3;
+  top: 83%;
+  left: 29%;
+  width: 42%;
+  margin: 0;
+  color: #fff3de;
+  font: 700 2.4cqh/1.18 Arial, sans-serif;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: none;
+  white-space: pre-line;
+}
+
+.crimsonportrait32 .crimson-label {
+  position: absolute;
+  z-index: 3;
+  color: #fff3de;
+  font: 700 2.5cqh/1 Arial, sans-serif;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.crimsonportrait32 .crimson-top-left {
+  top: 11%;
+  left: 9%;
+}
+
+.crimsonportrait32 .crimson-top-right {
+  top: 11%;
+  right: 9%;
+}
+
+.crimsonportrait32 .crimson-bottom-left {
+  bottom: 10%;
+  left: 9%;
+}
+
+.crimsonportrait32 .crimson-bottom-right {
+  right: 9%;
+  bottom: 10%;
+}
+
+.crimsonportrait32 #artboard[data-ratio="1x1"] #plate-subtitle {
+  top: 80%;
+  left: 22%;
+  width: 56%;
+  font-size: 2cqh;
+}

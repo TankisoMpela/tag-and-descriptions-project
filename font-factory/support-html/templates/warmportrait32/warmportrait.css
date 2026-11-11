@@ -1,0 +1,72 @@
+.warmportrait32 #plate-copy {
+  left: 6%;
+  top: 18%;
+  width: 88%;
+  height: 54%;
+  padding: 0;
+  color: #fff2d8;
+  text-align: center;
+}
+
+.warmportrait32 #plate-title {
+  font-size: 30cqh;
+  line-height: .86;
+  letter-spacing: -.05em;
+}
+
+.warmportrait32 #plate-subtitle {
+  position: absolute;
+  top: calc(100% + 3cqh);
+  left: 0;
+  width: 100%;
+  margin: 0;
+  color: #fff2d8;
+  font-family: inherit;
+  font-size: 1.8cqh;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: .12em;
+  text-transform: none;
+  text-shadow: 0 1px 8px #1b0d08;
+}
+
+.warmportrait32 #plate-eyebrow-left,
+.warmportrait32 #plate-eyebrow-right,
+.warmportrait32 #plate-footer-left,
+.warmportrait32 #plate-footer-right {
+  position: absolute;
+  z-index: 2;
+  width: 28%;
+  color: #fff1d8;
+  font: 500 1.05cqh/1.2 Arial, sans-serif;
+  letter-spacing: .1em;
+  text-shadow: 0 1px 7px #1b0d08;
+}
+
+.warmportrait32 #plate-eyebrow-left,
+.warmportrait32 #plate-eyebrow-right {
+  top: 7%;
+}
+
+.warmportrait32 #plate-eyebrow-left,
+.warmportrait32 #plate-footer-left {
+  left: 4.8%;
+  text-align: left;
+}
+
+.warmportrait32 #plate-eyebrow-right,
+.warmportrait32 #plate-footer-right {
+  right: 4.8%;
+  text-align: right;
+}
+
+.warmportrait32 #plate-footer-left,
+.warmportrait32 #plate-footer-right {
+  top: 91.5%;
+  white-space: nowrap;
+}
+
+.warmportrait32 #artboard[data-ratio="1x1"] #plate-footer-left,
+.warmportrait32 #artboard[data-ratio="1x1"] #plate-footer-right {
+  width: 40%;
+}

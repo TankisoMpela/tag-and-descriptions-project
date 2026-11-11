@@ -1,0 +1,44 @@
+.amberquote32 #plate-copy {
+  left: 10%;
+  top: 16%;
+  width: 80%;
+  height: 62%;
+  display: block;
+  padding: 0;
+  color: #fff7ed;
+  text-shadow: none;
+}
+
+.amberquote32 #plate-title {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: auto;
+  color: #fff7ed;
+  font-size: 9cqh;
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  text-align: center;
+  text-shadow: 0 1px 8px #17100bcc;
+  transform: translateY(-50%);
+}
+
+.amberquote32 #plate-subtitle {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8cqh);
+  width: 100%;
+  margin: 0;
+  color: #fff7ed;
+  font: 500 1.45cqh/1.85 "Arial Narrow", Arial, sans-serif;
+  letter-spacing: .08em;
+  text-align: center;
+  text-shadow: 0 1px 6px #17100bcc;
+  text-transform: uppercase;
+  white-space: pre-line;
+}
+
+.amberquote32 #artboard[data-ratio="1x1"] #plate-title {
+  line-height: 1.25;
+}

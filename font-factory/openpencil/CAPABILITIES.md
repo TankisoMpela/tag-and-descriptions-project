@@ -112,7 +112,7 @@ w/h, `nodeCount`, `textNodes` with `fontFamily`, `fontSize`, bounds,
 
 The handoff must contain:
 - `prepared_visuals/3x2/thumbnail_main.png` + `promo_N.png`
-- `prepared_visuals/1x1/thumbnail_main.png`, `thumbnail_japanese.png`, `promo_N.png`
+- `prepared_visuals/1x1/thumbnail_main.png`, `promo_N.png`
 - four factual specimen PNGs (two families × two ratios)
 - matching `openpencil/3x2/*.{fig,jsx}` and `openpencil/1x1/*.{fig,jsx}` sources
 - `visual-handoff-manifest.md`, `VISUAL-HANDOFF-READY.md`

@@ -118,7 +118,9 @@ body { margin: 0; min-width: 320px; }
 .controls-panel { display: grid; gap: 15px; }
 .font-picker { display: grid; gap: 8px; color: #dad8d2; font-size: 13px; }
 .font-picker input { width: 100%; color: #c3c6ce; font: inherit; font-size: 12px; }
-.font-status { margin: 0; color: #a7abb4; font-size: 11px; line-height: 1.4; overflow-wrap: anywhere; }
+.font-status { margin: 0; color: #a7abb4; font-size: 14px; line-height: 1.4; overflow-wrap: anywhere; }
+.approved-renders { margin: 0; color: #a7abb4; font-size: 14px; line-height: 1.4; }
+.approved-renders a { color: #eeeae2; text-underline-offset: 3px; }
 #template-controls { display: grid; gap: 16px; }
 .content-warnings:empty { display: none; }
 .content-warnings { padding: 10px 12px; border-left: 2px solid #efb46a; background: #1a1b1f; color: #e8cfae; font-size: 12px; line-height: 1.45; }

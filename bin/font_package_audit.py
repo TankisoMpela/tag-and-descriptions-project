@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Audit the prepared font binaries (Agent 13 release gate).
 
-Checks OS/2 fsType, branded name values, platform/language normalization,
-removed metadata records and tables, glyph count, and CFF names/identifiers.
+Checks OS/2 embedding/style flags, branded name values, platform/language
+normalization, removed metadata records and tables, glyph count, CFF post format,
+and CFF names/identifiers.
 The audit is read-only and fails if the package folder is missing, empty, or
 any font file cannot be inspected.
 
@@ -13,7 +14,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import struct
 from pathlib import Path
 
 from fontTools.misc.timeTools import timestampToString
@@ -29,26 +29,10 @@ from prepare_font_package import (
     referenced_name_ids,
 )
 
-FONT_SUFFIXES = (".otf", ".ttf", ".woff", ".woff2")
+FONT_SUFFIXES = (".otf", ".ttf", ".woff")
+FORMAT_FOLDERS = {"OTF": ".otf", "TTF": ".ttf", "WOFF": ".woff"}
 REQUIRED_NAME_IDS = set(range(15)) - {10}
 WINDOWS_ENGLISH = (3, 1, 0x409)
-
-
-def woff_optional_blocks_absent(path: Path) -> bool:
-    """Check that WOFF containers have no extended metadata or private block."""
-    is_woff2 = path.suffix.lower() == ".woff2"
-    fmt = ">4s4sIHHIIHHIIIII" if is_woff2 else ">4s4sIHHIHHIIIII"
-    header_size = struct.calcsize(fmt)
-    with path.open("rb") as stream:
-        header = stream.read(header_size)
-    if len(header) != header_size:
-        return False
-    fields = struct.unpack(fmt, header)
-    expected_signature = b"wOF2" if is_woff2 else b"wOFF"
-    if fields[0] != expected_signature:
-        return False
-    optional_fields = fields[9:] if is_woff2 else fields[8:]
-    return not any(optional_fields)
 
 
 def audit_file(path: Path) -> bool:
@@ -60,6 +44,25 @@ def audit_file(path: Path) -> bool:
             names = {name_id: font["name"].getDebugName(name_id)
                      for name_id in (1, 4, 6)}
             glyph_count = len(font.getGlyphOrder())
+            fs_selection = font["OS/2"].fsSelection
+            mac_style = font["head"].macStyle
+            post_format = font["post"].formatType if "post" in font else None
+            unicode_tables = [
+                table for table in font["cmap"].tables
+                if ((table.platformID == 0 and table.platEncID in (3, 4, 6)) or
+                    (table.platformID == 3 and table.platEncID in (1, 10)))
+                and hasattr(table, "cmap")
+            ]
+            unicode_cmap = {}
+            for table in unicode_tables:
+                unicode_cmap.update(table.cmap)
+            missing_upper = [chr(cp) for cp in range(0x41, 0x5B) if cp not in unicode_cmap]
+            missing_lower = [chr(cp) for cp in range(0x61, 0x7B) if cp not in unicode_cmap]
+            missing_digits = [chr(cp) for cp in range(0x30, 0x3A) if cp not in unicode_cmap]
+            missing_punctuation = [
+                chr(cp) for cp in range(0x21, 0x7F)
+                if not chr(cp).isalnum() and cp not in unicode_cmap
+            ]
             designer = font["name"].getDebugName(9)
             description = font["name"].getDebugName(10)
             created = font["head"].created
@@ -68,6 +71,44 @@ def audit_file(path: Path) -> bool:
                 print(f"OS/2 fsType: {fstype} — ❌ FAIL (expected 0)")
             else:
                 print("OS/2 fsType: 0 — ✅ PASS")
+            style_bits = (0x0002 if fs_selection & (0x0001 | 0x0200) else 0) | (
+                0x0001 if fs_selection & 0x0020 else 0
+            )
+            regular_conflict = bool(fs_selection & 0x0040 and style_bits)
+            style_flags_ok = not regular_conflict and (mac_style & 0x0003) == style_bits
+            print(
+                f"Style flags: fsSelection={fs_selection}, head.macStyle={mac_style} — "
+                f"{'✅ PASS' if style_flags_ok else '❌ FAIL (contradictory regular/bold/italic flags)'}"
+            )
+            post_ok = "CFF " not in font or post_format == 3.0
+            if "CFF " in font:
+                print(
+                    f"CFF post format: {post_format} — "
+                    f"{'✅ PASS' if post_ok else '❌ FAIL (CFF requires post format 3)'}"
+                )
+            cmap_ok = bool(unicode_tables)
+            print(
+                "Unicode cmap: "
+                f"{'✅ PASS' if unicode_tables else '❌ FAIL (no Unicode platform or Windows Unicode subtable)'}"
+            )
+            print(
+                f"Character coverage: uppercase {26-len(missing_upper)}/26; "
+                f"lowercase {26-len(missing_lower)}/26; digits {10-len(missing_digits)}/10; "
+                f"ASCII punctuation {32-len(missing_punctuation)}/32"
+            )
+            if missing_upper or missing_lower:
+                print(f"Missing Latin letters: ⚠️ REVIEW ({''.join(missing_upper + missing_lower)})")
+            if missing_digits:
+                print(f"Missing digits: ⚠️ REVIEW ({''.join(missing_digits)})")
+            if missing_punctuation:
+                print(f"Missing ASCII punctuation: ⚠️ REVIEW ({''.join(missing_punctuation)})")
+            invalid_cmap_targets = sorted({
+                glyph_name for glyph_name in unicode_cmap.values()
+                if glyph_name not in font.getGlyphOrder()
+            })
+            if invalid_cmap_targets:
+                cmap_ok = False
+                print(f"Unicode cmap references absent glyphs: ❌ FAIL ({', '.join(invalid_cmap_targets)})")
             print(f"Name ID 1 (Family): {names[1]}")
             print(f"Name ID 4 (Full Name): {names[4]}")
             print(f"Name ID 6 (PostScript): {names[6]}")
@@ -147,13 +188,6 @@ def audit_file(path: Path) -> bool:
                 print(f"Removed metadata/signature tables: ❌ FAIL ({', '.join(forbidden_tables)})")
             else:
                 print("Removed metadata/signature tables: ✅ DSIG/FFTM/PCLT/meta absent")
-            woff_data_ok = True
-            if path.suffix.lower() in (".woff", ".woff2"):
-                woff_data_ok = woff_optional_blocks_absent(path)
-                print(
-                    "WOFF metadata/private blocks: "
-                    f"{'✅ absent' if woff_data_ok else '❌ FAIL (unexpected or malformed block)'}"
-                )
             for tag in ("GSUB", "GPOS"):
                 if tag in font:
                     feature_list = font[tag].table.FeatureList
@@ -164,8 +198,9 @@ def audit_file(path: Path) -> bool:
                     print(f"{tag} features: (table absent)")
 
             passed = (
-                fstype == 0 and all(names.values()) and glyph_count > 0
-                and name_records_ok and not forbidden_tables and woff_data_ok
+                fstype == 0 and style_flags_ok and post_ok and cmap_ok
+                and all(names.values()) and glyph_count > 0
+                and name_records_ok and not forbidden_tables
             )
             if "CFF " in font:
                 cff = font["CFF "].cff
@@ -208,17 +243,31 @@ def audit_file(path: Path) -> bool:
 
 
 def audit_dir(directory: Path) -> tuple[int, int]:
-    """Audit every font in a directory. Return (audited, failed)."""
+    """Audit every delivered font and enforce the OTF/TTF/WOFF folder layout."""
     if not directory.is_dir():
         print(f"❌ FAIL (package folder does not exist: {directory})")
         return 0, 1
-    files = sorted(p for p in directory.iterdir()
-                   if p.is_file() and p.suffix.lower() in FONT_SUFFIXES)
+    unwanted = []
+    for path in directory.rglob("*"):
+        if path.is_dir():
+            if path.parent == directory and path.name not in FORMAT_FOLDERS:
+                unwanted.append(path)
+        elif (path.parent.name not in FORMAT_FOLDERS or
+              path.suffix.casefold() != FORMAT_FOLDERS.get(path.parent.name)):
+            unwanted.append(path)
+    for path in sorted(unwanted):
+        print(f"Unexpected package entry: ❌ FAIL ({path.relative_to(directory)}; expected separate OTF/TTF/WOFF folders)")
+    files = sorted(p for p in directory.rglob("*")
+                   if p.is_file() and p.suffix.lower() in FONT_SUFFIXES and
+                   p.parent.name in FORMAT_FOLDERS and p.suffix.casefold() == FORMAT_FOLDERS[p.parent.name])
+    missing_folders = sorted(name for name in FORMAT_FOLDERS if not (directory / name).is_dir())
+    for name in missing_folders:
+        print(f"Missing format folder: ❌ FAIL ({name})")
     if not files:
         print(f"❌ FAIL (no font files in {directory})")
-        return 0, 1
+        return 0, 1 + len(unwanted) + len(missing_folders)
     passed = sum(1 for path in files if audit_file(path))
-    return len(files), len(files) - passed
+    return len(files) + len(unwanted) + len(missing_folders), len(files) - passed + len(unwanted) + len(missing_folders)
 
 
 def main() -> int:

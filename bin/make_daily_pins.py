@@ -2,8 +2,8 @@
 """Daily Pinterest run — pick fonts, brief the agent, assemble the bulk CSV.
 
 Mechanical half of the Daily-Pinterest-Run pipeline. The agent writes the
-creative copy (copy.json); this tool does selection, a mechanical
-candidate-keyword seed in the brief, validation, staggered publish times,
+creative copy (copy.json); this tool does selection, profile-backed and
+mechanical keyword candidates in the brief, validation, staggered publish times,
 and both CSVs: buffer.csv (Buffer free-plan import, carries Alt Text —
 primary destination) and pins.csv (Pinterest-native fallback).
 
@@ -47,13 +47,13 @@ PRIOR_PINS_IN_BRIEF = 4
 CSV_HEADER = ["Title", "Media URL", "Pinterest board", "Thumbnail",
               "Description", "Link", "Publish date", "Keywords"]
 # Exact column order from Buffer's own Pinterest import template
-# (~/Downloads/Buffer_Import_Template.csv): Text, Image URL, Board Name,
+# (docs/pinterest/Buffer_Import_Template.csv): Text, Image URL, Board Name,
 # Tags, Posting Time, Title, Alt Text, Link — all cells quoted, UTF-8 BOM.
 BUFFER_HEADER = ["Text", "Image URL", "Board Name", "Tags", "Posting Time",
                  "Title", "Alt Text", "Link"]
 
-# Mechanical candidate-keyword seed for brief.md. These seeds narrow the
-# drafting space; the ledger owns rotation.
+# Mechanical description-derived candidates supplement the preparer's
+# profile; they narrow the drafting space while the ledger owns rotation.
 STYLE_TERMS = ("art deco", "sans serif", "sans-serif", "blackletter", "handwritten",
                "calligraphy", "signature", "decorative", "minimalist", "minimal",
                "geometric", "condensed", "monoline", "outline", "stencil", "rounded",
@@ -86,8 +86,13 @@ def recent_pins(con, date: str) -> set[str]:
 
 def looks_like_shop_root(url: str) -> bool:
     """A shop/store root (no product path) — weak pin destination, worth flagging."""
-    segments = [s for s in urlparse(url).path.split("/") if s]
-    return len(segments) <= 1
+    parsed = urlparse(url)
+    segments = [s for s in parsed.path.split("/") if s]
+    host = (parsed.hostname or "").casefold()
+    query = parsed.query.casefold()
+    return (len(segments) <= 1
+            or (host.endswith("creativefabrica.com") and segments[0].casefold() in {"designer", "search"})
+            or any(key in query for key in ("category=", "status=", "page=")))
 
 
 def image_index(key: str, image: dict) -> int | None:
@@ -195,6 +200,53 @@ def extract_candidates(text: str, max_out: int = 12) -> list[str]:
     return res[:max_out]
 
 
+def load_content_profile(rec: dict) -> tuple[dict | None, str | None]:
+    """Load the preparer's metadata-and-visual profile when one is registered."""
+    prep = Path(rec.get("prep_path") or ".").resolve()
+    profile_value = rec.get("profile_path")
+    path = Path(profile_value) if profile_value else prep / "pinterest-profile.json"
+    path = path.resolve()
+    try:
+        path.relative_to(prep)
+    except ValueError:
+        sys.exit(f"error: Pinterest profile must stay inside the preparation folder: {path}")
+    if not path.is_file():
+        return None, str(path)
+    try:
+        profile = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        sys.exit(f"error: invalid Pinterest profile {path}: {error}")
+    if not isinstance(profile, dict) or profile.get("schema_version") != 1:
+        sys.exit(f"error: Pinterest profile {path} must be an object with schema_version 1")
+    if str(profile.get("font_name", "")).strip().casefold() != str(rec.get("name", "")).strip().casefold():
+        sys.exit(f"error: Pinterest profile {path} does not match registered font {rec.get('name')!r}")
+    for key in ("metadata_summary", "visual_summary"):
+        if not isinstance(profile.get(key), str) or not profile[key].strip():
+            sys.exit(f"error: Pinterest profile {path} needs a non-empty {key}")
+    for key in ("letterform_traits", "mood_terms", "best_uses", "keyword_bank"):
+        value = profile.get(key)
+        if not isinstance(value, list) or any(not isinstance(item, str) or not item.strip() for item in value):
+            sys.exit(f"error: Pinterest profile {path} has an invalid {key} list")
+    return profile, str(path)
+
+
+def merge_candidates(profile: dict | None, description: str) -> list[str]:
+    """Put the reviewed profile's phrases first, then add mechanical seeds."""
+    candidates = (profile.get("keyword_bank") or []) if profile else []
+    candidates = list(candidates) + (extract_candidates(description, max_out=12) if description else [])
+    seen: set[str] = set()
+    result: list[str] = []
+    for candidate in candidates:
+        phrase = " ".join(str(candidate).split())
+        key = phrase.casefold()
+        if phrase and key not in seen:
+            seen.add(key)
+            result.append(phrase)
+        if len(result) >= 60:
+            break
+    return result
+
+
 def cmd_pick(args, con) -> int:
     if not 1 <= args.count <= 10:
         sys.exit("error: count must be between 1 and 10 for the current Buffer free-plan batch")
@@ -202,7 +254,7 @@ def cmd_pick(args, con) -> int:
     eligible = [s for s, r in reg["fonts"].items()
                 if pinterest_registry.is_ready(r) and s not in recent_pins(con, args.date)]
     if not eligible:
-        sys.exit("error: no ready fonts remain after the 14-day exclusion")
+        sys.exit("error: no ready fonts remain after the 14-day exclusion; confirm each font has a valid prepper-assigned board, product URL, and complete uploaded image set")
     seed = args.seed or f"{args.date}:{args.count}"
     rng = random.Random(seed)
     chosen = sorted(rng.sample(eligible, min(args.count, len(eligible))))
@@ -221,8 +273,8 @@ def cmd_pick(args, con) -> int:
         print(f"picked {len(chosen)}/{args.count} from {len(eligible)} eligible "
               f"(14-day exclusion applied; seed {seed})")
         if len(chosen) < args.count:
-            print("warning: fewer eligible fonts than requested — register more fonts "
-                  "or reset ledger pinned_runs")
+            print("warning: fewer eligible fonts than requested — prepare and classify "
+                  "more fonts, or wait until the 14-day exclusion window passes")
         for s in chosen:
             urls = reg_fonts[s].get("urls") or {}
             for market, url in urls.items():
@@ -246,12 +298,20 @@ def cmd_brief(args, con) -> int:
         used = pinterest_tag_ledger.font_counts(con, slug)
         top_used = sorted(used.items(), key=lambda kv: -kv[1])[:8]
         prior = pinterest_tag_ledger.font_pins(con, slug, PRIOR_PINS_IN_BRIEF)
-        candidates = extract_candidates(desc) if desc else []
+        profile, profile_path = load_content_profile(r)
+        candidates = merge_candidates(profile, desc)
         urls = r.get("urls") or {}
+        board = r.get("board")
+        if not board:
+            sys.exit(f"error: {slug} has no preparer-assigned Pinterest board; rerun `/pinterest-prepare` first")
+        try:
+            board = pinterest_registry.normalize_board(board)
+        except SystemExit:
+            sys.exit(f"error: {slug} has an invalid Pinterest board assignment; rerun `/pinterest-prepare`")
         today_image = image_assignments.get(slug)
         entry = {
             "slug": slug, "number": r.get("number"), "name": r.get("name"),
-            "board": r.get("board"), "urls": urls,
+            "board": board, "urls": urls,
             "today_image": ({
                 "index": today_image.get("index"),
                 "kind": today_image.get("kind"),
@@ -261,13 +321,22 @@ def cmd_brief(args, con) -> int:
                 "url": today_image.get("url"),
             } if today_image else None),
             "description_excerpt": desc,
+            "profile_path": profile_path,
+            "profile": ({
+                "metadata_summary": profile.get("metadata_summary"),
+                "visual_summary": profile.get("visual_summary"),
+                "letterform_traits": profile.get("letterform_traits", []),
+                "mood_terms": profile.get("mood_terms", []),
+                "best_uses": profile.get("best_uses", []),
+                "keyword_bank": profile.get("keyword_bank", []),
+            } if profile else None),
             "candidates": candidates,
             "most_used_tags": [t for t, _ in top_used],
             "previous_pins": prior,
         }
         brief_fonts.append(entry)
         lines.append(f"## {r['name']} ({slug})")
-        lines.append(f"- Board suggestion: {r.get('board') or 'decide one of ' + ', '.join(pinterest_registry.BOARDS)}")
+        lines.append(f"- Assigned board (from preparer): {board}")
         if today_image:
             index_label = f"#{today_image['index']}" if today_image.get("index") else "selected"
             lines.append(f"- Assigned image {index_label}: {image_description(r, today_image)}")
@@ -284,8 +353,21 @@ def cmd_brief(args, con) -> int:
         lines.append("- Image choice is stable for this date and balanced across selected fonts; "
                      "when both product URLs exist, destinations are split as evenly as possible.")
         lines.append(f"- Description source: {desc or '(no description.txt)'}…")
+        if profile:
+            lines.append(f"- Content profile: {profile_path}")
+            lines.append(f"- Verified metadata: {profile['metadata_summary']}")
+            lines.append(f"- Visual vibe: {profile['visual_summary']}")
+            if profile.get("letterform_traits"):
+                lines.append(f"- Letterform traits: {', '.join(profile['letterform_traits'])}")
+            if profile.get("mood_terms"):
+                lines.append(f"- Mood terms: {', '.join(profile['mood_terms'])}")
+            if profile.get("best_uses"):
+                lines.append(f"- Best-fit uses: {', '.join(profile['best_uses'])}")
+        else:
+            lines.append(f"- Content profile: MISSING ({profile_path}); use description fallback and flag for preparer refresh.")
         if candidates:
-            lines.append(f"- Candidate keywords (mechanical seed — vary phrasing, rotate via ledger): {', '.join(candidates)}")
+            source = "reviewed profile + description seed" if profile else "description-only seed"
+            lines.append(f"- Candidate keywords ({source}; filter for this Pin, then rotate via ledger): {', '.join(candidates)}")
         if entry["most_used_tags"]:
             lines.append(f"- Tags already used most (rotate away): {', '.join(entry['most_used_tags'])}")
         if prior:
@@ -363,14 +445,24 @@ def validate(entries: list[dict], reg: dict, date: str, start_hour: int, interva
             errors.append(f"{slug}: keywords must not contain #")
         if not (MIN_KEYWORDS <= len(kws) <= MAX_KEYWORDS):
             errors.append(f"{slug}: need {MIN_KEYWORDS}-{MAX_KEYWORDS} keywords (got {len(kws)})")
-        board = e.get("board") or r.get("board")
-        if not board:
-            errors.append(f"{slug}: no board (set in copy.json or registry)")
-        else:
+        registered_board = r.get("board")
+        if not registered_board:
+            errors.append(f"{slug}: no preparer-assigned board; rerun /pinterest-prepare")
+            continue
+        try:
+            board = pinterest_registry.normalize_board(registered_board)
+        except SystemExit:
+            errors.append(f"{slug}: invalid registry board {registered_board!r}; rerun /pinterest-prepare")
+            continue
+        requested_board = e.get("board")
+        if requested_board:
             try:
-                board = pinterest_registry.normalize_board(board)
+                requested_board = pinterest_registry.normalize_board(requested_board)
             except SystemExit:
-                errors.append(f"{slug}: unknown board {board!r}")
+                errors.append(f"{slug}: unknown board {requested_board!r}")
+                continue
+            if requested_board != board:
+                errors.append(f"{slug}: copy board {requested_board!r} conflicts with preparer assignment {board!r}")
                 continue
         link = e.get("link") or batch_links.get(slug)
         if not link:

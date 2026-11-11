@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import re
+import unicodedata
 from pathlib import Path
 
 from PIL import Image
@@ -18,7 +19,7 @@ SUPPORT_RE = re.compile(r"^support-\d+_[a-z0-9]+(?:-[a-z0-9]+)*\.png$")
 THUMBNAIL_VARIANTS = {"left", "center", "band"}
 RENDERER_CLASSES = {"elegant", "blackletter", "sports", "script"}
 FAMILY_SHOWCASE_TEMPLATES = {
-    "plakat32", "weightfamily32", "mangosboard32", "italicregular32",
+    "weightfamily32", "mangosboard32", "italicregular32",
 }
 ACTIVE_PIN_TEMPLATES = (
     "hero", "set", "wall", "full_stack", "studio_cover", "specimen_mosaic",
@@ -36,6 +37,19 @@ PLACEHOLDER_COPY = (
     "A straightforward buyer-facing application",
     "approved product description",
 )
+CONCEPT_STOPWORDS = {
+    "a", "an", "and", "as", "at", "by", "for", "from", "in", "of", "on",
+    "one", "the", "to", "with", "your", "font", "name", "thumbnail",
+    "direction", "design", "visual", "image", "concept", "style", "using",
+}
+PALETTE_WORDS = {
+    "amber", "aqua", "beige", "black", "blue", "bone", "brick", "bronze",
+    "brown", "charcoal", "coral", "cream", "crimson", "cyan", "gold", "gray",
+    "grey", "green", "ivory", "jade", "lavender", "lime", "magenta", "maroon",
+    "mint", "navy", "ochre", "olive", "orange", "pale", "pink", "purple", "red",
+    "rose", "rust", "saturated", "scarlet", "slate", "teal", "turquoise", "vermilion",
+    "warm", "white", "yellow", "muted", "deep", "dark", "light",
+}
 
 
 def check_png(path: Path, expected_size: tuple[int, int], failures: list[str]) -> None:
@@ -49,6 +63,22 @@ def check_png(path: Path, expected_size: tuple[int, int], failures: list[str]) -
                 failures.append(f"wrong dimensions: {path} is {image.size}, expected {expected_size}")
     except Exception as error:
         failures.append(f"unreadable PNG: {path}: {error}")
+
+
+def check_generated_thumbnail(path: Path, ratio: float, failures: list[str]) -> None:
+    if not path.is_file():
+        failures.append(f"missing generated thumbnail: {path}")
+        return
+    try:
+        with Image.open(path) as image:
+            image.load()
+            actual = image.width / image.height
+            if abs(actual - ratio) > 0.025:
+                failures.append(
+                    f"wrong thumbnail ratio: {path} is {image.width}x{image.height}, expected approximately {ratio:.2f}:1"
+                )
+    except Exception as error:
+        failures.append(f"unreadable generated thumbnail: {path}: {error}")
 
 
 def active_html_support_templates(failures: list[str]) -> set[str]:
@@ -171,6 +201,77 @@ def source_family_style_count(root: Path, plan: dict, failures: list[str]) -> in
         return None
 
 
+def name_tokens(value: str) -> set[str]:
+    """Normalize a name for detecting source-name carry-through."""
+    spaced = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", value)
+    normalized = unicodedata.normalize("NFKD", spaced)
+    ascii_text = normalized.encode("ascii", "ignore").decode("ascii")
+    return {token.casefold() for token in re.findall(r"[A-Za-z0-9]+", ascii_text)}
+
+
+def validate_product_name(root: Path, plan: dict, failures: list[str]) -> None:
+    """Reject an agent-selected product name that merely carries the source name."""
+    origin = plan.get("name_origin", "agent_selected")
+    if origin not in {"agent_selected", "user_supplied"}:
+        failures.append(
+            "strict art-direction: name_origin must be 'agent_selected' or 'user_supplied'"
+        )
+        return
+    if origin == "user_supplied":
+        return
+
+    primary_value = plan.get("primary_font")
+    product_name = plan.get("font_name")
+    if not isinstance(primary_value, str) or not isinstance(product_name, str):
+        return
+    workspace = root.parent.resolve()
+    source = Path(primary_value).expanduser()
+    if not source.is_absolute():
+        source = workspace / source
+    source = source.resolve()
+    try:
+        source.relative_to(workspace)
+    except ValueError:
+        return  # The primary-font validator reports the path violation.
+    if not source.is_file():
+        return  # The primary-font validator reports the missing source.
+
+    try:
+        from fontTools.ttLib import TTFont
+    except ImportError as error:
+        failures.append(f"strict art-direction: cannot inspect source names: {error}")
+        return
+
+    source_names: set[str] = set()
+    for candidate in sorted(source.parent.iterdir()):
+        if candidate.suffix.casefold() not in {".otf", ".ttf"}:
+            continue
+        source_names.add(candidate.stem)
+        try:
+            face = TTFont(str(candidate), fontNumber=0, lazy=True)
+            try:
+                names = face["name"]
+                for name_id in (1, 16):
+                    value = (names.getDebugName(name_id) or "").strip()
+                    if value:
+                        source_names.add(value)
+            finally:
+                face.close()
+        except Exception:
+            continue
+
+    product_tokens = name_tokens(product_name)
+    for source_name in sorted(source_names):
+        tokens = name_tokens(source_name)
+        if tokens and tokens <= product_tokens:
+            failures.append(
+                f"strict art-direction: agent-selected font_name {product_name!r} reuses "
+                f"source name {source_name!r}; choose a distinct product name or record "
+                "name_origin='user_supplied' for an explicitly requested name"
+            )
+            return
+
+
 def contrast_ratio(foreground: str, background: str) -> float:
     def luminance(value: str) -> float:
         value = value.lstrip("#")
@@ -184,6 +285,63 @@ def contrast_ratio(foreground: str, background: str) -> float:
     light = max(luminance(foreground), luminance(background))
     dark = min(luminance(foreground), luminance(background))
     return (light + 0.05) / (dark + 0.05)
+
+
+def validate_lettering_colors(owner: object, label: str, failures: list[str]) -> None:
+    if not isinstance(owner, dict):
+        return
+    colors = owner.get("lettering_colors")
+    if not isinstance(colors, dict):
+        failures.append(f"strict art-direction: {label}.lettering_colors is required when visual_palette_schema is 1")
+        return
+
+    parsed: dict[str, dict[str, str]] = {}
+    for role in ("title", "descriptor", "background"):
+        value = colors.get(role)
+        if not isinstance(value, dict):
+            failures.append(f"strict art-direction: {label}.lettering_colors.{role} must name a color and hex")
+            continue
+        name, hex_value = value.get("name"), value.get("hex")
+        if not isinstance(name, str) or not name.strip() or not isinstance(hex_value, str) or not re.fullmatch(r"#[0-9A-Fa-f]{6}", hex_value):
+            failures.append(f"strict art-direction: {label}.lettering_colors.{role} needs a color name and six-digit hex")
+            continue
+        parsed[role] = {"name": name.strip(), "hex": hex_value.upper()}
+
+    rationale = colors.get("rationale")
+    if not isinstance(rationale, str) or len(rationale.split()) < 5:
+        failures.append(f"strict art-direction: {label}.lettering_colors.rationale must connect the lettering color to the concept")
+    if all(role in parsed for role in ("title", "descriptor", "background")):
+        for role in ("title", "descriptor"):
+            ratio = contrast_ratio(parsed[role]["hex"], parsed["background"]["hex"])
+            if ratio < 4.5:
+                failures.append(f"strict art-direction: {label} {role} color contrast is {ratio:.2f}:1, below 4.50:1")
+        prompts = [owner.get("image_prompt", "")]
+        layouts = owner.get("ratio_layouts")
+        square = layouts.get("1x1") if isinstance(layouts, dict) else None
+        prompts.append(square.get("image_prompt", "") if isinstance(square, dict) else "")
+        for ratio_label, prompt in zip(("3:2", "1:1"), prompts):
+            prompt_text = prompt.casefold() if isinstance(prompt, str) else ""
+            for role, color in parsed.items():
+                if color["hex"].casefold() not in prompt_text:
+                    failures.append(f"strict art-direction: {label} {ratio_label} prompt must include {role} hex {color['hex']}")
+
+
+def validate_reference_influence(owner: object, label: str, failures: list[str]) -> str | None:
+    if not isinstance(owner, dict):
+        return None
+    influence = owner.get("reference_influence")
+    if not isinstance(influence, dict):
+        failures.append(f"strict art-direction: {label}.reference_influence is required when visual_research_schema is 1")
+        return None
+    source = influence.get("source")
+    if not isinstance(source, str) or "font-factory/Style-References/thumbnail-prompt-research-2026-10-20/" not in source:
+        failures.append(f"strict art-direction: {label}.reference_influence.source must identify a saved thumbnail research item")
+        source = None
+    for key in ("mechanism", "fit", "adapted", "left_out"):
+        value = influence.get(key)
+        if not isinstance(value, str) or len(value.split()) < 4:
+            failures.append(f"strict art-direction: {label}.reference_influence.{key} must be a specific note")
+    return source
 
 
 def validate_copy(owner: object, label: str, plan: dict, failures: list[str]) -> None:
@@ -210,6 +368,10 @@ def validate_image_prompt(owner: object, label: str, failures: list[str]) -> Non
     prompt = owner.get("image_prompt") if isinstance(owner, dict) else None
     if not isinstance(prompt, str) or not prompt.strip():
         failures.append(f"strict art-direction: {label}.image_prompt must be a complete prompt")
+    elif "neutral sans-serif" not in prompt.casefold():
+        failures.append(
+            f"strict art-direction: {label}.image_prompt must specify the descriptor in a neutral sans-serif"
+        )
 
 
 def validate_layouts(owner: object, label: str, failures: list[str]) -> None:
@@ -235,20 +397,6 @@ def validate_layouts(owner: object, label: str, failures: list[str]) -> None:
         signatures.append((str(layout.get("composition")), str(layout.get("focus")), tuple(order)))
     if len(signatures) == 2 and signatures[0] == signatures[1]:
         failures.append(f"strict art-direction: {label} must make different 3:2 and 1:1 crop decisions")
-
-
-def validate_japanese_square(owner: object, failures: list[str]) -> None:
-    layouts = owner.get("ratio_layouts") if isinstance(owner, dict) else None
-    layout = layouts.get("1x1") if isinstance(layouts, dict) else None
-    if not isinstance(layout, dict):
-        failures.append("strict art-direction: japanese_thumbnail.ratio_layouts.1x1 is required")
-        return
-    for key in ("composition", "focus"):
-        if not isinstance(layout.get(key), str) or not layout[key].strip():
-            failures.append(f"strict art-direction: japanese_thumbnail.ratio_layouts.1x1.{key} is required")
-    order = layout.get("copy_order")
-    if not isinstance(order, list) or not order or any(not isinstance(item, str) or not item.strip() for item in order):
-        failures.append("strict art-direction: japanese_thumbnail 1x1 copy_order must be non-empty")
 
 
 def validate_verified_product_facts(owner: object, failures: list[str]) -> None:
@@ -321,6 +469,8 @@ def validate_art_direction(root: Path, failures: list[str]) -> dict | None:
     font_name = plan.get("font_name")
     if not isinstance(font_name, str) or not font_name.strip():
         failures.append("strict art-direction: font_name must be non-empty")
+    else:
+        validate_product_name(root, plan, failures)
     if not isinstance(plan.get("primary_font"), str) or not plan["primary_font"].strip():
         failures.append("strict art-direction: primary_font must identify the source font")
     else:
@@ -329,8 +479,8 @@ def validate_art_direction(root: Path, failures: list[str]) -> dict | None:
             plan["_verified_family_style_count"] = family_style_count
     if plan.get("renderer_class") not in RENDERER_CLASSES:
         failures.append("strict art-direction: renderer_class must be elegant, blackletter, sports, or script")
-    if plan.get("support_count", 13) != 13:
-        failures.append("strict art-direction: support_count is fixed at 13")
+    if plan.get("support_count", 12) != 12:
+        failures.append("strict art-direction: support_count is fixed at 12")
     if plan.get("support_renderer", "html") != "html":
         failures.append("strict art-direction: support_renderer must be html")
     if plan.get("promos") not in (None, []):
@@ -443,22 +593,58 @@ def validate_art_direction(root: Path, failures: list[str]) -> dict | None:
             if ratio < float(minimum):
                 failures.append(f"strict art-direction: contrast_checks[{index}] is {ratio:.2f}:1, below {float(minimum):.2f}:1")
 
+    palette_schema = plan.get("visual_palette_schema")
+    if palette_schema is not None:
+        if palette_schema != 1:
+            failures.append("strict art-direction: visual_palette_schema must be 1")
+        else:
+            validate_lettering_colors(plan.get("thumbnail"), "thumbnail", failures)
+            validate_lettering_colors(plan.get("thumbnail_alternate"), "thumbnail_alternate", failures)
+
+    research_schema = plan.get("visual_research_schema")
+    if research_schema is not None:
+        if research_schema != 1:
+            failures.append("strict art-direction: visual_research_schema must be 1")
+        else:
+            validate_reference_influence(plan.get("thumbnail"), "thumbnail", failures)
+            validate_reference_influence(plan.get("thumbnail_alternate"), "thumbnail_alternate", failures)
+
     thumbnail = plan.get("thumbnail")
-    japanese = plan.get("japanese_thumbnail")
-    validate_copy(thumbnail, "thumbnail", plan, failures)
-    validate_layouts(thumbnail, "thumbnail", failures)
-    validate_free_space(thumbnail, "thumbnail", failures)
-    validate_image_prompt(thumbnail, "thumbnail 3:2", failures)
-    square_layouts = thumbnail.get("ratio_layouts") if isinstance(thumbnail, dict) else None
-    validate_image_prompt(
-        square_layouts.get("1x1") if isinstance(square_layouts, dict) else None,
-        "thumbnail 1:1",
-        failures,
-    )
-    validate_copy(japanese, "japanese_thumbnail", plan, failures)
-    validate_japanese_square(japanese, failures)
-    validate_free_space(japanese, "japanese_thumbnail", failures)
-    validate_image_prompt(japanese, "japanese_thumbnail 1:1", failures)
+    alternate = plan.get("thumbnail_alternate")
+    if "japanese_thumbnail" in plan:
+        failures.append("strict art-direction: japanese_thumbnail is retired; use thumbnail_alternate for the second direction")
+    for owner, label in ((thumbnail, "thumbnail"), (alternate, "thumbnail_alternate")):
+        validate_copy(owner, label, plan, failures)
+        validate_layouts(owner, label, failures)
+        validate_free_space(owner, label, failures)
+        validate_image_prompt(owner, f"{label} 3:2", failures)
+        layouts = owner.get("ratio_layouts") if isinstance(owner, dict) else None
+        square_layout = layouts.get("1x1") if isinstance(layouts, dict) else None
+        validate_image_prompt(square_layout, f"{label} 1:1", failures)
+
+    primary_direction = thumbnail.get("visual_direction") if isinstance(thumbnail, dict) else None
+    alternate_direction = alternate.get("visual_direction") if isinstance(alternate, dict) else None
+    if not isinstance(primary_direction, str) or len(primary_direction.split()) < 5:
+        failures.append("strict art-direction: thumbnail.visual_direction must name the primary visual premise")
+    if not isinstance(alternate_direction, str) or len(alternate_direction.split()) < 5:
+        failures.append("strict art-direction: thumbnail_alternate.visual_direction must name a distinct visual premise")
+    elif isinstance(primary_direction, str) and alternate_direction.casefold() == primary_direction.casefold():
+        failures.append("strict art-direction: primary and alternate thumbnail visual_direction values must differ")
+    if isinstance(primary_direction, str) and isinstance(alternate_direction, str):
+        tokens = lambda value: {
+            token for token in re.findall(r"[a-z0-9]+", value.casefold())
+            if token not in CONCEPT_STOPWORDS and token not in PALETTE_WORDS
+        }
+        primary_tokens, alternate_tokens = tokens(primary_direction), tokens(alternate_direction)
+        smaller = min(len(primary_tokens), len(alternate_tokens))
+        overlap = (len(primary_tokens & alternate_tokens) / smaller) if smaller else 1.0
+        if overlap > 0.35:
+            failures.append("strict art-direction: primary and alternate directions share too much non-palette concept language; change the subject, medium, or structure")
+    if isinstance(thumbnail, dict) and isinstance(alternate, dict):
+        primary_prompt = str(thumbnail.get("image_prompt", "")).strip().casefold()
+        alternate_prompt = str(alternate.get("image_prompt", "")).strip().casefold()
+        if primary_prompt and alternate_prompt and primary_prompt == alternate_prompt:
+            failures.append("strict art-direction: alternate 3:2 prompt must use a different direction")
 
     theme_path = direction / "theme.txt"
     if not theme_path.is_file():
@@ -468,7 +654,8 @@ def validate_art_direction(root: Path, failures: list[str]) -> dict | None:
         for heading in (
             "## thumbnail_main_3x2",
             "## thumbnail_main_1x1",
-            "## thumbnail_japanese_1x1",
+            "## thumbnail_alt_3x2",
+            "## thumbnail_alt_1x1",
         ):
             if heading not in theme:
                 failures.append(f"strict art-direction: theme.txt is missing prompt section {heading[3:]}")
@@ -509,10 +696,17 @@ def validate_handoff_documents(
     manifest = manifest_path.read_text(encoding="utf-8")
     if "status" not in manifest.casefold() or "dimension" not in manifest.casefold():
         failures.append("visual manifest must include status and dimension fields")
+    if "thumbnail_state: generated final thumbnails" not in manifest.casefold():
+        failures.append("visual manifest must confirm all four generated final thumbnails")
+    if "manual_replacement_required" in manifest.casefold():
+        failures.append("visual manifest still requires manual thumbnail replacement")
     required_paths = [
         "3x2/thumbnail_main.png",
         "1x1/thumbnail_main.png",
-        "1x1/thumbnail_japanese.png",
+        "final-thumbnails/thumbnail_main_3x2.png",
+        "final-thumbnails/thumbnail_main_1x1.png",
+        "final-thumbnails/thumbnail_alt_3x2.png",
+        "final-thumbnails/thumbnail_alt_1x1.png",
         *required_assets,
     ]
     for required in required_paths:
@@ -588,27 +782,21 @@ def main() -> int:
         if not (root / required).is_file():
             failures.append(f"missing handoff file: {root / required}")
     plan = validate_art_direction(root, failures) if args.strict_art_direction else None
-    pin_assets = validate_pinterest_templates(root, plan, failures)
 
     sizes = {"3x2": (2400, 1600), "1x1": (1600, 1600)}
     check_png(root / "3x2" / "thumbnail_main.png", sizes["3x2"], failures)
     check_png(root / "1x1" / "thumbnail_main.png", sizes["1x1"], failures)
-    check_png(root / "1x1" / "thumbnail_japanese.png", sizes["1x1"], failures)
+    retired_thumbnail = root / "1x1" / "thumbnail_japanese.png"
+    if retired_thumbnail.exists():
+        failures.append(f"retired storefront thumbnail reference must be removed: {retired_thumbnail}")
     for ratio in sizes:
         stale = list((root / ratio).glob("promo_*.png"))
         if stale:
             failures.append(f"{ratio}: retired promo PNGs remain: {', '.join(path.name for path in stale)}")
 
-    required_assets = [
-        "specimens/3x2/specimen-letters.png",
-        "specimens/3x2/specimen-numerals.png",
-        "specimens/1x1/specimen-letters.png",
-        "specimens/1x1/specimen-numerals.png",
-    ]
-    for relative in required_assets:
-        ratio = relative.split("/")[1]
-        check_png(root / relative, sizes[ratio], failures)
-    required_assets.extend(pin_assets)
+    if (root / "specimens").exists():
+        failures.append("retired Agent 27 factual specimen previews must not be present")
+    required_assets: list[str] = []
 
     active_templates = active_html_support_templates(failures)
     support_names: dict[str, set[str]] = {}
@@ -616,8 +804,8 @@ def main() -> int:
     for ratio in sizes:
         support_dir = root / "supporting" / ratio
         supports = sorted(support_dir.glob("support-*.png")) if support_dir.is_dir() else []
-        if len(supports) != 13:
-            failures.append(f"supporting/{ratio}: expected exactly 13 support templates, found {len(supports)}")
+        if len(supports) != 12:
+            failures.append(f"supporting/{ratio}: expected exactly 12 support templates, found {len(supports)}")
         names = {path.stem.split("_", 1)[-1] for path in supports}
         support_names[ratio] = names
         if len(names) != len(supports):
@@ -634,27 +822,28 @@ def main() -> int:
             required_assets.append(path.relative_to(root).as_posix())
         support_count += len(supports)
     if support_names.get("3x2") != support_names.get("1x1"):
-        failures.append("supporting: the selected 3:2 and 1:1 templates must be the same 13 layouts")
+        failures.append("supporting: the selected 3:2 and 1:1 templates must be the same 12 layouts")
     if plan is not None:
         family_style_count = plan.get("_verified_family_style_count")
         if isinstance(family_style_count, int):
             selected_family = support_names.get("3x2", set()) & FAMILY_SHOWCASE_TEMPLATES
-            expected_family = FAMILY_SHOWCASE_TEMPLATES if family_style_count >= 2 else set()
-            if selected_family != expected_family:
-                if family_style_count >= 2:
-                    failures.append(
-                        "supporting: a multi-style source family must include all four "
-                        "family showcases: " + ", ".join(sorted(FAMILY_SHOWCASE_TEMPLATES))
-                    )
-                elif selected_family:
-                    failures.append(
-                        "supporting: single-style source fonts must not include family showcases: "
-                        + ", ".join(sorted(selected_family))
-                    )
+            if family_style_count < 2 and selected_family:
+                failures.append(
+                    "supporting: single-style source fonts must not include family showcases: "
+                    + ", ".join(sorted(selected_family))
+                )
+
+    for name, ratio in (
+        ("thumbnail_main_3x2.png", 1.5),
+        ("thumbnail_main_1x1.png", 1.0),
+        ("thumbnail_alt_3x2.png", 1.5),
+        ("thumbnail_alt_1x1.png", 1.0),
+    ):
+        check_generated_thumbnail(root / "final-thumbnails" / name, ratio, failures)
 
     png_count = len(list(root.rglob("*.png")))
-    if png_count != 33:
-        failures.append(f"handoff: expected exactly 33 PNGs (3 thumbnails, 26 support renders, 4 specimens), found {png_count}")
+    if png_count != 30:
+        failures.append(f"handoff: expected exactly 30 PNGs (2 lettering references, 4 generated thumbnails, 24 support renders), found {png_count}")
 
     validate_handoff_documents(root, required_assets, failures, args.allow_pending_marker)
     if plan is not None and plan.get("render_mode") != "text_placeholder":
@@ -664,10 +853,8 @@ def main() -> int:
             print(f"[FAIL] {failure}")
         return 1
 
-    print(f"[PASS] visual handoff valid: {png_count} PNGs, {len(pin_assets)} Pinterest JPEGs (3 thumbnails, {support_count} support renders, 4 factual specimens)")
-    print("[PASS] supporting templates: 13 matched layouts at 3:2 and 1:1")
-    print("[PASS] factual specimens: 4 across 3x2 and 1x1")
-    print(f"[PASS] Pinterest templates: {len(pin_assets)} rendered with the supplied font")
+    print(f"[PASS] visual handoff valid: {png_count} PNGs (2 lettering references, 4 generated thumbnails, {support_count} support renders)")
+    print("[PASS] supporting templates: 12 matched layouts at 3:2 and 1:1")
     return 0
 
 

@@ -372,7 +372,7 @@ The atmospheric tagline may be more expressive but must remain concise.
 
 VISUAL HANDOFF BOUNDARY
 
-Agent 27 (`font-image-generator`) owns the complete visual handoff: the white-background font-name specimens and bespoke prompts for the 3:2 main thumbnail, separately composed 1:1 main thumbnail, and 1:1 storefront thumbnail. This naming assistant must not write `theme.txt`, `theme_variant`, thumbnail prompts, or a suggested thumbnail headline. Do not require a fixed medium, flat-only artwork, or a shared visual template. Agent 27 develops the final visual concept from the font's actual letterforms, its description, verified facts, and buyer use.
+Agent 27 (`font-image-generator`) owns the complete visual handoff: two white-background font-name specimens and four bespoke prompts covering a primary and a distinctly different alternate direction, each composed for 3:2 and 1:1. This naming assistant must not write `theme.txt`, `theme_variant`, thumbnail prompts, or a suggested thumbnail headline. Do not require a fixed medium, flat-only artwork, or a shared visual template. Agent 27 develops the two visual concepts from the font's actual letterforms, its description, verified facts, and buyer use.
 
 This assistant may discuss a name's imagery or associations when explaining why the name fits. Treat those associations as naming rationale only; they are not instructions for the thumbnail or supporting image design.
 

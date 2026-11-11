@@ -5,7 +5,8 @@ INPUTS
 - Exact font name: [ENTER THE FINAL FONT NAME]
 - Approved style descriptor: [ENTER THE TITLE-CASE DESCRIPTOR]
 - Complete 1:1 prompt from `visual-direction/theme.txt`:
-  [PASTE the `thumbnail_main_1x1` section]
+  [PASTE either `thumbnail_main_1x1` or `thumbnail_alt_1x1`; use the same
+   direction as the 3:2 thumbnail]
 - Output filename: `thumbnail_main.png`
 
 Create one finished square thumbnail. Use the white-background specimen as the
@@ -21,6 +22,12 @@ the name dominant, the descriptor secondary but readable, and both fully inside
 the frame. Make the lettering stand apart from the background through clear
 value contrast. Do not add generic props, unrelated effects, fake claims, or
 accidental extra text.
+
+Give the font name a genuinely large footprint: its longest line must span at
+least 75% of the frame width, and the visible font-name glyph block must span at
+least 35% of the frame height. Measure the name alone, excluding the descriptor.
+If it does not fit, stack or reflow the words and simplify or move the scene;
+never shrink the lettering to make room for background elements.
 
 Follow the font-specific composition in the prompt. Keep the name and descriptor
 as flat, front-facing overlays, separate from any photographed or rendered

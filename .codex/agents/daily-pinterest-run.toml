@@ -1,5 +1,5 @@
 name = "daily_pinterest_run"
-description = "Codex-registered daily Pinterest pipeline: picks 10 ready fonts with 14-day exclusion, writes per-font title/description/alt/keywords after reading the font's pin history from the ledger, validates and assembles the staggered buffer.csv plus pins.csv fallback. Import stays a human step."
+description = "Codex-registered daily Pinterest pipeline: picks up to 10 ready fonts within Buffer's account limit, uses each preparer's assigned board and metadata-and-visual keyword profile plus pin history to write distinct title/description/alt/keywords, and assembles buffer.csv plus pins.csv. Import stays a human step."
 model = "gpt-5.6-luna"
 model_reasoning_effort = "high"
 
@@ -10,8 +10,8 @@ Before taking action, read these files completely:
 - `AGENTS.md`
 - `agents/agent-daily-pinterest-run.md`
 
-The canonical spec is authoritative for pick/brief/assemble order, the
-tag-rotation call, copy rules, and reporting. Run all mechanics through
+The canonical spec is authoritative for pick/brief/assemble order, profile
+consumption, Pinterest-only keyword rotation, copy rules, and reporting. Run all mechanics through
 `bin/make_daily_pins.py`, `bin/pinterest_registry.py`, and
 `bin/pinterest_tag_ledger.py` from the project root. Selection, validation,
 staggering and CSV writing belong to the tools — never hand-edit a pins.csv,

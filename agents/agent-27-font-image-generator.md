@@ -1,6 +1,6 @@
 ---
 name: agent-27-font-image-generator
-description: Creates thumbnail prompts and lettering specimens, 13 random eligible support catalogue designs rendered at both ratios, four factual specimens, and every active HTML/CSS Pinterest template rendered with the font.
+description: Creates four final thumbnails from their paired prompts and specimens, two lettering references, and 12 random eligible support designs at both ratios. Pinterest template pins are retired.
 user-invocable: true
 ---
 
@@ -15,10 +15,24 @@ requests adjustments afterward.
 
 ## Scope
 
-Work only in the supplied `font-factory/fonts/{input-slug}/` folder. Preserve the
-supplied font name and verified facts. If the caller supplies no final name,
-choose one only after reviewing the source metadata and character atlas, using
-the Naming policy below; do not run external name-uniqueness research.
+Work only in the exact `font-factory/fonts/{input-slug}/` folder selected for
+the run. When `/full-workflow` invokes you without an exact source folder or an
+already-staged workspace, begin by running
+`python3 bin/stage_saved_font.py --random`. Use the helper's one randomly
+selected Saved family and its returned staged path; it moves only that
+family's root-level OTF/TTF files unchanged and refuses occupied destinations.
+Proceed only when this invocation reports `RANDOM_SOURCE_CLAIMED` and names the
+freshly staged workspace. If it fails or omits that marker, stop; never reuse a
+workspace, visual plan, or source another concurrent run may have claimed.
+Do not list folders and ask the user to choose in this mode. If the user
+supplies an exact Saved folder, stage only that folder with
+`python3 bin/stage_saved_font.py --source "{folder}"` and use its returned
+workspace. If an existing `font-factory/fonts/{input-slug}/` workspace is
+supplied, use it directly. Never randomize when either exact source is given.
+Preserve the supplied font name and verified facts. If the caller supplies no
+final name, choose one only after reviewing the source metadata and complete
+character atlas, using the Naming policy below; do not run external
+name-uniqueness research.
 
 ### Naming policy
 
@@ -36,6 +50,13 @@ When no name is supplied, privately sketch a few candidates across different
 concept routes, then choose the clearest, most memorable fit. Do not reuse a
 reference title, its distinctive word pairing, or a near-variant. Put only the
 chosen name in the plan; do not add a candidate list or naming report.
+Do not carry the source family's name forward, including by adding a generic
+style word or suffix (for example, changing `Carmen` to `Carmen Ink`). Record
+`name_origin: "agent_selected"` for a name you choose or
+`name_origin: "user_supplied"` only when the caller explicitly gives the final
+name. The strict handoff validator rejects an agent-selected name that retains
+all source-name words; resolve that failure with a genuinely distinct name
+before rendering or handing off. User-supplied names remain exact.
 
 Before writing copy, run the family preflight and the fact sheet once:
 
@@ -81,6 +102,10 @@ unsupported claims rather than adding to them. Never add unsupported language,
 glyph, feature, or use-case claims. Do not create a separate profile or
 description report.
 
+Base `font_profile.personality` on the observed letterforms and record the
+font's concise vibe there. Derive both that vibe and `product_description`
+only after reviewing the complete character atlas and verified metadata.
+
 Add a compact `verified_product_facts` object to the same visual plan for the
 listing stages. Include source formats; each real family style with its name,
 weight class, width class, and italic state; mapped-character count, basic
@@ -116,95 +141,168 @@ handoff.
 
 ## Deliverables
 
-Author one compact `visual-plan.json` for the three full thumbnail prompts:
+Author one compact `visual-plan.json` with two complete visual directions,
+each composed for both thumbnail ratios, then generate all four finished
+thumbnails from their matching prompts and lettering references:
 
-- `thumbnail`: the final font name, 3:2 hero direction and 1:1 crop direction;
-- `japanese_thumbnail`: the same exact name, with a distinct Japanese-storefront
-  direction;
+- `thumbnail`: the primary direction, with a 3:2 hero and independent 1:1 composition;
+- `thumbnail_alternate`: a genuinely different direction, also with its own 3:2
+  hero and independent 1:1 composition;
 - `renderer_class`: one of `elegant`, `blackletter`, `sports`, or `script`,
   selected from the font's actual forms;
 - factual campaign/profile fields, a concept-specific palette and readable
-  contrast checks.
+  contrast checks;
+- final primary and alternate thumbnail images in
+  `prepared_visuals/final-thumbnails/` under the canonical filenames.
 
-Use 13 as the fixed `support_count` (or omit the field to use the same default).
+Use 12 as the fixed `support_count` (or omit the field to use the same default).
 The catalogue renderer and handoff validator enforce the count.
 
 Do not author custom supporting-image promos or a `supporting_image_theme`.
-The renderer makes a seeded random selection of 13 eligible layouts from the
-shared HTML/CSS support catalogue and records the selected files and exact
-names in the output manifest. It renders those same 13 designs to `supporting/3x2/` and
-`supporting/1x1/` for 26 support images total. The Pinterest catalogue is a
-separate output set and does not count toward these 13 support designs.
+The renderer selects 12 eligible layouts from the shared HTML/CSS support
+catalogue, prioritizing designs used least often by previous non-archived
+handoffs in the same renderer class. It randomizes ties deterministically from
+the font name and records the selected files and exact names in the output
+manifest. Family-showcase templates are eligible only when the source family
+qualifies, but join the same selection pool as other layouts; none is
+guaranteed. Their selection is determined by the normal seeded sampling. It
+renders those same 12 designs to `supporting/3x2/` and `supporting/1x1/` for 24
+support images total. The Pinterest catalogue is a separate output set and
+does not count toward these 12 support designs.
 Supporting artwork must not repeat the font name; it uses other words to show
-the typeface. When eligible real sibling styles exist, include every family-
-showcase template in the 13: `plakat32`, `weightfamily32`, `mangosboard32`, and
-`italicregular32`. The family boards and italic/regular comparison use actual
-sibling files. `italicregular32` selects the closest opposite italic/upright
+the typeface. When eligible real sibling styles exist, family showcases may be
+selected by the same seeded sampling as other layouts: `weightfamily32`,
+`mangosboard32`, and `italicregular32`. They are not default
+inclusions for every multi-style family. Any selected family boards and
+italic/regular comparison use actual sibling files. `italicregular32` selects the closest opposite italic/upright
 style when available, otherwise the nearest distinct sibling, and prints the
 real style names instead of assuming a member is called Italic. Fill the
-remaining slots with the reproducible random
-selection from the font-class-fit catalogue. The four factual specimen sheets
-in this handoff are previews; Agent 13 still renders the final package
-specimens from the font binary.
+remaining slots from the same reproducible, font-class-fit selection pool; all
+eligible layouts follow the same least-used/random policy. Do not render factual
+letter or numeral specimen sheets; Agent 13 owns the canonical factual specimens.
 
-Render every active Pinterest layout from `font-factory/pin-html/` with the
-primary font and exact product name into `prepared_visuals/pinterest/` using
-`node font-factory/pin-html/render_gallery.mjs --mode pins`. The active set has
-23 individual templates; `green_starburst` and `phrase` are retired and must
-not appear in this production set. Keep each pin as its own 1000×1500 JPEG at
-or below 200 KB. Include `pinterest-template-manifest.json` with the exact
-template/index mapping, font hash, byte sizes, and image hashes. Use the actual
-font in every display specimen; replace demo family names and unsupported
-glyph/feature-count claims with the supplied font name and neutral copy. These
-23 pins are later copied unchanged by Agent 13. Agent 30 appends ten composites
-after them, and the Pinterest preparer uploads the complete set and records all
-public links.
+For photo-led and other image-backed catalogue templates, use the preserved
+text-free plate and the template's documented copy slots. Treat wording,
+studio credits, font names, and category claims visible in a source reference
+as removable source branding, not template copy. Render the selected product's
+support wording in the selected font file; use a neutral sans-serif only for
+functional labels. Keep the font profile as the source of truth for the font's
+actual name and traits, and keep generic template copy separate so a source
+font name or category cannot be mistaken for the current product.
+
+Do not render Pinterest catalogue pins or create a `pinterest/` folder. The
+HTML/CSS Pinterest template catalogue is retired. After the final image set is
+installed in the preparation output, Agent 30 creates the ten Pinterest panels
+from that set; only those composites enter the Pinterest upload set.
 
 Agent 27 must keep producing the clean, white-background font-name specimens.
 Those images are raw lettering material for the later image-generation step;
 they are not intended to look like finished thumbnails. Render the exact final
 font name with the actual font file, on white, without decoration or added copy.
 
-Each thumbnail plan entry's sole `copy_blocks` value is the exact font name.
-For the main 3:2 and 1:1 final-image prompts, use the exact
-`font_profile.subtext` as secondary visible copy in title case, alongside the
-verified type trait, a short buyer question, and distinct composition notes for
-each ratio. The white-background name specimens and Japanese storefront prompt
-show only the exact font name. Author full image-generation prompts from
-scratch for this font.
+Each thumbnail direction's sole `copy_blocks` value is the exact font name.
+For every 3:2 and 1:1 final-image prompt, use the exact `font_profile.subtext`
+as secondary visible copy in title case. Specify it as clean, neutral sans-serif
+typesetting (plain grotesk or humanist sans, regular or medium weight), clearly
+distinct from the featured display face. The descriptor must not imitate the
+font under sale, use hand-drawn lettering, or become another display-font
+sample. Keep the wording exact and the treatment quiet so the font name remains
+the only custom lettering. Ground both directions in a verified
+type trait, a short buyer question, and distinct composition notes for each
+ratio. Author all four complete image-generation prompts from scratch for this
+font.
 There is no old thumbnail reference to find, inspect, reimagine, or preserve.
 The white-background font specimen is the sole lettering reference; the font
 description and verified facts ground the concept. Use only the approved font
 name and style descriptor as visible copy. Keep the name dominant and readable,
-but choose its placement and scale from the composition instead of forcing a
-centred lockup or fixed percentage.
+and give it a genuinely large footprint: the longest title line must span at
+least 75% of the frame width, and the visible font-name glyph block must span
+at least 35% of the frame height. If the title does not fit, reflow or stack
+the words and simplify or move the scene; do not shrink the lettering to make
+room for background objects. Keep the descriptor secondary.
 
-Write three complete prompts into the plan and derived `theme.txt`:
+Write four complete prompts into the plan and derived `theme.txt`:
 
-- `thumbnail.image_prompt`: the main 3:2 thumbnail;
-- `thumbnail.ratio_layouts.1x1.image_prompt`: a separately composed square main
-  thumbnail using the same font name;
-- `japanese_thumbnail.image_prompt`: a separate square storefront design.
+- `thumbnail.image_prompt`: the primary 3:2 thumbnail;
+- `thumbnail.ratio_layouts.1x1.image_prompt`: the primary square thumbnail,
+  independently composed;
+- `thumbnail_alternate.image_prompt`: a second 3:2 concept with a different
+  subject or major visual structure, not a palette swap;
+- `thumbnail_alternate.ratio_layouts.1x1.image_prompt`: that alternate concept
+  independently composed for the square frame.
 
 Each prompt must be usable with the matching white-background specimen by itself.
-The 3:2 and 1:1 prompts must make different crop and layout decisions. Do not
+The primary and alternate directions must differ in subject, medium, or major
+graphic structure; a palette-only change is not enough. Within each direction,
+the 3:2 and 1:1 prompts must make different crop and layout decisions. Do not
 write a reusable thumbnail-reimagination prompt. Supporting templates need no
-per-font prompt or theme file.
+per-font prompt or theme file. The strict handoff validator enforces the four
+prompt sections and checks that the direction labels do not differ only by color.
+
+### Generate the four final thumbnails
+
+After `theme.txt` and its four complete prompts have been written, use the
+built-in image-generation tool to create each image yourself. Make four
+independent image requests and pair each prompt with only its matching
+white-background specimen:
+
+- primary 3:2 prompt + `prepared_visuals/3x2/thumbnail_main.png`;
+- primary 1:1 prompt + `prepared_visuals/1x1/thumbnail_main.png`;
+- alternate 3:2 prompt + `prepared_visuals/3x2/thumbnail_main.png`;
+- alternate 1:1 prompt + `prepared_visuals/1x1/thumbnail_main.png`.
+
+Use the prompt text from `visual-direction/theme.txt` verbatim as the art
+direction. Do not substitute a summary, combine ratios, or invent another
+prompt. Save the returned images, without cropping or recompressing them, as:
+
+- `prepared_visuals/final-thumbnails/thumbnail_main_3x2.png`;
+- `prepared_visuals/final-thumbnails/thumbnail_main_1x1.png`;
+- `prepared_visuals/final-thumbnails/thumbnail_alt_3x2.png`;
+- `prepared_visuals/final-thumbnails/thumbnail_alt_1x1.png`.
+
+Inspect all four generated images at full size and at small marketplace size.
+Confirm the exact product name and descriptor, visible lettering fidelity,
+ratio, title prominence, contrast, and that each image follows its matching
+theme prompt. If an image has an obvious text, ratio, or composition failure,
+make at most one targeted regeneration for that image with the same specimen
+and prompt. Do not leave final thumbnail creation for the seller. If the
+image-generation tool fails or an image remains unusable after that retry,
+stop and report the specific missing or failed output rather than marking the
+handoff ready.
+
+After saving the four images, update `visual-handoff-manifest.md` to list their
+actual dimensions and set `thumbnail_state: generated final thumbnails`;
+remove any manual-replacement-required thumbnail note. Then run the strict handoff
+validator. It requires both lettering references, all four generated
+thumbnails, and all 24 support renders.
 
 ### Bespoke thumbnail prompt requirements
 
-Read `docs/AGENT-27-CREATIVE-PROCESS.md` before authoring prompts. That portable
-guide contains the current design preferences; it replaces the archived
-thumbnail research set. Do not require old reference images, prototype renders,
-or prior font plans to create a thumbnail prompt.
+Read `docs/AGENT-27-CREATIVE-PROCESS.md` and the seller's saved research in
+`font-factory/Style-References/thumbnail-prompt-research-2026-10-20/` before
+authoring prompts. That research is active preference evidence, not an
+optional gallery. For an ordinary run, read only `prompt-findings.md` and
+`prototypes/review.md`; their synthesis is sufficient. Do not retrieve
+individual records from `reference-review.md` or `captions.json`, and do not
+open research or prototype images. This avoids anchoring a new direction to a
+favorite example's exact layout, subject, palette, or props. Inspect a specific
+reference only when the seller asks to use it or when the written findings are
+ambiguous; in that case, use it to resolve that question, not as a template.
+No old marketplace thumbnail for the current font is required.
 
 Compare up to five recent visual plans only when they exist in the current
-workspace. If fewer than five exist, build the novelty pass from the current
-font specimen and facts: privately sketch three distinct directions and choose
-the one that fits this font and buyer context. The chosen premise must differ
-in subject or major structure from any available recent plan; a palette-only
-change is not a new concept. Do not include private chain-of-thought. Record
-one concise novelty note in the already-required `candidate-review.md`.
+workspace. Use the saved research's positive and negative findings to calibrate
+focus, color, detail, and user taste; do not inspect the underlying reference
+images. If fewer than five plans exist, use the written prototype review, not
+the prototype gallery. Build the novelty pass from the specimen, name, buyer
+context, and synthesized preference principles: privately sketch at least
+three distinct directions, then select a primary and an alternate that fit
+this font.
+The alternate must differ from the primary in subject, medium, or major
+structure; a palette-only change is not a new concept. Both must differ in
+subject or major structure from available recent plans. Do not include private
+chain-of-thought. Record a concise novelty note for both directions in the
+already-required `candidate-review.md`.
 
 Start from the actual white-background font-name specimen. Observe its natural
 capitalization, proportions, terminals, stroke contrast, joins, and filled or
@@ -213,17 +311,53 @@ write a one-sentence concept thesis that ties one of those features to one
 specific subject, environment, material, or graphic action. If the idea could
 fit any unrelated font unchanged, make it more specific.
 
-Each complete prompt should stand on its matching specimen alone. Do not impose
-a word count. State the exact specimen behavior to preserve, one specific visual
-premise, the title's scale and position, the supporting subject or graphic
-structure, palette/value contrast, and any focus hierarchy needed at thumbnail
-size. For the 3:2 main thumbnail and 1:1 main thumbnail, include the exact font
+Each complete prompt should stand on its matching white-background specimen
+alone. Do not impose a word count. State the exact specimen behavior to
+preserve, one specific visual premise, the title's position and minimum
+occupancy (75% of frame width and 35% of frame height), the supporting subject
+or graphic structure, palette/value contrast, and any focus hierarchy needed
+at thumbnail size. All four prompts include the exact font
 name plus the same concise style descriptor, set as a secondary but readable
-line at small size. Use title case for the descriptor; preserve natural title
-case in the name, with all caps only when the font itself is designed that way.
-The Japanese-storefront prompt may adapt its descriptor to that composition.
-Do not add unapproved claims or extra supporting copy. Use enough detail to make
-the layout unmistakable, then stop; do not enumerate caption details as props.
+line at small size in clean, neutral sans-serif typesetting. Name the neutral
+sans-serif treatment explicitly in every prompt; do not leave the descriptor's
+font style for the image model to invent. Use title case for the descriptor;
+preserve natural title case in the name, with all caps only when the font itself
+is designed that way.
+Do not add unapproved claims or extra supporting copy. Use enough detail to
+make each layout unmistakable, then stop; do not enumerate caption details as
+props.
+
+For every newly authored visual plan, set `visual_palette_schema` and
+`visual_research_schema` to `1`. For each direction, cite the relevant
+synthesized finding by summary-file path and principle, then record how it
+fits this font, what the design applies, and what it avoids. Cite only
+`prompt-findings.md` or `prototypes/review.md`; both directions may use the same
+summary because the design must come from the font, not from finding a new
+reference image. The handoff validator checks these records.
+
+Give each direction a `lettering_colors` record for the title, descriptor, and
+the field directly behind both lines. Name each color, give its hex value, and
+explain why the title color belongs to the concept. Choose hue, saturation and
+contrast to fit the concept and the seller's research signals; do not default
+to weak, unconsidered neutrals or to bright colors without a reason. Use the
+color contrast validator against the backing field and include the same hex
+values in both ratio prompts. Keep the title over its named backing field; if
+it crosses multiple colors, provide and validate each actual pairing.
+
+Keep the background to one visual premise and its purposeful subjects or
+materials. Avoid unrelated prop piles, labels and effects, but do not force a
+flat or minimal solution when the research and font idea call for a richer
+photograph, illustration or print treatment. Color contrast, lettering color,
+and background should support the same idea rather than compete.
+Do not mistake a written rationale for visual impact. Before rendering, confirm
+that the concept has a visible anchor or a memorable type relationship—not just
+a solid field with fine grids, circles, or abstract marks. A restrained design
+still needs a clear visual payoff at thumbnail size. Give the palette a
+distinctive, concept-led color relationship and an intentional accent; numeric
+contrast alone does not make a palette vivid or cohesive. Avoid low-energy,
+near-monochrome color and pale decorative accents as defaults. Do not force
+neon or unrelated saturation; choose colors that make this specific font idea
+read clearly and feel compelling.
 
 All thumbnail lettering is a flat, front-facing 2D graphic layer. It may
 overlap a photograph, person, illustration, or color field, but it stays
@@ -266,7 +400,9 @@ all-caps copy only in these source-specific support designs:
 `support-44_neue32.png`, and `support-141_practicehard32.png`.
 
 Before writing the final prompt, add a compact composition map to
-candidate-review.md: the font-specific reason for the idea; the title's
+candidate-review.md: the font-specific reason for the idea; the synthesized
+preference finding and principle used; what the design applies and deliberately
+leaves out; the title's
 position, scale, and overlap; the background/illustration role; the palette
 contrast; the one or two design decisions that make the image feel finished;
 and the one-sentence novelty note. Name one or two reference mechanisms, why
@@ -280,11 +416,6 @@ the composition reads as a designed thumbnail rather than a raw name sample.
 Reject surface-embedded lettering even when an image model produces it from an
 otherwise successful prompt.
 
-The Japanese-storefront thumbnail still shows only the exact supplied name.
-Compose it separately for 1:1 and follow the same hierarchy, flat-title,
-contrast and restraint rules; a Japanese destination does not call for invented copy or
-unsupported glyph claims.
-
 ## One-pass render and validation
 
 Create `visual-direction/visual-plan.json` and a short
@@ -297,9 +428,8 @@ python3 bin/generate_font_text_placeholders.py \
   --output font-factory/fonts/{input-slug}/prepared_visuals
 ```
 
-It generates three thumbnail placeholders, 13 eligible HTML/CSS support
-templates at both 3:2 and 1:1, four factual specimen sheets, and all 23
-Pinterest template pins. It also derives `theme.txt`,
+It generates two thumbnail lettering references and 12 eligible HTML/CSS support
+templates at both 3:2 and 1:1. It also derives `theme.txt`,
 `image-notes/`, `art-direction.md`, the manifest and ready marker. Do not hand
 edit generated views. If a mechanical validator error occurs, fix that error
 and rerun; do not create multiple visual variants or polish a PNG for its own
@@ -311,24 +441,20 @@ The prepared handoff is expected to contain:
 prepared_visuals/
   3x2/thumbnail_main.png
   1x1/thumbnail_main.png
-  1x1/thumbnail_japanese.png
-  supporting/3x2/support-*_*.png       # 13 eligible templates
-  supporting/1x1/support-*_*.png       # the same 13 square adaptations
-  specimens/{3x2,1x1}/specimen-{letters,numerals}.png
-  pinterest/pinterest_1.jpg ... pinterest_23.jpg
-  pinterest/pinterest-template-manifest.json
+  supporting/3x2/support-*_*.png       # 12 eligible templates
+  supporting/1x1/support-*_*.png       # the same 12 square adaptations
   visual-handoff-manifest.md
   VISUAL-HANDOFF-READY.md
 ```
 
-Thumbnail, support, and specimen PNGs stay in `font-factory/`; Agent 13 must not
-copy or reinterpret them. Agent 13 copies only the 23 verified Pinterest JPEGs
-and their manifest into the final preparation folder. The handoff manifest
-lists all 26 support renders and four specimen previews and links to
-`visual-direction/theme.txt`, which contains the three thumbnail prompts for
-the seller to use with the matching lettering specimens. Supporting templates
-and factual specimens are renderer-generated review assets, not image-model
-placeholders. Never move to Agent 13 if the renderer or validator fails.
+Thumbnail and support PNGs stay in `font-factory/`; Agent 13 must not
+copy or reinterpret them. Agent 13 does not install Pinterest assets. The handoff manifest
+lists all 24 support renders and links to
+`visual-direction/theme.txt`, which contains four prompts: a primary and an
+alternate direction, each with 3:2 and 1:1 compositions. Both directions use
+the matching-ratio lettering specimen. Supporting templates
+are renderer-generated review assets, not image-model placeholders. Never
+move to Agent 13 if the renderer or validator fails.
 
 ## Completion response
 
@@ -337,8 +463,10 @@ When validation passes, report:
 ```text
 READY FOR FONT PREP HANDOFF
 Font: {exact-font-name}
+Source: {Saved source folder or existing staged workspace}
+Staged workspace: {exact font-factory/fonts/{input-slug} path}
 Draft visuals (stay in font-factory): {absolute prepared_visuals path}
-Contents: 13 HTML/CSS support designs (26 renders), 4 factual specimen previews, 3 thumbnail lettering specimens, 3 thumbnail prompts
+Contents: 12 HTML/CSS support designs (24 renders), 2 thumbnail lettering references, 4 thumbnail prompts across 2 distinct directions
 Profile: {type label}; {subtext}; description saved in visual-direction/visual-plan.json
 Character atlases: {absolute character-atlases path}; {mapped character count} per style
 Validation: PASS

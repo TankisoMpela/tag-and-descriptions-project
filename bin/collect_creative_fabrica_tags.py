@@ -3,8 +3,8 @@
 
 Uses the project's serper + firecrawl MCP servers (stdio) to:
   1. scrape the Creative Fabrica Fonts index for the canonical category list;
-  2. hit https://www.creativefabrica.com/tag/<slug>-fonts/ for every candidate
-     tag and record its published font count ("Explore N stunning X Fonts");
+  2. check the exact `/tag/<slug>-fonts/` and `/tag/<slug>-font/` candidates
+     and record a published count only from a font-scoped route;
   3. discover popular font products via serper and record the keywords their
      titles and category breadcrumbs use.
 
@@ -70,6 +70,7 @@ SERPER_QUERIES = [
 
 EXPLORE_RE = re.compile(r"Explore\s+([\d,]+)\s+stunning", re.IGNORECASE)
 TITLE_COUNT_RE = re.compile(r"([\d,]+)\+\s+Stunning", re.IGNORECASE)
+H1_COUNT_RE = re.compile(r"^#\s+([\d,]+)\s+.+?\s+Designs?\s*&\s*Graphics\s*$", re.IGNORECASE | re.MULTILINE)
 H1_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
 BREADCRUMB_RE = re.compile(
     r"\[Fonts\]\(https://www\.creativefabrica\.com/fonts/\)\s*/\s*\[([^\]]+)\]"
@@ -141,7 +142,7 @@ def parse_tag_page(body: str) -> tuple[int | None, str]:
     heading = (H1_RE.search(body) or [None, ""])[1].strip() if H1_RE.search(body) else ""
     if heading.startswith("http"):
         return None, heading  # 404 / unknown tag
-    for pattern in (EXPLORE_RE, TITLE_COUNT_RE):
+    for pattern in (EXPLORE_RE, TITLE_COUNT_RE, H1_COUNT_RE):
         match = pattern.search(body)
         if match:
             return int(match.group(1).replace(",", "")), heading
@@ -163,7 +164,7 @@ def main() -> int:
     bank: dict = {
         "platform": "Creative Fabrica",
         "generated": stamp,
-        "method": "firecrawl scrape of /tag/<slug>-fonts/ and /fonts/; serper product discovery",
+        "method": "Firecrawl checks /tag/<slug>-fonts/ then /tag/<slug>-font/ and /fonts/; Serper product discovery",
         "caveat": "Counts are catalog coverage / tag-page life, NOT demand or sales evidence.",
         "categories": [],
         "total_fonts": None,
@@ -184,15 +185,15 @@ def main() -> int:
     print(f"[2/3] tag pages: {len(seeds)}", file=sys.stderr)
     for i, tag in enumerate(seeds, 1):
         slug = slugify(tag)
+        count, heading = None, ""
         url = f"https://www.creativefabrica.com/tag/{slug}-fonts/"
-        body = scrape(url)
-        count, heading = parse_tag_page(body)
-        if count is None:  # fall back to the bare slug page
-            bare = f"https://www.creativefabrica.com/tag/{slug}/"
-            body2 = scrape(bare)
-            count2, heading2 = parse_tag_page(body2)
-            if count2 is not None:
-                url, count, heading = bare, count2, heading2
+        for suffix in ("-fonts", "-font"):
+            candidate_url = f"https://www.creativefabrica.com/tag/{slug}{suffix}/"
+            body = scrape(candidate_url)
+            candidate_count, candidate_heading = parse_tag_page(body)
+            if candidate_count is not None:
+                url, count, heading = candidate_url, candidate_count, candidate_heading
+                break
         bank["tags"].append({
             "tag": tag, "slug": slug, "url": url, "h1": heading,
             "coverage_count": count, "status": "live" if count is not None else "absent",
@@ -237,7 +238,7 @@ def main() -> int:
     ]
     for category in bank["categories"]:
         lines.append(f"- {category}")
-    lines += ["", "## Tag coverage ranking (live /tag/<slug>-fonts/ pages)", "",
+    lines += ["", "## Tag coverage ranking (live font-scoped /tag/ routes)", "",
               "| Tag | Coverage count | H1 | URL |", "|---|---:|---|---|"]
     for tag in live:
         lines.append(f"| {tag['tag']} | {tag['coverage_count']:,} | {tag['h1']} | {tag['url']} |")

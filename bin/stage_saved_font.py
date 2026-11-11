@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
-"""Move one user-selected Saved font family into font-factory/fonts/.
+"""Move one selected Saved font family into font-factory/fonts/.
 
-Only direct, original OTF/TTF files in the selected Saved folder are moved.
-Nested repair/output directories and non-font files are intentionally excluded.
-The moved source files remain in font-factory/fonts/ as the source of record.
+Select the family by exact folder name or choose one eligible folder randomly.
+Only direct, original OTF/TTF files in that Saved folder are moved. Nested
+repair/output directories and non-font files are intentionally excluded. The
+moved source files remain in font-factory/fonts/ as the source of record.
+Concurrent selections and moves are serialized.
 """
 
 from __future__ import annotations
 
 import argparse
+import fcntl
 import hashlib
 import json
 import os
 import re
+import secrets
 import shutil
 import unicodedata
 from datetime import datetime, timezone
@@ -72,6 +76,29 @@ def list_saved() -> int:
     return 0
 
 
+def random_saved_source() -> tuple[str, str]:
+    """Choose one stageable Saved family without touching unrelated sources."""
+    if not SAVED_ROOT.is_dir():
+        raise SystemExit(f"Saved directory not found: {SAVED_ROOT}")
+    candidates: list[tuple[str, str]] = []
+    for folder in SAVED_ROOT.iterdir():
+        if not folder.is_dir() or folder.is_symlink() or not font_files(folder):
+            continue
+        try:
+            slug = slugify(folder.name)
+        except SystemExit:
+            # Keep non-Latin folder names eligible while making a safe stable
+            # ASCII input path for the selected source.
+            slug = "saved-" + hashlib.sha256(folder.name.encode("utf-8")).hexdigest()[:10]
+        if not (FONTS_ROOT / slug).exists():
+            candidates.append((folder.name, slug))
+    if not candidates:
+        raise SystemExit(
+            "No stageable Saved folders with root-level OTF/TTF files and a fresh destination."
+        )
+    return secrets.choice(candidates)
+
+
 def matching_import(destination: Path, source_name: str) -> bool:
     """Check that destination is the recorded, intact source for this Saved folder."""
     if destination.is_symlink() or not destination.is_dir():
@@ -97,34 +124,34 @@ def matching_import(destination: Path, source_name: str) -> bool:
     return bool(recorded) and current == recorded
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--list", action="store_true", help="list Saved folders and their original root-level OTF/TTF files")
-    group.add_argument("--source", help="exact Saved folder whose root font files will be moved")
-    parser.add_argument("--slug", help="destination input slug; defaults to a normalized source-folder name")
-    args = parser.parse_args()
-
-    if args.list:
-        if args.slug:
-            parser.error("--slug is only valid with --source")
-        return list_saved()
-
-    source_name = args.source
+def stage(args: argparse.Namespace) -> int:
+    if args.random:
+        source_name, selected_slug = random_saved_source()
+        print(f"Randomly selected Saved family: {source_name}")
+    else:
+        source_name, selected_slug = args.source, None
     if not source_name or Path(source_name).name != source_name or source_name in {".", ".."}:
-        parser.error("--source must be the exact name of one folder directly inside font-factory/Saved")
+        raise SystemExit(
+            "source must be the exact name of one folder directly inside font-factory/Saved"
+        )
     if not SAVED_ROOT.is_dir():
         raise SystemExit(f"Saved directory not found: {SAVED_ROOT}")
 
     source = SAVED_ROOT / source_name
-    slug = slugify(args.slug or source_name)
+    slug = args.slug or selected_slug or slugify(source_name)
     destination = FONTS_ROOT / slug
 
     if source.is_symlink():
         raise SystemExit(f"Saved source folder is a symlink: {source}")
     if not source.exists():
         if matching_import(destination, source_name):
+            if args.random:
+                raise SystemExit(
+                    "randomly selected Saved family was already claimed by another run; "
+                    "start a fresh --random invocation"
+                )
             print(f"Already moved with matching source hashes: {destination}")
+            print(f"Source workspace: {destination}")
             return 0
         raise SystemExit(f"Saved source folder not found or already moved elsewhere: {source}")
     if not source.is_dir():
@@ -132,7 +159,13 @@ def main() -> int:
     files = font_files(source)
     if not files:
         if matching_import(destination, source_name):
+            if args.random:
+                raise SystemExit(
+                    "randomly selected Saved family was already claimed by another run; "
+                    "start a fresh --random invocation"
+                )
             print(f"Already moved with matching source hashes: {destination}")
+            print(f"Source workspace: {destination}")
             return 0
         raise SystemExit(f"no direct OTF/TTF source files found in {source}")
 
@@ -164,6 +197,7 @@ def main() -> int:
             except OSError:
                 pass
             print(f"Moved source ownership to the matching existing destination: {destination}")
+            print(f"Source workspace: {destination}")
             return 0
         raise SystemExit(
             f"refusing to overwrite existing destination {destination}; choose a new --slug"
@@ -207,10 +241,38 @@ def main() -> int:
     except OSError:
         pass
     print(f"Moved {len(files)} original font file(s) into the source workspace: {destination}")
+    print(f"Source workspace: {destination}")
+    if args.random:
+        print(
+            "RANDOM_SOURCE_CLAIMED: "
+            f"font-factory/Saved/{source.name} -> font-factory/fonts/{slug}"
+        )
     for path in files:
         print(f"  {path.name}  sha256={expected[path.name]}")
     print("Source bytes were moved unchanged; nested repair folders were not included.")
     return 0
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--list", action="store_true", help="list Saved folders and their original root-level OTF/TTF files")
+    group.add_argument("--source", help="exact Saved folder whose root font files will be moved")
+    group.add_argument("--random", action="store_true", help="randomly choose and stage one eligible Saved family")
+    parser.add_argument("--slug", help="destination input slug; defaults to a normalized source-folder name")
+    args = parser.parse_args()
+
+    if args.list:
+        if args.slug:
+            parser.error("--slug is only valid with --source or --random")
+        return list_saved()
+
+    # Serialize candidate selection and the complete move so concurrent runs
+    # cannot both claim the same still-eligible Saved family.
+    lock_path = PROJECT_ROOT / "font-factory" / ".stage_saved_font.lock"
+    with lock_path.open("a", encoding="utf-8") as lock_file:
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        return stage(args)
 
 
 if __name__ == "__main__":

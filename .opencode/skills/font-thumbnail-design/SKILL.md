@@ -17,14 +17,32 @@ font-specific visual direction.
 - Remove the specimen's white field; do not retype the name in a substitute
   font or force it into all caps.
 - Keep the full name crisp, high-contrast, and readable at about 300 px wide.
-- Create the 3:2, main 1:1, and storefront 1:1 images as separate compositions.
+- Make the name fill the composition: the longest line spans at least 75% of
+  frame width and its visible glyph block spans at least 35% of frame height.
+  Reflow the name or simplify/move the scene rather than shrinking the type.
+- Provide a primary and a distinctly different alternate direction, each with independently composed 3:2 and 1:1 prompts. Use one direction consistently for a finished thumbnail pair.
+- For each new direction, state the title, descriptor, and backing-field colors
+  by name and hex; explain why the lettering color fits the idea and check
+  contrast. Favor clear, intentional color relationships over washed-out or
+  default black/gray lettering.
 
 ## Keep the design restrained
+
+The seller's written research synthesis is a required input, not an optional
+archive. Read `font-factory/Style-References/thumbnail-prompt-research-2026-10-20/prompt-findings.md`
+and `prototypes/review.md`; their findings are sufficient for an ordinary run.
+Do not reopen individual reference or prototype images, which can anchor the
+design to their exact subjects and layouts. Carry forward the seller's
+principles across photography, illustration, and print design. Inspect a
+specific example only at the seller's request or to clarify an unresolved point.
 
 Follow the prompt's one visual premise. Use only details that explain it; the
 composition may use negative space, but it should not default to a sterile
 field. A quiet, relevant paper/ink/print texture or faint illustration can
 make flat work feel tactile; keep it purposeful and secondary. Keep the
+background to one premise and a few purposeful forms; do not pile up props,
+labels, texture, or effects. Make the lettering and background colors feel
+chosen together. Keep the
 lettering flat and front-facing, separate from every photographed or rendered
 surface. Compare the concept with recent thumbnails across medium, layout,
 focal motif, palette, texture/light and title placement; avoid repeating a

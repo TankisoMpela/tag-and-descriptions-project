@@ -5,7 +5,8 @@ INPUTS
 - Exact font name: [ENTER THE FINAL FONT NAME]
 - Approved style descriptor: [ENTER THE TITLE-CASE DESCRIPTOR]
 - Complete 3:2 prompt from `visual-direction/theme.txt`:
-  [PASTE the `thumbnail_main_3x2` section]
+  [PASTE either `thumbnail_main_3x2` or `thumbnail_alt_3x2`; use the same
+   direction as the square thumbnail]
 - Output filename: `thumbnail_main.png`
 
 Create one finished 3:2 thumbnail. Use the white-background specimen as the
@@ -22,6 +23,12 @@ the frame. Make the lettering stand apart from the background through clear
 value contrast. Do not add generic props, unrelated effects, fake claims, or
 accidental extra text.
 
+Give the font name a genuinely large footprint: its longest line must span at
+least 75% of the frame width, and the visible font-name glyph block must span at
+least 35% of the frame height. Measure the name alone, excluding the descriptor.
+If it does not fit, stack or reflow the words and simplify or move the scene;
+never shrink the lettering to make room for background elements.
+
 Follow the font-specific composition in the prompt. Keep the name and descriptor
 as flat, front-facing overlays, separate from any photographed or rendered
 surface. Keep any person secondary with the face cropped out or soft in the
@@ -36,8 +43,29 @@ when the subject is specific to this font and the composition stays balanced.
 No glitter, sparkles, starbursts, confetti, floating particles, fake lens flare,
 arbitrary badges, gratuitous glow, excessive texture, or generic AI decoration.
 
-Generate one image and inspect it at small preview size. Check the prompt,
-spelling, capitalization, letterform fidelity, crop, contrast, and readability.
+Generate one image and inspect the actual render at full size and at 300×200.
+Accept it only if the name is the first read, occupies at least 75% of frame
+width and 35% of frame height, preserves the specimen's spelling, natural
+capitalization and glyph construction, stays fully inside the frame, and has
+clear contrast behind every letter. Confirm that the image expresses the
+font-specific premise as a finished composition with a meaningful scene or
+graphic relationship, without a competing hero, generic luxury still-life
+styling, arbitrary decoration, or a sterile centered specimen on an empty
+field. A fine-line grid, isolated circle, pale technical marks, or a solid
+field alone is not enough unless together they make a clear, memorable idea.
+Give the frame one substantial font-relevant visual anchor while keeping the
+name dominant. Use a decisive palette with a clear accent and lettering color
+that belongs with the background; numeric contrast alone does not make color
+impactful. Do not default to muted, low-saturation neutrals or faint accents.
+The letters must remain crisp, flat, front-facing overlays, never
+attached to a photographed or rendered surface. Verify the image still reads
+at small size and follows the supplied concept rather than only borrowing its
+palette.
+
+If any check fails, reject the render, fix the cause in the composition or
+prompt, and regenerate. Repeat until the selected image passes. Do not save a
+failed render as the completed thumbnail or claim completion while a check
+still fails.
 
 COMPLETE — save as `prepared_visuals/3x2/thumbnail_main.png`
 Font name: [EXACT FONT NAME]

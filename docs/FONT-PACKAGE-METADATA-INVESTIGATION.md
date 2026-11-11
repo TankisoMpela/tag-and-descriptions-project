@@ -71,19 +71,19 @@ to the `fi` and `fl` ligature glyphs; the `AT` pair advanced 1847 units with
 kerning enabled versus 1864 with kerning disabled. The original TTF and the
 pre-existing `layout-repaired/` proof artifacts were not overwritten.
 
-## Watermark Workflow Removed
+## Current Package Shape
 
-New preparation runs create only Commercial-Use and Personal-Use archives.
-The packager verifies that the archives contain the same font paths and
-byte-identical font binaries; Personal-Use may additionally include the
-like-request note. The Free-Trial-Demo stamping pass and archive were removed
-from both active archive builders, Agent 13's instructions, and the active
-helper index. `stamp_personal_use.py` remains documented as a legacy standalone
-utility and is no longer called by the preparation workflow.
+New preparation runs deliver OTF masters, generated TTF siblings, and WOFF
+copies in separate `OTF/`, `TTF/`, and `WOFF/` folders inside the font-named
+folder, plus one `{FontName}.zip` containing those folders. Every format in the
+ZIP is checked with fontTools, OTS, FreeType/fontconfig, and HarfBuzz before the
+package can pass. WOFF2 is not included, and no separate Commercial-Use or
+Personal-Use archives are created. Legacy watermark utilities remain outside
+the active preparation workflow.
 
-On a successful `--force` rebuild, the packager removes that product's obsolete
-local Free-Trial-Demo ZIP after the replacement fonts pass their audits. No
-existing package archive was rewritten or deleted during this investigation.
+On a successful `--force` rebuild, the packager removes the product's obsolete
+ZIP files after the replacement package passes its audits. This update changes
+future packaging behavior; it does not rewrite existing preparation outputs.
 
 ## Tests Run
 

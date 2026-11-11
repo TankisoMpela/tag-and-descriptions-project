@@ -198,11 +198,14 @@ def cmd_avoid(args, con: sqlite3.Connection) -> int:
     if not candidates:
         sys.exit("error: no candidates given")
     used = font_counts(con, args.slug)
-    # never-used first, then least-used, stable alphabetical within a tier
-    ranked = sorted(candidates, key=lambda t: (used.get(t, 0), t))
+    global_used = dict(con.execute("SELECT tag, COUNT(*) FROM tag_uses GROUP BY tag"))
+    # Never-used for this font first; within each tier, prefer phrases less
+    # saturated across the full account history. Alphabetical keeps ties stable.
+    ranked = sorted(candidates, key=lambda t: (used.get(t, 0), global_used.get(t, 0), t))
     take = ranked[: args.take]
     out = {"slug": args.slug, "take": args.take, "selected": take,
-            "font_usage": {t: used.get(t, 0) for t in candidates}}
+            "font_usage": {t: used.get(t, 0) for t in candidates},
+            "global_usage": {t: global_used.get(t, 0) for t in candidates}}
     if args.json:
         print(json.dumps(out, indent=2))
     else:

@@ -14,6 +14,8 @@ import re
 import sys
 from pathlib import Path
 
+from marketplace_description_rules import validate_marketplace_description
+
 
 REQUIRED = [
     "PRODUCT TITLE",
@@ -65,8 +67,18 @@ ALLOWED_CLASSIFICATIONS = {
     "symbols",
 }
 
-MAX_TAG_CHARACTERS = 40
-MAX_FOUR_WORD_TAGS = 3
+MAX_TAGS = 20
+
+TECHNICAL_TAG_REVIEW_PATTERNS = (
+    (re.compile(r"\b\d+\s+(?:mapped\s+)?characters?\b", re.IGNORECASE), "raw character count"),
+    (re.compile(r"\b(?:gsub|gpos)\b", re.IGNORECASE), "OpenType table name"),
+    (re.compile(r"\blegacy\s+kern(?:ing)?\b", re.IGNORECASE), "kerning implementation detail"),
+    (re.compile(r"\b(?:single|regular)\s+(?:font\s+)?(?:style|weight)\b", re.IGNORECASE), "style or weight metadata"),
+    (re.compile(r"\b(?:basic\s+latin|latin\s+extended(?:\s*-?\s*a)?)\b", re.IGNORECASE), "Unicode range label"),
+    (re.compile(r"\bweb\s?fonts?\b", re.IGNORECASE), "web font capability or license claim"),
+)
+
+FILE_FORMAT_TAG = re.compile(r"^(?:otf|ttf|woff2?|opentype|truetype)(?:\s+(?:font|format))?$", re.IGNORECASE)
 
 
 def sections(text: str) -> dict[str, str]:
@@ -117,6 +129,8 @@ def main() -> int:
     if meta_description and len(meta_description) > 155:
         failures.append(f"meta description is {len(meta_description)} characters; maximum is 155")
 
+    failures.extend(validate_marketplace_description(parsed.get("PRODUCT DESCRIPTION", "")))
+
     classification = parsed.get("CLASSIFICATION", "").strip()
     if classification:
         first_line = first_content(classification).strip().casefold()
@@ -130,6 +144,7 @@ def main() -> int:
                 "classification must be exactly one of: Blackletter, Handwritten, Sans Serif, Script, Serif, Slab Serif, Symbols"
             )
 
+    tags: list[str] = []
     if "## TAGS" not in text:
         failures.append("missing TAGS section")
     else:
@@ -145,23 +160,25 @@ def main() -> int:
                 tag_line = stripped
                 break
         tags = [item.strip() for item in tag_line.split(",") if item.strip()]
-        if len(tags) != 30:
-            failures.append(f"tag count is {len(tags)}; expected exactly 30")
+        if not tags:
+            failures.append("TAGS section must contain at least one tag")
+        if len(tags) > MAX_TAGS:
+            failures.append(f"TAGS section has {len(tags)} tags; maximum is {MAX_TAGS}")
         lowered = [item.casefold() for item in tags]
         if len(lowered) != len(set(lowered)):
             failures.append("tags contain duplicates")
         for tag in tags:
             if len(tag.split()) < 2:
                 failures.append(f"tag is not 2+ words: {tag}")
-            if tag.casefold() in BANNED_TAGS:
+            if tag.casefold() in BANNED_TAGS or FILE_FORMAT_TAG.fullmatch(tag):
                 failures.append(f"banned mechanical tag: {tag}")
-        leading_words: dict[str, int] = {}
-        for tag in tags:
-            first = tag.casefold().split()[0]
-            leading_words[first] = leading_words.get(first, 0) + 1
-        for first, count in leading_words.items():
-            if count > 3:
-                failures.append(f"leading-word repetition exceeds 3: {first} ({count})")
+
+    tag_reviews: list[tuple[str, str]] = []
+    for tag in tags:
+        for pattern, reason in TECHNICAL_TAG_REVIEW_PATTERNS:
+            if pattern.search(tag):
+                tag_reviews.append((tag, reason))
+                break
 
     if "—" in text:
         failures.append("em dash found; replace with a hyphen")
@@ -170,6 +187,9 @@ def main() -> int:
         for failure in failures:
             print(f"[FAIL] {failure}")
         return 1
+
+    for tag, reason in tag_reviews:
+        print(f"[REVIEW] tag may be technical metadata ({reason}): {tag}")
 
     print(f"[PASS] {args.listing}: Creative Market listing-copy hard gates passed")
     return 0
